@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.relation
 
 import app.cash.paging.PagingData
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -21,7 +22,7 @@ interface RelationRepository {
     fun getRelationshipsByType(
         entityId: String,
         entity: MusicBrainzEntity = MusicBrainzEntity.URL,
-    ): List<RelationListItemModel>
+    ): ImmutableList<RelationListItemModel>
 
     fun deleteRelationshipsByType(
         entityId: String,

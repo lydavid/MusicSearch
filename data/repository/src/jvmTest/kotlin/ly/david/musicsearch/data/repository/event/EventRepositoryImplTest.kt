@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.event
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -109,7 +110,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                     begin = "2024-11-14",
                 ),
                 time = "19:00",
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "674fd59c-9986-4561-a255-a2959d14a5fe_1",
                         linkedEntityId = "674fd59c-9986-4561-a255-a2959d14a5fe",

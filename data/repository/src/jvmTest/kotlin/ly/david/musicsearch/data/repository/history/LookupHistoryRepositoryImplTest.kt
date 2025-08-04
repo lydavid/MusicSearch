@@ -247,15 +247,15 @@ class LookupHistoryRepositoryImplTest :
                             type = AliasType.ARTIST_NAME,
                         ),
                         BasicAlias(
-                            name = "계속 한밤중이면 좋을 텐데.",
-                            locale = "ko",
-                            isPrimary = true,
-                            type = AliasType.ARTIST_NAME,
-                        ),
-                        BasicAlias(
                             name = "ずとまよ",
                             locale = "ja",
                             isPrimary = false,
+                            type = AliasType.ARTIST_NAME,
+                        ),
+                        BasicAlias(
+                            name = "계속 한밤중이면 좋을 텐데.",
+                            locale = "ko",
+                            isPrimary = true,
                             type = AliasType.ARTIST_NAME,
                         ),
                     ),

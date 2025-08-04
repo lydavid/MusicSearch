@@ -27,7 +27,7 @@ data class ArtistDetailsModel(
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
-    override val urls: List<RelationListItemModel> = listOf(),
+    override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Artist, MusicBrainzDetailsModel {
@@ -43,7 +43,7 @@ data class ArtistDetailsModel(
         return copy(wikipediaExtract = wikipediaExtract)
     }
 
-    override fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel {
+    override fun withUrls(urls: ImmutableList<RelationListItemModel>): MusicBrainzDetailsModel {
         return copy(urls = urls)
     }
 

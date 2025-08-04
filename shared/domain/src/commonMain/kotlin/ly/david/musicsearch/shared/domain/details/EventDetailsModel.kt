@@ -24,7 +24,7 @@ data class EventDetailsModel(
     override val artistCredits: List<ArtistCreditUiModel> = listOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
-    override val urls: List<RelationListItemModel> = listOf(),
+    override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Event, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
@@ -39,7 +39,7 @@ data class EventDetailsModel(
         return copy(wikipediaExtract = wikipediaExtract)
     }
 
-    override fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel {
+    override fun withUrls(urls: ImmutableList<RelationListItemModel>): MusicBrainzDetailsModel {
         return copy(urls = urls)
     }
 

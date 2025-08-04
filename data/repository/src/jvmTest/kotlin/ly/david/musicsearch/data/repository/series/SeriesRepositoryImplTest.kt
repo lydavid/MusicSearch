@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.series
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
@@ -150,7 +151,7 @@ class SeriesRepositoryImplTest : KoinTest {
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
                 type = "Release group series",
                 lastUpdated = testDateTimeInThePast,
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "61036cd9-8819-4f56-8739-d7f9bd16d675_3",
                         linkedEntityId = "61036cd9-8819-4f56-8739-d7f9bd16d675",

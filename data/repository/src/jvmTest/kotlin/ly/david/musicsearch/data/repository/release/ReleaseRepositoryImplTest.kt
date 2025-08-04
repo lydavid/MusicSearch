@@ -756,7 +756,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     ),
                 ),
                 lastUpdated = testDateTimeInThePast,
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1_4",
                         linkedEntityId = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1",
@@ -972,7 +972,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     ),
                 ),
                 labels = emptyList(),
-                urls = emptyList(),
+                urls = persistentListOf(),
                 releaseLength = 18733,
                 hasNullLength = false,
                 lastUpdated = testDateTimeInThePast,

@@ -36,7 +36,7 @@ private val artist = ArtistDetailsModel(
             "The Beatles are the best-selling music act of all time, with estimated sales of 600 million units worldwide. They are the most successful act in the history of the US Billboard charts, holding the record for most number-one albums on the UK Albums Chart (15), most number-one hits on the US Billboard Hot 100 chart (20), and most singles sold in the UK (21.9 million). The band received many accolades, including seven Grammy Awards, four Brit Awards, an Academy Award (for Best Original Song Score for the 1970 documentary film Let It Be) and fifteen Ivor Novello Awards. They were inducted into the Rock and Roll Hall of Fame in their first year of eligibility, 1988, and each principal member was individually inducted between 1994 and 2015. In 2004 and 2011, the group topped Rolling Stone's lists of the greatest artists in history. Time magazine named them among the 20th century's 100 most important people.",
         wikipediaUrl = "https://en.wikipedia.org/wiki/The_Beatles",
     ),
-    urls = listOf(
+    urls = persistentListOf(
         RelationListItemModel(
             id = "1",
             label = "Allmusic",
@@ -95,7 +95,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                     wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
                 ),
                 lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "1",
                         label = "Wikidata",

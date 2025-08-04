@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.place
 
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
@@ -252,7 +253,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     name = "Kitanomaru Kōen",
                 ),
                 lastUpdated = testDateTimeInThePast,
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "e893b81b-a678-4989-858f-c83a30243b7b_8",
                         linkedEntityId = "e893b81b-a678-4989-858f-c83a30243b7b",

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.instrument
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
@@ -167,7 +168,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 disambiguation = "Modern acoustic gut/nylon string guitar",
                 type = "String instrument",
                 lastUpdated = testDateTimeInThePast.plus(2.seconds),
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "a_7",
                         linkedEntityId = "a",

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.label
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -163,7 +164,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                     ended = true,
                 ),
                 lastUpdated = testDateTimeInThePast.plus(2.milliseconds),
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090_5",
                         linkedEntityId = "2741a789-1c8a-453a-a8d3-fb8a5cc6f090",

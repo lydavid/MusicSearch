@@ -6,6 +6,8 @@ import androidx.paging.map
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
@@ -271,10 +273,12 @@ class RelationRepositoryImpl(
     override fun getRelationshipsByType(
         entityId: String,
         entity: MusicBrainzEntity,
-    ): List<RelationListItemModel> = relationDao.getRelationshipsByType(
-        entityId = entityId,
-        entity = entity,
-    )
+    ): ImmutableList<RelationListItemModel> {
+        return relationDao.getRelationshipsByType(
+            entityId = entityId,
+            entity = entity,
+        ).toPersistentList()
+    }
 
     override fun deleteRelationshipsByType(
         entityId: String,

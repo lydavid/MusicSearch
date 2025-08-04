@@ -15,14 +15,12 @@ sealed interface MusicBrainzDetailsModel : MusicBrainzModel, NameWithDisambiguat
     val artistCredits: List<ArtistCreditUiModel>
     val imageMetadata: ImageMetadata
     val wikipediaExtract: WikipediaExtract
-
-    // TODO: make immutable
-    val urls: List<RelationListItemModel>
+    val urls: ImmutableList<RelationListItemModel>
     override val aliases: ImmutableList<BasicAlias>
 
     fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel
     fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel
     fun withWikipediaExtract(wikipediaExtract: WikipediaExtract): MusicBrainzDetailsModel
-    fun withUrls(urls: List<RelationListItemModel>): MusicBrainzDetailsModel
+    fun withUrls(urls: ImmutableList<RelationListItemModel>): MusicBrainzDetailsModel
     override fun withAliases(aliases: ImmutableList<BasicAlias>): MusicBrainzDetailsModel
 }

@@ -59,7 +59,7 @@ private val release = ReleaseDetailsModel(
     ),
     releaseLength = 2836000,
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-    urls = listOf(
+    urls = persistentListOf(
         RelationListItemModel(
             id = "1",
             label = "ASIN",

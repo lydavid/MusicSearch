@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.recording
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -155,7 +156,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                 ),
                 video = true,
                 lastUpdated = testDateTimeInThePast.plus(3.days),
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "b5322490-3003-42e9-a043-d26a83bd1bbd_1",
                         linkedEntityId = "b5322490-3003-42e9-a043-d26a83bd1bbd",

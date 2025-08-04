@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -15,7 +16,7 @@ internal fun PreviewUrlsSection() {
         Surface {
             LazyColumn {
                 urlsSection(
-                    urls = listOf(
+                    urls = persistentListOf(
                         RelationListItemModel(
                             id = "1",
                             linkedEntityId = "3",

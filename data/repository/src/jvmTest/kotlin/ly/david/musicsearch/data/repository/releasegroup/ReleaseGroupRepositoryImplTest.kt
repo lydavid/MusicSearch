@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -175,7 +176,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                     ),
                 ),
                 lastUpdated = testDateTimeInThePast,
-                urls = listOf(
+                urls = persistentListOf(
                     RelationListItemModel(
                         id = "c3e175ed-6618-42d9-8d0f-680883a35f43_4",
                         linkedEntityId = "c3e175ed-6618-42d9-8d0f-680883a35f43",

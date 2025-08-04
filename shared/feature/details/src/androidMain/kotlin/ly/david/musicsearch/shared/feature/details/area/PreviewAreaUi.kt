@@ -482,7 +482,7 @@ private val country = AreaDetailsModel(
     type = "Country",
     countryCode = "CA",
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-    urls = listOf(
+    urls = persistentListOf(
         RelationListItemModel(
             id = "1",
             linkedEntity = MusicBrainzEntity.URL,

@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -25,7 +26,7 @@ private val releaseGroup = ReleaseGroupDetailsModel(
             "more than 10 countries around the world.",
         wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
     ),
-    urls = listOf(
+    urls = persistentListOf(
         RelationListItemModel(
             id = "1",
             label = "Discogs",
