@@ -13,7 +13,7 @@ internal fun LazyListScope.urlsSection(
     onCollapseExpand: () -> Unit = {},
 ) {
     urls.ifNotNullOrEmpty {
-        item {
+        stickyHeader {
             CollapsibleListSeparatorHeader(
                 text = "External links",
                 collapsed = collapsed,

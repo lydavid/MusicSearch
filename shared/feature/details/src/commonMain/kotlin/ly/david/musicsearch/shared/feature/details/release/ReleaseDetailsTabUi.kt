@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
@@ -172,32 +173,13 @@ internal fun ReleaseDetailsTabUi(
                     )
                 }
 
-                val collapsed = detailsTabUiState.isReleaseEventsCollapsed
-                item {
-                    areas.ifNotNullOrEmpty {
-                        CollapsibleListSeparatorHeader(
-                            text = strings.releaseEvents,
-                            collapsed = collapsed,
-                            onClick = onCollapseExpandReleaseEvents,
-                        )
-                    }
-                }
-                if (!collapsed) {
-                    items(areas) { area: AreaListItemModel ->
-                        AreaListItem(
-                            area = area,
-                            showType = false,
-                            showIcon = false,
-                            showEditCollection = false,
-                            onAreaClick = {
-                                onItemClick(
-                                    MusicBrainzEntity.AREA,
-                                    id,
-                                )
-                            },
-                        )
-                    }
-                }
+                releaseEventsSection(
+                    collapsed = detailsTabUiState.isReleaseEventsCollapsed,
+                    areas = areas,
+                    strings = strings,
+                    onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
+                    onItemClick = onItemClick,
+                )
             }
     }
     DetailsTabUi(
@@ -212,4 +194,38 @@ internal fun ReleaseDetailsTabUi(
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
         onCollapseExpandAliases = onCollapseExpandAliases,
     )
+}
+
+private fun LazyListScope.releaseEventsSection(
+    collapsed: Boolean,
+    areas: List<AreaListItemModel>,
+    strings: AppStrings,
+    onCollapseExpandReleaseEvents: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+) {
+    stickyHeader {
+        areas.ifNotNullOrEmpty {
+            CollapsibleListSeparatorHeader(
+                text = strings.releaseEvents,
+                collapsed = collapsed,
+                onClick = onCollapseExpandReleaseEvents,
+            )
+        }
+    }
+    if (!collapsed) {
+        items(areas) { area: AreaListItemModel ->
+            AreaListItem(
+                area = area,
+                showType = false,
+                showIcon = false,
+                showEditCollection = false,
+                onAreaClick = {
+                    onItemClick(
+                        MusicBrainzEntity.AREA,
+                        id,
+                    )
+                },
+            )
+        }
+    }
 }

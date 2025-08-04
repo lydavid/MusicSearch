@@ -19,7 +19,7 @@ internal fun LazyListScope.aliasesSection(
     onCollapseExpand: () -> Unit = {},
 ) {
     aliases.ifNotNullOrEmpty {
-        item {
+        stickyHeader {
             CollapsibleListSeparatorHeader(
                 text = "Aliases",
                 collapsed = collapsed,
