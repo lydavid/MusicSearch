@@ -20,8 +20,8 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.sqldelight) apply false
     alias(libs.plugins.kotlin.powerAssert) apply false
+    alias(libs.plugins.aboutlibraries) apply false
 
-    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.version.catalog.update)

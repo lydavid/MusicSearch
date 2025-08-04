@@ -2,7 +2,6 @@ plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    alias(libs.plugins.aboutlibraries)
 }
 
 android {
