@@ -7,8 +7,6 @@ CREATE TABLE work (
   disambiguation TEXT,
   type TEXT,
   type_id TEXT,
-  -- TODO: drop this
-  language TEXT,
   iswcs TEXT AS List<String>,
   languages TEXT AS List<String>
 );
@@ -20,7 +18,6 @@ SET
   disambiguation = :disambiguation,
   type = :type,
   type_id = :typeId,
-  language = :language,
   iswcs = :iswcs,
   languages = :languages
 WHERE id = :id;
@@ -32,7 +29,6 @@ VALUES (
   :disambiguation,
   :type,
   :typeId,
-  :language,
   :iswcs,
   :languages
 );

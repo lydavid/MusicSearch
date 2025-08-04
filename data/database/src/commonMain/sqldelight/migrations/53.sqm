@@ -1,0 +1,60 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+PRAGMA foreign_keys = OFF;
+
+CREATE TABLE work_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  type TEXT,
+  type_id TEXT,
+  iswcs TEXT AS List<String>,
+  languages TEXT AS List<String>
+);
+
+INSERT INTO work_temp (
+  id,
+  name,
+  disambiguation,
+  type,
+  type_id,
+  iswcs,
+  languages
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  type,
+  type_id,
+  iswcs,
+  COALESCE(languages, language)
+FROM work;
+
+DROP TABLE work;
+
+ALTER TABLE work_temp RENAME TO work;
+
+CREATE TABLE work_attribute_backup AS SELECT * FROM work_attribute;
+
+DROP TABLE work_attribute;
+
+CREATE TABLE work_attribute (
+  work_id TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  value TEXT NOT NULL,
+
+  PRIMARY KEY(work_id, type, value),
+
+  FOREIGN KEY(work_id) REFERENCES work(id)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+INSERT INTO work_attribute SELECT * FROM work_attribute_backup;
+
+DROP TABLE work_attribute_backup;
+
+PRAGMA foreign_keys = on;

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS work_attribute (
+CREATE TABLE work_attribute (
   work_id TEXT NOT NULL,
   type TEXT NOT NULL,
   type_id TEXT NOT NULL,
