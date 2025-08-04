@@ -18,6 +18,7 @@ internal fun ReleaseGroupDetailsTabUi(
     filterText: String = "",
     onImageClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -28,6 +29,7 @@ internal fun ReleaseGroupDetailsTabUi(
         filterText = filterText,
         onImageClick = onImageClick,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             TextWithHeading(
                 heading = strings.type,

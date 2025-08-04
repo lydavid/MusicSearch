@@ -217,6 +217,9 @@ internal fun InstrumentUi(
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
                 )
             },
         )

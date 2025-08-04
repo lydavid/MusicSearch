@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.url
+package ly.david.musicsearch.shared.feature.details.utils
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 
-fun LazyListScope.urlsSection(
+internal fun LazyListScope.urlsSection(
     urls: List<RelationListItemModel>,
     collapsed: Boolean = false,
     onCollapseExpand: () -> Unit = {},

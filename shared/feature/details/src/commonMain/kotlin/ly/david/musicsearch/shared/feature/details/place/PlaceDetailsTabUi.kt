@@ -24,6 +24,7 @@ internal fun PlaceDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -33,6 +34,7 @@ internal fun PlaceDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             type?.ifNotNullOrEmpty {
                 TextWithHeading(

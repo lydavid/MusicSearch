@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.GROUP_CONCAT_DELIMITER
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 
-internal fun combineToPrimaryAliases(
+internal fun combineToAliases(
     aliasNames: String?,
     aliasLocales: String?,
 ): ImmutableList<BasicAlias> {

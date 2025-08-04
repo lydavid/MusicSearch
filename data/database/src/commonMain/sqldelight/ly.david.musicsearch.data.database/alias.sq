@@ -617,94 +617,154 @@ getAreaAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM area_alias
-WHERE area_alias.area_id = :mbid;
+WHERE area_alias.area_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getArtistAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM artist_alias
-WHERE artist_alias.artist_id = :mbid;
+WHERE artist_alias.artist_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getEventAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM event_alias
-WHERE event_alias.event_id = :mbid;
+WHERE event_alias.event_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getGenreAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM genre_alias
-WHERE genre_alias.genre_id = :mbid;
+WHERE genre_alias.genre_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getInstrumentAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM instrument_alias
-WHERE instrument_alias.instrument_id = :mbid;
+WHERE instrument_alias.instrument_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getLabelAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM label_alias
-WHERE label_alias.label_id = :mbid;
+WHERE label_alias.label_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getPlaceAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM place_alias
-WHERE place_alias.place_id = :mbid;
+WHERE place_alias.place_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getRecordingAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM recording_alias
-WHERE recording_alias.recording_id = :mbid;
+WHERE recording_alias.recording_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getReleaseAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM release_alias
-WHERE release_alias.release_id = :mbid;
+WHERE release_alias.release_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getReleaseGroupAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM release_group_alias
-WHERE release_group_alias.release_group_id = :mbid;
+WHERE release_group_alias.release_group_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getSeriesAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM series_alias
-WHERE series_alias.series_id = :mbid;
+WHERE series_alias.series_id = :mbid
+ORDER BY locale, is_primary DESC, name;
 
 getWorkAliases:
 SELECT
   name,
   locale,
-  is_primary
+  is_primary,
+  type_id,
+  begin_date,
+  end_date,
+  ended
 FROM work_alias
-WHERE work_alias.work_id = :mbid;
+WHERE work_alias.work_id = :mbid
+ORDER BY locale, is_primary DESC, name;

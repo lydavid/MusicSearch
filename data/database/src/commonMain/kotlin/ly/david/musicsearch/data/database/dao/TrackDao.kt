@@ -4,7 +4,7 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.combineToPrimaryAliases
+import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
@@ -112,7 +112,7 @@ private fun mapToTrackAndMedium(
     mediumName = mediumName,
     trackCount = trackCount,
     format = format,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
 data class TrackAndMedium(

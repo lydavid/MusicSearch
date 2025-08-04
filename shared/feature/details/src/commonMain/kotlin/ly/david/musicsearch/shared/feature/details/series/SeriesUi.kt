@@ -217,6 +217,9 @@ internal fun SeriesUi(
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
                 )
             },
         )

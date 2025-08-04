@@ -275,6 +275,9 @@ internal fun ReleaseGroupUi(
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
                 )
             },
         )

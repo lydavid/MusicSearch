@@ -7,7 +7,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.combineToPrimaryAliases
+import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
@@ -141,7 +141,7 @@ class RelationDao(
         ),
         imageUrl = thumbnailUrl,
         imageId = imageId?.let { ImageId(it) },
-        aliases = combineToPrimaryAliases(
+        aliases = combineToAliases(
             aliasNames = aliasNames,
             aliasLocales = aliasLocales,
         ),

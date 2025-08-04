@@ -16,12 +16,12 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.url.urlsSection
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 
 fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(strings: AppStrings): String {
@@ -51,6 +51,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
     onImageClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -98,9 +99,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
 
-            // TODO: display all aliases? default expanded or no?
-            //  show the primary one for user locale but toggle to show rest?
-            //  primary is already shown in title, but we should repeat here for completeness
+            aliasesSection(
+                aliases = aliases,
+                collapsed = detailsTabUiState.isAliasesCollapsed,
+                onCollapseExpand = onCollapseExpandAliases,
+            )
 
             item {
                 LastUpdatedFooterItem(

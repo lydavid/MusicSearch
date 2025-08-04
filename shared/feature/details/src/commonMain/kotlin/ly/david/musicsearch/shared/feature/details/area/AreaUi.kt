@@ -288,6 +288,9 @@ internal fun AreaUiInternal(
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
                 )
             },
         )

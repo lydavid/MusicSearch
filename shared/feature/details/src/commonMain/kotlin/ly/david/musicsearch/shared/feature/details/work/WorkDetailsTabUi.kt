@@ -19,6 +19,7 @@ internal fun WorkDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -28,6 +29,7 @@ internal fun WorkDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             type?.ifNotNullOrEmpty {
                 TextWithHeading(

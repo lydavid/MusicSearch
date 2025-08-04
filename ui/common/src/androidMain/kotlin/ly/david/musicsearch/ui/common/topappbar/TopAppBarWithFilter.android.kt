@@ -83,8 +83,8 @@ internal fun PreviewTopAppBarWithFilter() {
                         name = "NANO",
                         locale = "en",
                         isPrimary = true,
-                    )
-                )
+                    ),
+                ),
             ).getAnnotatedName(),
         )
     }
@@ -111,7 +111,7 @@ internal fun PreviewTopAppBarWithFilterFilterModeWithText() {
             annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(
                 initialFilterText = "Initial text",
-                initialIsFilterMode = true
+                initialIsFilterMode = true,
             ),
         )
     }
@@ -126,7 +126,7 @@ internal fun PreviewTopAppBarWithFilterNoFilter() {
             annotatedString = AnnotatedString(text = "Title"),
             topAppBarFilterState = TopAppBarFilterState(
                 initialShow = false,
-            )
+            ),
         )
     }
 }

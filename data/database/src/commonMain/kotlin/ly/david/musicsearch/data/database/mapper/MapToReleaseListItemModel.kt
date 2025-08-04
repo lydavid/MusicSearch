@@ -56,7 +56,7 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
     collected = collected == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
 /**
@@ -114,5 +114,5 @@ internal fun mapToReleaseListItemModel(
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited == true,
     collected = collected == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

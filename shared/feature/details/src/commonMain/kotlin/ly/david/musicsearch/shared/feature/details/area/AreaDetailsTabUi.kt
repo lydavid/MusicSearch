@@ -18,6 +18,7 @@ internal fun AreaDetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -59,5 +60,6 @@ internal fun AreaDetailsTabUi(
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         entityInfoSection = entityInfoSection,
+        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.url
+package ly.david.musicsearch.shared.feature.details.utils
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface

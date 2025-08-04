@@ -265,6 +265,9 @@ internal fun RecordingUi(
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
                 )
             },
         )

@@ -20,7 +20,7 @@ fun mapToLabelListItemModel(
     labelCode = labelCode,
     visited = visited == true,
     collected = collected == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
 fun mapToLabelListItemModel(
@@ -41,5 +41,5 @@ fun mapToLabelListItemModel(
     labelCode = labelCode,
     catalogNumbers = catalogNumbers,
     visited = visited == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

@@ -23,6 +23,7 @@ internal fun InstrumentDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -57,5 +58,6 @@ internal fun InstrumentDetailsTabUi(
                 }
             }
         },
+        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }

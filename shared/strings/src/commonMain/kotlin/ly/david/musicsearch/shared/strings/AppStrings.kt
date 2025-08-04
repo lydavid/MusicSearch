@@ -169,6 +169,22 @@ data class AppStrings(
     val yearAgo: String,
     val yearsAgo: String,
     val appearance: String,
+    val areaName: String,
+    val artistName: String,
+    val eventName: String,
+    val instrumentName: String,
+    val labelName: String,
+    val placeName: String,
+    val recordingName: String,
+    val releaseName: String,
+    val releaseGroupName: String,
+    val seriesName: String,
+    val workName: String,
+    val searchHint: String,
+    val legalName: String,
+    val formalName: String,
+    val brandName: String,
+    val primary: String,
 )
 
 object Locales {

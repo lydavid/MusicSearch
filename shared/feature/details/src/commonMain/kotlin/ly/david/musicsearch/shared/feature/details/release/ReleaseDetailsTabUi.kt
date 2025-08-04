@@ -33,6 +33,7 @@ internal fun ReleaseDetailsTabUi(
     onImageClick: () -> Unit = {},
     onCollapseExpandReleaseEvents: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val strings = LocalStrings.current
@@ -209,5 +210,6 @@ internal fun ReleaseDetailsTabUi(
         entityInfoSection = entityInfoSection,
         additionalDetailsSection = additionalDetailsSection,
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
+        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }

@@ -4,7 +4,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -41,7 +40,7 @@ data class InstrumentDetailsModel(
         return copy(urls = urls)
     }
 
-    override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
+    override fun withAliases(aliases: ImmutableList<BasicAlias>): MusicBrainzDetailsModel {
         return copy(aliases = aliases)
     }
 }

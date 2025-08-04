@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
+import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -237,21 +238,25 @@ class LookupHistoryRepositoryImplTest :
                             name = "ZUTOMAYO",
                             locale = "en",
                             isPrimary = true,
+                            type = AliasType.ARTIST_NAME,
                         ),
                         BasicAlias(
                             name = "ZTMY",
                             locale = "en",
                             isPrimary = false,
+                            type = AliasType.ARTIST_NAME,
                         ),
                         BasicAlias(
                             name = "계속 한밤중이면 좋을 텐데.",
                             locale = "ko",
                             isPrimary = true,
+                            type = AliasType.ARTIST_NAME,
                         ),
                         BasicAlias(
                             name = "ずとまよ",
                             locale = "ja",
                             isPrimary = false,
+                            type = AliasType.ARTIST_NAME,
                         ),
                     ),
                 ),

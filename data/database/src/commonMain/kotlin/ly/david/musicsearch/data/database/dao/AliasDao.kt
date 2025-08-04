@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.AliasQueries
@@ -81,8 +82,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -95,8 +96,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -109,8 +110,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -123,8 +124,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -137,8 +138,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -151,8 +152,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -165,8 +166,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -179,8 +180,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -193,8 +194,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -207,8 +208,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -221,8 +222,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -235,8 +236,8 @@ class AliasDao(
                         locale = locale.orEmpty(),
                         typeId = typeId,
                         isPrimary = isPrimary == true,
-                        beginDate = beginDate.orEmpty(),
-                        endDate = endDate.orEmpty(),
+                        beginDate = begin.orEmpty(),
+                        endDate = end.orEmpty(),
                         ended = ended == true,
                     )
                 }
@@ -273,12 +274,18 @@ class AliasDao(
     }
 }
 
-private typealias AliasQuery<T> = (String, (String, String?, Boolean) -> T) -> Query<T>
+private typealias AliasQuery<T> =
+    (String, (String, String?, Boolean, String?, String, String, Boolean) -> T) -> Query<T>
 
-private fun mapToBasicAlias(): (String, String?, Boolean) -> BasicAlias = { name, locale, isPrimary ->
-    BasicAlias(
-        name = name,
-        locale = locale.orEmpty(),
-        isPrimary = isPrimary,
-    )
-}
+private fun mapToBasicAlias(): (String, String?, Boolean, String?, String, String, Boolean) -> BasicAlias =
+    { name, locale, isPrimary, typeId, beginDate, endDate, ended ->
+        BasicAlias(
+            name = name,
+            locale = locale.orEmpty(),
+            isPrimary = isPrimary,
+            type = AliasType.fromId(typeId),
+            begin = beginDate,
+            end = endDate,
+            ended = ended,
+        )
+    }

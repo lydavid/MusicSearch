@@ -3,9 +3,11 @@ package ly.david.musicsearch.shared.feature.details.area
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -507,7 +509,25 @@ private val country = AreaDetailsModel(
 private val detailsUiState = DetailsUiState(
     tabs = areaTabs,
     selectedTab = Tab.DETAILS,
-    detailsModel = country,
+    detailsModel = country.copy(
+        aliases = persistentListOf(
+            BasicAlias(
+                name = "Canada",
+                locale = "en",
+                isPrimary = true,
+            ),
+            BasicAlias(
+                name = "Canada",
+                locale = "fr",
+                isPrimary = true,
+            ),
+            BasicAlias(
+                name = "カナダ",
+                locale = "ja",
+                isPrimary = true,
+            ),
+        )
+    ),
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-06-05T20:42:20Z"),
     ),

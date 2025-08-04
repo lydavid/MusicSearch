@@ -17,6 +17,7 @@ internal fun LabelDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -26,6 +27,7 @@ internal fun LabelDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             type?.ifNotNullOrEmpty {
                 TextWithHeading(

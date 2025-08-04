@@ -31,6 +31,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.feature.details.alias.filterAliases
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -93,6 +94,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
         var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
         var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
+        var isAliasesCollapsed by rememberSaveable { mutableStateOf(false) }
         val collected by collectionRepository.observeEntityIsInACollection(
             entityId = screen.id,
         ).collectAsRetainedState(false)
@@ -256,6 +258,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
                     isExternalLinksCollapsed = !isExternalLinksCollapsed
                 }
+
+                DetailsUiEvent.ToggleCollapseExpandAliases -> {
+                    isAliasesCollapsed = !isAliasesCollapsed
+                }
             }
         }
 
@@ -264,9 +270,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             tabs = getTabs(),
             selectedTab = selectedTab,
             url = getMusicBrainzUrl(screen.entity, screen.id),
-            detailsModel = detailsModel?.withUrls(
-                urls = detailsModel?.urls.filterUrlRelations(query = query),
-            ) as DetailsModel?,
+            detailsModel = detailsModel
+                ?.withUrls(
+                    urls = detailsModel?.urls.filterUrlRelations(query = query),
+                )
+                ?.withAliases(
+                    aliases = detailsModel?.aliases.filterAliases(query = query),
+                ) as DetailsModel?,
             collected = collected,
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
@@ -278,6 +288,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 lazyListState = detailsLazyListState,
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
+                isAliasesCollapsed = isAliasesCollapsed,
             ),
             allEntitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
@@ -309,6 +320,7 @@ internal data class DetailsTabUiState(
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,
     val isExternalLinksCollapsed: Boolean = false,
+    val isAliasesCollapsed: Boolean = false,
     val now: Instant = Clock.System.now(),
 )
 
@@ -340,4 +352,6 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
 
     data object ToggleCollapseExpandReleaseEvents : DetailsUiEvent
+
+    data object ToggleCollapseExpandAliases : DetailsUiEvent
 }

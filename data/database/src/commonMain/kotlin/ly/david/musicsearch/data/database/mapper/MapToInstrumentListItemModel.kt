@@ -20,5 +20,5 @@ fun mapToInstrumentListItemModel(
     type = type,
     visited = visited == true,
     collected = collected == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

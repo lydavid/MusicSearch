@@ -18,6 +18,7 @@ internal fun RecordingDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -27,6 +28,7 @@ internal fun RecordingDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             length?.ifNotNull {
                 TextWithHeading(

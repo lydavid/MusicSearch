@@ -26,6 +26,7 @@ internal fun EventDetailsTabUi(
     filterText: String = "",
     onImageClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
 
@@ -76,5 +77,6 @@ internal fun EventDetailsTabUi(
         onImageClick = onImageClick,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         entityInfoSection = entityInfoSection,
+        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }

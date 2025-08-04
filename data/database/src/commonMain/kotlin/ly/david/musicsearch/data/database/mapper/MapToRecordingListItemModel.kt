@@ -24,5 +24,5 @@ internal fun mapToRecordingListItemModel(
     formattedArtistCredits = formattedArtistCreditNames,
     visited = visited == true,
     collected = collected == true,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

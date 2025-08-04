@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.url
+package ly.david.musicsearch.shared.feature.details.utils
 
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test

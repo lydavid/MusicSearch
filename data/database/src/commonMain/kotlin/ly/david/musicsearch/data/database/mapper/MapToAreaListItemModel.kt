@@ -32,5 +32,5 @@ internal fun mapToAreaListItemModel(
     countryCodes = listOfNotNull(countryCode.takeIf { !it.isNullOrEmpty() }).toPersistentList(),
     visited = visited,
     collected = collected,
-    aliases = combineToPrimaryAliases(aliasNames, aliasLocales),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

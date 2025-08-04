@@ -23,6 +23,7 @@ internal fun ArtistDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
+    onCollapseExpandAliases: () -> Unit = {},
 ) {
     DetailsTabUi(
         detailsModel = artist,
@@ -48,6 +49,7 @@ internal fun ArtistDetailsTabUi(
                 // TODO: begin area, end area
             }
         },
+        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }
 
