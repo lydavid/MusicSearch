@@ -46,6 +46,7 @@ internal fun PreviewWorkDetailsUi() {
             ),
             detailsTabUiState = DetailsTabUiState(
                 now = Instant.parse("2025-06-05T19:42:20Z"),
+                totalUrls = 1,
             ),
         )
     }

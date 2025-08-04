@@ -60,6 +60,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
             detailsTabUiState = DetailsTabUiState(
                 numberOfImages = 1,
                 now = Instant.parse("2025-06-05T19:42:20Z"),
+                totalUrls = 3,
             ),
         )
     }
@@ -75,6 +76,7 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
                 numberOfImages = 1,
                 now = Instant.parse("2025-06-05T19:42:20Z"),
                 isExternalLinksCollapsed = true,
+                totalUrls = 3,
             ),
         )
     }

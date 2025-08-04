@@ -558,7 +558,12 @@ private val detailsUiState = DetailsUiState(
 internal fun PreviewAreaDetails() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = detailsUiState,
+            state = detailsUiState.copy(
+                detailsTabUiState = DetailsTabUiState(
+                    totalUrls = 2,
+                    totalAliases = 3,
+                ),
+            ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
             now = Instant.parse("2025-04-26T16:42:20Z"),
         )
@@ -570,10 +575,11 @@ internal fun PreviewAreaDetails() {
 internal fun PreviewAreaDetailsCollapsed() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state =
-            detailsUiState.copy(
+            state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     isExternalLinksCollapsed = true,
+                    totalUrls = 2,
+                    totalAliases = 3,
                 ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
