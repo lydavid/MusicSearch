@@ -13,13 +13,6 @@ application {
 group = "io.github.lydavid.musicsearch"
 version = project.properties["VERSION_NAME"] as String
 
-aboutLibraries {
-    excludeFields = arrayOf("generated")
-    outputPath = "../../shared/feature/licenses/src/commonMain/composeResources/files/"
-
-    prettyPrint = true
-}
-
 dependencies {
     implementation(projects.shared)
 
@@ -54,5 +47,17 @@ configurations.all {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+aboutLibraries {
+    export {
+        excludeFields.addAll("generated")
+        outputFile = file("../../shared/feature/licenses/src/commonMain/composeResources/files/aboutlibraries.json")
+        prettyPrint = true
+    }
+    library {
+        duplicationMode = com.mikepenz.aboutlibraries.plugin.DuplicateMode.MERGE
+        duplicationRule = com.mikepenz.aboutlibraries.plugin.DuplicateRule.GROUP
     }
 }

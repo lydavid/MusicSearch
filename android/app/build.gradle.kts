@@ -118,12 +118,10 @@ fun DependencyHandler.googlePlayImplementation(dependencyNotation: Any) =
     add("googlePlayImplementation", dependencyNotation)
 
 aboutLibraries {
-    excludeFields = arrayOf("generated")
-    outputPath = "../../shared/feature/licenses/src/commonMain/composeResources/files/"
-
-    prettyPrint = true
-    android {
-        registerAndroidTasks = false
+    export {
+        excludeFields.addAll("generated")
+        outputFile = file("../../shared/feature/licenses/src/commonMain/composeResources/files/aboutlibraries.json")
+        prettyPrint = true
     }
     library {
         duplicationMode = com.mikepenz.aboutlibraries.plugin.DuplicateMode.MERGE
