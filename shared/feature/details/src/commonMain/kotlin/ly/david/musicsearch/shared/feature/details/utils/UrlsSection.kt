@@ -9,21 +9,26 @@ import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 
 internal fun LazyListScope.urlsSection(
-    urls: ImmutableList<RelationListItemModel>,
+    filteredUrls: ImmutableList<RelationListItemModel>,
+    totalUrls: Int,
     collapsed: Boolean = false,
     onCollapseExpand: () -> Unit = {},
 ) {
-    urls.ifNotNullOrEmpty {
+    filteredUrls.ifNotNullOrEmpty {
         stickyHeader {
+            val numberOfFilteredItems = getNumberOfFilteredItems(
+                filteredCount = filteredUrls.size,
+                total = totalUrls,
+            )
             CollapsibleListSeparatorHeader(
-                text = "External links",
+                text = "External links $numberOfFilteredItems",
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
             )
         }
     }
     if (!collapsed) {
-        items(urls) {
+        items(filteredUrls) {
             UrlListItem(
                 relation = it,
             )

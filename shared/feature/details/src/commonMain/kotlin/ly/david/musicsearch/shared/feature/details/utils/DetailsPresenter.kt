@@ -289,6 +289,8 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
                 isAliasesCollapsed = isAliasesCollapsed,
+                totalUrls = detailsModel?.urls?.size ?: 0,
+                totalAliases = detailsModel?.aliases?.size ?: 0,
             ),
             allEntitiesListUiState = entitiesListUiState,
             loginUiState = loginUiState,
@@ -322,6 +324,8 @@ internal data class DetailsTabUiState(
     val isExternalLinksCollapsed: Boolean = false,
     val isAliasesCollapsed: Boolean = false,
     val now: Instant = Clock.System.now(),
+    val totalUrls: Int = 0,
+    val totalAliases: Int = 0,
 )
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {

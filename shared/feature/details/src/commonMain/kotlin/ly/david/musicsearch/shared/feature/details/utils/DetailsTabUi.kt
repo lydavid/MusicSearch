@@ -94,13 +94,15 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
             bringYourOwnLabelsSection()
 
             urlsSection(
-                urls = urls,
+                filteredUrls = urls,
+                totalUrls = detailsTabUiState.totalUrls,
                 collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
 
             aliasesSection(
-                aliases = aliases,
+                filteredAliases = aliases,
+                totalAliases = detailsTabUiState.totalAliases,
                 collapsed = detailsTabUiState.isAliasesCollapsed,
                 onCollapseExpand = onCollapseExpandAliases,
             )

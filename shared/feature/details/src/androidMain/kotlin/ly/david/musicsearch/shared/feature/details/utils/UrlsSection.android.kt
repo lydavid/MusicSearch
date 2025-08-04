@@ -16,7 +16,7 @@ internal fun PreviewUrlsSection() {
         Surface {
             LazyColumn {
                 urlsSection(
-                    urls = persistentListOf(
+                    filteredUrls = persistentListOf(
                         RelationListItemModel(
                             id = "1",
                             linkedEntityId = "3",
@@ -39,6 +39,7 @@ internal fun PreviewUrlsSection() {
                             name = "https://www.wikidata.org/wiki/Q719120",
                         ),
                     ),
+                    totalUrls = 3,
                 )
             }
         }

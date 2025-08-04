@@ -9,26 +9,32 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal fun LazyListScope.aliasesSection(
-    aliases: ImmutableList<BasicAlias>,
+    filteredAliases: ImmutableList<BasicAlias>,
+    totalAliases: Int,
     collapsed: Boolean = false,
     onCollapseExpand: () -> Unit = {},
 ) {
-    aliases.ifNotNullOrEmpty {
+    filteredAliases.ifNotNullOrEmpty {
         stickyHeader {
+            val numberOfFilteredItems = getNumberOfFilteredItems(
+                filteredCount = filteredAliases.size,
+                total = totalAliases,
+            )
             CollapsibleListSeparatorHeader(
-                text = "Aliases",
+                text = "Aliases $numberOfFilteredItems",
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
             )
         }
     }
     if (!collapsed) {
-        items(aliases) { alias ->
+        items(filteredAliases) { alias ->
             AliasListItem(
                 alias = alias,
             )
@@ -43,7 +49,7 @@ internal fun PreviewAliasesSection() {
         Surface {
             LazyColumn {
                 aliasesSection(
-                    aliases = persistentListOf(
+                    filteredAliases = persistentListOf(
                         BasicAlias(
                             name = "Various Artists",
                             locale = "en",
@@ -60,6 +66,7 @@ internal fun PreviewAliasesSection() {
                             isPrimary = true,
                         ),
                     ),
+                    totalAliases = 50,
                 )
             }
         }
