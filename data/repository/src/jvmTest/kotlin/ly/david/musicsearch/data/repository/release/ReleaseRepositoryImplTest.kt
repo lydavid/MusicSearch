@@ -1085,6 +1085,185 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     }
 
     @Test
+    fun `can load more than 100 tracks`() = runTest {
+        val releaseId = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
+        val trackCount = 300
+        val releaseRepositoryBeforeEdit = createRepositoryWithMedia(
+            listOf(
+                MediumMusicBrainzModel(
+                    position = 1,
+                    formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+                    format = "CD",
+                    trackCount = trackCount,
+                    title = "SFC版「真・女神転生」",
+                    tracks = Array(trackCount) { trackIndex ->
+                        TrackMusicBrainzModel(
+                            id = "c9700f84-638f-3dec-9170-a15eb4f0cc96$trackIndex",
+                            position = trackIndex,
+                            number = "$trackIndex",
+                            name = "Demo",
+                            length = 18733,
+                            artistCredits = listOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "アトラスサウンドチーム",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        name = "アトラスサウンドチーム",
+                                        sortName = "ATLUS Sound Team",
+                                        type = "Group",
+                                        typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                                        disambiguation = "",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "994b2961-3527-43f7-830d-7c817d286577",
+                                name = "Demo",
+                                length = 18733,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        )
+                    }.toList(),
+                ),
+            ),
+        )
+        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
+            releaseId = releaseId,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        )
+        assertEquals(
+            ReleaseDetailsModel(
+                id = releaseId,
+                name = "真・女神転生30th Anniversary Special Sound Compilation",
+                disambiguation = "",
+                date = "2023-07-26",
+                barcode = "4573471821543",
+                status = "Official",
+                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                countryCode = "JP",
+                packaging = "Box",
+                packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
+                asin = null,
+                quality = "normal",
+                coverArtArchive = CoverArtArchiveUiModel(count = 26),
+                textRepresentation = TextRepresentationUiModel(
+                    script = "Jpan",
+                    language = "jpn",
+                ),
+                formattedFormats = "CD",
+                formattedTracks = "$trackCount",
+                artistCredits = listOf(
+                    ArtistCreditUiModel(
+                        artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                        name = "アトラスサウンドチーム",
+                        joinPhrase = "",
+                    ),
+                ),
+                releaseGroup = ReleaseGroupForRelease(
+                    id = "a5a83577-ddca-4428-bf6b-b852296bc5f3",
+                    name = "真・女神転生30th Anniversary Special Sound Compilation",
+                    firstReleaseDate = "2011-03-16",
+                    disambiguation = "",
+                    primaryType = "Album",
+                    secondaryTypes = listOf(
+                        "Compilation",
+                        "Soundtrack",
+                    ),
+                ),
+                areas = listOf(
+                    AreaListItemModel(
+                        id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                        name = "Japan",
+                        sortName = "",
+                        disambiguation = null,
+                        type = null,
+                        countryCodes = persistentListOf("JP"),
+                        date = "2023-07-26",
+                        visited = false,
+                    ),
+                ),
+                labels = emptyList(),
+                urls = persistentListOf(),
+                releaseLength = 5619900,
+                hasNullLength = false,
+                lastUpdated = testDateTimeInThePast,
+            ),
+            artistDetailsModelBeforeEdit,
+        )
+        val flow = releaseRepositoryBeforeEdit.observeTracksByRelease(
+            releaseId = releaseId,
+            query = "",
+            lastUpdated = testDateTimeInThePast,
+        )
+        flow.asSnapshot().let { tracksAndMedium ->
+            assertEquals(
+                201,
+                tracksAndMedium.size,
+            )
+            assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = "1",
+                        text = "CD 1 (SFC版「真・女神転生」)",
+                    ),
+                ) + Array(200) { trackIndex ->
+                    TrackListItemModel(
+                        id = "c9700f84-638f-3dec-9170-a15eb4f0cc96$trackIndex",
+                        position = trackIndex,
+                        number = "$trackIndex",
+                        name = "Demo",
+                        length = 18733,
+                        mediumId = 1,
+                        recordingId = "994b2961-3527-43f7-830d-7c817d286577",
+                        formattedArtistCredits = "アトラスサウンドチーム",
+                        visited = false,
+                        mediumPosition = 1,
+                        mediumName = "SFC版「真・女神転生」",
+                        trackCount = trackCount,
+                        format = "CD",
+                    )
+                },
+                tracksAndMedium,
+            )
+        }
+        flow.asSnapshot {
+            scrollTo(200)
+        }.let { tracksAndMedium ->
+            assertEquals(
+                301,
+                tracksAndMedium.size,
+            )
+            assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = "1",
+                        text = "CD 1 (SFC版「真・女神転生」)",
+                    ),
+                ) + Array(trackCount) { trackIndex ->
+                    TrackListItemModel(
+                        id = "c9700f84-638f-3dec-9170-a15eb4f0cc96$trackIndex",
+                        position = trackIndex,
+                        number = "$trackIndex",
+                        name = "Demo",
+                        length = 18733,
+                        mediumId = 1,
+                        recordingId = "994b2961-3527-43f7-830d-7c817d286577",
+                        formattedArtistCredits = "アトラスサウンドチーム",
+                        visited = false,
+                        mediumPosition = 1,
+                        mediumName = "SFC版「真・女神転生」",
+                        trackCount = trackCount,
+                        format = "CD",
+                    )
+                },
+                tracksAndMedium,
+            )
+        }
+    }
+
+    @Test
     fun `release with multiple catalog numbers with the same label`() = runTest {
         val releaseRepository = createReleaseRepository(
             musicBrainzModel = releaseWith3CatalogNumbersWithSameLabel.copy(
