@@ -106,7 +106,10 @@ runtime class DetailsTabUiState {
   stable val lazyListState: LazyListState
   stable val isReleaseEventsCollapsed: Boolean
   stable val isExternalLinksCollapsed: Boolean
+  stable val isAliasesCollapsed: Boolean
   stable val now: Instant
+  stable val totalUrls: Int
+  stable val totalAliases: Int
   <runtime stability> = Runtime(HandledException)
 }
 stable class NavigateUp {
@@ -143,6 +146,9 @@ stable class ToggleCollapseExpandExternalLinks {
   <runtime stability> = Stable
 }
 stable class ToggleCollapseExpandReleaseEvents {
+  <runtime stability> = Stable
+}
+stable class ToggleCollapseExpandAliases {
   <runtime stability> = Stable
 }
 stable class WorkPresenter {

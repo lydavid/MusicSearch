@@ -106,7 +106,6 @@ ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithTabsFilte
 ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedOne,PreviewTopAppBarWithFilterWithSelectedOne,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedAll,PreviewTopAppBarWithFilterWithSelectedAll,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedAllExceptOne,PreviewTopAppBarWithFilterWithSelectedAllExceptOne,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.ui.common.url.PreviewUrlsSection,PreviewUrlsSection,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.wikimedia.PreviewWikipediaSection,PreviewWikipediaSection,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.work.PreviewWorkListItemModel,PreviewWorkListItemModel,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.work.PreviewWorkListItemModelAllInfo,PreviewWorkListItemModelAllInfo,1,1,1,0,0,0,0,0,1,1,

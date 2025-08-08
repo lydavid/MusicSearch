@@ -142,7 +142,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithSelectedOne()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithSelectedAll()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTopAppBarWithFilterWithSelectedAllExceptOne()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWikipediaSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModel()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkListItemModelAllInfo()

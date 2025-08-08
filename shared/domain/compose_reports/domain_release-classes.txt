@@ -39,6 +39,10 @@ stable class BasicAlias {
   stable val name: String
   stable val locale: String
   stable val isPrimary: Boolean
+  stable val type: AliasType?
+  stable val begin: String
+  stable val end: String
+  stable val ended: Boolean
   <runtime stability> = Stable
 }
 stable class AreaType {
@@ -113,7 +117,7 @@ unstable class AreaDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -131,7 +135,7 @@ unstable class ArtistDetailsModel {
   stable val lastUpdated: Instant
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val wikipediaExtract: WikipediaExtract
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
@@ -148,7 +152,7 @@ unstable class EventDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -162,7 +166,7 @@ unstable class InstrumentDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -179,7 +183,7 @@ unstable class LabelDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -196,7 +200,7 @@ unstable class PlaceDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -212,7 +216,7 @@ unstable class RecordingDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -233,7 +237,7 @@ unstable class ReleaseDetailsModel {
   stable val imageMetadata: ImageMetadata
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   stable val coverArtArchive: CoverArtArchiveUiModel
   stable val textRepresentation: TextRepresentationUiModel
@@ -257,7 +261,7 @@ unstable class ReleaseGroupDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -270,7 +274,7 @@ unstable class SeriesDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -286,7 +290,7 @@ unstable class WorkDetailsModel {
   unstable val artistCredits: List<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
   stable val wikipediaExtract: WikipediaExtract
-  unstable val urls: List<RelationListItemModel>
+  stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = Unstable
 }
@@ -630,7 +634,7 @@ stable class TrackListItemModel {
   stable val recordingId: String
   stable val formattedArtistCredits: String?
   stable val visited: Boolean
-  stable val mediumPosition: Int?
+  stable val mediumPosition: Int
   stable val mediumName: String?
   stable val trackCount: Int
   stable val format: String?
