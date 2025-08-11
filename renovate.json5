@@ -31,7 +31,10 @@
       "packageRules": [
         {
           "matchPackageNames": [
-            "com.android.tools.build:gradle"
+            "com.android.application",
+            "com.android.library",
+            "com.android.test",
+            "com.android.tools.build:gradle",
           ],
           "allowedVersions": "<8.12.0"
         }
