@@ -25,6 +25,17 @@
         "androidx.compose.compiler",
         "org.jetbrains.kotlin:kotlin"
       ]
+    },
+    // F-Droid buildserver issue: https://gitlab.com/fdroid/admin/-/issues/593
+    {
+      "packageRules": [
+        {
+          "matchPackageNames": [
+            "com.android.tools.build:gradle"
+          ],
+          "allowedVersions": "<8.12.0"
+        }
+      ]
     }
   ]
 }
