@@ -1,4 +1,4 @@
-import kotlinx.datetime.Instant;
+import kotlin.time.Instant;
 
 -- metadata related to a MusicBrainz entity's details screen
 -- having an entry in this table means we have visited it

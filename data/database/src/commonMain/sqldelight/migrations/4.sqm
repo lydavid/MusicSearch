@@ -1,5 +1,5 @@
 import kotlin.Int;
-import kotlinx.datetime.Instant;
+import kotlin.time.Instant;
 
 CREATE TABLE IF NOT EXISTS spotify_track (
   `track_id` TEXT PRIMARY KEY NOT NULL,

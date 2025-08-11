@@ -37,7 +37,10 @@ buildscript {
 subprojects {
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
-            freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
+            freeCompilerArgs.addAll(
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.time.ExperimentalTime",
+            )
 
             if (project.findProperty("musicsearch.enableComposeCompilerReports") == "true") {
                 freeCompilerArgs.addAll(

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.artist
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 
 interface ArtistRepository {

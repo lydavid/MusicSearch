@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.instrument
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 
 interface InstrumentRepository {

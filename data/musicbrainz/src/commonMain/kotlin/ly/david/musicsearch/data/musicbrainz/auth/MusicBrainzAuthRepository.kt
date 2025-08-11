@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import ly.david.musicsearch.data.musicbrainz.auth.api.MusicBrainzOAuthApi
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 

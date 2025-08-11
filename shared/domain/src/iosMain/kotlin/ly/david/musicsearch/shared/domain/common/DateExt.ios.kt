@@ -1,8 +1,8 @@
 package ly.david.musicsearch.shared.domain.common
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.toNSDate
 import platform.Foundation.NSDateFormatter
+import kotlin.time.Instant
 
 actual fun Instant.getDateFormatted(): String {
     val dateFormatter = NSDateFormatter()

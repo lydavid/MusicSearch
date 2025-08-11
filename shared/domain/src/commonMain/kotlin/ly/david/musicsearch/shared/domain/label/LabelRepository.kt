@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.label
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 
 interface LabelRepository {

@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.nowplaying
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.error
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class ActionableResult(
     val message: String = "",
