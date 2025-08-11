@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.history
 import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSearchApi
 import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel

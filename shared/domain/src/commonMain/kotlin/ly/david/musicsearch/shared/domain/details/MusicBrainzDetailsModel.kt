@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.details
 
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.MusicBrainzModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias

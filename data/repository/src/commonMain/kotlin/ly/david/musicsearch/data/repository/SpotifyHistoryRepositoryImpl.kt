@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel

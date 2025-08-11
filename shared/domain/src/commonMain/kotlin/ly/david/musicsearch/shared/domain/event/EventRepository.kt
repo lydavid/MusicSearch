@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.event
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 
 interface EventRepository {

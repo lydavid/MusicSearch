@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.relation
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class RelationStats(
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.history
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 interface DetailsMetadataDao {
     fun upsert(

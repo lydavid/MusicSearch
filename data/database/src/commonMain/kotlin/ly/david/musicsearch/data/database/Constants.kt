@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 private const val DATABASE_FILE_NAME = "musicsearch"
 internal const val DATABASE_FILE_FULL_NAME = "$DATABASE_FILE_NAME.db"

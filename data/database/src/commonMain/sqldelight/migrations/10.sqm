@@ -1,5 +1,5 @@
 import kotlin.Boolean;
-import kotlinx.datetime.Instant;
+import kotlin.time.Instant;
 
 -- Follow: https://www.sqlite.org/lang_altertable.html
 

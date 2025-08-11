@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.history
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 /**
  * Example format of the data that comes from Spotify's [broadcast notification](https://developer.spotify.com/documentation/android/tutorials/android-media-notifications).

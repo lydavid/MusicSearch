@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.label
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi

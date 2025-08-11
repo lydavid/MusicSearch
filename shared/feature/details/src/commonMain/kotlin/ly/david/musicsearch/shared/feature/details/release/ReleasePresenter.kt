@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.details.release
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository

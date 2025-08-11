@@ -3,8 +3,8 @@ package ly.david.musicsearch.ui.common.listitem
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import kotlinx.datetime.Instant
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable

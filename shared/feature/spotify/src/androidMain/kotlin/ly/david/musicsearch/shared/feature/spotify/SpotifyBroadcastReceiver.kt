@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.spotify
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 import org.koin.core.component.KoinComponent

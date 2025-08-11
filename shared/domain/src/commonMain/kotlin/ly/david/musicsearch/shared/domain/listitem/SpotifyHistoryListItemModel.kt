@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.listitem
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory
 
 data class SpotifyHistoryListItemModel(

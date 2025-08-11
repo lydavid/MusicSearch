@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.spotify
 
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 

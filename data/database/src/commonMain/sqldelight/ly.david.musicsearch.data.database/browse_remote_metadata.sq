@@ -1,5 +1,5 @@
 import kotlin.Int;
-import kotlinx.datetime.Instant;
+import kotlin.time.Instant;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 
 -- Tracks how many [browse_entity] there are in MusicBrainz with [remote_count]

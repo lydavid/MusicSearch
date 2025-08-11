@@ -7,7 +7,7 @@ import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory

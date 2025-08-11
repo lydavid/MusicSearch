@@ -1,5 +1,5 @@
 import kotlin.Int;
-import kotlinx.datetime.Instant;
+import kotlin.time.Instant;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 
 
