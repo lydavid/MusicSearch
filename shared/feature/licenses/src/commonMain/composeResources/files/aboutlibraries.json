@@ -1757,7 +1757,7 @@
                     "name": "Kotlin Team"
                 }
             ],
-            "artifactVersion": "2.2.0",
+            "artifactVersion": "2.2.10",
             "description": "Kotlin Standard Library",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/kotlin.git",
