@@ -43,7 +43,7 @@ android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref 
 androidx-activity-compose = "androidx.activity:activity-compose:1.10.1"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
-androidx-core = "androidx.core:core-ktx:1.16.0"
+androidx-core = "androidx.core:core-ktx:1.17.0"
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingTesting" }
