@@ -46,3 +46,10 @@ style:
     ignoreAnnotated:
       - "DefaultPreviews"
       - "Preview"
+coroutines:
+  GlobalCoroutineUsage:
+    active: true
+  SuspendFunSwallowedCancellation:
+    active: true
+  SuspendFunWithCoroutineScopeReceiver:
+    active: true
