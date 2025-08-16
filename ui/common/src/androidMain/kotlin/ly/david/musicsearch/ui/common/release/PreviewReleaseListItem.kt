@@ -174,7 +174,7 @@ internal fun PreviewReleaseListItemCatalog() {
                         name = "Uta no Uta ONE PIECE FILM RED",
                         locale = "en",
                         isPrimary = true,
-                    )
+                    ),
                 ),
             ),
             showMoreInfo = true,
@@ -202,7 +202,7 @@ internal fun PreviewReleaseListItemVisited() {
                         name = "Uta no Uta ONE PIECE FILM RED",
                         locale = "en",
                         isPrimary = true,
-                    )
+                    ),
                 ),
             ),
             showMoreInfo = true,

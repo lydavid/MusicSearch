@@ -28,6 +28,7 @@ actual fun TopAppBarWithFilter(
     modifier: Modifier,
     onBack: () -> Unit,
     showBackButton: Boolean,
+    onSelectAllToggle: () -> Unit,
     entity: MusicBrainzEntity?,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
@@ -37,7 +38,6 @@ actual fun TopAppBarWithFilter(
     selectionState: SelectionState,
     additionalActions: @Composable (() -> Unit),
     additionalBar: @Composable (() -> Unit),
-    onSelectAllToggle: () -> Unit,
 ) {
     if (topAppBarFilterState.isFilterMode || selectionState.isEditMode) {
         BackHandler {

@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.domain.common
 private const val MS = 1000
 private const val SECONDS_IN_MINUTE = 60
 private const val MINUTES_IN_HOUR = 60
+private const val SINGLE_DIGIT_THRESHOLD = 10
 
 const val UNKNOWN_TIME = "?:??"
 
@@ -23,9 +24,9 @@ fun Int?.toDisplayTime(): String {
 
     val seconds = timeWithoutMs % SECONDS_IN_MINUTE
 
-    val formattedSeconds = if (seconds < 10) "0$seconds" else seconds.toString()
+    val formattedSeconds = if (seconds < SINGLE_DIGIT_THRESHOLD) "0$seconds" else seconds.toString()
     val formattedHours = if (hours > 0) "$hours:" else ""
-    val minutesPadding = if (formattedHours.isNotEmpty() && minutes < 10) "0" else ""
+    val minutesPadding = if (formattedHours.isNotEmpty() && minutes < SINGLE_DIGIT_THRESHOLD) "0" else ""
 
     return "$formattedHours$minutesPadding$minutes:$formattedSeconds"
 }

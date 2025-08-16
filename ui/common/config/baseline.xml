@@ -1,10 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>ComposableParamOrder:RefreshMenuItem.kt$RefreshMenuItem</ID>
-    <ID>CyclomaticComplexMethod:EntitiesListScreen.kt$@Composable fun EntitiesListScreen( uiState: EntitiesListUiState, modifier: Modifier = Modifier, selectedIds: ImmutableSet&lt;String&gt; = persistentSetOf(), now: Instant = Clock.System.now(), onItemClick: MusicBrainzItemClickHandler = { _, _, _ -&gt; }, onSelect: (String) -&gt; Unit = {}, requestForMissingCoverArtUrl: suspend (id: String) -&gt; Unit = {}, )</ID>
-    <ID>MagicNumber:DotsFlashing.kt$4</ID>
-    <ID>ModifierMissing:EntitiesListUi.kt$EntitiesListUi</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

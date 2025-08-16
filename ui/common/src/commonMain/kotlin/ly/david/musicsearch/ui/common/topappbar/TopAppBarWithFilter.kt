@@ -105,6 +105,7 @@ expect fun TopAppBarWithFilter(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
+    onSelectAllToggle: () -> Unit = {},
     entity: MusicBrainzEntity? = null,
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -114,7 +115,6 @@ expect fun TopAppBarWithFilter(
     selectionState: SelectionState = SelectionState(),
     additionalActions: @Composable (() -> Unit) = {},
     additionalBar: @Composable (() -> Unit) = {},
-    onSelectAllToggle: () -> Unit = {},
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

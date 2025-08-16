@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 
 private val DEFAULT_DOT_SIZE = 12.dp
 private const val ANIMATION_DELAY_MS = 300
+private const val DURATION = 4
 private const val MIN_ALPHA = 0.2f
 
 /**
@@ -51,7 +52,7 @@ fun DotsFlashing(
         targetValue = minAlpha,
         animationSpec = infiniteRepeatable(
             animation = keyframes {
-                durationMillis = ANIMATION_DELAY_MS * 4
+                durationMillis = ANIMATION_DELAY_MS * DURATION
                 minAlpha at delay
                 1f at delay + ANIMATION_DELAY_MS
                 minAlpha at delay + ANIMATION_DELAY_MS * 2

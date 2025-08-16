@@ -77,4 +77,4 @@ import androidx.compose.ui.tooling.preview.Preview
     showSystemUi = true,
     group = "Light",
 )
-actual annotation class DefaultPreviews
+actual annotation class PreviewManyDevices

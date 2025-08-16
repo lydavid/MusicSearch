@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 
+@Suppress("ThrowsCount")
 internal suspend fun handleRecoverableException(
     logger: Logger,
     exception: Throwable,

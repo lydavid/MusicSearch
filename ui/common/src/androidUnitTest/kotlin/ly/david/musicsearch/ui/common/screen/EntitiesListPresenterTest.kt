@@ -43,6 +43,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class EntitiesListPresenterTest {
 
+    @Suppress("LongMethod")
     private fun createPresenter(
         areasListItems: List<ListItemModel>,
         artistsListItems: List<ListItemModel>,

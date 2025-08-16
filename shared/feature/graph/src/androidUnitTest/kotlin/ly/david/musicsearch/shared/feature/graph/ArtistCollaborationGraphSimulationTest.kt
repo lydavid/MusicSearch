@@ -39,8 +39,8 @@ class ArtistCollaborationGraphSimulationTest {
             val state = awaitItem()
 
             assertEquals(26, state.nodes.size)
-            assertEquals(9, state.nodes.filter { it.entity == MusicBrainzEntity.ARTIST }.size)
-            assertEquals(17, state.nodes.filter { it.entity == MusicBrainzEntity.RECORDING }.size)
+            assertEquals(9, state.nodes.count { it.entity == MusicBrainzEntity.ARTIST })
+            assertEquals(17, state.nodes.count { it.entity == MusicBrainzEntity.RECORDING })
 
             assertEquals(42, state.edges.size)
 

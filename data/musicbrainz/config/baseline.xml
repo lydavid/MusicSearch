@@ -1,13 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"01d3488d-8d2a-4cff-9226-5250404db4dc" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"26b5d3aa-7d05-4121-a9eb-bf8a9aeb6e28" to ("mail-order purchase page for the score of" to "purchase score for mail-order")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"287361d2-1dce-4d39-9f82-222b786e2b30" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"68ac61a1-6151-48bf-8596-ac3bcc3a41a2" to ("download purchase page for the score of" to "purchase score for download")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"7fd5fbc0-fbf4-4d04-be23-417d50a4dc30" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"fc399d47-23a7-4c28-bfcf-0607a562b644" to ("transliterated/translated track listings" to "transliterated/translated track listing of")</ID>
-    <ID>MaxLineLength:RelationshipHeaders.kt$"fd841726-ba3c-47f7-af8e-6734ab6243ff" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
-  </CurrentIssues>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues/>
 </SmellBaseline>

@@ -112,7 +112,7 @@ internal fun PreviewAddRelationshipsSectionNullLastUpdated() {
                                 linkedEntity = MusicBrainzEntity.URL,
                                 count = 2,
                             ),
-                        )
+                        ),
                     ),
                     now = Instant.parse("2025-04-26T16:42:20Z"),
                 )

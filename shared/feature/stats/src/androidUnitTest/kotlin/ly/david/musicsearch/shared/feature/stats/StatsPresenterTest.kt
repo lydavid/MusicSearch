@@ -59,7 +59,7 @@ class StatsPresenterTest {
                                 ),
                             ),
                             lastUpdated = lastUpdated,
-                        )
+                        ),
                     )
                 }
             },

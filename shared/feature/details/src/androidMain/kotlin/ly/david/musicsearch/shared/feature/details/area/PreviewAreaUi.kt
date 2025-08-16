@@ -526,7 +526,7 @@ private val detailsUiState = DetailsUiState(
                 locale = "ja",
                 isPrimary = true,
             ),
-        )
+        ),
     ),
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-06-05T20:42:20Z"),

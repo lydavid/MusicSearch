@@ -48,7 +48,7 @@ fun MainViewController(): UIViewController =
             )
             val navigator: Navigator = rememberCircuitNavigator(
                 backStack = backStack,
-                onRootPop = {}
+                onRootPop = {},
             )
             AppRoot(
                 backStack = backStack,

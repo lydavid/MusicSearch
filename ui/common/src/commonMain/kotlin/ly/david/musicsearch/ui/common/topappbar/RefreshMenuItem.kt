@@ -11,10 +11,10 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 fun OverflowMenuScope.RefreshMenuItem(
-    show: Boolean = true,
-    tab: Tab? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    show: Boolean = true,
+    tab: Tab? = null,
 ) {
     val strings = LocalStrings.current
 

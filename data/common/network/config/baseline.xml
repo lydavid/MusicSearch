@@ -1,7 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>ThrowsCount:HandleRecoverableException.kt$internal suspend fun handleRecoverableException( logger: Logger, exception: Throwable, )</ID>
-  </CurrentIssues>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues/>
 </SmellBaseline>

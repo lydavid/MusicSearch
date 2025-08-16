@@ -32,7 +32,8 @@ style:
   MagicNumber:
     ignorePropertyDeclaration: true
     ignoreAnnotated:
-      - "DefaultPreviews"
+      - "PreviewLightDark"
+      - "PreviewManyDevices"
       - "Test"
   MaxLineLength:
     excludeCommentStatements: true
@@ -44,8 +45,7 @@ style:
     allowedNames: '(_|ignored|expected|((android(UnitTest|InstrumentedTest)?|common|ios|jvm)(Main|Test)?))'
   UnusedPrivateMember:
     ignoreAnnotated:
-      - "DefaultPreviews"
-      - "Preview"
+      - "PreviewManyDevices"
 coroutines:
   GlobalCoroutineUsage:
     active: true
