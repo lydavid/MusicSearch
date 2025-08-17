@@ -15,7 +15,7 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -37,7 +37,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     scrollBehavior: TopAppBarScrollBehavior,
     now: Instant = Clock.System.now(),
     onEditCollectionClick: (String) -> Unit = {},
-    requestForMissingCoverArtUrl: (entityId: String, entity: MusicBrainzEntity?) -> Unit = { _, _ -> },
+    requestForMissingCoverArtUrl: (entityId: String, entity: MusicBrainzEntityType?) -> Unit = { _, _ -> },
     detailsScreen: @Composable ((T) -> Unit),
 ) {
     val eventSink = state.eventSink
@@ -82,7 +82,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
-                                entity = MusicBrainzEntity.RECORDING,
+                                entity = MusicBrainzEntityType.RECORDING,
                                 id = id,
                             ),
                         )

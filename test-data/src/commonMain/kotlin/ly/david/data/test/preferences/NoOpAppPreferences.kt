@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 open class NoOpAppPreferences : AppPreferences {
@@ -110,10 +110,10 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
-    override val observeCollaborationEntityType: Flow<MusicBrainzEntity>
+    override val observeCollaborationEntityType: Flow<MusicBrainzEntityType>
         get() = flowOf()
 
-    override fun setCollaborationEntityType(entity: MusicBrainzEntity) {
+    override fun setCollaborationEntityType(entity: MusicBrainzEntityType) {
         // No-op.
     }
 }

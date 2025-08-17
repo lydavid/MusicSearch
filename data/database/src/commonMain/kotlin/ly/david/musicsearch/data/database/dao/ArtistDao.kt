@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artists_by_entity
 
@@ -171,7 +171,7 @@ class ArtistDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                 getArtistsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -188,7 +188,7 @@ class ArtistDao(
     fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

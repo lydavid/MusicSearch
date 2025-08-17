@@ -14,7 +14,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -99,7 +99,7 @@ internal class AllLocalEntitiesPresenter(
 @Stable
 internal data class AllLocalEntitiesUiState(
     val subtitle: String,
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val allEntitiesListUiState: AllEntitiesListUiState,
@@ -111,7 +111,7 @@ internal sealed interface AllLocalEntitiesUiEvent : CircuitUiEvent {
     data object NavigateUp : AllLocalEntitiesUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : AllLocalEntitiesUiEvent
 }

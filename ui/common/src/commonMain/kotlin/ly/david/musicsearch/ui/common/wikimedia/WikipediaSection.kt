@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -80,7 +80,7 @@ fun WikipediaSection(
                     relation = RelationListItemModel(
                         id = "wikipedia_section",
                         label = strings.readMore,
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         name = extract.wikipediaUrl,
                         linkedEntityId = "wikipedia_section",
                     ),

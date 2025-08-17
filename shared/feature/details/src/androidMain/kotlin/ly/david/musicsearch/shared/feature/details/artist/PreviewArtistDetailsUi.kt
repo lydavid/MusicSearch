@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -82,14 +82,14 @@ private val artist = ArtistDetailsModel(
             id = "1",
             label = "Allmusic",
             name = "https://www.allmusic.com/artist/mn0000754032",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
             label = "BBC Music",
             name = "https://www.bbc.co.uk/music/artists/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",
         ),
     ),
@@ -143,7 +143,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                         id = "1",
                         label = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q3108914",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         linkedEntityId = "1",
                     ),
                 ),

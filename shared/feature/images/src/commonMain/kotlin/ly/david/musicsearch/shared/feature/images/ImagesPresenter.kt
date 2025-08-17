@@ -27,7 +27,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -124,7 +124,7 @@ internal class ImagesPresenter(
                 selectedImageMetadata?.largeUrl ?: screen.id?.let { entityId ->
                     getMusicBrainzCoverArtUrl(
                         entityId = entityId,
-                        entity = screen.entity ?: MusicBrainzEntity.RELEASE,
+                        entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
                     )
                 }
             }
@@ -221,7 +221,7 @@ internal sealed interface ImagesUiEvent : CircuitUiEvent {
     ) : ImagesUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : ImagesUiEvent
 

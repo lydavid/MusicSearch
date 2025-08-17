@@ -35,7 +35,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import org.junit.Assert.assertEquals
@@ -69,7 +69,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browsePlacesByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -99,7 +99,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 id = collectionId,
                 isRemote = false,
                 name = "places",
-                entity = MusicBrainzEntity.PLACE,
+                entity = MusicBrainzEntityType.PLACE,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -109,7 +109,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            entity = MusicBrainzEntityType.COLLECTION,
         )
 
         placesListRepository.observePlaces(
@@ -153,7 +153,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
     private fun setUpKitanomaruPlaces() = runTest {
         val entityId = kitanomaruAreaMusicBrainzModel.id
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val places = listOf(
             budokanPlaceMusicBrainzModel,
         )
@@ -201,7 +201,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 placesListRepository.observePlaces(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = marunouchiAreaMusicBrainzModel.id,
-                        entity = MusicBrainzEntity.AREA,
+                        entity = MusicBrainzEntityType.AREA,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -243,7 +243,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 placesListRepository.observePlaces(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = chiyodaAreaMusicBrainzModel.id,
-                        entity = MusicBrainzEntity.AREA,
+                        entity = MusicBrainzEntityType.AREA,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -344,7 +344,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placesListRepository.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = marunouchiAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -363,7 +363,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placesListRepository.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = chiyodaAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

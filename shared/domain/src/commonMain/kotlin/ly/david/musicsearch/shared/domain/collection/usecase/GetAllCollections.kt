@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -20,7 +20,7 @@ class GetAllCollections(
     private val coroutineScope: CoroutineScope,
 ) {
     operator fun invoke(
-        entity: MusicBrainzEntity? = null,
+        entity: MusicBrainzEntityType? = null,
         query: String = "",
         showLocal: Boolean = true,
         showRemote: Boolean = true,

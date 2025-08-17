@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -17,19 +17,19 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 @Composable
 internal fun SearchSpotifyBottomSheetContent(
     spotifyHistory: SpotifyHistoryListItemModel?,
-    searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, id: MusicBrainzEntityType) -> Unit = { _, _ -> },
 ) {
     val strings = LocalStrings.current
 
     spotifyHistory?.artistName.ifNotNullOrEmpty { artistName ->
         ClickableItem(
             title = strings.searchX(artistName),
-            startIcon = MusicBrainzEntity.ARTIST.getIcon(),
+            startIcon = MusicBrainzEntityType.ARTIST.getIcon(),
             endIcon = CustomIcons.Search,
             onClick = {
                 searchMusicBrainz(
                     "\"$artistName\"",
-                    MusicBrainzEntity.ARTIST,
+                    MusicBrainzEntityType.ARTIST,
                 )
             },
         )
@@ -40,12 +40,12 @@ internal fun SearchSpotifyBottomSheetContent(
                     albumName,
                     artistName,
                 ),
-                startIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
+                startIcon = MusicBrainzEntityType.RELEASE_GROUP.getIcon(),
                 endIcon = CustomIcons.Search,
                 onClick = {
                     searchMusicBrainz(
                         "\"$albumName\" artist:\"$artistName\"",
-                        MusicBrainzEntity.RELEASE_GROUP,
+                        MusicBrainzEntityType.RELEASE_GROUP,
                     )
                 },
             )
@@ -57,12 +57,12 @@ internal fun SearchSpotifyBottomSheetContent(
                     trackName,
                     artistName,
                 ),
-                startIcon = MusicBrainzEntity.RECORDING.getIcon(),
+                startIcon = MusicBrainzEntityType.RECORDING.getIcon(),
                 endIcon = CustomIcons.Search,
                 onClick = {
                     searchMusicBrainz(
                         "\"$trackName\" artist:\"$artistName\"",
-                        MusicBrainzEntity.RECORDING,
+                        MusicBrainzEntityType.RECORDING,
                     )
                 },
             )

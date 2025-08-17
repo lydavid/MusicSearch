@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -83,7 +83,7 @@ fun ArtistListItem(
             ThumbnailImage(
                 url = artist.imageUrl.orEmpty(),
                 imageId = artist.imageId,
-                placeholderIcon = MusicBrainzEntity.ARTIST.getIcon(),
+                placeholderIcon = MusicBrainzEntityType.ARTIST.getIcon(),
                 modifier = Modifier
                     .clickable {
                         onSelect(artist.id)

@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -31,21 +31,21 @@ private val releaseGroup = ReleaseGroupDetailsModel(
             id = "1",
             label = "Discogs",
             name = "https://www.discogs.com/master/13442",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
             label = "Discogs",
             name = "https://www.discogs.com/master/66626",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",
         ),
         RelationListItemModel(
             id = "3",
             label = "Wikidata",
             name = "https://www.wikidata.org/wiki/Q836667",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "3",
         ),
     ),

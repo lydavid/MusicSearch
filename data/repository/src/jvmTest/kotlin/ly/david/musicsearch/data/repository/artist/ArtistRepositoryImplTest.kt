@@ -29,7 +29,7 @@ import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -162,7 +162,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseArtistsByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -193,7 +193,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         val flow: Flow<PagingData<ArtistListItemModel>> = artistsListRepositoryImpl.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = "area-id",
-                entity = MusicBrainzEntity.AREA
+                entity = MusicBrainzEntityType.AREA
             ),
             listFilters = ListFilters(),
         )

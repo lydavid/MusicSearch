@@ -8,7 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface RecordVisit {
 
@@ -18,7 +18,7 @@ interface RecordVisit {
     fun RecordVisit(
         mbid: String,
         title: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         searchHint: String?,
     ) {
         var recordedHistory by rememberSaveable { mutableStateOf(false) }

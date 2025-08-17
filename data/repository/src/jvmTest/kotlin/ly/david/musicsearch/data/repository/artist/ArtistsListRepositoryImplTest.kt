@@ -36,7 +36,7 @@ import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -70,7 +70,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseArtistsByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -195,7 +195,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = collectionId,
                 isRemote = false,
                 name = "Who I've been listening to recently",
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -205,7 +205,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            entity = MusicBrainzEntityType.COLLECTION,
         )
 
         sut.observeArtists(
@@ -261,7 +261,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            entity = MusicBrainzEntityType.AREA,
         )
         sut.observeArtists(
             browseMethod = browseMethod,
@@ -312,7 +312,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntity.AREA,
+            entity = MusicBrainzEntityType.AREA,
         )
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
@@ -368,7 +368,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
         )
         testFilter(
             pagingFlowProducer = { query ->
@@ -465,7 +465,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistsListRepository.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = japanAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -485,7 +485,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistsListRepository.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

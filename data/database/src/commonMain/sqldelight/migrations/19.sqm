@@ -1,5 +1,5 @@
 import com.android.build.gradle.internal.dsl.decorator.SupportedPropertyType.Var.Int;
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
 CREATE TABLE IF NOT EXISTS search_result (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS search_result (
 );
 
 CREATE TABLE IF NOT EXISTS search_result_metadata (
-  `entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `entity` TEXT AS MusicBrainzEntityType NOT NULL,
   `query` TEXT NOT NULL,
   `local_count` INTEGER AS Int,
   `remote_count` INTEGER AS Int,

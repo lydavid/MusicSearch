@@ -7,7 +7,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
@@ -22,14 +22,14 @@ internal fun PreviewCollectionBottomSheet() {
                             id = "1",
                             isRemote = true,
                             name = "My remote CD collection",
-                            entity = MusicBrainzEntity.RELEASE,
+                            entity = MusicBrainzEntityType.RELEASE,
                             visited = true,
                         ),
                         CollectionListItemModel(
                             id = "2",
                             isRemote = false,
                             name = "My local CD collection",
-                            entity = MusicBrainzEntity.RELEASE,
+                            entity = MusicBrainzEntityType.RELEASE,
                         ),
                     ),
                 ),

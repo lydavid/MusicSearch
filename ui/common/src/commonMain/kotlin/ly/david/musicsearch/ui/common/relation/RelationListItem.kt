@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.getIcon
@@ -41,7 +41,7 @@ fun RelationListItem(
                 url = relation.imageUrl.orEmpty(),
                 imageId = relation.imageId,
                 placeholderIcon = relation.linkedEntity.getIcon(),
-                clipCircle = relation.linkedEntity == MusicBrainzEntity.ARTIST,
+                clipCircle = relation.linkedEntity == MusicBrainzEntityType.ARTIST,
             )
         },
         headlineContent = {

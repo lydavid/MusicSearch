@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import lydavidmusicsearchdatadatabase.Area_place
 import lydavidmusicsearchdatadatabase.Place
@@ -148,7 +148,7 @@ class PlaceDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                 getPlacesByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -165,7 +165,7 @@ class PlaceDao(
     fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

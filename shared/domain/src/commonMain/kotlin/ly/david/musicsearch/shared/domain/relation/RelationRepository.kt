@@ -7,7 +7,7 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.relatableEntities
 
 interface RelationRepository {
@@ -21,25 +21,25 @@ interface RelationRepository {
 
     fun getRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity = MusicBrainzEntity.URL,
+        entity: MusicBrainzEntityType = MusicBrainzEntityType.URL,
     ): ImmutableList<RelationListItemModel>
 
     fun deleteRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity = MusicBrainzEntity.URL,
+        entity: MusicBrainzEntityType = MusicBrainzEntityType.URL,
     )
 
     suspend fun insertAllRelations(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
         now: Instant,
     )
 
     fun observeEntityRelationships(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity> = relatableEntities subtract setOf(MusicBrainzEntity.URL),
+        relatedEntities: Set<MusicBrainzEntityType> = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>

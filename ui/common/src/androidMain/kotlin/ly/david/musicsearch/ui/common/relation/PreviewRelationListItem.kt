@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.relation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 @PreviewLightDark
@@ -14,7 +14,7 @@ internal fun PreviewArtistRelationListItem() {
             relation = RelationListItemModel(
                 id = "2_0",
                 linkedEntityId = "2",
-                linkedEntity = MusicBrainzEntity.ARTIST,
+                linkedEntity = MusicBrainzEntityType.ARTIST,
                 label = "miscellaneous support",
                 name = "Artist Name",
                 disambiguation = "that guy",
@@ -32,7 +32,7 @@ internal fun PreviewRecordingRelationListItem() {
             relation = RelationListItemModel(
                 id = "2_1",
                 linkedEntityId = "2",
-                linkedEntity = MusicBrainzEntity.RECORDING,
+                linkedEntity = MusicBrainzEntityType.RECORDING,
                 label = "DJ-mixes",
                 name = "Recording Name",
                 attributes = "number: 10",
@@ -49,7 +49,7 @@ internal fun PreviewRecordingRelationListItemVisited() {
             relation = RelationListItemModel(
                 id = "2_1",
                 linkedEntityId = "2",
-                linkedEntity = MusicBrainzEntity.RECORDING,
+                linkedEntity = MusicBrainzEntityType.RECORDING,
                 label = "DJ-mixes",
                 name = "Recording Name",
                 attributes = "number: 10",

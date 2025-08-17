@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.screen.Screen
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getNamePlural
@@ -109,8 +109,8 @@ internal fun DatabaseUi(
             }
         }
 
-        MusicBrainzEntity.entries
-            .filterNot { it == MusicBrainzEntity.COLLECTION || it == MusicBrainzEntity.URL }
+        MusicBrainzEntityType.entries
+            .filterNot { it == MusicBrainzEntityType.COLLECTION || it == MusicBrainzEntityType.URL }
             .forEach { entity ->
                 val title = entity.getNamePlural(strings)
                 if (title.contains(filterText, ignoreCase = true)) {

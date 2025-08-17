@@ -21,7 +21,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -164,7 +164,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                         name = "https://music.youtube.com/watch?v=2vkgqu3-_Pk",
                         disambiguation = null,
                         attributes = "video",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

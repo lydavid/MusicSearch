@@ -11,7 +11,7 @@ import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 
@@ -24,10 +24,10 @@ class RelationsPresenterImpl(
     override fun present(): RelationsUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var id: String by rememberSaveable { mutableStateOf("") }
-        var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        var relatedEntities: Set<MusicBrainzEntity> by rememberSaveable {
+        var entity: MusicBrainzEntityType? by rememberSaveable { mutableStateOf(null) }
+        var relatedEntities: Set<MusicBrainzEntityType> by rememberSaveable {
             mutableStateOf(
-                relatableEntities subtract setOf(MusicBrainzEntity.URL),
+                relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             )
         }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(id, entity, query) {
@@ -60,8 +60,8 @@ class RelationsPresenterImpl(
     private fun handleEvent(
         event: RelationsUiEvent,
         onIdChanged: (String) -> Unit,
-        onEntityChanged: (MusicBrainzEntity) -> Unit,
-        onRelatedEntitiesChanged: (Set<MusicBrainzEntity>) -> Unit,
+        onEntityChanged: (MusicBrainzEntityType) -> Unit,
+        onRelatedEntitiesChanged: (Set<MusicBrainzEntityType>) -> Unit,
         onQueryChanged: (String) -> Unit,
     ) {
         when (event) {

@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.domain.image
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguation
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 data class ImageMetadata(
     val imageId: ImageId = ImageId(0L),
@@ -14,5 +14,5 @@ data class ImageMetadata(
     val mbid: String? = null,
     override val name: String? = null,
     override val disambiguation: String? = null,
-    val entity: MusicBrainzEntity? = null,
+    val entity: MusicBrainzEntityType? = null,
 ) : NameWithDisambiguation

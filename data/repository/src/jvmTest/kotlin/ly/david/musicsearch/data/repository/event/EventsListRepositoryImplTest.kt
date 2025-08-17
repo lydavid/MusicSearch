@@ -36,7 +36,7 @@ import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -68,7 +68,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseEventsByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -99,7 +99,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 id = collectionId,
                 isRemote = false,
                 name = "events",
-                entity = MusicBrainzEntity.EVENT,
+                entity = MusicBrainzEntityType.EVENT,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -112,7 +112,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 eventsListRepository.observeEvents(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -187,7 +187,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     @Test
     fun setUpEventsByCountryArea() = runTest {
         val entityId = canadaAreaMusicBrainzModel.id
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val events = listOf(
             tsoAtMasseyHallEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
@@ -233,7 +233,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     @Test
     fun setupEventsByPlace() = runTest {
         val entityId = budokanPlaceMusicBrainzModel.id
-        val entity = MusicBrainzEntity.PLACE
+        val entity = MusicBrainzEntityType.PLACE
         val events = listOf(
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
@@ -307,7 +307,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     @Test
     fun setupEventsByArea() = runTest {
         val entityId = kitanomaruAreaMusicBrainzModel.id
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val events = listOf(
             kissAtBudokanEventMusicBrainzModel,
             aimerAtBudokanEventMusicBrainzModel,
@@ -381,7 +381,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     @Test
     fun setupEventsByArtist() = runTest {
         val entityId = kissArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         val events = listOf(
             kissAtBudokanEventMusicBrainzModel,
             kissAtScotiabankArenaEventMusicBrainzModel,
@@ -530,7 +530,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = kitanomaruAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -551,7 +551,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = budokanPlaceMusicBrainzModel.id,
-                entity = MusicBrainzEntity.PLACE,
+                entity = MusicBrainzEntityType.PLACE,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -584,7 +584,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = budokanPlaceMusicBrainzModel.id,
-                entity = MusicBrainzEntity.PLACE,
+                entity = MusicBrainzEntityType.PLACE,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {

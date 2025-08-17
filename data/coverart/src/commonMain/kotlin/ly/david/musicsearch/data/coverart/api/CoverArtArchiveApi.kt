@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.coverart.api
 
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface CoverArtArchiveApi {
     /**
@@ -10,6 +10,6 @@ interface CoverArtArchiveApi {
      */
     suspend fun getCoverArts(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): CoverArtsResponse
 }

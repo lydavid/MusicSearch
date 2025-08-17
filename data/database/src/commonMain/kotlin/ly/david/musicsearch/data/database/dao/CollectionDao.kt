@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Collection
 
 class CollectionDao(
@@ -71,7 +71,7 @@ class CollectionDao(
         showLocal: Boolean,
         showRemote: Boolean,
         query: String,
-        entity: MusicBrainzEntity?,
+        entity: MusicBrainzEntityType?,
     ): Query<Long> = transacter.getCountOfCollections(
         showLocal = showLocal,
         showRemote = showRemote,
@@ -101,7 +101,7 @@ class CollectionDao(
             .map { it.toInt() }
 
     fun getAllCollections(
-        entity: MusicBrainzEntity?,
+        entity: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
@@ -138,7 +138,7 @@ class CollectionDao(
         id: String,
         isRemote: Boolean,
         name: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityCount: Long,
         visited: Boolean?,
     ) = mapToCollectionListItem(
@@ -155,7 +155,7 @@ class CollectionDao(
         id: String,
         isRemote: Boolean,
         name: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityCount: Long,
         visited: Boolean?,
         containsEntity: Boolean?,

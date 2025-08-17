@@ -6,12 +6,12 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class NoOpMusicBrainzImageMetadataRepository : MusicBrainzImageMetadataRepository {
     override suspend fun getAndSaveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
     ): ImageMetadataWithCount {
         error("Not used")
@@ -19,7 +19,7 @@ class NoOpMusicBrainzImageMetadataRepository : MusicBrainzImageMetadataRepositor
 
     override suspend fun saveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         itemsCount: Int,
     ) {
         // No-op

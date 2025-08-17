@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point
 import ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink
 import ly.david.musicsearch.shared.feature.graph.viz.force.ForceNode
@@ -18,7 +18,7 @@ import ly.david.musicsearch.shared.feature.graph.viz.force.forceSimulation
 data class GraphNode(
     val id: String,
     val name: String,
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
     val radius: Double,
     val x: Double = 0.0,
     val y: Double = 0.0,
@@ -90,15 +90,15 @@ class ArtistCollaborationGraphSimulation {
             forceLinks = forceLink {
                 linkGet = {
                     when (this.domain.entity) {
-                        MusicBrainzEntity.ARTIST -> artistEntityLinks.filter { it.artistId == this.domain.id }
+                        MusicBrainzEntityType.ARTIST -> artistEntityLinks.filter { it.artistId == this.domain.id }
                         else -> artistEntityLinks.filter { it.entityId == this.domain.id }
                     }.mapNotNull { artistEntity ->
-                        val sourceId = if (this.domain.entity == MusicBrainzEntity.ARTIST) {
+                        val sourceId = if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
                             this.domain.id
                         } else {
                             artistEntity.artistId
                         }
-                        val targetId = if (this.domain.entity == MusicBrainzEntity.ARTIST) {
+                        val targetId = if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
                             artistEntity.entityId
                         } else {
                             this.domain.id
@@ -138,7 +138,7 @@ class ArtistCollaborationGraphSimulation {
                 GraphNode(
                     id = id,
                     name = name,
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     radius = calculateRadius(artistFrequency[id] ?: 1),
                 )
             }
@@ -150,7 +150,7 @@ class ArtistCollaborationGraphSimulation {
                 GraphNode(
                     id = id,
                     name = name,
-                    entity = collaborations.firstOrNull()?.entity ?: MusicBrainzEntity.RECORDING,
+                    entity = collaborations.firstOrNull()?.entity ?: MusicBrainzEntityType.RECORDING,
                     radius = calculateRadius(collaborationEntityFrequency[id] ?: 1),
                 )
             }

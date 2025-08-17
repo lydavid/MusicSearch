@@ -6,7 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
@@ -36,7 +36,7 @@ internal fun PreviewWorkDetailsUi() {
                 urls = persistentListOf(
                     RelationListItemModel(
                         id = "1",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         linkedEntityId = "2",
                         label = "lyrics page",
                         name = "https://genius.com/Genius-romanizations-nano-kemurikusa-romanized-lyrics",

@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 
 class MbidImageDao(
     database: Database,
@@ -170,5 +170,5 @@ private fun mapToImageMetadata(
     mbid = mbid,
     name = name,
     disambiguation = disambiguation,
-    entity = entity?.toMusicBrainzEntity(),
+    entity = entity?.toMusicBrainzEntityType(),
 )

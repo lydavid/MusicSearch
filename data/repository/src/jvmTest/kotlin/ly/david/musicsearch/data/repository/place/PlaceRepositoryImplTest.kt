@@ -37,7 +37,7 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -261,7 +261,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.discogs.com/label/268904",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -272,7 +272,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.songkick.com/venues/33448",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -283,7 +283,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.wikidata.org/wiki/Q386246",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -294,7 +294,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.nipponbudokan.or.jp/",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -305,7 +305,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.generasia.com/wiki/Nippon_Budokan",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -316,7 +316,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.livefans.jp/venues/4699",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -327,7 +327,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://commons.wikimedia.org/wiki/File:Nippon_Budokan_2010.jpg",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -338,7 +338,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "https://www.setlist.fm/venue/nippon-budokan-tokyo-japan-3d61d43.html",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -379,7 +379,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browsePlacesByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -397,7 +397,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val flow: Flow<PagingData<PlaceListItemModel>> = placesListRepositoryImpl.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = countryId,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
         )
         val places = flow.asSnapshot()

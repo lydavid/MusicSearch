@@ -18,9 +18,9 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
-import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 
 private const val THEME_KEY = "theme"
@@ -267,14 +267,14 @@ internal class AppPreferencesImpl(
     }
 
     private val collaborationEntityTypePreference = stringPreferencesKey("collaborationEntityType")
-    override val observeCollaborationEntityType: Flow<MusicBrainzEntity>
+    override val observeCollaborationEntityType: Flow<MusicBrainzEntityType>
         get() = preferencesDataStore.data
             .map {
-                it[collaborationEntityTypePreference]?.toMusicBrainzEntity() ?: MusicBrainzEntity.RECORDING
+                it[collaborationEntityTypePreference]?.toMusicBrainzEntityType() ?: MusicBrainzEntityType.RECORDING
             }
             .distinctUntilChanged()
 
-    override fun setCollaborationEntityType(entity: MusicBrainzEntity) {
+    override fun setCollaborationEntityType(entity: MusicBrainzEntityType) {
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[collaborationEntityTypePreference] = entity.resourceUri

@@ -20,7 +20,7 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.musicsearch.shared.AppRoot
-import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.spotify.BroadcastTypes
 import ly.david.musicsearch.shared.feature.spotify.SpotifyBroadcastReceiver
@@ -129,7 +129,7 @@ private fun getInitialScreens(
             initialScreens.add(
                 SearchScreen(
                     query = uri.getQueryParameter(QUERY),
-                    entity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
+                    entity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntityType(),
                 ),
             )
         }
@@ -148,7 +148,7 @@ private fun getInitialScreens(
 
         else -> {
             initialScreens.add(SearchScreen())
-            val entity = pathSegments.first().toMusicBrainzEntity()
+            val entity = pathSegments.first().toMusicBrainzEntityType()
             if (entity != null && pathSegments.size > 1) {
                 val id = pathSegments.last()
                 initialScreens.add(
@@ -172,7 +172,7 @@ private fun getCollectionScreens(uri: Uri): List<Screen> {
             CollectionListScreen(
                 newCollectionId = uri.getQueryParameter(ID),
                 newCollectionName = uri.getQueryParameter(NAME),
-                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntity(),
+                newCollectionEntity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntityType(),
             ),
         )
 

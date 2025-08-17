@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class LabelsListRepositoryImpl(
     private val labelDao: LabelDao,
@@ -25,7 +25,7 @@ class LabelsListRepositoryImpl(
     aliasDao: AliasDao,
 ) : LabelsListRepository,
     BrowseEntities<LabelListItemModel, LabelMusicBrainzNetworkModel, BrowseLabelsResponse>(
-        browseEntity = MusicBrainzEntity.LABEL,
+        browseEntity = MusicBrainzEntityType.LABEL,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
@@ -52,7 +52,7 @@ class LabelsListRepositoryImpl(
 
     override fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
@@ -61,7 +61,7 @@ class LabelsListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
@@ -74,7 +74,7 @@ class LabelsListRepositoryImpl(
 
     override suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): BrowseLabelsResponse {
         return browseApi.browseLabelsByEntity(
@@ -86,12 +86,12 @@ class LabelsListRepositoryImpl(
 
     override fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<LabelMusicBrainzNetworkModel>,
     ) {
         labelDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { label -> label.id },
@@ -109,10 +109,10 @@ class LabelsListRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int {
         return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.getCountOfEntitiesByCollection(entityId)
             }
 

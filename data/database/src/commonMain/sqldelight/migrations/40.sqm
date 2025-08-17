@@ -1,12 +1,12 @@
 import kotlin.Boolean;
 import kotlin.Int;
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
 -- create new table
 CREATE TABLE IF NOT EXISTS relation_temp (
   entity_id TEXT NOT NULL,
   linked_entity_id TEXT NOT NULL,
-  linked_entity TEXT AS MusicBrainzEntity NOT NULL,
+  linked_entity TEXT AS MusicBrainzEntityType NOT NULL,
   `order` INTEGER AS Int NOT NULL,
   label TEXT NOT NULL,
   name TEXT NOT NULL,

@@ -5,7 +5,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.SearchHistory
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.data.database.Database
 
 class SearchHistoryDao(
@@ -25,7 +25,7 @@ class SearchHistoryDao(
     }
 
     fun getAllSearchHistory(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): PagingSource<Int, SearchHistoryListItemModel> = QueryPagingSource(
         countQuery = transacter.getAllSearchHistoryCount(
             entity = entity,
@@ -49,7 +49,7 @@ class SearchHistoryDao(
     )
 
     fun delete(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
     ) {
         transacter.delete(
@@ -59,7 +59,7 @@ class SearchHistoryDao(
     }
 
     fun deleteAll(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         transacter.deleteAll(
             entity = entity,

@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
@@ -64,14 +64,14 @@ private val release = ReleaseDetailsModel(
             id = "1",
             label = "ASIN",
             name = "https://www.amazon.co.jp/gp/product/B0B392M9SC",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
             label = "VGMdb",
             name = "https://vgmdb.net/album/120991",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",
         ),
     ),

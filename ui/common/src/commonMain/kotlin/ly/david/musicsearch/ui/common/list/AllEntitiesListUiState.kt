@@ -2,7 +2,7 @@ package ly.david.musicsearch.ui.common.list
 
 import androidx.compose.runtime.Stable
 import com.slack.circuit.runtime.CircuitUiState
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
@@ -25,22 +25,22 @@ data class AllEntitiesListUiState(
     val eventSink: (AllEntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState
 
-fun AllEntitiesListUiState.getTotalLocalCount(entity: MusicBrainzEntity?): Int {
+fun AllEntitiesListUiState.getTotalLocalCount(entity: MusicBrainzEntityType?): Int {
     return when (entity) {
-        MusicBrainzEntity.AREA -> areasListUiState.count
-        MusicBrainzEntity.ARTIST -> artistsListUiState.count
-        MusicBrainzEntity.EVENT -> eventsListUiState.count
-        MusicBrainzEntity.GENRE -> genresListUiState.count
-        MusicBrainzEntity.INSTRUMENT -> instrumentsListUiState.count
-        MusicBrainzEntity.LABEL -> labelsListUiState.count
-        MusicBrainzEntity.PLACE -> placesListUiState.count
-        MusicBrainzEntity.RECORDING -> recordingsListUiState.count
-        MusicBrainzEntity.RELEASE -> releasesListUiState.count
-        MusicBrainzEntity.RELEASE_GROUP -> releaseGroupsListUiState.count
-        MusicBrainzEntity.SERIES -> seriesListUiState.count
-        MusicBrainzEntity.WORK -> worksListUiState.count
-        MusicBrainzEntity.COLLECTION,
-        MusicBrainzEntity.URL,
+        MusicBrainzEntityType.AREA -> areasListUiState.count
+        MusicBrainzEntityType.ARTIST -> artistsListUiState.count
+        MusicBrainzEntityType.EVENT -> eventsListUiState.count
+        MusicBrainzEntityType.GENRE -> genresListUiState.count
+        MusicBrainzEntityType.INSTRUMENT -> instrumentsListUiState.count
+        MusicBrainzEntityType.LABEL -> labelsListUiState.count
+        MusicBrainzEntityType.PLACE -> placesListUiState.count
+        MusicBrainzEntityType.RECORDING -> recordingsListUiState.count
+        MusicBrainzEntityType.RELEASE -> releasesListUiState.count
+        MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListUiState.count
+        MusicBrainzEntityType.SERIES -> seriesListUiState.count
+        MusicBrainzEntityType.WORK -> worksListUiState.count
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.URL,
         null,
         -> 0
     }

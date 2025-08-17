@@ -19,7 +19,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -104,7 +104,7 @@ internal sealed interface SpotifyUiEvent : CircuitUiEvent {
     data object NavigateUp : SpotifyUiEvent
     data class GoToSearch(
         val query: String,
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
     ) : SpotifyUiEvent
 
     data class MarkForDeletion(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent

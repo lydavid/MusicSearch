@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
 
 class CollectionRepositoryImpl(
@@ -33,7 +33,7 @@ class CollectionRepositoryImpl(
     @OptIn(ExperimentalPagingApi::class)
     override fun observeAllCollections(
         username: String,
-        entity: MusicBrainzEntity?,
+        entity: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
@@ -79,7 +79,7 @@ class CollectionRepositoryImpl(
 
         browseRemoteMetadataDao.upsert(
             entityId = username,
-            browseEntity = MusicBrainzEntity.COLLECTION,
+            browseEntity = MusicBrainzEntityType.COLLECTION,
             remoteCount = response.count,
             lastUpdated = Clock.System.now(),
         )
@@ -93,7 +93,7 @@ class CollectionRepositoryImpl(
     private fun getRemoteLinkedEntitiesCountByEntity(username: String): Int? {
         return browseEntityCountRepository.get(
             entityId = username,
-            entity = MusicBrainzEntity.COLLECTION,
+            entity = MusicBrainzEntityType.COLLECTION,
         )?.remoteCount
     }
 
@@ -167,7 +167,7 @@ class CollectionRepositoryImpl(
 
     override suspend fun addToCollection(
         collectionId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityIds: Set<String>,
     ): ActionableResult {
         val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")

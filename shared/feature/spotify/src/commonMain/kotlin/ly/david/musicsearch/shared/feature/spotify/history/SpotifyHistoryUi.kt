@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -82,7 +82,7 @@ internal fun SpotifyHistoryUi(
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     lazyListState: LazyListState = LazyListState(),
     onBack: () -> Unit = {},
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
     onMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onUndoMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
@@ -158,7 +158,7 @@ private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
     var clickListItem: SpotifyHistoryListItemModel? by rememberSaveable { mutableStateOf(null) }

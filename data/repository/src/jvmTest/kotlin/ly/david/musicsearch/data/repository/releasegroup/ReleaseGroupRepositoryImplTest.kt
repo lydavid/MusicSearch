@@ -21,7 +21,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -184,7 +184,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         name = "https://www.wikidata.org/wiki/Q1058017",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -195,7 +195,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         name = "https://en.wikipedia.org/wiki/Today_Is_a_Beautiful_Day",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -206,7 +206,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         name = "http://www.supercell.jp/2nd/",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

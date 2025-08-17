@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 open class FakeBrowseApi : BrowseApi {
     override suspend fun browseAreasByCollection(
@@ -31,7 +31,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseArtistsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -45,7 +45,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseEventsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -59,7 +59,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseGenresByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
     ): BrowseGenresResponse {
@@ -85,7 +85,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseLabelsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -99,7 +99,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browsePlacesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -113,7 +113,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseRecordingsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -127,7 +127,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseReleaseGroupsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -154,7 +154,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseWorksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -168,7 +168,7 @@ open class FakeBrowseApi : BrowseApi {
 
     override suspend fun browseReleasesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,

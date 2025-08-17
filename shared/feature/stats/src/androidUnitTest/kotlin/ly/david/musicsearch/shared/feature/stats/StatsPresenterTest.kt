@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
@@ -37,7 +37,7 @@ class StatsPresenterTest {
         val presenter = StatsPresenter(
             screen = StatsScreen(
                 byEntityId = "1",
-                byEntity = MusicBrainzEntity.ARTIST,
+                byEntity = MusicBrainzEntityType.ARTIST,
                 tabs = artistTabs,
             ),
             observeRelationStatsUseCase = object : ObserveRelationStatsUseCase {
@@ -46,15 +46,15 @@ class StatsPresenterTest {
                         RelationStats(
                             relationTypeCounts = persistentListOf(
                                 RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.AREA,
+                                    linkedEntity = MusicBrainzEntityType.AREA,
                                     count = 1,
                                 ),
                                 RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.ARTIST,
+                                    linkedEntity = MusicBrainzEntityType.ARTIST,
                                     count = 2,
                                 ),
                                 RelationTypeCount(
-                                    linkedEntity = MusicBrainzEntity.EVENT,
+                                    linkedEntity = MusicBrainzEntityType.EVENT,
                                     count = 3,
                                 ),
                             ),
@@ -66,7 +66,7 @@ class StatsPresenterTest {
             browseRemoteMetadataRepository = object : BrowseRemoteMetadataRepository {
                 override fun observe(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                 ): Flow<BrowseRemoteMetadata?> {
                     return flowOf(
                         BrowseRemoteMetadata(
@@ -78,14 +78,14 @@ class StatsPresenterTest {
 
                 override fun get(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                 ): BrowseRemoteMetadata? {
                     error("unused")
                 }
             },
             observeLocalCount = object : ObserveLocalCount {
                 override fun invoke(
-                    browseEntity: MusicBrainzEntity,
+                    browseEntity: MusicBrainzEntityType,
                     browseMethod: BrowseMethod?,
                 ): Flow<Int> {
                     return flowOf(200)
@@ -93,7 +93,7 @@ class StatsPresenterTest {
             },
             observeVisitedCount = object : ObserveVisitedCount {
                 override fun invoke(
-                    browseEntity: MusicBrainzEntity,
+                    browseEntity: MusicBrainzEntityType,
                     browseMethod: BrowseMethod?,
                 ): Flow<Int> {
                     return flowOf(2)
@@ -101,7 +101,7 @@ class StatsPresenterTest {
             },
             observeCollectedCount = object : ObserveCollectedCount {
                 override fun invoke(
-                    browseEntity: MusicBrainzEntity,
+                    browseEntity: MusicBrainzEntityType,
                     browseMethod: BrowseMethod?,
                 ): Flow<Int> {
                     return flowOf(1)
@@ -142,15 +142,15 @@ class StatsPresenterTest {
                             relationStats = RelationStats(
                                 relationTypeCounts = persistentListOf(
                                     RelationTypeCount(
-                                        linkedEntity = MusicBrainzEntity.AREA,
+                                        linkedEntity = MusicBrainzEntityType.AREA,
                                         count = 1,
                                     ),
                                     RelationTypeCount(
-                                        linkedEntity = MusicBrainzEntity.ARTIST,
+                                        linkedEntity = MusicBrainzEntityType.ARTIST,
                                         count = 2,
                                     ),
                                     RelationTypeCount(
-                                        linkedEntity = MusicBrainzEntity.EVENT,
+                                        linkedEntity = MusicBrainzEntityType.EVENT,
                                         count = 3,
                                     ),
                                 ),

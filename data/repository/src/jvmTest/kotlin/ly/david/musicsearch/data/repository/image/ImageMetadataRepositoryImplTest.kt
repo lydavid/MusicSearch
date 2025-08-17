@@ -39,7 +39,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import org.junit.After
 import org.junit.Assert
@@ -82,7 +82,7 @@ class ImageMetadataRepositoryImplTest :
         val repository = createMusicBrainzImageMetadataRepository(coverArtUrlsProducer = { _, _ -> listOf() })
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = "",
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -138,7 +138,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = eventId,
-            entity = MusicBrainzEntity.EVENT,
+            entity = MusicBrainzEntityType.EVENT,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -171,7 +171,7 @@ class ImageMetadataRepositoryImplTest :
                 mbid = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
-                entity = MusicBrainzEntity.EVENT,
+                entity = MusicBrainzEntityType.EVENT,
             ),
             imageMetadataList[0],
         )
@@ -230,7 +230,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseId,
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -264,7 +264,7 @@ class ImageMetadataRepositoryImplTest :
                     mbid = releaseId,
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
                 ImageMetadata(
                     imageId = ImageId(1L),
@@ -273,7 +273,7 @@ class ImageMetadataRepositoryImplTest :
                     mbid = releaseId,
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
             ),
             imageMetadataList,
@@ -308,7 +308,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseId,
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -389,7 +389,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val imageMetadataWithCount = repository.getAndSaveImageMetadata(
             mbid = releaseGroupId,
-            entity = MusicBrainzEntity.RELEASE_GROUP,
+            entity = MusicBrainzEntityType.RELEASE_GROUP,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -421,7 +421,7 @@ class ImageMetadataRepositoryImplTest :
                     mbid = releaseGroupId,
                     name = releaseGroupName,
                     disambiguation = releaseGroupDisambiguation,
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 ),
                 this[0],
             )
@@ -456,7 +456,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val eventImageMetadata = repository.getAndSaveImageMetadata(
             mbid = eventId,
-            entity = MusicBrainzEntity.EVENT,
+            entity = MusicBrainzEntityType.EVENT,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -483,7 +483,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val releaseImageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseId,
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -510,7 +510,7 @@ class ImageMetadataRepositoryImplTest :
         )
         val releaseGroupImageMetadata = repository.getAndSaveImageMetadata(
             mbid = releaseGroupId,
-            entity = MusicBrainzEntity.RELEASE_GROUP,
+            entity = MusicBrainzEntityType.RELEASE_GROUP,
             forceRefresh = false,
         )
         Assert.assertEquals(
@@ -544,7 +544,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
@@ -553,7 +553,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                     ImageMetadata(
                         imageId = ImageId(1L),
@@ -562,7 +562,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntity.EVENT,
+                        entity = MusicBrainzEntityType.EVENT,
                     ),
                 ),
                 imageMetadataList,
@@ -587,7 +587,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntity.EVENT,
+                        entity = MusicBrainzEntityType.EVENT,
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
@@ -596,7 +596,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
@@ -605,7 +605,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                 ),
                 imageMetadataList,
@@ -630,7 +630,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntity.EVENT,
+                        entity = MusicBrainzEntityType.EVENT,
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
@@ -639,7 +639,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
@@ -648,7 +648,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                 ),
                 imageMetadataList,
@@ -673,7 +673,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
@@ -682,7 +682,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                     ImageMetadata(
                         imageId = ImageId(1L),
@@ -691,7 +691,7 @@ class ImageMetadataRepositoryImplTest :
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntity.EVENT,
+                        entity = MusicBrainzEntityType.EVENT,
                     ),
                 ),
                 imageMetadataList,
@@ -718,7 +718,7 @@ class ImageMetadataRepositoryImplTest :
         (1..99).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 99,
             )
         }
@@ -734,7 +734,7 @@ class ImageMetadataRepositoryImplTest :
         }
         repository.saveImageMetadata(
             mbid = "100",
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             itemsCount = 100,
         )
         repository.observeAllImageMetadata(
@@ -775,7 +775,7 @@ class ImageMetadataRepositoryImplTest :
         (1..100).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 100,
             )
         }
@@ -812,7 +812,7 @@ class ImageMetadataRepositoryImplTest :
         (1..99).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 99,
             )
         }
@@ -848,7 +848,7 @@ class ImageMetadataRepositoryImplTest :
         (1..100).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 100,
             )
             repository.observeAllImageMetadata(
@@ -865,7 +865,7 @@ class ImageMetadataRepositoryImplTest :
         (101..200).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 200, // This value will be updated as more data is loaded into our local database
             )
             repository.observeAllImageMetadata(
@@ -885,7 +885,7 @@ class ImageMetadataRepositoryImplTest :
         (201..299).forEach {
             repository.saveImageMetadata(
                 mbid = "$it",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
                 itemsCount = 300,
             )
             repository.observeAllImageMetadata(
@@ -903,7 +903,7 @@ class ImageMetadataRepositoryImplTest :
         }
         repository.saveImageMetadata(
             mbid = "300",
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             itemsCount = 300,
         )
         repository.observeAllImageMetadata(

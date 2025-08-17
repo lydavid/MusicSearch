@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -66,7 +66,7 @@ class ArtistCollaborationRepositoryImplTest :
         )
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RECORDING,
+            collaborationEntityType = MusicBrainzEntityType.RECORDING,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(
@@ -76,7 +76,7 @@ class ArtistCollaborationRepositoryImplTest :
         }
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RELEASE,
+            collaborationEntityType = MusicBrainzEntityType.RELEASE,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(
@@ -86,7 +86,7 @@ class ArtistCollaborationRepositoryImplTest :
         }
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RELEASE_GROUP,
+            collaborationEntityType = MusicBrainzEntityType.RELEASE_GROUP,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(
@@ -150,13 +150,13 @@ class ArtistCollaborationRepositoryImplTest :
         ).observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = aimerArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot()
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RECORDING,
+            collaborationEntityType = MusicBrainzEntityType.RECORDING,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(
@@ -164,14 +164,14 @@ class ArtistCollaborationRepositoryImplTest :
                     CollaboratingArtistAndEntity(
                         artistId = "4dfe9c0b-7602-4189-9919-151d493d1028",
                         artistName = "chelly (EGOIST)",
-                        entity = MusicBrainzEntity.RECORDING,
+                        entity = MusicBrainzEntityType.RECORDING,
                         entityId = "fea5134e-f0ee-49d5-a643-470fbc893241",
                         entityName = "ninelie",
                     ),
                     CollaboratingArtistAndEntity(
                         artistId = "4dfe9c0b-7602-4189-9919-151d493d1028",
                         artistName = "chelly (EGOIST)",
-                        entity = MusicBrainzEntity.RECORDING,
+                        entity = MusicBrainzEntityType.RECORDING,
                         entityId = "3c1234e3-13cb-4726-86ad-f7101fa3aef4",
                         entityName = "ninelie (TV size)",
                     ),
@@ -181,7 +181,7 @@ class ArtistCollaborationRepositoryImplTest :
         }
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RELEASE,
+            collaborationEntityType = MusicBrainzEntityType.RELEASE,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(
@@ -191,7 +191,7 @@ class ArtistCollaborationRepositoryImplTest :
         }
         artistCollaborationRepositoryImpl.getAllCollaboratingArtistsAndEntities(
             artistId = aimerArtistMusicBrainzModel.id,
-            collaborationEntityType = MusicBrainzEntity.RELEASE_GROUP,
+            collaborationEntityType = MusicBrainzEntityType.RELEASE_GROUP,
             query = "",
         ).let { collaboratingArtistsAndEntities ->
             assertEquals(

@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -111,7 +111,7 @@ class AreasListRepositoryImplTest : KoinTest {
                 id = collectionId,
                 isRemote = false,
                 name = "Areas I've been",
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -121,7 +121,7 @@ class AreasListRepositoryImplTest : KoinTest {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntity.COLLECTION,
+            entity = MusicBrainzEntityType.COLLECTION,
         )
 
         sut.observeAreas(

@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 
 class SeriesListRepositoryImpl(
@@ -25,7 +25,7 @@ class SeriesListRepositoryImpl(
     aliasDao: AliasDao,
 ) : SeriesListRepository,
     BrowseEntities<SeriesListItemModel, SeriesMusicBrainzNetworkModel, BrowseSeriesResponse>(
-        browseEntity = MusicBrainzEntity.SERIES,
+        browseEntity = MusicBrainzEntityType.SERIES,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
@@ -52,7 +52,7 @@ class SeriesListRepositoryImpl(
 
     override fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
@@ -61,7 +61,7 @@ class SeriesListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
@@ -72,11 +72,11 @@ class SeriesListRepositoryImpl(
 
     override suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): BrowseSeriesResponse {
         return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 browseApi.browseSeriesByCollection(
                     collectionId = entityId,
                     offset = offset,
@@ -89,12 +89,12 @@ class SeriesListRepositoryImpl(
 
     override fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<SeriesMusicBrainzNetworkModel>,
     ) {
         seriesDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { series -> series.id },
@@ -109,7 +109,7 @@ class SeriesListRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int {
         return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }

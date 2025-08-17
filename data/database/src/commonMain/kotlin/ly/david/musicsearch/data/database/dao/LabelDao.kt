@@ -18,7 +18,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Labels_by_entity
 
@@ -146,7 +146,7 @@ class LabelDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                 getLabelsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -163,7 +163,7 @@ class LabelDao(
     fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface AppPreferences {
 
@@ -57,6 +57,6 @@ interface AppPreferences {
     val observeImagesGridPaddingDp: Flow<Int>
     fun setImagesGridPaddingDp(padding: Int)
 
-    val observeCollaborationEntityType: Flow<MusicBrainzEntity>
-    fun setCollaborationEntityType(entity: MusicBrainzEntity)
+    val observeCollaborationEntityType: Flow<MusicBrainzEntityType>
+    fun setCollaborationEntityType(entity: MusicBrainzEntityType)
 }

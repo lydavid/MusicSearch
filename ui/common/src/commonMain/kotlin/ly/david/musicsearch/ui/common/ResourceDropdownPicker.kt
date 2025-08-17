@@ -24,17 +24,17 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResourceDropdownPicker(
-    options: List<MusicBrainzEntity>,
-    selectedOption: MusicBrainzEntity,
+    options: List<MusicBrainzEntityType>,
+    selectedOption: MusicBrainzEntityType,
     modifier: Modifier = Modifier,
-    onSelectOption: (MusicBrainzEntity) -> Unit = {},
+    onSelectOption: (MusicBrainzEntityType) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     var expanded by rememberSaveable { mutableStateOf(false) }

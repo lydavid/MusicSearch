@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class AreasListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
@@ -25,7 +25,7 @@ class AreasListRepositoryImpl(
     aliasDao: AliasDao,
 ) : AreasListRepository,
     BrowseEntities<AreaListItemModel, AreaMusicBrainzNetworkModel, BrowseAreasResponse>(
-        browseEntity = MusicBrainzEntity.AREA,
+        browseEntity = MusicBrainzEntityType.AREA,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
@@ -52,7 +52,7 @@ class AreasListRepositoryImpl(
 
     override fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
@@ -61,7 +61,7 @@ class AreasListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
@@ -72,11 +72,11 @@ class AreasListRepositoryImpl(
 
     override suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): BrowseAreasResponse {
         return when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 browseApi.browseAreasByCollection(
                     collectionId = entityId,
                     offset = offset,
@@ -89,12 +89,12 @@ class AreasListRepositoryImpl(
 
     override fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<AreaMusicBrainzNetworkModel>,
     ) {
         areaDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { area -> area.id },
@@ -109,7 +109,7 @@ class AreasListRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int {
         return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }

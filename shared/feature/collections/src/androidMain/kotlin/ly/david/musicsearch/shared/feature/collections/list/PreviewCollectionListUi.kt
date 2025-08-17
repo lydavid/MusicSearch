@@ -6,7 +6,7 @@ import app.cash.paging.PagingData
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 
@@ -21,13 +21,13 @@ internal fun PreviewCollectionListUi() {
                         id = "1",
                         isRemote = true,
                         name = "Favorite works",
-                        entity = MusicBrainzEntity.WORK,
+                        entity = MusicBrainzEntityType.WORK,
                     ),
                     CollectionListItemModel(
                         id = "2",
                         isRemote = false,
                         name = "My CD collection",
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                     ),
                 ),
@@ -55,13 +55,13 @@ internal fun PreviewCollectionListUiSelection() {
                         id = "1",
                         isRemote = true,
                         name = "Favorite works",
-                        entity = MusicBrainzEntity.WORK,
+                        entity = MusicBrainzEntityType.WORK,
                     ),
                     CollectionListItemModel(
                         id = "2",
                         isRemote = false,
                         name = "My CD collection",
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                     ),
                 ),
@@ -91,13 +91,13 @@ internal fun PreviewCollectionListUiSelectedAll() {
                         id = "1",
                         isRemote = false,
                         name = "Favorite works",
-                        entity = MusicBrainzEntity.WORK,
+                        entity = MusicBrainzEntityType.WORK,
                     ),
                     CollectionListItemModel(
                         id = "2",
                         isRemote = false,
                         name = "My CD collection",
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                     ),
                 ),

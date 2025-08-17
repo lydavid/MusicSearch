@@ -8,7 +8,7 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.data.database.Database
 
 class BrowseRemoteMetadataDao(
@@ -19,7 +19,7 @@ class BrowseRemoteMetadataDao(
 
     fun upsert(
         entityId: String,
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
         remoteCount: Int,
         lastUpdated: Instant = Clock.System.now(),
     ) {
@@ -33,7 +33,7 @@ class BrowseRemoteMetadataDao(
 
     private fun getQuery(
         entityId: String,
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
     ): Query<BrowseRemoteMetadata> =
         transacter.getBrowseRemoteMetadata(
             entityId = entityId,
@@ -48,7 +48,7 @@ class BrowseRemoteMetadataDao(
 
     fun get(
         entityId: String,
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
     ): BrowseRemoteMetadata? =
         getQuery(
             entityId = entityId,
@@ -57,7 +57,7 @@ class BrowseRemoteMetadataDao(
 
     fun observe(
         entityId: String,
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
     ): Flow<BrowseRemoteMetadata?> =
         getQuery(
             entityId = entityId,
@@ -68,7 +68,7 @@ class BrowseRemoteMetadataDao(
 
     fun deleteBrowseRemoteCountByEntity(
         entityId: String,
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
     ) {
         transacter.deleteBrowseRemoteCountByEntity(
             entityId = entityId,

@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetwork
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.label.LabelRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class LabelRepositoryImpl(
@@ -31,7 +31,7 @@ class LabelRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(labelId)
         val visited = relationRepository.visited(labelId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.LABEL,
+            entityType = MusicBrainzEntityType.LABEL,
             mbid = labelId,
         )
 

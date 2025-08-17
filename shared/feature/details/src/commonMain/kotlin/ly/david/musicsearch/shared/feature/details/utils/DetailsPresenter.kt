@@ -29,7 +29,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.alias.filterAliases
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
@@ -136,10 +136,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
         LaunchedEffect(forceRefreshDetails, detailsModel) {
             val showImage = setOf(
-                MusicBrainzEntity.ARTIST,
-                MusicBrainzEntity.EVENT,
-                MusicBrainzEntity.RELEASE,
-                MusicBrainzEntity.RELEASE_GROUP,
+                MusicBrainzEntityType.ARTIST,
+                MusicBrainzEntityType.EVENT,
+                MusicBrainzEntityType.RELEASE,
+                MusicBrainzEntityType.RELEASE_GROUP,
             ).contains(screen.entity)
             if (!showImage) return@LaunchedEffect
 
@@ -345,7 +345,7 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     ) : DetailsUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : DetailsUiEvent
 

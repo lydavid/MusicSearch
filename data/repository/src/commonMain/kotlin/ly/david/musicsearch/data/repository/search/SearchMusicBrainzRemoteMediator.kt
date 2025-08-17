@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 /**
  * Mediates search results from network.
@@ -23,7 +23,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
 @ExperimentalPagingApi
 internal class SearchMusicBrainzRemoteMediator(
     private val searchResultDao: SearchResultDao,
-    private val entity: MusicBrainzEntity,
+    private val entity: MusicBrainzEntityType,
     private val query: String,
     private val fetchAndStore: suspend (offset: Int, removeAll: () -> Unit) -> Int,
 ) : RemoteMediator<Int, ListItemModel>() {

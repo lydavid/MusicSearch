@@ -20,7 +20,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -172,7 +172,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         name = "https://www.discogs.com/label/57296",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -183,7 +183,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         name = "https://vgmdb.net/org/2391",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -194,7 +194,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         name = "https://vgmdb.net/org/533",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -205,7 +205,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         name = "https://www.wikidata.org/wiki/Q112654575",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -216,7 +216,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         name = "https://twitter.com/UNIVERSAL_J",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

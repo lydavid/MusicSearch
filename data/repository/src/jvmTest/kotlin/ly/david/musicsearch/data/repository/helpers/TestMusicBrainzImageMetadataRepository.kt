@@ -9,7 +9,7 @@ import ly.david.musicsearch.data.repository.image.MusicBrainzImageMetadataReposi
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface TestMusicBrainzImageMetadataRepository {
 
@@ -17,13 +17,13 @@ interface TestMusicBrainzImageMetadataRepository {
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createMusicBrainzImageMetadataRepository(
-        coverArtUrlsProducer: (id: String, entity: MusicBrainzEntity) -> List<CoverArtUrls>,
+        coverArtUrlsProducer: (id: String, entity: MusicBrainzEntityType) -> List<CoverArtUrls>,
     ): MusicBrainzImageMetadataRepository {
         return MusicBrainzImageMetadataRepositoryImpl(
             coverArtArchiveApi = object : NoOpCoverArtArchiveApi() {
                 override suspend fun getCoverArts(
                     mbid: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                 ): CoverArtsResponse {
                     return CoverArtsResponse(
                         coverArtUrls = coverArtUrlsProducer(mbid, entity),

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
 private const val SEARCH_DELAY_MS = 500L
@@ -22,10 +22,10 @@ class GetSearchResults(
     private val searchResultsRepository: SearchResultsRepository,
     private val coroutineScope: CoroutineScope,
 ) {
-    private val _searchQueries = MutableStateFlow(MusicBrainzEntity.ARTIST to "")
+    private val _searchQueries = MutableStateFlow(MusicBrainzEntityType.ARTIST to "")
 
     operator fun invoke(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
     ): Flow<PagingData<ListItemModel>> {
         _searchQueries.value = entity to query

@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -79,7 +79,7 @@ fun PlaceListItem(
             ThumbnailImage(
                 url = "",
                 imageId = null,
-                placeholderIcon = MusicBrainzEntity.PLACE.getIcon(),
+                placeholderIcon = MusicBrainzEntityType.PLACE.getIcon(),
                 modifier = Modifier
                     .clickable {
                         onSelect(place.id)

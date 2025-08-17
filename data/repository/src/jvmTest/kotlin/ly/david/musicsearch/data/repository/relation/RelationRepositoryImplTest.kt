@@ -40,7 +40,7 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -179,7 +179,7 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntity.SERIES,
+            entity = MusicBrainzEntityType.SERIES,
             entityId = "eca82a1b-1efa-4d6b-9278-e278523267f8",
             query = "",
             lastUpdated = testDateTimeInThePast,
@@ -193,7 +193,7 @@ class RelationRepositoryImplTest :
                         name = "上海アリス幻樂団",
                         disambiguation = "dōjin game developer",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.LABEL,
+                        linkedEntity = MusicBrainzEntityType.LABEL,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -204,7 +204,7 @@ class RelationRepositoryImplTest :
                         label = "publishing label",
                         name = "黄昏フロンティア",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.LABEL,
+                        linkedEntity = MusicBrainzEntityType.LABEL,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -216,7 +216,7 @@ class RelationRepositoryImplTest :
                         name = "東方靈異伝 〜 Highly Responsive to Prayers",
                         disambiguation = "",
                         attributes = "number: 1",
-                        linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
+                        linkedEntity = MusicBrainzEntityType.RELEASE_GROUP,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -228,7 +228,7 @@ class RelationRepositoryImplTest :
                         name = "東方封魔録 〜 Story of Eastern Wonderland",
                         disambiguation = "",
                         attributes = "number: 2",
-                        linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
+                        linkedEntity = MusicBrainzEntityType.RELEASE_GROUP,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -240,7 +240,7 @@ class RelationRepositoryImplTest :
                         name = "ZUN's Music Collection",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.SERIES,
+                        linkedEntity = MusicBrainzEntityType.SERIES,
                         visited = false,
                         isForwardDirection = true,
                         lastUpdated = testDateTimeInThePast,
@@ -300,7 +300,7 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntity.WORK,
+            entity = MusicBrainzEntityType.WORK,
             entityId = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
             query = "",
             lastUpdated = testDateTimeInThePast,
@@ -313,7 +313,7 @@ class RelationRepositoryImplTest :
                         label = "composer, lyricist",
                         name = "ヒグチアイ",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -403,7 +403,7 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntity.WORK,
+            entity = MusicBrainzEntityType.WORK,
             entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
             query = "",
             lastUpdated = testDateTimeInThePast,
@@ -417,7 +417,7 @@ class RelationRepositoryImplTest :
                         linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
                         label = "composer, lyricist, premiered by",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -429,7 +429,7 @@ class RelationRepositoryImplTest :
                         linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
                         label = "premiered by",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -442,7 +442,7 @@ class RelationRepositoryImplTest :
 
         // when filtering, the linked entities that were filtered out will not be grouped
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntity.WORK,
+            entity = MusicBrainzEntityType.WORK,
             entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
             query = "pre",
             lastUpdated = testDateTimeInThePast,
@@ -456,7 +456,7 @@ class RelationRepositoryImplTest :
                         linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
                         label = "premiered by",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -468,7 +468,7 @@ class RelationRepositoryImplTest :
                         linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
                         label = "premiered by",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.ARTIST,
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
                         isForwardDirection = false,
                         lastUpdated = testDateTimeInThePast,
@@ -529,7 +529,7 @@ class RelationRepositoryImplTest :
             },
         ).getAndSaveImageMetadata(
             mbid = releaseId,
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             forceRefresh = false,
         )
 
@@ -561,7 +561,7 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             entityId = zutomayoArtistMusicBrainzNetworkModel.id,
             query = "",
             lastUpdated = testDateTimeInThePast,
@@ -575,7 +575,7 @@ class RelationRepositoryImplTest :
                         linkedEntityId = releaseId,
                         label = "producer",
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.RELEASE,
+                        linkedEntity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                         isForwardDirection = false,
                         imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250.jpg",

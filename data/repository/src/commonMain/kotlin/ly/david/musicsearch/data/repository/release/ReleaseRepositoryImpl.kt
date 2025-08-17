@@ -34,7 +34,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
@@ -74,7 +74,7 @@ class ReleaseRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(releaseId)
         val visited = relationRepository.visited(releaseId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.RELEASE,
+            entityType = MusicBrainzEntityType.RELEASE,
             mbid = releaseId,
         )
 

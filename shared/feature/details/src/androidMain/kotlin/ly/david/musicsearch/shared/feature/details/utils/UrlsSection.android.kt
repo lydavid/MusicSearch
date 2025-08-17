@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
@@ -20,21 +20,21 @@ internal fun PreviewUrlsSection() {
                         RelationListItemModel(
                             id = "1",
                             linkedEntityId = "3",
-                            linkedEntity = MusicBrainzEntity.URL,
+                            linkedEntity = MusicBrainzEntityType.URL,
                             label = "stream for free",
                             name = "https://www.example.com",
                         ),
                         RelationListItemModel(
                             id = "2",
                             linkedEntityId = "4",
-                            linkedEntity = MusicBrainzEntity.URL,
+                            linkedEntity = MusicBrainzEntityType.URL,
                             label = "official homepage",
                             name = "https://www.example.com",
                         ),
                         RelationListItemModel(
                             id = "2",
                             linkedEntityId = "4",
-                            linkedEntity = MusicBrainzEntity.URL,
+                            linkedEntity = MusicBrainzEntityType.URL,
                             label = "Wikidata",
                             name = "https://www.wikidata.org/wiki/Q719120",
                         ),

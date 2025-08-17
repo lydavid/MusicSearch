@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIcon
 
 @Composable
 fun AddToCollectionActionToggle(
     collected: Boolean,
-    entity: MusicBrainzEntity,
+    entity: MusicBrainzEntityType,
     entityId: String,
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,

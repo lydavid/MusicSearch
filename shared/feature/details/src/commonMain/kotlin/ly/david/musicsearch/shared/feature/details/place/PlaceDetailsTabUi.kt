@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -78,7 +78,7 @@ internal fun PlaceDetailsTabUi(
                         showEditCollection = false,
                         onAreaClick = {
                             onItemClick(
-                                MusicBrainzEntity.AREA,
+                                MusicBrainzEntityType.AREA,
                                 id,
                             )
                         },

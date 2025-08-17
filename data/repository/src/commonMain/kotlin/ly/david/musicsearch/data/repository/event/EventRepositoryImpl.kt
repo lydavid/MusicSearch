@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetwork
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class EventRepositoryImpl(
@@ -31,7 +31,7 @@ class EventRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(eventId)
         val visited = relationRepository.visited(eventId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.EVENT,
+            entityType = MusicBrainzEntityType.EVENT,
             mbid = eventId,
         )
 

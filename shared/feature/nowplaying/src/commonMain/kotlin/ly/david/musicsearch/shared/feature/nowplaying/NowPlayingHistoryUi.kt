@@ -14,7 +14,7 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -59,7 +59,7 @@ internal fun NowPlayingHistoryUi(
     lazyListState: LazyListState = LazyListState(),
     topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     onBack: () -> Unit = {},
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -95,7 +95,7 @@ private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
@@ -116,7 +116,7 @@ private fun NowPlayingHistoryContent(
                             onClick = {
                                 searchMusicBrainz(
                                     "\"$title\" artist:\"$artist\"",
-                                    MusicBrainzEntity.RECORDING,
+                                    MusicBrainzEntityType.RECORDING,
                                 )
                             },
                         )

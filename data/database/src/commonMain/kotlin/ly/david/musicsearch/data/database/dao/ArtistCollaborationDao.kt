@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class ArtistCollaborationDao(
     database: Database,
@@ -11,21 +11,21 @@ class ArtistCollaborationDao(
 
     fun getAllCollaboratingArtistsAndEntities(
         artistId: String,
-        collaborationEntityType: MusicBrainzEntity,
+        collaborationEntityType: MusicBrainzEntityType,
         query: String,
     ): List<CollaboratingArtistAndEntity> {
         return when (collaborationEntityType) {
-            MusicBrainzEntity.RECORDING -> getAllCollaboratingArtistsAndRecordings(
+            MusicBrainzEntityType.RECORDING -> getAllCollaboratingArtistsAndRecordings(
                 artistId = artistId,
                 query = query,
             )
 
-            MusicBrainzEntity.RELEASE -> getAllCollaboratingArtistsAndReleases(
+            MusicBrainzEntityType.RELEASE -> getAllCollaboratingArtistsAndReleases(
                 artistId = artistId,
                 query = query,
             )
 
-            MusicBrainzEntity.RELEASE_GROUP -> getAllCollaboratingArtistsAndReleaseGroups(
+            MusicBrainzEntityType.RELEASE_GROUP -> getAllCollaboratingArtistsAndReleaseGroups(
                 artistId = artistId,
                 query = query,
             )
@@ -52,7 +52,7 @@ class ArtistCollaborationDao(
                     artistName = collaboratingArtistName,
                     entityId = entityId,
                     entityName = entityName,
-                    entity = MusicBrainzEntity.RECORDING,
+                    entity = MusicBrainzEntityType.RECORDING,
                 )
             },
         ).executeAsList()
@@ -76,7 +76,7 @@ class ArtistCollaborationDao(
                     artistName = collaboratingArtistName,
                     entityId = entityId,
                     entityName = entityName,
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 )
             },
         ).executeAsList()
@@ -100,7 +100,7 @@ class ArtistCollaborationDao(
                     artistName = collaboratingArtistName,
                     entityId = entityId,
                     entityName = entityName,
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 )
             },
         ).executeAsList()

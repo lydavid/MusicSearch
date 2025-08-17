@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
@@ -56,7 +56,7 @@ internal class StatsPresenter(
                     browseEntity = browseEntity,
                     browseMethod = browseMethod,
                     countOfEachAlbumTypeFlow = {
-                        if (browseEntity == MusicBrainzEntity.RELEASE_GROUP) {
+                        if (browseEntity == MusicBrainzEntityType.RELEASE_GROUP) {
                             observeCountOfEachAlbumType(
                                 browseMethod = browseMethod,
                             )
@@ -79,7 +79,7 @@ internal class StatsPresenter(
     }
 
     private fun observeEntityStats(
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod,
         countOfEachAlbumTypeFlow: () -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {

@@ -1,6 +1,6 @@
 import kotlin.Int;
 import kotlin.time.Instant;
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
 -- Tracks how many [browse_entity] there are in MusicBrainz with [remote_count]
 -- that are linked to the entity with [entity_id].
@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
 -- remote_count: How many browse_entity exists in MusicBrainz's database.
 CREATE TABLE IF NOT EXISTS browse_remote_metadata (
   entity_id TEXT NOT NULL,
-  browse_entity TEXT AS MusicBrainzEntity NOT NULL,
+  browse_entity TEXT AS MusicBrainzEntityType NOT NULL,
   remote_count INTEGER AS Int NOT NULL,
   last_updated INTEGER AS Instant NOT NULL,
 

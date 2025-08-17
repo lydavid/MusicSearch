@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -138,7 +138,7 @@ fun ReleaseListItem(
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
                 imageId = release.imageId,
-                placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
+                placeholderIcon = MusicBrainzEntityType.RELEASE.getIcon(),
                 modifier = Modifier
                     .clickable {
                         onSelect(release.id)

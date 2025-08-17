@@ -4,12 +4,12 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface CollectionRepository {
     fun observeAllCollections(
         username: String,
-        entity: MusicBrainzEntity?,
+        entity: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
@@ -40,7 +40,7 @@ interface CollectionRepository {
 
     suspend fun addToCollection(
         collectionId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityIds: Set<String>,
     ): ActionableResult
 

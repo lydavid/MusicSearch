@@ -35,7 +35,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.junit.Assert.assertEquals
@@ -72,7 +72,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseWorksByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -103,7 +103,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 id = collectionId,
                 isRemote = false,
                 name = "works",
-                entity = MusicBrainzEntity.WORK,
+                entity = MusicBrainzEntityType.WORK,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -116,7 +116,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 worksListRepository.observeWorks(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -188,7 +188,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     @Test
     fun setupWorksByDavidBowie() = runTest {
         val entityId = davidBowieArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         val works = listOf(
             starmanWorkMusicBrainzModel,
             underPressureWorkMusicBrainzModel,
@@ -255,7 +255,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
     @Test
     fun setupWorksByQueen() = runTest {
         val entityId = queenArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         val works = listOf(
             dontStopMeNowWorkMusicBrainzModel,
             underPressureWorkMusicBrainzModel,
@@ -396,7 +396,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = davidBowieArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -420,7 +420,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = queenArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -438,7 +438,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntity.COLLECTION,
+                entity = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

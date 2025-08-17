@@ -11,7 +11,7 @@ import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 @PreviewLightDark
@@ -117,7 +117,7 @@ internal fun PreviewSearchUiSearchResults() {
         SearchUiContent(
             state = SearchUiState(
                 query = "aimer",
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
                 searchResults = searchResults.collectAsLazyPagingItems(),
                 searchHistory = searchHistory.collectAsLazyPagingItems(),
                 eventSink = {},
@@ -140,7 +140,7 @@ internal fun PreviewSearchUiSearchHistory() {
                     SearchHistoryListItemModel(
                         id = "a",
                         query = "aimer",
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = MusicBrainzEntityType.ARTIST,
                     ),
                 ),
             ),
@@ -148,7 +148,7 @@ internal fun PreviewSearchUiSearchHistory() {
         SearchUiContent(
             state = SearchUiState(
                 query = "",
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
                 searchResults = searchResults.collectAsLazyPagingItems(),
                 searchHistory = searchHistory.collectAsLazyPagingItems(),
                 eventSink = {},

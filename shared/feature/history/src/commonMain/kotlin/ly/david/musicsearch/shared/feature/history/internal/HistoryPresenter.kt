@@ -23,7 +23,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDe
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -89,7 +89,7 @@ internal class HistoryPresenter(
                 is HistoryUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            if (event.entity == MusicBrainzEntity.COLLECTION) {
+                            if (event.entity == MusicBrainzEntityType.COLLECTION) {
                                 CollectionScreen(
                                     collectionId = event.id,
                                 )
@@ -134,7 +134,7 @@ internal sealed interface HistoryUiEvent : CircuitUiEvent {
     data object UnMarkAllHistoryForDeletion : HistoryUiEvent
     data object DeleteAllHistory : HistoryUiEvent
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : HistoryUiEvent
 }

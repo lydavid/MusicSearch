@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun SearchHistoryListItem(
     searchHistory: SearchHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntity, query: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
 ) {
     SwipeToDeleteListItem(

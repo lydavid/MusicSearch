@@ -35,7 +35,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -54,7 +54,7 @@ fun ScrollableTopAppBar(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -84,7 +84,7 @@ fun ScrollableTopAppBar(
  * [TopAppBar] with icon for [entity], scrollable [title]/[subtitle];
  * back button if [showBackButton], invoking [onBack].
  *
- * @param entity What [MusicBrainzEntity]'s icon to display.
+ * @param entity What [MusicBrainzEntityType]'s icon to display.
  * @param actions Actions displayed in a [RowScope].
  * @param overflowDropdownMenuItems If set, displays three-ellipses action button at the end of the bar.
  *  When clicked, the items in this composable will be displayed in a dropdown menu.
@@ -97,7 +97,7 @@ fun ScrollableTopAppBar(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     annotatedString: AnnotatedString = AnnotatedString(""),
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -146,7 +146,7 @@ fun ScrollableTopAppBar(
 @Composable
 private fun TitleAndSubtitle(
     annotatedString: AnnotatedString,
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     subtitle: String = "",
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {

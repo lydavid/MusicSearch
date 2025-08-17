@@ -17,7 +17,7 @@ import kotlinx.collections.immutable.toImmutableMap
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
@@ -33,51 +33,51 @@ internal class DatabasePresenter(
         val countOfAllImages by
             musicBrainzImageMetadataRepository.observeCountOfAllImageMetadata().collectAsRetainedState(0)
         val countOfAllAreas by observeLocalCount(
-            browseEntity = MusicBrainzEntity.AREA,
+            browseEntity = MusicBrainzEntityType.AREA,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllArtists by observeLocalCount(
-            browseEntity = MusicBrainzEntity.ARTIST,
+            browseEntity = MusicBrainzEntityType.ARTIST,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllEvents by observeLocalCount(
-            browseEntity = MusicBrainzEntity.EVENT,
+            browseEntity = MusicBrainzEntityType.EVENT,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllGenres by observeLocalCount(
-            browseEntity = MusicBrainzEntity.GENRE,
+            browseEntity = MusicBrainzEntityType.GENRE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllInstruments by observeLocalCount(
-            browseEntity = MusicBrainzEntity.INSTRUMENT,
+            browseEntity = MusicBrainzEntityType.INSTRUMENT,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllLabels by observeLocalCount(
-            browseEntity = MusicBrainzEntity.LABEL,
+            browseEntity = MusicBrainzEntityType.LABEL,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllPlaces by observeLocalCount(
-            browseEntity = MusicBrainzEntity.PLACE,
+            browseEntity = MusicBrainzEntityType.PLACE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllRecordings by observeLocalCount(
-            browseEntity = MusicBrainzEntity.RECORDING,
+            browseEntity = MusicBrainzEntityType.RECORDING,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllReleases by observeLocalCount(
-            browseEntity = MusicBrainzEntity.RELEASE,
+            browseEntity = MusicBrainzEntityType.RELEASE,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllReleaseGroups by observeLocalCount(
-            browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+            browseEntity = MusicBrainzEntityType.RELEASE_GROUP,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllSeries by observeLocalCount(
-            browseEntity = MusicBrainzEntity.SERIES,
+            browseEntity = MusicBrainzEntityType.SERIES,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
         val countOfAllWorks by observeLocalCount(
-            browseEntity = MusicBrainzEntity.WORK,
+            browseEntity = MusicBrainzEntityType.WORK,
             browseMethod = BrowseMethod.All,
         ).collectAsRetainedState(0)
 
@@ -93,20 +93,20 @@ internal class DatabasePresenter(
             topAppBarFilterState = topAppBarFilterState,
             lazyListState = lazyListState,
             countOfAllImages = countOfAllImages,
-            entitiesCount = MusicBrainzEntity.entries.associateWith { entity ->
+            entitiesCount = MusicBrainzEntityType.entries.associateWith { entity ->
                 when (entity) {
-                    MusicBrainzEntity.AREA -> countOfAllAreas
-                    MusicBrainzEntity.ARTIST -> countOfAllArtists
-                    MusicBrainzEntity.EVENT -> countOfAllEvents
-                    MusicBrainzEntity.GENRE -> countOfAllGenres
-                    MusicBrainzEntity.INSTRUMENT -> countOfAllInstruments
-                    MusicBrainzEntity.LABEL -> countOfAllLabels
-                    MusicBrainzEntity.PLACE -> countOfAllPlaces
-                    MusicBrainzEntity.RECORDING -> countOfAllRecordings
-                    MusicBrainzEntity.RELEASE -> countOfAllReleases
-                    MusicBrainzEntity.RELEASE_GROUP -> countOfAllReleaseGroups
-                    MusicBrainzEntity.SERIES -> countOfAllSeries
-                    MusicBrainzEntity.WORK -> countOfAllWorks
+                    MusicBrainzEntityType.AREA -> countOfAllAreas
+                    MusicBrainzEntityType.ARTIST -> countOfAllArtists
+                    MusicBrainzEntityType.EVENT -> countOfAllEvents
+                    MusicBrainzEntityType.GENRE -> countOfAllGenres
+                    MusicBrainzEntityType.INSTRUMENT -> countOfAllInstruments
+                    MusicBrainzEntityType.LABEL -> countOfAllLabels
+                    MusicBrainzEntityType.PLACE -> countOfAllPlaces
+                    MusicBrainzEntityType.RECORDING -> countOfAllRecordings
+                    MusicBrainzEntityType.RELEASE -> countOfAllReleases
+                    MusicBrainzEntityType.RELEASE_GROUP -> countOfAllReleaseGroups
+                    MusicBrainzEntityType.SERIES -> countOfAllSeries
+                    MusicBrainzEntityType.WORK -> countOfAllWorks
                     else -> 0
                 }
             }.toImmutableMap(),
@@ -120,7 +120,7 @@ internal data class DatabaseUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyListState: LazyListState = LazyListState(),
     val countOfAllImages: Long = 0,
-    val entitiesCount: ImmutableMap<MusicBrainzEntity, Int> = persistentMapOf(),
+    val entitiesCount: ImmutableMap<MusicBrainzEntityType, Int> = persistentMapOf(),
     val eventSink: (DatabaseUiEvent) -> Unit = {},
 ) : CircuitUiState
 

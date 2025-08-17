@@ -11,7 +11,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.graph.GraphEdge
 import ly.david.musicsearch.shared.feature.graph.GraphNode
 import ly.david.musicsearch.ui.common.theme.ExtendedColors
@@ -84,21 +84,21 @@ fun DrawScope.renderText(
     )
 }
 
-private fun MusicBrainzEntity.getNodeColor(extendedColors: ExtendedColors): Color {
+private fun MusicBrainzEntityType.getNodeColor(extendedColors: ExtendedColors): Color {
     return when (this) {
-        MusicBrainzEntity.AREA -> extendedColors.area
-        MusicBrainzEntity.ARTIST -> extendedColors.artist
-        MusicBrainzEntity.COLLECTION -> extendedColors.collection
-        MusicBrainzEntity.EVENT -> extendedColors.event
-        MusicBrainzEntity.GENRE -> extendedColors.genre
-        MusicBrainzEntity.INSTRUMENT -> extendedColors.instrument
-        MusicBrainzEntity.LABEL -> extendedColors.label
-        MusicBrainzEntity.PLACE -> extendedColors.place
-        MusicBrainzEntity.RECORDING -> extendedColors.recording
-        MusicBrainzEntity.RELEASE -> extendedColors.release
-        MusicBrainzEntity.RELEASE_GROUP -> extendedColors.releaseGroup
-        MusicBrainzEntity.SERIES -> extendedColors.series
-        MusicBrainzEntity.WORK -> extendedColors.work
-        MusicBrainzEntity.URL -> extendedColors.url
+        MusicBrainzEntityType.AREA -> extendedColors.area
+        MusicBrainzEntityType.ARTIST -> extendedColors.artist
+        MusicBrainzEntityType.COLLECTION -> extendedColors.collection
+        MusicBrainzEntityType.EVENT -> extendedColors.event
+        MusicBrainzEntityType.GENRE -> extendedColors.genre
+        MusicBrainzEntityType.INSTRUMENT -> extendedColors.instrument
+        MusicBrainzEntityType.LABEL -> extendedColors.label
+        MusicBrainzEntityType.PLACE -> extendedColors.place
+        MusicBrainzEntityType.RECORDING -> extendedColors.recording
+        MusicBrainzEntityType.RELEASE -> extendedColors.release
+        MusicBrainzEntityType.RELEASE_GROUP -> extendedColors.releaseGroup
+        MusicBrainzEntityType.SERIES -> extendedColors.series
+        MusicBrainzEntityType.WORK -> extendedColors.work
+        MusicBrainzEntityType.URL -> extendedColors.url
     }
 }

@@ -14,7 +14,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.area.AreaPresenter
 import ly.david.musicsearch.shared.feature.details.area.AreaUi
 import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
@@ -51,7 +51,7 @@ val detailsFeatureModule = module {
             when (screen) {
                 is DetailsScreen -> {
                     when (screen.entity) {
-                        MusicBrainzEntity.AREA -> {
+                        MusicBrainzEntityType.AREA -> {
                             AreaPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -67,7 +67,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.ARTIST -> {
+                        MusicBrainzEntityType.ARTIST -> {
                             ArtistPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -83,7 +83,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.EVENT -> {
+                        MusicBrainzEntityType.EVENT -> {
                             EventPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -99,7 +99,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.GENRE -> {
+                        MusicBrainzEntityType.GENRE -> {
                             GenrePresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -110,7 +110,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.INSTRUMENT -> {
+                        MusicBrainzEntityType.INSTRUMENT -> {
                             InstrumentPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -126,7 +126,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.LABEL -> {
+                        MusicBrainzEntityType.LABEL -> {
                             LabelPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -142,7 +142,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.PLACE -> {
+                        MusicBrainzEntityType.PLACE -> {
                             PlacePresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -158,7 +158,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.RECORDING -> {
+                        MusicBrainzEntityType.RECORDING -> {
                             RecordingPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -174,7 +174,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.RELEASE -> {
+                        MusicBrainzEntityType.RELEASE -> {
                             ReleasePresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -190,7 +190,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.RELEASE_GROUP -> {
+                        MusicBrainzEntityType.RELEASE_GROUP -> {
                             ReleaseGroupPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -206,7 +206,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.SERIES -> {
+                        MusicBrainzEntityType.SERIES -> {
                             SeriesPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -222,7 +222,7 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        MusicBrainzEntity.WORK -> {
+                        MusicBrainzEntityType.WORK -> {
                             WorkPresenter(
                                 screen = screen,
                                 navigator = navigator,
@@ -251,7 +251,7 @@ val detailsFeatureModule = module {
             when (screen) {
                 is DetailsScreen -> {
                     when (screen.entity) {
-                        MusicBrainzEntity.AREA -> {
+                        MusicBrainzEntityType.AREA -> {
                             ui<DetailsUiState<AreaDetailsModel>> { state, modifier ->
                                 AreaUi(
                                     state = state,
@@ -261,7 +261,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.ARTIST -> {
+                        MusicBrainzEntityType.ARTIST -> {
                             ui<DetailsUiState<ArtistDetailsModel>> { state, modifier ->
                                 ArtistUi(
                                     state = state,
@@ -271,7 +271,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.EVENT -> {
+                        MusicBrainzEntityType.EVENT -> {
                             ui<DetailsUiState<EventDetailsModel>> { state, modifier ->
                                 EventUi(
                                     state = state,
@@ -281,7 +281,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.GENRE -> {
+                        MusicBrainzEntityType.GENRE -> {
                             ui<GenreUiState> { state, modifier ->
                                 GenreUi(
                                     state = state,
@@ -290,7 +290,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.INSTRUMENT -> {
+                        MusicBrainzEntityType.INSTRUMENT -> {
                             ui<DetailsUiState<InstrumentDetailsModel>> { state, modifier ->
                                 InstrumentUi(
                                     state = state,
@@ -300,7 +300,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.LABEL -> {
+                        MusicBrainzEntityType.LABEL -> {
                             ui<DetailsUiState<LabelDetailsModel>> { state, modifier ->
                                 LabelUi(
                                     state = state,
@@ -310,7 +310,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.PLACE -> {
+                        MusicBrainzEntityType.PLACE -> {
                             ui<DetailsUiState<PlaceDetailsModel>> { state, modifier ->
                                 PlaceUi(
                                     state = state,
@@ -320,7 +320,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.RECORDING -> {
+                        MusicBrainzEntityType.RECORDING -> {
                             ui<DetailsUiState<RecordingDetailsModel>> { state, modifier ->
                                 RecordingUi(
                                     state = state,
@@ -330,7 +330,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.RELEASE -> {
+                        MusicBrainzEntityType.RELEASE -> {
                             ui<DetailsUiState<ReleaseDetailsModel>> { state, modifier ->
                                 ReleaseUi(
                                     state = state,
@@ -340,7 +340,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.RELEASE_GROUP -> {
+                        MusicBrainzEntityType.RELEASE_GROUP -> {
                             ui<DetailsUiState<ReleaseGroupDetailsModel>> { state, modifier ->
                                 ReleaseGroupUi(
                                     state = state,
@@ -350,7 +350,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.SERIES -> {
+                        MusicBrainzEntityType.SERIES -> {
                             ui<DetailsUiState<SeriesDetailsModel>> { state, modifier ->
                                 SeriesUi(
                                     state = state,
@@ -360,7 +360,7 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        MusicBrainzEntity.WORK -> {
+                        MusicBrainzEntityType.WORK -> {
                             ui<DetailsUiState<WorkDetailsModel>> { state, modifier ->
                                 WorkUi(
                                     state = state,

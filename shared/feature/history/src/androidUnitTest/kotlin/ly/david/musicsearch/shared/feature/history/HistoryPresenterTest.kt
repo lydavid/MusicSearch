@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.MarkLookupHistoryForDe
 import ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter
 import ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
@@ -77,7 +77,7 @@ class HistoryPresenterTest {
             listItems = listOf(
                 LookupHistoryListItemModel(
                     title = "欠けた心象、世のよすが",
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
                     lastAccessed = currentTime,
@@ -93,7 +93,7 @@ class HistoryPresenterTest {
                 listOf(
                     LookupHistoryListItemModel(
                         title = "欠けた心象、世のよすが",
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                         id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                         numberOfVisits = 9999,
                         lastAccessed = currentTime,
@@ -110,14 +110,14 @@ class HistoryPresenterTest {
 
             state.eventSink(
                 HistoryUiEvent.ClickItem(
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 ),
             )
             assertEquals(
                 navigator.awaitNextScreen(),
                 DetailsScreen(
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 ),
             )
@@ -130,7 +130,7 @@ class HistoryPresenterTest {
             listItems = listOf(
                 LookupHistoryListItemModel(
                     title = "My collection",
-                    entity = MusicBrainzEntity.COLLECTION,
+                    entity = MusicBrainzEntityType.COLLECTION,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
                     lastAccessed = currentTime,
                 ),
@@ -143,7 +143,7 @@ class HistoryPresenterTest {
                 listOf(
                     LookupHistoryListItemModel(
                         title = "My collection",
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                         id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
                         lastAccessed = currentTime,
                     ),
@@ -153,7 +153,7 @@ class HistoryPresenterTest {
 
             state.eventSink(
                 HistoryUiEvent.ClickItem(
-                    entity = MusicBrainzEntity.COLLECTION,
+                    entity = MusicBrainzEntityType.COLLECTION,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
                 ),
             )

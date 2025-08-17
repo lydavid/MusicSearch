@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlin.time.Clock
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 interface GetEntityRelationships {
     operator fun invoke(
         entityId: String,
-        entity: MusicBrainzEntity?,
-        relatedEntities: Set<MusicBrainzEntity>,
+        entity: MusicBrainzEntityType?,
+        relatedEntities: Set<MusicBrainzEntityType>,
         query: String,
     ): Flow<PagingData<ListItemModel>>
 }
@@ -26,8 +26,8 @@ class GetEntityRelationshipsImpl(
 ) : GetEntityRelationships {
     override operator fun invoke(
         entityId: String,
-        entity: MusicBrainzEntity?,
-        relatedEntities: Set<MusicBrainzEntity>,
+        entity: MusicBrainzEntityType?,
+        relatedEntities: Set<MusicBrainzEntityType>,
         query: String,
     ): Flow<PagingData<ListItemModel>> {
         return when {

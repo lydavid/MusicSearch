@@ -1,6 +1,6 @@
 package ly.david.musicsearch.ui.common.topappbar
 
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.strings.AppStrings
 
 /**
@@ -46,20 +46,20 @@ fun Tab.getTitle(strings: AppStrings): String {
     }
 }
 
-fun Tab.toMusicBrainzEntity(): MusicBrainzEntity? {
+fun Tab.toMusicBrainzEntity(): MusicBrainzEntityType? {
     return when (this) {
-        Tab.AREAS -> MusicBrainzEntity.AREA
-        Tab.ARTISTS -> MusicBrainzEntity.ARTIST
-        Tab.EVENTS -> MusicBrainzEntity.EVENT
-        Tab.GENRES -> MusicBrainzEntity.GENRE
-        Tab.INSTRUMENTS -> MusicBrainzEntity.INSTRUMENT
-        Tab.LABELS -> MusicBrainzEntity.LABEL
-        Tab.PLACES -> MusicBrainzEntity.PLACE
-        Tab.RECORDINGS -> MusicBrainzEntity.RECORDING
-        Tab.RELEASES -> MusicBrainzEntity.RELEASE
-        Tab.RELEASE_GROUPS -> MusicBrainzEntity.RELEASE_GROUP
-        Tab.SERIES -> MusicBrainzEntity.SERIES
-        Tab.WORKS -> MusicBrainzEntity.WORK
+        Tab.AREAS -> MusicBrainzEntityType.AREA
+        Tab.ARTISTS -> MusicBrainzEntityType.ARTIST
+        Tab.EVENTS -> MusicBrainzEntityType.EVENT
+        Tab.GENRES -> MusicBrainzEntityType.GENRE
+        Tab.INSTRUMENTS -> MusicBrainzEntityType.INSTRUMENT
+        Tab.LABELS -> MusicBrainzEntityType.LABEL
+        Tab.PLACES -> MusicBrainzEntityType.PLACE
+        Tab.RECORDINGS -> MusicBrainzEntityType.RECORDING
+        Tab.RELEASES -> MusicBrainzEntityType.RELEASE
+        Tab.RELEASE_GROUPS -> MusicBrainzEntityType.RELEASE_GROUP
+        Tab.SERIES -> MusicBrainzEntityType.SERIES
+        Tab.WORKS -> MusicBrainzEntityType.WORK
         Tab.DETAILS,
         Tab.RELATIONSHIPS,
         Tab.STATS,
@@ -68,22 +68,22 @@ fun Tab.toMusicBrainzEntity(): MusicBrainzEntity? {
     }
 }
 
-fun MusicBrainzEntity.toTab(): Tab? {
+fun MusicBrainzEntityType.toTab(): Tab? {
     return when (this) {
-        MusicBrainzEntity.AREA -> Tab.AREAS
-        MusicBrainzEntity.ARTIST -> Tab.ARTISTS
-        MusicBrainzEntity.EVENT -> Tab.EVENTS
-        MusicBrainzEntity.GENRE -> Tab.GENRES
-        MusicBrainzEntity.INSTRUMENT -> Tab.INSTRUMENTS
-        MusicBrainzEntity.LABEL -> Tab.LABELS
-        MusicBrainzEntity.PLACE -> Tab.PLACES
-        MusicBrainzEntity.RECORDING -> Tab.RECORDINGS
-        MusicBrainzEntity.RELEASE -> Tab.RELEASES
-        MusicBrainzEntity.RELEASE_GROUP -> Tab.RELEASE_GROUPS
-        MusicBrainzEntity.SERIES -> Tab.SERIES
-        MusicBrainzEntity.WORK -> Tab.WORKS
-        MusicBrainzEntity.COLLECTION,
-        MusicBrainzEntity.URL,
+        MusicBrainzEntityType.AREA -> Tab.AREAS
+        MusicBrainzEntityType.ARTIST -> Tab.ARTISTS
+        MusicBrainzEntityType.EVENT -> Tab.EVENTS
+        MusicBrainzEntityType.GENRE -> Tab.GENRES
+        MusicBrainzEntityType.INSTRUMENT -> Tab.INSTRUMENTS
+        MusicBrainzEntityType.LABEL -> Tab.LABELS
+        MusicBrainzEntityType.PLACE -> Tab.PLACES
+        MusicBrainzEntityType.RECORDING -> Tab.RECORDINGS
+        MusicBrainzEntityType.RELEASE -> Tab.RELEASES
+        MusicBrainzEntityType.RELEASE_GROUP -> Tab.RELEASE_GROUPS
+        MusicBrainzEntityType.SERIES -> Tab.SERIES
+        MusicBrainzEntityType.WORK -> Tab.WORKS
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.URL,
         -> null
     }
 }

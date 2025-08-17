@@ -20,7 +20,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.AliasQueries
 
 class AliasDao(
@@ -248,22 +248,22 @@ class AliasDao(
     }
 
     fun getAliases(
-        entityType: MusicBrainzEntity,
+        entityType: MusicBrainzEntityType,
         mbid: String,
     ): ImmutableList<BasicAlias> {
-        val aliasQueries: Map<MusicBrainzEntity, AliasQuery<BasicAlias>> = mapOf(
-            MusicBrainzEntity.AREA to transacter::getAreaAliases,
-            MusicBrainzEntity.ARTIST to transacter::getArtistAliases,
-            MusicBrainzEntity.EVENT to transacter::getEventAliases,
-            MusicBrainzEntity.GENRE to transacter::getGenreAliases,
-            MusicBrainzEntity.INSTRUMENT to transacter::getInstrumentAliases,
-            MusicBrainzEntity.LABEL to transacter::getLabelAliases,
-            MusicBrainzEntity.PLACE to transacter::getPlaceAliases,
-            MusicBrainzEntity.RECORDING to transacter::getRecordingAliases,
-            MusicBrainzEntity.RELEASE to transacter::getReleaseAliases,
-            MusicBrainzEntity.RELEASE_GROUP to transacter::getReleaseGroupAliases,
-            MusicBrainzEntity.SERIES to transacter::getSeriesAliases,
-            MusicBrainzEntity.WORK to transacter::getWorkAliases,
+        val aliasQueries: Map<MusicBrainzEntityType, AliasQuery<BasicAlias>> = mapOf(
+            MusicBrainzEntityType.AREA to transacter::getAreaAliases,
+            MusicBrainzEntityType.ARTIST to transacter::getArtistAliases,
+            MusicBrainzEntityType.EVENT to transacter::getEventAliases,
+            MusicBrainzEntityType.GENRE to transacter::getGenreAliases,
+            MusicBrainzEntityType.INSTRUMENT to transacter::getInstrumentAliases,
+            MusicBrainzEntityType.LABEL to transacter::getLabelAliases,
+            MusicBrainzEntityType.PLACE to transacter::getPlaceAliases,
+            MusicBrainzEntityType.RECORDING to transacter::getRecordingAliases,
+            MusicBrainzEntityType.RELEASE to transacter::getReleaseAliases,
+            MusicBrainzEntityType.RELEASE_GROUP to transacter::getReleaseGroupAliases,
+            MusicBrainzEntityType.SERIES to transacter::getSeriesAliases,
+            MusicBrainzEntityType.WORK to transacter::getWorkAliases,
         )
 
         return aliasQueries[entityType]

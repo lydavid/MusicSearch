@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -152,21 +152,21 @@ class ReleaseDao(
 
         is BrowseMethod.ByEntity -> {
             when (browseMethod.entity) {
-                MusicBrainzEntity.AREA -> {
+                MusicBrainzEntityType.AREA -> {
                     getReleasesByCountry(
                         areaId = browseMethod.entityId,
                         query = query,
                     )
                 }
 
-                MusicBrainzEntity.LABEL -> {
+                MusicBrainzEntityType.LABEL -> {
                     getReleasesByLabel(
                         labelId = browseMethod.entityId,
                         query = query,
                     )
                 }
 
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     getReleasesByCollection(
                         collectionId = browseMethod.entityId,
                         query = query,
@@ -391,7 +391,7 @@ class ReleaseDao(
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

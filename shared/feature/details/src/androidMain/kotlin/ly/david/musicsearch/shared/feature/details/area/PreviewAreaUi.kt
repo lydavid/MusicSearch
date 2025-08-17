@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -417,35 +417,35 @@ private val canadianRelations: MutableStateFlow<PagingData<ListItemModel>> = Mut
             RelationListItemModel(
                 id = "1",
                 linkedEntityId = "11e1b699-4e38-49b0-bb24-5092e0f8f4ad",
-                linkedEntity = MusicBrainzEntity.AREA,
+                linkedEntity = MusicBrainzEntityType.AREA,
                 label = "parts",
                 name = "Alberta",
             ),
             RelationListItemModel(
                 id = "2",
                 linkedEntityId = "659cef61-3f19-4435-aae5-360183a42d6c",
-                linkedEntity = MusicBrainzEntity.EVENT,
+                linkedEntity = MusicBrainzEntityType.EVENT,
                 label = "held events",
                 name = "BadBitz: Surprise",
             ),
             RelationListItemModel(
                 id = "3",
                 linkedEntityId = "340e3fe3-bb82-467d-9d10-ea2ebbfc8350",
-                linkedEntity = MusicBrainzEntity.GENRE,
+                linkedEntity = MusicBrainzEntityType.GENRE,
                 label = "genres",
                 name = "cape breton fiddling",
             ),
             RelationListItemModel(
                 id = "4",
                 linkedEntityId = "7aa50be7-d31a-4e89-9fb2-a32ad290b255",
-                linkedEntity = MusicBrainzEntity.INSTRUMENT,
+                linkedEntity = MusicBrainzEntityType.INSTRUMENT,
                 label = "instruments",
                 name = "qilaut",
             ),
             RelationListItemModel(
                 id = "5",
                 linkedEntityId = "7aa50be7-d31a-4e89-9fb2-a32ad290b255",
-                linkedEntity = MusicBrainzEntity.RECORDING,
+                linkedEntity = MusicBrainzEntityType.RECORDING,
                 label = "engineered in",
                 name = "Prélude de Sarah / Sarah",
                 disambiguation = "live, 1976-04-18: Radio Canada",
@@ -453,21 +453,21 @@ private val canadianRelations: MutableStateFlow<PagingData<ListItemModel>> = Mut
             RelationListItemModel(
                 id = "6",
                 linkedEntityId = "9cd48072-3b45-4c1f-8af0-fb443582f371",
-                linkedEntity = MusicBrainzEntity.RELEASE,
+                linkedEntity = MusicBrainzEntityType.RELEASE,
                 label = "manufacturing location for",
                 name = "National Melodies",
             ),
             RelationListItemModel(
                 id = "7",
                 linkedEntityId = "fb4789c6-bfe7-43aa-ae9b-83e14bc7707b",
-                linkedEntity = MusicBrainzEntity.SERIES,
+                linkedEntity = MusicBrainzEntityType.SERIES,
                 label = "location for",
                 name = "Reckoning Night World Tour",
             ),
             RelationListItemModel(
                 id = "8",
                 linkedEntityId = "3076d301-eacc-4316-95d2-5b6cda30928c",
-                linkedEntity = MusicBrainzEntity.WORK,
+                linkedEntity = MusicBrainzEntityType.WORK,
                 label = "anthem",
                 name = "O Canada",
                 disambiguation = "English version by Robert Stanley Weir",
@@ -485,14 +485,14 @@ private val country = AreaDetailsModel(
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "82973788-ebfc-46b5-ae59-bc8dcb5a67b9",
             label = "Geonames",
             name = "http://sws.geonames.org/6251999/",
         ),
         RelationListItemModel(
             id = "2",
-            linkedEntity = MusicBrainzEntity.URL,
+            linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2f21890b-48d9-4449-a883-18752b3f4508",
             label = "Wikidata",
             name = "https://m.wikidata.org/wiki/Q16",

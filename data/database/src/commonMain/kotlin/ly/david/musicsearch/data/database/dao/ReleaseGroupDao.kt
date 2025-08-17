@@ -17,7 +17,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_group
@@ -168,7 +168,7 @@ class ReleaseGroupDaoImpl(
     ): Flow<List<ReleaseGroupTypeCount>> {
         return when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     transacter.getCountOfEachAlbumTypesByCollection(
                         collectionId = browseMethod.entityId,
                         mapper = { primaryType, secondaryTypes, count ->
@@ -222,7 +222,7 @@ class ReleaseGroupDaoImpl(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                 getReleaseGroupsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -241,7 +241,7 @@ class ReleaseGroupDaoImpl(
     override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

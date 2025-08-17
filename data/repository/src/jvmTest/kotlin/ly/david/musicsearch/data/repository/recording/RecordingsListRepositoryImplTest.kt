@@ -31,7 +31,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -69,7 +69,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                 id = collectionId,
                 isRemote = false,
                 name = "recordings",
-                entity = MusicBrainzEntity.RECORDING,
+                entity = MusicBrainzEntityType.RECORDING,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -82,7 +82,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                 recordingsListRepository.observeRecordings(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -136,7 +136,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     @Test
     fun setUpRecordingsByArtist() = runTest {
         val entityId = itouKanakoArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         val recordings = listOf(
             skycladObserverRecordingMusicBrainzModel,
             skycladObserverCoverRecordingMusicBrainzModel,
@@ -181,7 +181,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     @Test
     fun setupRecordingsByWork() = runTest {
         val entityId = skycladObserverWorkMusicBrainzModel.id
-        val entity = MusicBrainzEntity.WORK
+        val entity = MusicBrainzEntityType.WORK
         val recordings = listOf(
             skycladObserverRecordingMusicBrainzModel,
             skycladObserverCoverRecordingMusicBrainzModel,
@@ -295,7 +295,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = itouKanakoArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -316,7 +316,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = skycladObserverWorkMusicBrainzModel.id,
-                entity = MusicBrainzEntity.WORK,
+                entity = MusicBrainzEntityType.WORK,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -349,7 +349,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = skycladObserverWorkMusicBrainzModel.id,
-                entity = MusicBrainzEntity.WORK,
+                entity = MusicBrainzEntityType.WORK,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -467,7 +467,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = itouKanakoArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -487,7 +487,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntity.COLLECTION,
+                entity = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

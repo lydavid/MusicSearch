@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageId
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.Relation
 
 /**
@@ -24,7 +24,7 @@ data class RelationListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val attributes: String? = null,
-    override val linkedEntity: MusicBrainzEntity,
+    override val linkedEntity: MusicBrainzEntityType,
     override val visited: Boolean = true,
     override val isForwardDirection: Boolean? = null,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

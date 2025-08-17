@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 
@@ -52,7 +52,7 @@ class RelationDao(
     fun getEntityRelationships(
         entityId: String,
         query: String = "%%",
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
         countQuery = transacter.countEntityRelationships(
             entityId = entityId,
@@ -75,7 +75,7 @@ class RelationDao(
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
     ) {
         transacter.deleteRelationships(
             entityId = entityId,
@@ -85,7 +85,7 @@ class RelationDao(
 
     fun getRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): List<RelationListItemModel> {
         return transacter.getRelationshipsByType(
             entityId = entityId,
@@ -98,7 +98,7 @@ class RelationDao(
 
     fun deleteRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         transacter.deleteRelationshipsByType(
             entityId = entityId,
@@ -108,7 +108,7 @@ class RelationDao(
 
     private fun mapToRelationListItemModel(
         linkedEntityId: String,
-        linkedEntity: MusicBrainzEntity,
+        linkedEntity: MusicBrainzEntityType,
         order: Int,
         label: String,
         name: String,
@@ -132,7 +132,7 @@ class RelationDao(
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        visited = visited == true || linkedEntity == MusicBrainzEntity.URL,
+        visited = visited == true || linkedEntity == MusicBrainzEntityType.URL,
         isForwardDirection = isForwardDirection,
         lifeSpan = LifeSpanUiModel(
             begin = begin,

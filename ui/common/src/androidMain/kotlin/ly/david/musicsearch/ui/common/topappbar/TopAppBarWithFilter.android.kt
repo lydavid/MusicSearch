@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
@@ -29,7 +29,7 @@ actual fun TopAppBarWithFilter(
     onBack: () -> Unit,
     showBackButton: Boolean,
     onSelectAllToggle: () -> Unit,
-    entity: MusicBrainzEntity?,
+    entity: MusicBrainzEntityType?,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,

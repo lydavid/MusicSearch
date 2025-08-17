@@ -20,7 +20,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.artist.ArtistListItem
@@ -63,7 +63,7 @@ fun EntitiesPagingListUi(
                     area = listItemModel,
                     onAreaClick = {
                         onItemClick(
-                            MusicBrainzEntity.AREA,
+                            MusicBrainzEntityType.AREA,
                             id,
                         )
                     },
@@ -78,7 +78,7 @@ fun EntitiesPagingListUi(
                     artist = listItemModel,
                     onClick = {
                         onItemClick(
-                            MusicBrainzEntity.ARTIST,
+                            MusicBrainzEntityType.ARTIST,
                             id,
                         )
                     },
@@ -93,7 +93,7 @@ fun EntitiesPagingListUi(
                     event = listItemModel,
                     onEventClick = {
                         onItemClick(
-                            MusicBrainzEntity.EVENT,
+                            MusicBrainzEntityType.EVENT,
                             id,
                         )
                     },
@@ -108,7 +108,7 @@ fun EntitiesPagingListUi(
                     genre = listItemModel,
                     onGenreClick = {
                         onItemClick(
-                            MusicBrainzEntity.GENRE,
+                            MusicBrainzEntityType.GENRE,
                             id,
                         )
                     },
@@ -123,7 +123,7 @@ fun EntitiesPagingListUi(
                     instrument = listItemModel,
                     onInstrumentClick = {
                         onItemClick(
-                            MusicBrainzEntity.INSTRUMENT,
+                            MusicBrainzEntityType.INSTRUMENT,
                             id,
                         )
                     },
@@ -138,7 +138,7 @@ fun EntitiesPagingListUi(
                     label = listItemModel,
                     onLabelClick = {
                         onItemClick(
-                            MusicBrainzEntity.LABEL,
+                            MusicBrainzEntityType.LABEL,
                             id,
                         )
                     },
@@ -153,7 +153,7 @@ fun EntitiesPagingListUi(
                     place = listItemModel,
                     onPlaceClick = {
                         onItemClick(
-                            MusicBrainzEntity.PLACE,
+                            MusicBrainzEntityType.PLACE,
                             id,
                         )
                     },
@@ -168,7 +168,7 @@ fun EntitiesPagingListUi(
                     recording = listItemModel,
                     onRecordingClick = {
                         onItemClick(
-                            MusicBrainzEntity.RECORDING,
+                            MusicBrainzEntityType.RECORDING,
                             id,
                         )
                     },
@@ -187,7 +187,7 @@ fun EntitiesPagingListUi(
                     },
                     onClick = {
                         onItemClick(
-                            MusicBrainzEntity.RELEASE,
+                            MusicBrainzEntityType.RELEASE,
                             id,
                         )
                     },
@@ -206,7 +206,7 @@ fun EntitiesPagingListUi(
                     },
                     onClick = {
                         onItemClick(
-                            MusicBrainzEntity.RELEASE_GROUP,
+                            MusicBrainzEntityType.RELEASE_GROUP,
                             id,
                         )
                     },
@@ -221,7 +221,7 @@ fun EntitiesPagingListUi(
                     series = listItemModel,
                     onSeriesClick = {
                         onItemClick(
-                            MusicBrainzEntity.SERIES,
+                            MusicBrainzEntityType.SERIES,
                             id,
                         )
                     },
@@ -236,7 +236,7 @@ fun EntitiesPagingListUi(
                     work = listItemModel,
                     onWorkClick = {
                         onItemClick(
-                            MusicBrainzEntity.WORK,
+                            MusicBrainzEntityType.WORK,
                             id,
                         )
                     },
@@ -250,7 +250,7 @@ fun EntitiesPagingListUi(
                 RelationListItem(
                     relation = listItemModel,
                     onItemClick = { entity, id ->
-                        require(entity != MusicBrainzEntity.URL)
+                        require(entity != MusicBrainzEntityType.URL)
                         onItemClick(
                             entity,
                             id,

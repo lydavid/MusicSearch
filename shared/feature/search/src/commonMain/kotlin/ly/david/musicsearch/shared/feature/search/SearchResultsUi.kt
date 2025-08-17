@@ -25,7 +25,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.artist.ArtistListItem
@@ -85,7 +85,7 @@ private fun ListItemUi(
                 showType = true,
                 onAreaClick = {
                     onItemClick(
-                        MusicBrainzEntity.AREA,
+                        MusicBrainzEntityType.AREA,
                         id,
                     )
                 },
@@ -97,7 +97,7 @@ private fun ListItemUi(
                 artist = listItemModel,
                 onClick = {
                     onItemClick(
-                        MusicBrainzEntity.ARTIST,
+                        MusicBrainzEntityType.ARTIST,
                         id,
                     )
                 },
@@ -109,7 +109,7 @@ private fun ListItemUi(
                 event = listItemModel,
                 onEventClick = {
                     onItemClick(
-                        MusicBrainzEntity.EVENT,
+                        MusicBrainzEntityType.EVENT,
                         id,
                     )
                 },
@@ -121,7 +121,7 @@ private fun ListItemUi(
                 instrument = listItemModel,
                 onInstrumentClick = {
                     onItemClick(
-                        MusicBrainzEntity.INSTRUMENT,
+                        MusicBrainzEntityType.INSTRUMENT,
                         id,
                     )
                 },
@@ -133,7 +133,7 @@ private fun ListItemUi(
                 label = listItemModel,
                 onLabelClick = {
                     onItemClick(
-                        MusicBrainzEntity.LABEL,
+                        MusicBrainzEntityType.LABEL,
                         id,
                     )
                 },
@@ -145,7 +145,7 @@ private fun ListItemUi(
                 place = listItemModel,
                 onPlaceClick = {
                     onItemClick(
-                        MusicBrainzEntity.PLACE,
+                        MusicBrainzEntityType.PLACE,
                         id,
                     )
                 },
@@ -157,7 +157,7 @@ private fun ListItemUi(
                 recording = listItemModel,
                 onRecordingClick = {
                     onItemClick(
-                        MusicBrainzEntity.RECORDING,
+                        MusicBrainzEntityType.RECORDING,
                         id,
                     )
                 },
@@ -169,7 +169,7 @@ private fun ListItemUi(
                 release = listItemModel,
                 onClick = {
                     onItemClick(
-                        MusicBrainzEntity.RELEASE,
+                        MusicBrainzEntityType.RELEASE,
                         id,
                     )
                 },
@@ -182,7 +182,7 @@ private fun ListItemUi(
                 showType = true,
                 onClick = {
                     onItemClick(
-                        MusicBrainzEntity.RELEASE_GROUP,
+                        MusicBrainzEntityType.RELEASE_GROUP,
                         id,
                     )
                 },
@@ -194,7 +194,7 @@ private fun ListItemUi(
                 series = listItemModel,
                 onSeriesClick = {
                     onItemClick(
-                        MusicBrainzEntity.SERIES,
+                        MusicBrainzEntityType.SERIES,
                         id,
                     )
                 },
@@ -206,7 +206,7 @@ private fun ListItemUi(
                 work = listItemModel,
                 onWorkClick = {
                     onItemClick(
-                        MusicBrainzEntity.WORK,
+                        MusicBrainzEntityType.WORK,
                         id,
                     )
                 },

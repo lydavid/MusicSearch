@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -21,55 +21,55 @@ internal fun PreviewAddRelationshipsSectionAll() {
                     relationStats = RelationStats(
                         relationTypeCounts = persistentListOf(
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.AREA,
+                                linkedEntity = MusicBrainzEntityType.AREA,
                                 count = 1,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.ARTIST,
+                                linkedEntity = MusicBrainzEntityType.ARTIST,
                                 count = 2,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.EVENT,
+                                linkedEntity = MusicBrainzEntityType.EVENT,
                                 count = 3,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.GENRE,
+                                linkedEntity = MusicBrainzEntityType.GENRE,
                                 count = 4,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.INSTRUMENT,
+                                linkedEntity = MusicBrainzEntityType.INSTRUMENT,
                                 count = 5,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.LABEL,
+                                linkedEntity = MusicBrainzEntityType.LABEL,
                                 count = 6,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.PLACE,
+                                linkedEntity = MusicBrainzEntityType.PLACE,
                                 count = 7,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.RECORDING,
+                                linkedEntity = MusicBrainzEntityType.RECORDING,
                                 count = 6,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.RELEASE,
+                                linkedEntity = MusicBrainzEntityType.RELEASE,
                                 count = 5,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.RELEASE_GROUP,
+                                linkedEntity = MusicBrainzEntityType.RELEASE_GROUP,
                                 count = 4,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.SERIES,
+                                linkedEntity = MusicBrainzEntityType.SERIES,
                                 count = 3,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.URL,
+                                linkedEntity = MusicBrainzEntityType.URL,
                                 count = 2,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.WORK,
+                                linkedEntity = MusicBrainzEntityType.WORK,
                                 count = 1,
                             ),
                         ),
@@ -109,7 +109,7 @@ internal fun PreviewAddRelationshipsSectionNullLastUpdated() {
                     relationStats = RelationStats(
                         relationTypeCounts = persistentListOf(
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.URL,
+                                linkedEntity = MusicBrainzEntityType.URL,
                                 count = 2,
                             ),
                         ),

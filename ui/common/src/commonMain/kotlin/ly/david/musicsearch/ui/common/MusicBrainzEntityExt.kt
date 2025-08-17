@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.CollectionsBookmark
@@ -20,62 +20,62 @@ import ly.david.musicsearch.ui.common.icons.Public
 import ly.david.musicsearch.ui.common.icons.TheaterComedy
 
 /**
- * Returns an appropriate name for this [MusicBrainzEntity].
+ * Returns an appropriate name for this [MusicBrainzEntityType].
  */
-fun MusicBrainzEntity.getName(strings: AppStrings): String {
+fun MusicBrainzEntityType.getName(strings: AppStrings): String {
     return when (this) {
-        MusicBrainzEntity.AREA -> strings.area
-        MusicBrainzEntity.ARTIST -> strings.artist
-        MusicBrainzEntity.EVENT -> strings.event
-        MusicBrainzEntity.GENRE -> strings.genre
-        MusicBrainzEntity.INSTRUMENT -> strings.instrument
-        MusicBrainzEntity.LABEL -> strings.label
-        MusicBrainzEntity.PLACE -> strings.place
-        MusicBrainzEntity.RECORDING -> strings.recording
-        MusicBrainzEntity.RELEASE -> strings.release
-        MusicBrainzEntity.RELEASE_GROUP -> strings.releaseGroup
-        MusicBrainzEntity.SERIES -> strings.series
-        MusicBrainzEntity.WORK -> strings.work
-        MusicBrainzEntity.URL -> strings.url
-        MusicBrainzEntity.COLLECTION -> strings.collection
+        MusicBrainzEntityType.AREA -> strings.area
+        MusicBrainzEntityType.ARTIST -> strings.artist
+        MusicBrainzEntityType.EVENT -> strings.event
+        MusicBrainzEntityType.GENRE -> strings.genre
+        MusicBrainzEntityType.INSTRUMENT -> strings.instrument
+        MusicBrainzEntityType.LABEL -> strings.label
+        MusicBrainzEntityType.PLACE -> strings.place
+        MusicBrainzEntityType.RECORDING -> strings.recording
+        MusicBrainzEntityType.RELEASE -> strings.release
+        MusicBrainzEntityType.RELEASE_GROUP -> strings.releaseGroup
+        MusicBrainzEntityType.SERIES -> strings.series
+        MusicBrainzEntityType.WORK -> strings.work
+        MusicBrainzEntityType.URL -> strings.url
+        MusicBrainzEntityType.COLLECTION -> strings.collection
     }
 }
 
-fun MusicBrainzEntity.getNamePlural(strings: AppStrings): String {
+fun MusicBrainzEntityType.getNamePlural(strings: AppStrings): String {
     return when (this) {
-        MusicBrainzEntity.AREA -> strings.areas
-        MusicBrainzEntity.ARTIST -> strings.artists
-        MusicBrainzEntity.EVENT -> strings.events
-        MusicBrainzEntity.GENRE -> strings.genres
-        MusicBrainzEntity.INSTRUMENT -> strings.instruments
-        MusicBrainzEntity.LABEL -> strings.labels
-        MusicBrainzEntity.PLACE -> strings.places
-        MusicBrainzEntity.RECORDING -> strings.recordings
-        MusicBrainzEntity.RELEASE -> strings.releases
-        MusicBrainzEntity.RELEASE_GROUP -> strings.releaseGroups
-        MusicBrainzEntity.SERIES -> strings.series
-        MusicBrainzEntity.WORK -> strings.works
-        MusicBrainzEntity.URL -> strings.urls
-        MusicBrainzEntity.COLLECTION -> strings.collections
+        MusicBrainzEntityType.AREA -> strings.areas
+        MusicBrainzEntityType.ARTIST -> strings.artists
+        MusicBrainzEntityType.EVENT -> strings.events
+        MusicBrainzEntityType.GENRE -> strings.genres
+        MusicBrainzEntityType.INSTRUMENT -> strings.instruments
+        MusicBrainzEntityType.LABEL -> strings.labels
+        MusicBrainzEntityType.PLACE -> strings.places
+        MusicBrainzEntityType.RECORDING -> strings.recordings
+        MusicBrainzEntityType.RELEASE -> strings.releases
+        MusicBrainzEntityType.RELEASE_GROUP -> strings.releaseGroups
+        MusicBrainzEntityType.SERIES -> strings.series
+        MusicBrainzEntityType.WORK -> strings.works
+        MusicBrainzEntityType.URL -> strings.urls
+        MusicBrainzEntityType.COLLECTION -> strings.collections
     }
 }
 
-fun MusicBrainzEntity.getIcon(): ImageVector? {
+fun MusicBrainzEntityType.getIcon(): ImageVector? {
     return when (this) {
-        MusicBrainzEntity.AREA -> CustomIcons.Public
-        MusicBrainzEntity.ARTIST -> CustomIcons.Person
-        MusicBrainzEntity.COLLECTION -> CustomIcons.CollectionsBookmark
-        MusicBrainzEntity.EVENT -> CustomIcons.Event
-        MusicBrainzEntity.GENRE -> CustomIcons.TheaterComedy
-        MusicBrainzEntity.INSTRUMENT -> CustomIcons.Piano
-        MusicBrainzEntity.LABEL -> CustomIcons.CorporateFare
-        MusicBrainzEntity.PLACE -> CustomIcons.Place
-        MusicBrainzEntity.RECORDING -> CustomIcons.Mic
-        MusicBrainzEntity.RELEASE -> CustomIcons.Album
-        MusicBrainzEntity.RELEASE_GROUP -> CustomIcons.Folder
-        MusicBrainzEntity.SERIES -> CustomIcons.List
-        MusicBrainzEntity.WORK -> CustomIcons.MusicNote
-        MusicBrainzEntity.URL -> CustomIcons.Link
+        MusicBrainzEntityType.AREA -> CustomIcons.Public
+        MusicBrainzEntityType.ARTIST -> CustomIcons.Person
+        MusicBrainzEntityType.COLLECTION -> CustomIcons.CollectionsBookmark
+        MusicBrainzEntityType.EVENT -> CustomIcons.Event
+        MusicBrainzEntityType.GENRE -> CustomIcons.TheaterComedy
+        MusicBrainzEntityType.INSTRUMENT -> CustomIcons.Piano
+        MusicBrainzEntityType.LABEL -> CustomIcons.CorporateFare
+        MusicBrainzEntityType.PLACE -> CustomIcons.Place
+        MusicBrainzEntityType.RECORDING -> CustomIcons.Mic
+        MusicBrainzEntityType.RELEASE -> CustomIcons.Album
+        MusicBrainzEntityType.RELEASE_GROUP -> CustomIcons.Folder
+        MusicBrainzEntityType.SERIES -> CustomIcons.List
+        MusicBrainzEntityType.WORK -> CustomIcons.MusicNote
+        MusicBrainzEntityType.URL -> CustomIcons.Link
         else -> {
             // No icons.
             null

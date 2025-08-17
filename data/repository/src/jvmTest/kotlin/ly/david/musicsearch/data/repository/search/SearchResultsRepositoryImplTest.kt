@@ -46,7 +46,7 @@ import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -87,7 +87,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
         )
 
         val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "a",
         )
         val searchResults: List<ListItemModel> = flow.asSnapshot()
@@ -133,7 +133,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
         )
 
         val flow: Flow<PagingData<ListItemModel>> = sut.observeSearchResults(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "a",
         )
         val searchResults: List<ListItemModel> = flow.asSnapshot()
@@ -202,7 +202,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
         )
 
         var flow: Flow<PagingData<ListItemModel>> = sut.observeSearchResults(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "a",
         )
         var searchResults: List<ListItemModel> = flow.asSnapshot()
@@ -219,7 +219,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
         )
 
         flow = sut.observeSearchResults(
-            entity = MusicBrainzEntity.AREA,
+            entity = MusicBrainzEntityType.AREA,
             query = "a",
         )
         searchResults = flow.asSnapshot()
@@ -268,7 +268,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
         )
 
         val flow: Flow<PagingData<ListItemModel>> = repository.observeSearchResults(
-            entity = MusicBrainzEntity.RELEASE,
+            entity = MusicBrainzEntityType.RELEASE,
             query = "a",
         )
         val searchResults: List<ListItemModel> = flow.asSnapshot()
@@ -328,7 +328,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
             },
         )
         searchResultsRepository.observeSearchResults(
-            entity = MusicBrainzEntity.AREA,
+            entity = MusicBrainzEntityType.AREA,
             query = "iso1:IT",
         ).asSnapshot().run {
             Assert.assertEquals(

@@ -22,7 +22,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -59,7 +59,7 @@ internal fun ReleaseUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntity.RELEASE
+    val entity = MusicBrainzEntityType.RELEASE
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(
@@ -197,12 +197,12 @@ internal fun ReleaseUi(
                     state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntity.ARTIST,
+                                        entity = MusicBrainzEntityType.ARTIST,
                                         id = artistCredit.artistId,
                                     ),
                                 )
@@ -212,12 +212,12 @@ internal fun ReleaseUi(
                     state.detailsModel?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
                             text = { Text(text = releaseGroup.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.RELEASE_GROUP) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                                         id = releaseGroup.id,
                                     ),
                                 )

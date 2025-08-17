@@ -7,14 +7,14 @@ import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
 import ly.david.musicsearch.ui.common.screen.showInBottomSheet
 
 fun showAddToCollectionSheet(
     coroutineScope: CoroutineScope,
     overlayHost: OverlayHost,
-    entity: MusicBrainzEntity,
+    entity: MusicBrainzEntityType,
     entityIds: Set<String>,
     snackbarHostState: SnackbarHostState,
     onLoginClick: () -> Unit,

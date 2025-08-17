@@ -11,11 +11,11 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface GetEntities {
     operator fun invoke(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>>
@@ -27,7 +27,7 @@ class GetEntitiesImpl(
     private val coroutineScope: CoroutineScope,
 ) : GetEntities {
     override operator fun invoke(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
         listFilters: ListFilters,
     ): Flow<PagingData<ListItemModel>> {

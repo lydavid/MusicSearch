@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
@@ -51,9 +51,9 @@ class RelationRepositoryImpl(
     }
 
     override suspend fun insertAllRelations(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
         lastUpdated: Instant,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
@@ -73,92 +73,92 @@ class RelationRepositoryImpl(
     }
 
     private suspend fun lookupEntityWithRelations(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
     ): List<RelationMusicBrainzModel>? {
         val include = relatedEntities.joinToString(separator = "+") { "${it.resourceUri}-rels" }
         return when (entity) {
-            MusicBrainzEntity.AREA -> {
+            MusicBrainzEntityType.AREA -> {
                 lookupApi.lookupArea(
                     areaId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.ARTIST -> {
+            MusicBrainzEntityType.ARTIST -> {
                 lookupApi.lookupArtist(
                     artistId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.EVENT -> {
+            MusicBrainzEntityType.EVENT -> {
                 lookupApi.lookupEvent(
                     eventId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.INSTRUMENT -> {
+            MusicBrainzEntityType.INSTRUMENT -> {
                 lookupApi.lookupInstrument(
                     instrumentId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.LABEL -> {
+            MusicBrainzEntityType.LABEL -> {
                 lookupApi.lookupLabel(
                     labelId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.PLACE -> {
+            MusicBrainzEntityType.PLACE -> {
                 lookupApi.lookupPlace(
                     placeId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.RECORDING -> {
+            MusicBrainzEntityType.RECORDING -> {
                 lookupApi.lookupRecording(
                     recordingId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.RELEASE -> {
+            MusicBrainzEntityType.RELEASE -> {
                 lookupApi.lookupRelease(
                     releaseId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.RELEASE_GROUP -> {
+            MusicBrainzEntityType.RELEASE_GROUP -> {
                 lookupApi.lookupReleaseGroup(
                     releaseGroupId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.SERIES -> {
+            MusicBrainzEntityType.SERIES -> {
                 lookupApi.lookupSeries(
                     seriesId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.WORK -> {
+            MusicBrainzEntityType.WORK -> {
                 lookupApi.lookupWork(
                     workId = entityId,
                     include = include,
                 ).relations
             }
 
-            MusicBrainzEntity.COLLECTION,
-            MusicBrainzEntity.GENRE,
-            MusicBrainzEntity.URL,
+            MusicBrainzEntityType.COLLECTION,
+            MusicBrainzEntityType.GENRE,
+            MusicBrainzEntityType.URL,
             -> error("Attempting to lookup the relationships of unsupported entity $entity")
         }
     }
@@ -168,9 +168,9 @@ class RelationRepositoryImpl(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
@@ -244,9 +244,9 @@ class RelationRepositoryImpl(
     }
 
     private suspend fun lookupRelationsAndStore(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ) {
@@ -262,7 +262,7 @@ class RelationRepositoryImpl(
 
     private fun deleteEntityRelationships(
         entityId: String,
-        relatedEntities: Set<MusicBrainzEntity>,
+        relatedEntities: Set<MusicBrainzEntityType>,
     ) {
         relationDao.deleteRelationshipsExcludingUrlsByEntity(
             entityId = entityId,
@@ -272,7 +272,7 @@ class RelationRepositoryImpl(
 
     override fun getRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): ImmutableList<RelationListItemModel> {
         return relationDao.getRelationshipsByType(
             entityId = entityId,
@@ -282,7 +282,7 @@ class RelationRepositoryImpl(
 
     override fun deleteRelationshipsByType(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         relationDao.deleteRelationshipsByType(
             entityId = entityId,

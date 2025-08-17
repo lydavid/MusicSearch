@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.domain.image
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 /**
  * See [ArtistImageRepository] for artists.
@@ -18,7 +18,7 @@ interface MusicBrainzImageMetadataRepository {
      */
     suspend fun getAndSaveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
     ): ImageMetadataWithCount
 
@@ -31,7 +31,7 @@ interface MusicBrainzImageMetadataRepository {
      */
     suspend fun saveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         itemsCount: Int,
     )
 

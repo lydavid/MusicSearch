@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.junit.Assert.assertEquals
@@ -43,7 +43,7 @@ class ImagesPresenterTest {
         musicBrainzImageMetadataRepository = object : MusicBrainzImageMetadataRepository {
             override suspend fun getAndSaveImageMetadata(
                 mbid: String,
-                entity: MusicBrainzEntity,
+                entity: MusicBrainzEntityType,
                 forceRefresh: Boolean,
             ): ImageMetadataWithCount {
                 return ImageMetadataWithCount()
@@ -51,7 +51,7 @@ class ImagesPresenterTest {
 
             override suspend fun saveImageMetadata(
                 mbid: String,
-                entity: MusicBrainzEntity,
+                entity: MusicBrainzEntityType,
                 itemsCount: Int,
             ) {
                 // No-op
@@ -72,7 +72,7 @@ class ImagesPresenterTest {
         getMusicBrainzCoverArtUrl = GetMusicBrainzCoverArtUrl(
             getMusicBrainzUrl = object : GetMusicBrainzUrl {
                 override fun invoke(
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     entityId: String,
                 ): String {
                     return ""
@@ -216,7 +216,7 @@ class ImagesPresenterTest {
                     comment = "p. 14-15",
                     mbid = "c",
                     name = "Release name",
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
             ),
         )
@@ -234,7 +234,7 @@ class ImagesPresenterTest {
                         comment = "p. 14-15",
                         mbid = "c",
                         name = "Release name",
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                 ),
                 snapshot,
@@ -262,7 +262,7 @@ class ImagesPresenterTest {
                     comment = "p. 14-15",
                     mbid = "c",
                     name = "Release name",
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
                 state.selectedImageMetadata,
             )
@@ -286,7 +286,7 @@ class ImagesPresenterTest {
                     comment = "p. 14-15",
                     mbid = "c",
                     name = "Release name",
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
                 ImageMetadata(
                     imageId = ImageId(2L),
@@ -294,7 +294,7 @@ class ImagesPresenterTest {
                     largeUrl = "b",
                     mbid = "c",
                     name = "Release group name",
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 ),
                 ImageMetadata(
                     imageId = ImageId(3L),
@@ -302,7 +302,7 @@ class ImagesPresenterTest {
                     largeUrl = "b",
                     mbid = "c",
                     name = "Artist name",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                 ),
             ),
         )
@@ -320,7 +320,7 @@ class ImagesPresenterTest {
                         comment = "p. 14-15",
                         mbid = "c",
                         name = "Release name",
-                        entity = MusicBrainzEntity.RELEASE,
+                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
@@ -328,7 +328,7 @@ class ImagesPresenterTest {
                         largeUrl = "b",
                         mbid = "c",
                         name = "Release group name",
-                        entity = MusicBrainzEntity.RELEASE_GROUP,
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
@@ -336,7 +336,7 @@ class ImagesPresenterTest {
                         largeUrl = "b",
                         mbid = "c",
                         name = "Artist name",
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = MusicBrainzEntityType.ARTIST,
                     ),
                 ),
                 snapshot,
@@ -364,7 +364,7 @@ class ImagesPresenterTest {
                     comment = "p. 14-15",
                     mbid = "c",
                     name = "Release name",
-                    entity = MusicBrainzEntity.RELEASE,
+                    entity = MusicBrainzEntityType.RELEASE,
                 ),
                 state.selectedImageMetadata,
             )
@@ -389,7 +389,7 @@ class ImagesPresenterTest {
                     largeUrl = "b",
                     mbid = "c",
                     name = "Release group name",
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 ),
                 state.selectedImageMetadata,
             )
@@ -414,7 +414,7 @@ class ImagesPresenterTest {
                     largeUrl = "b",
                     mbid = "c",
                     name = "Artist name",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                 ),
                 state.selectedImageMetadata,
             )

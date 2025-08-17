@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class GenresListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
@@ -25,7 +25,7 @@ class GenresListRepositoryImpl(
     aliasDao: AliasDao,
 ) : GenresListRepository,
     BrowseEntities<GenreListItemModel, GenreMusicBrainzNetworkModel, BrowseGenresResponse>(
-        browseEntity = MusicBrainzEntity.GENRE,
+        browseEntity = MusicBrainzEntityType.GENRE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
@@ -52,7 +52,7 @@ class GenresListRepositoryImpl(
 
     override fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
@@ -61,7 +61,7 @@ class GenresListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
@@ -74,7 +74,7 @@ class GenresListRepositoryImpl(
 
     override suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): BrowseGenresResponse {
         return musicBrainzApi.browseGenresByEntity(
@@ -86,12 +86,12 @@ class GenresListRepositoryImpl(
 
     override fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<GenreMusicBrainzNetworkModel>,
     ) {
         genreDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { genre -> genre.id },
@@ -106,7 +106,7 @@ class GenresListRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int {
         return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
     }

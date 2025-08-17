@@ -13,7 +13,7 @@ import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
@@ -124,8 +124,8 @@ class EntitiesListPresenterTest {
             getEntityRelationships = object : GetEntityRelationships {
                 override fun invoke(
                     entityId: String,
-                    entity: MusicBrainzEntity?,
-                    relatedEntities: Set<MusicBrainzEntity>,
+                    entity: MusicBrainzEntityType?,
+                    relatedEntities: Set<MusicBrainzEntityType>,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
                     return flowOf(PagingData.from(areasListItems))

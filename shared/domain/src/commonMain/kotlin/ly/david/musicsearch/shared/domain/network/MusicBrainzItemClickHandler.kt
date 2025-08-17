@@ -1,3 +1,3 @@
 package ly.david.musicsearch.shared.domain.network
 
-typealias MusicBrainzItemClickHandler = (entity: MusicBrainzEntity, id: String) -> Unit
+typealias MusicBrainzItemClickHandler = (entity: MusicBrainzEntityType, id: String) -> Unit

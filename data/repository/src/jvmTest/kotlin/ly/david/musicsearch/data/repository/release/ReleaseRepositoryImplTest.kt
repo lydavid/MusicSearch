@@ -46,7 +46,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -764,7 +764,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         name = "https://www.amazon.co.jp/gp/product/B004GJ33BO",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -775,7 +775,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         name = "https://www.discogs.com/release/2899823",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -786,7 +786,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         name = "https://vgmdb.net/album/28417",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -797,7 +797,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         name = "https://rateyourmusic.com/release/album/supercell_f2/today_is_a_beautiful_day_f1/",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

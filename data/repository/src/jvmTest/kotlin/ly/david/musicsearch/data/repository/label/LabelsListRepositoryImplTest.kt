@@ -26,7 +26,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -55,7 +55,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseLabelsByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -73,7 +73,7 @@ class LabelsListRepositoryImplTest : KoinTest {
     @Test
     fun setUpLabelsByCollection() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
-        val entity = MusicBrainzEntity.COLLECTION
+        val entity = MusicBrainzEntityType.COLLECTION
         val labels = listOf(
             virginMusicLabelMusicBrainzModel,
             elektraLabelMusicBrainzModel,
@@ -87,7 +87,7 @@ class LabelsListRepositoryImplTest : KoinTest {
                 id = collectionId,
                 isRemote = false,
                 name = "labels",
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -143,7 +143,7 @@ class LabelsListRepositoryImplTest : KoinTest {
     @Test
     fun setUpJapaneseLabels() = runTest {
         val entityId = japanAreaMusicBrainzModel.id
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val labels = listOf(
             flyingDogLabelMusicBrainzModel,
             virginMusicLabelMusicBrainzModel,
@@ -183,7 +183,7 @@ class LabelsListRepositoryImplTest : KoinTest {
     @Test
     fun setUpUKLabels() = runTest {
         val entityId = "8a754a16-0027-3a29-b6d7-2b40ea0481ed"
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val labels = listOf(
             elektraLabelMusicBrainzModel,
             elektraMusicGroupLabelMusicBrainzModel,

@@ -17,7 +17,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNet
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
 
@@ -137,7 +137,7 @@ class RecordingDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                 getRecordingsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -154,7 +154,7 @@ class RecordingDao(
     fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

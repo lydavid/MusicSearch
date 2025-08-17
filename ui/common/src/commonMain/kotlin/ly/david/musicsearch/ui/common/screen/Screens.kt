@@ -3,13 +3,13 @@ package ly.david.musicsearch.ui.common.screen
 import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Parcelize
 data class SearchScreen(
     val query: String? = null,
-    val entity: MusicBrainzEntity? = null,
+    val entity: MusicBrainzEntityType? = null,
 ) : Screen
 
 @Parcelize
@@ -23,7 +23,7 @@ data object DatabaseScreen : Screen
 
 @Parcelize
 data class AllEntitiesScreen(
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
 ) : Screen
 
 @Parcelize
@@ -33,7 +33,7 @@ data object HistoryScreen : Screen
 data class CollectionListScreen(
     val newCollectionId: String? = null,
     val newCollectionName: String? = null,
-    val newCollectionEntity: MusicBrainzEntity? = null,
+    val newCollectionEntity: MusicBrainzEntityType? = null,
 ) : Screen
 
 @Parcelize
@@ -44,7 +44,7 @@ data class CollectionScreen(
 
 @Parcelize
 data class AddToCollectionScreen(
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
     val collectableIds: Set<String>,
 ) : Screen
 
@@ -56,14 +56,14 @@ data class SnackbarPopResult(
 
 @Parcelize
 data class DetailsScreen(
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
     val id: String,
 ) : Screen
 
 @Parcelize
 data class CoverArtsScreen(
     val id: String? = null,
-    val entity: MusicBrainzEntity? = null,
+    val entity: MusicBrainzEntityType? = null,
 ) : Screen
 
 /**
@@ -73,7 +73,7 @@ data class CoverArtsScreen(
 @Parcelize
 data class StatsScreen(
     val byEntityId: String?,
-    val byEntity: MusicBrainzEntity?,
+    val byEntity: MusicBrainzEntityType?,
     val tabs: ImmutableList<Tab>,
     val isRemote: Boolean = true,
 ) : Screen

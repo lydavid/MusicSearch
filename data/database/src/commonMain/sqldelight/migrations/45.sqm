@@ -1,5 +1,5 @@
 import kotlin.Boolean;
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
 CREATE TABLE collection_entity_backup AS
 SELECT * FROM collection_entity;
@@ -8,7 +8,7 @@ CREATE TABLE collection_temp (
   id TEXT PRIMARY KEY NOT NULL,
   is_remote INTEGER AS Boolean NOT NULL,
   name TEXT NOT NULL,
-  entity TEXT AS MusicBrainzEntity NOT NULL,
+  entity TEXT AS MusicBrainzEntityType NOT NULL,
   type TEXT,
   type_id TEXT,
   deleted INTEGER AS Boolean NOT NULL DEFAULT 0

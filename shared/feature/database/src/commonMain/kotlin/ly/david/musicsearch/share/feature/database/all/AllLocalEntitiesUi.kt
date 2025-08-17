@@ -19,7 +19,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
@@ -119,7 +119,7 @@ internal fun AllLocalEntitiesUi(
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                     )
-                    if (entity == MusicBrainzEntity.RELEASE_GROUP) {
+                    if (entity == MusicBrainzEntityType.RELEASE_GROUP) {
                         SortToggleMenuItem(
                             sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,
                             onToggle = {
@@ -127,7 +127,7 @@ internal fun AllLocalEntitiesUi(
                             },
                         )
                     }
-                    if (entity == MusicBrainzEntity.RELEASE) {
+                    if (entity == MusicBrainzEntityType.RELEASE) {
                         MoreInfoToggleMenuItem(
                             showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
@@ -160,63 +160,63 @@ internal fun AllLocalEntitiesUi(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         val uiState = when (entity) {
-            MusicBrainzEntity.AREA -> {
+            MusicBrainzEntityType.AREA -> {
                 EntitiesPagingListUiState(
                     lazyPagingItems = areasLazyPagingItems,
                     lazyListState = state.allEntitiesListUiState.areasListUiState.lazyListState,
                 )
             }
 
-            MusicBrainzEntity.ARTIST -> {
+            MusicBrainzEntityType.ARTIST -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.artistsListUiState.lazyListState,
                     lazyPagingItems = artistsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.EVENT -> {
+            MusicBrainzEntityType.EVENT -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.eventsListUiState.lazyListState,
                     lazyPagingItems = eventsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.GENRE -> {
+            MusicBrainzEntityType.GENRE -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.genresListUiState.lazyListState,
                     lazyPagingItems = genresLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.INSTRUMENT -> {
+            MusicBrainzEntityType.INSTRUMENT -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.instrumentsListUiState.lazyListState,
                     lazyPagingItems = instrumentsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.LABEL -> {
+            MusicBrainzEntityType.LABEL -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.labelsListUiState.lazyListState,
                     lazyPagingItems = labelsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.PLACE -> {
+            MusicBrainzEntityType.PLACE -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.placesListUiState.lazyListState,
                     lazyPagingItems = placesLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.RECORDING -> {
+            MusicBrainzEntityType.RECORDING -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.recordingsListUiState.lazyListState,
                     lazyPagingItems = recordingsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.RELEASE -> {
+            MusicBrainzEntityType.RELEASE -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.releasesListUiState.lazyListState,
                     lazyPagingItems = releasesLazyPagingItems,
@@ -224,21 +224,21 @@ internal fun AllLocalEntitiesUi(
                 )
             }
 
-            MusicBrainzEntity.RELEASE_GROUP -> {
+            MusicBrainzEntityType.RELEASE_GROUP -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.releaseGroupsListUiState.lazyListState,
                     lazyPagingItems = releaseGroupsLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.SERIES -> {
+            MusicBrainzEntityType.SERIES -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.seriesListUiState.lazyListState,
                     lazyPagingItems = seriesLazyPagingItems,
                 )
             }
 
-            MusicBrainzEntity.WORK -> {
+            MusicBrainzEntityType.WORK -> {
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.worksListUiState.lazyListState,
                     lazyPagingItems = worksLazyPagingItems,
@@ -286,11 +286,11 @@ internal fun AllLocalEntitiesUi(
             },
             requestForMissingCoverArtUrl = { entityId ->
                 when (entity) {
-                    MusicBrainzEntity.RELEASE -> {
+                    MusicBrainzEntityType.RELEASE -> {
                         releasesEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(entityId))
                     }
 
-                    MusicBrainzEntity.RELEASE_GROUP -> {
+                    MusicBrainzEntityType.RELEASE_GROUP -> {
                         releaseGroupsEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(entityId))
                     }
 

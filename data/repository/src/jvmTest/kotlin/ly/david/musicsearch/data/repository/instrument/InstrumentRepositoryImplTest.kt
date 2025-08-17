@@ -19,7 +19,7 @@ import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -176,7 +176,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         name = "https://www.wikidata.org/wiki/Q719120",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -187,7 +187,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_classic.html",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -198,7 +198,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_gut.html",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -209,7 +209,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         name = "https://static.metabrainz.org/irombook/guitar/guitar_acoustic_classical.png",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

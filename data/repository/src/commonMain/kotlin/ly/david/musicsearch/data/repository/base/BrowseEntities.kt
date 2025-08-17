@@ -15,7 +15,7 @@ import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
 
 abstract class BrowseEntities<
@@ -23,7 +23,7 @@ abstract class BrowseEntities<
     MB : MusicBrainzNetworkModel,
     B : Browsable<MB>,
     >(
-    val browseEntity: MusicBrainzEntity,
+    val browseEntity: MusicBrainzEntityType,
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val aliasDao: AliasDao,
 ) {
@@ -55,7 +55,7 @@ abstract class BrowseEntities<
 
     private fun getRemoteMediator(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) = BrowseEntityRemoteMediator<LI>(
         getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = {
@@ -87,12 +87,12 @@ abstract class BrowseEntities<
 
     abstract fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int
 
     abstract fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     )
 
     abstract fun getLinkedEntitiesPagingSource(
@@ -102,7 +102,7 @@ abstract class BrowseEntities<
 
     private suspend fun browseLinkedEntitiesAndStore(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         nextOffset: Int,
     ): Int {
         val response = browseEntitiesByEntity(
@@ -137,16 +137,16 @@ abstract class BrowseEntities<
 
     abstract suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): B
 
     abstract fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<MB>,
     )
 
-    protected fun browseEntitiesNotSupported(entity: MusicBrainzEntity?) =
+    protected fun browseEntitiesNotSupported(entity: MusicBrainzEntityType?) =
         "${browseEntity.resourceUriPlural} by $entity not supported."
 }

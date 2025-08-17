@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -79,7 +79,7 @@ fun WorkListItem(
             ThumbnailImage(
                 url = "",
                 imageId = null,
-                placeholderIcon = MusicBrainzEntity.WORK.getIcon(),
+                placeholderIcon = MusicBrainzEntityType.WORK.getIcon(),
                 modifier = Modifier
                     .clickable {
                         onSelect(work.id)

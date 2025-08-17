@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class ArtistRepositoryImpl(
@@ -36,7 +36,7 @@ class ArtistRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(artistId)
         val visited = relationRepository.visited(artistId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.ARTIST,
+            entityType = MusicBrainzEntityType.ARTIST,
             mbid = artistId,
         )
 
@@ -69,7 +69,7 @@ class ArtistRepositoryImpl(
             artistDao.delete(artistId = artistId)
             relationRepository.deleteRelationshipsByType(
                 entityId = artistId,
-                entity = MusicBrainzEntity.URL,
+                entity = MusicBrainzEntityType.URL,
             )
         }
     }

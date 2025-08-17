@@ -17,7 +17,7 @@ import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 
 class ReleasesListRepositoryImpl(
@@ -28,7 +28,7 @@ class ReleasesListRepositoryImpl(
     aliasDao: AliasDao,
 ) : ReleasesListRepository,
     BrowseEntities<ReleaseListItemModel, ReleaseMusicBrainzNetworkModel, BrowseReleasesResponse>(
-        browseEntity = MusicBrainzEntity.RELEASE,
+        browseEntity = MusicBrainzEntityType.RELEASE,
         browseRemoteMetadataDao = browseRemoteMetadataDao,
         aliasDao = aliasDao,
     ) {
@@ -55,7 +55,7 @@ class ReleasesListRepositoryImpl(
 
     override fun deleteEntityLinksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
@@ -64,15 +64,15 @@ class ReleasesListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntity.AREA -> {
+                MusicBrainzEntityType.AREA -> {
                     releaseDao.deleteReleasesByCountry(entityId)
                 }
 
-                MusicBrainzEntity.COLLECTION -> {
+                MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
 
-                MusicBrainzEntity.LABEL -> {
+                MusicBrainzEntityType.LABEL -> {
                     releaseDao.deleteReleasesByLabel(entityId)
                 }
 
@@ -83,11 +83,11 @@ class ReleasesListRepositoryImpl(
 
     override suspend fun browseEntitiesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         offset: Int,
     ): BrowseReleasesResponse {
         return when (entity) {
-            MusicBrainzEntity.LABEL -> {
+            MusicBrainzEntityType.LABEL -> {
                 browseApi.browseReleasesByEntity(
                     entityId = entityId,
                     entity = entity,
@@ -108,26 +108,26 @@ class ReleasesListRepositoryImpl(
 
     override fun insertAll(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         musicBrainzModels: List<ReleaseMusicBrainzNetworkModel>,
     ) {
         releaseDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntity.AREA -> {
+            MusicBrainzEntityType.AREA -> {
                 releaseDao.insertReleasesByCountry(
                     areaId = entityId,
                     releases = musicBrainzModels,
                 )
             }
 
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
                     entityIds = musicBrainzModels.map { release -> release.id },
                 )
             }
 
-            MusicBrainzEntity.LABEL -> {
+            MusicBrainzEntityType.LABEL -> {
                 releaseDao.insertReleasesByLabel(
                     labelId = entityId,
                     releases = musicBrainzModels,
@@ -143,18 +143,18 @@ class ReleasesListRepositoryImpl(
 
     override fun getLocalLinkedEntitiesCountByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): Int {
         return when (entity) {
-            MusicBrainzEntity.AREA -> {
+            MusicBrainzEntityType.AREA -> {
                 releaseDao.getCountOfReleasesByCountry(entityId)
             }
 
-            MusicBrainzEntity.COLLECTION -> {
+            MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.getCountOfEntitiesByCollection(entityId)
             }
 
-            MusicBrainzEntity.LABEL -> {
+            MusicBrainzEntityType.LABEL -> {
                 releaseDao.getCountOfReleasesByLabel(entityId)
             }
 

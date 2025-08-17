@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class LookupHistoryDao(
     database: Database,
@@ -86,7 +86,7 @@ class LookupHistoryDao(
 private fun mapToLookupHistoryListItemModel(
     mbid: String,
     title: String,
-    entity: MusicBrainzEntity,
+    entity: MusicBrainzEntityType,
     numberOfVisits: Int,
     lastAccessed: Instant,
     imageUrl: String?,

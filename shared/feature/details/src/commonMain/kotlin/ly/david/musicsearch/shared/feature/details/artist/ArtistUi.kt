@@ -24,7 +24,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -66,7 +66,7 @@ internal fun ArtistUi(
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntity.ARTIST
+    val entity = MusicBrainzEntityType.ARTIST
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
     val pagerState: PagerState = rememberPagerState(
@@ -275,11 +275,11 @@ internal fun ArtistUi(
             },
             requestForMissingCoverArtUrl = { id, entity ->
                 when (entity) {
-                    MusicBrainzEntity.RELEASE -> {
+                    MusicBrainzEntityType.RELEASE -> {
                         releasesByEntityEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(id))
                     }
 
-                    MusicBrainzEntity.RELEASE_GROUP -> {
+                    MusicBrainzEntityType.RELEASE_GROUP -> {
                         releaseGroupsByEntityEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(id))
                     }
 

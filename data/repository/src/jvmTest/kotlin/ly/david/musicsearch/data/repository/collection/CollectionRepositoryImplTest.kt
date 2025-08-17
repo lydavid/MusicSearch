@@ -19,7 +19,7 @@ import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -132,12 +132,12 @@ class CollectionRepositoryImplTest : KoinTest {
                     id = "2",
                     isRemote = true,
                     name = "Areas",
-                    entity = MusicBrainzEntity.AREA,
+                    entity = MusicBrainzEntityType.AREA,
                 ),
                 CollectionListItemModel(
                     id = "1",
                     name = "Artists",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     isRemote = true,
                 ),
             ),
@@ -190,14 +190,14 @@ class CollectionRepositoryImplTest : KoinTest {
                 CollectionListItemModel(
                     id = "1",
                     name = "Artists",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     isRemote = true,
                 ),
                 CollectionListItemModel(
                     id = "2",
                     isRemote = true,
                     name = "Areas",
-                    entity = MusicBrainzEntity.AREA,
+                    entity = MusicBrainzEntityType.AREA,
                 ),
             ),
             collections,
@@ -251,7 +251,7 @@ class CollectionRepositoryImplTest : KoinTest {
                 CollectionListItemModel(
                     id = "1",
                     name = "Artists",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     isRemote = true,
                     cachedEntityCount = 0, // Because we have not clicked into the collection
                 ),
@@ -259,7 +259,7 @@ class CollectionRepositoryImplTest : KoinTest {
                     id = "2",
                     isRemote = true,
                     name = "Areas",
-                    entity = MusicBrainzEntity.AREA,
+                    entity = MusicBrainzEntityType.AREA,
                     cachedEntityCount = 0,
                 ),
             ),
@@ -299,7 +299,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         repository.observeAllCollections(
             username = "user",
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -310,7 +310,7 @@ class CollectionRepositoryImplTest : KoinTest {
                     CollectionListItemModel(
                         id = "1",
                         name = "Artists",
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = MusicBrainzEntityType.ARTIST,
                         isRemote = true,
                     ),
                 ),
@@ -369,13 +369,13 @@ class CollectionRepositoryImplTest : KoinTest {
                 CollectionListItemModel(
                     id = "2",
                     name = "Artists",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     isRemote = true,
                 ),
                 CollectionListItemModel(
                     id = "3",
                     name = "art",
-                    entity = MusicBrainzEntity.ARTIST,
+                    entity = MusicBrainzEntityType.ARTIST,
                     isRemote = true,
                 ),
             ),
@@ -387,7 +387,7 @@ class CollectionRepositoryImplTest : KoinTest {
         id = NEW_COLLECTION_ID,
         isRemote = false,
         name = "New collection",
-        entity = MusicBrainzEntity.ARTIST,
+        entity = MusicBrainzEntityType.ARTIST,
     )
 
     private fun testAddingACollection(repository: CollectionRepository) = runTest {
@@ -568,7 +568,7 @@ class CollectionRepositoryImplTest : KoinTest {
         )
         repository.observeAllCollections(
             username = "user",
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -579,7 +579,7 @@ class CollectionRepositoryImplTest : KoinTest {
                     CollectionListItemModel(
                         id = "1",
                         name = "Artists",
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = MusicBrainzEntityType.ARTIST,
                         isRemote = true,
                     ),
                 ),
@@ -593,7 +593,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
             repository.addToCollection(
                 collectionId = "1",
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
                 entityIds = setOf(entityId),
             )
             Assert.assertEquals(true, awaitItem())

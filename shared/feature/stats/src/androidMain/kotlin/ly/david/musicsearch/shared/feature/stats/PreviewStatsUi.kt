@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
@@ -29,11 +29,11 @@ internal fun PreviewStatsUi() {
                     relationStats = RelationStats(
                         relationTypeCounts = persistentListOf(
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.ARTIST,
+                                linkedEntity = MusicBrainzEntityType.ARTIST,
                                 count = 17,
                             ),
                             RelationTypeCount(
-                                linkedEntity = MusicBrainzEntity.RECORDING,
+                                linkedEntity = MusicBrainzEntityType.RECORDING,
                                 count = 397,
                             ),
                         ),

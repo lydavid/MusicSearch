@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
@@ -34,7 +34,7 @@ class PlaceRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(placeId)
         val visited = relationRepository.visited(placeId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.PLACE,
+            entityType = MusicBrainzEntityType.PLACE,
             mbid = placeId,
         )
 

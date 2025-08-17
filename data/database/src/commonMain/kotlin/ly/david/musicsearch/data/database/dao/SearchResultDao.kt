@@ -16,7 +16,7 @@ import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.search.results.SearchResultMetadata
 
 class SearchResultDao(
@@ -46,7 +46,7 @@ class SearchResultDao(
     }
 
     fun rewriteMetadata(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
         localCount: Int,
         remoteCount: Int,
@@ -74,22 +74,22 @@ class SearchResultDao(
     ).executeAsOneOrNull()
 
     fun getSearchResults(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ): PagingSource<Int, ListItemModel> = when (entity) {
-        MusicBrainzEntity.ARTIST -> getArtistSearchResults()
-        MusicBrainzEntity.AREA -> getAreaSearchResults()
-        MusicBrainzEntity.EVENT -> getEventSearchResults()
-        MusicBrainzEntity.INSTRUMENT -> getInstrumentSearchResults()
-        MusicBrainzEntity.LABEL -> getLabelSearchResults()
-        MusicBrainzEntity.PLACE -> getPlaceSearchResults()
-        MusicBrainzEntity.RECORDING -> getRecordingSearchResults()
-        MusicBrainzEntity.RELEASE -> getReleaseSearchResults()
-        MusicBrainzEntity.RELEASE_GROUP -> getReleaseGroupSearchResults()
-        MusicBrainzEntity.SERIES -> getSeriesSearchResults()
-        MusicBrainzEntity.WORK -> getWorkSearchResults()
-        MusicBrainzEntity.COLLECTION,
-        MusicBrainzEntity.GENRE,
-        MusicBrainzEntity.URL,
+        MusicBrainzEntityType.ARTIST -> getArtistSearchResults()
+        MusicBrainzEntityType.AREA -> getAreaSearchResults()
+        MusicBrainzEntityType.EVENT -> getEventSearchResults()
+        MusicBrainzEntityType.INSTRUMENT -> getInstrumentSearchResults()
+        MusicBrainzEntityType.LABEL -> getLabelSearchResults()
+        MusicBrainzEntityType.PLACE -> getPlaceSearchResults()
+        MusicBrainzEntityType.RECORDING -> getRecordingSearchResults()
+        MusicBrainzEntityType.RELEASE -> getReleaseSearchResults()
+        MusicBrainzEntityType.RELEASE_GROUP -> getReleaseGroupSearchResults()
+        MusicBrainzEntityType.SERIES -> getSeriesSearchResults()
+        MusicBrainzEntityType.WORK -> getWorkSearchResults()
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.GENRE,
+        MusicBrainzEntityType.URL,
         -> {
             error(IllegalStateException("No search results stored for $entity"))
         }

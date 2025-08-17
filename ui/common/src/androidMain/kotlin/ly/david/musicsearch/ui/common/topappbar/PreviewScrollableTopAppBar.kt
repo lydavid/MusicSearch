@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +28,7 @@ internal fun PreviewScrollableTopAppBar() {
 internal fun PreviewScrollableTopAppBarWithIcon() {
     PreviewTheme {
         ScrollableTopAppBar(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen.",
         )
@@ -43,7 +43,7 @@ internal fun PreviewScrollableTopAppBarWithTabs() {
         var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
         ScrollableTopAppBar(
-            entity = MusicBrainzEntity.RELEASE_GROUP,
+            entity = MusicBrainzEntityType.RELEASE_GROUP,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen.",
             additionalBar = {

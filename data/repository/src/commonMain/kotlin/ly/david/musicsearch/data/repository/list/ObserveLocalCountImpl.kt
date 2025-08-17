@@ -16,7 +16,7 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class ObserveLocalCountImpl(
     private val areaDao: AreaDao,
@@ -33,61 +33,61 @@ class ObserveLocalCountImpl(
     private val workDao: WorkDao,
 ) : ObserveLocalCount {
     override fun invoke(
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
     ): Flow<Int> {
         if (browseMethod == null) return flowOf(0)
         return when (browseEntity) {
-            MusicBrainzEntity.AREA -> areaDao.observeCountOfAreas(
+            MusicBrainzEntityType.AREA -> areaDao.observeCountOfAreas(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.ARTIST -> artistDao.observeCountOfArtists(
+            MusicBrainzEntityType.ARTIST -> artistDao.observeCountOfArtists(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.EVENT -> eventDao.observeCountOfEvents(
+            MusicBrainzEntityType.EVENT -> eventDao.observeCountOfEvents(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.GENRE -> genreDao.observeCountOfGenres(
+            MusicBrainzEntityType.GENRE -> genreDao.observeCountOfGenres(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.INSTRUMENT -> instrumentDao.observeCountOfInstruments(
+            MusicBrainzEntityType.INSTRUMENT -> instrumentDao.observeCountOfInstruments(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.LABEL -> labelDao.observeCountOfLabels(
+            MusicBrainzEntityType.LABEL -> labelDao.observeCountOfLabels(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.PLACE -> placeDao.observeCountOfPlaces(
+            MusicBrainzEntityType.PLACE -> placeDao.observeCountOfPlaces(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.RECORDING -> recordingDao.observeCountOfRecordings(
+            MusicBrainzEntityType.RECORDING -> recordingDao.observeCountOfRecordings(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.RELEASE -> releaseDao.observeCountOfReleases(
+            MusicBrainzEntityType.RELEASE -> releaseDao.observeCountOfReleases(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.RELEASE_GROUP -> releaseGroupDao.observeLocalCount(
+            MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupDao.observeLocalCount(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.WORK -> workDao.observeCountOfWorks(
+            MusicBrainzEntityType.WORK -> workDao.observeCountOfWorks(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.SERIES -> seriesDao.observeCountOfSeries(
+            MusicBrainzEntityType.SERIES -> seriesDao.observeCountOfSeries(
                 browseMethod = browseMethod,
             )
 
-            MusicBrainzEntity.COLLECTION,
-            MusicBrainzEntity.URL,
+            MusicBrainzEntityType.COLLECTION,
+            MusicBrainzEntityType.URL,
             -> flowOf(0)
         }
     }

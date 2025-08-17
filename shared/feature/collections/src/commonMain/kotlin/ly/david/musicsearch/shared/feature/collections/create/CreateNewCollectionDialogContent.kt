@@ -27,20 +27,20 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.collectableEntities
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun CreateNewCollectionDialogContent(
     modifier: Modifier = Modifier,
-    defaultEntity: MusicBrainzEntity = MusicBrainzEntity.RELEASE,
+    defaultEntity: MusicBrainzEntityType = MusicBrainzEntityType.RELEASE,
     onDismiss: () -> Unit = {},
-    onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
+    onSubmit: (name: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
 ) {
     val strings = LocalStrings.current
     var name by rememberSaveable { mutableStateOf("") }

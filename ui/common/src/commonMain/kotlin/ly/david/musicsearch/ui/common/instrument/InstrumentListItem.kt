@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -68,7 +68,7 @@ fun InstrumentListItem(
             ThumbnailImage(
                 url = "",
                 imageId = null,
-                placeholderIcon = MusicBrainzEntity.INSTRUMENT.getIcon(),
+                placeholderIcon = MusicBrainzEntityType.INSTRUMENT.getIcon(),
                 modifier = Modifier
                     .clickable {
                         onSelect(instrument.id)

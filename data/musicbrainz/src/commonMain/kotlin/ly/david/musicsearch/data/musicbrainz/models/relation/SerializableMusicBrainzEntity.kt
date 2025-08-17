@@ -2,48 +2,48 @@ package ly.david.musicsearch.data.musicbrainz.models.relation
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 @Serializable
-enum class SerializableMusicBrainzEntity(val entity: MusicBrainzEntity) {
+enum class SerializableMusicBrainzEntity(val entity: MusicBrainzEntityType) {
     @SerialName("area")
-    AREA(MusicBrainzEntity.AREA),
+    AREA(MusicBrainzEntityType.AREA),
 
     @SerialName("artist")
-    ARTIST(MusicBrainzEntity.ARTIST),
+    ARTIST(MusicBrainzEntityType.ARTIST),
 
     @SerialName("event")
-    EVENT(MusicBrainzEntity.EVENT),
+    EVENT(MusicBrainzEntityType.EVENT),
 
     @SerialName("genre")
-    GENRE(MusicBrainzEntity.GENRE),
+    GENRE(MusicBrainzEntityType.GENRE),
 
     @SerialName("instrument")
-    INSTRUMENT(MusicBrainzEntity.INSTRUMENT),
+    INSTRUMENT(MusicBrainzEntityType.INSTRUMENT),
 
     @SerialName("label")
-    LABEL(MusicBrainzEntity.LABEL),
+    LABEL(MusicBrainzEntityType.LABEL),
 
     @SerialName("place")
-    PLACE(MusicBrainzEntity.PLACE),
+    PLACE(MusicBrainzEntityType.PLACE),
 
     @SerialName("recording")
-    RECORDING(MusicBrainzEntity.RECORDING),
+    RECORDING(MusicBrainzEntityType.RECORDING),
 
     @SerialName("release")
-    RELEASE(MusicBrainzEntity.RELEASE),
+    RELEASE(MusicBrainzEntityType.RELEASE),
 
     // Note that target-type uses release_group, while uri uses release-group.
     // For our domain entity, we will always prefer release-group.
     @SerialName("release_group")
-    RELEASE_GROUP(MusicBrainzEntity.RELEASE_GROUP),
+    RELEASE_GROUP(MusicBrainzEntityType.RELEASE_GROUP),
 
     @SerialName("series")
-    SERIES(MusicBrainzEntity.SERIES),
+    SERIES(MusicBrainzEntityType.SERIES),
 
     @SerialName("work")
-    WORK(MusicBrainzEntity.WORK),
+    WORK(MusicBrainzEntityType.WORK),
 
     @SerialName("url")
-    URL(MusicBrainzEntity.URL),
+    URL(MusicBrainzEntityType.URL),
 }

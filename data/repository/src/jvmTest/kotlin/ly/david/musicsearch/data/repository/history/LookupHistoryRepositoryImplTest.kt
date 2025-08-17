@@ -44,7 +44,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -101,7 +101,7 @@ class LookupHistoryRepositoryImplTest :
             LookupHistory(
                 mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 title = "欠けた心象、世のよすが",
-                entity = MusicBrainzEntity.RELEASE_GROUP,
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
                 lastAccessed = currentTime,
             ),
         )
@@ -117,7 +117,7 @@ class LookupHistoryRepositoryImplTest :
                 ),
                 LookupHistoryListItemModel(
                     title = "欠けた心象、世のよすが",
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 1,
                     lastAccessed = currentTime,
@@ -184,7 +184,7 @@ class LookupHistoryRepositoryImplTest :
         )
 
         searchResultsRepository.observeSearchResults(
-            entity = MusicBrainzEntity.ARTIST,
+            entity = MusicBrainzEntityType.ARTIST,
             query = "zutomayo",
         ).asSnapshot().run {
             Assert.assertEquals(
@@ -272,7 +272,7 @@ class LookupHistoryRepositoryImplTest :
             LookupHistory(
                 mbid = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                 title = "ずっと真夜中でいいのに",
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
                 searchHint = "Zutto Mayonaka de Iinoni.",
                 lastAccessed = currentTime,
             ),
@@ -289,7 +289,7 @@ class LookupHistoryRepositoryImplTest :
                     ),
                     LookupHistoryListItemModel(
                         title = "ずっと真夜中でいいのに",
-                        entity = MusicBrainzEntity.ARTIST,
+                        entity = MusicBrainzEntityType.ARTIST,
                         id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                         numberOfVisits = 1,
                         lastAccessed = currentTime,

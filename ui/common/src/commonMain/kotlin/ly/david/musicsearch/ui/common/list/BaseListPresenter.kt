@@ -25,7 +25,7 @@ import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataReposito
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
@@ -36,7 +36,7 @@ abstract class BaseListPresenter(
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
 ) : Presenter<EntitiesListUiState> {
 
-    abstract fun getEntityType(): MusicBrainzEntity
+    abstract fun getEntityType(): MusicBrainzEntityType
 
     @Composable
     override fun present(): EntitiesListUiState {

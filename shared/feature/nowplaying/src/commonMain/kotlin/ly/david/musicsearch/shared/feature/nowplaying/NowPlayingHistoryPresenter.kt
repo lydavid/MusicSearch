@@ -16,7 +16,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.musicsearch.ui.common.screen.SearchScreen
@@ -87,6 +87,6 @@ internal sealed interface NowPlayingHistoryUiEvent : CircuitUiEvent {
     data class DeleteHistory(val id: String) : NowPlayingHistoryUiEvent
     data class GoToSearch(
         val query: String,
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
     ) : NowPlayingHistoryUiEvent
 }

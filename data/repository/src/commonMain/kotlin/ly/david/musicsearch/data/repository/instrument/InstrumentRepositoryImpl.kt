@@ -8,7 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNe
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 
 class InstrumentRepositoryImpl(
@@ -31,7 +31,7 @@ class InstrumentRepositoryImpl(
         val urlRelations = relationRepository.getRelationshipsByType(instrumentId)
         val visited = relationRepository.visited(instrumentId)
         val aliases = aliasDao.getAliases(
-            entityType = MusicBrainzEntity.INSTRUMENT,
+            entityType = MusicBrainzEntityType.INSTRUMENT,
             mbid = instrumentId,
         )
 

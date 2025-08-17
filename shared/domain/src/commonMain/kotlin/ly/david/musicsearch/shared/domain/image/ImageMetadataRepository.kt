@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.domain.image
 
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface ImageMetadataRepository {
     /**
@@ -14,7 +14,7 @@ interface ImageMetadataRepository {
      */
     suspend fun getAndSaveImageMetadata(
         detailsModel: MusicBrainzDetailsModel,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
     ): ImageMetadataWithCount
 }
@@ -25,11 +25,11 @@ class ImageMetadataRepositoryImpl(
 ) : ImageMetadataRepository {
     override suspend fun getAndSaveImageMetadata(
         detailsModel: MusicBrainzDetailsModel,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
     ): ImageMetadataWithCount {
         return when (entity) {
-            MusicBrainzEntity.ARTIST -> {
+            MusicBrainzEntityType.ARTIST -> {
                 artistImageRepository.getArtistImageMetadata(
                     detailsModel = detailsModel,
                     forceRefresh = forceRefresh,

@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
@@ -164,7 +164,7 @@ internal fun ReleaseDetailsTabUi(
                         label = label,
                         onLabelClick = {
                             onItemClick(
-                                MusicBrainzEntity.LABEL,
+                                MusicBrainzEntityType.LABEL,
                                 id,
                             )
                         },
@@ -221,7 +221,7 @@ private fun LazyListScope.releaseEventsSection(
                 showEditCollection = false,
                 onAreaClick = {
                     onItemClick(
-                        MusicBrainzEntity.AREA,
+                        MusicBrainzEntityType.AREA,
                         id,
                     )
                 },

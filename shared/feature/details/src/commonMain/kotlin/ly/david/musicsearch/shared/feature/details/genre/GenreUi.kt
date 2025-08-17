@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenContent
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
@@ -26,7 +26,7 @@ internal fun GenreUi(
 ) {
     val eventSink = state.eventSink
 
-    val entity = MusicBrainzEntity.GENRE
+    val entity = MusicBrainzEntityType.GENRE
 
     val strings = LocalStrings.current
     val uriHandler = LocalUriHandler.current

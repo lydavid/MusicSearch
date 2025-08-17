@@ -18,7 +18,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import org.junit.Assert.assertEquals
@@ -159,7 +159,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         name = "https://www.wikidata.org/wiki/Q240550",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),
@@ -170,7 +170,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         name = "https://www.rollingstone.com/music/music-lists/best-albums-of-all-time-1062063/",
                         disambiguation = null,
                         attributes = "",
-                        linkedEntity = MusicBrainzEntity.URL,
+                        linkedEntity = MusicBrainzEntityType.URL,
                         visited = true,
                         isForwardDirection = true,
                     ),

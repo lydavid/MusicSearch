@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 
@@ -42,7 +42,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
 
     override suspend fun getAndSaveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
     ): ImageMetadataWithCount {
         if (forceRefresh) {
@@ -60,7 +60,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
 
     private suspend fun saveImageMetadataFromNetwork(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
     ) {
         fetchImageMetadataFromNetwork(
             mbid = mbid,
@@ -75,7 +75,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
 
     private suspend fun fetchImageMetadataFromNetwork(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         completion: suspend (List<ImageMetadata>) -> Unit,
     ) {
         try {
@@ -108,7 +108,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
 
     override suspend fun saveImageMetadata(
         mbid: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         itemsCount: Int,
     ) {
         // Reset the clock each time we make a network call.

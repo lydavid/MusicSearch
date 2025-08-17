@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -95,7 +95,7 @@ internal class CollectionPresenter(
         RecordVisit(
             mbid = collectionId,
             title = title,
-            entity = MusicBrainzEntity.COLLECTION,
+            entity = MusicBrainzEntityType.COLLECTION,
             searchHint = "",
         )
 
@@ -105,7 +105,7 @@ internal class CollectionPresenter(
             val tab = collection?.entity?.toTab() ?: return@LaunchedEffect
             val browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntity.COLLECTION,
+                entity = MusicBrainzEntityType.COLLECTION,
             )
             entitiesListEventSink(
                 AllEntitiesListUiEvent.Get(
@@ -161,7 +161,7 @@ internal class CollectionPresenter(
         return CollectionUiState(
             title = title,
             collection = collection,
-            url = getMusicBrainzUrl(MusicBrainzEntity.COLLECTION, screen.collectionId),
+            url = getMusicBrainzUrl(MusicBrainzEntityType.COLLECTION, screen.collectionId),
             firstActionableResult = firstActionableResult,
             secondActionableResult = secondActionableResult,
             topAppBarFilterState = topAppBarFilterState,
@@ -195,7 +195,7 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data object UnMarkItemsAsDeleted : CollectionUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : CollectionUiEvent
 

@@ -29,7 +29,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
 @OptIn(ExperimentalPagingApi::class)
@@ -52,7 +52,7 @@ internal class SearchResultsRepositoryImpl(
 ) : SearchResultsRepository {
 
     override fun observeSearchResults(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
     ): Flow<PagingData<ListItemModel>> = Pager(
         config = CommonPagingConfig.pagingConfig,
@@ -73,7 +73,7 @@ internal class SearchResultsRepositoryImpl(
     }
 
     private fun getRemoteMediator(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
         limit: Int,
     ): RemoteMediator<Int, ListItemModel> {
@@ -95,7 +95,7 @@ internal class SearchResultsRepositoryImpl(
 
     @Suppress("LongMethod")
     private suspend fun fetchAndStore(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
         offset: Int,
         limit: Int,
@@ -103,7 +103,7 @@ internal class SearchResultsRepositoryImpl(
     ): Int {
         return withContext(coroutineDispatchers.io) {
             when (entity) {
-                MusicBrainzEntity.AREA -> {
+                MusicBrainzEntityType.AREA -> {
                     val response = searchApi.queryAreas(
                         query = query,
                         offset = offset,
@@ -124,7 +124,7 @@ internal class SearchResultsRepositoryImpl(
                     areas.size
                 }
 
-                MusicBrainzEntity.ARTIST -> {
+                MusicBrainzEntityType.ARTIST -> {
                     val response = searchApi.queryArtists(
                         query = query,
                         offset = offset,
@@ -145,7 +145,7 @@ internal class SearchResultsRepositoryImpl(
                     artists.size
                 }
 
-                MusicBrainzEntity.EVENT -> {
+                MusicBrainzEntityType.EVENT -> {
                     val response = searchApi.queryEvents(
                         query = query,
                         offset = offset,
@@ -166,7 +166,7 @@ internal class SearchResultsRepositoryImpl(
                     events.size
                 }
 
-                MusicBrainzEntity.INSTRUMENT -> {
+                MusicBrainzEntityType.INSTRUMENT -> {
                     val response = searchApi.queryInstruments(
                         query = query,
                         offset = offset,
@@ -187,7 +187,7 @@ internal class SearchResultsRepositoryImpl(
                     instruments.size
                 }
 
-                MusicBrainzEntity.LABEL -> {
+                MusicBrainzEntityType.LABEL -> {
                     val response = searchApi.queryLabels(
                         query = query,
                         offset = offset,
@@ -208,7 +208,7 @@ internal class SearchResultsRepositoryImpl(
                     labels.size
                 }
 
-                MusicBrainzEntity.PLACE -> {
+                MusicBrainzEntityType.PLACE -> {
                     val response = searchApi.queryPlaces(
                         query = query,
                         offset = offset,
@@ -229,7 +229,7 @@ internal class SearchResultsRepositoryImpl(
                     places.size
                 }
 
-                MusicBrainzEntity.RECORDING -> {
+                MusicBrainzEntityType.RECORDING -> {
                     val response = searchApi.queryRecordings(
                         query = query,
                         offset = offset,
@@ -250,7 +250,7 @@ internal class SearchResultsRepositoryImpl(
                     recordings.size
                 }
 
-                MusicBrainzEntity.RELEASE -> {
+                MusicBrainzEntityType.RELEASE -> {
                     val response = searchApi.queryReleases(
                         query = query,
                         offset = offset,
@@ -271,7 +271,7 @@ internal class SearchResultsRepositoryImpl(
                     releases.size
                 }
 
-                MusicBrainzEntity.RELEASE_GROUP -> {
+                MusicBrainzEntityType.RELEASE_GROUP -> {
                     val response = searchApi.queryReleaseGroups(
                         query = query,
                         offset = offset,
@@ -292,7 +292,7 @@ internal class SearchResultsRepositoryImpl(
                     releaseGroups.size
                 }
 
-                MusicBrainzEntity.SERIES -> {
+                MusicBrainzEntityType.SERIES -> {
                     val response = searchApi.querySeries(
                         query = query,
                         offset = offset,
@@ -313,7 +313,7 @@ internal class SearchResultsRepositoryImpl(
                     series.size
                 }
 
-                MusicBrainzEntity.WORK -> {
+                MusicBrainzEntityType.WORK -> {
                     val response = searchApi.queryWorks(
                         query = query,
                         offset = offset,
@@ -334,9 +334,9 @@ internal class SearchResultsRepositoryImpl(
                     works.size
                 }
 
-                MusicBrainzEntity.COLLECTION,
-                MusicBrainzEntity.GENRE,
-                MusicBrainzEntity.URL,
+                MusicBrainzEntityType.COLLECTION,
+                MusicBrainzEntityType.GENRE,
+                MusicBrainzEntityType.URL,
                 -> {
                     error(IllegalStateException("Cannot search $entity"))
                 }
@@ -345,7 +345,7 @@ internal class SearchResultsRepositoryImpl(
     }
 
     private fun insertIntoCommonTables(
-        entityType: MusicBrainzEntity,
+        entityType: MusicBrainzEntityType,
         entities: List<MusicBrainzNetworkModel>,
         query: String,
         offset: Int,
@@ -355,9 +355,9 @@ internal class SearchResultsRepositoryImpl(
             musicBrainzNetworkModels = entities,
             // https://tickets.metabrainz.org/browse/SEARCH-746
             deleteExisting = !setOf(
-                MusicBrainzEntity.RECORDING,
-                MusicBrainzEntity.RELEASE,
-                MusicBrainzEntity.RELEASE_GROUP,
+                MusicBrainzEntityType.RECORDING,
+                MusicBrainzEntityType.RELEASE,
+                MusicBrainzEntityType.RELEASE_GROUP,
             ).contains(entityType),
         )
         searchResultDao.insertAll(entities.map { it.id })

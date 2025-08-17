@@ -17,7 +17,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -38,7 +38,7 @@ internal class ArtistCollaborationGraphPresenter(
     override fun present(): ArtistCollaborationGraphUiState {
         val graphState by graphSimulation.uiState.collectAsRetainedState()
         val collaborationEntityType by
-            appPreferences.observeCollaborationEntityType.collectAsState(initial = MusicBrainzEntity.RECORDING)
+            appPreferences.observeCollaborationEntityType.collectAsState(initial = MusicBrainzEntityType.RECORDING)
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
@@ -105,7 +105,7 @@ internal class ArtistCollaborationGraphPresenter(
 internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
     val topAppBarFilterState: TopAppBarFilterState,
-    val collaborationEntityType: MusicBrainzEntity = MusicBrainzEntity.RECORDING,
+    val collaborationEntityType: MusicBrainzEntityType = MusicBrainzEntityType.RECORDING,
     val edges: List<GraphEdge> = listOf(),
     val nodes: List<GraphNode> = listOf(),
     val isDeveloperMode: Boolean = false,
@@ -114,9 +114,9 @@ internal data class ArtistCollaborationGraphUiState(
 
 internal sealed interface ArtistCollaborationGraphUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistCollaborationGraphUiEvent
-    data class SelectEntity(val entity: MusicBrainzEntity) : ArtistCollaborationGraphUiEvent
+    data class SelectEntity(val entity: MusicBrainzEntityType) : ArtistCollaborationGraphUiEvent
     data class ClickItem(
-        val entity: MusicBrainzEntity,
+        val entity: MusicBrainzEntityType,
         val id: String,
     ) : ArtistCollaborationGraphUiEvent
 }

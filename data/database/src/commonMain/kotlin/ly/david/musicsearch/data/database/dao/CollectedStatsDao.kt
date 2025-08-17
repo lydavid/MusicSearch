@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class CollectedStatsDao(
     database: Database,
@@ -17,12 +17,12 @@ class CollectedStatsDao(
     private val transacter = database.collected_statsQueries
 
     fun observeCollectedCount(
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod,
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntity.COLLECTION) {
+                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
                     transacter.getCountOfCollectedEntitiesByCollection(
                         collectionId = browseMethod.entityId,
                     )
@@ -40,71 +40,71 @@ class CollectedStatsDao(
             .map { it.toInt() }
 
     private fun getCountOfCollectedEntitiesByEntity(
-        browseEntity: MusicBrainzEntity,
+        browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod.ByEntity,
     ): Query<Long> = when (browseEntity) {
-        MusicBrainzEntity.AREA -> transacter.getCountOfCollectedAreasByEntity(
+        MusicBrainzEntityType.AREA -> transacter.getCountOfCollectedAreasByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.ARTIST -> transacter.getCountOfCollectedArtistsByEntity(
+        MusicBrainzEntityType.ARTIST -> transacter.getCountOfCollectedArtistsByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.EVENT -> transacter.getCountOfCollectedEventsByEntity(
+        MusicBrainzEntityType.EVENT -> transacter.getCountOfCollectedEventsByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.LABEL -> transacter.getCountOfCollectedLabelsByEntity(
+        MusicBrainzEntityType.LABEL -> transacter.getCountOfCollectedLabelsByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.PLACE -> transacter.getCountOfCollectedPlacesByEntity(
+        MusicBrainzEntityType.PLACE -> transacter.getCountOfCollectedPlacesByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.RECORDING -> transacter.getCountOfCollectedRecordingsByEntity(
+        MusicBrainzEntityType.RECORDING -> transacter.getCountOfCollectedRecordingsByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.RELEASE -> transacter.getCountOfCollectedReleasesByEntity(
+        MusicBrainzEntityType.RELEASE -> transacter.getCountOfCollectedReleasesByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.RELEASE_GROUP -> transacter.getCountOfCollectedReleaseGroupsByEntity(
+        MusicBrainzEntityType.RELEASE_GROUP -> transacter.getCountOfCollectedReleaseGroupsByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.WORK -> transacter.getCountOfCollectedWorksByEntity(
+        MusicBrainzEntityType.WORK -> transacter.getCountOfCollectedWorksByEntity(
             entityId = browseMethod.entityId,
         )
 
-        MusicBrainzEntity.COLLECTION,
-        MusicBrainzEntity.GENRE,
-        MusicBrainzEntity.INSTRUMENT,
-        MusicBrainzEntity.SERIES,
-        MusicBrainzEntity.URL,
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.GENRE,
+        MusicBrainzEntityType.INSTRUMENT,
+        MusicBrainzEntityType.SERIES,
+        MusicBrainzEntityType.URL,
         -> error(getError(browseEntity))
     }
 
-    private fun getCountOfAllCollectedEntities(browseEntity: MusicBrainzEntity): Query<Long> = when (browseEntity) {
-        MusicBrainzEntity.AREA -> transacter.getCountOfAllCollectedAreas()
-        MusicBrainzEntity.ARTIST -> transacter.getCountOfAllCollectedArtists()
-        MusicBrainzEntity.EVENT -> transacter.getCountOfAllCollectedEvents()
-        MusicBrainzEntity.GENRE -> transacter.getCountOfAllCollectedGenres()
-        MusicBrainzEntity.INSTRUMENT -> transacter.getCountOfAllCollectedInstruments()
-        MusicBrainzEntity.LABEL -> transacter.getCountOfAllCollectedLabels()
-        MusicBrainzEntity.PLACE -> transacter.getCountOfAllCollectedPlaces()
-        MusicBrainzEntity.RECORDING -> transacter.getCountOfAllCollectedRecordings()
-        MusicBrainzEntity.RELEASE -> transacter.getCountOfAllCollectedReleases()
-        MusicBrainzEntity.RELEASE_GROUP -> transacter.getCountOfAllCollectedReleaseGroups()
-        MusicBrainzEntity.SERIES -> transacter.getCountOfAllCollectedSeries()
-        MusicBrainzEntity.WORK -> transacter.getCountOfAllCollectedWorks()
-        MusicBrainzEntity.COLLECTION,
-        MusicBrainzEntity.URL,
+    private fun getCountOfAllCollectedEntities(browseEntity: MusicBrainzEntityType): Query<Long> = when (browseEntity) {
+        MusicBrainzEntityType.AREA -> transacter.getCountOfAllCollectedAreas()
+        MusicBrainzEntityType.ARTIST -> transacter.getCountOfAllCollectedArtists()
+        MusicBrainzEntityType.EVENT -> transacter.getCountOfAllCollectedEvents()
+        MusicBrainzEntityType.GENRE -> transacter.getCountOfAllCollectedGenres()
+        MusicBrainzEntityType.INSTRUMENT -> transacter.getCountOfAllCollectedInstruments()
+        MusicBrainzEntityType.LABEL -> transacter.getCountOfAllCollectedLabels()
+        MusicBrainzEntityType.PLACE -> transacter.getCountOfAllCollectedPlaces()
+        MusicBrainzEntityType.RECORDING -> transacter.getCountOfAllCollectedRecordings()
+        MusicBrainzEntityType.RELEASE -> transacter.getCountOfAllCollectedReleases()
+        MusicBrainzEntityType.RELEASE_GROUP -> transacter.getCountOfAllCollectedReleaseGroups()
+        MusicBrainzEntityType.SERIES -> transacter.getCountOfAllCollectedSeries()
+        MusicBrainzEntityType.WORK -> transacter.getCountOfAllCollectedWorks()
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.URL,
         -> error(getError(browseEntity))
     }
 
-    private fun getError(browseEntity: MusicBrainzEntity): String =
+    private fun getError(browseEntity: MusicBrainzEntityType): String =
         "Cannot get collected count for unsupported entity: $browseEntity"
 }

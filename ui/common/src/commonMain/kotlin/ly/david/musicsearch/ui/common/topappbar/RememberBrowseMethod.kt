@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 val BrowseMethodSaver: Saver<MutableState<BrowseMethod?>, Any> = run {
     val id = "id"
@@ -29,7 +29,7 @@ val BrowseMethodSaver: Saver<MutableState<BrowseMethod?>, Any> = run {
                     BrowseMethod.All.toString() -> BrowseMethod.All
                     BrowseMethod.ByEntity::class.toString() -> BrowseMethod.ByEntity(
                         entityId = it[entityId] as String,
-                        entity = it[entity] as MusicBrainzEntity,
+                        entity = it[entity] as MusicBrainzEntityType,
                     )
 
                     else -> null

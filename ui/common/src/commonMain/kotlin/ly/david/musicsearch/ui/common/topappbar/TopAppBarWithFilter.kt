@@ -52,7 +52,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -65,7 +65,7 @@ fun TopAppBarWithFilter(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -106,7 +106,7 @@ expect fun TopAppBarWithFilter(
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     onSelectAllToggle: () -> Unit = {},
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -124,7 +124,7 @@ internal fun TopAppBarWithFilterInternal(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntity? = null,
+    entity: MusicBrainzEntityType? = null,
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,

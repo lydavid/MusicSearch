@@ -11,13 +11,13 @@ import ly.david.musicsearch.shared.domain.history.SearchHistory
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.search.history.SearchHistoryRepository
 
 internal class SearchHistoryRepositoryImpl(
     private val searchHistoryDao: SearchHistoryDao,
 ) : SearchHistoryRepository {
-    override fun observeSearchHistory(entity: MusicBrainzEntity): Flow<PagingData<ListItemModel>> =
+    override fun observeSearchHistory(entity: MusicBrainzEntityType): Flow<PagingData<ListItemModel>> =
         Pager(
             config = CommonPagingConfig.pagingConfig,
             pagingSourceFactory = {
@@ -33,7 +33,7 @@ internal class SearchHistoryRepositoryImpl(
         }
 
     override fun recordSearchHistory(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
     ) {
         searchHistoryDao.upsert(
@@ -44,12 +44,12 @@ internal class SearchHistoryRepositoryImpl(
         )
     }
 
-    override fun deleteAll(entity: MusicBrainzEntity) {
+    override fun deleteAll(entity: MusicBrainzEntityType) {
         searchHistoryDao.deleteAll(entity)
     }
 
     override fun delete(
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         query: String,
     ) {
         searchHistoryDao.delete(

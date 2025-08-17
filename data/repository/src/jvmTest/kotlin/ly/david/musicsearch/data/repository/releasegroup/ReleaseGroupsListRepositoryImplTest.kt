@@ -42,7 +42,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -84,7 +84,7 @@ class ReleaseGroupsListRepositoryImplTest :
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleaseGroupsByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -114,7 +114,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 id = collectionId,
                 isRemote = false,
                 name = "release groups",
-                entity = MusicBrainzEntity.RELEASE_GROUP,
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -127,7 +127,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -184,7 +184,7 @@ class ReleaseGroupsListRepositoryImplTest :
     @Test
     fun setupReleaseGroupsByTchaikovsky() = runTest {
         val entityId = tchaikovskyArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             tchaikovskyArtistMusicBrainzModel,
         ).lookupArtist(
@@ -250,7 +250,7 @@ class ReleaseGroupsListRepositoryImplTest :
     @Test
     fun setupReleaseGroupsByBerlinerPhilharmoniker() = runTest {
         val entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             berlinerPhilharmonikerArtistMusicBrainzModel,
         ).lookupArtist(
@@ -376,7 +376,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -402,7 +402,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = tchaikovskyArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -419,7 +419,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntity.COLLECTION,
+                entity = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -558,7 +558,7 @@ class ReleaseGroupsListRepositoryImplTest :
     @Test
     fun `filter by alias`() = runTest {
         val entityId = adoArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             adoArtistMusicBrainzModel,
         ).lookupArtist(

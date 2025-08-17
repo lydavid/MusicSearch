@@ -20,7 +20,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -59,7 +59,7 @@ internal fun InstrumentUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntity.INSTRUMENT
+    val entity = MusicBrainzEntityType.INSTRUMENT
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(

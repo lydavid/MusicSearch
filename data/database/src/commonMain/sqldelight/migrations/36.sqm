@@ -1,10 +1,10 @@
 import kotlin.Int;
 import kotlin.time.Instant;
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
 CREATE TABLE IF NOT EXISTS new_browse_remote_count (
   entity_id TEXT NOT NULL,
-  browse_entity TEXT AS MusicBrainzEntity NOT NULL,
+  browse_entity TEXT AS MusicBrainzEntityType NOT NULL,
   remote_count INTEGER AS Int NOT NULL,
   last_updated INTEGER AS Instant NOT NULL,
 

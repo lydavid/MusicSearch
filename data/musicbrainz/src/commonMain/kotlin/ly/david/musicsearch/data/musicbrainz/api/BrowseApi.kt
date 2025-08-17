@@ -22,7 +22,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 
 const val ALIASES = "aliases"
@@ -46,7 +46,7 @@ interface BrowseApi {
 
     suspend fun browseArtistsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ALIASES,
@@ -54,7 +54,7 @@ interface BrowseApi {
 
     suspend fun browseEventsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ALIASES,
@@ -62,7 +62,7 @@ interface BrowseApi {
 
     suspend fun browseGenresByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseGenresResponse
@@ -76,7 +76,7 @@ interface BrowseApi {
 
     suspend fun browseLabelsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ALIASES,
@@ -84,7 +84,7 @@ interface BrowseApi {
 
     suspend fun browsePlacesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ALIASES,
@@ -92,7 +92,7 @@ interface BrowseApi {
 
     suspend fun browseRecordingsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = "$ARTIST_CREDITS+$ALIASES",
@@ -100,7 +100,7 @@ interface BrowseApi {
 
     suspend fun browseReleasesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = "$ARTIST_CREDITS+$ALIASES",
@@ -108,7 +108,7 @@ interface BrowseApi {
 
     suspend fun browseReleaseGroupsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = "$ARTIST_CREDITS+$ALIASES",
@@ -123,7 +123,7 @@ interface BrowseApi {
 
     suspend fun browseWorksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
         include: String = ALIASES,
@@ -164,7 +164,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseArtistsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -194,7 +194,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseEventsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -224,7 +224,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseGenresByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
     ): BrowseGenresResponse {
@@ -278,7 +278,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseLabelsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -308,7 +308,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browsePlacesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -338,7 +338,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseRecordingsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -368,7 +368,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseReleasesByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -398,7 +398,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseReleaseGroupsByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,
@@ -457,7 +457,7 @@ interface BrowseApiImpl : BrowseApi {
 
     override suspend fun browseWorksByEntity(
         entityId: String,
-        entity: MusicBrainzEntity,
+        entity: MusicBrainzEntityType,
         limit: Int,
         offset: Int,
         include: String,

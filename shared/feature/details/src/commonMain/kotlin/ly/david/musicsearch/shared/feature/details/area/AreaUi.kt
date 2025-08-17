@@ -23,7 +23,7 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -77,7 +77,7 @@ internal fun AreaUi(
         additionalActions = {
             AddToCollectionActionToggle(
                 collected = state.collected,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
                 entityId = entityId,
                 overlayHost = overlayHost,
                 coroutineScope = coroutineScope,
@@ -131,7 +131,7 @@ internal fun AreaUiInternal(
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
     onEditCollectionClick: (String) -> Unit = {},
 ) {
-    val entity = MusicBrainzEntity.AREA
+    val entity = MusicBrainzEntityType.AREA
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),

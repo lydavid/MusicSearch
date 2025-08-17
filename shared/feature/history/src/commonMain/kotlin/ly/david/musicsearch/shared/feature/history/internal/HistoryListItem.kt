@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
@@ -54,7 +54,7 @@ internal fun HistoryListItem(
                         url = lookupHistory.imageUrl.orEmpty(),
                         imageId = lookupHistory.imageId,
                         placeholderIcon = lookupHistory.entity.getIcon(),
-                        clipCircle = lookupHistory.entity == MusicBrainzEntity.ARTIST,
+                        clipCircle = lookupHistory.entity == MusicBrainzEntityType.ARTIST,
                     )
                 },
                 trailingContent = {

@@ -65,7 +65,7 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -119,7 +119,7 @@ class ReleasesListRepositoryImplTest :
             browseApi = object : FakeBrowseApi() {
                 override suspend fun browseReleasesByEntity(
                     entityId: String,
-                    entity: MusicBrainzEntity,
+                    entity: MusicBrainzEntityType,
                     limit: Int,
                     offset: Int,
                     include: String,
@@ -169,7 +169,7 @@ class ReleasesListRepositoryImplTest :
             val flow: Flow<PagingData<ReleaseListItemModel>> = releasesListRepository.observeReleases(
                 browseMethod = BrowseMethod.ByEntity(
                     entityId = labelId,
-                    entity = MusicBrainzEntity.LABEL,
+                    entity = MusicBrainzEntityType.LABEL,
                 ),
                 listFilters = ListFilters(
                     query = "ウタ",
@@ -210,7 +210,7 @@ class ReleasesListRepositoryImplTest :
         val flow: Flow<PagingData<ReleaseListItemModel>> = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = labelId,
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
             listFilters = ListFilters(),
         )
@@ -248,7 +248,7 @@ class ReleasesListRepositoryImplTest :
         val flow: Flow<PagingData<ReleaseListItemModel>> = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = labelId,
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
             listFilters = ListFilters(),
         )
@@ -303,7 +303,7 @@ class ReleasesListRepositoryImplTest :
                 id = collectionId,
                 isRemote = false,
                 name = "releases",
-                entity = MusicBrainzEntity.RELEASE,
+                entity = MusicBrainzEntityType.RELEASE,
             ),
         )
         collectionEntityDao.addAllToCollection(
@@ -316,7 +316,7 @@ class ReleasesListRepositoryImplTest :
                 releasesListRepository.observeReleases(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntity.COLLECTION,
+                        entity = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -400,7 +400,7 @@ class ReleasesListRepositoryImplTest :
             lastUpdated = testDateTimeInThePast,
         )
 
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val releases = listOf(
             weirdAlGreatestHitsReleaseMusicBrainzModel,
             utaNoUtaReleaseMusicBrainzModel,
@@ -503,7 +503,7 @@ class ReleasesListRepositoryImplTest :
             lastUpdated = testDateTimeInThePast,
         )
 
-        val entity = MusicBrainzEntity.AREA
+        val entity = MusicBrainzEntityType.AREA
         val releases = listOf(
             weirdAlGreatestHitsReleaseMusicBrainzModel,
             utaNoUtaReleaseMusicBrainzModel,
@@ -584,7 +584,7 @@ class ReleasesListRepositoryImplTest :
         oldreleasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = virginMusicLabelMusicBrainzModel.id,
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -631,7 +631,7 @@ class ReleasesListRepositoryImplTest :
                 releasesListRepository.observeReleases(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = areaId,
-                        entity = MusicBrainzEntity.AREA,
+                        entity = MusicBrainzEntityType.AREA,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -668,7 +668,7 @@ class ReleasesListRepositoryImplTest :
         modifiedreleasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = virginMusicLabelMusicBrainzModel.id,
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -691,7 +691,7 @@ class ReleasesListRepositoryImplTest :
         modifiedreleasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = areaId,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -712,7 +712,7 @@ class ReleasesListRepositoryImplTest :
         modifiedreleasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = virginMusicLabelMusicBrainzModel.id,
-                entity = MusicBrainzEntity.LABEL,
+                entity = MusicBrainzEntityType.LABEL,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -735,7 +735,7 @@ class ReleasesListRepositoryImplTest :
     @Test
     fun setupReleasesByDavidBowie() = runTest {
         val entityId = davidBowieArtistMusicBrainzModel.id
-        val entity = MusicBrainzEntity.ARTIST
+        val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             davidBowieArtistMusicBrainzModel,
         ).lookupArtist(
@@ -813,7 +813,7 @@ class ReleasesListRepositoryImplTest :
     @Test
     fun setupReleasesByUnderPressureRecording() = runTest {
         val entityId = underPressureRecordingMusicBrainzModel.id
-        val entity = MusicBrainzEntity.RECORDING
+        val entity = MusicBrainzEntityType.RECORDING
         createRecordingRepository(
             underPressureRecordingMusicBrainzModel,
         ).lookupRecording(
@@ -891,7 +891,7 @@ class ReleasesListRepositoryImplTest :
     @Test
     fun setupReleasesByUnderPressureReleaseGroup() = runTest {
         val entityId = underPressureReleaseGroupMusicBrainzModel.id
-        val entity = MusicBrainzEntity.RELEASE_GROUP
+        val entity = MusicBrainzEntityType.RELEASE_GROUP
         createReleaseGroupRepository(
             underPressureReleaseGroupMusicBrainzModel,
         ).lookupReleaseGroup(
@@ -988,7 +988,7 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = davidBowieArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -1012,7 +1012,7 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = japanAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntity.AREA,
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -1179,7 +1179,7 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = underPressureRecordingMusicBrainzModel.id,
-                entity = MusicBrainzEntity.RECORDING,
+                entity = MusicBrainzEntityType.RECORDING,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -1201,7 +1201,7 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = davidBowieArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntity.ARTIST,
+                entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -1349,7 +1349,7 @@ class ReleasesListRepositoryImplTest :
             releasesListRepository.observeReleases(
                 browseMethod = BrowseMethod.ByEntity(
                     entityId = underPressureReleaseGroupMusicBrainzModel.id,
-                    entity = MusicBrainzEntity.RELEASE_GROUP,
+                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 ),
                 listFilters = ListFilters(),
             ).asSnapshot {
@@ -1371,7 +1371,7 @@ class ReleasesListRepositoryImplTest :
             releasesListRepository.observeReleases(
                 browseMethod = BrowseMethod.ByEntity(
                     entityId = underPressureRecordingMusicBrainzModel.id,
-                    entity = MusicBrainzEntity.RECORDING,
+                    entity = MusicBrainzEntityType.RECORDING,
                 ),
                 listFilters = ListFilters(),
             ).asSnapshot().run {

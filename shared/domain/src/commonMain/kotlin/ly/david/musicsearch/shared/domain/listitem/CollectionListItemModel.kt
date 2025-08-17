@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.listitem
 
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 /**
  * @param cachedEntityCount The number of entities in this collection in our local database.
@@ -10,7 +10,7 @@ data class CollectionListItemModel(
     val isRemote: Boolean,
     val name: String,
     val description: String = "",
-    val entity: MusicBrainzEntity,
+    val entity: MusicBrainzEntityType,
     val cachedEntityCount: Int = 0,
     override val visited: Boolean = false,
     val containsEntity: Boolean = false,

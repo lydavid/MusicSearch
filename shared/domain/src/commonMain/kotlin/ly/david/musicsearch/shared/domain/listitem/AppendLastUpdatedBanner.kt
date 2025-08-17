@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     browseMethod: BrowseMethod,
-    browseEntity: MusicBrainzEntity,
+    browseEntity: MusicBrainzEntityType,
 ): Flow<PagingData<ListItemModel>> {
     return transformLatest { listItems ->
         val browseByEntity = browseMethod as? BrowseMethod.ByEntity
