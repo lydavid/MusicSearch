@@ -10,7 +10,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -27,6 +26,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
+import kotlin.time.Instant
 
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
@@ -57,7 +57,7 @@ class RelationRepositoryImpl(
         lastUpdated: Instant,
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
-            entity = entity,
+            entityType = entity,
             entityId = entityId,
             relatedEntities = relatedEntities,
         )
@@ -72,13 +72,14 @@ class RelationRepositoryImpl(
         )
     }
 
+    @Suppress("LongMethod")
     private suspend fun lookupEntityWithRelations(
-        entity: MusicBrainzEntityType,
+        entityType: MusicBrainzEntityType,
         entityId: String,
         relatedEntities: Set<MusicBrainzEntityType>,
     ): List<RelationMusicBrainzModel>? {
         val include = relatedEntities.joinToString(separator = "+") { "${it.resourceUri}-rels" }
-        return when (entity) {
+        return when (entityType) {
             MusicBrainzEntityType.AREA -> {
                 lookupApi.lookupArea(
                     areaId = entityId,
@@ -159,7 +160,7 @@ class RelationRepositoryImpl(
             MusicBrainzEntityType.COLLECTION,
             MusicBrainzEntityType.GENRE,
             MusicBrainzEntityType.URL,
-            -> error("Attempting to lookup the relationships of unsupported entity $entity")
+            -> error("Attempting to lookup the relationships of unsupported entity $entityType")
         }
     }
 

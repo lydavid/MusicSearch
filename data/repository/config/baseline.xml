@@ -4,7 +4,6 @@
   <CurrentIssues>
     <ID>ComplexCondition:ReleaseGroupsListRepositoryImpl.kt$ReleaseGroupsListRepositoryImpl$listFilters.sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
     <ID>ComplexCondition:ReleaseRepositoryImpl.kt$ReleaseRepositoryImpl$releaseDetailsModel != null &amp;&amp; releaseGroup != null &amp;&amp; artistCredits.isNotEmpty() &amp;&amp; visited &amp;&amp; !forceRefresh</ID>
-    <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, relatedEntities: Set&lt;MusicBrainzEntity&gt;, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
     <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, DM&gt;, ): MediatorResult</ID>
     <ID>ReturnCount:SearchMusicBrainzRemoteMediator.kt$SearchMusicBrainzRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, ListItemModel&gt;, ): MediatorResult</ID>
   </CurrentIssues>
