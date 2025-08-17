@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,8 +39,6 @@ fun ResourceDropdownPicker(
     val strings = LocalStrings.current
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    // TODO: this can't properly take up the full size allotted to it
-    //  so in landscape mode, it doesn't fill up half the screen
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
@@ -47,6 +46,7 @@ fun ResourceDropdownPicker(
     ) {
         TextField(
             modifier = Modifier
+                .fillMaxWidth()
                 .menuAnchor(type = PrimaryNotEditable, enabled = true),
             readOnly = true,
             shape = RectangleShape,
