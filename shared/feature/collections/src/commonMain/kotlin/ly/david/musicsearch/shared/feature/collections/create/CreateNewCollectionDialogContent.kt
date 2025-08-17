@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.collections.create
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -64,6 +65,7 @@ fun CreateNewCollectionDialogContent(
         TextField(
             modifier = Modifier
                 .padding(top = 16.dp)
+                .fillMaxWidth()
                 .focusRequester(focusRequester),
             shape = RectangleShape,
             value = name,
