@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType.Companion.PrimaryNotEditable
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
@@ -45,7 +46,8 @@ fun ResourceDropdownPicker(
         modifier = modifier,
     ) {
         TextField(
-            modifier = Modifier.menuAnchor(),
+            modifier = Modifier
+                .menuAnchor(type = PrimaryNotEditable, enabled = true),
             readOnly = true,
             shape = RectangleShape,
             value = selectedOption.getName(strings),
