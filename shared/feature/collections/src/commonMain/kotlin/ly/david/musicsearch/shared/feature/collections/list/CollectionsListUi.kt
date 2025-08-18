@@ -226,6 +226,7 @@ internal fun CollectionListUi(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
+                        query = state.topAppBarFilterState.filterText,
                         onClick = {
                             eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
                         },

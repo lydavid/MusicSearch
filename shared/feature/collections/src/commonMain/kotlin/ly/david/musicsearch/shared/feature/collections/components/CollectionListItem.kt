@@ -17,6 +17,7 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.Cloud
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
@@ -26,6 +27,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
+    query: String = "",
     onClick: (String) -> Unit = {},
     enabled: Boolean = true,
     isSelected: Boolean = false,
@@ -47,9 +49,9 @@ internal fun CollectionListItem(
     }
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = collection.name,
-                style = TextStyles.getCardBodyTextStyle(),
+                highlightedText = query,
                 fontWeight = collection.fontWeight,
             )
         },
