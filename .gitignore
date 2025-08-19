@@ -50,3 +50,4 @@ output/
 node_modules/
 
 *.sql
+scratch/
