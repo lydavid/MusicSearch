@@ -1,0 +1,34 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+CREATE TABLE listen (
+  inserted_at_ms INTEGER NOT NULL,
+  listened_at_ms INTEGER NOT NULL,
+  recording_messybrainz_id TEXT NOT NULL,
+  username TEXT NOT NULL,
+
+  recording_musicbrainz_id TEXT,
+  caa_id INTEGER,
+  caa_release_mbid TEXT,
+
+  artist_name TEXT NOT NULL,
+  track_name TEXT NOT NULL,
+  release_name TEXT,
+
+  duration_ms INTEGER,
+  media_player TEXT,
+  submission_client TEXT,
+  music_service TEXT,
+  music_service_name TEXT,
+  origin_url TEXT,
+
+  spotify_album_artist_ids TEXT AS List<String>,
+  spotify_album_id TEXT,
+  spotify_artist_ids TEXT AS List<String>,
+  spotify_id TEXT,
+
+  PRIMARY KEY (listened_at_ms, username, recording_messybrainz_id)
+);
+
+CREATE INDEX idx_listen_recording_mbid ON listen (recording_musicbrainz_id);
+CREATE INDEX idx_listen_caa_release_mbid ON listen (caa_release_mbid);

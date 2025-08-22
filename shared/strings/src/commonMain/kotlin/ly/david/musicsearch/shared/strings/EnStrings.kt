@@ -345,4 +345,7 @@ val EnStrings = AppStrings(
     formalName = "Formal name",
     brandName = "Brand name",
     primary = "Primary",
+    listens = "Listens",
+    username = "Username",
+    enterUsername = "Enter username",
 )

@@ -95,3 +95,6 @@ data object NowPlayingHistoryScreen : Screen
 
 @Parcelize
 data object SpotifyHistoryScreen : Screen
+
+@Parcelize
+data object ListensScreen : Screen

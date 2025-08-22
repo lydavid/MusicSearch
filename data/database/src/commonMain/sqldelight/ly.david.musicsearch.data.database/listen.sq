@@ -1,0 +1,115 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+-- Primary key considerations:
+-- An autoincrementing id may let unintended duplicates through if the user doesn't fetch all their listens in one go.
+-- With manual submission in ListenBrainz, it is possible to have the same listened_at for multiple listens.
+-- But ListenBrainz doesn't allow the same recording to be listened at the same time by the same user: https://github.com/metabrainz/listenbrainz-server/blob/e18111661afaf18834dfce4e138e380e674564cd/admin/timescale/create_indexes.sql#L5
+CREATE TABLE listen (
+  inserted_at_ms INTEGER NOT NULL,
+  listened_at_ms INTEGER NOT NULL,
+  recording_messybrainz_id TEXT NOT NULL,
+  username TEXT NOT NULL,
+
+  recording_musicbrainz_id TEXT,
+  caa_id INTEGER,
+  caa_release_mbid TEXT,
+
+  -- These are required fields when submitting listens to ListenBrainz.
+  -- We will use them as fallback when there are no mappings to a MusicBrainz recording
+  -- to get its name and artist credits
+  artist_name TEXT NOT NULL,
+  track_name TEXT NOT NULL,
+
+  release_name TEXT,
+
+  duration_ms INTEGER,
+  media_player TEXT,
+  submission_client TEXT,
+  music_service TEXT,
+  music_service_name TEXT,
+  origin_url TEXT,
+
+  spotify_album_artist_ids TEXT AS List<String>,
+  spotify_album_id TEXT,
+  spotify_artist_ids TEXT AS List<String>,
+  spotify_id TEXT,
+
+  PRIMARY KEY (listened_at_ms, username, recording_messybrainz_id)
+);
+
+CREATE INDEX idx_listen_recording_mbid ON listen (recording_musicbrainz_id);
+CREATE INDEX idx_listen_caa_release_mbid ON listen (caa_release_mbid);
+
+-- queries
+
+insert:
+INSERT OR IGNORE INTO listen
+VALUES ?;
+
+deleteByUser:
+DELETE FROM listen
+WHERE listen.username = :username;
+
+getLatestTimestampByUser:
+SELECT MAX(listened_at_ms) AS timestamp
+FROM listen
+WHERE listen.username = :username;
+
+getOldestTimestampByUser:
+SELECT MIN(listened_at_ms) AS timestamp
+FROM listen
+WHERE listen.username = :username;
+
+getCountOfListensByUser:
+SELECT COUNT(*)
+FROM (
+  SELECT DISTINCT listened_at_ms, username, recording_messybrainz_id
+  FROM listen
+  LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
+  LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+  LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+  LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
+    AND recording_alias.is_primary
+  WHERE listen.username = :username AND
+  (
+    recording.name LIKE :query OR
+    track_name LIKE :query OR
+    artist_credit.name LIKE :query OR
+    artist_name LIKE :query OR
+    release_name LIKE :query OR
+    recording_alias.name LIKE :query
+  )
+);
+
+getListensByUser:
+SELECT
+  listened_at_ms,
+  recording_messybrainz_id,
+  username,
+  recording_musicbrainz_id,
+  recording.name AS recordingName,
+  track_name AS fallbackName,
+  artist_credit.name AS artistCreditNames,
+  artist_name AS fallbackArtistCreditNames,
+  mi.thumbnail_url,
+  mi.id AS imageId
+FROM listen
+LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
+LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
+  AND recording_alias.is_primary
+LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
+WHERE listen.username = :username AND
+(
+  recordingName LIKE :query OR
+  track_name LIKE :query OR
+  artistCreditNames LIKE :query OR
+  artist_name LIKE :query OR
+  release_name LIKE :query OR
+  recording_alias.name LIKE :query
+)
+GROUP BY listened_at_ms, username, recording_messybrainz_id
+ORDER BY listened_at_ms DESC
+LIMIT :limit OFFSET :offset;

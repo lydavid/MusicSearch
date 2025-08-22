@@ -59,7 +59,6 @@ internal class SearchResultsRepositoryImpl(
         remoteMediator = getRemoteMediator(
             entity = entity,
             query = query,
-            limit = CommonPagingConfig.pagingConfig.pageSize,
         ),
         pagingSourceFactory = {
             searchResultDao.getSearchResults(entity)
@@ -75,7 +74,6 @@ internal class SearchResultsRepositoryImpl(
     private fun getRemoteMediator(
         entity: MusicBrainzEntityType,
         query: String,
-        limit: Int,
     ): RemoteMediator<Int, ListItemModel> {
         return SearchMusicBrainzRemoteMediator(
             searchResultDao = searchResultDao,
@@ -86,7 +84,7 @@ internal class SearchResultsRepositoryImpl(
                     entity = entity,
                     query = query,
                     offset = offset,
-                    limit = limit,
+                    limit = CommonPagingConfig.pagingConfig.pageSize,
                     removeAll = removeAll,
                 )
             },

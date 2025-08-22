@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.coverart.di.coverArtModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.database.databasePlatformModule
+import ly.david.musicsearch.data.listenbrainz.di.listenBrainzApiModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzApiModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzAuthModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
@@ -24,6 +25,7 @@ import ly.david.musicsearch.shared.feature.graph.graphFeatureModule
 import ly.david.musicsearch.shared.feature.history.historyFeatureModule
 import ly.david.musicsearch.shared.feature.images.imagesFeatureModule
 import ly.david.musicsearch.shared.feature.licenses.licensesFeatureModule
+import ly.david.musicsearch.shared.feature.listens.listensFeatureModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
 import ly.david.musicsearch.shared.feature.settings.settingsFeatureModule
 import ly.david.musicsearch.shared.feature.stats.statsFeatureModule
@@ -44,6 +46,7 @@ val circuitModule = module {
         detailsFeatureModule,
         statsFeatureModule,
         imagesFeatureModule,
+        listensFeatureModule,
     )
     single {
         Circuit.Builder()
@@ -65,6 +68,7 @@ val sharedModule: Module = module {
         spotifyDataModule,
         appPreferencesModule,
         repositoryDataModule,
+        listenBrainzApiModule,
         musicBrainzDataModule,
         databaseModule,
         databaseDaoModule,

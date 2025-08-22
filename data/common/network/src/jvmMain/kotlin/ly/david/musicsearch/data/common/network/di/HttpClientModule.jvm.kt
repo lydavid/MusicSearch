@@ -12,11 +12,16 @@ import io.ktor.http.HttpHeaders
 import ly.david.musicsearch.data.common.network.ApiHttpClient
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import java.util.concurrent.TimeUnit
 
 actual val HttpClientModule: Module = module {
     single {
+        val okHttpConfig = OkHttpConfig()
+        okHttpConfig.config {
+            connectTimeout(15, TimeUnit.SECONDS)
+        }
         ApiHttpClient.configAndCreate(
-            engine = OkHttpEngine(config = OkHttpConfig()),
+            engine = OkHttpEngine(config = okHttpConfig),
         ) {
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->

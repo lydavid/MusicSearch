@@ -52,12 +52,15 @@ WHERE mbid = :mbid
 LIMIT 1;
 
 getCountOfAllImageMetadataById:
-SELECT count(`id`)
-FROM mbid_image
-WHERE mbid = :mbid
-AND (
-  types LIKE :query OR
-  comment LIKE :query
+SELECT count(*)
+FROM (
+  SELECT DISTINCT mbid, thumbnail_url
+  FROM mbid_image
+  WHERE mbid = :mbid
+  AND (
+    types LIKE :query OR
+    comment LIKE :query
+  )
 );
 
 -- if types or comment is null, this will not show them at all (fix in 24.sqm)
@@ -74,20 +77,25 @@ AND (
   types LIKE :query OR
   comment LIKE :query
 )
+GROUP BY mbid, thumbnail_url
 LIMIT :limit
 OFFSET :offset;
 
+-- TODO: deduplicate by recreating table with constraint, then insert or ignore into it
 getCountOfAllImageMetadata:
-SELECT count(mbid_image.`id`)
-FROM mbid_image
-LEFT JOIN coalesced_entity ON coalesced_entity.id = mbid_image.mbid
-WHERE thumbnail_url != ''
-AND (
-  types LIKE :query OR
-  comment LIKE :query OR
-  coalesced_entity.name LIKE :query OR
-  coalesced_entity.sort_name LIKE :query OR
-  coalesced_entity.disambiguation LIKE :query
+SELECT count(*)
+FROM (
+  SELECT DISTINCT mbid, thumbnail_url
+  FROM mbid_image
+  LEFT JOIN coalesced_entity ON coalesced_entity.id = mbid_image.mbid
+  WHERE thumbnail_url != ''
+  AND (
+    types LIKE :query OR
+    comment LIKE :query OR
+    coalesced_entity.name LIKE :query OR
+    coalesced_entity.sort_name LIKE :query OR
+    coalesced_entity.disambiguation LIKE :query
+  )
 );
 
 getAllImageMetadata:
@@ -111,6 +119,7 @@ AND (
   coalesced_entity.sort_name LIKE :query OR
   coalesced_entity.disambiguation LIKE :query
 )
+GROUP BY mbid, thumbnail_url
 ORDER BY
   CASE WHEN :alphabetically THEN coalesced_entity.name END ASC,
   CASE WHEN :alphabeticallyReverse THEN coalesced_entity.name END DESC,

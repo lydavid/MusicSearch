@@ -13,16 +13,12 @@ kotlin {
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(libs.paging.common)
+                implementation(libs.androidx.datastore.preferences.core)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(libs.koin.test)
-                implementation(libs.junit)
-                implementation(libs.kotlinx.coroutines.test)
-                implementation(libs.androidx.paging.testing)
             }
         }
     }

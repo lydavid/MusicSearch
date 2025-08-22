@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.common
 
-private const val MS = 1000
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
+
 private const val SECONDS_IN_MINUTE = 60
 private const val MINUTES_IN_HOUR = 60
 private const val SINGLE_DIGIT_THRESHOLD = 10
@@ -13,7 +14,7 @@ const val UNKNOWN_TIME = "?:??"
 fun Int?.toDisplayTime(): String {
     if (this == null || this < 0) return UNKNOWN_TIME
 
-    val timeWithoutMs = this / MS
+    val timeWithoutMs = this / MS_IN_SECOND
     var minutes = timeWithoutMs / SECONDS_IN_MINUTE
 
     var hours = 0
