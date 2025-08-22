@@ -25,6 +25,6 @@ stable class DeleteHistory {
 }
 stable class GoToSearch {
   stable val query: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }

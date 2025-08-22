@@ -5,6 +5,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCo
   stable collected: Boolean = @static true
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItemDisabled()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItemHighlighted()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContentDefaultEntity()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListUi()
@@ -44,7 +45,8 @@ tmp1_group@ly.david.musicsearch.shared.feature.collections.components.Collection
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
   collection: CollectionListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -860060277, "CC(remember):CollectionListItem.kt#9igjgp")
+  stable query: String? = @static ""
+  stable onClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -529552842, "CC(remember):CollectionListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -56,7 +58,7 @@ sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
   stable enabled: Boolean = @static true
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -860057109, "CC(remember):CollectionListItem.kt#9igjgp")
+  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -529549674, "CC(remember):CollectionListItem.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -69,8 +71,8 @@ tmp1_group@ly.david.musicsearch.shared.feature.collections.components.Collection
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateNewCollectionDialogContent(
   stable modifier: Modifier? = @static Companion
-  stable defaultEntity: MusicBrainzEntity? = @static MusicBrainzEntity.RELEASE
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1867974415, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
+  stable defaultEntity: MusicBrainzEntityType? = @static MusicBrainzEntityType.RELEASE
+  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1574662773, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -80,9 +82,9 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
-  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 1867976664, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
+  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, 1574665150, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
 
   }
 

@@ -43,7 +43,7 @@ stable class DeleteAllHistory {
   <runtime stability> = Stable
 }
 stable class ClickItem {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

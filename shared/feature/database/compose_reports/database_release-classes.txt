@@ -8,7 +8,7 @@ stable class DatabaseUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val lazyListState: LazyListState
   stable val countOfAllImages: Long
-  stable val entitiesCount: ImmutableMap<MusicBrainzEntity, Int>
+  stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Int>
   stable val eventSink: Function1<DatabaseUiEvent, Unit>
 }
 stable class GoToScreen {
@@ -24,7 +24,7 @@ stable class AllLocalEntitiesPresenter {
 }
 stable class AllLocalEntitiesUiState {
   stable val subtitle: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
   stable val allEntitiesListUiState: AllEntitiesListUiState
@@ -35,7 +35,7 @@ stable class NavigateUp {
   <runtime stability> = Stable
 }
 stable class ClickItem {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

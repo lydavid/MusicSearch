@@ -166,8 +166,8 @@ stable class RelationsPresenterImpl {
 }
 stable class GetRelations {
   stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntity
-  unstable val relatedEntities: Set<MusicBrainzEntity>
+  stable val byEntity: MusicBrainzEntityType
+  unstable val relatedEntities: Set<MusicBrainzEntityType>
   <runtime stability> = Stable
 }
 stable class UpdateQuery {
@@ -187,7 +187,7 @@ stable class ReleaseGroupsListPresenter {
 }
 stable class SearchScreen {
   stable val query: String?
-  stable val entity: MusicBrainzEntity?
+  stable val entity: MusicBrainzEntityType?
   <runtime stability> = Stable
 }
 stable class ArtistCollaborationScreen {
@@ -199,7 +199,7 @@ stable class DatabaseScreen {
   <runtime stability> = Stable
 }
 stable class AllEntitiesScreen {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class HistoryScreen {
@@ -208,7 +208,7 @@ stable class HistoryScreen {
 stable class CollectionListScreen {
   stable val newCollectionId: String?
   stable val newCollectionName: String?
-  stable val newCollectionEntity: MusicBrainzEntity?
+  stable val newCollectionEntity: MusicBrainzEntityType?
   <runtime stability> = Stable
 }
 stable class CollectionScreen {
@@ -217,7 +217,7 @@ stable class CollectionScreen {
   <runtime stability> = Stable
 }
 stable class AddToCollectionScreen {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   unstable val collectableIds: Set<String>
   <runtime stability> = Stable
 }
@@ -227,18 +227,18 @@ stable class SnackbarPopResult {
   <runtime stability> = Stable
 }
 stable class DetailsScreen {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
 stable class CoverArtsScreen {
   stable val id: String?
-  stable val entity: MusicBrainzEntity?
+  stable val entity: MusicBrainzEntityType?
   <runtime stability> = Stable
 }
 stable class StatsScreen {
   stable val byEntityId: String?
-  stable val byEntity: MusicBrainzEntity?
+  stable val byEntity: MusicBrainzEntityType?
   stable val tabs: ImmutableList<Tab>
   stable val isRemote: Boolean
   <runtime stability> = Stable

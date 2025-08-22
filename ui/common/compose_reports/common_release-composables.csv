@@ -138,6 +138,7 @@ ly.david.musicsearch.ui.common.label.LabelListItem,LabelListItem,1,1,1,0,0,0,0,0
 ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter.present,present,1,0,0,0,0,0,0,0,1,19,
 ly.david.musicsearch.ui.common.list.BaseListPresenter.present,present,1,0,0,0,0,0,0,0,1,9,
 ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader,CollapsibleListSeparatorHeader,1,1,1,0,0,0,0,0,1,4,
+ly.david.musicsearch.ui.common.listitem.HighlightableText,HighlightableText,1,1,1,0,0,0,0,0,2,2,
 ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem,LastUpdatedFooterItem,1,1,1,0,0,0,1,0,2,1,
 ly.david.musicsearch.ui.common.listitem.LastUpdatedText,LastUpdatedText,1,1,1,0,0,0,1,0,2,3,
 ly.david.musicsearch.ui.common.listitem.formatLastUpdatedPeriod,formatLastUpdatedPeriod,1,0,0,0,0,0,0,0,1,1,

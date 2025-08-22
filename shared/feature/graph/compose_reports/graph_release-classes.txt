@@ -9,7 +9,7 @@ stable class ArtistCollaborationGraphPresenter {
 stable class ArtistCollaborationGraphUiState {
   stable val artistName: String
   stable val topAppBarFilterState: TopAppBarFilterState
-  stable val collaborationEntityType: MusicBrainzEntity
+  stable val collaborationEntityType: MusicBrainzEntityType
   unstable val edges: List<GraphEdge>
   unstable val nodes: List<GraphNode>
   stable val isDeveloperMode: Boolean
@@ -19,18 +19,18 @@ stable class NavigateUp {
   <runtime stability> = Stable
 }
 stable class SelectEntity {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class ClickItem {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
 stable class GraphNode {
   stable val id: String
   stable val name: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val radius: Double
   stable val x: Double
   stable val y: Double

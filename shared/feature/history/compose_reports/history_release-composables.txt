@@ -10,9 +10,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
   lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1239075507, "CC(remember):HistoryListItem.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1239075507, "CC(remember):HistoryListItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 
@@ -42,9 +42,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryUi
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -431877702, "CC(remember):HistoryUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -431877702, "CC(remember):HistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 

@@ -9,7 +9,7 @@ stable class SearchPresenter {
 }
 stable class SearchUiState {
   stable val query: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   runtime val searchResults: LazyPagingItems<ListItemModel>
   stable val searchResultsListState: LazyListState
   runtime val searchHistory: LazyPagingItems<ListItemModel>
@@ -17,7 +17,7 @@ stable class SearchUiState {
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }
 stable class UpdateEntity {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class UpdateQuery {
@@ -35,7 +35,7 @@ stable class DeleteAllEntitySearchHistory {
   <runtime stability> = Stable
 }
 stable class ClickItem {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

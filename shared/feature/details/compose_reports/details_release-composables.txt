@@ -98,9 +98,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDet
   stable modifier: Modifier? = @static Companion
   detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 20744219, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 20744219, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 
@@ -136,9 +136,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistInf
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaSection(
   areaListItemModel: AreaListItemModel?
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1205572391, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1205572391, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 
@@ -267,9 +267,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDeta
   stable modifier: Modifier? = @static Companion
   detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 2020178785, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 2020178785, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 
@@ -379,9 +379,9 @@ val tmp3_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp3_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1357044755, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1357044755, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
 val tmp4_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntity  ,   <unused var>  :   String   ->
+  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
 
   }
 
@@ -525,9 +525,9 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
-  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity?, Unit>? = @static sourceInformationMarkerStart($composer, -405016300, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
+  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType?, Unit>? = @static sourceInformationMarkerStart($composer, -405016172, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity?   ->
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType?   ->
 
   }
 

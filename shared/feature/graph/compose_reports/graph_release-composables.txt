@@ -24,10 +24,10 @@ sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheet(
-  stable selectedEntity: MusicBrainzEntity
-  stable onClick: Function1<MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 863538936, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+  stable selectedEntity: MusicBrainzEntityType
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -2073031074, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     it  :   MusicBrainzEntity   ->
+  {     it  :   MusicBrainzEntityType   ->
 
   }
 
@@ -36,7 +36,7 @@ val tmp0_group = $composer.cache(false) {
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
   stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 863542136, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -2073027874, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -48,10 +48,10 @@ sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheetContent(
-  stable selectedEntity: MusicBrainzEntity
-  stable onClick: Function1<MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 1547447657, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
+  stable selectedEntity: MusicBrainzEntityType
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -2095118397, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     it  :   MusicBrainzEntity   ->
+  {     it  :   MusicBrainzEntityType   ->
 
   }
 

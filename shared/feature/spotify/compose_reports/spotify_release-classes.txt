@@ -25,7 +25,7 @@ stable class NavigateUp {
 }
 stable class GoToSearch {
   stable val query: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class MarkForDeletion {

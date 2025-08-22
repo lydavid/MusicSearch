@@ -36,9 +36,9 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 1246840957, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, 1246841085, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
 
   }
 
@@ -46,7 +46,7 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi
-  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1246842420, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1246842548, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
   {     it  :   String   ->
 
@@ -61,9 +61,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun NowPlayin
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static sourceInformationMarkerStart($composer, 2032603106, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, 2032603234, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntity   ->
+  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
 
   }
 
@@ -71,7 +71,7 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryContent
-  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 2032604569, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
+  stable onDelete: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 2032604697, "CC(remember):NowPlayingHistoryUi.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {     it  :   String   ->
 

@@ -3,7 +3,7 @@ stable class All {
 }
 stable class ByEntity {
   stable val entityId: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class BrowseMethod {
@@ -54,7 +54,7 @@ stable class CollaboratingArtistAndEntity {
   stable val artistName: String
   stable val entityId: String
   stable val entityName: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class BrowseRemoteMetadata {
@@ -65,7 +65,7 @@ stable class BrowseRemoteMetadata {
 stable class NewCollection {
   stable val id: String?
   stable val name: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class Dismissed {
@@ -295,7 +295,7 @@ unstable class HandledException {
 stable class LookupHistory {
   stable val mbid: String
   stable val title: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val numberOfVisits: Int
   stable val lastAccessed: Instant
   stable val searchHint: String
@@ -309,7 +309,7 @@ stable class NowPlayingHistory {
 }
 stable class SearchHistory {
   stable val query: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val lastAccessed: Instant
   <runtime stability> = Stable
 }
@@ -352,7 +352,7 @@ stable class ImageMetadata {
   stable val mbid: String?
   stable val name: String?
   stable val disambiguation: String?
-  stable val entity: MusicBrainzEntity?
+  stable val entity: MusicBrainzEntityType?
   <runtime stability> = 
 }
 stable class ImageMetadataRepositoryImpl {
@@ -406,7 +406,7 @@ stable class CollectionListItemModel {
   stable val isRemote: Boolean
   stable val name: String
   stable val description: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val cachedEntityCount: Int
   stable val visited: Boolean
   stable val containsEntity: Boolean
@@ -480,7 +480,7 @@ stable class ListSeparator {
 stable class LookupHistoryListItemModel {
   stable val id: String
   stable val title: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val numberOfVisits: Int
   stable val lastAccessed: Instant
   stable val imageUrl: String?
@@ -527,7 +527,7 @@ stable class RelationListItemModel {
   stable val name: String
   stable val disambiguation: String?
   stable val attributes: String?
-  stable val linkedEntity: MusicBrainzEntity
+  stable val linkedEntity: MusicBrainzEntityType
   stable val visited: Boolean
   stable val isForwardDirection: Boolean?
   stable val aliases: ImmutableList<BasicAlias>
@@ -587,7 +587,7 @@ stable class SearchHeader {
 stable class SearchHistoryListItemModel {
   stable val id: String
   stable val query: String
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class SeriesListItemModel {
@@ -669,7 +669,7 @@ stable class RelationStats {
   <runtime stability> = 
 }
 stable class RelationTypeCount {
-  stable val linkedEntity: MusicBrainzEntity
+  stable val linkedEntity: MusicBrainzEntityType
   stable val count: Int
   <runtime stability> = Stable
 }
@@ -680,7 +680,7 @@ stable class RelationWithOrder {
   stable val name: String
   stable val disambiguation: String?
   stable val attributes: String?
-  stable val linkedEntity: MusicBrainzEntity
+  stable val linkedEntity: MusicBrainzEntityType
   stable val isForwardDirection: Boolean?
   stable val order: Int
   stable val lifeSpan: LifeSpanUiModel
@@ -743,7 +743,7 @@ runtime class RecordSearchHistory {
   <runtime stability> = Uncertain(SearchHistoryRepository)
 }
 stable class SearchResultMetadata {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val query: String
   stable val localCount: Int
   stable val remoteCount: Int
@@ -752,7 +752,7 @@ stable class SearchResultMetadata {
 unstable class GetSearchResults {
   runtime val searchResultsRepository: SearchResultsRepository
   unstable val coroutineScope: CoroutineScope
-  unstable val _searchQueries: MutableStateFlow<Pair<MusicBrainzEntity, String>>
+  unstable val _searchQueries: MutableStateFlow<Pair<MusicBrainzEntityType, String>>
   <runtime stability> = Unstable
 }
 stable class WikipediaExtract {

@@ -7,7 +7,7 @@ stable class AddToCollectionPresenter {
   <runtime stability> = Stable
 }
 stable class AddToCollectionUiState {
-  stable val defaultEntity: MusicBrainzEntity
+  stable val defaultEntity: MusicBrainzEntityType
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
 }
@@ -104,7 +104,7 @@ stable class UnMarkItemsAsDeleted {
   <runtime stability> = Stable
 }
 stable class ClickItem {
-  stable val entity: MusicBrainzEntity
+  stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
