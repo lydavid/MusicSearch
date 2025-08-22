@@ -23,6 +23,12 @@ internal fun PreviewListensUi() {
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochMilliseconds(1755655177000),
                         ),
+                        ListenListItemModel(
+                            id = "2",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                            listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                        ),
                     ),
                 ),
             )

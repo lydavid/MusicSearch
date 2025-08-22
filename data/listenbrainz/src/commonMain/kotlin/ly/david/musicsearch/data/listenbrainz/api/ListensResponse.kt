@@ -12,15 +12,13 @@ data class ListensResponse(
 )
 
 /**
- * [latest_listen_ts] and [oldest_listen_ts] are for the lifetime of the user.
- *  Use them to determine when to stop paginating.
+ * `latest_listen_ts` and `oldest_listen_ts` are for all listens of the user.
+ *  Rather than use them for paginating, we will use the first/last listen in [listens].
  */
 @Suppress("ConstructorParameterNaming")
 @Serializable
 data class Payload(
-    val latest_listen_ts: Long,
-    val oldest_listen_ts: Long,
-    val listens: List<Listens>,
+    val listens: List<ListenBrainzListen>,
 )
 
 /**
@@ -29,7 +27,7 @@ data class Payload(
  */
 @Suppress("ConstructorParameterNaming")
 @Serializable
-data class Listens(
+data class ListenBrainzListen(
     @SerialName("inserted_at")
     val insertedAtS: Long,
     @SerialName("listened_at")
@@ -42,7 +40,7 @@ data class Listens(
 /**
  * @param artist_name All artist names and join phrases as they appear in the listen submission.
  *  If there's no [mbid_mapping], we can fallback to display this.
- *  May not match [Artist.artist_credit_name] or [Artist.join_phrase].
+ *  May not match [ListenBrainzArtist.artist_credit_name] or [ListenBrainzArtist.join_phrase].
  *  This may include the localized name.
  * @param track_name Fallback to display this if [mbid_mapping] is missing.
  *
@@ -116,7 +114,7 @@ data class MbidMapping(
     // sometimes we do not have these.
     // It may be because of a bug caused when a recording has been merged into another one.
     val recording_name: String? = null,
-    val artists: List<Artist>? = null,
+    val artists: List<ListenBrainzArtist>? = null,
     val caa_id: Long? = null,
     val caa_release_mbid: String? = null,
     val release_mbid: String? = null,
@@ -124,7 +122,7 @@ data class MbidMapping(
 
 @Suppress("ConstructorParameterNaming")
 @Serializable
-data class Artist(
+data class ListenBrainzArtist(
     val artist_credit_name: String,
     val artist_mbid: String,
     val join_phrase: String,

@@ -53,6 +53,8 @@ import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
+import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 
 private const val SPACER_WEIGHT = 0.1f
@@ -94,6 +96,7 @@ internal fun ListensUi(
                         },
                         onSetUsername = {
                             eventSink(ListensUiEvent.SetUsername)
+                            showDialog = false
                         },
                     )
                 }
@@ -101,6 +104,28 @@ internal fun ListensUi(
         }
     }
 
+    val noUsernameSet = state.username.isEmpty()
+    val lazyPagingItems = state.listensPagingDataFlow.collectAsLazyPagingItems()
+    val overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = if (noUsernameSet) {
+        null
+    } else {
+        {
+            RefreshMenuItem(
+                onClick = {
+                    lazyPagingItems.refresh()
+                },
+            )
+            DropdownMenuItem(
+                text = {
+                    Text(strings.changeUsername)
+                },
+                onClick = {
+                    showDialog = true
+                    closeMenu()
+                },
+            )
+        }
+    }
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -112,17 +137,7 @@ internal fun ListensUi(
                 },
                 title = strings.listens,
                 topAppBarFilterState = state.topAppBarFilterState,
-                overflowDropdownMenuItems = {
-                    DropdownMenuItem(
-                        text = {
-                            Text(strings.changeUsername)
-                        },
-                        onClick = {
-                            showDialog = true
-                            closeMenu()
-                        },
-                    )
-                },
+                overflowDropdownMenuItems = overflowDropdownMenuItems,
             )
         },
         snackbarHost = {
@@ -135,8 +150,7 @@ internal fun ListensUi(
             }
         },
     ) { innerPadding ->
-
-        if (state.username.isEmpty()) {
+        if (noUsernameSet) {
             UsernameInput(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -153,7 +167,7 @@ internal fun ListensUi(
             )
         } else {
             ScreenWithPagingLoadingAndError(
-                lazyPagingItems = state.listensPagingDataFlow.collectAsLazyPagingItems(),
+                lazyPagingItems = lazyPagingItems,
                 modifier = Modifier
                     .padding(innerPadding),
                 lazyListState = state.lazyListState,

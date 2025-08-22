@@ -1,6 +1,9 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadType.APPEND
+import androidx.paging.LoadType.PREPEND
+import androidx.paging.LoadType.REFRESH
 import app.cash.paging.LoadType
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
@@ -19,8 +22,8 @@ internal class ListenRemoteMediator(
 ) : RemoteMediator<Int, ListenListItemModel>() {
 
     override suspend fun initialize(): InitializeAction {
-        val currentOldestTimeStampMs = listenDao.getOldestTimestampMsByUser(username = username)
-        return if (currentOldestTimeStampMs == null) {
+        val listensHaveBeenStoredForUser = listenDao.getOldestTimestampMsByUser(username = username) == null
+        return if (listensHaveBeenStoredForUser) {
             InitializeAction.LAUNCH_INITIAL_REFRESH
         } else {
             InitializeAction.SKIP_INITIAL_REFRESH
@@ -33,31 +36,16 @@ internal class ListenRemoteMediator(
     ): MediatorResult {
         return try {
             when (loadType) {
-                androidx.paging.LoadType.REFRESH -> {
+                REFRESH -> {
                     listenDao.deleteListensByUser(username = username)
-
                     append()
                 }
-                androidx.paging.LoadType.PREPEND -> {
-                    val currentLatestTimeStampS = listenDao.getLatestTimestampMsByUser(
-                        username = username,
-                    )?.let { it / MS_IN_SECOND }
-                    val listensResponse = listenBrainzApi.getListensByUser(
-                        username = username,
-                        minTimestamp = currentLatestTimeStampS,
-                    )
 
-                    listenDao.insert(listens = listensResponse.asListOfListens())
-
-                    val newLatestTimeStampS = listensResponse.payload.listens.firstOrNull()?.listenedAtS
-
-                    // We constantly try to fetch new listens when the user changes their query.
-                    // Any way to not do that?
-                    MediatorResult.Success(
-                        endOfPaginationReached = currentLatestTimeStampS == newLatestTimeStampS,
-                    )
+                PREPEND -> {
+                    prepend()
                 }
-                androidx.paging.LoadType.APPEND -> {
+
+                APPEND -> {
                     append()
                 }
             }
@@ -85,6 +73,26 @@ internal class ListenRemoteMediator(
         // and scrolls to the bottom. These calls are small and fast, so it is okay for now.
         return MediatorResult.Success(
             endOfPaginationReached = currentOldestTimeStampS == newOldestTimeStampS,
+        )
+    }
+
+    private suspend fun prepend(): MediatorResult.Success {
+        val currentLatestTimeStampS = listenDao.getLatestTimestampMsByUser(
+            username = username,
+        )?.let { it / MS_IN_SECOND }
+        val listensResponse = listenBrainzApi.getListensByUser(
+            username = username,
+            minTimestamp = currentLatestTimeStampS,
+        )
+
+        listenDao.insert(listens = listensResponse.asListOfListens())
+
+        val newLatestTimeStampS = listensResponse.payload.listens.firstOrNull()?.listenedAtS
+
+        // We also constantly try to fetch new listens when the user changes their query.
+        // Any way to not do that?
+        return MediatorResult.Success(
+            endOfPaginationReached = currentLatestTimeStampS == newLatestTimeStampS,
         )
     }
 }
