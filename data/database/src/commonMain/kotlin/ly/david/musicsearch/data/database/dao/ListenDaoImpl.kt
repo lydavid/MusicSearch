@@ -12,8 +12,8 @@ import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Recording
+import lydavidmusicsearchdatadatabase.Release
 import kotlin.time.Instant
 
 class ListenDaoImpl(
@@ -24,6 +24,7 @@ class ListenDaoImpl(
 ) : ListenDao {
     private val listenTransacter = database.listenQueries
     private val recordingTransacter = database.recordingQueries
+    private val releaseTransacter = database.releaseQueries
 
     @Suppress("LongMethod")
     override fun insert(
@@ -35,6 +36,7 @@ class ListenDaoImpl(
                 val durationMs = listen.durationMs
                 val coverArtId = listen.caaId
                 val coverArtReleaseMbid = listen.caaReleaseMbid
+                val releaseName = listen.releaseName
                 listenTransacter.insert(
                     listen = lydavidmusicsearchdatadatabase.Listen(
                         inserted_at_ms = listen.insertedAtMs,
@@ -46,7 +48,7 @@ class ListenDaoImpl(
                         caa_release_mbid = coverArtReleaseMbid,
                         artist_name = listen.artistName,
                         track_name = listen.trackName,
-                        release_name = listen.releaseName,
+                        release_name = releaseName,
                         duration_ms = durationMs,
                         media_player = listen.mediaPlayer,
                         submission_client = listen.submissionClient,
@@ -60,6 +62,7 @@ class ListenDaoImpl(
                     ),
                 )
 
+                // Add stub recording so that we can link it with artist credits
                 val recordingName = listen.recordingName
                 if (recordingMusicbrainzId == null || recordingName == null) return@forEach
                 recordingTransacter.insertRecording(
@@ -95,8 +98,29 @@ class ListenDaoImpl(
                         ImageMetadata(
                             thumbnailUrl = "$coverArtUrl-250",
                             largeUrl = "$coverArtUrl-1200",
-                            entity = MusicBrainzEntityType.RELEASE,
                         ),
+                    ),
+                )
+
+                // Add stub release so that we can link it with its cover art
+                if (releaseName == null) return@forEach
+                releaseTransacter.insertRelease(
+                    release = Release(
+                        id = coverArtReleaseMbid,
+                        name = releaseName,
+                        disambiguation = "",
+                        date = "",
+                        status = null,
+                        barcode = null,
+                        status_id = null,
+                        country_code = null,
+                        packaging = null,
+                        packaging_id = null,
+                        asin = null,
+                        quality = null,
+                        cover_art_count = 0,
+                        script = null,
+                        language = null,
                     ),
                 )
             }

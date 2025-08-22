@@ -115,7 +115,7 @@ internal fun ListensUi(
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = {
-                            Text("Change username")
+                            Text(strings.changeUsername)
                         },
                         onClick = {
                             showDialog = true
@@ -244,7 +244,7 @@ private fun UsernameInput(
                     }) {
                         Icon(
                             CustomIcons.Clear,
-                            contentDescription = strings.clearSearch,
+                            contentDescription = "Clear",
                         )
                     }
                 },
@@ -259,7 +259,7 @@ private fun UsernameInput(
                     .padding(top = 16.dp),
                 onClick = onSetUsername,
             ) {
-                Text("Set")
+                Text(strings.set)
             }
         }
         Spacer(modifier = Modifier.weight(SPACER_WEIGHT))

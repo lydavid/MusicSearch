@@ -348,4 +348,6 @@ val EnStrings = AppStrings(
     listens = "Listens",
     username = "Username",
     enterUsername = "Enter username",
+    changeUsername = "Change username",
+    set = "Set",
 )
