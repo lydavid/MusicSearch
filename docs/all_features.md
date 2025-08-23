@@ -15,6 +15,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Filtering](#filtering)                                     | ✅       | ✅       | ✅   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
+| [ListenBrainz integration](#listenbrainz-integration)       | ✅       | ✅       | ✅   |
 | [Local Database](#local-database)                           | ✅       | ✅       | ✅   |
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ✅   |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
@@ -143,6 +144,11 @@ Artist/recording graph showing which artists and recordings a given artist colla
 This is currently limited to artists credited on the recording, which are primarily performers.
 
 Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph view.
+
+## ListenBrainz integration
+
+Enter your [ListenBrainz](https://listenbrainz.org) username to explore your listens.
+Or you can enter someone else's username to explore their listens.
 
 ## Local Database
 
