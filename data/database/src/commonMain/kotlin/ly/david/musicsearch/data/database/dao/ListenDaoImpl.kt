@@ -220,5 +220,5 @@ private fun mapToListenListItemModel(
         name = releaseName,
         id = releaseId,
         visited = visitedRelease,
-    )
+    ),
 )
