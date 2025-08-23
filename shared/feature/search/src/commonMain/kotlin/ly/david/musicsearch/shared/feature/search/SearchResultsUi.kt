@@ -53,7 +53,6 @@ internal fun SearchResultsUi(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         customNoResultsText = strings.noResultsFoundSearch,
-        keyed = false,
     ) { listItemModel: ListItemModel? ->
         ListItemUi(
             listItemModel = listItemModel,

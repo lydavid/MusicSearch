@@ -208,7 +208,6 @@ internal fun ListensUi(
                 modifier = Modifier
                     .padding(innerPadding),
                 lazyListState = state.lazyListState,
-                keyed = true,
             ) { listenListItemModel: ListenListItemModel? ->
                 listenListItemModel?.let {
                     ListenListItem(

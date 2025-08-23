@@ -14,16 +14,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import app.cash.paging.LoadStateError
 import app.cash.paging.LoadStateLoading
 import app.cash.paging.compose.LazyPagingItems
-import app.cash.paging.compose.itemKey
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.Header
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.ui.common.button.RetryButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator
@@ -40,7 +42,9 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
  *  This is already true for any item that uses MB's UUID, but separators must also have a unique id.
  * @param modifier For lazy column containing [itemContent].
  *
- *  @param itemContent Composable UI for each [lazyPagingItems].
+ * @param itemContent Composable UI for each [lazyPagingItems].
+ *
+ * Any [ListSeparator] will be displayed as a sticky header.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +53,6 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     customNoResultsText: String = "",
-    keyed: Boolean = false,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     val strings = LocalStrings.current
@@ -58,6 +61,12 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     }
     val isRefreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
     val refreshState = rememberPullToRefreshState()
+
+    val preservedItemContent = remember {
+        movableContentOf<LazyItemScope, T?> { scope, value ->
+            scope.itemContent(value)
+        }
+    }
 
     PullToRefreshBox(
         modifier = modifier,
@@ -92,44 +101,56 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                     modifier = Modifier.fillMaxSize(),
                     state = lazyListState,
                 ) {
-                    items(
-                        count = lazyPagingItems.itemCount,
-                        // TODO: do not set keyed to true without resolving the issue with footer
-                        //  sometimes showing up before the rest and causing it to stay as the first visible item.
-                        key = lazyPagingItems.itemKey { it.id }.takeIf { keyed },
-                        contentType = { lazyPagingItems[it] },
-                    ) { index ->
-                        itemContent(lazyPagingItems[index])
-
-                        // Is this inefficient? At least it preserves list state on configuration change.
-                        if (index == lazyPagingItems.itemCount - 1) {
-                            when (lazyPagingItems.loadState.append) {
-                                is LoadStateLoading -> {
-                                    FooterLoadingIndicator()
+                    for (index in 0 until lazyPagingItems.itemCount) {
+                        when (lazyPagingItems.peek(index)) {
+                            is ListSeparator -> {
+                                stickyHeader {
+                                    preservedItemContent(this, lazyPagingItems[index])
                                 }
+                            }
 
-                                is LoadStateError -> {
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp),
-                                        horizontalArrangement = Arrangement.Center,
-                                    ) {
-                                        RetryButton(onClick = { lazyPagingItems.refresh() })
-                                    }
-                                }
-
-                                else -> {
-                                    Spacer(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp),
-                                    )
+                            else -> {
+                                item {
+                                    preservedItemContent(this, lazyPagingItems[index])
+                                    AppendFooter(index, lazyPagingItems)
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun <T : Identifiable> LazyItemScope.AppendFooter(
+    index: Int,
+    lazyPagingItems: LazyPagingItems<T>,
+) {
+    if (index == lazyPagingItems.itemCount - 1) {
+        when (lazyPagingItems.loadState.append) {
+            is LoadStateLoading -> {
+                FooterLoadingIndicator()
+            }
+
+            is LoadStateError -> {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    RetryButton(onClick = { lazyPagingItems.retry() })
+                }
+            }
+
+            else -> {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                )
             }
         }
     }
