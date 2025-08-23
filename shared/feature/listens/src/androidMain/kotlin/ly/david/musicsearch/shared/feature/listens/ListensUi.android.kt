@@ -60,3 +60,22 @@ internal fun PreviewListensUiNoUsername() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiBottomSheetContent() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            BottomSheetContent(
+                listen = ListenListItemModel(
+                    id = "2",
+                    name = "Color Your Night",
+                    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                    releaseName = "PERSONA3 RELOAD Limited Box Original Soundtrack",
+                    releaseId = "6ad6af61-7e68-472a-9f9d-0030781ad964",
+                ),
+            )
+        }
+    }
+}

@@ -86,7 +86,7 @@ fun ThumbnailImage(
                         .data(url.useHttps())
                         .scale(Scale.FILL)
                         .crossfade(true)
-                        .memoryCacheKey(imageId?.value?.toString().orEmpty())
+                        .memoryCacheKey(imageId?.value?.toString())
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

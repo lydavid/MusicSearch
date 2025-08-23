@@ -92,6 +92,8 @@ SELECT
   track_name AS fallbackName,
   artist_credit.name AS artistCreditNames,
   artist_name AS fallbackArtistCreditNames,
+  release_name,
+  caa_release_mbid AS releaseId,
   mi.thumbnail_url,
   mi.id AS imageId
 FROM listen

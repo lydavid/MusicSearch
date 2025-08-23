@@ -3,6 +3,8 @@ package ly.david.musicsearch.shared.feature.listens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +14,8 @@ import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -20,6 +24,7 @@ fun ListenListItem(
     listen: ListenListItemModel,
     modifier: Modifier = Modifier,
     onClick: (id: String) -> Unit = {},
+    onClickMoreActions: ListenListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -52,6 +57,18 @@ fun ListenListItem(
                 imageId = listen.imageId,
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
             )
+        },
+        trailingContent = {
+            IconButton(
+                onClick = {
+                    onClickMoreActions(listen)
+                },
+            ) {
+                Icon(
+                    imageVector = CustomIcons.MoreVert,
+                    contentDescription = "More actions for ${listen.name} by ${listen.formattedArtistCredits}",
+                )
+            }
         },
     )
 }

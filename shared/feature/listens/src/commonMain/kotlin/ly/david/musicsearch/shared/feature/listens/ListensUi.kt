@@ -13,9 +13,11 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -49,10 +51,16 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.strings.AppStrings
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icons.Album
+import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -166,6 +174,27 @@ internal fun ListensUi(
                 },
             )
         } else {
+            var showBottomSheetForListen: ListenListItemModel? by remember { mutableStateOf(null) }
+
+            showBottomSheetForListen?.let { listen ->
+                ModalBottomSheet(
+                    onDismissRequest = { showBottomSheetForListen = null },
+                ) {
+                    BottomSheetContent(
+                        listen = listen,
+                        onReleaseClick = { releaseId ->
+                            eventSink(
+                                ListensUiEvent.ClickItem(
+                                    entity = MusicBrainzEntityType.RELEASE,
+                                    id = releaseId,
+                                ),
+                            )
+                        },
+                        onDismiss = { showBottomSheetForListen = null },
+                    )
+                }
+            }
+
             ScreenWithPagingLoadingAndError(
                 lazyPagingItems = lazyPagingItems,
                 modifier = Modifier
@@ -183,6 +212,9 @@ internal fun ListensUi(
                                     id = id,
                                 ),
                             )
+                        },
+                        onClickMoreActions = {
+                            showBottomSheetForListen = it
                         },
                     )
                 }
@@ -277,5 +309,60 @@ private fun UsernameInput(
             }
         }
         Spacer(modifier = Modifier.weight(SPACER_WEIGHT))
+    }
+}
+
+@Composable
+internal fun BottomSheetContent(
+    listen: ListenListItemModel,
+    onReleaseClick: (releaseId: String) -> Unit = {},
+    onDismiss: () -> Unit = {},
+) {
+    Column {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ThumbnailImage(
+                url = listen.imageUrl.orEmpty(),
+                imageId = null,
+                placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
+            )
+
+            Column(
+                modifier = Modifier.padding(start = 16.dp),
+            ) {
+                Text(
+                    text = listen.name,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+                Text(
+                    text = listen.formattedArtistCredits,
+                    modifier = Modifier.padding(top = 4.dp),
+                    style = TextStyles.getCardBodySubTextStyle(),
+                )
+                listen.releaseName?.let { releaseName ->
+                    Text(
+                        text = releaseName,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+            }
+        }
+        HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+
+        listen.releaseId?.let { releaseId ->
+            ClickableItem(
+                title = "Go to album",
+                startIcon = CustomIcons.Album,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    onReleaseClick(releaseId)
+                    onDismiss()
+                },
+            )
+        }
+        Spacer(modifier = Modifier.padding(bottom = 32.dp))
     }
 }

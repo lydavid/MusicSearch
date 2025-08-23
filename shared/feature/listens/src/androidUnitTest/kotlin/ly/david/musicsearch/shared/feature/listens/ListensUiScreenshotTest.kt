@@ -18,4 +18,11 @@ class ListensUiScreenshotTest : ScreenshotTest() {
             PreviewListensUiNoUsername()
         }
     }
+
+    @Test
+    fun bottomSheetContent() {
+        snapshot {
+            PreviewListensUiBottomSheetContent()
+        }
+    }
 }

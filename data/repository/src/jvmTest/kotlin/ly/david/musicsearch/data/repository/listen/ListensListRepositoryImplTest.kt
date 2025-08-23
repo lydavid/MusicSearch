@@ -287,7 +287,7 @@ class ListensListRepositoryImplTest :
                     ),
                 ),
                 FilterTestCase(
-                    description = "filter name",
+                    description = "filter by track name",
                     query = "full",
                     expectedResult = listOf(
                         ListenListItemModel(
@@ -302,7 +302,7 @@ class ListensListRepositoryImplTest :
                     ),
                 ),
                 FilterTestCase(
-                    description = "filter artist",
+                    description = "filter by artist",
                     query = "feat",
                     expectedResult = listOf(
                         ListenListItemModel(
@@ -313,6 +313,30 @@ class ListensListRepositoryImplTest :
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
+                        ),
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by release name",
+                    query = "persona",
+                    expectedResult = listOf(
+                        ListenListItemModel(
+                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
+                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
+                        ),
+                        ListenListItemModel(
+                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            name = "Full Moon Full Life",
+                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
                         ),
                     ),
                 ),

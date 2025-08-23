@@ -10,6 +10,8 @@ data class ListenListItemModel(
     val formattedArtistCredits: String,
     val listenedAt: Instant,
     val recordingId: String? = null,
+    val releaseName: String? = null,
+    val releaseId: String? = null,
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
 ) : Identifiable
