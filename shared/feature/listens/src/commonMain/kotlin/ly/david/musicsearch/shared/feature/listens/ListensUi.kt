@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -337,26 +338,28 @@ internal fun BottomSheetContent(
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
             )
 
-            Column(
-                modifier = Modifier.padding(start = 16.dp),
-            ) {
-                Text(
-                    text = listen.name,
-                    style = TextStyles.getCardBodyTextStyle(),
-                    fontWeight = listen.fontWeight,
-                )
-                Text(
-                    text = listen.formattedArtistCredits,
-                    modifier = Modifier.padding(top = 4.dp),
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
-                release.name?.let { releaseName ->
+            SelectionContainer {
+                Column(
+                    modifier = Modifier.padding(start = 16.dp),
+                ) {
                     Text(
-                        text = releaseName,
+                        text = listen.name,
+                        style = TextStyles.getCardBodyTextStyle(),
+                        fontWeight = listen.fontWeight,
+                    )
+                    Text(
+                        text = listen.formattedArtistCredits,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = release.fontWeight,
                     )
+                    release.name?.let { releaseName ->
+                        Text(
+                            text = releaseName,
+                            modifier = Modifier.padding(top = 4.dp),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                            fontWeight = release.fontWeight,
+                        )
+                    }
                 }
             }
         }
