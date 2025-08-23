@@ -43,4 +43,8 @@ class ListensListRepositoryImpl(
             ).flow
         }
     }
+
+    override fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?> {
+        return listenDao.observeUnfilteredCountOfListensByUser(username = username)
+    }
 }

@@ -61,6 +61,11 @@ SELECT MIN(listened_at_ms) AS timestamp
 FROM listen
 WHERE listen.username = :username;
 
+getUnfilteredCountOfListensByUser:
+SELECT COUNT(*)
+FROM listen
+WHERE listen.username = :username;
+
 getCountOfListensByUser:
 SELECT COUNT(*)
 FROM (

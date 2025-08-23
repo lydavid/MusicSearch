@@ -8,4 +8,6 @@ interface ListensListRepository {
         username: String,
         query: String,
     ): Flow<PagingData<ListenListItemModel>>
+
+    fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?>
 }

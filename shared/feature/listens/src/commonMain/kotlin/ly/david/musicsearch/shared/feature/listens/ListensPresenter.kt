@@ -42,6 +42,8 @@ internal class ListensPresenter(
         val query = topAppBarFilterState.filterText
         val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
+        val totalCountOfListens by
+            listensListRepository.observeUnfilteredCountOfListensByUser(username).collectAsRetainedState(null)
         val listens: Flow<PagingData<ListenListItemModel>> by rememberRetained(username, query) {
             mutableStateOf(
                 listensListRepository.observeListens(
@@ -66,6 +68,7 @@ internal class ListensPresenter(
                 is ListensUiEvent.SetUsername -> {
                     coroutineScope.launch {
                         listenBrainzStore.setUsername(textFieldText)
+                        lazyListState.scrollToItem(0)
                     }
                 }
 
@@ -83,6 +86,7 @@ internal class ListensPresenter(
         return ListensUiState(
             username = username,
             textFieldText = textFieldText,
+            totalCountOfListens = totalCountOfListens,
             topAppBarFilterState = topAppBarFilterState,
             lazyListState = lazyListState,
             listensPagingDataFlow = listens,
@@ -95,6 +99,7 @@ internal class ListensPresenter(
 internal data class ListensUiState(
     val username: String = "",
     val textFieldText: String = "",
+    val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyListState: LazyListState = LazyListState(),
     val listensPagingDataFlow: Flow<PagingData<ListenListItemModel>> = emptyFlow(),

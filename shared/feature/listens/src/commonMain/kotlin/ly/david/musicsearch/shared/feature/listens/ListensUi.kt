@@ -134,6 +134,11 @@ internal fun ListensUi(
             )
         }
     }
+    val title = if (noUsernameSet) {
+        strings.listens
+    } else {
+        strings.xListens(state.username)
+    }
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -143,7 +148,8 @@ internal fun ListensUi(
                 onBack = {
                     eventSink(ListensUiEvent.NavigateUp)
                 },
-                title = strings.listens,
+                title = title,
+                subtitle = state.totalCountOfListens?.let { "$it songs" }.orEmpty(),
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
             )

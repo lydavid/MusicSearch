@@ -1,7 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -129,6 +132,13 @@ class ListenDaoImpl(
 
     override fun deleteListensByUser(username: String) {
         listenTransacter.deleteByUser(username = username)
+    }
+
+    override fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?> {
+        return listenTransacter
+            .getUnfilteredCountOfListensByUser(username = username)
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
     }
 
     override fun getListensByUser(

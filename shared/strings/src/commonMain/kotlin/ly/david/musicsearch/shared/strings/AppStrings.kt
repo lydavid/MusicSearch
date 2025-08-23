@@ -186,6 +186,7 @@ data class AppStrings(
     val brandName: String,
     val primary: String,
     val listens: String,
+    val xListens: (String) -> String,
     val username: String,
     val enterUsername: String,
     val changeUsername: String,

@@ -346,6 +346,7 @@ val EnStrings = AppStrings(
     brandName = "Brand name",
     primary = "Primary",
     listens = "Listens",
+    xListens = { p0 -> "%s's Listens".fmt(p0) },
     username = "Username",
     enterUsername = "Enter username",
     changeUsername = "Change username",

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.listen
 
 import app.cash.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
 
 interface ListenDao {
     fun insert(
@@ -8,6 +9,8 @@ interface ListenDao {
     )
 
     fun deleteListensByUser(username: String)
+
+    fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?>
 
     fun getListensByUser(
         username: String,
