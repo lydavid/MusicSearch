@@ -1,26 +1,28 @@
 import kotlin.String;
 import kotlinx.collections.immutable.ImmutableList;
 
--- If an entity with mbid has no image urls, we will add one entry
--- with empty values, to mark that we've tried fetching its image urls.
-CREATE TABLE IF NOT EXISTS mbid_image (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `mbid` TEXT NOT NULL,
-  `thumbnail_url` TEXT NOT NULL,
-  `large_url` TEXT NOT NULL,
-  `types` TEXT AS ImmutableList<String>,
-  `comment` TEXT
+-- If an entity with mbid has no image urls, we will add an entry
+-- with empty values to mark that we've tried fetching its image urls but failed to find any.
+CREATE TABLE mbid_image (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mbid TEXT NOT NULL,
+  thumbnail_url TEXT NOT NULL,
+  large_url TEXT NOT NULL,
+  types TEXT AS ImmutableList<String>,
+  comment TEXT,
+
+  UNIQUE(mbid, thumbnail_url)
 );
 
-CREATE INDEX IF NOT EXISTS idx_mbid_image_mbid ON mbid_image(`mbid`);
+CREATE INDEX idx_mbid_image_mbid ON mbid_image(mbid);
 
 insert:
 INSERT OR IGNORE INTO mbid_image (
-  `mbid`,
-  `thumbnail_url`,
-  `large_url`,
-  `types`,
-  `comment`
+  mbid,
+  thumbnail_url,
+  large_url,
+  types,
+  comment
 )
 VALUES (
   :mbid,
@@ -33,11 +35,11 @@ VALUES (
 -- Do not count the filler empty url
 getFrontImageMetadata:
 SELECT
-  `id`,
-  `thumbnail_url`,
-  `large_url`,
-  `types`,
-  `comment`,
+  id,
+  thumbnail_url,
+  large_url,
+  types,
+  comment,
   (
     SELECT count(id)
     FROM mbid_image
@@ -66,11 +68,11 @@ FROM (
 -- if types or comment is null, this will not show them at all (fix in 24.sqm)
 getAllImageMetadataById:
 SELECT
-  `id`,
-  `thumbnail_url`,
-  `large_url`,
-  `types`,
-  `comment`
+  id,
+  thumbnail_url,
+  large_url,
+  types,
+  comment
 FROM mbid_image
 WHERE mbid = :mbid
 AND (
@@ -100,11 +102,11 @@ FROM (
 
 getAllImageMetadata:
 SELECT
-  mbid_image.`id`,
-  mbid_image.`thumbnail_url`,
-  mbid_image.`large_url`,
-  mbid_image.`types`,
-  mbid_image.`comment`,
+  mbid_image.id,
+  mbid_image.thumbnail_url,
+  mbid_image.large_url,
+  mbid_image.types,
+  mbid_image.comment,
   mbid_image.mbid,
   coalesced_entity.name,
   coalesced_entity.disambiguation,

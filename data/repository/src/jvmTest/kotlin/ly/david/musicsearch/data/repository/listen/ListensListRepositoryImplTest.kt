@@ -73,7 +73,10 @@ class ListensListRepositoryImplTest :
 
     @Test
     fun listensByUser() = runTest {
-        val caaReleaseMbid = "71c9f176-e6e3-4610-807d-b8a11b870df3"
+        val track1ListenedAtS = 1755100634L
+        val track2ListenedAtS = 1755100633L
+        val track3ListenedAtS = 1755100632L
+        val track4ListenedAtS = 1755100631L
         val listensListRepository = createRepository(
             response = ListensResponse(
                 payload = Payload(
@@ -81,7 +84,7 @@ class ListensListRepositoryImplTest :
                         // with mapping
                         ListenBrainzListen(
                             insertedAtS = 1755101240L,
-                            listenedAtS = 1755100634L,
+                            listenedAtS = track1ListenedAtS,
                             recording_msid = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
                             user_name = "user",
                             track_metadata = TrackMetadata(
@@ -119,15 +122,62 @@ class ListensListRepositoryImplTest :
                                         ),
                                     ),
                                     caa_id = 42143556739L,
-                                    caa_release_mbid = caaReleaseMbid,
+                                    caa_release_mbid = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                                     release_mbid = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
                                 ),
                             ),
                         ),
-                        // without mapping
                         ListenBrainzListen(
                             insertedAtS = 1755101240L,
-                            listenedAtS = 1755100633L,
+                            listenedAtS = track2ListenedAtS,
+                            recording_msid = "28f390ae-b7a3-4636-82bc-7d39a7348978",
+                            user_name = "user",
+                            track_metadata = TrackMetadata(
+                                artist_name = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
+                                track_name = "Color Your Night",
+                                release_name = "Persona 3 Reload Original Soundtrack",
+                                additional_info = AdditionalInfo(
+                                    duration_ms = 293493,
+                                    submission_client = "listenbrainz",
+                                    music_service = "spotify.com",
+                                    origin_url = "https://open.spotify.com/track/4pjFNyjGaoKgLTnndISP6V",
+                                    spotify_album_artist_ids = listOf(
+                                        "https://open.spotify.com/artist/4hFBhdNVZZuVk5FYThUwaN",
+                                        "https://open.spotify.com/artist/7tUDDR0lAc9PLMPHPfzaqI",
+                                    ),
+                                    spotify_album_id = "https://open.spotify.com/album/20Bf2RVERC5Bc2eo3vyvJv",
+                                    spotify_artist_ids = listOf(
+                                        "https://open.spotify.com/artist/4VeqFgWkP7P9eEGwzPuXcM",
+                                        "https://open.spotify.com/artist/0HM4KuHUJ5ww5DdOGi3FEf",
+                                        "https://open.spotify.com/artist/4hFBhdNVZZuVk5FYThUwaN",
+                                        "https://open.spotify.com/artist/7tUDDR0lAc9PLMPHPfzaqI",
+                                    ),
+                                    spotify_id = "https://open.spotify.com/track/4pjFNyjGaoKgLTnndISP6V",
+                                ),
+                                mbid_mapping = MbidMapping(
+                                    recording_mbid = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                                    recording_name = "Color Your Night",
+                                    artists = listOf(
+                                        ListenBrainzArtist(
+                                            artist_credit_name = "高橋あず美",
+                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            join_phrase = " & ",
+                                        ),
+                                        ListenBrainzArtist(
+                                            artist_credit_name = "Lotus Juice",
+                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            join_phrase = "",
+                                        ),
+                                    ),
+                                    caa_id = 40524230813,
+                                    caa_release_mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                    release_mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                ),
+                            ),
+                        ),
+                        ListenBrainzListen(
+                            insertedAtS = 1755101240L,
+                            listenedAtS = track3ListenedAtS,
                             recording_msid = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
                             user_name = "user",
                             track_metadata = TrackMetadata(
@@ -152,6 +202,36 @@ class ListensListRepositoryImplTest :
                                     ),
                                     spotify_id = "https://open.spotify.com/track/3Jl2LQmRwbXEF2lO1RTvxn",
                                 ),
+                                mbid_mapping = MbidMapping(
+                                    recording_mbid = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                                    recording_name = "Full Moon Full Life",
+                                    artists = listOf(
+                                        ListenBrainzArtist(
+                                            artist_credit_name = "高橋あず美",
+                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            join_phrase = " & ",
+                                        ),
+                                        ListenBrainzArtist(
+                                            artist_credit_name = "Lotus Juice",
+                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            join_phrase = "",
+                                        ),
+                                    ),
+                                    caa_id = 40524230813,
+                                    caa_release_mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                    release_mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                ),
+                            ),
+                        ),
+                        // minimum without mapping
+                        ListenBrainzListen(
+                            insertedAtS = 1755101240L,
+                            listenedAtS = track4ListenedAtS,
+                            recording_msid = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
+                            user_name = "user",
+                            track_metadata = TrackMetadata(
+                                artist_name = "Tsukuyomi",
+                                track_name = "Absolute zero",
                             ),
                         ),
                     ),
@@ -175,19 +255,34 @@ class ListensListRepositoryImplTest :
                             id = "1755100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAt = Instant.fromEpochSeconds(1755100634),
+                            listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                         ),
                         ListenListItemModel(
-                            id = "1755100633000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
+                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
+                        ),
+                        ListenListItemModel(
+                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
-                            formattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
-                            listenedAt = Instant.fromEpochSeconds(1755100633),
-                            recordingId = null,
-                            imageUrl = null,
-                            imageId = null,
+                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
+                        ),
+                        ListenListItemModel(
+                            id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
+                            name = "Absolute zero",
+                            formattedArtistCredits = "Tsukuyomi",
+                            listenedAt = Instant.fromEpochSeconds(track4ListenedAtS),
                         ),
                     ),
                 ),
@@ -196,13 +291,13 @@ class ListensListRepositoryImplTest :
                     query = "full",
                     expectedResult = listOf(
                         ListenListItemModel(
-                            id = "1755100633000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
-                            formattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
-                            listenedAt = Instant.fromEpochSeconds(1755100633),
-                            recordingId = null,
-                            imageUrl = null,
-                            imageId = null,
+                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
                         ),
                     ),
                 ),
@@ -214,7 +309,7 @@ class ListensListRepositoryImplTest :
                             id = "1755100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAt = Instant.fromEpochSeconds(1755100634),
+                            listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
@@ -224,13 +319,13 @@ class ListensListRepositoryImplTest :
             ),
         )
 
-        testImageExists(caaReleaseMbid)
+        testImageExists()
 
-        testReleaseStubExists(caaReleaseMbid)
+        testReleaseStubExists()
     }
 
     @Suppress("MaxLineLength")
-    private suspend fun testReleaseStubExists(caaReleaseMbid: String) {
+    private suspend fun testReleaseStubExists() {
         val releasesListRepository = createReleasesListRepository(
             releases = emptyList(),
         )
@@ -241,7 +336,13 @@ class ListensListRepositoryImplTest :
         Assert.assertEquals(
             listOf(
                 ReleaseListItemModel(
-                    id = caaReleaseMbid,
+                    id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                    name = "Persona 3 Reload Original Soundtrack",
+                    imageId = ImageId(2L),
+                    imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                ),
+                ReleaseListItemModel(
+                    id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
                     imageId = ImageId(1L),
                     imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
@@ -252,7 +353,7 @@ class ListensListRepositoryImplTest :
     }
 
     @Suppress("MaxLineLength")
-    private suspend fun testImageExists(caaReleaseMbid: String) {
+    private suspend fun testImageExists() {
         val imageRepository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 emptyList()
@@ -266,10 +367,19 @@ class ListensListRepositoryImplTest :
         Assert.assertEquals(
             listOf(
                 ImageMetadata(
+                    imageId = ImageId(2L),
+                    thumbnailUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                    largeUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
+                    mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                    name = "Persona 3 Reload Original Soundtrack",
+                    disambiguation = "",
+                    entity = MusicBrainzEntityType.RELEASE,
+                ),
+                ImageMetadata(
                     imageId = ImageId(1L),
                     thumbnailUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                     largeUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-1200",
-                    mbid = caaReleaseMbid,
+                    mbid = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
                     disambiguation = "",
                     entity = MusicBrainzEntityType.RELEASE,
