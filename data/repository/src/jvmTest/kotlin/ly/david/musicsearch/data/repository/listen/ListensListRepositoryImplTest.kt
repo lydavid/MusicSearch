@@ -3,6 +3,10 @@ package ly.david.musicsearch.data.repository.listen
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.musicsearch.data.database.dao.AliasDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
@@ -13,7 +17,10 @@ import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -22,6 +29,7 @@ import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
 import org.junit.Rule
@@ -30,7 +38,10 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Instant
 
-class ListensListRepositoryImplTest : KoinTest, TestMusicBrainzImageMetadataRepository {
+class ListensListRepositoryImplTest :
+    KoinTest,
+    TestMusicBrainzImageMetadataRepository,
+    TestReleasesListRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -38,6 +49,10 @@ class ListensListRepositoryImplTest : KoinTest, TestMusicBrainzImageMetadataRepo
     private val listenDao: ListenDao by inject()
     override val imageUrlDao: ImageUrlDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
+    override val releaseDao: ReleaseDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
+    override val aliasDao: AliasDao by inject()
 
     private fun createRepository(
         response: ListensResponse,
@@ -209,6 +224,35 @@ class ListensListRepositoryImplTest : KoinTest, TestMusicBrainzImageMetadataRepo
             ),
         )
 
+        testImageExists(caaReleaseMbid)
+
+        testReleaseStubExists(caaReleaseMbid)
+    }
+
+    @Suppress("MaxLineLength")
+    private suspend fun testReleaseStubExists(caaReleaseMbid: String) {
+        val releasesListRepository = createReleasesListRepository(
+            releases = emptyList(),
+        )
+        val releases = releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(),
+        ).asSnapshot()
+        Assert.assertEquals(
+            listOf(
+                ReleaseListItemModel(
+                    id = caaReleaseMbid,
+                    name = "絶絶絶絶対聖域",
+                    imageId = ImageId(1L),
+                    imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                ),
+            ),
+            releases,
+        )
+    }
+
+    @Suppress("MaxLineLength")
+    private suspend fun testImageExists(caaReleaseMbid: String) {
         val imageRepository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
                 emptyList()

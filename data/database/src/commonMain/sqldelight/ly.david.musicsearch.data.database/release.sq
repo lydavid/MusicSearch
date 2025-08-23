@@ -369,8 +369,8 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT r.id)
     FROM `release` r
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
     WHERE (
       r.name LIKE :query OR
@@ -384,6 +384,9 @@ SELECT IFNULL(
   0
 ) AS count;
 
+-- left join artist credits because we can insert stub releases from browsing listens
+-- we still want these to be searchable in all releases because they are releases the user
+-- has likely listened to and may care about. Plus, they likely have images!
 getAllReleases:
 SELECT
   r.*,
@@ -407,8 +410,8 @@ SELECT
   GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
 FROM `release` r
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
