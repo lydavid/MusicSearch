@@ -18,9 +18,6 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(projects.testData)
-                implementation(projects.data.musicbrainz)
-                implementation(projects.data.database)
                 implementation(libs.kotlin.test)
                 implementation(libs.koin.test)
                 implementation(libs.junit)

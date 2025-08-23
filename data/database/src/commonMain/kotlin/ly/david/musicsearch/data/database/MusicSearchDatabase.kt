@@ -12,6 +12,7 @@ import lydavidmusicsearchdatadatabase.Browse_remote_metadata
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Details_metadata
 import lydavidmusicsearchdatadatabase.Label
+import lydavidmusicsearchdatadatabase.Listen
 import lydavidmusicsearchdatadatabase.Lookup_history
 import lydavidmusicsearchdatadatabase.Mbid_image
 import lydavidmusicsearchdatadatabase.Medium
@@ -110,6 +111,10 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         relations_metadataAdapter = Relations_metadata.Adapter(
             last_updatedAdapter = InstantLongColumnAdapter,
+        ),
+        listenAdapter = Listen.Adapter(
+            spotify_artist_idsAdapter = ListStringColumnAdapter,
+            spotify_album_artist_idsAdapter = ListStringColumnAdapter,
         ),
     )
 }

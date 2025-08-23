@@ -6,7 +6,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.davidBowieArtistMusicBrainzModel
 import ly.david.data.test.japanAreaMusicBrainzModel
 import ly.david.data.test.mercuryRecordsLabelMusicBrainzModel
@@ -44,8 +43,6 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
@@ -53,6 +50,7 @@ import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -67,7 +65,6 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import org.junit.Assert.assertEquals
@@ -76,6 +73,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
+@Suppress("LargeClass")
 class ReleasesListRepositoryImplTest :
     KoinTest,
     TestAreaRepository,
@@ -83,6 +81,7 @@ class ReleasesListRepositoryImplTest :
     TestLabelRepository,
     TestRecordingRepository,
     TestReleaseRepository,
+    TestReleasesListRepository,
     TestReleaseGroupRepository {
 
     @get:Rule(order = 0)
@@ -91,7 +90,7 @@ class ReleasesListRepositoryImplTest :
     private val database: Database by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionDao: CollectionDao by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
     override val releaseDao: ReleaseDao by inject()
     override val releaseReleaseGroupDao: ReleaseReleaseGroupDao by inject()
     override val labelDao: LabelDao by inject()
@@ -107,30 +106,6 @@ class ReleasesListRepositoryImplTest :
     override val areaDao: AreaDao by inject()
     override val aliasDao: AliasDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
-
-    private fun createReleasesListRepository(
-        releases: List<ReleaseMusicBrainzNetworkModel>,
-    ): ReleasesListRepository {
-        return ReleasesListRepositoryImpl(
-            browseRemoteMetadataDao = browseRemoteMetadataDao,
-            collectionEntityDao = collectionEntityDao,
-            releaseDao = releaseDao,
-            aliasDao = aliasDao,
-            browseApi = object : FakeBrowseApi() {
-                override suspend fun browseReleasesByEntity(
-                    entityId: String,
-                    entity: MusicBrainzEntityType,
-                    limit: Int,
-                    offset: Int,
-                    include: String,
-                ) = BrowseReleasesResponse(
-                    count = 1,
-                    offset = 0,
-                    musicBrainzModels = releases,
-                )
-            },
-        )
-    }
 
     @Test
     fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() =

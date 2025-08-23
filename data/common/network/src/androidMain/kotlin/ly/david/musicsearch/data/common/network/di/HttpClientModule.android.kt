@@ -12,12 +12,14 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.common.network.ApiHttpClient
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import java.util.concurrent.TimeUnit
 import io.ktor.client.plugins.logging.Logger as KtorLogger
 
 actual val HttpClientModule: Module = module {
     single {
         val okHttpConfig = OkHttpConfig()
         okHttpConfig.config {
+            readTimeout(15, TimeUnit.SECONDS)
             cache(null)
             addInterceptor(ChuckerInterceptor(context = get()))
         }

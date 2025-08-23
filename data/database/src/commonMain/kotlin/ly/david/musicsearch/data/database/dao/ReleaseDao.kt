@@ -7,8 +7,6 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
@@ -22,6 +20,8 @@ import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Releases_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class ReleaseDao(
     database: Database,
@@ -58,6 +58,7 @@ class ReleaseDao(
                     packaging_id = packagingId,
                     asin = asin,
                     quality = quality,
+                    // TODO: drop unused count
                     cover_art_count = coverArtArchive.count,
                     script = textRepresentation?.script,
                     language = textRepresentation?.language,

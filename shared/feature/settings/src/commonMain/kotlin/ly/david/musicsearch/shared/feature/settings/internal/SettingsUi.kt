@@ -40,11 +40,12 @@ import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
-import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 
 @Composable
 internal expect fun SettingsUi(
@@ -181,6 +182,15 @@ internal fun SettingsUi(
             }
 
             ListSeparatorHeader(text = strings.experimentalSearch)
+
+            ClickableItem(
+                title = strings.listens,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    eventSink(SettingsUiEvent.GoToScreen(ListensScreen))
+                },
+            )
+
             if (showAndroidSettings) {
                 if (isNotificationListenerEnabled) {
                     ClickableItem(

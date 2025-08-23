@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.GenreDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.ListenDaoImpl
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.database.dao.MbidImageDao
 import ly.david.musicsearch.data.database.dao.MbidWikipediaDaoImpl
@@ -42,6 +43,7 @@ import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -86,4 +88,5 @@ val databaseDaoModule = module {
     singleOf(::AliasDao)
     singleOf(::CollectedStatsDao)
     singleOf(::VisitedStatsDao)
+    singleOf(::ListenDaoImpl) bind ListenDao::class
 }

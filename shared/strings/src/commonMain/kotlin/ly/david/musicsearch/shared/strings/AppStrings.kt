@@ -185,6 +185,11 @@ data class AppStrings(
     val formalName: String,
     val brandName: String,
     val primary: String,
+    val listens: String,
+    val username: String,
+    val enterUsername: String,
+    val changeUsername: String,
+    val set: String,
 )
 
 object Locales {

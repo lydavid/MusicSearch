@@ -22,7 +22,7 @@ internal fun mapToReleaseListItemModel(
     script: String?,
     language: String?,
     coverArtCount: Int,
-    formattedArtistCreditNames: String,
+    formattedArtistCreditNames: String?,
     thumbnailUrl: String?,
     imageId: Long?,
     releaseCountryCount: Long,
