@@ -59,6 +59,7 @@ import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
@@ -324,6 +325,7 @@ internal fun BottomSheetContent(
     onReleaseClick: (releaseId: String) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
+    val release = listen.release
     Column {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -341,28 +343,31 @@ internal fun BottomSheetContent(
                 Text(
                     text = listen.name,
                     style = TextStyles.getCardBodyTextStyle(),
+                    fontWeight = listen.fontWeight,
                 )
                 Text(
                     text = listen.formattedArtistCredits,
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
-                listen.releaseName?.let { releaseName ->
+                release.name?.let { releaseName ->
                     Text(
                         text = releaseName,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = release.fontWeight,
                     )
                 }
             }
         }
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
-        listen.releaseId?.let { releaseId ->
+        release.id?.let { releaseId ->
             ClickableItem(
                 title = "Go to album",
                 startIcon = CustomIcons.Album,
                 endIcon = CustomIcons.ChevronRight,
+                fontWeight = release.fontWeight,
                 onClick = {
                     onReleaseClick(releaseId)
                     onDismiss()

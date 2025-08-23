@@ -1,10 +1,13 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.cachedIn
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.shared.domain.listen.ListenDao
@@ -14,6 +17,7 @@ import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 class ListensListRepositoryImpl(
     private val listenDao: ListenDao,
     private val listenBrainzApi: ListenBrainzApi,
+    private val coroutineScope: CoroutineScope,
 ) : ListensListRepository {
     @OptIn(ExperimentalPagingApi::class)
     override fun observeListens(
@@ -42,6 +46,8 @@ class ListensListRepositoryImpl(
                 },
             ).flow
         }
+            .distinctUntilChanged()
+            .cachedIn(scope = coroutineScope)
     }
 
     override fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?> {

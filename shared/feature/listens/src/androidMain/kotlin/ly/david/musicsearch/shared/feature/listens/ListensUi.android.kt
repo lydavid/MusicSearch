@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import kotlin.time.Instant
 
@@ -28,6 +29,7 @@ internal fun PreviewListensUi() {
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                            visited = true,
                         ),
                     ),
                 ),
@@ -72,8 +74,32 @@ internal fun PreviewListensUiBottomSheetContent() {
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
                     listenedAt = Instant.fromEpochMilliseconds(1755645177000),
-                    releaseName = "PERSONA3 RELOAD Limited Box Original Soundtrack",
-                    releaseId = "6ad6af61-7e68-472a-9f9d-0030781ad964",
+                    release = ListenRelease(
+                        id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
+                        name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiBottomSheetContentVisitedRelease() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            BottomSheetContent(
+                listen = ListenListItemModel(
+                    id = "2",
+                    name = "Color Your Night",
+                    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                    release = ListenRelease(
+                        id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
+                        name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
+                        visited = true,
+                    ),
                 ),
             )
         }

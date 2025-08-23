@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Release
 import kotlin.time.Instant
@@ -194,6 +195,8 @@ private fun mapToListenListItemModel(
     releaseId: String?,
     imageUrl: String?,
     imageId: Long?,
+    visitedRecording: Boolean,
+    visitedRelease: Boolean,
 //    duration_ms: Long?,
 //    media_player: String?,
 //    submission_client: String?,
@@ -210,8 +213,12 @@ private fun mapToListenListItemModel(
     formattedArtistCredits = artistCreditNames ?: fallbackArtistCreditNames,
     listenedAt = Instant.fromEpochMilliseconds(listenedAtMs),
     recordingId = recordingMusicbrainzId,
-    releaseName = releaseName,
-    releaseId = releaseId,
     imageUrl = imageUrl,
     imageId = imageId?.let { ImageId(it) },
+    visited = visitedRecording,
+    release = ListenRelease(
+        name = releaseName,
+        id = releaseId,
+        visited = visitedRelease,
+    )
 )

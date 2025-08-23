@@ -17,6 +17,7 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -31,7 +32,7 @@ fun ListenListItem(
             Text(
                 text = listen.name,
                 style = TextStyles.getCardBodyTextStyle(),
-//                fontWeight = recording.fontWeight,
+                fontWeight = listen.fontWeight,
             )
         },
         modifier = modifier.clickable {

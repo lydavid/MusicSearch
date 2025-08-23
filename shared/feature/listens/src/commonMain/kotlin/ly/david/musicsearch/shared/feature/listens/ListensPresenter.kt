@@ -9,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.paging.cachedIn
 import app.cash.paging.PagingData
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
@@ -18,7 +17,6 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.ListenBrainzStore
@@ -49,9 +47,7 @@ internal class ListensPresenter(
                 listensListRepository.observeListens(
                     username = username,
                     query = query,
-                )
-                    .distinctUntilChanged()
-                    .cachedIn(coroutineScope),
+                ),
             )
         }
 

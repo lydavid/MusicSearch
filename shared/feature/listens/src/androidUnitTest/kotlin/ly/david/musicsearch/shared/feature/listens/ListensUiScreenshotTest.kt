@@ -25,4 +25,11 @@ class ListensUiScreenshotTest : ScreenshotTest() {
             PreviewListensUiBottomSheetContent()
         }
     }
+
+    @Test
+    fun bottomSheetContentVisitedRelease() {
+        snapshot {
+            PreviewListensUiBottomSheetContentVisitedRelease()
+        }
+    }
 }

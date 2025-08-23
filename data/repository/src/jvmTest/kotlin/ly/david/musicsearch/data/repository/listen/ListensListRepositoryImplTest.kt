@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -28,6 +29,7 @@ import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -68,6 +70,7 @@ class ListensListRepositoryImplTest :
                     return response
                 }
             },
+            coroutineScope = TestScope(coroutineDispatchers.io),
         )
     }
 
@@ -257,10 +260,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
-                            releaseName = "絶絶絶絶対聖域",
-                            releaseId = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
+                            release = ListenRelease(
+                                id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                                name = "絶絶絶絶対聖域",
+                            ),
                         ),
                         ListenListItemModel(
                             id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
@@ -268,10 +273,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                            releaseName = "Persona 3 Reload Original Soundtrack",
-                            releaseId = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
                         ),
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
@@ -279,10 +286,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            releaseName = "Persona 3 Reload Original Soundtrack",
-                            releaseId = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
                         ),
                         ListenListItemModel(
                             id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
@@ -302,10 +311,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            releaseName = "Persona 3 Reload Original Soundtrack",
-                            releaseId = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
                         ),
                     ),
                 ),
@@ -319,10 +330,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
-                            releaseName = "絶絶絶絶対聖域",
-                            releaseId = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
+                            release = ListenRelease(
+                                id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                                name = "絶絶絶絶対聖域",
+                            ),
                         ),
                     ),
                 ),
@@ -336,10 +349,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                            releaseName = "Persona 3 Reload Original Soundtrack",
-                            releaseId = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
                         ),
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
@@ -347,10 +362,12 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            releaseName = "Persona 3 Reload Original Soundtrack",
-                            releaseId = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
                         ),
                     ),
                 ),

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -21,6 +22,7 @@ fun ClickableItem(
     subtitle: String? = null,
     startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
+    fontWeight: FontWeight = FontWeight.Normal,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -48,12 +50,14 @@ fun ClickableItem(
             Text(
                 text = title,
                 style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = fontWeight,
             )
 
             subtitle?.let {
                 Text(
                     text = subtitle,
                     style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = fontWeight,
                 )
             }
         }
