@@ -95,6 +95,7 @@ SELECT
   recording_musicbrainz_id,
   recording.name AS recordingName,
   track_name AS fallbackName,
+  duration_ms,
   artist_credit.name AS artistCreditNames,
   artist_name AS fallbackArtistCreditNames,
   release_name,

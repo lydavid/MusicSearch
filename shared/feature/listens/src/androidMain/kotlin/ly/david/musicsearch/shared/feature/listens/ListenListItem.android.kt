@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -16,7 +17,8 @@ internal fun PreviewListenListItem() {
                     id = "1",
                     name = "絶絶絶絶対聖域",
                     formattedArtistCredits = "ano feat. 幾田りら",
-                    listenedAt = kotlin.time.Instant.fromEpochMilliseconds(1755655177000),
+                    listenedAt = Instant.fromEpochMilliseconds(1755655177000),
+                    durationMs = 213868,
                 ),
             )
         }

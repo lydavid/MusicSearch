@@ -11,6 +11,7 @@ data class ListenListItemModel(
     val formattedArtistCredits: String,
     val listenedAt: Instant,
     val recordingId: String? = null,
+    val durationMs: Int? = null,
     val imageUrl: String? = null,
     val imageId: ImageId? = null,
     override val visited: Boolean = false,

@@ -140,7 +140,7 @@ class ListensListRepositoryImplTest :
                                 track_name = "Color Your Night",
                                 release_name = "Persona 3 Reload Original Soundtrack",
                                 additional_info = AdditionalInfo(
-                                    duration_ms = 293493,
+                                    duration_ms = 227240,
                                     submission_client = "listenbrainz",
                                     music_service = "spotify.com",
                                     origin_url = "https://open.spotify.com/track/4pjFNyjGaoKgLTnndISP6V",
@@ -260,6 +260,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
+                            durationMs = 213868,
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
@@ -273,6 +274,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
@@ -286,6 +288,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
@@ -311,6 +314,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
@@ -330,6 +334,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
+                            durationMs = 213868,
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
@@ -349,6 +354,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
@@ -362,6 +368,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "高橋あず美 & Lotus Juice",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                            durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(

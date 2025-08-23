@@ -9,8 +9,13 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
+import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
@@ -30,9 +35,21 @@ fun ListenListItem(
     ListItem(
         headlineContent = {
             Text(
-                text = listen.name,
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = SpanStyle(
+                            fontSize = 16.sp,
+                            fontWeight = listen.fontWeight,
+                        ),
+                    ) {
+                        append(listen.name)
+                    }
+                    withStyle(style = SpanStyle(fontSize = 13.sp)) {
+                        append(" ${listen.durationMs.toDisplayTime()}")
+                    }
+                },
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = listen.fontWeight,
+                lineHeight = 24.sp,
             )
         },
         modifier = modifier.clickable {
