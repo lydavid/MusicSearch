@@ -12,7 +12,7 @@ interface ListenBrainzApi {
     ): ListensResponse
 }
 
-private const val BASE_URL = "https://api.listenbrainz.org/1/"
+private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
 
 class ListenBrainzApiImpl(
     private val client: HttpClient,
@@ -26,7 +26,7 @@ class ListenBrainzApiImpl(
             "minTimestamp and maxTimestamp cannot both be set"
         }
         val url = buildString {
-            append("$BASE_URL/user/$username/listens")
+            append("$API_BASE_URL/user/$username/listens")
             // TODO: have a background task to load 1000 at a time if the user wants to load all
             append("?count=100")
             minTimestamp?.let { append("&min_ts=$it") }

@@ -63,6 +63,7 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -99,6 +100,7 @@ internal fun ListensUi(
                         )
                     }
                     UsernameInput(
+                        listenBrainzUrl = state.listenBrainzUrl,
                         text = state.textFieldText,
                         strings = strings,
                         onTextChange = {
@@ -124,6 +126,9 @@ internal fun ListensUi(
                 onClick = {
                     lazyPagingItems.refresh()
                 },
+            )
+            OpenInBrowserMenuItem(
+                url = state.userListensUrl,
             )
             DropdownMenuItem(
                 text = {
@@ -172,6 +177,7 @@ internal fun ListensUi(
                     .padding(innerPadding)
                     .padding(horizontal = 16.dp)
                     .fillMaxSize(),
+                listenBrainzUrl = state.listenBrainzUrl,
                 text = state.textFieldText,
                 strings = strings,
                 onTextChange = {
@@ -232,6 +238,7 @@ internal fun ListensUi(
 
 @Composable
 private fun UsernameInput(
+    listenBrainzUrl: String,
     text: String,
     strings: AppStrings,
     modifier: Modifier = Modifier,
@@ -258,7 +265,7 @@ private fun UsernameInput(
                     append("Enter your ")
                     withLink(
                         LinkAnnotation.Url(
-                            "https://listenbrainz.org",
+                            listenBrainzUrl,
                             styles = TextLinkStyles(
                                 style = SpanStyle(color = MaterialTheme.colorScheme.primary),
                                 hoveredStyle = SpanStyle(

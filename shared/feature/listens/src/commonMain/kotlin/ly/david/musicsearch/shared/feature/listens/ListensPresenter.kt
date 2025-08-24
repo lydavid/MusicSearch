@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.ListenBrainzStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -31,6 +32,7 @@ internal class ListensPresenter(
     private val navigator: Navigator,
     private val listenBrainzStore: ListenBrainzStore,
     private val listensListRepository: ListensListRepository,
+    private val listenBrainzRepository: ListenBrainzRepository,
 ) : Presenter<ListensUiState> {
     @Composable
     override fun present(): ListensUiState {
@@ -80,6 +82,7 @@ internal class ListensPresenter(
         }
 
         return ListensUiState(
+            listenBrainzUrl = listenBrainzRepository.getBaseUrl(),
             username = username,
             textFieldText = textFieldText,
             totalCountOfListens = totalCountOfListens,
@@ -93,6 +96,7 @@ internal class ListensPresenter(
 
 @Stable
 internal data class ListensUiState(
+    val listenBrainzUrl: String = "",
     val username: String = "",
     val textFieldText: String = "",
     val totalCountOfListens: Long? = null,
@@ -100,7 +104,10 @@ internal data class ListensUiState(
     val lazyListState: LazyListState = LazyListState(),
     val listensPagingDataFlow: Flow<PagingData<ListenListItemModel>> = emptyFlow(),
     val eventSink: (ListensUiEvent) -> Unit = {},
-) : CircuitUiState
+) : CircuitUiState {
+    val userListensUrl: String
+        get() = "$listenBrainzUrl/user/$username"
+}
 
 internal sealed interface ListensUiEvent : CircuitUiEvent {
     data object NavigateUp : ListensUiEvent

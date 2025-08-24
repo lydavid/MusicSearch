@@ -15,6 +15,7 @@ val listensFeatureModule = module {
                     navigator = navigator,
                     listenBrainzStore = get(),
                     listensListRepository = get(),
+                    listenBrainzRepository = get(),
                 )
 
                 else -> null
