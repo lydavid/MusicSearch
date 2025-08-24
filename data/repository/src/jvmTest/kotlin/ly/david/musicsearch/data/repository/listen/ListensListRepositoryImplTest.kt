@@ -31,6 +31,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
@@ -76,13 +77,15 @@ class ListensListRepositoryImplTest :
 
     @Test
     fun listensByUser() = runTest {
-        val track1ListenedAtS = 1755100634L
+        val track1ListenedAtS = 1756100634L
         val track2ListenedAtS = 1755100633L
         val track3ListenedAtS = 1755100632L
         val track4ListenedAtS = 1755100631L
         val listensListRepository = createRepository(
             response = ListensResponse(
                 payload = Payload(
+                    latest_listen_ts = track1ListenedAtS,
+                    oldest_listen_ts = track4ListenedAtS,
                     listens = listOf(
                         // with mapping
                         ListenBrainzListen(
@@ -254,8 +257,12 @@ class ListensListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
+                        ListSeparator(
+                            id = "1756100634",
+                            text = "Monday, August 25, 2025",
+                        ),
                         ListenListItemModel(
-                            id = "1755100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
+                            id = "1756100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
@@ -267,6 +274,10 @@ class ListensListRepositoryImplTest :
                                 id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                                 name = "絶絶絶絶対聖域",
                             ),
+                        ),
+                        ListSeparator(
+                            id = "1755100633",
+                            text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
                             id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
@@ -308,6 +319,10 @@ class ListensListRepositoryImplTest :
                     description = "filter by track name",
                     query = "full",
                     expectedResult = listOf(
+                        ListSeparator(
+                            id = "1755100632",
+                            text = "Wednesday, August 13, 2025",
+                        ),
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
@@ -328,8 +343,12 @@ class ListensListRepositoryImplTest :
                     description = "filter by artist",
                     query = "feat",
                     expectedResult = listOf(
+                        ListSeparator(
+                            id = "1756100634",
+                            text = "Monday, August 25, 2025",
+                        ),
                         ListenListItemModel(
-                            id = "1755100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
+                            id = "1756100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
                             listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
@@ -348,6 +367,10 @@ class ListensListRepositoryImplTest :
                     description = "filter by release name",
                     query = "persona",
                     expectedResult = listOf(
+                        ListSeparator(
+                            id = "1755100633",
+                            text = "Wednesday, August 13, 2025",
+                        ),
                         ListenListItemModel(
                             id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
                             name = "Color Your Night",

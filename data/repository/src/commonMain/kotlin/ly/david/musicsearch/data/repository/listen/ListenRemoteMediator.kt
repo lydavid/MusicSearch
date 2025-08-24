@@ -67,7 +67,8 @@ internal class ListenRemoteMediator(
 
         listenDao.insert(listens = listensResponse.asListOfListens())
 
-        val newOldestTimeStampS = listensResponse.payload.listens.lastOrNull()?.listenedAtS
+        val newOldestTimeStampS: Long = listensResponse.payload.listens.lastOrNull()?.listenedAtS
+            ?: listensResponse.payload.oldest_listen_ts
 
         // Note that we will constantly attempt to find older listens whenever the user changes their query
         // and scrolls to the bottom. These calls are small and fast, so it is okay for now.
@@ -87,7 +88,8 @@ internal class ListenRemoteMediator(
 
         listenDao.insert(listens = listensResponse.asListOfListens())
 
-        val newLatestTimeStampS = listensResponse.payload.listens.firstOrNull()?.listenedAtS
+        val newLatestTimeStampS: Long = listensResponse.payload.listens.firstOrNull()?.listenedAtS
+            ?: listensResponse.payload.latest_listen_ts
 
         // We also constantly try to fetch new listens when the user changes their query.
         // Any way to not do that?

@@ -5,8 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
+import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import kotlin.time.Instant
 
@@ -18,6 +21,10 @@ internal fun PreviewListensUi() {
             val listens = MutableStateFlow(
                 PagingData.from(
                     data = listOf(
+                        ListSeparator(
+                            id = 1755655177000.toString(),
+                            text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
+                        ),
                         ListenListItemModel(
                             id = "1",
                             name = "絶絶絶絶対聖域",
@@ -53,7 +60,7 @@ internal fun PreviewListensUiNoUsername() {
         Surface {
             val listens = MutableStateFlow(
                 PagingData.from(
-                    data = emptyList<ListenListItemModel>(),
+                    data = emptyList<Identifiable>(),
                 ),
             )
             ListensUi(

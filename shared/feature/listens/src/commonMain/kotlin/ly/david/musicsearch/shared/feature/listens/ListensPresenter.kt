@@ -19,9 +19,9 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.auth.ListenBrainzStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
-import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -44,7 +44,7 @@ internal class ListensPresenter(
         val coroutineScope = rememberCoroutineScope()
         val totalCountOfListens by
             listensListRepository.observeUnfilteredCountOfListensByUser(username).collectAsRetainedState(null)
-        val listens: Flow<PagingData<ListenListItemModel>> by rememberRetained(username, query) {
+        val listens: Flow<PagingData<Identifiable>> by rememberRetained(username, query) {
             mutableStateOf(
                 listensListRepository.observeListens(
                     username = username,
@@ -102,7 +102,7 @@ internal data class ListensUiState(
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val lazyListState: LazyListState = LazyListState(),
-    val listensPagingDataFlow: Flow<PagingData<ListenListItemModel>> = emptyFlow(),
+    val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
     val userListensUrl: String

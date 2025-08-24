@@ -1,12 +1,12 @@
 package ly.david.musicsearch.shared.domain.common
 
-import kotlin.time.Clock
 import kotlinx.datetime.DateTimePeriod
-import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.periodUntil
+import kotlin.time.Clock
+import kotlin.time.Instant
 
-internal const val DATE_FORMAT = "EEEE, MMMM d"
+internal const val DATE_FORMAT = "EEEE, MMMM d, YYYY"
 internal const val TIME_FORMAT = "hh:mm a"
 internal const val DATE_TIME_FORMAT = "YYYY-MM-dd hh:mm:ss"
 

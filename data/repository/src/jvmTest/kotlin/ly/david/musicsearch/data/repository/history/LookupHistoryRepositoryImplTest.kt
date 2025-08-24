@@ -113,7 +113,7 @@ class LookupHistoryRepositoryImplTest :
             listOf(
                 ListSeparator(
                     id = "1739108222",
-                    text = "Sunday, February 9",
+                    text = "Sunday, February 9, 2025",
                 ),
                 LookupHistoryListItemModel(
                     title = "欠けた心象、世のよすが",
@@ -285,7 +285,7 @@ class LookupHistoryRepositoryImplTest :
                 listOf(
                     ListSeparator(
                         id = "1717616540",
-                        text = "Wednesday, June 5",
+                        text = "Wednesday, June 5, 2024",
                     ),
                     LookupHistoryListItemModel(
                         title = "ずっと真夜中でいいのに",

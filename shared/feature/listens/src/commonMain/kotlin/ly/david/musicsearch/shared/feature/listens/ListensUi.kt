@@ -49,7 +49,9 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import app.cash.paging.compose.collectAsLazyPagingItems
+import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -59,6 +61,7 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.LocalStrings
@@ -214,10 +217,10 @@ internal fun ListensUi(
                 modifier = Modifier
                     .padding(innerPadding),
                 lazyListState = state.lazyListState,
-            ) { listenListItemModel: ListenListItemModel? ->
-                listenListItemModel?.let {
-                    ListenListItem(
-                        listen = it,
+            ) { listItemModel: Identifiable? ->
+                when (listItemModel) {
+                    is ListenListItemModel -> ListenListItem(
+                        listen = listItemModel,
                         onClick = { id ->
                             eventSink(
                                 ListensUiEvent.ClickItem(
@@ -227,8 +230,12 @@ internal fun ListensUi(
                             )
                         },
                         onClickMoreActions = {
-                            showBottomSheetForListen = it
+                            showBottomSheetForListen = listItemModel
                         },
+                    )
+
+                    is ListSeparator -> ListSeparatorHeader(
+                        text = listItemModel.text,
                     )
                 }
             }

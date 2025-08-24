@@ -12,12 +12,13 @@ data class ListensResponse(
 )
 
 /**
- * `latest_listen_ts` and `oldest_listen_ts` are for all listens of the user.
- *  Rather than use them for paginating, we will use the first/last listen in [listens].
+ * [latest_listen_ts] and [oldest_listen_ts] are for all listens of the user.
  */
 @Suppress("ConstructorParameterNaming")
 @Serializable
 data class Payload(
+    val latest_listen_ts: Long,
+    val oldest_listen_ts: Long,
     val listens: List<ListenBrainzListen>,
 )
 
