@@ -39,6 +39,15 @@
           "allowedVersions": "<8.11.0"
         }
       ]
+    },
+    {
+      "description": "Exclude alpha/beta/pre-release versions",
+      "matchPackageNames": [
+        "com.mikepenz.aboutlibraries.plugin",
+        "com.mikepenz:aboutlibraries-core",
+        "com.mikepenz:aboutlibraries-compose-m3"
+      ],
+      "allowedVersions": "!/-(alpha|beta|a\\d+|b\\d+|pre|rc|snapshot)/i"
     }
   ]
 }
