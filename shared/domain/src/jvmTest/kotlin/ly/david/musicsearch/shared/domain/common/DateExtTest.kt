@@ -1,9 +1,9 @@
 package ly.david.musicsearch.shared.domain.common
 
-import kotlin.time.Instant
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.Locale
+import kotlin.time.Instant
 
 class DateExtTest {
 
@@ -11,7 +11,7 @@ class DateExtTest {
     fun `format date US`() {
         val instant = Instant.parse("2024-04-05T21:42:20Z")
         Locale.setDefault(Locale.US)
-        assertEquals("Friday, April 5", instant.getDateFormatted())
+        assertEquals("Friday, April 5, 2024", instant.getDateFormatted())
     }
 
     @Test
@@ -25,7 +25,7 @@ class DateExtTest {
     fun `format date Canada`() {
         val instant = Instant.parse("2024-04-05T21:42:20Z")
         Locale.setDefault(Locale.CANADA)
-        assertEquals("Friday, April 5", instant.getDateFormatted())
+        assertEquals("Friday, April 5, 2024", instant.getDateFormatted())
     }
 
     @Test
