@@ -156,7 +156,7 @@ baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprof
 build-config = "com.github.gmazzo.buildconfig:5.6.7"
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-dependency-analysis = "com.autonomousapps.dependency-analysis:3.0.0"
+dependency-analysis = "com.autonomousapps.dependency-analysis:3.0.1"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = "com.google.firebase.crashlytics:3.0.6"
 google-services = "com.google.gms.google-services:4.4.3"
