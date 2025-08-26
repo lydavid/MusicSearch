@@ -37,7 +37,7 @@ internal class SettingsPresenter(
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        val scope = rememberCoroutineScope()
+        val coroutineScope = rememberCoroutineScope()
         val loginUiState = loginPresenter.present()
 
         fun eventSink(event: SettingsUiEvent) {
@@ -59,13 +59,15 @@ internal class SettingsPresenter(
                 }
 
                 is SettingsUiEvent.Logout -> {
-                    scope.launch {
+                    coroutineScope.launch {
                         logout()
                     }
                 }
 
                 is SettingsUiEvent.ExportDatabase -> {
-                    snackbarMessage = exportDatabase()
+                    coroutineScope.launch {
+                        snackbarMessage = exportDatabase()
+                    }
                 }
 
                 is SettingsUiEvent.EnableDeveloperMode -> {
