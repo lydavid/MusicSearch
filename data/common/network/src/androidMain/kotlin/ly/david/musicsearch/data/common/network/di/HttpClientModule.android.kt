@@ -19,7 +19,7 @@ actual val HttpClientModule: Module = module {
     single {
         val okHttpConfig = OkHttpConfig()
         okHttpConfig.config {
-            readTimeout(15, TimeUnit.SECONDS)
+            readTimeout(10, TimeUnit.SECONDS)
             cache(null)
             addInterceptor(ChuckerInterceptor(context = get()))
         }

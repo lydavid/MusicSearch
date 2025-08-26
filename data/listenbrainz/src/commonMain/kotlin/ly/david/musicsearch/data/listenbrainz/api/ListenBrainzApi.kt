@@ -17,6 +17,8 @@ private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
 class ListenBrainzApiImpl(
     private val client: HttpClient,
 ) : ListenBrainzApi {
+    // This will likely timeout if the user has listens spread far apart in time:
+    //  https://tickets.metabrainz.org/browse/LB-1584
     override suspend fun getListensByUser(
         username: String,
         minTimestamp: Long?,

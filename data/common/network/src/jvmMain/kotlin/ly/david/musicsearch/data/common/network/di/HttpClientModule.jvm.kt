@@ -18,7 +18,7 @@ actual val HttpClientModule: Module = module {
     single {
         val okHttpConfig = OkHttpConfig()
         okHttpConfig.config {
-            connectTimeout(15, TimeUnit.SECONDS)
+            connectTimeout(10, TimeUnit.SECONDS)
         }
         ApiHttpClient.configAndCreate(
             engine = OkHttpEngine(config = okHttpConfig),
