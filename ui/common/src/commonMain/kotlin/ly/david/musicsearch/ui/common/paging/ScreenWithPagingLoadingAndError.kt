@@ -52,6 +52,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     customNoResultsText: String = "",
+    keyed: Boolean = false,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     val strings = LocalStrings.current
@@ -95,15 +96,19 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                     state = lazyListState,
                 ) {
                     for (index in 0 until lazyPagingItems.itemCount) {
-                        when (lazyPagingItems.peek(index)) {
+                        when (val item = lazyPagingItems.peek(index)) {
                             is ListSeparator -> {
-                                stickyHeader {
+                                stickyHeader(
+                                    key = item.id.takeIf { keyed },
+                                ) {
                                     itemContent(this, lazyPagingItems[index])
                                 }
                             }
 
                             else -> {
-                                item {
+                                item(
+                                    key = item?.id.takeIf { keyed },
+                                ) {
                                     itemContent(this, lazyPagingItems[index])
                                 }
 

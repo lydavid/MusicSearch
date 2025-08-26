@@ -217,6 +217,7 @@ internal fun ListensUi(
                 modifier = Modifier
                     .padding(innerPadding),
                 lazyListState = state.lazyListState,
+                keyed = true,
             ) { listItemModel: Identifiable? ->
                 when (listItemModel) {
                     is ListenListItemModel -> ListenListItem(

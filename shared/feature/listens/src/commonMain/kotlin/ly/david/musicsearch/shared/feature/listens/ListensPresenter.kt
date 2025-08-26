@@ -45,7 +45,6 @@ internal class ListensPresenter(
         val coroutineScope = rememberCoroutineScope()
         val totalCountOfListens: Long? by
             listensListRepository.observeUnfilteredCountOfListensByUser(username).collectAsRetainedState(null)
-        // TODO: consider using key again, cause when we have a query, the scroll position is lost
         var hasReachedOldest by remember(username) { mutableStateOf(false) }
         var hasReachedLatest by remember(username) { mutableStateOf(false) }
         val listens: Flow<PagingData<Identifiable>> by rememberRetained(username, query) {

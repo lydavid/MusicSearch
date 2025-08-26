@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.TerminalSeparatorType
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import app.cash.paging.Pager
@@ -79,7 +80,7 @@ class ListensListRepositoryImpl(
                 )
             },
         ).flow.map { pagingData ->
-            pagingData.insertSeparators {
+            pagingData.insertSeparators(terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE) {
                     before: ListenListItemModel?,
                     after: ListenListItemModel?,
                 ->
