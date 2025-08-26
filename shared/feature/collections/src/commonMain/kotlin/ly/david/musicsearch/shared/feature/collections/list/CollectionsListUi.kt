@@ -221,6 +221,7 @@ internal fun CollectionListUi(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
+            keyed = true,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {

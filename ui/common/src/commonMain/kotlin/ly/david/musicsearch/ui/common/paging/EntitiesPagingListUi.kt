@@ -56,6 +56,7 @@ fun EntitiesPagingListUi(
         lazyPagingItems = uiState.lazyPagingItems,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
+        keyed = true,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {

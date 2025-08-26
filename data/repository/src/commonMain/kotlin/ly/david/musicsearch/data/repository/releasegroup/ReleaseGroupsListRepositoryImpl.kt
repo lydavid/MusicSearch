@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.releasegroup
 
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
+import app.cash.paging.TerminalSeparatorType
 import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -44,7 +45,9 @@ class ReleaseGroupsListRepositoryImpl(
             listFilters = listFilters,
         ).map { pagingData ->
             pagingData
-                .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
+                .insertSeparators(
+                    terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                ) { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
                     if (listFilters.sorted && rg2 != null &&
                         (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
                     ) {
