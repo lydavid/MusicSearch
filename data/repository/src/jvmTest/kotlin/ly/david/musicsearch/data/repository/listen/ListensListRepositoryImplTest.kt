@@ -250,6 +250,10 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = "user",
                     query = query,
+                    reachedLatest = false,
+                    reachedOldest = false,
+                    onReachedLatest = {},
+                    onReachedOldest = {},
                 )
             },
             testCases = listOf(

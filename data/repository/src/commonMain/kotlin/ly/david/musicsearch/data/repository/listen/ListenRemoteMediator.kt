@@ -19,6 +19,10 @@ internal class ListenRemoteMediator(
     private val username: String,
     private val listenDao: ListenDao,
     private val listenBrainzApi: ListenBrainzApi,
+    private val reachedLatest: Boolean,
+    private val reachedOldest: Boolean,
+    private val onReachedLatest: (Boolean) -> Unit,
+    private val onReachedOldest: (Boolean) -> Unit,
 ) : RemoteMediator<Int, ListenListItemModel>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -37,16 +41,26 @@ internal class ListenRemoteMediator(
         return try {
             when (loadType) {
                 REFRESH -> {
+                    onReachedLatest(false)
+                    onReachedOldest(false)
                     listenDao.deleteListensByUser(username = username)
                     append()
                 }
 
                 PREPEND -> {
-                    prepend()
+                    if (reachedLatest) {
+                        MediatorResult.Success(endOfPaginationReached = true)
+                    } else {
+                        prepend()
+                    }
                 }
 
                 APPEND -> {
-                    append()
+                    if (reachedOldest) {
+                        MediatorResult.Success(endOfPaginationReached = true)
+                    } else {
+                        append()
+                    }
                 }
             }
         } catch (ex: CancellationException) {
@@ -70,6 +84,11 @@ internal class ListenRemoteMediator(
         val newOldestTimeStampS: Long = listensResponse.payload.listens.lastOrNull()?.listenedAtS
             ?: listensResponse.payload.oldest_listen_ts
 
+        val endReached = currentOldestTimeStampS == newOldestTimeStampS
+        if (endReached) {
+            onReachedOldest(true)
+        }
+
         // Note that we will constantly attempt to find older listens whenever the user changes their query
         // and scrolls to the bottom. These calls are small and fast, so it is okay for now.
         return MediatorResult.Success(
@@ -90,6 +109,11 @@ internal class ListenRemoteMediator(
 
         val newLatestTimeStampS: Long = listensResponse.payload.listens.firstOrNull()?.listenedAtS
             ?: listensResponse.payload.latest_listen_ts
+
+        val endReached = currentLatestTimeStampS == newLatestTimeStampS
+        if (endReached) {
+            onReachedLatest(true)
+        }
 
         // We also constantly try to fetch new listens when the user changes their query.
         // Any way to not do that?

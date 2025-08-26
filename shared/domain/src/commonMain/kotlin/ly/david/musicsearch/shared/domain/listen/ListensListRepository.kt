@@ -8,6 +8,10 @@ interface ListensListRepository {
     fun observeListens(
         username: String,
         query: String,
+        reachedLatest: Boolean,
+        reachedOldest: Boolean,
+        onReachedLatest: (Boolean) -> Unit,
+        onReachedOldest: (Boolean) -> Unit,
     ): Flow<PagingData<Identifiable>>
 
     fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?>

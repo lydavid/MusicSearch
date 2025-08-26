@@ -27,11 +27,22 @@ class ListensListRepositoryImpl(
     override fun observeListens(
         username: String,
         query: String,
+        reachedLatest: Boolean,
+        reachedOldest: Boolean,
+        onReachedLatest: (Boolean) -> Unit,
+        onReachedOldest: (Boolean) -> Unit,
     ): Flow<PagingData<Identifiable>> {
         return if (username.isEmpty()) {
             emptyFlow()
         } else {
-            pagerFlow(username, query)
+            pagerFlow(
+                username = username,
+                query = query,
+                reachedLatest = reachedLatest,
+                reachedOldest = reachedOldest,
+                onReachedLatest = onReachedLatest,
+                onReachedOldest = onReachedOldest,
+            )
         }
             .distinctUntilChanged()
             .cachedIn(scope = coroutineScope)
@@ -41,6 +52,10 @@ class ListensListRepositoryImpl(
     private fun pagerFlow(
         username: String,
         query: String,
+        reachedLatest: Boolean,
+        reachedOldest: Boolean,
+        onReachedLatest: (Boolean) -> Unit,
+        onReachedOldest: (Boolean) -> Unit,
     ): Flow<PagingData<Identifiable>> {
         return Pager(
             config = PagingConfig(
@@ -52,6 +67,10 @@ class ListensListRepositoryImpl(
                 username = username,
                 listenDao = listenDao,
                 listenBrainzApi = listenBrainzApi,
+                reachedLatest = reachedLatest,
+                reachedOldest = reachedOldest,
+                onReachedLatest = onReachedLatest,
+                onReachedOldest = onReachedOldest,
             ),
             pagingSourceFactory = {
                 listenDao.getListensByUser(

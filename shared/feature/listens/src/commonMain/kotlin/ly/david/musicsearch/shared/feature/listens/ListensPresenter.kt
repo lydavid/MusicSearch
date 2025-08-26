@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -42,13 +43,20 @@ internal class ListensPresenter(
         val query = topAppBarFilterState.filterText
         val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
-        val totalCountOfListens by
+        val totalCountOfListens: Long? by
             listensListRepository.observeUnfilteredCountOfListensByUser(username).collectAsRetainedState(null)
+        // TODO: consider using key again, cause when we have a query, the scroll position is lost
+        var hasReachedOldest by remember(username) { mutableStateOf(false) }
+        var hasReachedLatest by remember(username) { mutableStateOf(false) }
         val listens: Flow<PagingData<Identifiable>> by rememberRetained(username, query) {
             mutableStateOf(
                 listensListRepository.observeListens(
                     username = username,
                     query = query,
+                    reachedLatest = hasReachedLatest,
+                    reachedOldest = hasReachedOldest,
+                    onReachedLatest = { hasReachedLatest = it },
+                    onReachedOldest = { hasReachedOldest = it },
                 ),
             )
         }
