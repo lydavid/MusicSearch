@@ -20,6 +20,11 @@ val underPressureRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
             joinPhrase = "",
         ),
     ),
+    isrcs = listOf(
+        "GBCEE0900136",
+        "GBCEG9400046",
+        // and more
+    ),
 )
 
 val skycladObserverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
@@ -33,6 +38,10 @@ val skycladObserverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
             name = "いとうかなこ",
             joinPhrase = "",
         ),
+    ),
+    isrcs = listOf(
+        "JPK630905801",
+        "JPR501002358",
     ),
 )
 
@@ -52,5 +61,8 @@ val skycladObserverCoverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkM
             name = "いとうかなこ",
             joinPhrase = "",
         ),
+    ),
+    isrcs = listOf(
+        "JPR562300374",
     ),
 )

@@ -314,7 +314,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
             )
         }
 
-        // other entities remain unchanged
+        // browse by another entity
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = skycladObserverWorkMusicBrainzModel.id,
@@ -424,6 +424,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "different change will show up",
+                    isrcs = listOf(
+                        "JPR562300374",
+                    ),
                     lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
@@ -453,9 +456,30 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "different change will show up",
+                    isrcs = listOf(
+                        "JPR562300374",
+                    ),
                     lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
+            )
+        }
+        recordingsListRepository.observeRecordings(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    skycladObserverRecordingListItemModel,
+                    skycladObserverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
+                    ),
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "different change will show up",
+                        visited = true,
+                    ),
+                ),
+                this,
             )
         }
     }

@@ -45,6 +45,7 @@ class RecordingDao(
         }
     }
 
+    // we can do this because both lookup and browse returns the same amount of info that goes into this table
     fun insertOrUpdateAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->

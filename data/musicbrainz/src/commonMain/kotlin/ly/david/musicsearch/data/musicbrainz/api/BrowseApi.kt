@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 const val ALIASES = "aliases"
 const val ARTIST_CREDITS = "artist-credits"
 const val LABELS = "labels"
+const val ISRCS = "isrcs"
 
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
@@ -95,7 +96,7 @@ interface BrowseApi {
         entity: MusicBrainzEntityType,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = "$ARTIST_CREDITS+$ALIASES",
+        include: String = "$ARTIST_CREDITS+$ALIASES+$ISRCS",
     ): BrowseRecordingsResponse
 
     suspend fun browseReleasesByEntity(

@@ -73,7 +73,7 @@ interface LookupApi {
 
     suspend fun lookupRecording(
         recordingId: String,
-        include: String = "artist-credits+$URL_REL+$ALIASES",
+        include: String = "$ARTIST_CREDITS+$ALIASES+$ISRCS+$URL_REL",
     ): RecordingMusicBrainzNetworkModel
 
     suspend fun lookupRelease(
