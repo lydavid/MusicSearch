@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.recording
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -11,6 +10,7 @@ import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class RecordingRepositoryImpl(
     private val recordingDao: RecordingDao,
@@ -79,7 +79,7 @@ class RecordingRepositoryImpl(
         lastUpdated: Instant,
     ) {
         recordingDao.withTransaction {
-            recordingDao.insert(recording)
+            recordingDao.insertOrUpdate(recording)
 
             aliasDao.insertAll(listOf(recording))
 

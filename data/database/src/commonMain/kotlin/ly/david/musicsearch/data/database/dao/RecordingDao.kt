@@ -5,21 +5,19 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class RecordingDao(
     database: Database,
@@ -29,18 +27,16 @@ class RecordingDao(
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
-    fun insert(recording: RecordingMusicBrainzNetworkModel) {
+    fun insertOrUpdate(recording: RecordingMusicBrainzNetworkModel) {
         recording.run {
-            transacter.insertRecording(
-                Recording(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation,
-                    first_release_date = firstReleaseDate,
-                    length = length,
-                    video = video == true,
-                    isrcs = isrcs?.toImmutableList(),
-                ),
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation,
+                firstReleaseDate = firstReleaseDate,
+                length = length,
+                video = video == true,
+                isrcs = isrcs,
             )
             artistCreditDao.insertArtistCredits(
                 entityId = recording.id,
@@ -49,10 +45,10 @@ class RecordingDao(
         }
     }
 
-    fun insertAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
+    fun insertOrUpdateAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->
-                insert(recording)
+                insertOrUpdate(recording)
             }
         }
     }

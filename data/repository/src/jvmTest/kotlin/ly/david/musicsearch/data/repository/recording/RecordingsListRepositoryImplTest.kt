@@ -284,7 +284,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                 id = "new-id-is-considered-a-different-recording",
             ),
             skycladObserverCoverRecordingMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if recording is linked to multiple entities",
+                disambiguation = "changes will still show up",
             ),
         )
         val recordingsListRepository = createRecordingsListRepository(
@@ -306,7 +306,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     skycladObserverRecordingListItemModel.copy(
                         id = "new-id-is-considered-a-different-recording",
                     ),
-                    skycladObserverCoverRecordingListItemModel,
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "changes will still show up",
+                    ),
                 ),
                 this,
             )
@@ -323,7 +325,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
             assertEquals(
                 listOf(
                     skycladObserverRecordingListItemModel,
-                    skycladObserverCoverRecordingListItemModel,
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "changes will still show up",
+                    ),
                 ),
                 this,
             )
@@ -340,7 +344,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     skycladObserverRecordingListItemModel.copy(
                         id = "new-id-is-considered-a-different-recording",
                     ),
-                    skycladObserverCoverRecordingListItemModel,
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "changes will still show up",
+                    ),
                 ),
                 this,
             )
@@ -360,7 +366,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     skycladObserverRecordingListItemModel.copy(
                         id = "new-id-is-considered-a-different-recording",
                     ),
-                    skycladObserverCoverRecordingListItemModel,
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "changes will still show up",
+                    ),
                 ),
                 this,
             )
@@ -377,7 +385,9 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     skycladObserverRecordingListItemModel.copy(
                         id = "new-id-is-considered-a-different-recording",
                     ),
-                    skycladObserverCoverRecordingListItemModel,
+                    skycladObserverCoverRecordingListItemModel.copy(
+                        disambiguation = "changes will still show up",
+                    ),
                 ),
                 this,
             )
@@ -386,9 +396,10 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         // now visit the recording and refresh it
         val recordingRepository = createRecordingRepository(
             skycladObserverCoverRecordingMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if recording is linked to multiple entities",
+                disambiguation = "different change will show up",
             ),
         )
+        // because we have never visited this, we upsert it, so any changes will show up right away
         recordingRepository.lookupRecording(
             recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = false,
@@ -412,7 +423,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                             joinPhrase = "",
                         ),
                     ),
-                    disambiguation = "",
+                    disambiguation = "different change will show up",
                     lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,
@@ -441,7 +452,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                             joinPhrase = "",
                         ),
                     ),
-                    disambiguation = "changes will be ignored if recording is linked to multiple entities",
+                    disambiguation = "different change will show up",
                     lastUpdated = testDateTimeInThePast,
                 ),
                 recordingDetailsModel,

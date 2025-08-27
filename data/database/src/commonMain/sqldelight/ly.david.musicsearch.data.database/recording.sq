@@ -13,9 +13,40 @@ CREATE TABLE IF NOT EXISTS recording (
   isrcs TEXT AS List<String>
 );
 
-insertRecording:
+insert:
 INSERT OR IGNORE INTO recording
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :firstReleaseDate,
+  :length,
+  :video,
+  :isrcs
+);
+
+upsert {
+UPDATE recording
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  first_release_date = :firstReleaseDate,
+  length = :length,
+  video = :video,
+  isrcs = :isrcs
+WHERE id = :id;
+
+INSERT OR IGNORE INTO recording
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :firstReleaseDate,
+  :length,
+  :video,
+  :isrcs
+);
+}
 
 getRecordingForDetails:
 SELECT

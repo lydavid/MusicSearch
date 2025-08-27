@@ -16,7 +16,6 @@ import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
-import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Release
 import kotlin.time.Instant
 
@@ -69,16 +68,14 @@ class ListenDaoImpl(
                 // Add stub recording so that we can link it with artist credits
                 val recordingName = listen.recordingName
                 if (recordingMusicbrainzId == null || recordingName == null) return@forEach
-                recordingTransacter.insertRecording(
-                    recording = Recording(
-                        id = recordingMusicbrainzId,
-                        name = recordingName,
-                        disambiguation = "",
-                        first_release_date = null,
-                        length = durationMs?.toInt(),
-                        video = false,
-                        isrcs = null,
-                    ),
+                recordingTransacter.insert(
+                    id = recordingMusicbrainzId,
+                    name = recordingName,
+                    disambiguation = "",
+                    firstReleaseDate = null,
+                    length = durationMs?.toInt(),
+                    video = false,
+                    isrcs = null,
                 )
 
                 artistCreditDao.insertArtistCredits(

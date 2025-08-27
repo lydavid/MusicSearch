@@ -236,7 +236,7 @@ internal class SearchResultsRepositoryImpl(
                     val recordings = response.recordings
                     recordingDao.withTransaction {
                         removeAll()
-                        recordingDao.insertAll(recordings)
+                        recordingDao.insertOrUpdateAll(recordings)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = recordings,

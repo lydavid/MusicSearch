@@ -12,6 +12,8 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
+// TODO: this can still cause the last updated footer to appear before the rest of the content
+//  and when using lazy item key, it will stay on screen, so content won't start at top
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
     browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
