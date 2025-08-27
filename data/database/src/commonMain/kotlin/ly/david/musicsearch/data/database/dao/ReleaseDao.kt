@@ -18,7 +18,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
-import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Releases_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -34,35 +33,25 @@ class ReleaseDao(
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
-    fun insertAll(releases: List<ReleaseMusicBrainzNetworkModel>) {
-        transacter.transaction {
-            releases.forEach { release ->
-                insert(release)
-            }
-        }
-    }
-
-    fun insert(release: ReleaseMusicBrainzNetworkModel) {
+    fun insertOrUpdate(release: ReleaseMusicBrainzNetworkModel) {
         release.run {
-            transacter.insertRelease(
-                Release(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation,
-                    date = date.orEmpty(),
-                    status = status,
-                    barcode = barcode,
-                    status_id = statusId,
-                    country_code = countryCode,
-                    packaging = packaging,
-                    packaging_id = packagingId,
-                    asin = asin,
-                    quality = quality,
-                    // TODO: drop unused count
-                    cover_art_count = coverArtArchive.count,
-                    script = textRepresentation?.script,
-                    language = textRepresentation?.language,
-                ),
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation,
+                date = date.orEmpty(),
+                status = status,
+                barcode = barcode,
+                status_id = statusId,
+                country_code = countryCode,
+                packaging = packaging,
+                packaging_id = packagingId,
+                asin = asin,
+                quality = quality,
+                // TODO: drop unused count
+                cover_art_count = coverArtArchive.count,
+                script = textRepresentation?.script,
+                language = textRepresentation?.language,
             )
             artistCreditDao.insertArtistCredits(
                 entityId = id,
@@ -73,6 +62,40 @@ class ReleaseDao(
                 media = media,
             )
             // TODO: insert tracks' recording/aliases?
+        }
+    }
+
+    fun insert(release: ReleaseMusicBrainzNetworkModel) {
+        release.run {
+            transacter.insert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation,
+                date = date.orEmpty(),
+                status = status,
+                barcode = barcode,
+                status_id = statusId,
+                country_code = countryCode,
+                packaging = packaging,
+                packaging_id = packagingId,
+                asin = asin,
+                quality = quality,
+                cover_art_count = coverArtArchive.count,
+                script = textRepresentation?.script,
+                language = textRepresentation?.language,
+            )
+            artistCreditDao.insertArtistCredits(
+                entityId = id,
+                artistCredits = artistCredits,
+            )
+        }
+    }
+
+    fun insertAll(releases: List<ReleaseMusicBrainzNetworkModel>) {
+        transacter.transaction {
+            releases.forEach { release ->
+                insert(release)
+            }
         }
     }
 

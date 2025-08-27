@@ -134,7 +134,7 @@ class ReleaseRepositoryImpl(
                     releaseGroupId = releaseGroup.id,
                 )
             }
-            releaseDao.insert(release)
+            releaseDao.insertOrUpdate(release)
 
             aliasDao.insertAll(listOf(release))
 

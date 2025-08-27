@@ -1034,7 +1034,7 @@ class ReleasesListRepositoryImplTest :
         // now visit the release and refresh it
         val releaseRepository = createReleaseRepository(
             underPressureJapanReleaseMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if release is linked to multiple entities",
+                disambiguation = "changes will show up when visiting",
                 releaseGroup = underPressureReleaseGroupMusicBrainzModel,
             ),
         )
@@ -1042,6 +1042,7 @@ class ReleasesListRepositoryImplTest :
             id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
             name = "Under Pressure",
             date = "1991",
+            disambiguation = "changes will show up when visiting",
             artistCredits = listOf(
                 ArtistCreditUiModel(
                     artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
@@ -1099,7 +1100,7 @@ class ReleasesListRepositoryImplTest :
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails.copy(
-                    disambiguation = "changes will be ignored if release is linked to multiple entities",
+                    disambiguation = "changes will show up when visiting",
                 ),
                 releaseDetailsModel,
             )
@@ -1120,7 +1121,7 @@ class ReleasesListRepositoryImplTest :
                     ),
                     underPressureJapanReleaseListItemModel.copy(
                         releaseCountryCount = 1,
-                        disambiguation = "changes will be ignored if release is linked to multiple entities",
+                        disambiguation = "changes will show up when visiting",
                         visited = true,
                     ),
                     utaNoUtaReleaseListItemModel.copy(
@@ -1143,7 +1144,7 @@ class ReleasesListRepositoryImplTest :
                 id = "new-id-is-considered-a-different-release-group",
             ),
             underPressureJapanReleaseMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                disambiguation = "changes will be ignored if release is linked to multiple entities",
             ),
         )
         val releasesListRepository = createReleasesListRepository(
@@ -1209,7 +1210,7 @@ class ReleasesListRepositoryImplTest :
         // now visit the release and refresh it
         val releaseRepository = createReleaseRepository(
             underPressureJapanReleaseMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if release is linked to multiple entities",
+                disambiguation = "changes will show up when visiting",
                 releaseGroup = underPressureReleaseGroupMusicBrainzModel,
             ),
         )
@@ -1217,6 +1218,7 @@ class ReleasesListRepositoryImplTest :
             id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
             name = "Under Pressure",
             date = "1991",
+            disambiguation = "changes will show up when visiting",
             artistCredits = listOf(
                 ArtistCreditUiModel(
                     artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
@@ -1274,7 +1276,7 @@ class ReleasesListRepositoryImplTest :
         ).let { releaseDetailsModel ->
             assertEquals(
                 expectedReleaseDetails.copy(
-                    disambiguation = "changes will be ignored if release is linked to multiple entities",
+                    disambiguation = "changes will show up when visiting",
                 ),
                 releaseDetailsModel,
             )
@@ -1291,7 +1293,7 @@ class ReleasesListRepositoryImplTest :
                         id = "new-id-is-considered-a-different-release-group",
                     ),
                     underPressureJapanReleaseListItemModel.copy(
-                        disambiguation = "changes will be ignored if release is linked to multiple entities",
+                        disambiguation = "changes will show up when visiting",
                         releaseCountryCount = 1,
                         visited = true,
                     ),
@@ -1379,7 +1381,7 @@ class ReleasesListRepositoryImplTest :
             // now visit the release and refresh it
             val releaseRepository = createReleaseRepository(
                 underPressureJapanReleaseMusicBrainzModel.copy(
-                    disambiguation = "changes will be ignored if release is linked to multiple entities",
+                    disambiguation = "changes will show up if we have not visited it yet",
                     releaseGroup = underPressureReleaseGroupMusicBrainzModel,
                 ),
             )
@@ -1387,6 +1389,7 @@ class ReleasesListRepositoryImplTest :
                 id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
                 name = "Under Pressure",
                 date = "1991",
+                disambiguation = "changes will show up if we have not visited it yet",
                 artistCredits = listOf(
                     ArtistCreditUiModel(
                         artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
@@ -1444,7 +1447,7 @@ class ReleasesListRepositoryImplTest :
             ).let { releaseDetailsModel ->
                 assertEquals(
                     expectedReleaseDetails.copy(
-                        disambiguation = "changes will be ignored if release is linked to multiple entities",
+                        disambiguation = "changes will show up if we have not visited it yet",
                     ),
                     releaseDetailsModel,
                 )
@@ -1461,7 +1464,7 @@ class ReleasesListRepositoryImplTest :
                             id = "new-id-is-considered-a-different-release-group",
                         ),
                         underPressureJapanReleaseListItemModel.copy(
-                            disambiguation = "changes will be ignored if release is linked to multiple entities",
+                            disambiguation = "changes will show up if we have not visited it yet",
                             releaseCountryCount = 1,
                             visited = true,
                         ),

@@ -16,7 +16,6 @@ import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
-import lydavidmusicsearchdatadatabase.Release
 import kotlin.time.Instant
 
 class ListenDaoImpl(
@@ -105,24 +104,22 @@ class ListenDaoImpl(
 
                 // Add stub release so that we can link it with its cover art
                 if (releaseName == null) return@forEach
-                releaseTransacter.insertRelease(
-                    release = Release(
-                        id = coverArtReleaseMbid,
-                        name = releaseName,
-                        disambiguation = "",
-                        date = "",
-                        status = null,
-                        barcode = null,
-                        status_id = null,
-                        country_code = null,
-                        packaging = null,
-                        packaging_id = null,
-                        asin = null,
-                        quality = null,
-                        cover_art_count = 0,
-                        script = null,
-                        language = null,
-                    ),
+                releaseTransacter.insert(
+                    id = coverArtReleaseMbid,
+                    name = releaseName,
+                    disambiguation = "",
+                    date = "",
+                    status = null,
+                    barcode = null,
+                    status_id = null,
+                    country_code = null,
+                    packaging = null,
+                    packaging_id = null,
+                    asin = null,
+                    quality = null,
+                    cover_art_count = 0,
+                    script = null,
+                    language = null,
                 )
             }
         }

@@ -18,9 +18,64 @@ CREATE TABLE IF NOT EXISTS "release" (
   cover_art_count INTEGER AS Int NOT NULL
 );
 
-insertRelease:
+insert:
 INSERT OR IGNORE INTO `release`
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :date,
+  :barcode,
+  :asin,
+  :quality,
+  :country_code,
+  :status,
+  :status_id,
+  :packaging,
+  :packaging_id,
+  :script,
+  :language,
+  :cover_art_count
+);
+
+upsert {
+UPDATE `release`
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  date = :date,
+  barcode = :barcode,
+  asin = :asin,
+  quality = :quality,
+  country_code = :country_code,
+  status = :status,
+  status_id = :status_id,
+  packaging = :packaging,
+  packaging_id = :packaging_id,
+  script = :script,
+  language = :language,
+  cover_art_count = :cover_art_count
+WHERE id = :id;
+
+INSERT OR IGNORE INTO `release`
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :date,
+  :barcode,
+  :asin,
+  :quality,
+  :country_code,
+  :status,
+  :status_id,
+  :packaging,
+  :packaging_id,
+  :script,
+  :language,
+  :cover_art_count
+);
+}
 
 deleteRelease:
 DELETE FROM `release` WHERE id = :releaseId;
