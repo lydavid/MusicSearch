@@ -1,6 +1,8 @@
 package ly.david.musicsearch.shared.domain
 
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
+import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 
 /**
  * The purpose of this is to distinguish between ways to browse a list of entities.
@@ -8,7 +10,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
  * (e.g. [MusicBrainzEntityType.COLLECTION] while we are browsing works.
  * Or [MusicBrainzEntityType.ARTIST] while we are browsing their release groups.)
  */
-sealed class BrowseMethod {
+@Parcelize
+sealed class BrowseMethod : CommonParcelable {
     data object All : BrowseMethod()
     data class ByEntity(
         val entityId: String,

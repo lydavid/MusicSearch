@@ -36,16 +36,7 @@ internal class StatsPresenter(
 
     @Composable
     override fun present(): StatsUiState {
-        val byEntityId = screen.byEntityId
-        val byEntity = screen.byEntity
-        val browseMethod = if (byEntityId == null || byEntity == null) {
-            BrowseMethod.All
-        } else {
-            BrowseMethod.ByEntity(
-                entityId = byEntityId,
-                entity = byEntity,
-            )
-        }
+        val browseMethod = screen.browseMethod
         val relationStats by observeRelationStatsUseCase(browseMethod).collectAsState(RelationStats())
 
         val tabToStats = screen.tabs

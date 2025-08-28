@@ -18,6 +18,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
@@ -111,8 +112,7 @@ internal fun AllLocalEntitiesUi(
                 overflowDropdownMenuItems = {
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            byEntityId = null,
-                            byEntity = null,
+                            browseMethod = BrowseMethod.All,
                             tabs = listOfNotNull(entity.toTab()).toPersistentList(),
                             isRemote = false,
                         ),

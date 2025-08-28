@@ -6,7 +6,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
@@ -26,6 +25,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.time.Instant
 
 @RunWith(RobolectricTestRunner::class)
 class StatsPresenterTest {
@@ -36,8 +36,10 @@ class StatsPresenterTest {
     fun `parameters are passed through`() = runTest {
         val presenter = StatsPresenter(
             screen = StatsScreen(
-                byEntityId = "1",
-                byEntity = MusicBrainzEntityType.ARTIST,
+                browseMethod = BrowseMethod.ByEntity(
+                    entityId = "1",
+                    entity = MusicBrainzEntityType.ARTIST,
+                ),
                 tabs = artistTabs,
             ),
             observeRelationStatsUseCase = object : ObserveRelationStatsUseCase {

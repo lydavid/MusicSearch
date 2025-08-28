@@ -11,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.foundation.CircuitContent
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -25,6 +23,8 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,8 +68,10 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             Tab.STATS -> {
                 CircuitContent(
                     screen = StatsScreen(
-                        byEntityId = browseMethod.entityId,
-                        byEntity = browseMethod.entity,
+                        browseMethod = BrowseMethod.ByEntity(
+                            entityId = browseMethod.entityId,
+                            entity = browseMethod.entity,
+                        ),
                         tabs = state.tabs,
                     ),
                     modifier = Modifier.fillMaxSize(),

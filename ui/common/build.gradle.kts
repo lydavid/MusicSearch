@@ -1,11 +1,9 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
-
 plugins {
     id("ly.david.android.library")
+    alias(libs.plugins.kotlin.parcelize)
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.paparazzi)
-    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -78,23 +76,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-            }
-        }
-    }
-
-    // Copied from https://github.com/slackhq/circuit/blob/e9955929fcbb2833622d74d4a738d70e14708613/samples/bottom-navigation/build.gradle.kts#L79
-    targets.configureEach {
-        if (platformType == KotlinPlatformType.androidJvm) {
-            compilations.configureEach {
-                compileTaskProvider.configure {
-                    compilerOptions {
-                        freeCompilerArgs.addAll(
-                            "-P",
-                            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation=" +
-                                "ly.david.musicsearch.ui.common.screen.Parcelize",
-                        )
-                    }
-                }
             }
         }
     }

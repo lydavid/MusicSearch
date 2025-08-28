@@ -21,6 +21,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
@@ -178,8 +179,10 @@ internal fun CollectionUi(
                     }
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            byEntityId = collection?.id.orEmpty(),
-                            byEntity = MusicBrainzEntityType.COLLECTION,
+                            browseMethod = BrowseMethod.ByEntity(
+                                entityId = collection?.id.orEmpty(),
+                                entity = MusicBrainzEntityType.COLLECTION,
+                            ),
                             tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
                             isRemote = collection?.isRemote == true,
                         ),

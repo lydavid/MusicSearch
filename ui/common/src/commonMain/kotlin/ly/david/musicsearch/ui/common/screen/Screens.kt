@@ -3,7 +3,9 @@ package ly.david.musicsearch.ui.common.screen
 import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Parcelize
@@ -66,14 +68,9 @@ data class CoverArtsScreen(
     val entity: MusicBrainzEntityType? = null,
 ) : Screen
 
-/**
- * This is meant to take in [ly.david.musicsearch.shared.domain.BrowseMethod.ByEntity].
- * Had to split it up otherwise would have to parcelize its sealed interface in domain
- */
 @Parcelize
 data class StatsScreen(
-    val byEntityId: String?,
-    val byEntity: MusicBrainzEntityType?,
+    val browseMethod: BrowseMethod,
     val tabs: ImmutableList<Tab>,
     val isRemote: Boolean = true,
 ) : Screen

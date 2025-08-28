@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.screen
+package ly.david.musicsearch.shared.domain.parcelize
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.BINARY)
