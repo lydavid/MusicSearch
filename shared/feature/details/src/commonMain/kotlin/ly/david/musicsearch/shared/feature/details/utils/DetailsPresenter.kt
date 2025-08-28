@@ -37,8 +37,8 @@ import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
 import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
@@ -57,7 +57,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val imageMetadataRepository: ImageMetadataRepository,
     private val logger: Logger,
-    private val loginPresenter: LoginPresenter,
+    private val musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
     private val collectionRepository: CollectionRepository,
@@ -106,7 +106,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             totalCount = entitiesListUiState.getTotalLocalCount(selectedTab.toMusicBrainzEntity()),
         )
 
-        val loginUiState = loginPresenter.present()
+        val loginUiState = musicBrainzLoginPresenter.present()
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -293,7 +293,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 totalAliases = detailsModel?.aliases?.size ?: 0,
             ),
             allEntitiesListUiState = entitiesListUiState,
-            loginUiState = loginUiState,
+            musicBrainzLoginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -311,7 +311,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val selectionState: SelectionState = SelectionState(),
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
-    val loginUiState: LoginUiState = LoginUiState(),
+    val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState
 

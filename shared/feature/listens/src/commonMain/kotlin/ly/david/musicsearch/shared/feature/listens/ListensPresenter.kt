@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.Identifiable
-import ly.david.musicsearch.shared.domain.auth.ListenBrainzStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -31,13 +31,13 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 internal class ListensPresenter(
     private val navigator: Navigator,
-    private val listenBrainzStore: ListenBrainzStore,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
     private val listenBrainzRepository: ListenBrainzRepository,
 ) : Presenter<ListensUiState> {
     @Composable
     override fun present(): ListensUiState {
-        val username by listenBrainzStore.username.collectAsRetainedState("")
+        val username by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
         var textFieldText by rememberSaveable { mutableStateOf("") }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
@@ -72,7 +72,7 @@ internal class ListensPresenter(
 
                 is ListensUiEvent.SetUsername -> {
                     coroutineScope.launch {
-                        listenBrainzStore.setUsername(textFieldText)
+                        listenBrainzAuthStore.setBrowseUsername(textFieldText)
                         lazyListState.scrollToItem(0)
                     }
                 }

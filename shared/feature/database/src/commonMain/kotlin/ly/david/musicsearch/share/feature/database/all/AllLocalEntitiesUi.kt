@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
@@ -49,7 +49,7 @@ internal fun AllLocalEntitiesUi(
     val eventSink = state.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
-    val loginEventSink = state.loginUiState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -142,7 +142,7 @@ internal fun AllLocalEntitiesUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                     )
                 },
@@ -280,7 +280,7 @@ internal fun AllLocalEntitiesUi(
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
-                        loginEventSink(LoginUiEvent.StartLogin)
+                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },
                 )
             },

@@ -20,7 +20,7 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
-internal fun ProfileCard(
+internal fun MusicBrainzProfileCard(
     username: String,
     showLogin: Boolean,
     onLoginClick: () -> Unit = {},

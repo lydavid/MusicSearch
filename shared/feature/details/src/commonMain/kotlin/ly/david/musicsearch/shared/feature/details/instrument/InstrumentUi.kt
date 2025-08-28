@@ -25,7 +25,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.theme.LocalStrings
@@ -67,7 +67,7 @@ internal fun InstrumentUi(
         pageCount = state.tabs::size,
     )
 
-    val loginEventSink = state.loginUiState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     val areasLazyPagingItems =
         state.allEntitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
@@ -148,7 +148,7 @@ internal fun InstrumentUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                         nameWithDisambiguation = annotatedName.text,
                     )
@@ -176,7 +176,7 @@ internal fun InstrumentUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                     )
                 },

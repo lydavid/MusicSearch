@@ -112,8 +112,8 @@ internal fun PreviewSettingsScreenLoggedIn() {
             SettingsUi(
                 state = SettingsUiState(
                     appDatabaseVersion = "1",
-                    username = "david",
-                    accessToken = "token",
+                    musicBrainzUsername = "david",
+                    musicBrainzAccessToken = "token",
                 ),
                 showAndroidSettings = false,
                 versionName = "1.2.3",

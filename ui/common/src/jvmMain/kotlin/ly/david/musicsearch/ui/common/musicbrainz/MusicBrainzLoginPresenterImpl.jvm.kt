@@ -11,32 +11,32 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
 
-internal class LoginPresenterImpl(
+internal class MusicBrainzLoginPresenterImpl(
     private val login: Login,
     private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
-) : LoginPresenter {
+) : MusicBrainzLoginPresenter {
     @Composable
-    override fun present(): LoginUiState {
+    override fun present(): MusicBrainzLoginUiState {
         val uriHandler = LocalUriHandler.current
         var showDialog by rememberSaveable { mutableStateOf(false) }
         val coroutineScope = rememberCoroutineScope()
 
-        fun eventSink(event: LoginUiEvent) {
+        fun eventSink(event: MusicBrainzLoginUiEvent) {
             when (event) {
-                LoginUiEvent.StartLogin -> {
+                MusicBrainzLoginUiEvent.StartLogin -> {
                     uriHandler.openUri(musicBrainzAuthorizationUrl.url)
                     showDialog = true
                 }
 
-                LoginUiEvent.DismissError -> {
+                MusicBrainzLoginUiEvent.DismissError -> {
                     // no-op
                 }
 
-                LoginUiEvent.DismissDialog -> {
+                MusicBrainzLoginUiEvent.DismissDialog -> {
                     showDialog = false
                 }
 
-                is LoginUiEvent.SubmitAuthCode -> {
+                is MusicBrainzLoginUiEvent.SubmitAuthCode -> {
                     coroutineScope.launch {
                         login(event.authCode)
                     }
@@ -44,7 +44,7 @@ internal class LoginPresenterImpl(
             }
         }
 
-        return LoginUiState(
+        return MusicBrainzLoginUiState(
             showDialog = showDialog,
             eventSink = ::eventSink,
         )

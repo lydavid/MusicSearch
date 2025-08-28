@@ -27,7 +27,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
@@ -62,7 +62,7 @@ internal fun CollectionUi(
     val collection = state.collection
     val entity = collection?.entity
     val eventSink = state.eventSink
-    val loginEventSink = state.loginUiState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -148,7 +148,7 @@ internal fun CollectionUi(
 
             when (snackbarResult) {
                 SnackbarResult.ActionPerformed -> {
-                    loginEventSink(LoginUiEvent.StartLogin)
+                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 }
 
                 SnackbarResult.Dismissed -> {
@@ -218,7 +218,7 @@ internal fun CollectionUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                     )
                     if (state.selectionState.selectedIds.isNotEmpty()) {
@@ -372,7 +372,7 @@ internal fun CollectionUi(
                         entityIds = setOf(it),
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                     )
                 },

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -34,15 +34,15 @@ internal actual fun SettingsUi(
     state: SettingsUiState,
     modifier: Modifier,
 ) {
-    val loginEventSink = state.loginState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
-    if (state.loginState.showDialog) {
+    if (state.musicBrainzLoginUiState.showDialog) {
         AuthorizationDialog(
             onDismiss = {
-                loginEventSink(LoginUiEvent.DismissDialog)
+                loginEventSink(MusicBrainzLoginUiEvent.DismissDialog)
             },
             onSubmit = { code ->
-                loginEventSink(LoginUiEvent.SubmitAuthCode(code))
+                loginEventSink(MusicBrainzLoginUiEvent.SubmitAuthCode(code))
             },
         )
     }

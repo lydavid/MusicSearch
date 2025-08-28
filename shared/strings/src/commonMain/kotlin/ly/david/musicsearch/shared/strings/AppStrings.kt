@@ -191,6 +191,9 @@ data class AppStrings(
     val enterUsername: String,
     val changeUsername: String,
     val set: String,
+    val youAreLoggedIn: String,
+    val youAreLoggedOut: String,
+    val invalidToken: String,
 )
 
 object Locales {

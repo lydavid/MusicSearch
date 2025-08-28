@@ -13,7 +13,7 @@ val listensFeatureModule = module {
             when (screen) {
                 is ListensScreen -> ListensPresenter(
                     navigator = navigator,
-                    listenBrainzStore = get(),
+                    listenBrainzAuthStore = get(),
                     listensListRepository = get(),
                     listenBrainzRepository = get(),
                 )

@@ -26,8 +26,11 @@ val settingsFeatureModule = module {
                     navigator = navigator,
                     appPreferences = get(),
                     musicBrainzAuthStore = get(),
-                    loginPresenter = get(),
-                    logout = get(),
+                    musicBrainzLoginPresenter = get(),
+                    musicBrainzLogout = get(),
+                    listenBrainzRepository = get(),
+                    listenBrainzAuthStore = get(),
+                    updateListenBrainzToken = get(),
                     exportDatabase = get(),
                     metadataRepository = get(),
                 )

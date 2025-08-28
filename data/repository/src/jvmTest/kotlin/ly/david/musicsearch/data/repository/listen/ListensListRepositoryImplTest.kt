@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzListen
 import ly.david.musicsearch.data.listenbrainz.api.ListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
+import ly.david.musicsearch.data.listenbrainz.api.TokenValidationResponse
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
@@ -63,6 +64,10 @@ class ListensListRepositoryImplTest :
         return ListensListRepositoryImpl(
             listenDao = listenDao,
             listenBrainzApi = object : ListenBrainzApi {
+                override suspend fun validateToken(token: String): TokenValidationResponse {
+                    return TokenValidationResponse(valid = false)
+                }
+
                 override suspend fun getListensByUser(
                     username: String,
                     minTimestamp: Long?,

@@ -2,8 +2,8 @@ package ly.david.musicsearch.ui.common.musicbrainz
 
 import com.slack.circuit.runtime.CircuitUiState
 
-data class LoginUiState(
+data class MusicBrainzLoginUiState(
     val showDialog: Boolean = false,
     val errorMessage: String? = null,
-    val eventSink: (LoginUiEvent) -> Unit = {},
+    val eventSink: (MusicBrainzLoginUiEvent) -> Unit = {},
 ) : CircuitUiState

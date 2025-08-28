@@ -19,8 +19,8 @@ import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
-import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.SelectionState
@@ -33,7 +33,7 @@ internal class AllLocalEntitiesPresenter(
     private val screen: AllEntitiesScreen,
     private val navigator: Navigator,
     private val allEntitiesListPresenter: AllEntitiesListPresenter,
-    private val loginPresenter: LoginPresenter,
+    private val musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
 ) : Presenter<AllLocalEntitiesUiState> {
 
     @Composable
@@ -49,7 +49,7 @@ internal class AllLocalEntitiesPresenter(
             totalCount = entitiesListUiState.getTotalLocalCount(screen.entity),
         )
 
-        val loginUiState = loginPresenter.present()
+        val loginUiState = musicBrainzLoginPresenter.present()
 
         LaunchedEffect(
             key1 = query,
@@ -90,7 +90,7 @@ internal class AllLocalEntitiesPresenter(
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             allEntitiesListUiState = entitiesListUiState,
-            loginUiState = loginUiState,
+            musicBrainzLoginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -103,7 +103,7 @@ internal data class AllLocalEntitiesUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val allEntitiesListUiState: AllEntitiesListUiState,
-    val loginUiState: LoginUiState = LoginUiState(),
+    val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val eventSink: (AllLocalEntitiesUiEvent) -> Unit,
 ) : CircuitUiState
 

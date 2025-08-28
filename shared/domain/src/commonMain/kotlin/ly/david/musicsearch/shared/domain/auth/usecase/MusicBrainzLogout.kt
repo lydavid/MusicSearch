@@ -1,5 +1,5 @@
 package ly.david.musicsearch.shared.domain.auth.usecase
 
-interface Logout {
+interface MusicBrainzLogout {
     suspend operator fun invoke()
 }

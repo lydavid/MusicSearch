@@ -31,7 +31,7 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
@@ -60,7 +60,7 @@ internal fun AreaUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val loginEventSink = state.loginUiState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     state.snackbarMessage?.let { message ->
         LaunchedEffect(message) {
@@ -83,7 +83,7 @@ internal fun AreaUi(
                 coroutineScope = coroutineScope,
                 snackbarHostState = snackbarHostState,
                 onLoginClick = {
-                    loginEventSink(LoginUiEvent.StartLogin)
+                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 },
                 nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
             )
@@ -96,7 +96,7 @@ internal fun AreaUi(
                 coroutineScope = coroutineScope,
                 snackbarHostState = snackbarHostState,
                 onLoginClick = {
-                    loginEventSink(LoginUiEvent.StartLogin)
+                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 },
             )
         },
@@ -108,7 +108,7 @@ internal fun AreaUi(
                 entityIds = setOf(it),
                 snackbarHostState = snackbarHostState,
                 onLoginClick = {
-                    loginEventSink(LoginUiEvent.StartLogin)
+                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 },
             )
         },

@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
-import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -37,7 +37,7 @@ internal class AreaPresenter(
     allEntitiesListPresenter: AllEntitiesListPresenter,
     imageMetadataRepository: ImageMetadataRepository,
     logger: Logger,
-    loginPresenter: LoginPresenter,
+    musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
     collectionRepository: CollectionRepository,
@@ -48,7 +48,7 @@ internal class AreaPresenter(
     allEntitiesListPresenter = allEntitiesListPresenter,
     imageMetadataRepository = imageMetadataRepository,
     logger = logger,
-    loginPresenter = loginPresenter,
+    musicBrainzLoginPresenter = musicBrainzLoginPresenter,
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
     collectionRepository = collectionRepository,

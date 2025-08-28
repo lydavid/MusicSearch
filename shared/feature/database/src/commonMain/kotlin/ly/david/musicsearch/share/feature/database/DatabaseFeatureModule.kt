@@ -25,7 +25,7 @@ val databaseFeatureModule = module {
                     screen = screen,
                     navigator = navigator,
                     allEntitiesListPresenter = get(),
-                    loginPresenter = get(),
+                    musicBrainzLoginPresenter = get(),
                 )
 
                 else -> null

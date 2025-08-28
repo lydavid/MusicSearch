@@ -2,21 +2,83 @@ package ly.david.musicsearch.data.listenbrainz.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.plugins.UserAgent
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.AuthProvider
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
+import io.ktor.http.appendPathSegments
+import io.ktor.http.auth.HttpAuthHeader
+import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
+
+private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
+
+private const val AUTHORIZATION = "Authorization"
 
 interface ListenBrainzApi {
+    suspend fun validateToken(token: String): TokenValidationResponse
+
     suspend fun getListensByUser(
         username: String,
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
     ): ListensResponse
+
+    companion object {
+        fun create(
+            httpClient: HttpClient,
+            authStore: ListenBrainzAuthStore,
+        ): ListenBrainzApi {
+            val extendedClient = httpClient.config {
+                defaultRequest {
+                    url(API_BASE_URL)
+                }
+                install(UserAgent) {
+                    agent = USER_AGENT_VALUE
+                }
+                install(Auth) {
+                    providers += object : AuthProvider {
+                        override val sendWithoutRequest: Boolean = true
+
+                        override suspend fun addRequestHeaders(
+                            request: HttpRequestBuilder,
+                            authHeader: HttpAuthHeader?,
+                        ) {
+                            val token = authStore.getUserToken()
+                            token.ifNotEmpty {
+                                request.headers[AUTHORIZATION] = "Token $token"
+                            }
+                        }
+
+                        override fun isApplicable(auth: HttpAuthHeader): Boolean = false
+                    }
+                }
+            }
+            return ListenBrainzApiImpl(extendedClient)
+        }
+    }
 }
 
-private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
+private const val LISTENS_COUNT = 100
 
 class ListenBrainzApiImpl(
-    private val client: HttpClient,
+    private val httpClient: HttpClient,
 ) : ListenBrainzApi {
+
+    override suspend fun validateToken(token: String): TokenValidationResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("validate-token")
+                header(AUTHORIZATION, "Token $token")
+            }
+        }.body()
+    }
+
     // This will likely timeout if the user has listens spread far apart in time:
     //  https://tickets.metabrainz.org/browse/LB-1584
     override suspend fun getListensByUser(
@@ -27,13 +89,14 @@ class ListenBrainzApiImpl(
         require(!(minTimestamp != null && maxTimestamp != null)) {
             "minTimestamp and maxTimestamp cannot both be set"
         }
-        val url = buildString {
-            append("$API_BASE_URL/user/$username/listens")
-            // TODO: have a background task to load 1000 at a time if the user wants to load all
-            append("?count=100")
-            minTimestamp?.let { append("&min_ts=$it") }
-            maxTimestamp?.let { append("&max_ts=$it") }
-        }
-        return client.get(url).body()
+        return httpClient.get {
+            url {
+                appendPathSegments("user/$username/listens")
+                // TODO: have a background task to load 1000 at a time if the user wants to load all
+                parameter("count", LISTENS_COUNT)
+                parameter("min_ts", minTimestamp)
+                parameter("max_ts", maxTimestamp)
+            }
+        }.body()
     }
 }

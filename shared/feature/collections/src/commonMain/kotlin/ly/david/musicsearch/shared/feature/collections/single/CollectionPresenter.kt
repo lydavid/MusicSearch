@@ -29,8 +29,8 @@ import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.getTotalLocalCount
-import ly.david.musicsearch.ui.common.musicbrainz.LoginPresenter
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiState
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
@@ -45,7 +45,7 @@ internal class CollectionPresenter(
     private val navigator: Navigator,
     private val getCollection: GetCollection,
     override val incrementLookupHistory: IncrementLookupHistory,
-    private val loginPresenter: LoginPresenter,
+    private val musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
     private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
@@ -65,7 +65,7 @@ internal class CollectionPresenter(
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
 
-        val loginUiState = loginPresenter.present()
+        val loginUiState = musicBrainzLoginPresenter.present()
 
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -166,7 +166,7 @@ internal class CollectionPresenter(
             secondActionableResult = secondActionableResult,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
-            loginUiState = loginUiState,
+            musicBrainzLoginUiState = loginUiState,
             allEntitiesListUiState = entitiesListUiState,
             eventSink = ::eventSink,
         )
@@ -182,7 +182,7 @@ internal data class CollectionUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
     val selectionState: SelectionState,
-    val loginUiState: LoginUiState,
+    val musicBrainzLoginUiState: MusicBrainzLoginUiState,
     val allEntitiesListUiState: AllEntitiesListUiState,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState

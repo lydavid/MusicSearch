@@ -33,7 +33,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Group
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
@@ -124,7 +124,7 @@ internal fun ArtistUi(
     val releaseGroupsByEntityEventSink =
         state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
 
-    val loginEventSink = state.loginUiState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -166,7 +166,7 @@ internal fun ArtistUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                         nameWithDisambiguation = annotatedName.text,
                     )
@@ -228,7 +228,7 @@ internal fun ArtistUi(
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
-                            loginEventSink(LoginUiEvent.StartLogin)
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
                     )
                 },
@@ -269,7 +269,7 @@ internal fun ArtistUi(
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
-                        loginEventSink(LoginUiEvent.StartLogin)
+                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },
                 )
             },

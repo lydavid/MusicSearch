@@ -10,7 +10,7 @@ import ly.david.musicsearch.ui.common.preview.PreviewTheme
 internal fun PreviewProfileCardLoggedOut() {
     PreviewTheme {
         Surface {
-            ProfileCard(
+            MusicBrainzProfileCard(
                 username = "bob",
                 showLogin = false,
             )
@@ -23,7 +23,7 @@ internal fun PreviewProfileCardLoggedOut() {
 internal fun PreviewProfileCardLoggedIn() {
     PreviewTheme {
         Surface {
-            ProfileCard(
+            MusicBrainzProfileCard(
                 username = "bob",
                 showLogin = false,
             )
@@ -36,7 +36,7 @@ internal fun PreviewProfileCardLoggedIn() {
 internal fun PreviewProfileCardLoggedInWaitingForUsername() {
     PreviewTheme {
         Surface {
-            ProfileCard(
+            MusicBrainzProfileCard(
                 username = "",
                 showLogin = false,
             )

@@ -10,17 +10,17 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.error.HandledException
 
-internal class LoginPresenterImpl(
+internal class MusicBrainzLoginPresenterImpl(
     private val login: Login,
-) : LoginPresenter {
+) : MusicBrainzLoginPresenter {
     @Composable
-    override fun present(): LoginUiState {
+    override fun present(): MusicBrainzLoginUiState {
         val scope = rememberCoroutineScope()
         var errorMessage: String? by rememberSaveable { mutableStateOf(null) }
 
-        fun eventSink(event: LoginUiEvent) {
+        fun eventSink(event: MusicBrainzLoginUiEvent) {
             when (event) {
-                LoginUiEvent.StartLogin -> {
+                MusicBrainzLoginUiEvent.StartLogin -> {
                     scope.launch {
                         try {
                             login()
@@ -30,21 +30,21 @@ internal class LoginPresenterImpl(
                     }
                 }
 
-                LoginUiEvent.DismissError -> {
+                MusicBrainzLoginUiEvent.DismissError -> {
                     errorMessage = null
                 }
 
-                LoginUiEvent.DismissDialog -> {
+                MusicBrainzLoginUiEvent.DismissDialog -> {
                     // no-op
                 }
 
-                is LoginUiEvent.SubmitAuthCode -> {
+                is MusicBrainzLoginUiEvent.SubmitAuthCode -> {
                     // no-op
                 }
             }
         }
 
-        return LoginUiState(
+        return MusicBrainzLoginUiState(
             errorMessage = errorMessage,
             eventSink = ::eventSink,
         )

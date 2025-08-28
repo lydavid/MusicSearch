@@ -28,7 +28,9 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzLoginState
+import ly.david.musicsearch.shared.feature.settings.internal.components.ListenBrainzProfileCard
+import ly.david.musicsearch.shared.feature.settings.internal.components.MusicBrainzProfileCard
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -36,7 +38,7 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Download
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.musicbrainz.LoginUiEvent
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
@@ -66,18 +68,31 @@ internal fun SettingsUi(
 ) {
     val strings = LocalStrings.current
     val eventSink = state.eventSink
-    val loginEventSink = state.loginState.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val snackbarHostState = remember { SnackbarHostState() }
 
     state.snackbarMessage?.let { message ->
         LaunchedEffect(message) {
             snackbarHostState.showSnackbar(message = message)
+            eventSink(SettingsUiEvent.DismissSnackbar)
         }
     }
-    state.loginState.errorMessage?.let { message ->
+    state.listenBrainzLoginState?.let { state ->
+        LaunchedEffect(state) {
+            val message = when (state) {
+                ListenBrainzLoginState.InvalidToken -> strings.invalidToken
+                ListenBrainzLoginState.LoggedIn -> strings.youAreLoggedIn
+                ListenBrainzLoginState.LoggedOut -> strings.youAreLoggedOut
+                is ListenBrainzLoginState.OtherError -> state.message
+            }
+            snackbarHostState.showSnackbar(message = message)
+            eventSink(SettingsUiEvent.DismissSnackbar)
+        }
+    }
+    state.musicBrainzLoginUiState.errorMessage?.let { message ->
         LaunchedEffect(message) {
             snackbarHostState.showSnackbar(message = message)
-            loginEventSink(LoginUiEvent.DismissError)
+            loginEventSink(MusicBrainzLoginUiEvent.DismissError)
         }
     }
 
@@ -126,7 +141,7 @@ internal fun SettingsUi(
     versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
     eventSink: (SettingsUiEvent) -> Unit = {},
-    loginEventSink: (LoginUiEvent) -> Unit = {},
+    loginEventSink: (MusicBrainzLoginUiEvent) -> Unit = {},
 ) {
     val strings = LocalStrings.current
     val clipboard = LocalClipboard.current
@@ -137,11 +152,22 @@ internal fun SettingsUi(
 
     LazyColumn(modifier = modifier) {
         item {
-            ProfileCard(
-                username = state.username,
-                showLogin = state.accessToken.isNullOrEmpty(),
-                onLoginClick = { loginEventSink(LoginUiEvent.StartLogin) },
-                onLogoutClick = { eventSink(SettingsUiEvent.Logout) },
+            MusicBrainzProfileCard(
+                username = state.musicBrainzUsername,
+                showLogin = state.musicBrainzAccessToken.isNullOrEmpty(),
+                onLoginClick = { loginEventSink(MusicBrainzLoginUiEvent.StartLogin) },
+                onLogoutClick = { eventSink(SettingsUiEvent.MusicBrainzLogout) },
+            )
+
+            ListenBrainzProfileCard(
+                modifier = Modifier.padding(top = 4.dp),
+                listenBrainzUrl = state.listenBrainzUrl,
+                username = state.listenBrainzUsername,
+                showLogin = state.listenBrainzUserToken.isEmpty(),
+                text = state.listenBrainzText,
+                onTextChange = { eventSink(SettingsUiEvent.UpdateListenBrainzUserToken(it)) },
+                onLoginClick = { eventSink(SettingsUiEvent.ListenBrainzLogin) },
+                onLogoutClick = { eventSink(SettingsUiEvent.ListenBrainzLogout) },
             )
 
             ClickableItem(
