@@ -61,7 +61,7 @@ class ReleaseDao(
                 releaseId = id,
                 media = media,
             )
-            // TODO: insert tracks' recording/aliases?
+            // TODO: insert tracks' recording? There's no aliases here, but this will be useful for linking listens to
         }
     }
 

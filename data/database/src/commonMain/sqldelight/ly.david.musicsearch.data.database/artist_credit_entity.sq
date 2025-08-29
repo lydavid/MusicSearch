@@ -9,8 +9,10 @@ CREATE TABLE IF NOT EXISTS artist_credit_entity (
   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO artist_credit_entity
+CREATE UNIQUE INDEX idx_artist_credit_entity_entity_id ON artist_credit_entity (entity_id);
+
+insertOrReplace:
+INSERT OR REPLACE INTO artist_credit_entity
 VALUES ?;
 
 delete:
