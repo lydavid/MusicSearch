@@ -353,5 +353,5 @@ val EnStrings = AppStrings(
     set = "Set",
     youAreLoggedIn = "You are logged in",
     youAreLoggedOut = "You are logged out",
-    invalidToken = "Invalid token"
+    invalidToken = "Invalid token",
 )
