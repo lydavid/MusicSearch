@@ -1,0 +1,9 @@
+-- Delete all older artist_credit_entity where we have more than one artist_credit for an entity
+DELETE FROM artist_credit_entity
+WHERE rowid NOT IN (
+    SELECT MAX(rowid)
+    FROM artist_credit_entity
+    GROUP BY entity_id
+);
+
+CREATE UNIQUE INDEX idx_artist_credit_entity_entity_id ON artist_credit_entity (entity_id);

@@ -65,7 +65,7 @@ class ArtistCreditDaoImpl(
         artistCreditId: Long,
         entityId: String,
     ) {
-        artistCreditEntityQueries.insert(
+        artistCreditEntityQueries.insertOrReplace(
             Artist_credit_entity(
                 artist_credit_id = artistCreditId,
                 entity_id = entityId,
@@ -95,7 +95,7 @@ class ArtistCreditDaoImpl(
 /**
  * Converts artist credits to an appropriate model to store.
  *
- * We take in [artistCreditId] so that we don't duplicate [ArtistCreditNameRoomModel].
+ * We take in [artistCreditId] so that we don't duplicate [Artist_credit_name].
  *
  * The receiver must be a list because we need its index.
  */
