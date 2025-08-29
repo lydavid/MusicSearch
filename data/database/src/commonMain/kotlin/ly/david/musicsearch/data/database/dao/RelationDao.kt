@@ -135,9 +135,9 @@ class RelationDao(
         visited = visited == true || linkedEntity == MusicBrainzEntityType.URL,
         isForwardDirection = isForwardDirection,
         lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
+            begin = begin.orEmpty(),
+            end = end.orEmpty(),
+            ended = ended == true,
         ),
         imageUrl = thumbnailUrl,
         imageId = imageId?.let { ImageId(it) },

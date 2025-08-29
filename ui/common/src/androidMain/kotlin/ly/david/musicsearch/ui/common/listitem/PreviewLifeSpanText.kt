@@ -50,7 +50,6 @@ internal fun PreviewLifeSpanTextBeginOnly() {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
-                    end = null,
                 ),
                 heading = "Date",
                 beginHeading = "Start Date",
@@ -67,7 +66,6 @@ internal fun PreviewLifeSpanTextEndOnly() {
         Surface {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
-                    begin = null,
                     end = "2022-12-15",
                 ),
                 heading = "Date",

@@ -25,9 +25,9 @@ internal fun mapToAreaListItemModel(
     disambiguation = disambiguation,
     type = type,
     lifeSpan = LifeSpanUiModel(
-        begin = begin,
-        end = end,
-        ended = ended,
+        begin = begin.orEmpty(),
+        end = end.orEmpty(),
+        ended = ended == true,
     ),
     countryCodes = listOfNotNull(countryCode.takeIf { !it.isNullOrEmpty() }).toPersistentList(),
     visited = visited,

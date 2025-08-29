@@ -85,7 +85,7 @@ internal class SearchResultsRepositoryImpl(
                     query = query,
                     offset = offset,
                     limit = CommonPagingConfig.pagingConfig.pageSize,
-                    removeAll = removeAll,
+                    removeAllSearchResultsOnRefresh = removeAll,
                 )
             },
         )
@@ -97,7 +97,7 @@ internal class SearchResultsRepositoryImpl(
         query: String,
         offset: Int,
         limit: Int,
-        removeAll: () -> Unit,
+        removeAllSearchResultsOnRefresh: () -> Unit,
     ): Int {
         return withContext(coroutineDispatchers.io) {
             when (entity) {
@@ -109,7 +109,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val areas = response.areas
                     areaDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         areaDao.insertReplaceAll(areas = areas)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -130,8 +130,8 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val artists = response.artists
                     artistDao.withTransaction {
-                        removeAll()
-                        artistDao.insertAll(artists)
+                        removeAllSearchResultsOnRefresh()
+                        artistDao.upsertAll(artists)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = artists,
@@ -151,7 +151,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val events = response.events
                     eventDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         eventDao.insertAll(events)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -172,7 +172,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val instruments = response.instruments
                     instrumentDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         instrumentDao.insertAll(instruments)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -193,7 +193,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val labels = response.labels
                     labelDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         labelDao.insertAll(labels)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -214,7 +214,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val places = response.places
                     placeDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         placeDao.insertAll(places)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -235,8 +235,8 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val recordings = response.recordings
                     recordingDao.withTransaction {
-                        removeAll()
-                        recordingDao.insertOrUpdateAll(recordings)
+                        removeAllSearchResultsOnRefresh()
+                        recordingDao.upsertAll(recordings)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = recordings,
@@ -256,7 +256,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val releases = response.releases
                     releaseDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         releaseDao.insertAll(releases)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -277,7 +277,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val releaseGroups = response.releaseGroups
                     releaseGroupDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         releaseGroupDao.insertAllReleaseGroups(releaseGroups)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -298,7 +298,7 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val series = response.series
                     seriesDao.withTransaction {
-                        removeAll()
+                        removeAllSearchResultsOnRefresh()
                         seriesDao.insertAll(series)
                         insertIntoCommonTables(
                             entityType = entity,
@@ -319,8 +319,8 @@ internal class SearchResultsRepositoryImpl(
                     )
                     val works = response.works
                     workDao.withTransaction {
-                        removeAll()
-                        workDao.insertOrUpdateAll(works)
+                        removeAllSearchResultsOnRefresh()
+                        workDao.upsertAll(works)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = works,

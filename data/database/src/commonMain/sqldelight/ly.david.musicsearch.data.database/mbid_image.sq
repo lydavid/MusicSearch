@@ -83,7 +83,6 @@ GROUP BY mbid, thumbnail_url
 LIMIT :limit
 OFFSET :offset;
 
--- TODO: deduplicate by recreating table with constraint, then insert or ignore into it
 getCountOfAllImageMetadata:
 SELECT count(*)
 FROM (

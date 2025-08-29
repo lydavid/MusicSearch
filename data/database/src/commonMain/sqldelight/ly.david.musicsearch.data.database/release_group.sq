@@ -6,8 +6,8 @@ CREATE TABLE release_group (
   name TEXT NOT NULL,
   disambiguation TEXT NOT NULL,
   first_release_date TEXT NOT NULL,
-  primary_type TEXT NOT NULL ,
-  primary_type_id TEXT NOT NULL ,
+  primary_type TEXT NOT NULL,
+  primary_type_id TEXT NOT NULL,
   secondary_types TEXT AS List<String> NOT NULL,
   secondary_type_ids TEXT AS List<String> NOT NULL
 );

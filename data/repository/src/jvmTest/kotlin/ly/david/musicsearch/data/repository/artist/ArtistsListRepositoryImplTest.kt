@@ -143,7 +143,6 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         countryCode = "JP",
         lifeSpan = LifeSpanUiModel(
             begin = "2019-09",
-            end = null,
             ended = false,
         ),
     )
@@ -156,7 +155,6 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         countryCode = "JP",
         lifeSpan = LifeSpanUiModel(
             begin = "1994",
-            end = null,
             ended = false,
         ),
     )
@@ -450,12 +448,10 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         val modifiedArtistsByArea = listOf(
             roseliaArtistMusicBrainzModel.copy(
-                disambiguation = "some change that won't show up",
+                disambiguation = "new changes will show up",
             ),
             itouKanakoArtistMusicBrainzModel,
-            bumpOfChickenMusicBrainzModel.copy(
-                disambiguation = "this won't either",
-            ),
+            bumpOfChickenMusicBrainzModel,
         )
         val artistsListRepository = createArtistsListRepository(
             artists = modifiedArtistsByArea,
@@ -474,7 +470,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             assertEquals(
                 listOf(
                     bumpOfChickenListItemModel,
-                    roseliaArtistListItemModel,
+                    roseliaArtistListItemModel.copy(
+                        disambiguation = "new changes will show up",
+                    ),
                     itouKanakoArtistListItemModel,
                 ),
                 this,
@@ -492,7 +490,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             assertEquals(
                 listOf(
                     variousArtistsArtistListItemModel,
-                    roseliaArtistListItemModel,
+                    roseliaArtistListItemModel.copy(
+                        disambiguation = "new changes will show up",
+                    ),
                     itouKanakoArtistListItemModel,
                 ),
                 this,
@@ -502,7 +502,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         // now visit the artist
         val artistRepository = createArtistRepository(
             roseliaArtistMusicBrainzModel.copy(
-                disambiguation = "some change that won't show up",
+                disambiguation = "different changes will show up",
             ),
         )
         // the first lookup will replace existing data
@@ -517,7 +517,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     name = "Roselia",
                     sortName = "Roselia",
                     type = "Group",
-                    disambiguation = "some change that won't show up",
+                    disambiguation = "different changes will show up",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
                     ),
@@ -537,7 +537,53 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     name = "Roselia",
                     sortName = "Roselia",
                     type = "Group",
-                    disambiguation = "some change that won't show up",
+                    disambiguation = "different changes will show up",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "2016-09-15",
+                    ),
+                    lastUpdated = testDateTimeInThePast,
+                ),
+                this,
+            )
+        }
+
+        val newerArtistRepository = createArtistRepository(
+            roseliaArtistMusicBrainzModel.copy(
+                disambiguation = "more changes won't show up until refresh",
+            ),
+        )
+        newerArtistRepository.lookupArtist(
+            artistId = roseliaArtistMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                ArtistDetailsModel(
+                    id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                    name = "Roselia",
+                    sortName = "Roselia",
+                    type = "Group",
+                    disambiguation = "different changes will show up",
+                    lifeSpan = LifeSpanUiModel(
+                        begin = "2016-09-15",
+                    ),
+                    lastUpdated = testDateTimeInThePast,
+                ),
+                this,
+            )
+        }
+        newerArtistRepository.lookupArtist(
+            artistId = roseliaArtistMusicBrainzModel.id,
+            forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                ArtistDetailsModel(
+                    id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                    name = "Roselia",
+                    sortName = "Roselia",
+                    type = "Group",
+                    disambiguation = "more changes won't show up until refresh",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
                     ),

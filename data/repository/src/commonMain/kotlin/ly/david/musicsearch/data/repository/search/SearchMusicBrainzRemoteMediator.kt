@@ -68,6 +68,7 @@ internal class SearchMusicBrainzRemoteMediator(
             val numberOfEntities = fetchAndStore(
                 nextOffset,
             ) {
+                /* removeAll */
                 if (loadType == LoadType.REFRESH) {
                     searchResultDao.removeAll()
                 }

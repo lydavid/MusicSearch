@@ -86,9 +86,9 @@ class LabelDao(
         ipis = ipis,
         isnis = isnis,
         lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
+            begin = begin.orEmpty(),
+            end = end.orEmpty(),
+            ended = ended == true,
         ),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )

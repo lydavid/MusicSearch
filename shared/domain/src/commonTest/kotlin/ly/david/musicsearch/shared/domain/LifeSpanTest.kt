@@ -24,8 +24,8 @@ internal class LifeSpanTest {
     }
 
     @Test
-    fun `has begin but null end`() {
-        val lifeSpan = LifeSpanUiModel(begin = "2020-10-10", end = null)
+    fun `has begin but no end`() {
+        val lifeSpan = LifeSpanUiModel(begin = "2020-10-10", end = "")
         assertEquals("2020-10-10 -", lifeSpan.getLifeSpanForDisplay())
     }
 
@@ -41,10 +41,9 @@ internal class LifeSpanTest {
         assertEquals("1957-03", lifeSpan.getLifeSpanForDisplay())
     }
 
-    // Is valid?
     @Test
     fun `has end but no begin`() {
-        val lifeSpan = LifeSpanUiModel(begin = null, end = "2021")
+        val lifeSpan = LifeSpanUiModel(begin = "", end = "2021")
         assertEquals("?? - 2021", lifeSpan.getLifeSpanForDisplay())
     }
 }

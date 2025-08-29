@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
@@ -15,6 +14,7 @@ import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.search.results.SearchResultMetadata
@@ -25,7 +25,7 @@ class SearchResultDao(
 ) : EntityDao {
     override val transacter = database.search_resultQueries
 
-    fun insert(
+    private fun insert(
         entityId: String,
     ) {
         transacter.insert(

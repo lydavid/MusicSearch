@@ -141,9 +141,9 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         attributes = getFormattedAttributesForDisplay(),
         isForwardDirection = direction == Direction.FORWARD,
         lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
+            begin = begin.orEmpty(),
+            end = end.orEmpty(),
+            ended = ended == true,
         ),
     )
 }

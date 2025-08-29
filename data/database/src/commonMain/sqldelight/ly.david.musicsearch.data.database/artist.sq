@@ -2,30 +2,59 @@ import kotlin.Boolean;
 import kotlin.String;
 import kotlin.collections.List;
 
-CREATE TABLE IF NOT EXISTS artist (
+CREATE TABLE artist (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   sort_name TEXT NOT NULL,
-  disambiguation TEXT,
-  type TEXT,
-  type_id TEXT,
-  gender TEXT,
-  ipis TEXT AS List<String>,
-  isnis TEXT AS List<String>,
-  country_code TEXT,
-  begin TEXT,
-  end TEXT,
-  ended INTEGER AS Boolean,
-  area_id TEXT
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  ipis TEXT AS List<String> NOT NULL,
+  isnis TEXT AS List<String> NOT NULL,
+  country_code TEXT NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL,
+  area_id TEXT NOT NULL
 );
 
-insertOrIgnoreArtist:
-INSERT OR IGNORE INTO artist
-VALUES ?;
+upsert {
+UPDATE artist
+SET
+  name = :name,
+  sort_name = :sort_name,
+  disambiguation = :disambiguation,
+  type = :type,
+  type_id = :type_id,
+  gender = :gender,
+  ipis = :ipis,
+  isnis = :isnis,
+  country_code = :country_code,
+  begin = :begin,
+  end = :end,
+  ended = :ended,
+  area_id = :area_id
+WHERE id = :id;
 
-insertOrReplaceArtist:
-INSERT OR REPLACE INTO artist
-VALUES ?;
+INSERT OR IGNORE INTO artist
+VALUES (
+  :id,
+  :name,
+  :sort_name,
+  :disambiguation,
+  :type,
+  :type_id,
+  :gender,
+  :ipis,
+  :isnis,
+  :country_code,
+  :begin,
+  :end,
+  :ended,
+  :area_id
+);
+}
 
 deleteArtist:
 DELETE FROM artist
@@ -44,7 +73,7 @@ SELECT
   artist.`begin`,
   artist.`end`,
   artist.ended,
-  area.id,
+  artist.area_id,
   area.name,
   country_code.code,
   area_details_metadata.entity_id IS NOT NULL AS visitedArea,

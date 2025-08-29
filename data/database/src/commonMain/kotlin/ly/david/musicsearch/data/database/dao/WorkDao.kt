@@ -27,7 +27,7 @@ class WorkDao(
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
 
-    fun insertOrUpdate(work: WorkMusicBrainzNetworkModel) {
+    fun upsert(work: WorkMusicBrainzNetworkModel) {
         work.run {
             transacter.upsert(
                 id = id,
@@ -41,10 +41,10 @@ class WorkDao(
         }
     }
 
-    fun insertOrUpdateAll(works: List<WorkMusicBrainzNetworkModel>) {
+    fun upsertAll(works: List<WorkMusicBrainzNetworkModel>) {
         transacter.transaction {
             works.forEach { work ->
-                insertOrUpdate(work)
+                upsert(work)
             }
         }
     }

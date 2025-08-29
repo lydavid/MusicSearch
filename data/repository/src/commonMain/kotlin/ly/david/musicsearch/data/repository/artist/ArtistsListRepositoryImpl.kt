@@ -89,7 +89,7 @@ class ArtistsListRepositoryImpl(
         entity: MusicBrainzEntityType,
         musicBrainzModels: List<ArtistMusicBrainzNetworkModel>,
     ) {
-        artistDao.insertAll(musicBrainzModels)
+        artistDao.upsertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(

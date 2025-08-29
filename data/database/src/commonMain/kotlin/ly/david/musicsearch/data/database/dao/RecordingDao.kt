@@ -27,7 +27,7 @@ class RecordingDao(
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
-    fun insertOrUpdate(recording: RecordingMusicBrainzNetworkModel) {
+    fun upsert(recording: RecordingMusicBrainzNetworkModel) {
         recording.run {
             transacter.upsert(
                 id = id,
@@ -36,7 +36,7 @@ class RecordingDao(
                 firstReleaseDate = firstReleaseDate,
                 length = length,
                 video = video == true,
-                isrcs = isrcs,
+                isrcs = isrcs?.sorted(),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = recording.id,
@@ -45,11 +45,11 @@ class RecordingDao(
         }
     }
 
-    // we can do this because both lookup and browse returns the same amount of info that goes into this table
-    fun insertOrUpdateAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
+    // we can do this because lookup, search, and browse all returns the same amount of info that goes into this table
+    fun upsertAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->
-                insertOrUpdate(recording)
+                upsert(recording)
             }
         }
     }

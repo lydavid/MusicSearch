@@ -79,7 +79,7 @@ class ArtistRepositoryImpl(
         lastUpdated: Instant,
     ) {
         artistDao.withTransaction {
-            artistDao.insertReplace(artist)
+            artistDao.upsert(artist)
 
             aliasDao.insertAll(listOf(artist))
 

@@ -2,8 +2,6 @@ package ly.david.musicsearch.shared.domain.details
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.Artist
@@ -12,20 +10,22 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class ArtistDetailsModel(
     override val id: String,
     override val name: String,
     override val sortName: String = "",
-    override val disambiguation: String? = null,
-    override val type: String? = null,
-    override val gender: String? = null,
-    val ipis: List<String>? = null,
-    val isnis: List<String>? = null,
+    override val disambiguation: String = "",
+    override val type: String = "",
+    override val gender: String = "",
+    val ipis: ImmutableList<String> = persistentListOf(),
+    val isnis: ImmutableList<String> = persistentListOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val areaListItemModel: AreaListItemModel? = null,
     override val lastUpdated: Instant = Clock.System.now(),
-    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val artistCredits: List<ArtistCreditUiModel> = emptyList(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
