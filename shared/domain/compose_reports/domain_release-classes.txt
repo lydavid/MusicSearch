@@ -12,13 +12,15 @@ stable class Result {
 unstable class MusicBrainzLoginActivityResultContract {
   <runtime stability> = Unstable
 }
-stable class All {
-  <runtime stability> = Stable
+runtime class All {
+  runtime var CREATOR: Creator<All>
+  <runtime stability> = Uncertain(Creator)
 }
-stable class ByEntity {
+runtime class ByEntity {
   stable val entityId: String
   stable val entity: MusicBrainzEntityType
-  <runtime stability> = Stable
+  runtime var CREATOR: Creator<ByEntity>
+  <runtime stability> = Uncertain(Creator)
 }
 stable class BrowseMethod {
   <runtime stability> = Stable
@@ -384,6 +386,70 @@ unstable class GetEntitiesImpl {
   runtime val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
+}
+unstable class Listen {
+  stable val insertedAtMs: Long
+  stable val listenedAtMs: Long
+  stable val recordingMessybrainzId: String
+  stable val username: String
+  stable val recordingMusicbrainzId: String?
+  stable val caaId: Long?
+  stable val caaReleaseMbid: String?
+  stable val artistName: String
+  stable val trackName: String
+  stable val releaseName: String?
+  stable val durationMs: Long?
+  stable val mediaPlayer: String?
+  stable val submissionClient: String?
+  stable val musicService: String?
+  stable val musicServiceName: String?
+  stable val originUrl: String?
+  unstable val spotifyAlbumArtistIds: List<String>?
+  stable val spotifyAlbumId: String?
+  unstable val spotifyArtistIds: List<String>?
+  stable val spotifyId: String?
+  stable val recordingName: String?
+  unstable val artistCredits: List<ArtistCreditUiModel>
+  <runtime stability> = Unstable
+}
+stable class ListenListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val formattedArtistCredits: String
+  stable val listenedAt: Instant
+  stable val recordingId: String?
+  stable val durationMs: Int?
+  stable val imageUrl: String?
+  stable val imageId: ImageId?
+  stable val visited: Boolean
+  stable val release: ListenRelease
+  <runtime stability> = Stable
+}
+stable class ListenRelease {
+  stable val name: String?
+  stable val id: String?
+  stable val visited: Boolean
+  <runtime stability> = Stable
+}
+runtime class InvalidToken {
+  runtime var CREATOR: Creator<InvalidToken>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class LoggedIn {
+  runtime var CREATOR: Creator<LoggedIn>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class LoggedOut {
+  runtime var CREATOR: Creator<LoggedOut>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class OtherError {
+  stable val message: String
+  runtime var CREATOR: Creator<OtherError>
+  <runtime stability> = Uncertain(Creator)
+}
+stable class ListenBrainzLoginState {
+  <runtime stability> = Stable
 }
 stable class AreaListItemModel {
   stable val id: String

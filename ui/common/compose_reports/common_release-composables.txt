@@ -52,8 +52,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLi
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListSeparatorHeaderWithOneImage()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListSeparatorHeaderWithMultipleImages()
 fun present(
-  stable <this>: LoginPresenterImpl
-): LoginUiState
+  stable <this>: MusicBrainzLoginPresenterImpl
+): MusicBrainzLoginUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewFooterLoadingIndicator()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceListItemAllInfo()
@@ -257,7 +257,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Clickable
   stable subtitle: String? = @static null
   stable startIcon: ImageVector? = @static null
   stable endIcon: ImageVector? = @static null
-  stable onClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 863657373, "CC(remember):ClickableItem.kt#9igjgp")
+  stable fontWeight: FontWeight? = @static Companion.Normal
+  stable onClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1454874128, "CC(remember):ClickableItem.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
   {
 
@@ -306,6 +307,34 @@ val tmp0_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp0_group@ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheetContent
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun DialogWithCloseButton(
+  stable modifier: Modifier? = @static Companion
+  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 14142774, "CC(remember):DialogContentWithCloseButton.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun DialogContentWithCloseButton(
+  stable modifier: Modifier? = @static Companion
+  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1802824803, "CC(remember):DialogContentWithCloseButton.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.ui.common.dialog.DialogContentWithCloseButton
+  stable content: Function2<Composer, Int, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun MultipleChoiceDialog(
   stable title: String
@@ -703,13 +732,17 @@ sourceInformationMarkerEnd($composer)
 tmp3_group@ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FooterLoadingIndicator()
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ScreenWithPagingLoadingAndError(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [_]]") fun ScreenWithPagingLoadingAndError(
   lazyPagingItems: LazyPagingItems<T>
   stable modifier: Modifier? = @static Companion
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable customNoResultsText: String? = @static ""
   stable keyed: Boolean = @static false
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppendFooter(
+  unused stable <this>: LazyItemScope
+  lazyPagingItems: LazyPagingItems<T>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
   coordinates: CoordinatesUiModel
@@ -947,6 +980,34 @@ val tmp2_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp2_group@ly.david.musicsearch.ui.common.series.SeriesListItem
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TextInput(
+  stable instructions: AnnotatedString
+  stable textLabel: String
+  stable textHint: String
+  stable text: String
+  stable buttonText: String
+  stable modifier: Modifier? = @static Companion
+  stable onTextChange: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1090862175, "CC(remember):TextInput.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.ui.common.text.TextInput
+  stable onButtonClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1090861023, "CC(remember):TextInput.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.ui.common.text.TextInput
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TextWithHeading(
   stable heading: String

@@ -7,10 +7,49 @@ stable class SettingsPresenter {
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
   unstable val musicBrainzAuthStore: MusicBrainzAuthStore
-  stable val loginPresenter: LoginPresenter
-  unstable val logout: Logout
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  unstable val musicBrainzLogout: MusicBrainzLogout
+  unstable val listenBrainzRepository: ListenBrainzRepository
+  unstable val listenBrainzAuthStore: ListenBrainzAuthStore
+  unstable val updateListenBrainzToken: UpdateListenBrainzToken
   unstable val exportDatabase: ExportDatabase
   unstable val metadataRepository: MetadataRepository
+  <runtime stability> = Stable
+}
+stable class SettingsUiState {
+  stable val musicBrainzUsername: String
+  stable val musicBrainzAccessToken: String?
+  stable val listenBrainzUrl: String
+  stable val listenBrainzText: String
+  runtime val listenBrainzLoginState: ListenBrainzLoginState?
+  stable val listenBrainzUsername: String
+  stable val listenBrainzUserToken: String
+  stable val showMoreInfoInReleaseListItem: Boolean
+  stable val sortReleaseGroupListItems: Boolean
+  stable val showCrashReporterSettings: Boolean
+  stable val isCrashReportingEnabled: Boolean
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val snackbarMessage: String?
+  stable val appDatabaseVersion: String
+  stable val sqliteVersion: String
+  stable val isDeveloperMode: Boolean
+  stable val eventSink: Function1<SettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class MusicBrainzLogout {
+  <runtime stability> = Stable
+}
+stable class UpdateListenBrainzUserToken {
+  stable val token: String
+  <runtime stability> = Stable
+}
+stable class ListenBrainzLogin {
+  <runtime stability> = Stable
+}
+stable class ListenBrainzLogout {
+  <runtime stability> = Stable
+}
+stable class DismissSnackbar {
   <runtime stability> = Stable
 }
 stable class UpdateShowMoreInfoInReleaseListItem {
@@ -29,29 +68,11 @@ stable class GoToScreen {
   stable val screen: Screen
   <runtime stability> = Stable
 }
-stable class Logout {
-  <runtime stability> = Stable
-}
 stable class ExportDatabase {
   <runtime stability> = Stable
 }
 stable class EnableDeveloperMode {
   stable val enable: Boolean
-  <runtime stability> = Stable
-}
-stable class SettingsUiState {
-  stable val username: String
-  stable val accessToken: String?
-  stable val showMoreInfoInReleaseListItem: Boolean
-  stable val sortReleaseGroupListItems: Boolean
-  stable val showCrashReporterSettings: Boolean
-  stable val isCrashReportingEnabled: Boolean
-  stable val loginState: LoginUiState
-  stable val snackbarMessage: String?
-  stable val appDatabaseVersion: String
-  stable val sqliteVersion: String
-  stable val isDeveloperMode: Boolean
-  stable val eventSink: Function1<SettingsUiEvent, Unit>
   <runtime stability> = Stable
 }
 stable class AppearanceSettingsPresenter {

@@ -77,7 +77,7 @@ stable class DetailsPresenter {
   stable val allEntitiesListPresenter: AllEntitiesListPresenter
   unstable val imageMetadataRepository: ImageMetadataRepository
   unstable val logger: Logger
-  stable val loginPresenter: LoginPresenter
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val wikimediaRepository: WikimediaRepository
   unstable val collectionRepository: CollectionRepository
@@ -95,7 +95,7 @@ stable class DetailsUiState {
   stable val selectionState: SelectionState
   runtime val detailsTabUiState: DetailsTabUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
-  stable val loginUiState: LoginUiState
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val eventSink: Function1<DetailsUiEvent, Unit>
   <runtime stability> = Stable
 }

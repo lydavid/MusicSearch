@@ -75,7 +75,7 @@ stable class CollectionPresenter {
   stable val navigator: Navigator
   runtime val getCollection: GetCollection
   unstable val incrementLookupHistory: IncrementLookupHistory
-  stable val loginPresenter: LoginPresenter
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
   stable val allEntitiesListPresenter: AllEntitiesListPresenter
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val collectionRepository: CollectionRepository
@@ -90,7 +90,7 @@ stable class CollectionUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val url: String
   stable val selectionState: SelectionState
-  stable val loginUiState: LoginUiState
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }

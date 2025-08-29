@@ -34,8 +34,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.56.0"
-  stable versionCode: Int = @dynamic val <elvis> = "706".toIntOrNull()
+  stable versionName: String? = @static "1.59.2"
+  stable versionCode: Int = @dynamic val <elvis> = "712".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0
@@ -62,8 +62,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingsU
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static Companion
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.56.0"
-  stable versionCode: Int = @dynamic val <elvis> = "706".toIntOrNull()
+  stable versionName: String? = @static "1.59.2"
+  stable versionCode: Int = @dynamic val <elvis> = "712".toIntOrNull()
 when {
   <elvis>  @  ly.david.musicsearch.shared.feature.settings.internal.SettingsUi   ==   null   ->   {
     0
@@ -94,9 +94,9 @@ val tmp1_group = $composer.cache(false) {
 
 sourceInformationMarkerEnd($composer)
 tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
-  stable loginEventSink: Function1<LoginUiEvent, Unit>? = @static sourceInformationMarkerStart($composer, -1869772934, "CC(remember):SettingsUi.kt#9igjgp")
+  stable loginEventSink: Function1<MusicBrainzLoginUiEvent, Unit>? = @static sourceInformationMarkerStart($composer, -1869772582, "CC(remember):SettingsUi.kt#9igjgp")
 val tmp2_group = $composer.cache(false) {
-  {     it  :   LoginUiEvent   ->
+  {     it  :   MusicBrainzLoginUiEvent   ->
 
   }
 
@@ -119,20 +119,31 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CustomCol
   stable useMaterialYou: Boolean
   stable eventSink: Function1<AppearanceSettingsUiEvent, Unit>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ProfileCard(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListenBrainzProfileCard(
+  stable listenBrainzUrl: String
   stable username: String
+  stable text: String
   stable showLogin: Boolean
-  stable onLoginClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1301457000, "CC(remember):ProfileCard.kt#9igjgp")
+  stable onTextChange: Function1<String, Unit>
+  stable onLoginClick: Function0<Unit>
+  stable onLogoutClick: Function0<Unit>
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TokenInput(
+  stable listenBrainzUrl: String
+  stable text: String
+  stable modifier: Modifier? = @static Companion
+  stable onTextChange: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -439269206, "CC(remember):ListenBrainzProfileCard.kt#9igjgp")
 val tmp0_group = $composer.cache(false) {
-  {
+  {     it  :   String   ->
 
   }
 
 }
 
 sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
-  stable onLogoutClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1301458152, "CC(remember):ProfileCard.kt#9igjgp")
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.TokenInput
+  stable onSetToken: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -439268150, "CC(remember):ListenBrainzProfileCard.kt#9igjgp")
 val tmp1_group = $composer.cache(false) {
   {
 
@@ -141,7 +152,31 @@ val tmp1_group = $composer.cache(false) {
 }
 
 sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.ProfileCard
+tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.TokenInput
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun MusicBrainzProfileCard(
+  stable username: String
+  stable showLogin: Boolean
+  stable onLoginClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1864319156, "CC(remember):MusicBrainzProfileCard.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.settings.internal.components.MusicBrainzProfileCard
+  stable onLogoutClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1864320308, "CC(remember):MusicBrainzProfileCard.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.settings.internal.components.MusicBrainzProfileCard
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSwitch(
   stable header: String

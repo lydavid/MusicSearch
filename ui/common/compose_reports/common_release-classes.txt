@@ -1,4 +1,4 @@
-stable class LoginPresenterImpl {
+stable class MusicBrainzLoginPresenterImpl {
   runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
   unstable val login: Login
   <runtime stability> = Stable
@@ -125,10 +125,10 @@ stable class SubmitAuthCode {
   stable val authCode: String
   <runtime stability> = Stable
 }
-stable class LoginUiState {
+stable class MusicBrainzLoginUiState {
   stable val showDialog: Boolean
   stable val errorMessage: String?
-  stable val eventSink: Function1<LoginUiEvent, Unit>
+  stable val eventSink: Function1<MusicBrainzLoginUiEvent, Unit>
   <runtime stability> = Stable
 }
 runtime class EntitiesLazyPagingItems {
@@ -188,77 +188,98 @@ stable class ReleaseGroupsListPresenter {
 stable class SearchScreen {
   stable val query: String?
   stable val entity: MusicBrainzEntityType?
+  runtime var CREATOR: Creator<SearchScreen>
   <runtime stability> = Stable
 }
 stable class ArtistCollaborationScreen {
   stable val id: String
   stable val name: String
+  runtime var CREATOR: Creator<ArtistCollaborationScreen>
   <runtime stability> = Stable
 }
 stable class DatabaseScreen {
+  runtime var CREATOR: Creator<DatabaseScreen>
   <runtime stability> = Stable
 }
 stable class AllEntitiesScreen {
   stable val entity: MusicBrainzEntityType
+  runtime var CREATOR: Creator<AllEntitiesScreen>
   <runtime stability> = Stable
 }
 stable class HistoryScreen {
+  runtime var CREATOR: Creator<HistoryScreen>
   <runtime stability> = Stable
 }
 stable class CollectionListScreen {
   stable val newCollectionId: String?
   stable val newCollectionName: String?
   stable val newCollectionEntity: MusicBrainzEntityType?
+  runtime var CREATOR: Creator<CollectionListScreen>
   <runtime stability> = Stable
 }
 stable class CollectionScreen {
   stable val collectionId: String
   stable val collectableId: String?
+  runtime var CREATOR: Creator<CollectionScreen>
   <runtime stability> = Stable
 }
 stable class AddToCollectionScreen {
   stable val entity: MusicBrainzEntityType
   unstable val collectableIds: Set<String>
+  runtime var CREATOR: Creator<AddToCollectionScreen>
   <runtime stability> = Stable
 }
 stable class SnackbarPopResult {
   stable val message: String
   stable val actionLabel: String?
+  runtime var CREATOR: Creator<SnackbarPopResult>
   <runtime stability> = Stable
 }
 stable class DetailsScreen {
   stable val entity: MusicBrainzEntityType
   stable val id: String
+  runtime var CREATOR: Creator<DetailsScreen>
   <runtime stability> = Stable
 }
 stable class CoverArtsScreen {
   stable val id: String?
   stable val entity: MusicBrainzEntityType?
+  runtime var CREATOR: Creator<CoverArtsScreen>
   <runtime stability> = Stable
 }
 stable class StatsScreen {
-  stable val byEntityId: String?
-  stable val byEntity: MusicBrainzEntityType?
+  runtime val browseMethod: BrowseMethod
   stable val tabs: ImmutableList<Tab>
   stable val isRemote: Boolean
+  runtime var CREATOR: Creator<StatsScreen>
   <runtime stability> = Stable
 }
 stable class SettingsScreen {
+  runtime var CREATOR: Creator<SettingsScreen>
   <runtime stability> = Stable
 }
 stable class AppearanceSettingsScreen {
+  runtime var CREATOR: Creator<AppearanceSettingsScreen>
   <runtime stability> = Stable
 }
 stable class ImagesSettingsScreen {
+  runtime var CREATOR: Creator<ImagesSettingsScreen>
   <runtime stability> = Stable
 }
 stable class LicensesScreen {
+  runtime var CREATOR: Creator<LicensesScreen>
   <runtime stability> = Stable
 }
 stable class NowPlayingHistoryScreen {
+  runtime var CREATOR: Creator<NowPlayingHistoryScreen>
   <runtime stability> = Stable
 }
 stable class SpotifyHistoryScreen {
+  runtime var CREATOR: Creator<SpotifyHistoryScreen>
+  <runtime stability> = Stable
+}
+stable class ListensScreen {
+  runtime var CREATOR: Creator<ListensScreen>
   <runtime stability> = Stable
 }
 stable class SeriesListPresenter {

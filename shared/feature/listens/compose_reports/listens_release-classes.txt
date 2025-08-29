@@ -1,0 +1,32 @@
+stable class ListensPresenter {
+  stable val navigator: Navigator
+  unstable val listenBrainzAuthStore: ListenBrainzAuthStore
+  unstable val listensListRepository: ListensListRepository
+  unstable val listenBrainzRepository: ListenBrainzRepository
+  <runtime stability> = Stable
+}
+stable class ListensUiState {
+  stable val listenBrainzUrl: String
+  stable val username: String
+  stable val textFieldText: String
+  stable val totalCountOfListens: Long?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val lazyListState: LazyListState
+  unstable val listensPagingDataFlow: Flow<PagingData<Identifiable>>
+  stable val eventSink: Function1<ListensUiEvent, Unit>
+}
+stable class NavigateUp {
+  <runtime stability> = Stable
+}
+stable class EditText {
+  stable val text: String
+  <runtime stability> = Stable
+}
+stable class SetUsername {
+  <runtime stability> = Stable
+}
+stable class ClickItem {
+  stable val entity: MusicBrainzEntityType
+  stable val id: String
+  <runtime stability> = Stable
+}

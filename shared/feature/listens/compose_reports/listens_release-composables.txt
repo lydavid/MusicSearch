@@ -1,0 +1,85 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListenListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiNoUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiBottomSheetContentVisitedRelease()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListenListItem(
+  listen: ListenListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 140733193, "CC(remember):ListenListItem.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.listens.ListenListItem
+  stable onClickMoreActions: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 140735145, "CC(remember):ListenListItem.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.listens.ListenListItem
+)
+fun present(
+  stable <this>: ListensPresenter
+): ListensUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListensUi(
+  stable state: ListensUiState
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun UsernameInput(
+  stable listenBrainzUrl: String
+  stable text: String
+  unstable strings: AppStrings
+  stable modifier: Modifier? = @static Companion
+  stable onTextChange: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1354576806, "CC(remember):ListensUi.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.listens.UsernameInput
+  stable onSetUsername: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1354577958, "CC(remember):ListensUi.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.listens.UsernameInput
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun BottomSheetContent(
+  listen: ListenListItemModel
+  stable onReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static sourceInformationMarkerStart($composer, 171603210, "CC(remember):ListensUi.kt#9igjgp")
+val tmp0_group = $composer.cache(false) {
+  {     it  :   String   ->
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp0_group@ly.david.musicsearch.shared.feature.listens.BottomSheetContent
+  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 171604234, "CC(remember):ListensUi.kt#9igjgp")
+val tmp1_group = $composer.cache(false) {
+  {
+
+  }
+
+}
+
+sourceInformationMarkerEnd($composer)
+tmp1_group@ly.david.musicsearch.shared.feature.listens.BottomSheetContent
+)
