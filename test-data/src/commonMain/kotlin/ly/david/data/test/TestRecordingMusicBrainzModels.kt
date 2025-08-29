@@ -21,9 +21,14 @@ val underPressureRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
         ),
     ),
     isrcs = listOf(
+        "CBCEG8100001",
         "GBCEE0900136",
+        "GBCEG0100041",
+        "GBCEG8100001",
         "GBCEG9400046",
-        // and more
+        "GBUM71029622",
+        "GBUM71106916",
+        "GBUM71404523",
     ),
 )
 

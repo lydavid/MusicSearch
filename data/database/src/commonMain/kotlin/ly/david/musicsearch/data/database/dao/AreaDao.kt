@@ -194,9 +194,9 @@ class AreaDao(
         disambiguation = disambiguation,
         type = type,
         lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
+            begin = begin.orEmpty(),
+            end = end.orEmpty(),
+            ended = ended == true,
         ),
         countryCode = countryCode.orEmpty(),
         lastUpdated = lastUpdated ?: Clock.System.now(),

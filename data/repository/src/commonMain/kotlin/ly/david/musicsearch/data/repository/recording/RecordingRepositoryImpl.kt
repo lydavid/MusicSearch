@@ -79,7 +79,7 @@ class RecordingRepositoryImpl(
         lastUpdated: Instant,
     ) {
         recordingDao.withTransaction {
-            recordingDao.insertOrUpdate(recording)
+            recordingDao.upsert(recording)
 
             aliasDao.insertAll(listOf(recording))
 

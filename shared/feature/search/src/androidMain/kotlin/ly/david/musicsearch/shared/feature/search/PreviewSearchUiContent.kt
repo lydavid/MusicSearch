@@ -66,7 +66,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "The Proclaimers",
                         sortName = "Proclaimers, The",
                         type = "Group",
-                        countryCode = null,
+                        countryCode = "",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1983",
                             ended = false,

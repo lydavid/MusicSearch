@@ -30,9 +30,9 @@ fun mapToPlaceListItemModel(
         latitude = latitude,
     ),
     lifeSpan = LifeSpanUiModel(
-        begin = begin,
-        end = end,
-        ended = ended,
+        begin = begin.orEmpty(),
+        end = end.orEmpty(),
+        ended = ended == true,
     ),
     visited = visited == true,
     collected = collected == true,

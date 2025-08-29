@@ -8,8 +8,6 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -20,8 +18,9 @@ import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artists_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class ArtistDao(
     database: Database,
@@ -30,38 +29,31 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
-    private fun ArtistMusicBrainzNetworkModel.toDatabaseModel() = Artist(
-        id = id,
-        name = name,
-        sort_name = sortName,
-        disambiguation = disambiguation,
-        type = type,
-        type_id = typeId,
-        gender = gender,
-        ipis = ipis,
-        isnis = isnis,
-        country_code = countryCode,
-        begin = lifeSpan?.begin,
-        end = lifeSpan?.end,
-        ended = lifeSpan?.ended,
-        area_id = area?.id,
-    )
-
-    /**
-     * Appropriate for details screen, where we expect to have more data than previously found browsing.
-     */
-    fun insertReplace(artist: ArtistMusicBrainzNetworkModel) {
-        transacter.insertOrReplaceArtist(
-            artist = artist.toDatabaseModel(),
-        )
+    fun upsert(artist: ArtistMusicBrainzNetworkModel) {
+        artist.run {
+            transacter.upsert(
+                id = id,
+                name = name,
+                sort_name = sortName,
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
+                gender = gender.orEmpty(),
+                ipis = ipis.orEmpty(),
+                isnis = isnis.orEmpty(),
+                country_code = countryCode.orEmpty(),
+                begin = lifeSpan?.begin.orEmpty(),
+                end = lifeSpan?.end.orEmpty(),
+                ended = lifeSpan?.ended == true,
+                area_id = area?.id.orEmpty(),
+            )
+        }
     }
 
-    fun insertAll(artists: List<ArtistMusicBrainzNetworkModel>) {
+    fun upsertAll(artists: List<ArtistMusicBrainzNetworkModel>) {
         transacter.transaction {
             artists.forEach { artist ->
-                transacter.insertOrIgnoreArtist(
-                    artist = artist.toDatabaseModel(),
-                )
+                upsert(artist)
             }
         }
     }
@@ -77,21 +69,21 @@ class ArtistDao(
         id: String,
         name: String,
         sortName: String,
-        disambiguation: String?,
-        type: String?,
-        gender: String?,
-        ipis: List<String>?,
-        isnis: List<String>?,
-        begin: String?,
-        end: String?,
-        ended: Boolean?,
-        areaId: String?,
+        disambiguation: String,
+        type: String,
+        gender: String,
+        ipis: List<String>,
+        isnis: List<String>,
+        begin: String,
+        end: String,
+        ended: Boolean,
+        areaId: String,
         areaName: String?,
         countryCode: String?,
         visitedArea: Boolean?,
         lastUpdated: Instant?,
     ): ArtistDetailsModel {
-        val area = if (areaId != null && areaName != null) {
+        val area = if (areaName != null) {
             AreaListItemModel(
                 id = areaId,
                 name = areaName,
@@ -108,8 +100,8 @@ class ArtistDao(
             disambiguation = disambiguation,
             type = type,
             gender = gender,
-            ipis = ipis,
-            isnis = isnis,
+            ipis = ipis.toPersistentList(),
+            isnis = isnis.toPersistentList(),
             lifeSpan = LifeSpanUiModel(
                 begin = begin,
                 end = end,

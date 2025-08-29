@@ -1,0 +1,99 @@
+import kotlin.Boolean;
+import kotlin.String;
+import kotlin.collections.List;
+
+DROP VIEW coalesced_entity;
+
+CREATE TABLE artist_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  sort_name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  gender TEXT NOT NULL,
+  ipis TEXT AS List<String> NOT NULL,
+  isnis TEXT AS List<String> NOT NULL,
+  country_code TEXT NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL,
+  area_id TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO artist_temp(
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  type,
+  type_id,
+  gender,
+  ipis,
+  isnis,
+  country_code,
+  begin,
+  end,
+  ended,
+  area_id
+)
+SELECT
+  id,
+  name,
+  sort_name,
+  COALESCE(disambiguation, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, ''),
+  COALESCE(gender, ''),
+  COALESCE(ipis, ''),
+  COALESCE(isnis, ''),
+  COALESCE(country_code, ''),
+  COALESCE(begin, ''),
+  COALESCE(end, ''),
+  COALESCE(ended, ''),
+  COALESCE(area_id, '')
+FROM artist;
+
+DROP TABLE artist;
+
+ALTER TABLE artist_temp RENAME TO artist;
+
+-- recreate view that references artist
+CREATE VIEW coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;

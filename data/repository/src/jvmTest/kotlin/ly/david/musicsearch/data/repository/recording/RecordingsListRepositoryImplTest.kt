@@ -485,7 +485,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     }
 
     @Test
-    fun `refreshing recordings that also belong to collection not delete the recording`() = runTest {
+    fun `refreshing recordings that also belong to collection do not delete the recording`() = runTest {
         setUpRecordingsByArtist()
         setupRecordingsByCollection()
 

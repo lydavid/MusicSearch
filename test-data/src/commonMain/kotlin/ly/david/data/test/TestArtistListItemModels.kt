@@ -9,11 +9,6 @@ val variousArtistsArtistListItemModel = ArtistListItemModel(
     sortName = "Various Artists",
     disambiguation = "add compilations to this artist",
     type = "Other",
-    lifeSpan = LifeSpanUiModel(
-        begin = null,
-        end = null,
-        ended = false,
-    ),
 )
 
 val roseliaArtistListItemModel = ArtistListItemModel(

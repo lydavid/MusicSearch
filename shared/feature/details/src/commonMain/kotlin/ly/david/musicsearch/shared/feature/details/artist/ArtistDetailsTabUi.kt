@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -59,21 +60,21 @@ private fun ArtistDetailsModel.ArtistInformationSection(
 ) {
     val strings = LocalStrings.current
 
-    sortName.ifNotNullOrEmpty {
+    sortName.ifNotEmpty {
         TextWithHeading(
             heading = strings.sortName,
             text = it,
             filterText = filterText,
         )
     }
-    type?.ifNotNullOrEmpty {
+    type.ifNotEmpty {
         TextWithHeading(
             heading = strings.type,
             text = it,
             filterText = filterText,
         )
     }
-    gender?.ifNotNullOrEmpty {
+    gender.ifNotEmpty {
         TextWithHeading(
             heading = strings.gender,
             text = it,
@@ -96,7 +97,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         filterText = filterText,
     )
 
-    ipis?.ifNotNullOrEmpty {
+    ipis.ifNotNullOrEmpty {
         TextWithHeading(
             heading = strings.ipi,
             text = it.joinToString(", "),
@@ -104,7 +105,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         )
     }
 
-    isnis?.ifNotNullOrEmpty {
+    isnis.ifNotNullOrEmpty {
         TextWithHeading(
             heading = strings.isni,
             text = it.joinToString(", "),
