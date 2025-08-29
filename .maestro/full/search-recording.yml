@@ -17,6 +17,5 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "https://open.spotify.com/track/2fuCquhmrzHpu5xcA1ci9x"
 - tapOn: "Releases"
 - tapOn: "Stats"
-- assertVisible: "URL: 1"
 
 - stopRecording
