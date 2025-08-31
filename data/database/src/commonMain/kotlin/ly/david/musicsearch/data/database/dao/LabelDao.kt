@@ -5,10 +5,9 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
@@ -21,6 +20,8 @@ import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Labels_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class LabelDao(
     database: Database,
@@ -36,15 +37,15 @@ class LabelDao(
                 Label(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
+                    disambiguation = disambiguation.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
                     label_code = labelCode,
-                    ipis = ipis,
-                    isnis = isnis,
-                    begin = label.lifeSpan?.begin,
-                    end = label.lifeSpan?.end,
-                    ended = label.lifeSpan?.ended,
+                    ipis = ipis.orEmpty(),
+                    isnis = isnis.orEmpty(),
+                    begin = label.lifeSpan?.begin.orEmpty(),
+                    end = label.lifeSpan?.end.orEmpty(),
+                    ended = label.lifeSpan?.ended == true,
                 ),
             )
         }
@@ -68,14 +69,14 @@ class LabelDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        type: String?,
+        disambiguation: String,
+        type: String,
         labelCode: Int?,
-        ipis: List<String>?,
-        isnis: List<String>?,
-        begin: String?,
-        end: String?,
-        ended: Boolean?,
+        ipis: List<String>,
+        isnis: List<String>,
+        begin: String,
+        end: String,
+        ended: Boolean,
         lastUpdated: Instant?,
     ) = LabelDetailsModel(
         id = id,
@@ -83,12 +84,12 @@ class LabelDao(
         disambiguation = disambiguation,
         type = type,
         labelCode = labelCode,
-        ipis = ipis,
-        isnis = isnis,
+        ipis = ipis.toPersistentList(),
+        isnis = isnis.toPersistentList(),
         lifeSpan = LifeSpanUiModel(
-            begin = begin.orEmpty(),
-            end = end.orEmpty(),
-            ended = ended == true,
+            begin = begin,
+            end = end,
+            ended = ended,
         ),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )

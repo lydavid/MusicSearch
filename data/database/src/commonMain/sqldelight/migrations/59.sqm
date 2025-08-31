@@ -1,0 +1,188 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlin.String;
+import kotlin.collections.List;
+
+PRAGMA foreign_keys = OFF;
+
+-- area
+CREATE TABLE area_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  sort_name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
+);
+
+INSERT OR IGNORE INTO area_temp (
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  type,
+  type_id,
+  begin,
+  end,
+  ended
+)
+SELECT
+  id,
+  name,
+  sort_name,
+  COALESCE(disambiguation, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, ''),
+  COALESCE(begin, ''),
+  COALESCE(end, ''),
+  COALESCE(ended, 0)
+FROM area;
+
+DROP TABLE area;
+ALTER TABLE area_temp RENAME TO area;
+
+-- genre
+CREATE TABLE genre_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO genre_temp (
+  id,
+  name,
+  disambiguation
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, '')
+FROM genre;
+
+DROP TABLE genre;
+ALTER TABLE genre_temp RENAME TO genre;
+
+-- instrument
+CREATE TABLE instrument_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  description TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO instrument_temp (
+  id,
+  name,
+  disambiguation,
+  description,
+  type,
+  type_id
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, ''),
+  COALESCE(description, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, '')
+FROM instrument;
+
+DROP TABLE instrument;
+ALTER TABLE instrument_temp RENAME TO instrument;
+
+-- label
+CREATE TABLE label_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  label_code INTEGER AS Int,
+  ipis TEXT AS List<String> NOT NULL,
+  isnis TEXT AS List<String> NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
+);
+
+INSERT OR IGNORE INTO label_temp (
+  id,
+  name,
+  disambiguation,
+  type,
+  type_id,
+  label_code,
+  ipis,
+  isnis,
+  begin,
+  end,
+  ended
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, ''),
+  label_code,
+  COALESCE(ipis, ''),
+  COALESCE(isnis, ''),
+  COALESCE(begin, ''),
+  COALESCE(end, ''),
+  COALESCE(ended, 0)
+FROM label;
+
+DROP TABLE label;
+ALTER TABLE label_temp RENAME TO label;
+
+-- place
+CREATE TABLE place_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  address TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  longitude REAL,
+  latitude REAL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
+);
+
+INSERT OR IGNORE INTO place_temp (
+  id,
+  name,
+  disambiguation,
+  address,
+  type,
+  type_id,
+  longitude,
+  latitude,
+  begin,
+  end,
+  ended
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, ''),
+  address,
+  COALESCE(type, ''),
+  COALESCE(type_id, ''),
+  longitude,
+  latitude,
+  COALESCE(begin, ''),
+  COALESCE(end, ''),
+  COALESCE(ended, 0)
+FROM place;
+
+DROP TABLE place;
+ALTER TABLE place_temp RENAME TO place;
+
+PRAGMA foreign_keys = on;

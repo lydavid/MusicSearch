@@ -5,7 +5,7 @@ import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 fun mapToGenreListItemModel(
     id: String,
     name: String,
-    disambiguation: String?,
+    disambiguation: String,
     visited: Boolean?,
     collected: Boolean?,
 ) = GenreListItemModel(

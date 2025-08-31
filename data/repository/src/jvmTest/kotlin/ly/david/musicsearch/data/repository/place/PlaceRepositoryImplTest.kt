@@ -425,7 +425,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val placeRepository = createPlaceRepository(
             musicBrainzModel = budokanPlaceMusicBrainzModel,
         )
-        var artistDetailsModel = placeRepository.lookupPlace(
+        var placeDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
@@ -451,9 +451,9 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 ),
                 lastUpdated = testDateTimeInThePast,
             ),
-            artistDetailsModel,
+            placeDetailsModel,
         )
-        artistDetailsModel = placeRepository.lookupPlace(
+        placeDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
@@ -479,7 +479,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 ),
                 lastUpdated = testDateTimeInThePast,
             ),
-            artistDetailsModel,
+            placeDetailsModel,
         )
 
         // Lookup the more specific area
@@ -508,7 +508,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
 
         // Return back to the place
-        artistDetailsModel = placeRepository.lookupPlace(
+        placeDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
@@ -536,9 +536,9 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 ),
                 lastUpdated = testDateTimeInThePast,
             ),
-            artistDetailsModel,
+            placeDetailsModel,
         )
-        artistDetailsModel = placeRepository.lookupPlace(
+        placeDetailsModel = placeRepository.lookupPlace(
             placeId = placeId,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
@@ -566,7 +566,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                 ),
                 lastUpdated = testDateTimeInThePast,
             ),
-            artistDetailsModel,
+            placeDetailsModel,
         )
     }
 }

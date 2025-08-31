@@ -5,9 +5,9 @@ import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 fun mapToInstrumentListItemModel(
     id: String,
     name: String,
-    disambiguation: String?,
-    description: String?,
-    type: String?,
+    disambiguation: String,
+    description: String,
+    type: String,
     visited: Boolean?,
     collected: Boolean?,
     aliasNames: String?,

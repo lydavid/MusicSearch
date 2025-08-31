@@ -7,9 +7,6 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -17,11 +14,14 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainz
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
 import lydavidmusicsearchdatadatabase.Areas_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class AreaDao(
     database: Database,
@@ -39,12 +39,12 @@ class AreaDao(
                     id = id,
                     name = name,
                     sort_name = sortName,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
-                    begin = lifeSpan?.begin,
-                    end = lifeSpan?.end,
-                    ended = lifeSpan?.ended,
+                    disambiguation = disambiguation.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
+                    begin = lifeSpan?.begin.orEmpty(),
+                    end = lifeSpan?.end.orEmpty(),
+                    ended = lifeSpan?.ended == true,
                 ),
             )
             countryCodeDao.insertCountryCodesForArea(
@@ -61,12 +61,12 @@ class AreaDao(
                     id = id,
                     name = name,
                     sort_name = sortName,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
-                    begin = lifeSpan?.begin,
-                    end = lifeSpan?.end,
-                    ended = lifeSpan?.ended,
+                    disambiguation = disambiguation.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
+                    begin = lifeSpan?.begin.orEmpty(),
+                    end = lifeSpan?.end.orEmpty(),
+                    ended = lifeSpan?.ended == true,
                 ),
             )
             countryCodeDao.insertCountryCodesForArea(
@@ -181,11 +181,11 @@ class AreaDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        type: String?,
-        begin: String?,
-        end: String?,
-        ended: Boolean?,
+        disambiguation: String,
+        type: String,
+        begin: String,
+        end: String,
+        ended: Boolean,
         countryCode: String?,
         lastUpdated: Instant?,
     ) = AreaDetailsModel(
@@ -194,9 +194,9 @@ class AreaDao(
         disambiguation = disambiguation,
         type = type,
         lifeSpan = LifeSpanUiModel(
-            begin = begin.orEmpty(),
-            end = end.orEmpty(),
-            ended = ended == true,
+            begin = begin,
+            end = end,
+            ended = ended,
         ),
         countryCode = countryCode.orEmpty(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
@@ -211,8 +211,8 @@ class AreaDao(
 
     // TODO: may be inaccurate if an area is contained within another area but has the same type
     private fun List<AreaListItemModel>.findByTypePriority(
-        typePriorities: List<String?> = listOf(
-            null, // The area part of a place lookup has a null type
+        typePriorities: List<String> = listOf(
+            "", // The area part of a place lookup has a null type
             "District",
             "City",
             "Municipality",

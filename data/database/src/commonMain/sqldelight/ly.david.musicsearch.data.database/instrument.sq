@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS instrument (
+CREATE TABLE instrument (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  disambiguation TEXT,
-  description TEXT,
-  type TEXT,
-  type_id TEXT
+  disambiguation TEXT NOT NULL,
+  description TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL
 );
 
 insert:

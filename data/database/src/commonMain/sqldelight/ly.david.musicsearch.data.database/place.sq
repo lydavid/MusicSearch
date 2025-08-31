@@ -1,17 +1,17 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS place (
+CREATE TABLE place (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  disambiguation TEXT,
+  disambiguation TEXT NOT NULL,
   address TEXT NOT NULL,
-  type TEXT,
-  type_id TEXT,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
   longitude REAL,
   latitude REAL,
-  begin TEXT,
-  end TEXT,
-  ended INTEGER AS Boolean
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
 );
 
 insertPlace:

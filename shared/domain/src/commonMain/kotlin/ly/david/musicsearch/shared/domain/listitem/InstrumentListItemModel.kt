@@ -9,9 +9,9 @@ import ly.david.musicsearch.shared.domain.instrument.Instrument
 data class InstrumentListItemModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String? = null,
-    override val description: String? = null,
-    override val type: String? = null,
+    override val disambiguation: String = "",
+    override val description: String = "",
+    override val type: String = "",
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
