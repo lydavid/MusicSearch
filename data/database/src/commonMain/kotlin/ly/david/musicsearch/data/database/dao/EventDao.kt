@@ -7,19 +7,19 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Events_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class EventDao(
     database: Database,
@@ -34,14 +34,14 @@ class EventDao(
                 Event(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
-                    time = time,
-                    cancelled = cancelled,
-                    begin = lifeSpan?.begin,
-                    end = lifeSpan?.end,
-                    ended = lifeSpan?.ended,
+                    disambiguation = disambiguation.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
+                    time = time.orEmpty(),
+                    cancelled = cancelled == true,
+                    begin = lifeSpan?.begin.orEmpty(),
+                    end = lifeSpan?.end.orEmpty(),
+                    ended = lifeSpan?.ended == true,
                 ),
             )
         }
@@ -65,13 +65,13 @@ class EventDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        type: String?,
-        time: String?,
-        cancelled: Boolean?,
-        begin: String?,
-        end: String?,
-        ended: Boolean?,
+        disambiguation: String,
+        type: String,
+        time: String,
+        cancelled: Boolean,
+        begin: String,
+        end: String,
+        ended: Boolean,
         lastUpdated: Instant?,
     ) = EventDetailsModel(
         id = id,
@@ -81,9 +81,9 @@ class EventDao(
         time = time,
         cancelled = cancelled,
         lifeSpan = LifeSpanUiModel(
-            begin = begin.orEmpty(),
-            end = end.orEmpty(),
-            ended = ended == true,
+            begin = begin,
+            end = end,
+            ended = ended,
         ),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
