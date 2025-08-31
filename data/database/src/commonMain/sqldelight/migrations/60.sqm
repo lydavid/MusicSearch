@@ -1,0 +1,25 @@
+CREATE VIEW release_group_base AS
+SELECT
+  release_group.id,
+  release_group.name,
+  release_group.disambiguation,
+  release_group.first_release_date,
+  release_group.primary_type,
+  release_group.secondary_types,
+  ac.name AS artist_credits,
+  mi.thumbnail_url,
+  mi.id AS image_id,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = release_group.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected,
+  GROUP_CONCAT(release_group_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
+FROM release_group
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+GROUP BY release_group.id;

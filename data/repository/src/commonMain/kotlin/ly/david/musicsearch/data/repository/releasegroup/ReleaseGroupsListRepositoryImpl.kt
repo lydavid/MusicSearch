@@ -16,12 +16,14 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
+import kotlin.time.Instant
 
 class ReleaseGroupsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
@@ -48,15 +50,27 @@ class ReleaseGroupsListRepositoryImpl(
                 .insertSeparators(
                     terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
                 ) { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
-                    if (listFilters.sorted && rg2 != null &&
-                        (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
-                    ) {
-                        ListSeparator(
-                            id = "${rg1?.id}_${rg2.id}",
-                            text = rg2.getDisplayTypes(),
-                        )
-                    } else {
-                        null
+                    when {
+                        listFilters.sorted && rg2 != null &&
+                            (rg1?.primaryType != rg2.primaryType || rg1.secondaryTypes != rg2.secondaryTypes)
+                        -> {
+                            ListSeparator(
+                                id = "${rg1?.id}_${rg2.id}",
+                                text = rg2.getDisplayTypes(),
+                            )
+                        }
+
+                        rg1 != null && rg2 == null -> {
+                            rg1.lastUpdated
+                                ?.let { Instant.fromEpochMilliseconds(it) }
+                                ?.let { lastUpdated ->
+                                    LastUpdatedFooter(lastUpdated = lastUpdated)
+                                }
+                        }
+
+                        else -> {
+                            null
+                        }
                     }
                 }
         }
