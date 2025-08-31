@@ -9,8 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNull
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -41,7 +40,7 @@ fun PlaceListItem(
                         fontWeight = place.fontWeight,
                     )
 
-                    type.ifNotNullOrEmpty {
+                    type.ifNotEmpty {
                         Text(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
@@ -50,7 +49,7 @@ fun PlaceListItem(
                         )
                     }
 
-                    address.ifNotNullOrEmpty {
+                    address.ifNotEmpty {
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
@@ -59,10 +58,10 @@ fun PlaceListItem(
                         )
                     }
 
-                    lifeSpan.ifNotNull {
+                    lifeSpan.getLifeSpanForDisplay().ifNotEmpty {
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
-                            text = it.getLifeSpanForDisplay(),
+                            text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
                             fontWeight = place.fontWeight,
                         )
