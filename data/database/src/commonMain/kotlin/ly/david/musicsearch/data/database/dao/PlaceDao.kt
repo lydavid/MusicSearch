@@ -7,20 +7,20 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import lydavidmusicsearchdatadatabase.Area_place
 import lydavidmusicsearchdatadatabase.Place
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class PlaceDao(
     database: Database,
@@ -35,15 +35,15 @@ class PlaceDao(
                 Place(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
+                    disambiguation = disambiguation.orEmpty(),
                     address = address,
-                    type = type,
-                    type_id = typeId,
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
                     longitude = coordinates?.longitude,
                     latitude = coordinates?.latitude,
-                    begin = lifeSpan?.begin,
-                    end = lifeSpan?.end,
-                    ended = lifeSpan?.ended,
+                    begin = lifeSpan?.begin.orEmpty(),
+                    end = lifeSpan?.end.orEmpty(),
+                    ended = lifeSpan?.ended == true,
                 ),
             )
         }
@@ -67,14 +67,14 @@ class PlaceDao(
     private fun mapToDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
+        disambiguation: String,
         address: String,
-        type: String?,
+        type: String,
         longitude: Double?,
         latitude: Double?,
-        begin: String?,
-        end: String?,
-        ended: Boolean?,
+        begin: String,
+        end: String,
+        ended: Boolean,
         lastUpdated: Instant?,
     ) = PlaceDetailsModel(
         id = id,
@@ -87,9 +87,9 @@ class PlaceDao(
             latitude = latitude,
         ),
         lifeSpan = LifeSpanUiModel(
-            begin = begin.orEmpty(),
-            end = end.orEmpty(),
-            ended = ended == true,
+            begin = begin,
+            end = end,
+            ended = ended,
         ),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )

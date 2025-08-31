@@ -20,5 +20,5 @@ class GenreRepositoryImpl(
 internal fun GenreMusicBrainzNetworkModel.toListItem() = GenreListItemModel(
     id = id,
     name = name,
-    disambiguation = disambiguation,
+    disambiguation = disambiguation.orEmpty(),
 )

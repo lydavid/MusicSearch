@@ -5,7 +5,6 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -28,6 +27,7 @@ import ly.david.musicsearch.ui.common.list.EntitiesListUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Instant
 
 private val canadianArtists = MutableStateFlow(
     PagingData.from(
@@ -220,13 +220,11 @@ internal val labels = MutableStateFlow(
             LabelListItemModel(
                 id = "4e_regiment",
                 name = "4e Régiment",
-                type = null,
             ),
             LabelListItemModel(
                 id = "awesome_records",
                 name = "Awesome Records",
                 disambiguation = "Sub-label of Awesome Music, Inc.",
-                type = null,
             ),
             LabelListItemModel(
                 id = "banyan",
@@ -246,12 +244,10 @@ internal val labels = MutableStateFlow(
             LabelListItemModel(
                 id = "bassdrop_ca",
                 name = "bassdrop.ca",
-                type = null,
             ),
             LabelListItemModel(
                 id = "604_records",
                 name = "604 Records",
-                type = null,
             ),
             LabelListItemModel(
                 id = "artisti",
@@ -268,7 +264,6 @@ internal val labels = MutableStateFlow(
                 id = "amp_records",
                 name = "AMP Records",
                 disambiguation = "Canadian punk label",
-                type = null,
             ),
             LabelListItemModel(
                 id = "arbutus_records",

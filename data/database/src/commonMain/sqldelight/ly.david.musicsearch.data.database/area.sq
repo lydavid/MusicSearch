@@ -1,15 +1,15 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS area (
+CREATE TABLE area (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   sort_name TEXT NOT NULL,
-  disambiguation TEXT,
-  type TEXT,
-  type_id TEXT,
-  begin TEXT,
-  end TEXT,
-  ended INTEGER AS Boolean
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
 );
 
 insertArea:

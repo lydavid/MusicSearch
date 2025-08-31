@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.label
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
@@ -29,7 +30,7 @@ internal fun LabelDetailsTabUi(
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
-            type?.ifNotNullOrEmpty {
+            type.ifNotEmpty {
                 TextWithHeading(
                     heading = strings.type,
                     text = it,
@@ -44,7 +45,7 @@ internal fun LabelDetailsTabUi(
                 )
             }
 
-            ipis?.ifNotNullOrEmpty {
+            ipis.ifNotNullOrEmpty {
                 TextWithHeading(
                     heading = strings.ipi,
                     text = it.joinToString(", "),
@@ -52,7 +53,7 @@ internal fun LabelDetailsTabUi(
                 )
             }
 
-            isnis?.ifNotNullOrEmpty {
+            isnis.ifNotNullOrEmpty {
                 TextWithHeading(
                     heading = strings.isni,
                     text = it.joinToString(", "),

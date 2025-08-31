@@ -3,18 +3,18 @@ import kotlin.Int;
 import kotlin.String;
 import kotlin.collections.List;
 
-CREATE TABLE IF NOT EXISTS label (
+CREATE TABLE label (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  disambiguation TEXT,
-  type TEXT,
-  type_id TEXT,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
   label_code INTEGER AS Int,
-  ipis TEXT AS List<String>,
-  isnis TEXT AS List<String>,
-  begin TEXT,
-  end TEXT,
-  ended INTEGER AS Boolean
+  ipis TEXT AS List<String> NOT NULL,
+  isnis TEXT AS List<String> NOT NULL,
+  begin TEXT NOT NULL,
+  end TEXT NOT NULL,
+  ended INTEGER AS Boolean NOT NULL
 );
 
 insertLabel:

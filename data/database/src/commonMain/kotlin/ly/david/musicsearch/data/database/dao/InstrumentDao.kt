@@ -7,16 +7,16 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import lydavidmusicsearchdatadatabase.Instrument
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class InstrumentDao(
     database: Database,
@@ -31,10 +31,10 @@ class InstrumentDao(
                 Instrument(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
-                    description = description,
-                    type = type,
-                    type_id = typeId,
+                    disambiguation = disambiguation.orEmpty(),
+                    description = description.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
                 ),
             )
         }
@@ -58,9 +58,9 @@ class InstrumentDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        description: String?,
-        type: String?,
+        disambiguation: String,
+        description: String,
+        type: String,
         lastUpdated: Instant?,
     ) = InstrumentDetailsModel(
         id = id,

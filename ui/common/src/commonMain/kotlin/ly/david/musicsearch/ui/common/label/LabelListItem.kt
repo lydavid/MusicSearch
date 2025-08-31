@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -63,7 +64,7 @@ fun LabelListItem(
                     fontWeight = label.fontWeight,
                 )
 
-                label.type?.ifNotNullOrEmpty {
+                label.type.ifNotEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,

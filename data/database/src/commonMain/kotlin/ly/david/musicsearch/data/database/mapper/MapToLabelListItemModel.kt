@@ -5,8 +5,8 @@ import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 fun mapToLabelListItemModel(
     id: String,
     name: String,
-    disambiguation: String?,
-    type: String?,
+    disambiguation: String,
+    type: String,
     labelCode: Int?,
     visited: Boolean?,
     collected: Boolean?,
@@ -26,8 +26,8 @@ fun mapToLabelListItemModel(
 fun mapToLabelListItemModel(
     id: String,
     name: String,
-    disambiguation: String?,
-    type: String?,
+    disambiguation: String,
+    type: String,
     labelCode: Int?,
     catalogNumbers: String?,
     visited: Boolean?,

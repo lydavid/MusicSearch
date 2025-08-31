@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -34,7 +34,7 @@ internal fun InstrumentDetailsTabUi(
         filterText = filterText,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         entityInfoSection = {
-            type?.ifNotNullOrEmpty {
+            type.ifNotEmpty {
                 TextWithHeading(
                     heading = strings.type,
                     text = it,
@@ -42,7 +42,7 @@ internal fun InstrumentDetailsTabUi(
                 )
             }
 
-            description?.ifNotNullOrEmpty {
+            description.ifNotEmpty {
                 ListSeparatorHeader(strings.description)
                 SelectionContainer {
                     Text(

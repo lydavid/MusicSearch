@@ -7,11 +7,11 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import lydavidmusicsearchdatadatabase.Genre
 
@@ -28,7 +28,7 @@ class GenreDao(
                 Genre(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
+                    disambiguation = disambiguation.orEmpty(),
                 ),
             )
         }

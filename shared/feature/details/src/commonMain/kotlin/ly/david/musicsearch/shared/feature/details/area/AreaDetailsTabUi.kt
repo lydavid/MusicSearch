@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.area
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -23,7 +24,7 @@ internal fun AreaDetailsTabUi(
     val strings = LocalStrings.current
 
     val entityInfoSection: @Composable AreaDetailsModel.() -> Unit = {
-        type?.ifNotNullOrEmpty {
+        type.ifNotEmpty {
             TextWithHeading(
                 heading = strings.type,
                 text = it,

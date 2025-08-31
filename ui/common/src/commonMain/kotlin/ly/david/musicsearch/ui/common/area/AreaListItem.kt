@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNull
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
@@ -83,7 +83,7 @@ fun AreaListItem(
         supportingContent = {
             Column {
                 val type = area.type
-                if (showType && !type.isNullOrEmpty()) {
+                if (showType && type.isNotEmpty()) {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = type,
@@ -92,10 +92,10 @@ fun AreaListItem(
                     )
                 }
 
-                area.lifeSpan.ifNotNull {
+                area.lifeSpan.getLifeSpanForDisplay().ifNotEmpty {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = it.getLifeSpanForDisplay(),
+                        text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
                         fontWeight = area.fontWeight,
                     )
