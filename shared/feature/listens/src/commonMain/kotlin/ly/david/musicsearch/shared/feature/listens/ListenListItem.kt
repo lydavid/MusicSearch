@@ -22,6 +22,7 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -42,7 +43,7 @@ fun ListenListItem(
                             fontWeight = listen.fontWeight,
                         ),
                     ) {
-                        append(listen.name)
+                        append(listen.getAnnotatedName())
                     }
                     withStyle(style = SpanStyle(fontSize = 13.sp)) {
                         append(" ${listen.durationMs.toDisplayTime()}")
