@@ -41,10 +41,12 @@ class ReleaseGroupsListRepositoryImpl(
     override fun observeReleaseGroups(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
+        now: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return observeEntities(
             browseMethod = browseMethod,
             listFilters = listFilters,
+            now = now,
         ).map { pagingData ->
             pagingData
                 .insertSeparators(

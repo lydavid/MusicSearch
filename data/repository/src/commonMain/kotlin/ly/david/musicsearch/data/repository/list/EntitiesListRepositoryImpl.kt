@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
+import kotlin.time.Clock
 
 class EntitiesListRepositoryImpl(
     private val areasListRepository: AreasListRepository,
@@ -91,6 +92,7 @@ class EntitiesListRepositoryImpl(
             MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListRepository.observeReleaseGroups(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
+                now = Clock.System.now(),
             )
 
             MusicBrainzEntityType.SERIES -> seriesListRepository.observeSeries(
