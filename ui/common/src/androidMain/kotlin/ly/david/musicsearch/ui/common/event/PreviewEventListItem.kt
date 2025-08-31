@@ -33,7 +33,6 @@ internal fun PreviewEventListItemLong() {
                 name = "1998-01-22: Sony Music Studios, New York City, NY, USA",
                 disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, " +
                     "a Rolling Stone Magazine 30th anniversary special",
-                type = null,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1998-01-22",
                     end = "1998-01-22",
@@ -54,7 +53,6 @@ internal fun PreviewEventListItemVisited() {
                 name = "1998-01-22: Sony Music Studios, New York City, NY, USA",
                 disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, " +
                     "a Rolling Stone Magazine 30th anniversary special",
-                type = null,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1998-01-22",
                     end = "1998-01-22",

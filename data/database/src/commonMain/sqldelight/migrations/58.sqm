@@ -1,64 +1,55 @@
 import kotlin.Boolean;
-import kotlin.String;
-import kotlin.collections.List;
 
 DROP VIEW coalesced_entity;
 
-CREATE TABLE artist_temp (
+-- fix yesterday's migration where the empty string was set instead
+UPDATE artist
+SET ended = 0
+WHERE ended = '';
+
+CREATE TABLE event_temp (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  sort_name TEXT NOT NULL,
   disambiguation TEXT NOT NULL,
   type TEXT NOT NULL,
   type_id TEXT NOT NULL,
-  gender TEXT NOT NULL,
-  ipis TEXT AS List<String> NOT NULL,
-  isnis TEXT AS List<String> NOT NULL,
-  country_code TEXT NOT NULL,
+  time TEXT NOT NULL,
+  cancelled INTEGER AS Boolean NOT NULL,
   begin TEXT NOT NULL,
   end TEXT NOT NULL,
-  ended INTEGER AS Boolean NOT NULL,
-  area_id TEXT NOT NULL
+  ended INTEGER AS Boolean NOT NULL
 );
 
-INSERT OR IGNORE INTO artist_temp(
+INSERT OR IGNORE INTO event_temp(
   id,
   name,
-  sort_name,
   disambiguation,
   type,
   type_id,
-  gender,
-  ipis,
-  isnis,
-  country_code,
+  time,
+  cancelled,
   begin,
   end,
-  ended,
-  area_id
+  ended
 )
 SELECT
   id,
   name,
-  sort_name,
   COALESCE(disambiguation, ''),
   COALESCE(type, ''),
   COALESCE(type_id, ''),
-  COALESCE(gender, ''),
-  COALESCE(ipis, ''),
-  COALESCE(isnis, ''),
-  COALESCE(country_code, ''),
+  COALESCE(time, ''),
+  COALESCE(cancelled, 0),
   COALESCE(begin, ''),
   COALESCE(end, ''),
-  COALESCE(ended, ''), -- should have been 0
-  COALESCE(area_id, '')
-FROM artist;
+  COALESCE(ended, 0)
+FROM event;
 
-DROP TABLE artist;
+DROP TABLE event;
 
-ALTER TABLE artist_temp RENAME TO artist;
+ALTER TABLE event_temp RENAME TO event;
 
--- recreate view that references artist
+-- recreate view that references event
 CREATE VIEW coalesced_entity AS
 SELECT
   id,

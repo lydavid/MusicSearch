@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -46,7 +46,7 @@ fun EventListItem(
                         fontWeight = event.fontWeight,
                     )
 
-                    type.ifNotNullOrEmpty {
+                    type.ifNotEmpty {
                         Text(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
@@ -67,7 +67,7 @@ fun EventListItem(
                                 fontWeight = event.fontWeight,
                             )
                         }
-                        time.ifNotNullOrEmpty { time ->
+                        time.ifNotEmpty { time ->
                             Text(
                                 modifier = Modifier.padding(top = 4.dp),
                                 text = buildString {
@@ -78,11 +78,11 @@ fun EventListItem(
                                 fontWeight = event.fontWeight,
                             )
                         }
-                        if (cancelled == true) {
+                        if (cancelled) {
                             Text(
                                 modifier = Modifier.padding(top = 4.dp),
                                 text = buildString {
-                                    append(" ").takeIf { lifeSpanText.isNotEmpty() || !time.isNullOrEmpty() }
+                                    append(" ").takeIf { lifeSpanText.isNotEmpty() || time.isNotEmpty() }
                                     append("(${strings.cancelled})")
                                 },
                                 style = TextStyles.getCardBodySubTextStyle(),
