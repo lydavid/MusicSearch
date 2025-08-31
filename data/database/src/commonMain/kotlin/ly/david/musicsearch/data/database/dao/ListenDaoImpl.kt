@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
@@ -182,6 +183,7 @@ private fun mapToListenListItemModel(
     recordingMessybrainzId: String,
     recordingMusicbrainzId: String?,
     recordingName: String?,
+    recordingDisambiguation: String?,
     fallbackName: String,
     durationMs: Long?,
     artistCreditNames: String?,
@@ -201,9 +203,12 @@ private fun mapToListenListItemModel(
 //    spotify_album_id: String?,
 //    spotify_artist_ids: List<String>?,
 //    spotify_id: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
 ) = ListenListItemModel(
     id = "${listenedAtMs}_${username}_$recordingMessybrainzId",
     name = recordingName ?: fallbackName,
+    disambiguation = recordingDisambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames ?: fallbackArtistCreditNames,
     listenedAt = Instant.fromEpochMilliseconds(listenedAtMs),
     recordingId = recordingMusicbrainzId,
@@ -216,4 +221,5 @@ private fun mapToListenListItemModel(
         id = releaseId,
         visited = visitedRelease,
     ),
+    aliases = combineToAliases(aliasNames, aliasLocales),
 )

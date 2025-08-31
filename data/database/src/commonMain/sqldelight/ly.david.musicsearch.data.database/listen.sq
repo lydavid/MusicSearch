@@ -94,6 +94,7 @@ SELECT
   username,
   recording_musicbrainz_id,
   recording.name AS recordingName,
+  recording.disambiguation,
   track_name AS fallbackName,
   duration_ms,
   artist_credit.name AS artistCreditNames,
@@ -107,7 +108,9 @@ SELECT
   ) AS visitedRecording,
   EXISTS (
     SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = listen.caa_release_mbid
-  ) AS visitedRelease
+  ) AS visitedRelease,
+  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
 FROM listen
 LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
