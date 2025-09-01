@@ -96,16 +96,13 @@ jobs:
           private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
 
       - name: Push new screenshots if available
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         if: always() && steps.screenshotsrecord.outcome == 'success'
-        with:
-          commit_message: "chore: rerecord snapshot tests"
-          token: ${{ steps.generate-token.outputs.token }}
-          commit_user_name: musicsearch-gha-helper[bot]
-          commit_user_email: 173635759+musicsearch-gha-helper[bot]@users.noreply.github.com
-          commit_author: musicsearch-gha-helper[bot] <173635759+musicsearch-gha-helper[bot]@users.noreply.github.com>
-          disable_globbing: true
-          file_pattern: '*/*.png'
+        run: |
+          git add '**\/*.png'
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -m "chore: rerecord snapshot tests [skip ci]"
+          git push
 
   ios-checks:
     timeout-minutes: 60
