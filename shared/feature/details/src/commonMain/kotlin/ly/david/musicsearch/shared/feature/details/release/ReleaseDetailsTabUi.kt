@@ -20,6 +20,7 @@ import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
@@ -97,10 +98,10 @@ internal fun ReleaseDetailsTabUi(
                 filterText = filterText,
             )
         }
-        status?.ifNotNullOrEmpty {
+        status?.let { status ->
             TextWithHeading(
                 heading = strings.status,
-                text = it,
+                text = status.getDisplayString(strings),
                 filterText = filterText,
             )
         }

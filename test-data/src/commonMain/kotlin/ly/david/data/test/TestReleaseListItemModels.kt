@@ -1,7 +1,7 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 
 val utaNoUtaReleaseListItemModel = ReleaseListItemModel(
@@ -10,14 +10,12 @@ val utaNoUtaReleaseListItemModel = ReleaseListItemModel(
     disambiguation = "初回限定盤",
     date = "2022-08-10",
     barcode = "4988031519660",
-    status = "Official",
-    statusId = null,
+    status = ReleaseStatus.OFFICIAL,
     countryCode = "JP",
     packaging = "Jewel Case",
-    packagingId = null,
+    packagingId = "",
     asin = "B0B392M9SC",
     quality = "normal",
-    coverArtArchive = CoverArtArchiveUiModel(count = 11),
     textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
     formattedFormats = null,
     formattedTracks = null,
@@ -31,15 +29,13 @@ val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     disambiguation = "",
     date = "",
     barcode = "614223200828",
-    status = "Official",
-    statusId = null,
+    status = ReleaseStatus.OFFICIAL,
     countryCode = "AF",
     packaging = "None",
     packagingId = "119eba76-b343-3e02-a292-f0f00644bb9b",
     asin = "B00138CYEI",
     quality = "normal",
     catalogNumbers = null,
-    coverArtArchive = CoverArtArchiveUiModel(count = 2),
     textRepresentation = TextRepresentationUiModel(script = "Latn", language = "eng"),
     imageUrl = null,
     formattedFormats = null,
@@ -53,7 +49,7 @@ val redReleaseListItemModel = ReleaseListItemModel(
     name = "Red",
     disambiguation = "",
     quality = "normal",
-    status = "Official",
+    status = ReleaseStatus.OFFICIAL,
     packaging = "Jewel Case",
     packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
     date = "2012-10-22",
@@ -64,7 +60,6 @@ val redReleaseListItemModel = ReleaseListItemModel(
         language = "eng",
     ),
     formattedArtistCredits = "Taylor Swift",
-    coverArtArchive = CoverArtArchiveUiModel(count = 25),
 )
 
 val underPressureRemasteredReleaseListItemModel = ReleaseListItemModel(
@@ -73,20 +68,14 @@ val underPressureRemasteredReleaseListItemModel = ReleaseListItemModel(
     date = "1988-11",
     formattedArtistCredits = "Queen & David Bowie",
     countryCode = "GB",
-    coverArtArchive = CoverArtArchiveUiModel(
-        count = 4,
-    ),
     quality = "normal",
-    status = "Official",
-    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    status = ReleaseStatus.OFFICIAL,
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",
     ),
     barcode = "5099920305833",
     asin = "B000LX0GZA",
-    packaging = null,
-    packagingId = null,
     disambiguation = "",
 )
 
@@ -96,12 +85,8 @@ val underPressureReleaseListItemModel = ReleaseListItemModel(
     date = "1981-10",
     formattedArtistCredits = "Queen & David Bowie",
     countryCode = "US",
-    coverArtArchive = CoverArtArchiveUiModel(
-        count = 1,
-    ),
     quality = "normal",
-    status = "Official",
-    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    status = ReleaseStatus.OFFICIAL,
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",
@@ -115,12 +100,8 @@ val underPressureJapanReleaseListItemModel = ReleaseListItemModel(
     date = "1991",
     formattedArtistCredits = "Queen & David Bowie",
     countryCode = "JP",
-    coverArtArchive = CoverArtArchiveUiModel(
-        count = 0,
-    ),
     quality = "normal",
-    status = "Official",
-    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+    status = ReleaseStatus.OFFICIAL,
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",

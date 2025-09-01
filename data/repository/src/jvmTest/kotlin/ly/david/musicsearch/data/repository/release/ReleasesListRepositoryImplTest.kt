@@ -64,7 +64,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import org.junit.Assert.assertEquals
@@ -1056,12 +1056,8 @@ class ReleasesListRepositoryImplTest :
                 ),
             ),
             countryCode = "JP",
-            coverArtArchive = CoverArtArchiveUiModel(
-                count = 0,
-            ),
             quality = "normal",
-            status = "Official",
-            statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+            status = ReleaseStatus.OFFICIAL,
             textRepresentation = TextRepresentationUiModel(
                 script = "Latn",
                 language = "eng",
@@ -1232,12 +1228,8 @@ class ReleasesListRepositoryImplTest :
                 ),
             ),
             countryCode = "JP",
-            coverArtArchive = CoverArtArchiveUiModel(
-                count = 0,
-            ),
             quality = "normal",
-            status = "Official",
-            statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+            status = ReleaseStatus.OFFICIAL,
             textRepresentation = TextRepresentationUiModel(
                 script = "Latn",
                 language = "eng",
@@ -1403,12 +1395,8 @@ class ReleasesListRepositoryImplTest :
                     ),
                 ),
                 countryCode = "JP",
-                coverArtArchive = CoverArtArchiveUiModel(
-                    count = 0,
-                ),
                 quality = "normal",
-                status = "Official",
-                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                status = ReleaseStatus.OFFICIAL,
                 textRepresentation = TextRepresentationUiModel(
                     script = "Latn",
                     language = "eng",

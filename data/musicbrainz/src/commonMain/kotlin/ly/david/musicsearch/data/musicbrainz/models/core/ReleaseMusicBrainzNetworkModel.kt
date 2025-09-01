@@ -7,7 +7,6 @@ import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetwo
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguation
-import ly.david.musicsearch.shared.domain.release.CoverArtArchive
 import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.TextRepresentation
 
@@ -17,18 +16,15 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("title") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String = "",
     @SerialName("date") override val date: String? = null,
-    @SerialName("status") override val status: String? = null,
-    @SerialName("status-id") override val statusId: String? = null,
+    @SerialName("status") val status: String? = null,
+    @SerialName("status-id") val statusId: String? = null,
     @SerialName("barcode") override val barcode: String? = null,
     @SerialName("country") override val countryCode: String? = null,
     @SerialName("packaging") override val packaging: String? = null,
     @SerialName("packaging-id") override val packagingId: String? = null,
     @SerialName("asin") override val asin: String? = null,
     @SerialName("quality") override val quality: String? = null,
-    @SerialName("cover-art-archive")
-    val coverArtArchive: CoverArtArchiveMusicBrainzModel = CoverArtArchiveMusicBrainzModel(),
-    @SerialName("text-representation")
-    val textRepresentation: TextRepresentationMusicBrainzModel? = null,
+    @SerialName("text-representation") val textRepresentation: TextRepresentationMusicBrainzModel? = null,
 
     @SerialName("release-events") val releaseEvents: List<ReleaseEventMusicBrainzModel>? = null,
 
@@ -47,15 +43,6 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Release
-
-@Serializable
-data class CoverArtArchiveMusicBrainzModel(
-    //    @SerialName("darkened") val darkened: Boolean = false,
-//    @SerialName("artwork") val artwork: Boolean = false,
-//    @SerialName("back") val back: Boolean = false,
-//    @SerialName("front") val front: Boolean = false,
-    override val count: Int = 0,
-) : CoverArtArchive
 
 @Serializable
 data class TextRepresentationMusicBrainzModel(

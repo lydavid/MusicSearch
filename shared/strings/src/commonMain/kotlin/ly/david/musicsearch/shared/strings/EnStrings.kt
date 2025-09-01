@@ -356,4 +356,10 @@ val EnStrings = AppStrings(
     youAreLoggedIn = "You are logged in",
     youAreLoggedOut = "You are logged out",
     invalidToken = "Invalid token",
+    official = "Official",
+    bootleg = "Bootleg",
+    promotion = "Promotion",
+    pseudoRelease = "Pseudo-Release",
+    withdrawn = "Withdrawn",
+    expunged = "Expunged",
 )

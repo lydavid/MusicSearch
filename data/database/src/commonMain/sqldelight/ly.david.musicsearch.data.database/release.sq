@@ -1,21 +1,17 @@
-import kotlin.Int;
-
-CREATE TABLE IF NOT EXISTS "release" (
+CREATE TABLE "release" (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT NOT NULL,
   date TEXT NOT NULL,
-  barcode TEXT,
-  asin TEXT,
-  quality TEXT,
-  country_code TEXT,
-  status TEXT,
-  status_id TEXT,
-  packaging TEXT,
-  packaging_id TEXT,
-  script TEXT,
-  language TEXT,
-  cover_art_count INTEGER AS Int NOT NULL
+  barcode TEXT NOT NULL,
+  asin TEXT NOT NULL,
+  quality TEXT NOT NULL,
+  country_code TEXT NOT NULL,
+  status_id TEXT NOT NULL,
+  packaging TEXT NOT NULL,
+  packaging_id TEXT NOT NULL,
+  script TEXT NOT NULL,
+  language TEXT NOT NULL
 );
 
 insert:
@@ -29,13 +25,11 @@ VALUES (
   :asin,
   :quality,
   :country_code,
-  :status,
   :status_id,
   :packaging,
   :packaging_id,
   :script,
-  :language,
-  :cover_art_count
+  :language
 );
 
 upsert {
@@ -48,13 +42,11 @@ SET
   asin = :asin,
   quality = :quality,
   country_code = :country_code,
-  status = :status,
   status_id = :status_id,
   packaging = :packaging,
   packaging_id = :packaging_id,
   script = :script,
-  language = :language,
-  cover_art_count = :cover_art_count
+  language = :language
 WHERE id = :id;
 
 INSERT OR IGNORE INTO `release`
@@ -67,13 +59,11 @@ VALUES (
   :asin,
   :quality,
   :country_code,
-  :status,
   :status_id,
   :packaging,
   :packaging_id,
   :script,
-  :language,
-  :cover_art_count
+  :language
 );
 }
 

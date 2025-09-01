@@ -3,18 +3,18 @@ package ly.david.musicsearch.shared.feature.details.release
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import kotlin.time.Instant
 
 private val release = ReleaseDetailsModel(
     id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
@@ -22,15 +22,13 @@ private val release = ReleaseDetailsModel(
     disambiguation = "初回限定盤",
     date = "2022-08-10",
     barcode = "4988031519660",
-    status = "Official",
+    status = ReleaseStatus.OFFICIAL,
     formattedFormats = "CD + DVD",
     formattedTracks = "10 + 3",
     countryCode = "JP",
     packaging = "Jewel Case",
-    packagingId = null,
     asin = "B0B392M9SC",
     quality = "normal",
-    coverArtArchive = CoverArtArchiveUiModel(count = 11),
     textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
     releaseGroup = ReleaseGroupForRelease(
         id = "1",

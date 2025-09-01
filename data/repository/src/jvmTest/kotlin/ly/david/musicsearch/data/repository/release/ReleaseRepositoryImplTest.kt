@@ -24,7 +24,6 @@ import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
@@ -47,8 +46,8 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import org.junit.Assert.assertEquals
@@ -144,9 +143,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
                 asin = "B004GJ33BO",
                 quality = "normal",
-                coverArtArchive = CoverArtArchiveMusicBrainzModel(
-                    count = 21,
-                ),
                 textRepresentation = TextRepresentationMusicBrainzModel(
                     script = "Jpan",
                     language = "jpn",
@@ -710,14 +706,12 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 disambiguation = "初回生産限定盤",
                 date = "2011-03-16",
                 barcode = "4988009047348",
-                status = "Official",
-                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                status = ReleaseStatus.OFFICIAL,
                 countryCode = "JP",
                 packaging = "Jewel Case",
                 packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
                 asin = "B004GJ33BO",
                 quality = "normal",
-                coverArtArchive = CoverArtArchiveUiModel(count = 21),
                 textRepresentation = TextRepresentationUiModel(
                     script = "Jpan",
                     language = "jpn",
@@ -825,9 +819,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
                 asin = null,
                 quality = "normal",
-                coverArtArchive = CoverArtArchiveMusicBrainzModel(
-                    count = 26,
-                ),
                 textRepresentation = TextRepresentationMusicBrainzModel(
                     script = "Jpan",
                     language = "jpn",
@@ -927,14 +918,11 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 disambiguation = "",
                 date = "2023-07-26",
                 barcode = "4573471821543",
-                status = "Official",
-                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                status = ReleaseStatus.OFFICIAL,
                 countryCode = "JP",
                 packaging = "Box",
                 packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
-                asin = null,
                 quality = "normal",
-                coverArtArchive = CoverArtArchiveUiModel(count = 26),
                 textRepresentation = TextRepresentationUiModel(
                     script = "Jpan",
                     language = "jpn",
@@ -1138,14 +1126,11 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 disambiguation = "",
                 date = "2023-07-26",
                 barcode = "4573471821543",
-                status = "Official",
-                statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
+                status = ReleaseStatus.OFFICIAL,
                 countryCode = "JP",
                 packaging = "Box",
                 packagingId = "c1668fc7-8944-4a00-bc3e-46e8d861d211",
-                asin = null,
                 quality = "normal",
-                coverArtArchive = CoverArtArchiveUiModel(count = 26),
                 textRepresentation = TextRepresentationUiModel(
                     script = "Jpan",
                     language = "jpn",
@@ -1273,14 +1258,11 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             disambiguation = "初回限定盤",
             date = "2022-08-10",
             barcode = "4988031519660",
-            status = "Official",
-            statusId = null,
+            status = ReleaseStatus.OFFICIAL,
             countryCode = "JP",
             packaging = "Jewel Case",
-            packagingId = null,
             asin = "B0B392M9SC",
             quality = "normal",
-            coverArtArchive = CoverArtArchiveUiModel(count = 11),
             textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
             artistCredits = listOf(
                 ArtistCreditUiModel(
@@ -1358,7 +1340,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             name = "Red",
             disambiguation = "",
             quality = "normal",
-            status = "Official",
+            status = ReleaseStatus.OFFICIAL,
             packaging = "Jewel Case",
             packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
             date = "2012-10-22",
@@ -1375,7 +1357,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     joinPhrase = "",
                 ),
             ),
-            coverArtArchive = CoverArtArchiveUiModel(count = 25),
             releaseGroup = ReleaseGroupForRelease(
                 id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
                 name = "Red",

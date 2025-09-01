@@ -5,8 +5,8 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageId
-import ly.david.musicsearch.shared.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.shared.domain.release.Release
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 
 data class ReleaseListItemModel(
@@ -14,18 +14,16 @@ data class ReleaseListItemModel(
     override val name: String,
     override val disambiguation: String = "",
     override val date: String = "",
-    override val barcode: String? = null,
-    override val status: String? = null,
-    override val statusId: String? = null,
-    override val countryCode: String? = null,
-    override val packaging: String? = null,
-    override val packagingId: String? = null,
-    override val asin: String? = null,
-    override val quality: String? = null,
+    override val barcode: String = "",
+    val status: ReleaseStatus? = null,
+    override val countryCode: String = "",
+    override val packaging: String = "",
+    override val packagingId: String = "",
+    override val asin: String = "",
+    override val quality: String = "",
 
     val catalogNumbers: String? = null,
 
-    val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
     val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
     val imageUrl: String? = null,
     val imageId: ImageId? = null,

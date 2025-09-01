@@ -20,7 +20,6 @@ import lydavidmusicsearchdatadatabase.Now_playing_history
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Relations_metadata
-import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Search_history
 import lydavidmusicsearchdatadatabase.Search_result_metadata
@@ -64,9 +63,6 @@ fun createDatabase(driver: SqlDriver): Database {
         workAdapter = Work.Adapter(
             iswcsAdapter = ListStringColumnAdapter,
             languagesAdapter = ListStringColumnAdapter,
-        ),
-        releaseAdapter = Release.Adapter(
-            cover_art_countAdapter = IntColumnAdapter,
         ),
         mediumAdapter = Medium.Adapter(
             positionAdapter = IntColumnAdapter,
