@@ -61,7 +61,22 @@ internal fun LabelDetailsTabUi(
                 )
             }
 
-            // TODO: lifespan, founded, defunct for end
+            lifeSpan.run {
+                begin.ifNotEmpty {
+                    TextWithHeading(
+                        heading = strings.founded,
+                        text = it,
+                        filterText = filterText,
+                    )
+                }
+                end.ifNotEmpty {
+                    TextWithHeading(
+                        heading = strings.defunct,
+                        text = it,
+                        filterText = filterText,
+                    )
+                }
+            }
 
             // TODO: area
         },

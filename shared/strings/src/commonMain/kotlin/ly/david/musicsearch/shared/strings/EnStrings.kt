@@ -163,6 +163,8 @@ val EnStrings = AppStrings(
 
     dissolved = "Dissolved",
 
+    defunct = "Defunct",
+
     date = "Date",
 
     firstReleaseDate = "First release date",

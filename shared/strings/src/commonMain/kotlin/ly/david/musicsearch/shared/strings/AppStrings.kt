@@ -84,6 +84,7 @@ data class AppStrings(
     val died: String,
     val founded: String,
     val dissolved: String,
+    val defunct: String,
     val date: String,
     val firstReleaseDate: String,
     val startDate: String,
