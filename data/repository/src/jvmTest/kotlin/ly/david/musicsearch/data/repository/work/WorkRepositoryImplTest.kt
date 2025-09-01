@@ -258,9 +258,9 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
                 type = "Song",
-                languages = listOf("jpn"),
-                iswcs = listOf("T-903.769.392-8"),
-                attributes = listOf(
+                languages = persistentListOf("jpn"),
+                iswcs = persistentListOf("T-903.769.392-8"),
+                attributes = persistentListOf(
                     WorkAttributeUiModel(
                         type = "COMPASS ID",
                         typeId = "5ea37343-be89-4cd0-8a37-f471738df641",

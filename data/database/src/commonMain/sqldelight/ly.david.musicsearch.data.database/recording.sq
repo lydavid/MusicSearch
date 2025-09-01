@@ -3,14 +3,14 @@ import kotlin.Int;
 import kotlin.String;
 import kotlin.collections.List;
 
-CREATE TABLE IF NOT EXISTS recording (
+CREATE TABLE recording (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT NOT NULL,
-  first_release_date TEXT,
+  first_release_date TEXT NOT NULL,
   length INTEGER AS Int,
   video INTEGER AS Boolean NOT NULL,
-  isrcs TEXT AS List<String>
+  isrcs TEXT AS List<String> NOT NULL
 );
 
 insert:

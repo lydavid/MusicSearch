@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.work
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
@@ -502,12 +503,12 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                     name = "Under Pressure",
                     disambiguation = "some change",
                     type = "Song",
-                    languages = listOf("eng"),
-                    iswcs = listOf(
+                    languages = persistentListOf("eng"),
+                    iswcs = persistentListOf(
                         "T-010.475.727-8",
                         "T-011.226.466-0",
                     ),
-                    attributes = listOf(
+                    attributes = persistentListOf(
                         WorkAttributeUiModel(
                             value = "2182263",
                             type = "ACAM ID",
@@ -535,12 +536,12 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                     disambiguation = "some change",
                     name = "Under Pressure",
                     type = "Song",
-                    languages = listOf("eng"),
-                    iswcs = listOf(
+                    languages = persistentListOf("eng"),
+                    iswcs = persistentListOf(
                         "T-010.475.727-8",
                         "T-011.226.466-0",
                     ),
-                    attributes = listOf(
+                    attributes = persistentListOf(
                         WorkAttributeUiModel(
                             value = "2182263",
                             type = "ACAM ID",

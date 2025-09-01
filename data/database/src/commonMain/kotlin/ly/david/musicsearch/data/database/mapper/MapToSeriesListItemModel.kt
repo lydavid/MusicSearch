@@ -5,8 +5,8 @@ import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 fun mapToSeriesListItemModel(
     id: String,
     name: String,
-    disambiguation: String?,
-    type: String?,
+    disambiguation: String,
+    type: String,
     visited: Boolean?,
     collected: Boolean?,
     aliasNames: String?,

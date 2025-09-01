@@ -4,11 +4,11 @@ import kotlin.collections.List;
 CREATE TABLE work (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  disambiguation TEXT,
-  type TEXT,
-  type_id TEXT,
-  iswcs TEXT AS List<String>,
-  languages TEXT AS List<String>
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  iswcs TEXT AS List<String> NOT NULL,
+  languages TEXT AS List<String> NOT NULL
 );
 
 upsert {

@@ -9,8 +9,8 @@ import ly.david.musicsearch.shared.domain.series.Series
 data class SeriesListItemModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String? = null,
-    override val type: String? = null,
+    override val disambiguation: String? = "",
+    override val type: String = "",
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

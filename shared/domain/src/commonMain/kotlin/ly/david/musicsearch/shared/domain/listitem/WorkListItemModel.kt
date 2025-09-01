@@ -10,8 +10,8 @@ import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 data class WorkListItemModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String? = null,
-    override val type: String? = null,
+    override val disambiguation: String = "",
+    override val type: String = "",
     override val languages: ImmutableList<String> = persistentListOf(),
     override val iswcs: ImmutableList<String> = persistentListOf(),
     val attributes: ImmutableList<WorkAttributeUiModel> = persistentListOf(),

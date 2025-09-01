@@ -5,6 +5,7 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
@@ -32,11 +33,11 @@ class WorkDao(
             transacter.upsert(
                 id = id,
                 name = name,
-                disambiguation = disambiguation,
-                type = type,
-                typeId = typeId,
-                languages = languages,
-                iswcs = iswcs?.sorted(),
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                typeId = typeId.orEmpty(),
+                languages = languages.orEmpty(),
+                iswcs = iswcs?.sorted().orEmpty(),
             )
         }
     }
@@ -59,18 +60,18 @@ class WorkDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        type: String?,
-        languages: List<String>?,
-        iswcs: List<String>?,
+        disambiguation: String,
+        type: String,
+        languages: List<String>,
+        iswcs: List<String>,
         lastUpdated: Instant?,
     ) = WorkDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         type = type,
-        languages = languages.orEmpty(),
-        iswcs = iswcs.orEmpty(),
+        languages = languages.toPersistentList(),
+        iswcs = iswcs.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

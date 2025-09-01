@@ -4,6 +4,7 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
@@ -72,10 +73,10 @@ class ListenDaoImpl(
                     id = recordingMusicbrainzId,
                     name = recordingName,
                     disambiguation = "",
-                    firstReleaseDate = null,
+                    firstReleaseDate = "",
                     length = durationMs?.toInt(),
                     video = false,
-                    isrcs = null,
+                    isrcs = emptyList(),
                 )
 
                 artistCreditDao.insertArtistCredits(
