@@ -3,7 +3,6 @@ package ly.david.data.test
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.core.CoverArtArchiveMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
@@ -55,9 +54,6 @@ val underPressureRemasteredReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkMo
         ),
     ),
     countryCode = "GB",
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 4,
-    ),
     quality = "normal",
     status = "Official",
     statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
@@ -122,9 +118,6 @@ val underPressureReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
         ),
     ),
     countryCode = "US",
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 1,
-    ),
     quality = "normal",
     status = "Official",
     statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
@@ -187,9 +180,6 @@ val underPressureJapanReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
         ),
     ),
     countryCode = "JP",
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 0,
-    ),
     quality = "normal",
     status = "Official",
     statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
@@ -206,6 +196,7 @@ val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     disambiguation = "初回限定盤",
     quality = "normal",
     status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
     asin = "B0B392M9SC",
     packaging = "Jewel Case",
     date = "2022-08-10",
@@ -225,9 +216,6 @@ val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
             ),
             date = "2022-08-10",
         ),
-    ),
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 11,
     ),
 )
 
@@ -275,6 +263,7 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     disambiguation = "",
     quality = "normal",
     status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
     asin = "B00138CYEI",
     packaging = "None",
     packagingId = "119eba76-b343-3e02-a292-f0f00644bb9b",
@@ -318,9 +307,6 @@ val weirdAlGreatestHitsReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
             date = "",
         ),
     ),
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 2,
-    ),
 )
 
 val redReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
@@ -329,6 +315,7 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     disambiguation = "",
     quality = "normal",
     status = "Official",
+    statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
     packaging = "Jewel Case",
     packagingId = "ec27701a-4a22-37f4-bfac-6616e0f9750a",
     date = "2012-10-22",
@@ -402,9 +389,6 @@ val redReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
             ),
             date = "2012-11-05",
         ),
-    ),
-    coverArtArchive = CoverArtArchiveMusicBrainzModel(
-        count = 25,
     ),
 )
 

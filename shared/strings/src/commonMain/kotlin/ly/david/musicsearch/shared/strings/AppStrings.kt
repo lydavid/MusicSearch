@@ -195,6 +195,12 @@ data class AppStrings(
     val youAreLoggedIn: String,
     val youAreLoggedOut: String,
     val invalidToken: String,
+    val official: String,
+    val bootleg: String,
+    val promotion: String,
+    val pseudoRelease: String,
+    val withdrawn: String,
+    val expunged: String,
 )
 
 object Locales {

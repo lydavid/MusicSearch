@@ -14,8 +14,6 @@ interface Release : NameWithDisambiguation {
     val asin: String?
     val quality: String?
     val countryCode: String?
-    val status: String?
-    val statusId: String?
     val packaging: String?
     val packagingId: String?
 }
