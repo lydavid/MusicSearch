@@ -78,7 +78,7 @@ internal fun LabelDetailsTabUi(
                 }
             }
 
-            // TODO: area
+            // TODO: area: its type is always null
         },
     )
 }
