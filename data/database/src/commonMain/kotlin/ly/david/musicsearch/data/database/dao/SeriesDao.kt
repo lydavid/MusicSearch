@@ -7,17 +7,17 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class SeriesDao(
     database: Database,
@@ -32,9 +32,9 @@ class SeriesDao(
                 Series(
                     id = id,
                     name = name,
-                    disambiguation = disambiguation,
-                    type = type,
-                    type_id = typeId,
+                    disambiguation = disambiguation.orEmpty(),
+                    type = type.orEmpty(),
+                    type_id = typeId.orEmpty(),
                 ),
             )
         }
@@ -58,8 +58,8 @@ class SeriesDao(
     private fun toDetailsModel(
         id: String,
         name: String,
-        disambiguation: String?,
-        type: String?,
+        disambiguation: String,
+        type: String,
         lastUpdated: Instant?,
     ) = SeriesDetailsModel(
         id = id,

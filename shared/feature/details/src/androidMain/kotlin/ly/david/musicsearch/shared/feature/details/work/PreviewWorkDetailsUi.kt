@@ -3,13 +3,13 @@ package ly.david.musicsearch.shared.feature.details.work
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -19,9 +19,9 @@ internal fun PreviewWorkDetailsUi() {
             work = WorkDetailsModel(
                 id = "ea44224b-bf88-4f35-b10a-fe53a6c44ffc",
                 name = "KEMURIKUSA",
-                languages = listOf("jpn", "eng"),
-                iswcs = listOf("T-927.551.670-6"),
-                attributes = listOf(
+                languages = persistentListOf("jpn", "eng"),
+                iswcs = persistentListOf("T-927.551.670-6"),
+                attributes = persistentListOf(
                     WorkAttributeUiModel(
                         type = "BUMA/STEMRA ID",
                         typeId = "a6492434-b847-4f1b-9869-9184ade990ed",

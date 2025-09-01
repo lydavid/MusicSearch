@@ -1,0 +1,102 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlin.String;
+import kotlin.collections.List;
+
+PRAGMA foreign_keys = OFF;
+
+-- recording
+CREATE TABLE recording_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  first_release_date TEXT NOT NULL,
+  length INTEGER AS Int,
+  video INTEGER AS Boolean NOT NULL,
+  isrcs TEXT AS List<String> NOT NULL
+);
+
+INSERT OR IGNORE INTO recording_temp (
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  length,
+  video,
+  isrcs
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  COALESCE(first_release_date, ''),
+  length,
+  video,
+  COALESCE(isrcs, '')
+FROM recording;
+
+DROP TABLE recording;
+ALTER TABLE recording_temp RENAME TO recording;
+
+-- series
+CREATE TABLE series_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO series_temp (
+  id,
+  name,
+  disambiguation,
+  type,
+  type_id
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, '')
+FROM series;
+
+DROP TABLE series;
+ALTER TABLE series_temp RENAME TO series;
+
+-- work
+CREATE TABLE work_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL,
+  iswcs TEXT AS List<String> NOT NULL,
+  languages TEXT AS List<String> NOT NULL
+);
+
+INSERT OR IGNORE INTO work_temp (
+  id,
+  name,
+  disambiguation,
+  type,
+  type_id,
+  iswcs,
+  languages
+)
+SELECT
+  id,
+  name,
+  COALESCE(disambiguation, ''),
+  COALESCE(type, ''),
+  COALESCE(type_id, ''),
+  COALESCE(iswcs, ''),
+  COALESCE(languages, '')
+FROM work;
+
+DROP TABLE work;
+ALTER TABLE work_temp RENAME TO work;
+
+
+PRAGMA foreign_keys = on;

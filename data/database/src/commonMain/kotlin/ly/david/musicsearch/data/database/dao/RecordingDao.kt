@@ -5,6 +5,7 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
@@ -33,10 +34,10 @@ class RecordingDao(
                 id = id,
                 name = name,
                 disambiguation = disambiguation,
-                firstReleaseDate = firstReleaseDate,
+                firstReleaseDate = firstReleaseDate.orEmpty(),
                 length = length,
                 video = video == true,
-                isrcs = isrcs?.sorted(),
+                isrcs = isrcs?.sorted().orEmpty(),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = recording.id,
@@ -65,10 +66,10 @@ class RecordingDao(
         id: String,
         name: String,
         disambiguation: String,
-        firstReleaseDate: String?,
+        firstReleaseDate: String,
         length: Int?,
         video: Boolean,
-        isrcs: List<String>?,
+        isrcs: List<String>,
         lastUpdated: Instant?,
     ) = RecordingDetailsModel(
         id = id,
@@ -77,7 +78,7 @@ class RecordingDao(
         disambiguation = disambiguation,
         length = length,
         video = video,
-        isrcs = isrcs,
+        isrcs = isrcs.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

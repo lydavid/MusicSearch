@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.recording
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
@@ -37,14 +38,14 @@ internal fun RecordingDetailsTabUi(
                     filterText = filterText,
                 )
             }
-            firstReleaseDate?.ifNotNullOrEmpty {
+            firstReleaseDate.ifNotEmpty {
                 TextWithHeading(
                     heading = strings.firstReleaseDate,
                     text = it,
                     filterText = filterText,
                 )
             }
-            isrcs?.ifNotNullOrEmpty {
+            isrcs.ifNotNullOrEmpty {
                 TextWithHeading(
                     heading = strings.isrc,
                     text = it.joinToString(", "),

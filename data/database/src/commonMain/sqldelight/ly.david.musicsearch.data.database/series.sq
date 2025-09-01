@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS series (
-  `id` TEXT PRIMARY KEY NOT NULL,
-  `name` TEXT NOT NULL,
-  `disambiguation` TEXT,
-  `type` TEXT,
-  `type_id` TEXT
+CREATE TABLE series (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT NOT NULL
 );
 
 insert:

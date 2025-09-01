@@ -6,7 +6,7 @@ internal fun mapToRecordingListItemModel(
     id: String,
     name: String,
     disambiguation: String,
-    firstReleaseDate: String?,
+    firstReleaseDate: String,
     length: Int?,
     video: Boolean,
     formattedArtistCreditNames: String,

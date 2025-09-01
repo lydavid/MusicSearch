@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.recording
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.itouKanakoArtistMusicBrainzModel
@@ -424,7 +425,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "different change will show up",
-                    isrcs = listOf(
+                    isrcs = persistentListOf(
                         "JPR562300374",
                     ),
                     lastUpdated = testDateTimeInThePast,
@@ -456,7 +457,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         ),
                     ),
                     disambiguation = "different change will show up",
-                    isrcs = listOf(
+                    isrcs = persistentListOf(
                         "JPR562300374",
                     ),
                     lastUpdated = testDateTimeInThePast,

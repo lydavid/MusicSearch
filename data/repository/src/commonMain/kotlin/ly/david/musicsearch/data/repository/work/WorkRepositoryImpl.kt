@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.work
 
-import kotlin.time.Instant
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
+import kotlin.time.Instant
 
 class WorkRepositoryImpl(
     private val workDao: WorkDao,
@@ -40,7 +41,7 @@ class WorkRepositoryImpl(
 
         if (work != null && visited) {
             return work.copy(
-                attributes = workAttributes,
+                attributes = workAttributes.toPersistentList(),
                 urls = urlRelations,
                 aliases = aliases,
             )

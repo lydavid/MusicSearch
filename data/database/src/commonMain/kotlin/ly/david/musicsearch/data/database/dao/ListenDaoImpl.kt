@@ -72,10 +72,10 @@ class ListenDaoImpl(
                     id = recordingMusicbrainzId,
                     name = recordingName,
                     disambiguation = "",
-                    firstReleaseDate = null,
+                    firstReleaseDate = "",
                     length = durationMs?.toInt(),
                     video = false,
-                    isrcs = null,
+                    isrcs = emptyList(),
                 )
 
                 artistCreditDao.insertArtistCredits(
