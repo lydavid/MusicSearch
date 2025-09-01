@@ -31,7 +31,7 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
         combine(this, metadataFlow) { listItems, browseRemoteMetadata ->
             val mappedItems = listItems.map { it as ListItemModel }
 
-            if (browseRemoteMetadata != null) {
+            if (browseRemoteMetadata != null && browseEntity != MusicBrainzEntityType.RELEASE_GROUP) {
                 mappedItems.insertFooterItem(
                     terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
                     item = LastUpdatedFooter(lastUpdated = browseRemoteMetadata.lastUpdated),

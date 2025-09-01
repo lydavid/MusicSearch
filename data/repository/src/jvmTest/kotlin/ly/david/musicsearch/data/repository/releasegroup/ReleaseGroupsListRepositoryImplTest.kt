@@ -42,6 +42,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
@@ -50,6 +51,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
+@Suppress("LargeClass")
 class ReleaseGroupsListRepositoryImplTest :
     KoinTest,
     TestArtistRepository,
@@ -132,6 +134,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     listFilters = ListFilters(
                         query = query,
                     ),
+                    now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
@@ -141,10 +144,13 @@ class ReleaseGroupsListRepositoryImplTest :
                     expectedResult = listOf(
                         alsoSprachZarathustraReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -153,7 +159,9 @@ class ReleaseGroupsListRepositoryImplTest :
                     expectedResult = listOf(
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -162,10 +170,13 @@ class ReleaseGroupsListRepositoryImplTest :
                     expectedResult = listOf(
                         alsoSprachZarathustraReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -174,7 +185,9 @@ class ReleaseGroupsListRepositoryImplTest :
                     expectedResult = listOf(
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -210,6 +223,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     listFilters = ListFilters(
                         query = query,
                     ),
+                    now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
@@ -217,30 +231,46 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        nutcrackerReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "1812",
                     expectedResult = listOf(
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by type",
                     query = "album",
                     expectedResult = listOf(
-                        nutcrackerReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "rattle",
                     expectedResult = listOf(
-                        nutcrackerReleaseGroupListItemModel,
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -277,6 +307,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     listFilters = ListFilters(
                         query = query,
                     ),
+                    now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
@@ -284,32 +315,52 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        alsoSprachZarathustraReleaseGroupListItemModel,
-                        nutcrackerReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "1812",
                     expectedResult = listOf(
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by type",
                     query = "album",
                     expectedResult = listOf(
-                        alsoSprachZarathustraReleaseGroupListItemModel,
-                        nutcrackerReleaseGroupListItemModel,
-                        tchaikovskyOverturesReleaseGroupListItemModel,
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "rattle",
                     expectedResult = listOf(
-                        nutcrackerReleaseGroupListItemModel,
+                        nutcrackerReleaseGroupListItemModel.copy(
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                        ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -333,6 +384,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     listFilters = ListFilters(
                         query = query,
                     ),
+                    now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
@@ -340,10 +392,10 @@ class ReleaseGroupsListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        nutcrackerReleaseGroupListItemModel,
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
                         ),
+                        nutcrackerReleaseGroupListItemModel,
                         alsoSprachZarathustraReleaseGroupListItemModel.copy(
                             collected = true,
                         ),
@@ -379,6 +431,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
         }.run {
@@ -386,13 +439,17 @@ class ReleaseGroupsListRepositoryImplTest :
                 listOf(
                     alsoSprachZarathustraReleaseGroupListItemModel.copy(
                         collected = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     nutcrackerReleaseGroupListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -405,13 +462,18 @@ class ReleaseGroupsListRepositoryImplTest :
                 entity = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    nutcrackerReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -422,15 +484,19 @@ class ReleaseGroupsListRepositoryImplTest :
                 entity = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
                 listOf(
                     alsoSprachZarathustraReleaseGroupListItemModel.copy(
                         collected = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -438,14 +504,15 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
                     ),
                     nutcrackerReleaseGroupListItemModel,
-                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
                         collected = true,
                     ),
                     nutcrackerReleaseGroupListItemModel.copy(
@@ -534,20 +601,21 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
-                        collected = true,
-                    ),
-                    nutcrackerReleaseGroupListItemModel,
-                    nutcrackerReleaseGroupListItemModel.copy(
-                        id = "new-id-is-considered-a-different-release-group",
-                    ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         disambiguation = "changes will be ignored if release group is linked to multiple entities",
                         visited = true,
                         collected = true,
+                    ),
+                    nutcrackerReleaseGroupListItemModel,
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
                     ),
                 ),
                 this,
@@ -592,6 +660,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     listFilters = ListFilters(
                         query = query,
                     ),
+                    now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
@@ -607,7 +676,9 @@ class ReleaseGroupsListRepositoryImplTest :
                                     isPrimary = true,
                                 ),
                             ),
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -627,7 +698,9 @@ class ReleaseGroupsListRepositoryImplTest :
                                     isPrimary = true,
                                 ),
                             ),
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -642,7 +715,9 @@ class ReleaseGroupsListRepositoryImplTest :
                                     isPrimary = true,
                                 ),
                             ),
+                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
+                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),

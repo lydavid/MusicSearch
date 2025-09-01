@@ -20,6 +20,7 @@ data class ReleaseGroupListItemModel(
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val lastUpdated: Long? = null,
 ) : EntityListItemModel, ReleaseGroup, NameWithDisambiguationAndAliases {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): ReleaseGroupListItemModel {
         return copy(aliases = aliases)
