@@ -1,0 +1,31 @@
+CREATE VIEW release_base AS
+SELECT
+  `release`.*,
+  ac.name AS artist_credit_names,
+  mi.thumbnail_url,
+  mi.id AS image_id,
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r2.id = `release`.id
+    ),
+    0
+  ) AS release_country_count,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = `release`.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
+  ) AS collected,
+  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+FROM `release`
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
+LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+GROUP BY `release`.id;

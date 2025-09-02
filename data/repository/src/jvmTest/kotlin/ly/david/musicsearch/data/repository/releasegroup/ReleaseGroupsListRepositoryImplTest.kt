@@ -102,6 +102,91 @@ class ReleaseGroupsListRepositoryImplTest :
     }
 
     @Test
+    fun releaseGroupsByLocalCollection() = runTest {
+        val releaseGroups = listOf(
+            alsoSprachZarathustraReleaseGroupMusicBrainzModel,
+            tchaikovskyOverturesReleaseGroupMusicBrainzModel,
+        )
+        val releaseGroupsListRepository = createReleaseGroupsListRepository(
+            releaseGroups = emptyList(),
+        )
+
+        collectionDao.insertLocal(
+            collection = CollectionListItemModel(
+                id = collectionId,
+                isRemote = false,
+                name = "release groups",
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
+            ),
+        )
+        collectionEntityDao.addAllToCollection(
+            collectionId = collectionId,
+            entityIds = releaseGroups.map { it.id },
+        )
+        releaseGroupDao.insertAllReleaseGroups(releaseGroups)
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                releaseGroupsListRepository.observeReleaseGroups(
+                    browseMethod = BrowseMethod.ByEntity(
+                        entityId = collectionId,
+                        entity = MusicBrainzEntityType.COLLECTION,
+                    ),
+                    listFilters = ListFilters(
+                        query = query,
+                        isRemote = false,
+                    ),
+                    now = testDateTimeInThePast,
+                )
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "No filter",
+                    query = "",
+                    expectedResult = listOf(
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by name",
+                    query = "1812",
+                    expectedResult = listOf(
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by type",
+                    query = "album",
+                    expectedResult = listOf(
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FilterTestCase(
+                    description = "filter by artist credit name",
+                    query = "tchai",
+                    expectedResult = listOf(
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+            ),
+        )
+    }
+
+    @Test
     fun setupReleaseGroupsByCollection() = runTest {
         val releaseGroups = listOf(
             alsoSprachZarathustraReleaseGroupMusicBrainzModel,
@@ -114,7 +199,7 @@ class ReleaseGroupsListRepositoryImplTest :
         collectionDao.insertLocal(
             collection = CollectionListItemModel(
                 id = collectionId,
-                isRemote = false,
+                isRemote = true,
                 name = "release groups",
                 entity = MusicBrainzEntityType.RELEASE_GROUP,
             ),

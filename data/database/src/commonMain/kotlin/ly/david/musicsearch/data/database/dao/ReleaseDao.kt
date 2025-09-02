@@ -27,7 +27,6 @@ class ReleaseDao(
     private val artistCreditDao: ArtistCreditDao,
     private val mediumDao: MediumDao,
     private val releaseLabelDao: ReleaseLabelDao,
-    private val releaseCountryDao: ReleaseCountryDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
@@ -156,26 +155,22 @@ class ReleaseDao(
     fun getReleases(
         browseMethod: BrowseMethod,
         query: String,
+        sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleases(
                 query = query,
+                sorted = sorted,
             )
         }
 
         is BrowseMethod.ByEntity -> {
             when (browseMethod.entity) {
-                MusicBrainzEntityType.AREA -> {
-                    getReleasesByCountry(
-                        areaId = browseMethod.entityId,
-                        query = query,
-                    )
-                }
-
                 MusicBrainzEntityType.LABEL -> {
                     getReleasesByLabel(
                         labelId = browseMethod.entityId,
                         query = query,
+                        sorted = sorted,
                     )
                 }
 
@@ -183,6 +178,7 @@ class ReleaseDao(
                     getReleasesByCollection(
                         collectionId = browseMethod.entityId,
                         query = query,
+                        sorted = sorted,
                     )
                 }
 
@@ -190,6 +186,7 @@ class ReleaseDao(
                     getReleasesByEntity(
                         entityId = browseMethod.entityId,
                         query = query,
+                        sorted = sorted,
                     )
                 }
             }
@@ -232,6 +229,7 @@ class ReleaseDao(
     private fun getReleasesByLabel(
         labelId: String,
         query: String,
+        sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByLabel(
             labelId = labelId,
@@ -243,6 +241,7 @@ class ReleaseDao(
             transacter.getReleasesByLabel(
                 labelId = labelId,
                 query = "%$query%",
+                sorted = sorted,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -255,67 +254,6 @@ class ReleaseDao(
             deleteReleaseLinksByEntity(labelId)
             transacter.deleteReleasesByLabelLinks(labelId = labelId)
         }
-    }
-    // endregion
-
-    // region releases by country
-    fun insertReleasesByCountry(
-        areaId: String,
-        releases: List<ReleaseMusicBrainzNetworkModel>,
-    ) {
-        transacter.transaction {
-            releases.forEach { release ->
-                insert(release)
-                transacter.insertOrIgnoreReleasesByEntity(
-                    Releases_by_entity(
-                        entity_id = areaId,
-                        release_id = release.id,
-                    ),
-                )
-                release.releaseEvents?.forEach { releaseEvent ->
-                    releaseCountryDao.insertOrIgnore(
-                        areaId = areaId,
-                        releaseId = release.id,
-                        date = releaseEvent.date,
-                    )
-                }
-            }
-        }
-    }
-
-    fun getCountOfReleasesByCountry(areaId: String): Int =
-        transacter.getNumberOfReleasesByCountry(
-            areaId = areaId,
-            query = "%%",
-        )
-            .executeAsOne()
-            .toInt()
-
-    private fun getReleasesByCountry(
-        areaId: String,
-        query: String,
-    ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleasesByCountry(
-            areaId = areaId,
-            query = "%$query%",
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getReleasesByCountry(
-                areaId = areaId,
-                query = "%$query%",
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToReleaseListItemModel,
-            )
-        },
-    )
-
-    fun deleteReleasesByCountry(areaId: String) {
-        deleteReleaseLinksByEntity(entityId = areaId)
-        // Do not delete from release_country,
-        // so that refreshing an area's release will not remove a release's release events
     }
     // endregion
 
@@ -358,6 +296,7 @@ class ReleaseDao(
     private fun getReleasesByEntity(
         entityId: String,
         query: String,
+        sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleasesByEntityQuery(
             entityId = entityId,
@@ -369,6 +308,7 @@ class ReleaseDao(
             transacter.getReleasesByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                sorted = sorted,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -381,6 +321,7 @@ class ReleaseDao(
     private fun getReleasesByCollection(
         collectionId: String,
         query: String,
+        sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByCollection(
             collectionId = collectionId,
@@ -392,6 +333,7 @@ class ReleaseDao(
             transacter.getReleasesByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sorted = sorted,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -432,6 +374,7 @@ class ReleaseDao(
 
     private fun getAllReleases(
         query: String,
+        sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllReleases(
             query = query,
@@ -441,6 +384,7 @@ class ReleaseDao(
         queryProvider = { limit, offset ->
             transacter.getAllReleases(
                 query = "%$query%",
+                sorted = sorted,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,

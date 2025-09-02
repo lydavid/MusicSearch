@@ -147,7 +147,7 @@ SELECT
   CAST (browse_remote_metadata.last_updated AS INTEGER)
 FROM release_group_base
 INNER JOIN release_groups_by_entity ON release_group_base.id = release_groups_by_entity.release_group_id
-LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = :entityId AND browse_remote_metadata.browse_entity = 'release-group'
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = release_groups_by_entity.entity_id AND browse_remote_metadata.browse_entity = 'release-group'
 WHERE release_groups_by_entity.entity_id = :entityId
 AND (
   release_group_base.name LIKE :query OR
@@ -210,7 +210,7 @@ SELECT
 FROM release_group_base
 INNER JOIN collection_entity ce ON release_group_base.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = :collectionId AND browse_remote_metadata.browse_entity = 'release-group'
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = c.id AND browse_remote_metadata.browse_entity = 'release-group'
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -278,7 +278,7 @@ WHERE (
   release_group_base.alias_names LIKE :query
 )
 ORDER BY
-  CASE WHEN :sorted THEN release_group_base.primary_type ELSE release_group_base.id END,
+  CASE WHEN :sorted THEN release_group_base.primary_type END,
   CASE WHEN :sorted THEN release_group_base.secondary_types END,
   CASE WHEN :sorted THEN release_group_base.first_release_date END
 LIMIT :limit OFFSET :offset;
