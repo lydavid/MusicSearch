@@ -77,8 +77,7 @@ class ReleasesListRepositoryImpl(
         return releaseDao.getReleases(
             browseMethod = browseMethod,
             query = listFilters.query,
-            // TODO: option to sort releases
-            sorted = true,
+            sorted = listFilters.sorted,
         )
     }
 

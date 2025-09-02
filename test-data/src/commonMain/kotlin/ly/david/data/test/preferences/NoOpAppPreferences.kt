@@ -32,6 +32,13 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
+    override val sortReleaseListItems: Flow<Boolean>
+        get() = flowOf(true)
+
+    override fun setSortReleaseListItems(show: Boolean) {
+        // No-op.
+    }
+
     override val showMoreInfoInReleaseListItem: Flow<Boolean>
         get() = flowOf(true)
 

@@ -534,10 +534,10 @@ class ReleasesListRepositoryImplTest :
                         weirdAlGreatestHitsReleaseListItemModel.copy(
                             lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        underPressureJapanReleaseListItemModel.copy(
+                        utaNoUtaReleaseListItemModel.copy(
                             lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        utaNoUtaReleaseListItemModel.copy(
+                        underPressureJapanReleaseListItemModel.copy(
                             lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
                         LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -1233,10 +1233,10 @@ class ReleasesListRepositoryImplTest :
                     weirdAlGreatestHitsReleaseListItemModel.copy(
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    underPressureJapanReleaseListItemModel.copy(
+                    utaNoUtaReleaseListItemModel.copy(
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    utaNoUtaReleaseListItemModel.copy(
+                    underPressureJapanReleaseListItemModel.copy(
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -1246,7 +1246,9 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters(
+                sorted = true,
+            ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1259,6 +1261,27 @@ class ReleasesListRepositoryImplTest :
                     ),
                     underPressureJapanReleaseListItemModel,
                     utaNoUtaReleaseListItemModel,
+                ),
+                this,
+            )
+        }
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(
+                sorted = false,
+            ),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    utaNoUtaReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
+                    underPressureReleaseListItemModel,
+                    weirdAlGreatestHitsReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
                 ),
                 this,
             )
@@ -1341,18 +1364,18 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    weirdAlGreatestHitsReleaseListItemModel,
-                    underPressureReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel.copy(
-                        id = "new-id-is-considered-a-different-release-group",
-                    ),
+                    utaNoUtaReleaseListItemModel,
                     underPressureJapanReleaseListItemModel.copy(
                         releaseCountryCount = 1,
                         disambiguation = "changes will show up when visiting",
                         visited = true,
                     ),
-                    utaNoUtaReleaseListItemModel,
+                    underPressureReleaseListItemModel,
+                    weirdAlGreatestHitsReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
                 ),
                 this,
             )
@@ -1438,12 +1461,12 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    underPressureJapanReleaseListItemModel,
                     underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
-                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1526,15 +1549,15 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel.copy(
-                        id = "new-id-is-considered-a-different-release-group",
-                    ),
                     underPressureJapanReleaseListItemModel.copy(
                         disambiguation = "changes will show up when visiting",
                         releaseCountryCount = 1,
                         visited = true,
+                    ),
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
                     ),
                 ),
                 this,
@@ -1543,186 +1566,185 @@ class ReleasesListRepositoryImplTest :
     }
 
     @Test
-    fun `refreshing releases by release group does not delete the release`() =
-        runTest {
-            setupReleasesByUnderPressureRecording()
-            setupReleasesByUnderPressureReleaseGroup()
+    fun `refreshing releases by release group does not delete the release`() = runTest {
+        setupReleasesByUnderPressureRecording()
+        setupReleasesByUnderPressureReleaseGroup()
 
-            val modifiedReleases = listOf(
-                underPressureReleaseMusicBrainzModel,
-                underPressureRemasteredReleaseMusicBrainzModel.copy(
-                    id = "new-id-is-considered-a-different-release-group",
-                ),
-                underPressureJapanReleaseMusicBrainzModel.copy(
-                    disambiguation = "changes will be ignored if release group is linked to multiple entities",
-                ),
-            )
-            val releasesListRepository = createReleasesListRepository(
-                releases = modifiedReleases,
-            )
+        val modifiedReleases = listOf(
+            underPressureReleaseMusicBrainzModel,
+            underPressureRemasteredReleaseMusicBrainzModel.copy(
+                id = "new-id-is-considered-a-different-release-group",
+            ),
+            underPressureJapanReleaseMusicBrainzModel.copy(
+                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+            ),
+        )
+        val releasesListRepository = createReleasesListRepository(
+            releases = modifiedReleases,
+        )
 
-            // refresh
-            releasesListRepository.observeReleases(
-                browseMethod = BrowseMethod.ByEntity(
-                    entityId = underPressureReleaseGroupMusicBrainzModel.id,
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
-                ),
-                listFilters = ListFilters(),
-                now = testDateTimeInThePast,
-            ).asSnapshot {
-                refresh()
-            }.run {
-                assertEquals(
-                    listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            id = "new-id-is-considered-a-different-release-group",
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+        // refresh
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = underPressureReleaseGroupMusicBrainzModel.id,
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
+            ),
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot {
+            refresh()
+        }.run {
+            assertEquals(
+                listOf(
+                    underPressureReleaseListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    this,
-                )
-            }
-
-            // other entities remain unchanged
-            releasesListRepository.observeReleases(
-                browseMethod = BrowseMethod.ByEntity(
-                    entityId = underPressureRecordingMusicBrainzModel.id,
-                    entity = MusicBrainzEntityType.RECORDING,
-                ),
-                listFilters = ListFilters(),
-                now = testDateTimeInThePast,
-            ).asSnapshot().run {
-                assertEquals(
-                    listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    this,
-                )
-            }
-            releasesListRepository.observeReleases(
-                browseMethod = BrowseMethod.All,
-                listFilters = ListFilters(),
-                now = testDateTimeInThePast,
-            ).asSnapshot().run {
-                assertEquals(
-                    listOf(
-                        underPressureReleaseListItemModel,
-                        underPressureRemasteredReleaseListItemModel,
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            id = "new-id-is-considered-a-different-release-group",
-                        ),
-                        underPressureJapanReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    this,
-                )
-            }
-
-            // now visit the release and refresh it
-            val releaseRepository = createReleaseRepository(
-                underPressureJapanReleaseMusicBrainzModel.copy(
-                    disambiguation = "changes will show up if we have not visited it yet",
-                    releaseGroup = underPressureReleaseGroupMusicBrainzModel,
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
+                this,
             )
-            val expectedReleaseDetails = ReleaseDetailsModel(
-                id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
-                name = "Under Pressure",
-                date = "1991",
-                disambiguation = "changes will show up if we have not visited it yet",
-                artistCredits = listOf(
-                    ArtistCreditUiModel(
-                        artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
-                        name = "Queen",
-                        joinPhrase = " & ",
-                    ),
-                    ArtistCreditUiModel(
-                        artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
-                        name = "David Bowie",
-                        joinPhrase = "",
-                    ),
-                ),
-                countryCode = "JP",
-                quality = "normal",
-                status = ReleaseStatus.OFFICIAL,
-                textRepresentation = TextRepresentationUiModel(
-                    script = "Latn",
-                    language = "eng",
-                ),
-                releaseGroup = ReleaseGroupForRelease(
-                    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-                    name = "Under Pressure",
-                    firstReleaseDate = "1981-10",
-                    primaryType = "Single",
-                ),
-                areas = listOf(
-                    AreaListItemModel(
-                        id = "2db42837-c832-3c27-b4a3-08198f75693c",
-                        name = "Japan",
-                        visited = false,
-                        countryCodes = persistentListOf("JP"),
-                        date = "1991",
-                    ),
-                ),
-                lastUpdated = testDateTimeInThePast,
-            )
-            releaseRepository.lookupRelease(
-                releaseId = underPressureJapanReleaseMusicBrainzModel.id,
-                forceRefresh = false,
-                lastUpdated = testDateTimeInThePast,
-            ).let { releaseDetailsModel ->
-                assertEquals(
-                    expectedReleaseDetails,
-                    releaseDetailsModel,
-                )
-            }
-            releaseRepository.lookupRelease(
-                releaseId = underPressureJapanReleaseMusicBrainzModel.id,
-                forceRefresh = true,
-                lastUpdated = testDateTimeInThePast,
-            ).let { releaseDetailsModel ->
-                assertEquals(
-                    expectedReleaseDetails.copy(
-                        disambiguation = "changes will show up if we have not visited it yet",
-                    ),
-                    releaseDetailsModel,
-                )
-            }
-            releasesListRepository.observeReleases(
-                browseMethod = BrowseMethod.All,
-                listFilters = ListFilters(),
-                now = testDateTimeInThePast,
-            ).asSnapshot().run {
-                assertEquals(
-                    listOf(
-                        underPressureReleaseListItemModel,
-                        underPressureRemasteredReleaseListItemModel,
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            id = "new-id-is-considered-a-different-release-group",
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            disambiguation = "changes will show up if we have not visited it yet",
-                            releaseCountryCount = 1,
-                            visited = true,
-                        ),
-                    ),
-                    this,
-                )
-            }
         }
+
+        // other entities remain unchanged
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = underPressureRecordingMusicBrainzModel.id,
+                entity = MusicBrainzEntityType.RECORDING,
+            ),
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureReleaseListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    underPressureJapanReleaseListItemModel.copy(
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureJapanReleaseListItemModel,
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                ),
+                this,
+            )
+        }
+
+        // now visit the release and refresh it
+        val releaseRepository = createReleaseRepository(
+            underPressureJapanReleaseMusicBrainzModel.copy(
+                disambiguation = "changes will show up if we have not visited it yet",
+                releaseGroup = underPressureReleaseGroupMusicBrainzModel,
+            ),
+        )
+        val expectedReleaseDetails = ReleaseDetailsModel(
+            id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
+            name = "Under Pressure",
+            date = "1991",
+            disambiguation = "changes will show up if we have not visited it yet",
+            artistCredits = listOf(
+                ArtistCreditUiModel(
+                    artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
+                    name = "Queen",
+                    joinPhrase = " & ",
+                ),
+                ArtistCreditUiModel(
+                    artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                    name = "David Bowie",
+                    joinPhrase = "",
+                ),
+            ),
+            countryCode = "JP",
+            quality = "normal",
+            status = ReleaseStatus.OFFICIAL,
+            textRepresentation = TextRepresentationUiModel(
+                script = "Latn",
+                language = "eng",
+            ),
+            releaseGroup = ReleaseGroupForRelease(
+                id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
+                name = "Under Pressure",
+                firstReleaseDate = "1981-10",
+                primaryType = "Single",
+            ),
+            areas = listOf(
+                AreaListItemModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    visited = false,
+                    countryCodes = persistentListOf("JP"),
+                    date = "1991",
+                ),
+            ),
+            lastUpdated = testDateTimeInThePast,
+        )
+        releaseRepository.lookupRelease(
+            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).let { releaseDetailsModel ->
+            assertEquals(
+                expectedReleaseDetails,
+                releaseDetailsModel,
+            )
+        }
+        releaseRepository.lookupRelease(
+            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+            forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
+        ).let { releaseDetailsModel ->
+            assertEquals(
+                expectedReleaseDetails.copy(
+                    disambiguation = "changes will show up if we have not visited it yet",
+                ),
+                releaseDetailsModel,
+            )
+        }
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    underPressureJapanReleaseListItemModel.copy(
+                        disambiguation = "changes will show up if we have not visited it yet",
+                        releaseCountryCount = 1,
+                        visited = true,
+                    ),
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
+                ),
+                this,
+            )
+        }
+    }
 }

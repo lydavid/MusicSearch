@@ -204,6 +204,14 @@ internal fun CollectionUi(
                         )
                     }
                     if (entity == MusicBrainzEntityType.RELEASE) {
+                        SortToggleMenuItem(
+                            sorted = state.allEntitiesListUiState.releasesListUiState.sort,
+                            onToggle = {
+                                releasesEventSink(
+                                    EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                                )
+                            },
+                        )
                         MoreInfoToggleMenuItem(
                             showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {

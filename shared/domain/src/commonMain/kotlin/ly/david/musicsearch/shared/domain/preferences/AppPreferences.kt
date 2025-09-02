@@ -23,6 +23,9 @@ interface AppPreferences {
     val observeSeedColor: Flow<Int>
     fun setSeedColor(seedColor: Int)
 
+    val sortReleaseListItems: Flow<Boolean>
+    fun setSortReleaseListItems(show: Boolean)
+
     val showMoreInfoInReleaseListItem: Flow<Boolean>
     fun setShowMoreInfoInReleaseListItem(show: Boolean)
 

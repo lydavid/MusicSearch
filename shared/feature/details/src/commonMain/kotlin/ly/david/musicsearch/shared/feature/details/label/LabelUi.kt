@@ -37,6 +37,7 @@ import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -172,6 +173,14 @@ internal fun LabelUi(
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == Tab.RELEASES) {
+                        SortToggleMenuItem(
+                            sorted = state.allEntitiesListUiState.releasesListUiState.sort,
+                            onToggle = {
+                                releasesByEntityEventSink(
+                                    EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                                )
+                            },
+                        )
                         MoreInfoToggleMenuItem(
                             showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {

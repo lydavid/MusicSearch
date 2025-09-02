@@ -43,8 +43,14 @@ abstract class BaseListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val sorted by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(true)
-        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod, sorted) {
+        val sortReleaseGroups by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
+        val sortReleases by appPreferences.sortReleaseListItems.collectAsRetainedState(false)
+        val sort = when (getEntityType()) {
+            MusicBrainzEntityType.RELEASE -> sortReleases
+            MusicBrainzEntityType.RELEASE_GROUP -> sortReleaseGroups
+            else -> false
+        }
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, browseMethod, sort) {
             mutableStateOf(
                 getEntities(
                     entity = getEntityType(),
@@ -52,7 +58,7 @@ abstract class BaseListPresenter(
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
-                        sorted = sorted,
+                        sorted = sort,
                     ),
                 ),
             )
@@ -71,7 +77,7 @@ abstract class BaseListPresenter(
             count = count,
             lazyListState = lazyListState,
             showMoreInfo = showMoreInfoInReleaseListItem,
-            sort = sorted,
+            sort = sort,
             eventSink = { event ->
                 when (event) {
                     is EntitiesListUiEvent.Get -> {
@@ -95,6 +101,10 @@ abstract class BaseListPresenter(
                                 )
                             }
                         }
+                    }
+
+                    is EntitiesListUiEvent.UpdateSortReleaseListItem -> {
+                        appPreferences.setSortReleaseListItems(event.sort)
                     }
 
                     is EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
@@ -122,6 +132,10 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
 
     data class RequestForMissingCoverArtUrl(
         val entityId: String,
+    ) : EntitiesListUiEvent
+
+    data class UpdateSortReleaseListItem(
+        val sort: Boolean,
     ) : EntitiesListUiEvent
 
     data class UpdateShowMoreInfoInReleaseListItem(

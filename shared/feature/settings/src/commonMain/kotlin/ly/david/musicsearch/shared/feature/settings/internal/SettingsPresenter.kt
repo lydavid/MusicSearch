@@ -1,12 +1,12 @@
 package ly.david.musicsearch.shared.feature.settings.internal
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -40,19 +40,20 @@ internal class SettingsPresenter(
 ) : Presenter<SettingsUiState> {
     @Composable
     override fun present(): SettingsUiState {
-        val musicBrainzUsername by musicBrainzAuthStore.username.collectAsState(initial = "")
-        val musicBrainzAccessToken by musicBrainzAuthStore.accessToken.collectAsState(initial = null)
+        val musicBrainzUsername by musicBrainzAuthStore.username.collectAsRetainedState("")
+        val musicBrainzAccessToken by musicBrainzAuthStore.accessToken.collectAsRetainedState(null)
 
         var textFieldText by rememberSaveable { mutableStateOf("") }
         var listenBrainzLoginState: ListenBrainzLoginState? by rememberRetained { mutableStateOf(null) }
-        val listenBrainzUsername by listenBrainzAuthStore.username.collectAsState(initial = "")
-        val listenBrainzUserToken by listenBrainzAuthStore.observeUserToken().collectAsState(initial = "")
+        val listenBrainzUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
+        val listenBrainzUserToken by listenBrainzAuthStore.observeUserToken().collectAsRetainedState("")
 
-        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsState(initial = true)
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+        val sortReleaseListItems by appPreferences.sortReleaseListItems.collectAsRetainedState(false)
+        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
-        val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsState(initial = false)
-        val isDeveloperMode by appPreferences.isDeveloperMode.collectAsState(initial = false)
+        val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsRetainedState(false)
+        val isDeveloperMode by appPreferences.isDeveloperMode.collectAsRetainedState(false)
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
 
         val coroutineScope = rememberCoroutineScope()
@@ -60,6 +61,10 @@ internal class SettingsPresenter(
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
+                is SettingsUiEvent.UpdateSortReleaseListItems -> {
+                    appPreferences.setSortReleaseListItems(event.sort)
+                }
+
                 is SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.show)
                 }
@@ -124,6 +129,7 @@ internal class SettingsPresenter(
             listenBrainzUsername = listenBrainzUsername,
             listenBrainzUserToken = listenBrainzUserToken,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            sortReleaseListItems = sortReleaseListItems,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showCrashReporterSettings = showCrashReporterSettings,
             isCrashReportingEnabled = isCrashReportingEnabled,
@@ -145,6 +151,7 @@ internal data class SettingsUiState(
     val listenBrainzLoginState: ListenBrainzLoginState? = null,
     val listenBrainzUsername: String = "",
     val listenBrainzUserToken: String = "",
+    val sortReleaseListItems: Boolean = false,
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
     val showCrashReporterSettings: Boolean = false,
@@ -165,6 +172,7 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data object ListenBrainzLogout : SettingsUiEvent
 
     data object DismissSnackbar : SettingsUiEvent
+    data class UpdateSortReleaseListItems(val sort: Boolean) : SettingsUiEvent
     data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
     data class UpdateSortReleaseGroupListItems(val sort: Boolean) : SettingsUiEvent
     data class EnableCrashReporting(val enable: Boolean) : SettingsUiEvent

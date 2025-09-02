@@ -199,6 +199,14 @@ internal fun ArtistUi(
                         )
                     }
                     if (selectedTab == Tab.RELEASES) {
+                        SortToggleMenuItem(
+                            sorted = state.allEntitiesListUiState.releasesListUiState.sort,
+                            onToggle = {
+                                releasesByEntityEventSink(
+                                    EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                                )
+                            },
+                        )
                         MoreInfoToggleMenuItem(
                             showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
