@@ -14,6 +14,42 @@ CREATE TABLE "release" (
   language TEXT NOT NULL
 );
 
+-- left join artist credits because we can insert stub releases from browsing listens
+-- we still want these to be searchable in all releases
+CREATE VIEW release_base AS
+SELECT
+  `release`.*,
+  ac.name AS artist_credit_names,
+  mi.thumbnail_url,
+  mi.id AS image_id,
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r2.id = `release`.id
+    ),
+    0
+  ) AS release_country_count,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = `release`.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
+  ) AS collected,
+  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+FROM `release`
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
+LEFT JOIN mbid_image mi ON mi.mbid = `release`.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+GROUP BY `release`.id;
+
+-- queries
+
 insert:
 INSERT OR IGNORE INTO `release`
 VALUES (
@@ -129,9 +165,9 @@ SELECT IFNULL(
       SELECT DISTINCT r.id
       FROM `release` r
       INNER JOIN releases_by_entity re ON re.release_id = r.id
-      INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-      INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-      LEFT JOIN release_label rl ON r.id = rl.release_id
+      INNER JOIN release_label ON r.id = release_label.release_id
+      LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+      LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
       LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
       WHERE re.entity_id = :labelId
       AND (
@@ -140,7 +176,7 @@ SELECT IFNULL(
         r.date LIKE :query OR
         r.country_code LIKE :query OR
         ac.name LIKE :query OR
-        rl.catalog_number LIKE :query OR
+        release_label.catalog_number LIKE :query OR
         release_alias.name LIKE :query
       )
     )
@@ -150,128 +186,40 @@ SELECT IFNULL(
 
 getReleasesByLabel:
 SELECT
-  r.*,
+  release_base.*,
+  CAST (browse_remote_metadata.last_updated AS INTEGER),
   (
     SELECT GROUP_CONCAT(catalog_number, ', ')
     FROM (
       SELECT DISTINCT rl2.catalog_number
       FROM release_label rl2
-      WHERE rl2.release_id = r.id
+      WHERE rl2.release_id = release_base.id
       ORDER BY rl2.catalog_number
     ) AS distinct_catalogs
-  ) AS catalogNumbers,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS imageId,
-  COALESCE(
-    (
-      SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
-      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
-    ),
-    0
-  ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
-  ) AS collected,
-  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
-FROM `release` r
-INNER JOIN releases_by_entity re ON re.release_id = r.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-LEFT JOIN release_label rl ON r.id = rl.release_id
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
-WHERE re.entity_id = :labelId
+  ) AS catalog_numbers
+FROM release_base
+INNER JOIN releases_by_entity ON releases_by_entity.release_id = release_base.id
+INNER JOIN release_label ON release_base.id = release_label.release_id
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = releases_by_entity.entity_id AND browse_remote_metadata.browse_entity = 'release'
+WHERE releases_by_entity.entity_id = :labelId
 AND (
-  r.name LIKE :query OR
-  r.disambiguation LIKE :query OR
-  r.date LIKE :query OR
-  r.country_code LIKE :query OR
-  ac.name LIKE :query OR
-  rl.catalog_number LIKE :query OR
-  release_alias.name LIKE :query
+  release_base.name LIKE :query OR
+  release_base.disambiguation LIKE :query OR
+  release_base.date LIKE :query OR
+  release_base.country_code LIKE :query OR
+  release_base.artist_credit_names LIKE :query OR
+  release_label.catalog_number LIKE :query OR
+  release_base.alias_names LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.date, r.name
+GROUP BY release_base.id
+ORDER BY
+  CASE WHEN :sorted THEN release_base.date ELSE releases_by_entity.rowid END,
+  CASE WHEN :sorted THEN release_base.name END
 LIMIT :limit OFFSET :offset;
 
 deleteReleasesByLabelLinks:
 DELETE FROM release_label
 WHERE label_id = :labelId;
-
--- releases by country
-
-getNumberOfReleasesByCountry:
-SELECT IFNULL(
-  (
-    SELECT COUNT(DISTINCT r.id)
-    FROM `release` r
-    INNER JOIN releases_by_entity re ON re.release_id = r.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-    LEFT JOIN release_country rc ON r.id = rc.release_id
-    WHERE re.entity_id = :areaId
-    AND (
-      r.name LIKE :query OR
-      r.disambiguation LIKE :query OR
-      r.date LIKE :query OR
-      r.country_code LIKE :query OR
-      ac.name LIKE :query OR
-      release_alias.name LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getReleasesByCountry:
-SELECT
-  r.*,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS imageId,
-  (
-    SELECT COUNT(cc.area_id)
-    FROM `release`
-    INNER JOIN release_country ON release_country.release_id = `release`.id
-    INNER JOIN country_code cc ON cc.area_id = release_country.country_id
-    WHERE r.id = `release`.id
-  ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
-  ) AS collected,
-  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
-FROM `release` r
-INNER JOIN releases_by_entity re ON re.release_id = r.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-LEFT JOIN release_country rc ON r.id = rc.release_id
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
-WHERE re.entity_id = :areaId
-AND (
-  r.name LIKE :query OR
-  r.disambiguation LIKE :query OR
-  r.date LIKE :query OR
-  r.country_code LIKE :query OR
-  ac.name LIKE :query OR
-  release_alias.name LIKE :query
-)
-GROUP BY r.id
-LIMIT :limit OFFSET :offset;
-
-deleteReleasesByCountryLinks:
-DELETE FROM release_country
-WHERE country_id = :areaId;
 
 -- releases by collection
 
@@ -282,8 +230,8 @@ SELECT IFNULL(
     FROM release r
     INNER JOIN collection_entity ce ON r.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
     WHERE c.id = :collectionId
     AND ce.deleted = 0
@@ -301,44 +249,25 @@ SELECT IFNULL(
 
 getReleasesByCollection:
 SELECT
-  r.*,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS imageId,
-  COALESCE(
-    (
-      SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
-      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
-    ),
-    0
-  ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected,
-  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
-FROM `release` r
-INNER JOIN collection_entity ce ON r.id = ce.entity_id
+  release_base.*,
+  CAST (browse_remote_metadata.last_updated AS INTEGER)
+FROM release_base
+INNER JOIN collection_entity ce ON release_base.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = c.id AND browse_remote_metadata.browse_entity = 'release'
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  r.name LIKE :query OR
-  r.disambiguation LIKE :query OR
-  r.date LIKE :query OR
-  r.country_code LIKE :query OR
-  ac.name LIKE :query OR
-  release_alias.name LIKE :query
+  release_base.name LIKE :query OR
+  release_base.disambiguation LIKE :query OR
+  release_base.date LIKE :query OR
+  release_base.country_code LIKE :query OR
+  release_base.artist_credit_names LIKE :query OR
+  release_base.alias_names LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.date, r.name
+ORDER BY
+  CASE WHEN :sorted THEN release_base.date ELSE ce.rowid END,
+  CASE WHEN :sorted THEN release_base.name END
 LIMIT :limit OFFSET :offset;
 
 -- releases by entity
@@ -349,8 +278,8 @@ SELECT IFNULL(
     SELECT COUNT(DISTINCT r.id)
     FROM release r
     INNER JOIN releases_by_entity re ON r.id = re.release_id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
     WHERE re.entity_id = :entityId
     AND (
@@ -367,44 +296,23 @@ SELECT IFNULL(
 
 getReleasesByEntity:
 SELECT
-  r.*,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS imageId,
-  COALESCE(
-    (
-      SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
-      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
-    ),
-    0
-  ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
-  ) AS collected,
-  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
-FROM `release` r
-INNER JOIN releases_by_entity re ON r.id = re.release_id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
-WHERE re.entity_id = :entityId
+  release_base.*,
+  CAST (browse_remote_metadata.last_updated AS INTEGER)
+FROM release_base
+INNER JOIN releases_by_entity ON release_base.id = releases_by_entity.release_id
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = releases_by_entity.entity_id AND browse_remote_metadata.browse_entity = 'release'
+WHERE releases_by_entity.entity_id = :entityId
 AND (
-  r.name LIKE :query OR
-  r.disambiguation LIKE :query OR
-  r.date LIKE :query OR
-  r.country_code LIKE :query OR
-  ac.name LIKE :query OR
-  release_alias.name LIKE :query
+  release_base.name LIKE :query OR
+  release_base.disambiguation LIKE :query OR
+  release_base.date LIKE :query OR
+  release_base.country_code LIKE :query OR
+  release_base.artist_credit_names LIKE :query OR
+  release_base.alias_names LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.date, r.name
+ORDER BY
+  CASE WHEN :sorted THEN release_base.date ELSE releases_by_entity.rowid END,
+  CASE WHEN :sorted THEN release_base.name END
 LIMIT :limit OFFSET :offset;
 
 -- all releases
@@ -429,45 +337,20 @@ SELECT IFNULL(
   0
 ) AS count;
 
--- left join artist credits because we can insert stub releases from browsing listens
--- we still want these to be searchable in all releases because they are releases the user
--- has likely listened to and may care about. Plus, they likely have images!
 getAllReleases:
 SELECT
-  r.*,
-  ac.name AS artistCreditNames,
-  mi.thumbnail_url,
-  mi.id AS imageId,
-  COALESCE(
-    (
-      SELECT COUNT(cc.area_id)
-      FROM `release`
-      LEFT JOIN release_country rc ON rc.release_id = `release`.id
-      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
-      WHERE r.id = `release`.id
-    ),
-    0
-  ) AS releaseCountryCount,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = r.id
-  ) AS collected,
-  GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
-FROM `release` r
-LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
-LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON r.id = release_alias.release_id AND release_alias.is_primary
-LEFT JOIN mbid_image mi ON mi.mbid = r.id
-LEFT JOIN details_metadata ON details_metadata.entity_id = r.id
+  release_base.*,
+  CAST(NULL AS INTEGER) AS last_updated
+FROM release_base
 WHERE (
-  r.name LIKE :query OR
-  r.disambiguation LIKE :query OR
-  r.date LIKE :query OR
-  r.country_code LIKE :query OR
-  ac.name LIKE :query OR
-  release_alias.name LIKE :query
+  release_base.name LIKE :query OR
+  release_base.disambiguation LIKE :query OR
+  release_base.date LIKE :query OR
+  release_base.country_code LIKE :query OR
+  release_base.artist_credit_names LIKE :query OR
+  release_base.alias_names LIKE :query
 )
-GROUP BY r.id
-ORDER BY r.date, r.name
+ORDER BY
+  CASE WHEN :sorted THEN release_base.date END,
+  CASE WHEN :sorted THEN release_base.name END
 LIMIT :limit OFFSET :offset;

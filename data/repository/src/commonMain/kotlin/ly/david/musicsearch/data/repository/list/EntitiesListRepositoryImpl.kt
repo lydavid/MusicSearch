@@ -87,7 +87,8 @@ class EntitiesListRepositoryImpl(
             MusicBrainzEntityType.RELEASE -> releasesListRepository.observeReleases(
                 browseMethod = browseMethod,
                 listFilters = listFilters,
-            ) as Flow<PagingData<ListItemModel>>
+                now = Clock.System.now(),
+            )
 
             MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListRepository.observeReleaseGroups(
                 browseMethod = browseMethod,

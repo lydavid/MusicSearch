@@ -4,11 +4,13 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import kotlin.time.Instant
 
 interface ReleasesListRepository {
     fun observeReleases(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
-    ): Flow<PagingData<ReleaseListItemModel>>
+        now: Instant,
+    ): Flow<PagingData<ListItemModel>>
 }

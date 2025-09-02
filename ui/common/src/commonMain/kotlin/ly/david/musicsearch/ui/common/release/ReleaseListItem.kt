@@ -66,7 +66,7 @@ fun ReleaseListItem(
         supportingContent = {
             Column {
                 if (showMoreInfo) {
-                    val countryAndDate = release.countryCode?.let { countryCode ->
+                    val countryAndDate = release.countryCode.takeIf { it.isNotEmpty() }?.let { countryCode ->
                         buildString {
                             append("${countryCode.toFlagEmoji()} $countryCode")
                             if (release.releaseCountryCount > 1) append(" + ${release.releaseCountryCount - 1}")

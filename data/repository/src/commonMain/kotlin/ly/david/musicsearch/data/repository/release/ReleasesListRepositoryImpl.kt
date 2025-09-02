@@ -2,7 +2,10 @@ package ly.david.musicsearch.data.repository.release
 
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
+import app.cash.paging.TerminalSeparatorType
+import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -16,9 +19,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
+import kotlin.time.Instant
 
 class ReleasesListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
@@ -36,11 +42,32 @@ class ReleasesListRepositoryImpl(
     override fun observeReleases(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
-    ): Flow<PagingData<ReleaseListItemModel>> {
+        now: Instant,
+    ): Flow<PagingData<ListItemModel>> {
         return observeEntities(
             browseMethod = browseMethod,
             listFilters = listFilters,
-        )
+            now = now,
+        ).map { pagingData ->
+            pagingData
+                .insertSeparators(
+                    terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                ) { r1: ReleaseListItemModel?, r2: ReleaseListItemModel? ->
+                    when {
+                        r1 != null && r2 == null -> {
+                            r1.lastUpdated
+                                ?.let { Instant.fromEpochMilliseconds(it) }
+                                ?.let { lastUpdated ->
+                                    LastUpdatedFooter(lastUpdated = lastUpdated)
+                                }
+                        }
+
+                        else -> {
+                            null
+                        }
+                    }
+                }
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -50,6 +77,8 @@ class ReleasesListRepositoryImpl(
         return releaseDao.getReleases(
             browseMethod = browseMethod,
             query = listFilters.query,
+            // TODO: option to sort releases
+            sorted = true,
         )
     }
 
@@ -64,10 +93,6 @@ class ReleasesListRepositoryImpl(
             )
 
             when (entity) {
-                MusicBrainzEntityType.AREA -> {
-                    releaseDao.deleteReleasesByCountry(entityId)
-                }
-
                 MusicBrainzEntityType.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
                 }
@@ -113,13 +138,6 @@ class ReleasesListRepositoryImpl(
     ) {
         releaseDao.insertAll(musicBrainzModels)
         when (entity) {
-            MusicBrainzEntityType.AREA -> {
-                releaseDao.insertReleasesByCountry(
-                    areaId = entityId,
-                    releases = musicBrainzModels,
-                )
-            }
-
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
                     collectionId = entityId,
@@ -146,10 +164,6 @@ class ReleasesListRepositoryImpl(
         entity: MusicBrainzEntityType,
     ): Int {
         return when (entity) {
-            MusicBrainzEntityType.AREA -> {
-                releaseDao.getCountOfReleasesByCountry(entityId)
-            }
-
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.getCountOfEntitiesByCollection(entityId)
             }

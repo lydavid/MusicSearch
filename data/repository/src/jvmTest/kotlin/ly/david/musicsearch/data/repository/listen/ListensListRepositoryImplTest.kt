@@ -20,6 +20,7 @@ import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
+import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -426,6 +427,7 @@ class ListensListRepositoryImplTest :
         val releases = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(),
+            now = testDateTimeInThePast,
         ).asSnapshot()
         Assert.assertEquals(
             listOf(

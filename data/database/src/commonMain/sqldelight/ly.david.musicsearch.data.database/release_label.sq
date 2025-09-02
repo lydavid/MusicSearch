@@ -1,5 +1,6 @@
 ﻿-- This table is used together with releases_by_entity or labels_by_entity
 -- to provide catalog_number
+-- Do not solely rely on this to page releases or labels.
 CREATE TABLE IF NOT EXISTS release_label (
   `release_id` TEXT NOT NULL,
   `label_id` TEXT NOT NULL,
