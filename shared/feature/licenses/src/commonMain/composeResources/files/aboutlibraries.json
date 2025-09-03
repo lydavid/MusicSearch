@@ -536,14 +536,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.8.8",
+            "artifactVersion": "1.8.9",
             "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "fragment",
-            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.8",
+            "website": "https://developer.android.com/jetpack/androidx/releases/fragment#1.8.9",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -608,14 +608,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.9.2",
+            "artifactVersion": "2.9.3",
             "description": "Android Lifecycle-Common",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Lifecycle-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.2",
+            "website": "https://developer.android.com/jetpack/androidx/releases/lifecycle#2.9.3",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1378,7 +1378,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.1.0",
+            "artifactVersion": "4.1.1",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
