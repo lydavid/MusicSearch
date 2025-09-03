@@ -47,6 +47,7 @@ appId: io.github.lydavid.musicsearch.debug
 # But with less data, like in this test, the item's position is retained.
 - scrollUntilVisible:
     direction: UP
+    speed: 100
     element:
         text: "ぐされ (Gusare)"
 - assertVisible: "ぐされ (Gusare)"
