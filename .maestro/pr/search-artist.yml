@@ -39,11 +39,11 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "Release Groups"
 - assertVisible: "ぐされ (Gusare)"
-- assertVisible: "潜潜話 (Hisohiso Banashi)"
-- tapOn: "More actions"
-- tapOn: "Un-sort"
-- assertVisible: "ぐされ (Gusare)"
 - assertNotVisible: "潜潜話 (Hisohiso Banashi)"
+- tapOn: "More actions"
+- tapOn: "Sort"
+- assertVisible: "ぐされ (Gusare)"
+- assertVisible: "潜潜話 (Hisohiso Banashi)"
 
 - tapOn: "Releases"
 
@@ -92,9 +92,11 @@ appId: io.github.lydavid.musicsearch.debug
 
 - tapOn: "Release Groups"
 - assertVisible: "ぐされ (Gusare)"
-- assertNotVisible: "潜潜話 (Hisohiso Banashi)"
+- assertVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
-- tapOn: "Sort"
+- tapOn: "Un-sort"
+- assertVisible: "ぐされ (Gusare)"
+- assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 
 - tapOn: "Releases"
 
