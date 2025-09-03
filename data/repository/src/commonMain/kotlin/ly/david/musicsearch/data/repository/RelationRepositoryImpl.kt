@@ -50,120 +50,6 @@ class RelationRepositoryImpl(
         )
     }
 
-    override suspend fun insertAllRelations(
-        entity: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType>,
-        lastUpdated: Instant,
-    ) {
-        val relationMusicBrainzModels = lookupEntityWithRelations(
-            entityType = entity,
-            entityId = entityId,
-            relatedEntities = relatedEntities,
-        )
-        val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
-        relationDao.insertAll(relationWithOrderList)
-
-        // We need to mark because an entity may have no relationships,
-        // which would cause us to keep trying to fetch it from remote
-        relationsMetadataDao.upsert(
-            entityId = entityId,
-            lastUpdated = lastUpdated,
-        )
-    }
-
-    @Suppress("LongMethod")
-    private suspend fun lookupEntityWithRelations(
-        entityType: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType>,
-    ): List<RelationMusicBrainzModel>? {
-        val include = relatedEntities.joinToString(separator = "+") { "${it.resourceUri}-rels" }
-        return when (entityType) {
-            MusicBrainzEntityType.AREA -> {
-                lookupApi.lookupArea(
-                    areaId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.ARTIST -> {
-                lookupApi.lookupArtist(
-                    artistId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.EVENT -> {
-                lookupApi.lookupEvent(
-                    eventId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.INSTRUMENT -> {
-                lookupApi.lookupInstrument(
-                    instrumentId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.LABEL -> {
-                lookupApi.lookupLabel(
-                    labelId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.PLACE -> {
-                lookupApi.lookupPlace(
-                    placeId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.RECORDING -> {
-                lookupApi.lookupRecording(
-                    recordingId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.RELEASE -> {
-                lookupApi.lookupRelease(
-                    releaseId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.RELEASE_GROUP -> {
-                lookupApi.lookupReleaseGroup(
-                    releaseGroupId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.SERIES -> {
-                lookupApi.lookupSeries(
-                    seriesId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.WORK -> {
-                lookupApi.lookupWork(
-                    workId = entityId,
-                    include = include,
-                ).relations
-            }
-
-            MusicBrainzEntityType.COLLECTION,
-            MusicBrainzEntityType.GENRE,
-            MusicBrainzEntityType.URL,
-            -> error("Attempting to lookup the relationships of unsupported entity $entityType")
-        }
-    }
-
     override fun visited(entityId: String): Boolean =
         detailsMetadataDao.contains(entityId)
 
@@ -257,8 +143,122 @@ class RelationRepositoryImpl(
             entity = entity,
             entityId = entityId,
             relatedEntities = relatedEntities,
-            lastUpdated = lastUpdated,
+            now = lastUpdated,
         )
+    }
+
+    private suspend fun insertAllRelations(
+        entity: MusicBrainzEntityType,
+        entityId: String,
+        relatedEntities: Set<MusicBrainzEntityType>,
+        now: Instant,
+    ) {
+        val relationMusicBrainzModels = lookupEntityWithRelations(
+            entityType = entity,
+            entityId = entityId,
+            relatedEntities = relatedEntities,
+        )
+        val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
+        relationDao.insertAll(relationWithOrderList)
+
+        // We need to mark because an entity may have no relationships,
+        // which would cause us to keep trying to fetch it from remote
+        relationsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = now,
+        )
+    }
+
+    @Suppress("LongMethod")
+    private suspend fun lookupEntityWithRelations(
+        entityType: MusicBrainzEntityType,
+        entityId: String,
+        relatedEntities: Set<MusicBrainzEntityType>,
+    ): List<RelationMusicBrainzModel>? {
+        val include = relatedEntities.joinToString(separator = "+") { "${it.resourceUri}-rels" }
+        return when (entityType) {
+            MusicBrainzEntityType.AREA -> {
+                lookupApi.lookupArea(
+                    areaId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.ARTIST -> {
+                lookupApi.lookupArtist(
+                    artistId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.EVENT -> {
+                lookupApi.lookupEvent(
+                    eventId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.INSTRUMENT -> {
+                lookupApi.lookupInstrument(
+                    instrumentId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.LABEL -> {
+                lookupApi.lookupLabel(
+                    labelId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.PLACE -> {
+                lookupApi.lookupPlace(
+                    placeId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.RECORDING -> {
+                lookupApi.lookupRecording(
+                    recordingId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.RELEASE -> {
+                lookupApi.lookupRelease(
+                    releaseId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.RELEASE_GROUP -> {
+                lookupApi.lookupReleaseGroup(
+                    releaseGroupId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.SERIES -> {
+                lookupApi.lookupSeries(
+                    seriesId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.WORK -> {
+                lookupApi.lookupWork(
+                    workId = entityId,
+                    include = include,
+                ).relations
+            }
+
+            MusicBrainzEntityType.COLLECTION,
+            MusicBrainzEntityType.GENRE,
+            MusicBrainzEntityType.URL,
+            -> error("Attempting to lookup the relationships of unsupported entity $entityType")
+        }
     }
 
     private fun deleteEntityRelationships(

@@ -3,12 +3,12 @@ package ly.david.musicsearch.shared.domain.relation
 import app.cash.paging.PagingData
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.relatableEntities
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 interface RelationRepository {
     fun visited(entityId: String): Boolean
@@ -27,13 +27,6 @@ interface RelationRepository {
     fun deleteRelationshipsByType(
         entityId: String,
         entity: MusicBrainzEntityType = MusicBrainzEntityType.URL,
-    )
-
-    suspend fun insertAllRelations(
-        entity: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType>,
-        now: Instant,
     )
 
     fun observeEntityRelationships(
