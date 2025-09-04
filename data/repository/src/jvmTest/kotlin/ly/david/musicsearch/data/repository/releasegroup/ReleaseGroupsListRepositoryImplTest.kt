@@ -623,7 +623,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 ReleaseGroupDetailsModel(
                     id = "3e76b16f-c8ef-342a-b909-ca50d92766d2",
                     name = "“1812” Overture / Romeo and Juliet / Marche slave / The Tempest",
-                    artistCredits = listOf(
+                    artistCredits = persistentListOf(
                         ArtistCreditUiModel(
                             artistId = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
                             name = "Tchaikovsky",
@@ -657,7 +657,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 ReleaseGroupDetailsModel(
                     id = "3e76b16f-c8ef-342a-b909-ca50d92766d2",
                     name = "“1812” Overture / Romeo and Juliet / Marche slave / The Tempest",
-                    artistCredits = listOf(
+                    artistCredits = persistentListOf(
                         ArtistCreditUiModel(
                             artistId = "9ddd7abc-9e1b-471d-8031-583bc6bc8be9",
                             name = "Tchaikovsky",

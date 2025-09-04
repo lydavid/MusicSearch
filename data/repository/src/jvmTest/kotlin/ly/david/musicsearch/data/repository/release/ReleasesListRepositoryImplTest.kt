@@ -1299,7 +1299,7 @@ class ReleasesListRepositoryImplTest :
             name = "Under Pressure",
             date = "1991",
             disambiguation = "changes will show up when visiting",
-            artistCredits = listOf(
+            artistCredits = persistentListOf(
                 ArtistCreditUiModel(
                     artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                     name = "Queen",
@@ -1484,7 +1484,7 @@ class ReleasesListRepositoryImplTest :
             name = "Under Pressure",
             date = "1991",
             disambiguation = "changes will show up when visiting",
-            artistCredits = listOf(
+            artistCredits = persistentListOf(
                 ArtistCreditUiModel(
                     artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                     name = "Queen",
@@ -1667,7 +1667,7 @@ class ReleasesListRepositoryImplTest :
             name = "Under Pressure",
             date = "1991",
             disambiguation = "changes will show up if we have not visited it yet",
-            artistCredits = listOf(
+            artistCredits = persistentListOf(
                 ArtistCreditUiModel(
                     artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                     name = "Queen",

@@ -25,13 +25,13 @@ data class ArtistDetailsModel(
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val areaListItemModel: AreaListItemModel? = null,
     override val lastUpdated: Instant = Clock.System.now(),
-    override val artistCredits: List<ArtistCreditUiModel> = emptyList(),
+    override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Artist, MusicBrainzDetailsModel {
-    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
     }
 

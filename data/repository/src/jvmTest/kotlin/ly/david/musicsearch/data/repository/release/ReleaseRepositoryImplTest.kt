@@ -80,7 +80,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             musicBrainzModel = ReleaseMusicBrainzNetworkModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell (something)",
                         artist = ArtistMusicBrainzNetworkModel(
@@ -111,7 +111,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ReleaseDetailsModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell (something)",
@@ -171,7 +171,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "1",
                                 name = "終わりへ向かう始まりの歌",
                                 length = 130000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -198,7 +198,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "2",
                                 name = "君の知らない物語",
                                 length = 339000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -225,7 +225,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "3",
                                 name = "ヒーロー",
                                 length = 311000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -247,7 +247,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "4",
                                 name = "Perfect Day",
                                 length = 286000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -269,7 +269,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "5",
                                 name = "復讐",
                                 length = 203000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -291,7 +291,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "6",
                                 name = "ロックンロールなんですの",
                                 length = 216000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -313,7 +313,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "7",
                                 name = "LOVE & ROLL",
                                 length = 295000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -335,7 +335,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "8",
                                 name = "Feel so good",
                                 length = 301000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -357,7 +357,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "9",
                                 name = "星が瞬くこんな夜に",
                                 length = 269000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -379,7 +379,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "10",
                                 name = "うたかた花火",
                                 length = 360000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -401,7 +401,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "11",
                                 name = "夜が明けるよ",
                                 length = 290000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -423,7 +423,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "12",
                                 name = "さよならメモリーズ",
                                 length = 368000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -445,7 +445,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "13",
                                 name = "私へ",
                                 length = 126000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -475,7 +475,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "1",
                                 name = "「君の知らない物語」 ×「君化物語」 コラボCM",
                                 length = 16000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -499,7 +499,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "2",
                                 name = "「センコロールトレーラー映像",
                                 length = 85000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -523,7 +523,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "3",
                                 name = "「魔法使いの夜」トレーラー映像",
                                 length = 217000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -547,7 +547,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "4",
                                 name = "「アオハル」トレーラー映像",
                                 length = 47000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -571,7 +571,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                                 number = "5",
                                 name = "「Perfect Day」Music Clip",
                                 length = 297000,
-                                artistCredits = listOf(
+                                artistCredits = persistentListOf(
                                     ArtistCreditMusicBrainzModel(
                                         name = "supercell",
                                         artist = ArtistMusicBrainzNetworkModel(
@@ -592,7 +592,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         ),
                     ),
                 ),
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell",
                         artist = ArtistMusicBrainzNetworkModel(
@@ -677,7 +677,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ReleaseDetailsModel(
                 id = "8516ca87-f9c4-3854-a727-6d328cf44837",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell (something)",
@@ -718,7 +718,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 formattedFormats = "CD + DVD-Video",
                 formattedTracks = "13 + 5",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell",
@@ -835,7 +835,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     ),
                 ),
                 media = media,
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditMusicBrainzModel(
                         name = "アトラスサウンドチーム",
                         artist = ArtistMusicBrainzNetworkModel(
@@ -881,7 +881,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             number = "1",
                             name = "Demo",
                             length = 18733,
-                            artistCredits = listOf(
+                            artistCredits = persistentListOf(
                                 ArtistCreditMusicBrainzModel(
                                     name = "アトラスサウンドチーム",
                                     artist = ArtistMusicBrainzNetworkModel(
@@ -929,7 +929,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 formattedFormats = "CD",
                 formattedTracks = "1",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
                         name = "アトラスサウンドチーム",
@@ -1011,7 +1011,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             number = "1",
                             name = "Demo",
                             length = 18733,
-                            artistCredits = listOf(
+                            artistCredits = persistentListOf(
                                 ArtistCreditMusicBrainzModel(
                                     name = "増子司",
                                     artist = ArtistMusicBrainzNetworkModel(
@@ -1089,7 +1089,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                             number = "$trackIndex",
                             name = "Demo",
                             length = 18733,
-                            artistCredits = listOf(
+                            artistCredits = persistentListOf(
                                 ArtistCreditMusicBrainzModel(
                                     name = "アトラスサウンドチーム",
                                     artist = ArtistMusicBrainzNetworkModel(
@@ -1137,7 +1137,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 formattedFormats = "CD",
                 formattedTracks = "$trackCount",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
                         name = "アトラスサウンドチーム",
@@ -1264,7 +1264,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             asin = "B0B392M9SC",
             quality = "normal",
             textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
-            artistCredits = listOf(
+            artistCredits = persistentListOf(
                 ArtistCreditUiModel(
                     artistId = "e134b52f-2e9e-4734-9bc3-bea9648d1fa1",
                     name = "Ado",
@@ -1350,7 +1350,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 script = "Latn",
                 language = "eng",
             ),
-            artistCredits = listOf(
+            artistCredits = persistentListOf(
                 ArtistCreditUiModel(
                     artistId = "20244d07-534f-4eff-b4d4-930878889970",
                     name = "Taylor Swift",

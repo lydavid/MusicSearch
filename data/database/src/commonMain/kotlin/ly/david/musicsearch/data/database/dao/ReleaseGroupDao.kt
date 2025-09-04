@@ -6,15 +6,14 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -22,6 +21,8 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 interface ReleaseGroupDao : EntityDao {
     fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzNetworkModel)
@@ -107,7 +108,7 @@ class ReleaseGroupDaoImpl(
         disambiguation = disambiguation,
         firstReleaseDate = firstReleaseDate,
         primaryType = primaryType,
-        secondaryTypes = secondaryTypes,
+        secondaryTypes = secondaryTypes.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

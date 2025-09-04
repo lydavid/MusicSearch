@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
-import kotlin.time.Instant
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
+import kotlin.time.Instant
 
 class ReleaseGroupRepositoryImpl(
     private val releaseGroupDao: ReleaseGroupDao,
@@ -54,7 +55,7 @@ class ReleaseGroupRepositoryImpl(
 
         return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
             releaseGroup.copy(
-                artistCredits = artistCredits,
+                artistCredits = artistCredits.toPersistentList(),
                 urls = urlRelations,
                 aliases = aliases,
             )

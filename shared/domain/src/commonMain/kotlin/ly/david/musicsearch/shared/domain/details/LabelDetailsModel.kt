@@ -22,13 +22,13 @@ data class LabelDetailsModel(
     val isnis: ImmutableList<String> = persistentListOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     override val lastUpdated: Instant = Clock.System.now(),
-    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Label, MusicBrainzDetailsModel {
-    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
     }
 

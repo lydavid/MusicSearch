@@ -21,13 +21,13 @@ data class WorkDetailsModel(
     override val iswcs: ImmutableList<String> = persistentListOf(),
     override val lastUpdated: Instant = Clock.System.now(),
     val attributes: ImmutableList<WorkAttributeUiModel> = persistentListOf(),
-    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Work, MusicBrainzDetailsModel {
-    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
     }
 

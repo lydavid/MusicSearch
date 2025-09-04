@@ -2,14 +2,14 @@ package ly.david.musicsearch.shared.domain.details
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class ReleaseGroupDetailsModel(
     override val id: String,
@@ -17,15 +17,15 @@ data class ReleaseGroupDetailsModel(
     override val disambiguation: String = "",
     override val firstReleaseDate: String = "",
     override val primaryType: String = "",
-    override val secondaryTypes: List<String> = listOf(),
+    override val secondaryTypes: ImmutableList<String> = persistentListOf(),
     override val lastUpdated: Instant = Clock.System.now(),
-    override val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : ReleaseGroup, MusicBrainzDetailsModel {
-    override fun withArtistCredits(artistCredits: List<ArtistCreditUiModel>): MusicBrainzDetailsModel {
+    override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
     }
 

@@ -412,7 +412,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     name = "スカイクラッドの観測者",
                     firstReleaseDate = "2023-09-06",
                     length = 273826,
-                    artistCredits = listOf(
+                    artistCredits = persistentListOf(
                         ArtistCreditUiModel(
                             artistId = roseliaArtistMusicBrainzModel.id,
                             name = roseliaArtistMusicBrainzModel.name,
@@ -444,7 +444,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     name = "スカイクラッドの観測者",
                     firstReleaseDate = "2023-09-06",
                     length = 273826,
-                    artistCredits = listOf(
+                    artistCredits = persistentListOf(
                         ArtistCreditUiModel(
                             artistId = roseliaArtistMusicBrainzModel.id,
                             name = roseliaArtistMusicBrainzModel.name,

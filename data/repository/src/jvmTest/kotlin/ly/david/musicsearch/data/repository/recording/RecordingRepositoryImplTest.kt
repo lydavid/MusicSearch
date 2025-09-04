@@ -71,7 +71,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
             RecordingDetailsModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                         name = "月詠み (something)",
@@ -126,7 +126,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
             RecordingDetailsModel(
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                         name = "月詠み (something)",
@@ -147,7 +147,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                 id = "7e52152f-c71a-49b1-b98d-f95e04c44445",
                 name = "導火",
                 length = 209000,
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                         name = "月詠み",

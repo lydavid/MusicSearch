@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.recording
 
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -57,7 +58,7 @@ class RecordingRepositoryImpl(
             visited
         ) {
             recording.copy(
-                artistCredits = artistCredits,
+                artistCredits = artistCredits.toPersistentList(),
                 urls = urlRelations,
                 aliases = aliases,
             )

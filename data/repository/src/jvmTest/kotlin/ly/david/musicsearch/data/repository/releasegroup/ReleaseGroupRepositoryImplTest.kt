@@ -46,7 +46,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
             musicBrainzModel = ReleaseGroupMusicBrainzNetworkModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell (something)",
                         artist = ArtistMusicBrainzNetworkModel(
@@ -71,7 +71,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
             ReleaseGroupDetailsModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell (something)",
@@ -89,7 +89,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 primaryType = "Album",
                 name = "Today Is A Beautiful Day",
                 firstReleaseDate = "2011-03-16",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditMusicBrainzModel(
                         name = "supercell", // artist credit name changed
                         artist = ArtistMusicBrainzNetworkModel(
@@ -146,7 +146,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
             ReleaseGroupDetailsModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 name = "Today Is A Beautiful Day",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell (something)",
@@ -168,7 +168,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 primaryType = "Album",
                 name = "Today Is A Beautiful Day",
                 firstReleaseDate = "2011-03-16",
-                artistCredits = listOf(
+                artistCredits = persistentListOf(
                     ArtistCreditUiModel(
                         artistId = "9b15ff5e-5bd1-43c2-821d-e31240aad334",
                         name = "supercell",

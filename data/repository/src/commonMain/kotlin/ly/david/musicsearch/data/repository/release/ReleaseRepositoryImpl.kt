@@ -6,6 +6,7 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -88,7 +89,7 @@ class ReleaseRepositoryImpl(
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
             return releaseDetailsModel.copy(
-                artistCredits = artistCredits,
+                artistCredits = artistCredits.toPersistentList(),
                 releaseGroup = releaseGroup,
                 formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
                 formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
