@@ -91,6 +91,10 @@ stable class RequestForMissingCoverArtUrl {
   stable val entityId: String
   <runtime stability> = Stable
 }
+stable class UpdateSortReleaseListItem {
+  stable val sort: Boolean
+  <runtime stability> = Stable
+}
 stable class UpdateShowMoreInfoInReleaseListItem {
   stable val showMore: Boolean
   <runtime stability> = Stable

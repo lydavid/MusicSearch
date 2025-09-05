@@ -37,7 +37,7 @@ ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi,AreaDetailsTab
 ly.david.musicsearch.shared.feature.details.area.AreaUi,AreaUi,1,1,1,0,0,0,0,0,3,6,
 ly.david.musicsearch.shared.feature.details.area.AreaUiInternal,AreaUiInternal,1,1,1,0,0,0,1,0,2,23,
 ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi,ArtistDetailsTabUi,1,1,1,0,0,0,1,0,2,2,
-ly.david.musicsearch.shared.feature.details.artist.ArtistInformationSection,ArtistInformationSection,1,1,1,0,0,0,0,0,10,2,
+ly.david.musicsearch.shared.feature.details.artist.ArtistInformationSection,ArtistInformationSection,1,1,1,0,0,0,0,0,5,2,
 ly.david.musicsearch.shared.feature.details.artist.AreaSection,AreaSection,1,1,1,0,0,0,0,0,3,1,
 ly.david.musicsearch.shared.feature.details.artist.ArtistUi,ArtistUi,1,1,1,0,0,0,0,0,3,24,
 ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi,EventDetailsTabUi,1,1,1,0,0,0,1,0,2,3,

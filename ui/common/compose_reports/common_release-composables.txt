@@ -635,7 +635,7 @@ fun formatLastUpdatedPeriod(
   unstable period: DateTimePeriod
 ): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LifeSpanText(
-  lifeSpan: LifeSpanUiModel?
+  lifeSpan: LifeSpanUiModel
   stable heading: String
   stable modifier: Modifier? = @static Companion
   stable beginHeading: String? = @static ""
