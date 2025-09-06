@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.database
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import ly.david.musicsearch.shared.domain.ExportDatabase
 import ly.david.musicsearch.shared.domain.APPLICATION_ID
+import ly.david.musicsearch.shared.domain.ExportDatabase
 import me.sujanpoudel.utils.paths.appCacheDirectory
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -25,7 +25,8 @@ private class DriverFactory {
         val driver = JdbcSqliteDriver(
             url = "jdbc:sqlite:$databasePath",
             schema = Database.Schema,
-            properties = Properties().apply { put("foreign_keys", "true") },
+            // https://github.com/sqldelight/sqldelight/issues/4931
+            properties = Properties().apply { put("foreign_keys", "false") },
         )
         return driver
     }
