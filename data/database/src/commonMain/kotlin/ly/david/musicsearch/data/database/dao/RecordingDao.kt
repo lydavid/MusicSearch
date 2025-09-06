@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
@@ -55,11 +56,25 @@ class RecordingDao(
         }
     }
 
-    fun getRecordingForDetails(recordingId: String): RecordingDetailsModel? {
-        return transacter.getRecordingForDetails(
-            recordingId = recordingId,
-            mapper = ::toDetailsModel,
-        ).executeAsOneOrNull()
+    fun getRecordingForDetails(
+        recordingId: String,
+        listenBrainzUsername: String,
+    ): RecordingDetailsModel? {
+        return transacter.transactionWithResult {
+            val recording = transacter.getRecordingForDetails(
+                recordingId = recordingId,
+                username = listenBrainzUsername,
+                mapper = ::toDetailsModel,
+            ).executeAsOneOrNull()
+
+            recording?.copy(
+                latestListensTimestampsMs = transacter.getLatestListensByRecording(
+                    recordingId = recordingId,
+                    username = listenBrainzUsername,
+                    limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
+                ).executeAsList().mapNotNull { it.listened_at_ms }.toPersistentList(),
+            )
+        }
     }
 
     private fun toDetailsModel(
@@ -71,6 +86,7 @@ class RecordingDao(
         video: Boolean,
         isrcs: List<String>,
         lastUpdated: Instant?,
+        listenCount: Long,
     ) = RecordingDetailsModel(
         id = id,
         name = name,
@@ -80,6 +96,7 @@ class RecordingDao(
         video = video,
         isrcs = isrcs.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
+        listenCount = listenCount,
     )
 
     fun delete(id: String) {

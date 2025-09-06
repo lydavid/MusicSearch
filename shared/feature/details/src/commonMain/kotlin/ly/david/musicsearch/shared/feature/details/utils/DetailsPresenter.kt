@@ -18,8 +18,6 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
@@ -49,6 +47,8 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>(
     private val screen: DetailsScreen,

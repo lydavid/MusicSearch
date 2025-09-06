@@ -1,12 +1,17 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.musicsearch.data.database.dao.AliasDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
@@ -17,14 +22,21 @@ import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TokenValidationResponse
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
+import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
@@ -43,10 +55,14 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Instant
 
+private const val USERNAME = "user"
+
+@Suppress("MaxLineLength")
 class ListensListRepositoryImplTest :
     KoinTest,
     TestMusicBrainzImageMetadataRepository,
-    TestReleasesListRepository {
+    TestReleasesListRepository,
+    TestRecordingRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -57,6 +73,11 @@ class ListensListRepositoryImplTest :
     override val releaseDao: ReleaseDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val recordingDao: RecordingDao by inject()
+    override val artistCreditDao: ArtistCreditDao by inject()
     override val aliasDao: AliasDao by inject()
 
     private fun createRepository(
@@ -98,7 +119,7 @@ class ListensListRepositoryImplTest :
                             insertedAtS = 1755101240L,
                             listenedAtS = track1ListenedAtS,
                             recording_msid = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
-                            user_name = "user",
+                            user_name = USERNAME,
                             track_metadata = TrackMetadata(
                                 artist_name = "ano, Lilas",
                                 track_name = "絶絶絶絶対聖域",
@@ -143,7 +164,7 @@ class ListensListRepositoryImplTest :
                             insertedAtS = 1755101240L,
                             listenedAtS = track2ListenedAtS,
                             recording_msid = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                            user_name = "user",
+                            user_name = USERNAME,
                             track_metadata = TrackMetadata(
                                 artist_name = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                                 track_name = "Color Your Night",
@@ -171,13 +192,13 @@ class ListensListRepositoryImplTest :
                                     recording_name = "Color Your Night",
                                     artists = listOf(
                                         ListenBrainzArtist(
-                                            artist_credit_name = "高橋あず美",
-                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            artist_credit_name = "Lotus Juice",
+                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
                                             join_phrase = " & ",
                                         ),
                                         ListenBrainzArtist(
-                                            artist_credit_name = "Lotus Juice",
-                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            artist_credit_name = "高橋あず美",
+                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
                                             join_phrase = "",
                                         ),
                                     ),
@@ -191,7 +212,7 @@ class ListensListRepositoryImplTest :
                             insertedAtS = 1755101240L,
                             listenedAtS = track3ListenedAtS,
                             recording_msid = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
-                            user_name = "user",
+                            user_name = USERNAME,
                             track_metadata = TrackMetadata(
                                 artist_name = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                                 track_name = "Full Moon Full Life",
@@ -219,13 +240,13 @@ class ListensListRepositoryImplTest :
                                     recording_name = "Full Moon Full Life",
                                     artists = listOf(
                                         ListenBrainzArtist(
-                                            artist_credit_name = "高橋あず美",
-                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            artist_credit_name = "Lotus Juice",
+                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
                                             join_phrase = " & ",
                                         ),
                                         ListenBrainzArtist(
-                                            artist_credit_name = "Lotus Juice",
-                                            artist_mbid = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            artist_credit_name = "高橋あず美",
+                                            artist_mbid = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
                                             join_phrase = "",
                                         ),
                                     ),
@@ -240,7 +261,7 @@ class ListensListRepositoryImplTest :
                             insertedAtS = 1755101240L,
                             listenedAtS = track4ListenedAtS,
                             recording_msid = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
-                            user_name = "user",
+                            user_name = USERNAME,
                             track_metadata = TrackMetadata(
                                 artist_name = "Tsukuyomi",
                                 track_name = "Absolute zero",
@@ -254,7 +275,7 @@ class ListensListRepositoryImplTest :
         testFilter(
             pagingFlowProducer = { query ->
                 listensListRepository.observeListens(
-                    username = "user",
+                    username = USERNAME,
                     query = query,
                     reachedLatest = false,
                     reachedOldest = false,
@@ -292,7 +313,7 @@ class ListensListRepositoryImplTest :
                         ListenListItemModel(
                             id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
                             name = "Color Your Night",
-                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
@@ -306,7 +327,7 @@ class ListensListRepositoryImplTest :
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
-                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
@@ -336,7 +357,7 @@ class ListensListRepositoryImplTest :
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
-                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
@@ -384,7 +405,7 @@ class ListensListRepositoryImplTest :
                         ListenListItemModel(
                             id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
                             name = "Color Your Night",
-                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
@@ -398,7 +419,7 @@ class ListensListRepositoryImplTest :
                         ListenListItemModel(
                             id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
                             name = "Full Moon Full Life",
-                            formattedArtistCredits = "高橋あず美 & Lotus Juice",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
@@ -415,40 +436,10 @@ class ListensListRepositoryImplTest :
         )
 
         testImageExists()
-
         testReleaseStubExists()
+        testRecordingShowsListens()
     }
 
-    @Suppress("MaxLineLength")
-    private suspend fun testReleaseStubExists() {
-        val releasesListRepository = createReleasesListRepository(
-            releases = emptyList(),
-        )
-        val releases = releasesListRepository.observeReleases(
-            browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
-            now = testDateTimeInThePast,
-        ).asSnapshot()
-        Assert.assertEquals(
-            listOf(
-                ReleaseListItemModel(
-                    id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                    name = "Persona 3 Reload Original Soundtrack",
-                    imageId = ImageId(2L),
-                    imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                ),
-                ReleaseListItemModel(
-                    id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
-                    name = "絶絶絶絶対聖域",
-                    imageId = ImageId(1L),
-                    imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                ),
-            ),
-            releases,
-        )
-    }
-
-    @Suppress("MaxLineLength")
     private suspend fun testImageExists() {
         val imageRepository = createMusicBrainzImageMetadataRepository(
             coverArtUrlsProducer = { _, _ ->
@@ -482,6 +473,98 @@ class ListensListRepositoryImplTest :
                 ),
             ),
             imageMetadataList,
+        )
+    }
+
+    private suspend fun testReleaseStubExists() {
+        val releasesListRepository = createReleasesListRepository(
+            releases = emptyList(),
+        )
+        val releases = releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot()
+        Assert.assertEquals(
+            listOf(
+                ReleaseListItemModel(
+                    id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                    name = "Persona 3 Reload Original Soundtrack",
+                    imageId = ImageId(2L),
+                    imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                ),
+                ReleaseListItemModel(
+                    id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                    name = "絶絶絶絶対聖域",
+                    imageId = ImageId(1L),
+                    imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                ),
+            ),
+            releases,
+        )
+    }
+
+    @Suppress("LongMethod")
+    private suspend fun testRecordingShowsListens() {
+        val id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1"
+        val recordingRepository = createRecordingRepository(
+            musicBrainzModel = RecordingMusicBrainzNetworkModel(
+                id = id,
+                name = "Color Your Night",
+                artistCredits = listOf(
+                    ArtistCreditMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
+                            id = "c731e592-2620-4f4c-859d-39e294b06b35",
+                            name = "Lotus Juice",
+                        ),
+                        name = "Lotus Juice",
+                        joinPhrase = " & ",
+                    ),
+                    ArtistCreditMusicBrainzModel(
+                        artist = ArtistMusicBrainzNetworkModel(
+                            id = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                            name = "高橋あず美",
+                        ),
+                        name = "高橋あず美",
+                        joinPhrase = "",
+                    ),
+                ),
+                firstReleaseDate = "2024-02-02",
+                length = 227240,
+                isrcs = listOf("JPK652300116"),
+            ),
+            fakeBrowseUsername = USERNAME,
+        )
+        val recordingDetailsModel = recordingRepository.lookupRecording(
+            recordingId = id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        )
+        Assert.assertEquals(
+            RecordingDetailsModel(
+                id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                name = "Color Your Night",
+                artistCredits = persistentListOf(
+                    ArtistCreditUiModel(
+                        artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+                        name = "Lotus Juice",
+                        joinPhrase = " & ",
+                    ),
+                    ArtistCreditUiModel(
+                        artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                        name = "高橋あず美",
+                        joinPhrase = "",
+                    ),
+                ),
+                firstReleaseDate = "2024-02-02",
+                length = 227240,
+                isrcs = persistentListOf("JPK652300116"),
+                lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/track/e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                listenCount = 1,
+                latestListensTimestampsMs = persistentListOf(1755100633000),
+            ),
+            recordingDetailsModel,
         )
     }
 }

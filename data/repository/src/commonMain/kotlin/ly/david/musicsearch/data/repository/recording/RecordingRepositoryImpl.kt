@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.recording
 
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.first
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -8,6 +9,8 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -18,6 +21,8 @@ class RecordingRepositoryImpl(
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
 ) : RecordingRepository {
 
@@ -43,28 +48,27 @@ class RecordingRepositoryImpl(
         }
     }
 
-    private fun getCachedData(recordingId: String): RecordingDetailsModel? {
-        val recording = recordingDao.getRecordingForDetails(recordingId)
+    private suspend fun getCachedData(recordingId: String): RecordingDetailsModel? {
+        if (!relationRepository.visited(recordingId)) return null
+        val username = listenBrainzAuthStore.browseUsername.first()
+        val recording = recordingDao.getRecordingForDetails(
+            recordingId = recordingId,
+            listenBrainzUsername = username,
+        ) ?: return null
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
         val urlRelations = relationRepository.getRelationshipsByType(recordingId)
-        val visited = relationRepository.visited(recordingId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RECORDING,
             mbid = recordingId,
         )
 
-        return if (recording != null &&
-            artistCredits.isNotEmpty() &&
-            visited
-        ) {
-            recording.copy(
-                artistCredits = artistCredits.toPersistentList(),
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        } else {
-            null
-        }
+        return recording.copy(
+            artistCredits = artistCredits.toPersistentList(),
+            urls = urlRelations,
+            aliases = aliases,
+            listenCount = recording.listenCount.takeIf { username.isNotEmpty() },
+            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/track/$recordingId",
+        )
     }
 
     private fun delete(id: String) {

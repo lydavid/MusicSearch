@@ -25,6 +25,9 @@ data class RecordingDetailsModel(
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val listenCount: Long? = null,
+    val latestListensTimestampsMs: ImmutableList<Long> = persistentListOf(),
+    val listenBrainzUrl: String = "",
 ) : Recording, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)

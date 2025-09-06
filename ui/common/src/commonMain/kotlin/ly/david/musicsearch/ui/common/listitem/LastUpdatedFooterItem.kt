@@ -54,7 +54,7 @@ fun LastUpdatedText(
 ) {
     val strings = LocalStrings.current
     SelectionContainer(modifier = modifier) {
-        val formattedDateTimePeriod = formatLastUpdatedPeriod(lastUpdated.getDateTimePeriod(now = now))
+        val formattedDateTimePeriod = formatPeriod(lastUpdated.getDateTimePeriod(now = now))
         val formattedDateTime = lastUpdated.getDateTimeFormatted()
         Text(
             text = strings.lastUpdatedFromMusicBrainz(
@@ -67,7 +67,7 @@ fun LastUpdatedText(
 }
 
 @Composable
-private fun formatLastUpdatedPeriod(period: DateTimePeriod): String {
+fun formatPeriod(period: DateTimePeriod): String {
     val strings = LocalStrings.current
     return when {
         period.years > 1 -> "${period.years} ${strings.yearsAgo}"

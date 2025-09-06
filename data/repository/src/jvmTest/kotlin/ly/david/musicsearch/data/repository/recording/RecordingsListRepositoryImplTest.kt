@@ -429,6 +429,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         "JPR562300374",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/track/108a3d66-d1ef-424d-a7cb-2f53a702ce45",
                 ),
                 recordingDetailsModel,
             )
@@ -461,6 +462,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                         "JPR562300374",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/track/108a3d66-d1ef-424d-a7cb-2f53a702ce45",
                 ),
                 recordingDetailsModel,
             )

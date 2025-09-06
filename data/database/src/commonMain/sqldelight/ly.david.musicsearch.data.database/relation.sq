@@ -2,7 +2,7 @@ import kotlin.Int;
 import kotlin.Boolean;
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
 
--- ended must be true if end is not null: https://github.com/metabrainz/musicbrainz-server/blob/master/admin/sql/CreateTables.sql#L2669
+-- ended must be true if end is set: https://github.com/metabrainz/musicbrainz-server/blob/master/admin/sql/CreateTables.sql#L2669
 CREATE TABLE relation (
   entity_id TEXT NOT NULL,
   linked_entity_id TEXT NOT NULL,

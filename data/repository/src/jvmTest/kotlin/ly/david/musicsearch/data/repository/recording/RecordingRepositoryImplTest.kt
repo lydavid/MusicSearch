@@ -79,6 +79,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                     ),
                 ),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/track/7e52152f-c71a-49b1-b98d-f95e04c44445",
             ),
             sparseDetailsModel,
         )
@@ -134,6 +135,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                     ),
                 ),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/track/7e52152f-c71a-49b1-b98d-f95e04c44445",
             ),
             allDataArtistDetailsModel,
         )
@@ -169,6 +171,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                         isForwardDirection = true,
                     ),
                 ),
+                listenBrainzUrl = "/track/7e52152f-c71a-49b1-b98d-f95e04c44445",
             ),
             allDataArtistDetailsModel,
         )

@@ -48,23 +48,35 @@ VALUES (
 );
 }
 
-getRecordingForDetails:
-SELECT
-  id,
-  name,
-  disambiguation,
-  first_release_date,
-  length,
-  video,
-  isrcs,
-  details_metadata.last_updated
-FROM recording
-LEFT JOIN details_metadata ON details_metadata.entity_id = id
-WHERE id = :recordingId;
-
 deleteRecording:
 DELETE FROM recording
 WHERE id = :id;
+
+getRecordingForDetails:
+SELECT
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
+  recording.isrcs,
+  details_metadata.last_updated,
+  COUNT(listen.recording_musicbrainz_id) AS listen_count
+FROM recording
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id AND listen.username = :username
+WHERE recording.id = :recordingId
+GROUP BY recording.id;
+
+getLatestListensByRecording:
+SELECT
+  listened_at_ms
+FROM recording
+LEFT JOIN listen ON recording.id = listen.recording_musicbrainz_id
+WHERE listen.username = :username AND recording.id = :recordingId
+ORDER BY listened_at_ms DESC
+LIMIT COALESCE(:limit, -1);
 
 -- recordings by entity
 
