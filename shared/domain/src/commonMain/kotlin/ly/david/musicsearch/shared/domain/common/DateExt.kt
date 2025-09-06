@@ -8,7 +8,7 @@ import kotlin.time.Instant
 
 internal const val DATE_FORMAT = "EEEE, MMMM d, YYYY"
 internal const val TIME_FORMAT = "hh:mm a"
-internal const val DATE_TIME_FORMAT = "YYYY-MM-dd hh:mm:ss"
+internal const val DATE_TIME_FORMAT = "YYYY-MM-dd HH:mm:ss"
 
 // See https://github.com/Kotlin/kotlinx-datetime/issues/211 for implementation details for jvm and ios.
 
