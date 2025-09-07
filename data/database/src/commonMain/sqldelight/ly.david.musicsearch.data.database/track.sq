@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS track (
   ON DELETE CASCADE
 );
 
+CREATE INDEX idx_track_recording_id ON track (recording_id);
+
 insert:
 INSERT OR IGNORE INTO track
 VALUES ?;
