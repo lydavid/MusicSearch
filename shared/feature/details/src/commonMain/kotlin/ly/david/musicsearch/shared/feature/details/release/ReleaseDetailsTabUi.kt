@@ -5,12 +5,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipAnchorPosition
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -43,7 +38,6 @@ import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
 import kotlin.time.Instant
@@ -314,30 +308,18 @@ private fun LastListenedListItem(
     val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
     val formattedDateTime = instant.getDateTimeFormatted()
 
-    TooltipBox(
-        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
-        tooltip = {
-            PlainTooltip {
-                Text(
-                    text = formattedDateTime,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
-        },
-        state = rememberTooltipState(),
-    ) {
-        val text = buildString {
-            append(formattedDateTimePeriod)
-            append(" - ")
-            append(listenWithTrack.mediumPosition)
-            append(".")
-            append(listenWithTrack.trackNumber)
-            append(". ")
-            append(listenWithTrack.trackName)
-        }
-        Text(
-            text = text,
-            modifier = Modifier.padding(horizontal = 16.dp),
-        )
+    val text = buildString {
+        append(formattedDateTimePeriod)
+        append(" (${formattedDateTime})")
+        append(" - ")
+        append(listenWithTrack.mediumPosition)
+        append(".")
+        append(listenWithTrack.trackNumber)
+        append(". ")
+        append(listenWithTrack.trackName)
     }
+    Text(
+        text = text,
+        modifier = Modifier.padding(horizontal = 16.dp),
+    )
 }
