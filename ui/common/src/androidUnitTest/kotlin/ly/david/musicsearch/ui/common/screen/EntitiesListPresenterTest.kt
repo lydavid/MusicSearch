@@ -136,6 +136,7 @@ class EntitiesListPresenterTest {
             getTracksByRelease = object : GetTracksByRelease {
                 override fun invoke(
                     releaseId: String,
+                    mostListenedTrackCount: Long,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
                     return flowOf(PagingData.from(areasListItems))

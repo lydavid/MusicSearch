@@ -106,7 +106,7 @@ private val detailsUiState = DetailsUiState(
     detailsModel = detailsModel,
     subtitle = "Recording by CHiCO with HoneyWorks",
     detailsTabUiState = DetailsTabUiState(
-        now = Instant.parse("2025-06-05T20:42:20Z"),
+        now = Instant.parse("2025-09-06T18:42:20Z"),
     ),
     allEntitiesListUiState = AllEntitiesListUiState(
         releasesListUiState = EntitiesListUiState(
@@ -125,7 +125,6 @@ internal fun PreviewRecordingUiDetails() {
         RecordingUiInternal(
             state = detailsUiState,
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -140,14 +139,13 @@ internal fun PreviewRecordingUiDetailsWithListens() {
                     listenCount = 1234,
                     latestListensTimestampsMs = persistentListOf(
                         1757116212000,
-                        1719355177000,
+                        1740055177000,
                         1600055177000,
                     ),
                     listenBrainzUrl = "https://listenbrainz.org/track/132a508b-624a-4f1d-b61f-f6616121bab5",
                 ),
             ),
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-            now = Instant.parse("2025-09-05T18:42:20Z"),
         )
     }
 }
@@ -165,7 +163,6 @@ internal fun PreviewRecordingUiDetailsWithZeroListens() {
                 ),
             ),
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-            now = Instant.parse("2025-09-05T18:42:20Z"),
         )
     }
 }
@@ -179,7 +176,6 @@ internal fun PreviewRecordingUiReleases() {
                 selectedTab = Tab.RELEASES,
             ),
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -193,7 +189,6 @@ internal fun PreviewRecordingUiRelationships() {
                 selectedTab = Tab.RELATIONSHIPS,
             ),
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }

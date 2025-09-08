@@ -18,4 +18,11 @@ class ReleaseUiScreenshotTest : ScreenshotTest() {
             PreviewReleaseDetailsUiCollapsed()
         }
     }
+
+    @Test
+    fun withListens() {
+        snapshot {
+            PreviewReleaseDetailsUiWithListens()
+        }
+    }
 }

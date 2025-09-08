@@ -5,14 +5,20 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.getFormatsForDisplay
+import ly.david.musicsearch.shared.domain.getTracksForDisplay
+import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
@@ -97,11 +103,61 @@ class ReleaseDao(
         transacter.deleteRelease(releaseId)
     }
 
-    fun getReleaseForDetails(releaseId: String): ReleaseDetailsModel? =
-        transacter.getReleaseForDetails(
+    fun getReleaseForDetails(
+        releaseId: String,
+        listenBrainzUsername: String,
+    ): ReleaseDetailsModel? {
+        val release = transacter.getReleaseForDetails(
             releaseId = releaseId,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
+
+        val formatTrackCounts = getReleaseFormatTrackCount(releaseId = releaseId)
+
+        val latestListens = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getLatestListensByRelease(
+                releaseId = releaseId,
+                username = listenBrainzUsername,
+                limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
+                mapper = { position, number, title, listenedAtMs ->
+                    ListenWithTrack(
+                        mediumPosition = position ?: 1,
+                        trackNumber = number,
+                        trackName = title,
+                        listenedMs = listenedAtMs,
+                    )
+                },
+            ).executeAsList().toPersistentList()
+        } else {
+            persistentListOf()
+        }
+
+        val listenCount = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getListenCountByRelease(
+                releaseId = releaseId,
+                username = listenBrainzUsername,
+            ).executeAsOne()
+        } else {
+            null
+        }
+
+        val mostListenedTrackCount = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getMostListenedTrackCountByRelease(
+                releaseId = releaseId,
+                username = listenBrainzUsername,
+            ).executeAsOneOrNull()
+        } else {
+            0
+        }
+
+        return release?.copy(
+            formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
+            formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
+            latestListens = latestListens,
+            listenCount = listenCount,
+            mostListenedTrackCount = mostListenedTrackCount ?: 0,
+        )
+    }
 
     private fun toDetailsModel(
         id: String,

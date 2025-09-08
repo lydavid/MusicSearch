@@ -263,14 +263,6 @@ internal fun ReleaseUi(
                     onImageClick = {
                         eventSink(DetailsUiEvent.ClickImage)
                     },
-                    onItemClick = { entity, id ->
-                        eventSink(
-                            DetailsUiEvent.ClickItem(
-                                entity = entity,
-                                id = id,
-                            ),
-                        )
-                    },
                     onCollapseExpandReleaseEvents = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandReleaseEvents)
                     },
@@ -279,6 +271,14 @@ internal fun ReleaseUi(
                     },
                     onCollapseExpandAliases = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
+                    onItemClick = { entity, id ->
+                        eventSink(
+                            DetailsUiEvent.ClickItem(
+                                entity = entity,
+                                id = id,
+                            ),
+                        )
                     },
                 )
             },

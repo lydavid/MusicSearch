@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.list
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,8 +25,8 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter
 import ly.david.musicsearch.ui.common.series.SeriesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleasePresenter
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.work.WorksListPresenter
 
 class AllEntitiesListPresenter(
@@ -52,6 +53,7 @@ class AllEntitiesListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var query by rememberSaveable { mutableStateOf("") }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        var mostListenedTrackCount: Long by rememberSaveable { mutableLongStateOf(0) }
 
         val areasByEntityUiState = areasListPresenter.present()
         val areasEventSink = areasByEntityUiState.eventSink
@@ -224,11 +226,12 @@ class AllEntitiesListPresenter(
                 Tab.TRACKS -> {
                     val browseByEntity = capturedBrowseMethod as? BrowseMethod.ByEntity ?: return@LaunchedEffect
                     tracksEventSink(
-                        TracksByEntityUiEvent.Get(
-                            byEntityId = browseByEntity.entityId,
+                        TracksByReleaseUiEvent.Get(
+                            byReleaseId = browseByEntity.entityId,
+                            mostListenedTrackCount = mostListenedTrackCount,
                         ),
                     )
-                    tracksEventSink(TracksByEntityUiEvent.UpdateQuery(query))
+                    tracksEventSink(TracksByReleaseUiEvent.UpdateQuery(query))
                 }
 
                 Tab.DETAILS,
@@ -262,6 +265,7 @@ class AllEntitiesListPresenter(
                     onBrowseMethodChanged = { browseMethod = it },
                     onQueryChanged = { query = it },
                     onIsRemoteChanged = { isRemote = it },
+                    onMostListenedTrackCountChanged = { mostListenedTrackCount = it },
                 )
             },
         )
@@ -273,6 +277,7 @@ class AllEntitiesListPresenter(
         onBrowseMethodChanged: (BrowseMethod?) -> Unit,
         onQueryChanged: (String) -> Unit,
         onIsRemoteChanged: (Boolean) -> Unit,
+        onMostListenedTrackCountChanged: (Long) -> Unit,
     ) {
         when (event) {
             is AllEntitiesListUiEvent.Get -> {
@@ -280,6 +285,7 @@ class AllEntitiesListPresenter(
                 onBrowseMethodChanged(event.browseMethod)
                 onQueryChanged(event.query)
                 onIsRemoteChanged(event.isRemote)
+                onMostListenedTrackCountChanged(event.mostListenedTrackCount)
             }
         }
     }
@@ -289,7 +295,8 @@ sealed interface AllEntitiesListUiEvent : CircuitUiEvent {
     data class Get(
         val tab: Tab?,
         val browseMethod: BrowseMethod,
-        val query: String = "",
+        val query: String,
         val isRemote: Boolean,
+        val mostListenedTrackCount: Long = 0,
     ) : AllEntitiesListUiEvent
 }

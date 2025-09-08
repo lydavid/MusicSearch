@@ -1,7 +1,6 @@
 package ly.david.musicsearch.shared.feature.stats
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,20 +11,20 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
-import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal fun LazyListScope.addRelationshipsSection(
     relationStats: RelationStats,
@@ -79,18 +78,11 @@ private fun RelationTypeCountBar(
             .padding(horizontal = 16.dp)
             .padding(top = 4.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            EntityIcon(
-                modifier = Modifier.padding(end = 8.dp),
-                entity = linkedEntity,
-            )
-            Text(
-                style = TextStyles.getCardBodySubTextStyle(),
-                text = "${linkedEntity.getName(LocalStrings.current)}: ${relationTypeCount.count}",
-            )
-        }
+        TextWithIcon(
+            imageVector = linkedEntity.getIcon() ?: return,
+            text = "${linkedEntity.getName(LocalStrings.current)}: ${relationTypeCount.count}",
+            style = TextStyles.getCardBodySubTextStyle(),
+        )
 
         if (totalRelations != 0) {
             LinearProgressIndicator(

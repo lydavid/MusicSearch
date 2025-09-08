@@ -126,6 +126,9 @@ SELECT
   ) AS hasNullLength,
   details_metadata.last_updated
 FROM `release`
+-- LEFT JOIN medium ON `release`.id = medium.release_id
+-- LEFT JOIN track ON medium.id = track.medium_id
+-- LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
 LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 WHERE `release`.id = :releaseId
 LIMIT 1;
@@ -137,6 +140,39 @@ INNER JOIN medium m ON t.medium_id = m.id
 INNER JOIN `release` r ON m.release_id = r.id
 WHERE r.id = :releaseId
 GROUP BY m.id;
+
+getListenCountByRelease:
+SELECT COUNT(listen.recording_musicbrainz_id)
+FROM `release`
+INNER JOIN medium ON medium.release_id = `release`.id
+INNER JOIN track ON track.medium_id = medium.id
+INNER JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+WHERE `release`.id = :releaseId;
+
+getMostListenedTrackCountByRelease:
+SELECT COUNT(listen.recording_musicbrainz_id)
+FROM `release`
+INNER JOIN medium ON medium.release_id = `release`.id
+INNER JOIN track ON track.medium_id = medium.id
+INNER JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+WHERE `release`.id = :releaseId
+GROUP BY listen.recording_musicbrainz_id
+ORDER BY COUNT(listen.recording_musicbrainz_id) DESC
+LIMIT 1;
+
+getLatestListensByRelease:
+SELECT
+  medium.position,
+  track.number,
+  track.title,
+  listened_at_ms
+FROM `release`
+INNER JOIN medium ON medium.release_id = `release`.id
+INNER JOIN track ON track.medium_id = medium.id
+INNER JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+WHERE `release`.id = :releaseId
+ORDER BY listened_at_ms DESC
+LIMIT COALESCE(:limit, -1);
 
 -- releases by entity
 

@@ -21,6 +21,8 @@ data class TrackListItemModel(
     val trackCount: Int = 0,
     val format: String? = null,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val listenCount: Long? = null,
+    val mostListenedTrackCount: Long = 0,
 ) : ListItemModel, Track, Visitable, NameWithDisambiguationAndAliases {
     /**
      * Unused. The actual disambiguation is part of [name].

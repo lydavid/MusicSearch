@@ -37,6 +37,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -73,6 +74,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
@@ -125,6 +127,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     firstReleaseDate = "2011-03-16",
                 ),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/album/93bb79c2-2995-4607-af5e-061a25a4e06f",
             ),
             sparseDetailsModel,
         )
@@ -691,6 +694,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     firstReleaseDate = "2011-03-16",
                 ),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/album/93bb79c2-2995-4607-af5e-061a25a4e06f",
             ),
             allDataArtistDetailsModel,
         )
@@ -798,6 +802,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseLength = 4156000,
                 hasNullLength = false,
+                listenBrainzUrl = "/album/93bb79c2-2995-4607-af5e-061a25a4e06f",
             ),
             allDataArtistDetailsModel,
         )
@@ -805,6 +810,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
 
     private fun createRepositoryWithMedia(
         media: List<MediumMusicBrainzModel>?,
+        fakeBrowseUsername: String,
     ): ReleaseRepository {
         return createReleaseRepository(
             musicBrainzModel = ReleaseMusicBrainzNetworkModel(
@@ -860,6 +866,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     firstReleaseDate = "2011-03-16",
                 ),
             ),
+            fakeBrowseUsername = fakeBrowseUsername,
         )
     }
 
@@ -867,7 +874,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     fun `refresh release tracks after changing artist credits`() = runTest {
         val releaseId = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
         val releaseRepositoryBeforeEdit = createRepositoryWithMedia(
-            listOf(
+            media = listOf(
                 MediumMusicBrainzModel(
                     position = 1,
                     formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
@@ -905,6 +912,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     ),
                 ),
             ),
+            fakeBrowseUsername = "",
         )
         val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
             releaseId = releaseId,
@@ -947,6 +955,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         "Soundtrack",
                     ),
                 ),
+                listenBrainzUrl = "/album/a5a83577-ddca-4428-bf6b-b852296bc5f3",
                 areas = listOf(
                     AreaListItemModel(
                         id = "2db42837-c832-3c27-b4a3-08198f75693c",
@@ -967,6 +976,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         )
         val tracksFlowBeforeEdit = releaseRepositoryBeforeEdit.observeTracksByRelease(
             releaseId = releaseId,
+            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -1035,9 +1045,11 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     ),
                 ),
             ),
+            fakeBrowseUsername = "",
         )
         val tracksFlowAfterEdit = releaseRepositoryAfterEdit.observeTracksByRelease(
             releaseId = releaseId,
+            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -1075,7 +1087,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         val releaseId = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
         val trackCount = 300
         val releaseRepositoryBeforeEdit = createRepositoryWithMedia(
-            listOf(
+            media = listOf(
                 MediumMusicBrainzModel(
                     position = 1,
                     formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
@@ -1113,6 +1125,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     }.toList(),
                 ),
             ),
+            fakeBrowseUsername = "",
         )
         val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
             releaseId = releaseId,
@@ -1170,11 +1183,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 releaseLength = 5619900,
                 hasNullLength = false,
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/album/a5a83577-ddca-4428-bf6b-b852296bc5f3",
             ),
             artistDetailsModelBeforeEdit,
         )
         val flow = releaseRepositoryBeforeEdit.observeTracksByRelease(
             releaseId = releaseId,
+            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -1278,6 +1293,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 secondaryTypes = listOf(),
                 firstReleaseDate = "2022-08-10",
             ),
+            listenBrainzUrl = "/album/22760f81-37ce-47ce-98b6-65f8a285f083",
             areas = listOf(
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
@@ -1419,6 +1435,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
             ),
             lastUpdated = testDateTimeInThePast,
+            listenBrainzUrl = "/album/a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
         )
 
         releaseRepository.lookupRelease(

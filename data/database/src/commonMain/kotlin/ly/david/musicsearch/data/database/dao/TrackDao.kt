@@ -63,6 +63,7 @@ class TrackDao(
     fun getTracksByRelease(
         releaseId: String,
         query: String,
+        username: String,
     ): PagingSource<Int, TrackAndMedium> = QueryPagingSource(
         countQuery = transacter.getNumberOfTracksByRelease(
             releaseId = releaseId,
@@ -74,6 +75,7 @@ class TrackDao(
             transacter.getTracksByRelease(
                 releaseId = releaseId,
                 query = query,
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToTrackAndMedium,
@@ -98,6 +100,7 @@ private fun mapToTrackAndMedium(
     format: String?,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long?,
 ) = TrackAndMedium(
     id = id,
     position = position,
@@ -108,11 +111,12 @@ private fun mapToTrackAndMedium(
     recordingId = recordingId,
     formattedArtistCredits = formattedArtistCreditNames,
     visited = visited == true,
+    aliases = combineToAliases(aliasNames, aliasLocales),
+    listenCount = listenCount,
     mediumPosition = mediumPosition ?: 0,
     mediumName = mediumName,
     trackCount = trackCount,
     format = format,
-    aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
 data class TrackAndMedium(
@@ -125,10 +129,11 @@ data class TrackAndMedium(
     val recordingId: String = "",
     val formattedArtistCredits: String? = null,
     val visited: Boolean = false,
+    val aliases: ImmutableList<BasicAlias>,
+    val listenCount: Long? = null,
 
     val mediumPosition: Int,
     val mediumName: String?,
     val trackCount: Int,
     val format: String?,
-    val aliases: ImmutableList<BasicAlias>,
 )

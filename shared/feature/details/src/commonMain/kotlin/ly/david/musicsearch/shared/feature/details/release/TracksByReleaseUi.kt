@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.track.TrackListItem
-import ly.david.musicsearch.ui.common.track.TracksByEntityUiEvent
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
 @Composable
@@ -30,7 +30,7 @@ internal fun TracksByReleaseUi(
         collapsedMediumIds = uiState.collapsedMediumIds,
         onRecordingClick = onRecordingClick,
         onToggleMedium = { id ->
-            eventSink(TracksByEntityUiEvent.ToggleMedium(id))
+            eventSink(TracksByReleaseUiEvent.ToggleMedium(id))
         },
     )
 }

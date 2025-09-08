@@ -7,8 +7,12 @@ import app.cash.paging.PagingData
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -27,9 +31,10 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
-import ly.david.musicsearch.shared.domain.getFormatsForDisplay
-import ly.david.musicsearch.shared.domain.getTracksForDisplay
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
@@ -50,65 +55,63 @@ class ReleaseRepositoryImpl(
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val aliasDao: AliasDao,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseRepository {
 
-    // TODO: split up what data to include when calling from details/tracks tabs?
-    //  initial load only requires 1 api call to display data on both tabs
-    //  but swipe to refresh should only refresh its own tab
-    //  I'm leaning towards not doing this to keep things simple
     override suspend fun lookupRelease(
         releaseId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): ReleaseDetailsModel {
+    ): ReleaseDetailsModel = withContext(coroutineDispatchers.io) {
         if (forceRefresh) {
             delete(releaseId)
         }
 
-        val releaseDetailsModel = releaseDao.getReleaseForDetails(releaseId)
+        val cachedData = getCachedData(releaseId)
+        return@withContext if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
+            cache(
+                release = releaseMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(releaseId) ?: error("Failed to get cached data")
+        }
+    }
+
+    private suspend fun getCachedData(releaseId: String): ReleaseDetailsModel? {
+        if (!relationRepository.visited(releaseId)) return null
+        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId) ?: return null
+
+        val username = listenBrainzAuthStore.browseUsername.first()
+        val release = releaseDao.getReleaseForDetails(
+            releaseId = releaseId,
+            listenBrainzUsername = username,
+        ) ?: return null
+
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
-        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
-        val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = labelDao.getLabelsByRelease(releaseId)
         val releaseEvents = areaDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getRelationshipsByType(releaseId)
-        val visited = relationRepository.visited(releaseId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RELEASE,
             mbid = releaseId,
         )
 
-        if (
-            releaseDetailsModel != null &&
-            releaseGroup != null &&
-            artistCredits.isNotEmpty() &&
-            visited &&
-            !forceRefresh
-        ) {
-            // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
-            // releases must have artist credits and a release group.
-            return releaseDetailsModel.copy(
-                artistCredits = artistCredits.toPersistentList(),
-                releaseGroup = releaseGroup,
-                formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
-                formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-                labels = labels,
-                areas = releaseEvents.map { it.toAreaListItemModel() },
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
-        cache(
-            release = releaseMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupRelease(
-            releaseId = releaseId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
+        // releases must have artist credits and a release group.
+        return release.copy(
+            artistCredits = artistCredits.toPersistentList(),
+            releaseGroup = releaseGroup,
+            labels = labels,
+            areas = releaseEvents.map { it.toAreaListItemModel() },
+            urls = urlRelations,
+            aliases = aliases,
+            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/album/${releaseGroup.id}",
         )
     }
 
@@ -175,16 +178,37 @@ class ReleaseRepositoryImpl(
     }
 
     // region tracks by release
-    @OptIn(ExperimentalPagingApi::class)
+    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override fun observeTracksByRelease(
         releaseId: String,
+        mostListenedTrackCount: Long,
         query: String,
         lastUpdated: Instant,
+    ): Flow<PagingData<ListItemModel>> {
+        return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
+            getPagingFlow(
+                releaseId = releaseId,
+                lastUpdated = lastUpdated,
+                query = query,
+                username = username,
+                mostListenedTrackCount = mostListenedTrackCount,
+            )
+        }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    private fun getPagingFlow(
+        releaseId: String,
+        lastUpdated: Instant,
+        query: String,
+        username: String,
+        mostListenedTrackCount: Long,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
-                hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
+                // The initial release lookup will store all tracks.
+                hasEntityBeenStored = { true },
                 lookupEntity = {
                     lookupRelease(
                         releaseId = releaseId,
@@ -198,12 +222,13 @@ class ReleaseRepositoryImpl(
                 trackDao.getTracksByRelease(
                     releaseId = releaseId,
                     query = "%$query%",
+                    username = username,
                 )
             },
         ).flow
             .map { pagingData ->
                 pagingData
-                    .map { it.toTrackListItemModel() }
+                    .map { it.toTrackListItemModel(mostListenedTrackCount = mostListenedTrackCount) }
                     .insertSeparators(
                         terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
                     ) { before: TrackListItemModel?, after: TrackListItemModel? ->
@@ -221,11 +246,6 @@ class ReleaseRepositoryImpl(
             }
     }
 
-    private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
-        // TODO: right now the details tab is coupled with the tracks list tab
-        return releaseDao.getReleaseForDetails(releaseId) != null
-    }
-
     private fun deleteMediaAndTracksByRelease(releaseId: String) {
         releaseDao.withTransaction {
             mediumDao.deleteMediaByRelease(releaseId)
@@ -235,7 +255,7 @@ class ReleaseRepositoryImpl(
     // endregion
 }
 
-private fun TrackAndMedium.toTrackListItemModel() =
+private fun TrackAndMedium.toTrackListItemModel(mostListenedTrackCount: Long) =
     TrackListItemModel(
         id = id,
         position = position,
@@ -251,4 +271,6 @@ private fun TrackAndMedium.toTrackListItemModel() =
         trackCount = trackCount,
         format = format,
         aliases = aliases,
+        listenCount = listenCount,
+        mostListenedTrackCount = mostListenedTrackCount,
     )

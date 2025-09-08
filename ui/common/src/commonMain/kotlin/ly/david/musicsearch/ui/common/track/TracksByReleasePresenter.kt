@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,11 +25,13 @@ class TracksByReleasePresenter(
     @Composable
     override fun present(): TracksByReleaseUiState {
         var query by rememberSaveable { mutableStateOf("") }
-        var id: String by rememberSaveable { mutableStateOf("") }
-        val tracksListItems: Flow<PagingData<ListItemModel>> by rememberRetained(id, query) {
+        var releaseId: String by rememberSaveable { mutableStateOf("") }
+        var mostListenedTrackCount: Long by rememberSaveable { mutableLongStateOf(0) }
+        val tracksListItems: Flow<PagingData<ListItemModel>> by rememberRetained(releaseId, query) {
             mutableStateOf(
                 getTracksByRelease(
-                    releaseId = id,
+                    releaseId = releaseId,
+                    mostListenedTrackCount = mostListenedTrackCount,
                     query = query,
                 ),
             )
@@ -43,7 +46,10 @@ class TracksByReleasePresenter(
             eventSink = { event ->
                 handleEvent(
                     event = event,
-                    onIdChanged = { id = it },
+                    onGet = { id, count ->
+                        releaseId = id
+                        mostListenedTrackCount = count
+                    },
                     onQueryChanged = { query = it },
                     onToggleMedium = { id ->
                         val mediumId = id.toLong()
@@ -59,19 +65,22 @@ class TracksByReleasePresenter(
     }
 
     private fun handleEvent(
-        event: TracksByEntityUiEvent,
-        onIdChanged: (String) -> Unit,
+        event: TracksByReleaseUiEvent,
+        onGet: (id: String, count: Long) -> Unit,
         onQueryChanged: (String) -> Unit,
         onToggleMedium: (String) -> Unit = {},
     ) {
         when (event) {
-            is TracksByEntityUiEvent.Get -> {
-                onIdChanged(event.byEntityId)
+            is TracksByReleaseUiEvent.Get -> {
+                onGet(
+                    event.byReleaseId,
+                    event.mostListenedTrackCount,
+                )
             }
-            is TracksByEntityUiEvent.UpdateQuery -> {
+            is TracksByReleaseUiEvent.UpdateQuery -> {
                 onQueryChanged(event.query)
             }
-            is TracksByEntityUiEvent.ToggleMedium -> {
+            is TracksByReleaseUiEvent.ToggleMedium -> {
                 onToggleMedium(event.id)
             }
         }
@@ -83,19 +92,20 @@ data class TracksByReleaseUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
     val collapsedMediumIds: Set<Long> = setOf(),
-    val eventSink: (TracksByEntityUiEvent) -> Unit = {},
+    val eventSink: (TracksByReleaseUiEvent) -> Unit = {},
 ) : CircuitUiState
 
-sealed interface TracksByEntityUiEvent : CircuitUiEvent {
+sealed interface TracksByReleaseUiEvent : CircuitUiEvent {
     data class Get(
-        val byEntityId: String,
-    ) : TracksByEntityUiEvent
+        val byReleaseId: String,
+        val mostListenedTrackCount: Long,
+    ) : TracksByReleaseUiEvent
 
     data class UpdateQuery(
         val query: String,
-    ) : TracksByEntityUiEvent
+    ) : TracksByReleaseUiEvent
 
     data class ToggleMedium(
         val id: String,
-    ) : TracksByEntityUiEvent
+    ) : TracksByReleaseUiEvent
 }

@@ -50,11 +50,13 @@ class RecordingRepositoryImpl(
 
     private suspend fun getCachedData(recordingId: String): RecordingDetailsModel? {
         if (!relationRepository.visited(recordingId)) return null
+
         val username = listenBrainzAuthStore.browseUsername.first()
         val recording = recordingDao.getRecordingForDetails(
             recordingId = recordingId,
             listenBrainzUsername = username,
         ) ?: return null
+
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
         val urlRelations = relationRepository.getRelationshipsByType(recordingId)
         val aliases = aliasDao.getAliases(

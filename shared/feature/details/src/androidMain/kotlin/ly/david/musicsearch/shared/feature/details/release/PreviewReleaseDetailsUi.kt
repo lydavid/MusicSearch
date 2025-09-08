@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -101,6 +102,45 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
                 isReleaseEventsCollapsed = true,
                 isExternalLinksCollapsed = true,
                 now = Instant.parse("2025-06-05T19:42:20Z"),
+                totalUrls = 2,
+            ),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseDetailsUiWithListens() {
+    PreviewWithSharedElementTransition {
+        ReleaseDetailsTabUi(
+            release = release.copy(
+                listenCount = 10,
+                latestListens = persistentListOf(
+                    ListenWithTrack(
+                        mediumPosition = 1,
+                        trackNumber = "10",
+                        trackName = "世界のつづき",
+                        listenedMs = 1757116212000,
+                    ),
+                    ListenWithTrack(
+                        mediumPosition = 1,
+                        trackNumber = "9",
+                        trackName = "風のゆくえ",
+                        listenedMs = 1757116212000 - 118706,
+                    ),
+                    ListenWithTrack(
+                        mediumPosition = 1,
+                        trackNumber = "8",
+                        trackName = "ビンクスの酒",
+                        listenedMs = 1757116212000 - 118706 - 100000,
+                    ),
+                ),
+                listenBrainzUrl = "https://listenbrainz.org/album/22760f81-37ce-47ce-98b6-65f8a285f083",
+            ),
+            detailsTabUiState = DetailsTabUiState(
+                numberOfImages = 11,
+                isReleaseEventsCollapsed = true,
+                now = Instant.fromEpochMilliseconds(1757116212000),
                 totalUrls = 2,
             ),
         )

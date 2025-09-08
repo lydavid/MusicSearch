@@ -22,6 +22,7 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
+import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -171,6 +172,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         LaunchedEffect(
             key1 = query,
             key2 = selectedTab,
+            key3 = detailsModel,
         ) {
             topAppBarFilterState.show(
                 selectedTab !in listOf(
@@ -187,6 +189,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     browseMethod = browseMethod,
                     query = query,
                     isRemote = true,
+                    mostListenedTrackCount = (detailsModel as? ReleaseDetailsModel)?.mostListenedTrackCount ?: 0,
                 ),
             )
         }

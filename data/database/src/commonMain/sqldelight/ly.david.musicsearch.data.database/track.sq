@@ -57,7 +57,8 @@ SELECT
   medium.track_count,
   medium.format,
   GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
 FROM track
 INNER JOIN medium ON track.medium_id = medium.id
 INNER JOIN `release` r ON medium.release_id = r.id
@@ -65,6 +66,7 @@ INNER JOIN artist_credit_entity acr ON acr.entity_id = track.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = track.recording_id
 LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
 WHERE r.id = :releaseId
 AND (
   track.title LIKE :query OR

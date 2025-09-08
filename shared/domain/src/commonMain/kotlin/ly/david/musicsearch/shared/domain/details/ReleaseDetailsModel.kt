@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -47,6 +48,11 @@ data class ReleaseDetailsModel(
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
+
+    val listenCount: Long? = null,
+    val latestListens: ImmutableList<ListenWithTrack> = persistentListOf(),
+    val listenBrainzUrl: String = "",
+    val mostListenedTrackCount: Long = 0,
 ) : Release, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)

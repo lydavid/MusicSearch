@@ -49,8 +49,6 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
-import kotlin.time.Clock
-import kotlin.time.Instant
 
 @Composable
 internal fun RecordingUi(
@@ -129,7 +127,6 @@ internal fun RecordingUiInternal(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
-    now: Instant = Clock.System.now(),
     additionalActions: @Composable () -> Unit = {},
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
     onEditCollectionClick: (String) -> Unit = {},
@@ -302,7 +299,7 @@ internal fun RecordingUiInternal(
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
-            now = now,
+            now = state.detailsTabUiState.now,
             onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, entity ->
                 releasesByEntityEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(id))
@@ -310,7 +307,6 @@ internal fun RecordingUiInternal(
             detailsScreen = { detailsModel ->
                 RecordingDetailsTabUi(
                     recording = detailsModel,
-                    now = now,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     onCollapseExpandExternalLinks = {

@@ -1,15 +1,30 @@
 package ly.david.musicsearch.shared.feature.details.release
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipAnchorPosition
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
+import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
@@ -17,14 +32,21 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.formatPeriod
+import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import ly.david.musicsearch.ui.common.work.getDisplayScript
+import kotlin.time.Instant
 
 @Composable
 internal fun ReleaseDetailsTabUi(
@@ -41,7 +63,7 @@ internal fun ReleaseDetailsTabUi(
     val strings = LocalStrings.current
 
     val entityInfoSection: @Composable ReleaseDetailsModel.() -> Unit = {
-        barcode?.ifNotNullOrEmpty {
+        barcode.ifNotEmpty {
             TextWithHeading(
                 heading = strings.barcode,
                 text = it,
@@ -91,7 +113,7 @@ internal fun ReleaseDetailsTabUi(
                 filterText = filterText,
             )
         }
-        packaging?.ifNotNullOrEmpty {
+        packaging.ifNotEmpty {
             TextWithHeading(
                 heading = strings.packaging,
                 text = it,
@@ -105,28 +127,28 @@ internal fun ReleaseDetailsTabUi(
                 filterText = filterText,
             )
         }
-        textRepresentation.language?.getDisplayLanguage(strings).ifNotNullOrEmpty {
+        textRepresentation.language.getDisplayLanguage(strings).ifNotNullOrEmpty {
             TextWithHeading(
                 heading = strings.language,
                 text = it,
                 filterText = filterText,
             )
         }
-        textRepresentation.script?.getDisplayScript(strings).ifNotNullOrEmpty {
+        textRepresentation.script.getDisplayScript(strings).ifNotNullOrEmpty {
             TextWithHeading(
                 heading = strings.script,
                 text = it,
                 filterText = filterText,
             )
         }
-        quality?.ifNotNullOrEmpty {
+        quality.ifNotEmpty {
             TextWithHeading(
                 heading = strings.dataQuality,
                 text = it,
                 filterText = filterText,
             )
         }
-        asin?.ifNotNullOrEmpty {
+        asin.ifNotEmpty {
             TextWithHeading(
                 heading = strings.asin,
                 text = it,
@@ -181,6 +203,11 @@ internal fun ReleaseDetailsTabUi(
                     onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
                     onItemClick = onItemClick,
                 )
+
+                listenSection(
+                    release = this@run,
+                    now = detailsTabUiState.now,
+                )
             }
     }
     DetailsTabUi(
@@ -228,5 +255,89 @@ private fun LazyListScope.releaseEventsSection(
                 },
             )
         }
+    }
+}
+
+private fun LazyListScope.listenSection(
+    release: ReleaseDetailsModel,
+    now: Instant,
+) {
+    if (release.listenCount != null) {
+        item {
+            ListSeparatorHeader(LocalStrings.current.listens)
+        }
+        item {
+            ListItem(
+                headlineContent = {
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = release.listenCount.toString(),
+                    )
+                },
+            )
+        }
+        items(release.latestListens) {
+            LastListenedListItem(
+                listenWithTrack = it,
+                now = now,
+            )
+        }
+        // TODO: see all listens for a release
+//        item {
+//            ClickableItem(
+//                title = "See all listens",
+//                endIcon = CustomIcons.ChevronRight,
+//                onClick = {},
+//            )
+//        }
+        item {
+            UrlListItem(
+                relation = RelationListItemModel(
+                    id = "listenbrainz_url",
+                    label = "ListenBrainz",
+                    linkedEntity = MusicBrainzEntityType.URL,
+                    name = release.listenBrainzUrl,
+                    linkedEntityId = "listenbrainz_url",
+                ),
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LastListenedListItem(
+    listenWithTrack: ListenWithTrack,
+    now: Instant,
+) {
+    val instant = Instant.fromEpochMilliseconds(listenWithTrack.listenedMs)
+    val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
+    val formattedDateTime = instant.getDateTimeFormatted()
+
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
+        tooltip = {
+            PlainTooltip {
+                Text(
+                    text = formattedDateTime,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
+        },
+        state = rememberTooltipState(),
+    ) {
+        val text = buildString {
+            append(formattedDateTimePeriod)
+            append(" - ")
+            append(listenWithTrack.mediumPosition)
+            append(".")
+            append(listenWithTrack.trackNumber)
+            append(". ")
+            append(listenWithTrack.trackName)
+        }
+        Text(
+            text = text,
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
     }
 }

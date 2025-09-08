@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
@@ -15,7 +17,9 @@ import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 
 interface TestReleaseRepository {
@@ -32,9 +36,11 @@ interface TestReleaseRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createReleaseRepository(
         musicBrainzModel: ReleaseMusicBrainzNetworkModel,
+        fakeBrowseUsername: String = "",
     ): ReleaseRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
@@ -60,6 +66,13 @@ interface TestReleaseRepository {
             mediumDao = mediumDao,
             trackDao = trackDao,
             aliasDao = aliasDao,
+            listenBrainzRepository = object : ListenBrainzRepository {
+                override fun getBaseUrl(): String = ""
+            },
+            listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
+                override val browseUsername: Flow<String>
+                    get() = flowOf(fakeBrowseUsername)
+            },
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupRelease(
                     releaseId: String,
@@ -68,6 +81,7 @@ interface TestReleaseRepository {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

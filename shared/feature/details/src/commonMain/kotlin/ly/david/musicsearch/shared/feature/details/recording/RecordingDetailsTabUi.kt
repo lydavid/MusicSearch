@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.recording
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +28,12 @@ import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TextStyles
 import kotlin.time.Instant
 
 @Composable
 internal fun RecordingDetailsTabUi(
     recording: RecordingDetailsModel,
-    now: Instant,
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
@@ -74,7 +75,7 @@ internal fun RecordingDetailsTabUi(
         bringYourOwnLabelsSection = {
             listenSection(
                 recording = recording,
-                now = now,
+                now = detailsTabUiState.now,
             )
         },
     )
@@ -116,17 +117,18 @@ private fun LazyListScope.listenSection(
         item {
             UrlListItem(
                 relation = RelationListItemModel(
-                    id = "listenbrainz_section",
+                    id = "listenbrainz_url",
                     label = "ListenBrainz",
                     linkedEntity = MusicBrainzEntityType.URL,
                     name = recording.listenBrainzUrl,
-                    linkedEntityId = "listenbrainz_section",
+                    linkedEntityId = "listenbrainz_url",
                 ),
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LastListenedListItem(
     lastListenedMs: Long,
@@ -138,5 +140,6 @@ private fun LastListenedListItem(
     Text(
         text = "$formattedDateTimePeriod ($formattedDateTime)",
         modifier = Modifier.padding(horizontal = 16.dp),
+        style = TextStyles.getCardBodyTextStyle(),
     )
 }
