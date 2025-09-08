@@ -310,7 +310,7 @@ private fun LastListenedListItem(
 
     val text = buildString {
         append(formattedDateTimePeriod)
-        append(" (${formattedDateTime})")
+        append(" ($formattedDateTime)")
         append(" - ")
         append(listenWithTrack.mediumPosition)
         append(".")
