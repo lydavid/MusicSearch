@@ -8,10 +8,8 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn:
     text: "Search"
     index: 0
-- inputText: "\"under pressure\" firstreleasedate:1981"
-- tapOn:
-      text: "Under Pressure"
-      index: 0
+- inputText: "rid:\"bdaeec2d-94f1-46b5-91f3-340ec6939c66\""
+- tapOn: "Under Pressure"
 
 - assertVisible: "Release Group by Queen & David Bowie"
 - assertVisible: "Release Group information"
