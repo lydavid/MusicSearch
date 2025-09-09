@@ -1,0 +1,4 @@
+
+CREATE INDEX idx_listen_username_recording_mbid ON listen (username, recording_musicbrainz_id);
+
+DROP INDEX idx_listen_recording_mbid;

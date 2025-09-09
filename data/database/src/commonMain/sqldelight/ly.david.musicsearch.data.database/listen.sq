@@ -38,7 +38,7 @@ CREATE TABLE listen (
   PRIMARY KEY (listened_at_ms, username, recording_messybrainz_id)
 );
 
-CREATE INDEX idx_listen_recording_mbid ON listen (recording_musicbrainz_id);
+CREATE INDEX idx_listen_username_recording_mbid ON listen (username, recording_musicbrainz_id);
 CREATE INDEX idx_listen_caa_release_mbid ON listen (caa_release_mbid);
 
 -- queries
