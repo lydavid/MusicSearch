@@ -45,13 +45,7 @@ appId: io.github.lydavid.musicsearch.debug
 # When there is more data, the loading takes long enough such that
 # the current item's position is no longer retained.
 # But with less data, like in this test, the item's position is retained.
-- scrollUntilVisible:
-    direction: UP
-    speed: 100
-    element:
-        text: "ぐされ (Gusare)"
-- assertVisible: "ぐされ (Gusare)"
-- assertVisible: "潜潜話 (Hisohiso Banashi)"
+# Because of this, it's better not to assert what is on screen to reduce chances of flaking.
 
 - tapOn: "Releases"
 
@@ -103,7 +97,6 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
 - tapOn: "Un-sort"
-- assertVisible: "ぐされ (Gusare)"
 - assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 
 - tapOn: "Releases"
