@@ -288,7 +288,7 @@ private fun LazyListScope.listenSection(
             UrlListItem(
                 relation = RelationListItemModel(
                     id = "listenbrainz_url",
-                    label = "ListenBrainz",
+                    type = "ListenBrainz",
                     linkedEntity = MusicBrainzEntityType.URL,
                     name = release.listenBrainzUrl,
                     linkedEntityId = "listenbrainz_url",

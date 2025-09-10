@@ -257,7 +257,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "e893b81b-a678-4989-858f-c83a30243b7b_8",
                         linkedEntityId = "e893b81b-a678-4989-858f-c83a30243b7b",
-                        label = "Discogs",
+                        type = "Discogs",
                         name = "https://www.discogs.com/label/268904",
                         disambiguation = null,
                         attributes = "",
@@ -268,7 +268,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "95cb03e2-8126-417d-82c1-84ef0274b6f8_14",
                         linkedEntityId = "95cb03e2-8126-417d-82c1-84ef0274b6f8",
-                        label = "Songkick",
+                        type = "Songkick",
                         name = "https://www.songkick.com/venues/33448",
                         disambiguation = null,
                         attributes = "",
@@ -279,7 +279,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "4674bf4a-5ae8-4154-a223-4c26338622bd_15",
                         linkedEntityId = "4674bf4a-5ae8-4154-a223-4c26338622bd",
-                        label = "Wikidata",
+                        type = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q386246",
                         disambiguation = null,
                         attributes = "",
@@ -290,7 +290,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "4adeee43-1b70-4144-8dfb-96713e868b33_10",
                         linkedEntityId = "4adeee43-1b70-4144-8dfb-96713e868b33",
-                        label = "official homepages",
+                        type = "official homepages",
                         name = "https://www.nipponbudokan.or.jp/",
                         disambiguation = null,
                         attributes = "",
@@ -301,7 +301,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "ab71b5f3-9c59-4595-abdc-6b047db1eb20_11",
                         linkedEntityId = "ab71b5f3-9c59-4595-abdc-6b047db1eb20",
-                        label = "other databases",
+                        type = "other databases",
                         name = "https://www.generasia.com/wiki/Nippon_Budokan",
                         disambiguation = null,
                         attributes = "",
@@ -312,7 +312,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "860a6bef-cee3-406e-a19e-54938a456926_12",
                         linkedEntityId = "860a6bef-cee3-406e-a19e-54938a456926",
-                        label = "other databases",
+                        type = "other databases",
                         name = "https://www.livefans.jp/venues/4699",
                         disambiguation = null,
                         attributes = "",
@@ -323,7 +323,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "66fa274b-74d5-47c4-85aa-d168fff294ea_9",
                         linkedEntityId = "66fa274b-74d5-47c4-85aa-d168fff294ea",
-                        label = "picture",
+                        type = "picture",
                         name = "https://commons.wikimedia.org/wiki/File:Nippon_Budokan_2010.jpg",
                         disambiguation = null,
                         attributes = "",
@@ -334,7 +334,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
                     RelationListItemModel(
                         id = "d1d588f8-abb9-4f12-b421-b2e9a2acf800_13",
                         linkedEntityId = "d1d588f8-abb9-4f12-b421-b2e9a2acf800",
-                        label = "setlist.fm",
+                        type = "setlist.fm",
                         name = "https://www.setlist.fm/venue/nippon-budokan-tokyo-japan-3d61d43.html",
                         disambiguation = null,
                         attributes = "",

@@ -114,7 +114,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                     RelationListItemModel(
                         id = "674fd59c-9986-4561-a255-a2959d14a5fe_1",
                         linkedEntityId = "674fd59c-9986-4561-a255-a2959d14a5fe",
-                        label = "ticketing",
+                        type = "ticketing",
                         name = "https://www.ticketmaster.ca/event/10005F01FAA14AE2",
                         disambiguation = null,
                         attributes = "",

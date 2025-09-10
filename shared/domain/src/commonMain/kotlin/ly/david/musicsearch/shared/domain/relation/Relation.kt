@@ -8,7 +8,7 @@ interface Relation : NameWithDisambiguation {
     override val disambiguation: String?
     val linkedEntityId: String
     val linkedEntity: MusicBrainzEntityType
-    val label: String
+    val type: String
     val attributes: String?
     val isForwardDirection: Boolean?
 }

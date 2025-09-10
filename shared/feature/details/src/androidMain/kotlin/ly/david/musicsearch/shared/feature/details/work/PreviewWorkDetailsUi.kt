@@ -38,7 +38,7 @@ internal fun PreviewWorkDetailsUi() {
                         id = "1",
                         linkedEntity = MusicBrainzEntityType.URL,
                         linkedEntityId = "2",
-                        label = "lyrics page",
+                        type = "lyrics page",
                         name = "https://genius.com/Genius-romanizations-nano-kemurikusa-romanized-lyrics",
                     ),
                 ),

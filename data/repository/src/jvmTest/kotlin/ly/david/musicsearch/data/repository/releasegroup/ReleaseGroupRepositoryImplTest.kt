@@ -180,7 +180,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                     RelationListItemModel(
                         id = "c3e175ed-6618-42d9-8d0f-680883a35f43_4",
                         linkedEntityId = "c3e175ed-6618-42d9-8d0f-680883a35f43",
-                        label = "Wikidata",
+                        type = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q1058017",
                         disambiguation = null,
                         attributes = "",
@@ -191,7 +191,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                     RelationListItemModel(
                         id = "c6d64f5a-dcde-425c-b9d6-a84a74a805c3_5",
                         linkedEntityId = "c6d64f5a-dcde-425c-b9d6-a84a74a805c3",
-                        label = "Wikipedia",
+                        type = "Wikipedia",
                         name = "https://en.wikipedia.org/wiki/Today_Is_a_Beautiful_Day",
                         disambiguation = null,
                         attributes = "",
@@ -202,7 +202,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                     RelationListItemModel(
                         id = "03620ecf-4ea0-4833-9cd7-2e9b73dd23bd_3",
                         linkedEntityId = "03620ecf-4ea0-4833-9cd7-2e9b73dd23bd",
-                        label = "standalone website",
+                        type = "standalone website",
                         name = "http://www.supercell.jp/2nd/",
                         disambiguation = null,
                         attributes = "",

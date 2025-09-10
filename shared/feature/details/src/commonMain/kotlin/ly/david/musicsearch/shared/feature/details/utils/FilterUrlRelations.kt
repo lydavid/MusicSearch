@@ -11,7 +11,7 @@ internal fun ImmutableList<RelationListItemModel>?.filterUrlRelations(
         val searchText = query.lowercase()
         listOf(
             relationListItemModel.name,
-            relationListItemModel.label,
+            relationListItemModel.type,
         ).any { it.lowercase().contains(searchText) }
     }.orEmpty().toPersistentList()
 }

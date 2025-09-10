@@ -9,23 +9,17 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
  *
  * All attributes/attribute-value pairs should be comma-separated.
  */
-fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
-    attributes?.joinToString(", ") { attribute ->
-        when (attribute) {
-            "task" -> {
-                attribute + attributeValues?.task.transformThisIfNotNullOrEmpty { ": $it" }
-            }
-            "number" -> {
-                attribute + attributeValues?.number.transformThisIfNotNullOrEmpty { ": $it" }
-            }
-            "time" -> {
-                attribute + attributeValues?.time.transformThisIfNotNullOrEmpty { ": $it" }
-            }
-            else -> {
-                attribute
-            }
-        }
+fun RelationMusicBrainzModel.getFormattedAttributes(): String {
+    return attributes?.joinToString(", ") { attribute ->
+        attribute + attributeValues?.get(attribute).transformThisIfNotNullOrEmpty { ": $it" }
     }.orEmpty()
+}
+
+fun RelationMusicBrainzModel.getFormattedAttributeIds(): String {
+    return attributes?.joinToString(", ") { attribute ->
+        attributeIds?.get(attribute).orEmpty()
+    }.orEmpty()
+}
 
 /**
  * Returns a human-readable label for this relationship based on its type and link direction.

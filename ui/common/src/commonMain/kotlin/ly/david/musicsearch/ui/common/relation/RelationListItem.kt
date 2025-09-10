@@ -47,7 +47,7 @@ fun RelationListItem(
         headlineContent = {
             Column {
                 Text(
-                    text = "${relation.label}:",
+                    text = "${relation.type}:",
                     style = TextStyles.getCardBodySubTextStyle(),
                     fontWeight = relation.fontWeight,
                 )

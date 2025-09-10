@@ -16,7 +16,6 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("title") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String = "",
     @SerialName("date") override val date: String? = null,
-    @SerialName("status") val status: String? = null,
     @SerialName("status-id") val statusId: String? = null,
     @SerialName("barcode") override val barcode: String? = null,
     @SerialName("country") override val countryCode: String? = null,

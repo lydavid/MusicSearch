@@ -108,10 +108,10 @@ class RelationRepositoryImpl(
         return map { pagingData ->
             pagingData.map { relationListItem ->
                 relationListItem.copy(
-                    label = relationListItem.label
+                    type = relationListItem.type
                         .split(", ")
                         .mapIndexed { index, part ->
-                            if (index == 0 || relationListItem.label.split(", ")[index - 1] != part.trim()) {
+                            if (index == 0 || relationListItem.type.split(", ")[index - 1] != part.trim()) {
                                 part.trim()
                             } else {
                                 null

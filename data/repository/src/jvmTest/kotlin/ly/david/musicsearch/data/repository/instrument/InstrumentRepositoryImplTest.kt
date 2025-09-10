@@ -172,7 +172,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "a_7",
                         linkedEntityId = "a",
-                        label = "Wikidata",
+                        type = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q719120",
                         disambiguation = null,
                         attributes = "",
@@ -183,7 +183,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "a_5",
                         linkedEntityId = "a",
-                        label = "other databases",
+                        type = "other databases",
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_classic.html",
                         disambiguation = null,
                         attributes = "",
@@ -194,7 +194,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "a_6",
                         linkedEntityId = "a",
-                        label = "other databases",
+                        type = "other databases",
                         name = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_gut.html",
                         disambiguation = null,
                         attributes = "",
@@ -205,7 +205,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "a_4",
                         linkedEntityId = "a",
-                        label = "picture",
+                        type = "picture",
                         name = "https://static.metabrainz.org/irombook/guitar/guitar_acoustic_classical.png",
                         disambiguation = null,
                         attributes = "",
