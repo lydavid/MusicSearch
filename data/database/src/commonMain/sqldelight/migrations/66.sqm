@@ -1,0 +1,60 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType;
+
+CREATE TABLE relation_temp (
+  entity_id TEXT NOT NULL,
+  linked_entity_id TEXT NOT NULL,
+  linked_entity TEXT AS MusicBrainzEntityType NOT NULL,
+  `order` INTEGER AS Int NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  attributes TEXT,
+  attribute_ids TEXT,
+  is_forward_direction INTEGER AS Boolean,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean,
+
+  PRIMARY KEY (entity_id, linked_entity_id, `order`)
+);
+
+INSERT INTO relation_temp (
+  entity_id,
+  linked_entity_id,
+  linked_entity,
+  `order`,
+  type,
+  type_id,
+  name,
+  disambiguation,
+  attributes,
+  attribute_ids,
+  is_forward_direction,
+  begin,
+  end,
+  ended
+)
+SELECT
+  entity_id,
+  linked_entity_id,
+  linked_entity,
+  `order`,
+  label, -- renamed from label to type
+  NULL, -- type_id
+  name,
+  disambiguation,
+  attributes,
+  NULL, -- attribute_ids
+  is_forward_direction,
+  begin,
+  end,
+  ended
+FROM relation;
+
+DROP TABLE relation;
+ALTER TABLE relation_temp RENAME TO relation;
+
+CREATE INDEX IF NOT EXISTS idx_relation_linked_entity_id ON relation(linked_entity_id);

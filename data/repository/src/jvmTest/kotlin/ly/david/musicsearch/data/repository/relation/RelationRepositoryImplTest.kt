@@ -26,7 +26,6 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.relation.AttributeValue
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -134,8 +133,8 @@ class RelationRepositoryImplTest :
                                     disambiguation = "",
                                 ),
                                 attributes = listOf("number"),
-                                attributeValues = AttributeValue(
-                                    number = "2",
+                                attributeValues = mapOf(
+                                    "number" to "2",
                                 ),
                                 orderingKey = 2,
                             ),
@@ -155,8 +154,8 @@ class RelationRepositoryImplTest :
                                     disambiguation = "",
                                 ),
                                 attributes = listOf("number"),
-                                attributeValues = AttributeValue(
-                                    number = "1",
+                                attributeValues = mapOf(
+                                    "number" to "1",
                                 ),
                                 orderingKey = 1,
                             ),
@@ -189,7 +188,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "bad6d0fa-938e-45a2-95fd-b37ea37b783c_5",
                         linkedEntityId = "bad6d0fa-938e-45a2-95fd-b37ea37b783c",
-                        label = "publishing label",
+                        type = "publishing label",
                         name = "上海アリス幻樂団",
                         disambiguation = "dōjin game developer",
                         attributes = "",
@@ -201,7 +200,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "09676c82-b1d0-4bb1-b827-91f4a8e52cb3_6",
                         linkedEntityId = "09676c82-b1d0-4bb1-b827-91f4a8e52cb3",
-                        label = "publishing label",
+                        type = "publishing label",
                         name = "黄昏フロンティア",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.LABEL,
@@ -212,7 +211,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b_1",
                         linkedEntityId = "5d286f5b-7cc3-3f78-b1cf-a24d496af34b",
-                        label = "has parts",
+                        type = "has parts",
                         name = "東方靈異伝 〜 Highly Responsive to Prayers",
                         disambiguation = "",
                         attributes = "number: 1",
@@ -224,7 +223,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "b22e3f3e-6c90-3df9-915f-12d8f86c240b_2",
                         linkedEntityId = "b22e3f3e-6c90-3df9-915f-12d8f86c240b",
-                        label = "has parts",
+                        type = "has parts",
                         name = "東方封魔録 〜 Story of Eastern Wonderland",
                         disambiguation = "",
                         attributes = "number: 2",
@@ -236,7 +235,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "fbca86fc-1509-40d6-b985-f50e45796187_9",
                         linkedEntityId = "fbca86fc-1509-40d6-b985-f50e45796187",
-                        label = "subseries",
+                        type = "subseries",
                         name = "ZUN's Music Collection",
                         disambiguation = null,
                         attributes = "",
@@ -310,7 +309,7 @@ class RelationRepositoryImplTest :
                     RelationListItemModel(
                         id = "ae6c957d-c33e-4028-abdd-688bddec3be8_2",
                         linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
-                        label = "composer, lyricist",
+                        type = "composer, lyricist",
                         name = "ヒグチアイ",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.ARTIST,
@@ -415,7 +414,7 @@ class RelationRepositoryImplTest :
                         name = "バルーン",
                         disambiguation = "Vocaloid producer",
                         linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
-                        label = "composer, lyricist, premiered by",
+                        type = "composer, lyricist, premiered by",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
@@ -427,7 +426,7 @@ class RelationRepositoryImplTest :
                         name = "v flower",
                         disambiguation = "Vocaloid; \uD835\uDC87lower",
                         linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
-                        label = "premiered by",
+                        type = "premiered by",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
@@ -454,7 +453,7 @@ class RelationRepositoryImplTest :
                         name = "バルーン",
                         disambiguation = "Vocaloid producer",
                         linkedEntityId = "ae6c957d-c33e-4028-abdd-688bddec3be8",
-                        label = "premiered by",
+                        type = "premiered by",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
@@ -466,7 +465,7 @@ class RelationRepositoryImplTest :
                         name = "v flower",
                         disambiguation = "Vocaloid; \uD835\uDC87lower",
                         linkedEntityId = "2708d1f1-d8f1-45fd-a3c6-074a410e61d8",
-                        label = "premiered by",
+                        type = "premiered by",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.ARTIST,
                         visited = false,
@@ -573,7 +572,7 @@ class RelationRepositoryImplTest :
                         name = "ぐされ",
                         disambiguation = "初回限定LIVE盤",
                         linkedEntityId = releaseId,
-                        label = "producer",
+                        type = "producer",
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.RELEASE,
                         visited = true,

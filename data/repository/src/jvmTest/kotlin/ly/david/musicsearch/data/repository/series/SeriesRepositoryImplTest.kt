@@ -155,7 +155,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "61036cd9-8819-4f56-8739-d7f9bd16d675_3",
                         linkedEntityId = "61036cd9-8819-4f56-8739-d7f9bd16d675",
-                        label = "Wikidata",
+                        type = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q240550",
                         disambiguation = null,
                         attributes = "",
@@ -166,7 +166,7 @@ class SeriesRepositoryImplTest : KoinTest {
                     RelationListItemModel(
                         id = "e4a5db48-cae3-404f-921d-0f1c3947f874_2",
                         linkedEntityId = "e4a5db48-cae3-404f-921d-0f1c3947f874",
-                        label = "official homepages",
+                        type = "official homepages",
                         name = "https://www.rollingstone.com/music/music-lists/best-albums-of-all-time-1062063/",
                         disambiguation = null,
                         attributes = "",

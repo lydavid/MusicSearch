@@ -61,14 +61,14 @@ private val release = ReleaseDetailsModel(
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
-            label = "ASIN",
+            type = "ASIN",
             name = "https://www.amazon.co.jp/gp/product/B0B392M9SC",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
-            label = "VGMdb",
+            type = "VGMdb",
             name = "https://vgmdb.net/album/120991",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",

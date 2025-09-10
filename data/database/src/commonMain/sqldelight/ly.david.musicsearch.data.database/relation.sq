@@ -8,10 +8,12 @@ CREATE TABLE relation (
   linked_entity_id TEXT NOT NULL,
   linked_entity TEXT AS MusicBrainzEntityType NOT NULL,
   `order` INTEGER AS Int NOT NULL,
-  label TEXT NOT NULL,
+  type TEXT NOT NULL,
+  type_id TEXT, -- nullable in case we want to map existing types to their id (unlikely, but you never know)
   name TEXT NOT NULL,
   disambiguation TEXT,
   attributes TEXT,
+  attribute_ids TEXT,
 
   -- these were added in migrations 21/22, so before they were null
   is_forward_direction INTEGER AS Boolean,
@@ -23,7 +25,7 @@ CREATE TABLE relation (
   PRIMARY KEY (entity_id, linked_entity_id, `order`)
 );
 
-CREATE INDEX IF NOT EXISTS idx_relation_linked_entity_id ON relation(linked_entity_id);
+CREATE INDEX idx_relation_linked_entity_id ON relation(linked_entity_id);
 
 insert:
 INSERT OR IGNORE INTO relation (
@@ -31,10 +33,12 @@ INSERT OR IGNORE INTO relation (
   `linked_entity_id`,
   `linked_entity`,
   `order`,
-  `label`,
+  type,
+  type_id,
   `name`,
   `disambiguation`,
   `attributes`,
+  attribute_ids,
   `is_forward_direction`,
   `begin`,
   `end`,
@@ -45,19 +49,17 @@ VALUES (
   :`linked_entity_id`,
   :`linked_entity`,
   :`order`,
-  :`label`,
+  :type,
+  :typeId,
   :`name`,
   :`disambiguation`,
   :`attributes`,
+  :attributeIds,
   :`is_forward_direction`,
   :`begin`,
   :`end`,
   :`ended`
 );
-
-insertEntity:
-INSERT OR IGNORE INTO relation
-VALUES ?;
 
 countEntityRelationships:
 SELECT COUNT(DISTINCT linked_entity_id)
@@ -68,7 +70,7 @@ AND linked_entity IN :relatedEntities
 AND (
   relation.name LIKE :query OR
   disambiguation LIKE :query OR
-  label LIKE :query OR
+  type LIKE :query OR
   attributes LIKE :query OR
   all_primary_alias.name LIKE :query
 );
@@ -78,7 +80,7 @@ SELECT
   `linked_entity_id`,
   `linked_entity`,
   `order`,
-  GROUP_CONCAT(`label`, ', '),
+  GROUP_CONCAT(type, ', '),
   relation.`name`,
   `disambiguation`,
   `attributes`,
@@ -102,12 +104,12 @@ AND linked_entity IN :relatedEntities
 AND (
   relation.name LIKE :query OR
   disambiguation LIKE :query OR
-  label LIKE :query OR
+  type LIKE :query OR
   attributes LIKE :query OR
   all_primary_alias.name LIKE :query
 )
 GROUP BY linked_entity_id
-ORDER BY linked_entity, label, `order`
+ORDER BY linked_entity, type, `order`
 LIMIT :limit OFFSET :offset;
 
 deleteRelationships:
@@ -120,7 +122,7 @@ SELECT
   `linked_entity_id`,
   `linked_entity`,
   `order`,
-  `label`,
+  type,
   relation.name,
   `disambiguation`,
   `attributes`,
@@ -139,10 +141,10 @@ AND linked_entity = :entityType
 AND (
   relation.name LIKE :query OR
   disambiguation LIKE :query OR
-  label LIKE :query OR
+  type LIKE :query OR
   attributes LIKE :query
 )
-ORDER BY linked_entity, label, `order`;
+ORDER BY linked_entity, type, `order`;
 
 deleteRelationshipsByType:
 DELETE FROM relation

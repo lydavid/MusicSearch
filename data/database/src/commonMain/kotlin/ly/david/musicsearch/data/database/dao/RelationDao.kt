@@ -5,7 +5,6 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -15,6 +14,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
+import kotlin.time.Instant
 
 class RelationDao(
     database: Database,
@@ -29,10 +29,12 @@ class RelationDao(
                 linked_entity_id = linkedEntityId,
                 linked_entity = linkedEntity,
                 order = order,
-                label = label,
+                type = type,
+                typeId = typeId,
                 name = name,
                 disambiguation = disambiguation,
                 attributes = attributes,
+                attributeIds = attributeIds,
                 is_forward_direction = isForwardDirection,
                 begin = lifeSpan.begin,
                 end = lifeSpan.end,
@@ -128,7 +130,7 @@ class RelationDao(
         id = "${linkedEntityId}_$order",
         linkedEntityId = linkedEntityId,
         linkedEntity = linkedEntity,
-        label = label,
+        type = label,
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,

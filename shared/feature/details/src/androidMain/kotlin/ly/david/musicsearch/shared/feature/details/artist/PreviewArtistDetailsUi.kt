@@ -80,14 +80,14 @@ private val artist = ArtistDetailsModel(
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
-            label = "Allmusic",
+            type = "Allmusic",
             name = "https://www.allmusic.com/artist/mn0000754032",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
-            label = "BBC Music",
+            type = "BBC Music",
             name = "https://www.bbc.co.uk/music/artists/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",
@@ -141,7 +141,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                 urls = persistentListOf(
                     RelationListItemModel(
                         id = "1",
-                        label = "Wikidata",
+                        type = "Wikidata",
                         name = "https://www.wikidata.org/wiki/Q3108914",
                         linkedEntity = MusicBrainzEntityType.URL,
                         linkedEntityId = "1",

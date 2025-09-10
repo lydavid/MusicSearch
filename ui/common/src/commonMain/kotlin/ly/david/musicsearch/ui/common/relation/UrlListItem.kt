@@ -45,7 +45,7 @@ fun UrlListItem(
         headlineContent = {
             Column {
                 Text(
-                    text = "${relation.label}:",
+                    text = "${relation.type}:",
                     style = TextStyles.getCardBodySubTextStyle(),
                     fontWeight = relation.fontWeight,
                 )
@@ -54,7 +54,7 @@ fun UrlListItem(
                     modifier = Modifier.padding(top = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    val imageVectorAndTint = when (relation.label) {
+                    val imageVectorAndTint = when (relation.type) {
                         strings.readMore,
                         strings.wikipedia,
                         -> {

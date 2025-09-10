@@ -162,7 +162,7 @@ class RecordingRepositoryImplTest : KoinTest, TestRecordingRepository {
                     RelationListItemModel(
                         id = "b5322490-3003-42e9-a043-d26a83bd1bbd_1",
                         linkedEntityId = "b5322490-3003-42e9-a043-d26a83bd1bbd",
-                        label = "free streaming",
+                        type = "free streaming",
                         name = "https://music.youtube.com/watch?v=2vkgqu3-_Pk",
                         disambiguation = null,
                         attributes = "video",

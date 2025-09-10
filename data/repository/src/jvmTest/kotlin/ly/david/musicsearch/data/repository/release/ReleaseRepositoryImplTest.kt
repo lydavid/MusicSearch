@@ -138,7 +138,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 name = "Today Is A Beautiful Day",
                 disambiguation = "初回生産限定盤",
                 date = "2011-03-16",
-                status = "Official",
                 statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
                 barcode = "4988009047348",
                 countryCode = "JP",
@@ -758,7 +757,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     RelationListItemModel(
                         id = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1_4",
                         linkedEntityId = "8248e638-ee4d-4e03-a6c3-ba4ad7af00c1",
-                        label = "ASIN",
+                        type = "ASIN",
                         name = "https://www.amazon.co.jp/gp/product/B004GJ33BO",
                         disambiguation = null,
                         attributes = "",
@@ -769,7 +768,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     RelationListItemModel(
                         id = "6f72b1ec-2634-4c23-a912-6e262ace69ea_5",
                         linkedEntityId = "6f72b1ec-2634-4c23-a912-6e262ace69ea",
-                        label = "Discogs",
+                        type = "Discogs",
                         name = "https://www.discogs.com/release/2899823",
                         disambiguation = null,
                         attributes = "",
@@ -780,7 +779,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     RelationListItemModel(
                         id = "9093d520-297d-4811-addb-93804d0723b8_7",
                         linkedEntityId = "9093d520-297d-4811-addb-93804d0723b8",
-                        label = "VGMdb",
+                        type = "VGMdb",
                         name = "https://vgmdb.net/album/28417",
                         disambiguation = null,
                         attributes = "",
@@ -791,7 +790,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     RelationListItemModel(
                         id = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3_6",
                         linkedEntityId = "c7ee5a1d-c11d-4511-809f-f5ba138a38d3",
-                        label = "other databases",
+                        type = "other databases",
                         name = "https://rateyourmusic.com/release/album/supercell_f2/today_is_a_beautiful_day_f1/",
                         disambiguation = null,
                         attributes = "",
@@ -817,7 +816,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 id = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0",
                 name = "真・女神転生30th Anniversary Special Sound Compilation",
                 date = "2023-07-26",
-                status = "Official",
                 statusId = "4e304316-386d-3409-af2e-78857eec5cfe",
                 barcode = "4573471821543",
                 countryCode = "JP",

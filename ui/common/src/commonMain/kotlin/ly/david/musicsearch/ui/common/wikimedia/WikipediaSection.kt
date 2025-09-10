@@ -79,7 +79,7 @@ fun WikipediaSection(
                 UrlListItem(
                     relation = RelationListItemModel(
                         id = "wikipedia_section",
-                        label = strings.readMore,
+                        type = strings.readMore,
                         linkedEntity = MusicBrainzEntityType.URL,
                         name = extract.wikipediaUrl,
                         linkedEntityId = "wikipedia_section",

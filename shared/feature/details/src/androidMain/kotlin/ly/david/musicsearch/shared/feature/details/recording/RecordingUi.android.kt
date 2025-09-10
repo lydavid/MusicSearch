@@ -59,14 +59,14 @@ private val relations: MutableStateFlow<PagingData<ListItemModel>> = MutableStat
                 id = "1",
                 linkedEntityId = "1dc670f7-1a43-4a71-973a-2ad181f4edd4",
                 linkedEntity = MusicBrainzEntityType.ARTIST,
-                label = "arranger",
+                type = "arranger",
                 name = "HoneyWorks",
             ),
             RelationListItemModel(
                 id = "2",
                 linkedEntityId = "9953ebf6-1836-45ef-bcca-bee2e32e29c6",
                 linkedEntity = MusicBrainzEntityType.ARTIST,
-                label = "vocal",
+                type = "vocal",
                 name = "CHiCO",
                 disambiguation = "collaborates with HoneyWorks",
             ),
@@ -75,7 +75,7 @@ private val relations: MutableStateFlow<PagingData<ListItemModel>> = MutableStat
                 id = "3",
                 linkedEntityId = "f01b9f4f-f416-44d5-bedb-b6fab5595ecf",
                 linkedEntity = MusicBrainzEntityType.WORK,
-                label = "performance",
+                type = "performance",
                 name = "プライド革命",
                 aliases = persistentListOf(
                     BasicAlias(

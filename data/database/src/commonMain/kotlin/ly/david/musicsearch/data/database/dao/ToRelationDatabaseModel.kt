@@ -3,7 +3,8 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributeIds
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributes
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.common.emptyToNull
@@ -135,10 +136,12 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         linkedEntityId = linkedEntityId,
         linkedEntity = entity,
         order = order,
-        label = getHeader(),
+        type = getHeader(),
+        typeId = typeId,
         name = linkedEntityName,
         disambiguation = linkedEntityDisambiguation,
-        attributes = getFormattedAttributesForDisplay(),
+        attributes = getFormattedAttributes(),
+        attributeIds = getFormattedAttributeIds(),
         isForwardDirection = direction == Direction.FORWARD,
         lifeSpan = LifeSpanUiModel(
             begin = begin.orEmpty(),

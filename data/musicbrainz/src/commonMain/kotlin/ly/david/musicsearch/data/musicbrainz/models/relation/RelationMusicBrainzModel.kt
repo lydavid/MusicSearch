@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.musicbrainz.models.relation
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.shared.domain.LifeSpan
+import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
@@ -14,15 +14,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNet
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
-import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.LifeSpan
 
 @Serializable
 data class RelationMusicBrainzModel(
-
-    // As long as type is unique, we can match its name, rather than type-id, since its name is more accessible to us
-    //  though we have to search up its forward/reverse link phrase anyways, which gives us its type-id.
-    //  Maybe we should just use that for future proofing.
     @SerialName("type") val type: String,
     @SerialName("type-id") val typeId: String,
 
@@ -34,7 +30,8 @@ data class RelationMusicBrainzModel(
     @SerialName("target-credit") val targetCredit: String? = null,
 
     @SerialName("attributes") val attributes: List<String>? = null, // strings, task
-    @SerialName("attribute-values") val attributeValues: AttributeValue? = null, // "director & organizer"
+    @SerialName("attribute-ids") val attributeIds: Map<String, String>? = null,
+    @SerialName("attribute-values") val attributeValues: Map<String, String>? = null, // "director & organizer"
 
     @SerialName("begin") override val begin: String? = null,
     @SerialName("end") override val end: String? = null,
@@ -64,13 +61,3 @@ enum class Direction {
     @SerialName("forward")
     FORWARD,
 }
-
-// TODO: use Map<String, String> or add the rest of relationship attributes
-//  there isn't actually that many of them
-//  https://musicbrainz.org/relationship-attributes
-@Serializable
-data class AttributeValue(
-    @SerialName("task") val task: String? = null,
-    @SerialName("number") val number: String? = null,
-    @SerialName("time") val time: String? = null,
-)

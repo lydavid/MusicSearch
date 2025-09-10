@@ -29,21 +29,21 @@ private val releaseGroup = ReleaseGroupDetailsModel(
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
-            label = "Discogs",
+            type = "Discogs",
             name = "https://www.discogs.com/master/13442",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "1",
         ),
         RelationListItemModel(
             id = "2",
-            label = "Discogs",
+            type = "Discogs",
             name = "https://www.discogs.com/master/66626",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "2",
         ),
         RelationListItemModel(
             id = "3",
-            label = "Wikidata",
+            type = "Wikidata",
             name = "https://www.wikidata.org/wiki/Q836667",
             linkedEntity = MusicBrainzEntityType.URL,
             linkedEntityId = "3",
