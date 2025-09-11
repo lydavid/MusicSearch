@@ -127,7 +127,7 @@ sqlite-framework = "androidx.sqlite:sqlite-framework:2.6.0"
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
 stately-iso-collections = { module = "co.touchlab:stately-iso-collections", version.ref = "stately" }
 stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "stately" }
-test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.18"
+test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.19"
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
