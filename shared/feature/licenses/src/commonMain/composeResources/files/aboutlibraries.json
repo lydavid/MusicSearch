@@ -752,14 +752,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "2.5.2",
+            "artifactVersion": "2.6.0",
             "description": "SQLite API",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "SQLite",
-            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.5.2",
+            "website": "https://developer.android.com/jetpack/androidx/releases/sqlite#2.6.0",
             "licenses": [
                 "Apache-2.0"
             ],
