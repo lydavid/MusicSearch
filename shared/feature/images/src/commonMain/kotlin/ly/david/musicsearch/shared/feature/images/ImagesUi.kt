@@ -61,9 +61,9 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
@@ -143,13 +143,15 @@ internal fun ImagesUi(
                             url = url,
                         )
                     }
-                    DropdownMenuItem(
-                        text = { Text(strings.sort) },
-                        onClick = {
-                            showBottomSheet = true
-                            closeMenu()
-                        },
-                    )
+                    if (state.showSort) {
+                        DropdownMenuItem(
+                            text = { Text(strings.sort) },
+                            onClick = {
+                                showBottomSheet = true
+                                closeMenu()
+                            },
+                        )
+                    }
                 },
                 subtitleDropdownMenuItems = {
                     val name = state.selectedImageMetadata?.name ?: return@TopAppBarWithFilter

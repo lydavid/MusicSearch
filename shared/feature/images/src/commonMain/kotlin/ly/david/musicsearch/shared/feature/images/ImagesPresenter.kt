@@ -170,6 +170,7 @@ internal class ImagesPresenter(
             lazyGridState = lazyGridState,
             sortOption = sortOption,
             topAppBarFilterState = topAppBarFilterState,
+            showSort = screen.id == null && selectedIndex == null,
             eventSink = ::eventSink,
         )
     }
@@ -197,6 +198,7 @@ internal data class ImagesUiState(
     val selectedImageIndex: Int? = null,
     val selectedImageMetadata: ImageMetadata? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val showSort: Boolean = false,
     val eventSink: (ImagesUiEvent) -> Unit = {},
 ) : CircuitUiState
 
