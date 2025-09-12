@@ -1,4 +1,4 @@
-stable class ArtistCollaborationGraphPresenter {
+stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphPresenter {
   stable val screen: ArtistCollaborationScreen
   stable val navigator: Navigator
   unstable val graphSimulation: ArtistCollaborationGraphSimulation
@@ -6,7 +6,7 @@ stable class ArtistCollaborationGraphPresenter {
   unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
-stable class ArtistCollaborationGraphUiState {
+stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUiState {
   stable val artistName: String
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val collaborationEntityType: MusicBrainzEntityType
@@ -15,19 +15,19 @@ stable class ArtistCollaborationGraphUiState {
   stable val isDeveloperMode: Boolean
   stable val eventSink: Function1<ArtistCollaborationGraphUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class SelectEntity {
+stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUiEvent.SelectEntity {
   stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
-stable class ClickItem {
+stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUiEvent.ClickItem {
   stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
-stable class GraphNode {
+stable class ly.david.musicsearch.shared.feature.graph.GraphNode {
   stable val id: String
   stable val name: String
   stable val entity: MusicBrainzEntityType
@@ -36,47 +36,47 @@ stable class GraphNode {
   stable val y: Double
   <runtime stability> = Stable
 }
-stable class GraphEdge {
+stable class ly.david.musicsearch.shared.feature.graph.GraphEdge {
   stable val x0: Double
   stable val y0: Double
   stable val x1: Double
   stable val y1: Double
   <runtime stability> = Stable
 }
-stable class GraphSimulationUiState {
+stable class ly.david.musicsearch.shared.feature.graph.GraphSimulationUiState {
   stable val edges: ImmutableList<GraphEdge>
   stable val nodes: ImmutableList<GraphNode>
   <runtime stability> = 
 }
-unstable class ArtistCollaborationGraphSimulation {
+unstable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphSimulation {
   unstable val _uiState: MutableStateFlow<GraphSimulationUiState>
   unstable var forceLinks: ForceLink<GraphNode>?
   unstable var simulation: ForceSimulation<GraphNode>
   <runtime stability> = Unstable
 }
-stable class Point {
+stable class ly.david.musicsearch.shared.feature.graph.viz.core.geom.Point {
   stable val x: Double
   stable val y: Double
   <runtime stability> = Stable
 }
-unstable class Rectangle {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.core.geom.Rectangle {
   stable var x0: Double
   stable var y0: Double
   stable var x1: Double
   stable var y1: Double
   <runtime stability> = Unstable
 }
-stable class Vector {
+stable class ly.david.musicsearch.shared.feature.graph.viz.core.geom.Vector {
   stable val vx: Double
   stable val vy: Double
   <runtime stability> = Stable
 }
-unstable class ForceCenter {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceCenter {
   unstable var _nodes: List<ForceNode<D>>
   stable var center: Point
   <runtime stability> = Unstable
 }
-unstable class ForceCollision {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceCollision {
   stable val x: Function1<ForceNode<D>, Double>
   stable val y: Function1<ForceNode<D>, Double>
   stable var ri: Double
@@ -91,14 +91,14 @@ unstable class ForceCollision {
   unstable var _radiuses: List<Double>
   <runtime stability> = Unstable
 }
-unstable class Link {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.Link {
   unstable val source: ForceNode<D>
   unstable val target: ForceNode<D>
   stable val distance: Double
   stable var strength: Double
   <runtime stability> = Unstable
 }
-unstable class ForceLink {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceLink {
   unstable var _nodes: List<ForceNode<D>>
   unstable var _links: List<Link<D>>
   unstable var bias: Array<Double>
@@ -107,7 +107,7 @@ unstable class ForceLink {
   stable var linkGet: @[ExtensionFunctionType] Function1<ForceNode<D>, List<Link<D>>?>
   <runtime stability> = Unstable
 }
-unstable class ForceNBody {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceNBody {
   stable var theta2: Double
   stable var distanceMin2: Double
   stable var distanceMax2: Double
@@ -120,7 +120,7 @@ unstable class ForceNBody {
   unstable var _strengths: List<Double>
   <runtime stability> = Unstable
 }
-unstable class ForceNode {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceNode {
   stable val index: Int
   runtime val domain: D
   stable var x: Double
@@ -131,7 +131,7 @@ unstable class ForceNode {
   stable var fixedY: Double?
   <runtime stability> = Unstable
 }
-unstable class ForcePoint {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForcePoint {
   stable val defaultPoint: Point
   stable var pointGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Point>
   stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
@@ -141,7 +141,7 @@ unstable class ForcePoint {
   unstable var _y: List<Double>
   <runtime stability> = Unstable
 }
-unstable class ForceRadial {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceRadial {
   stable var radiusGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
   stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
   stable var centerGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Point>
@@ -152,7 +152,7 @@ unstable class ForceRadial {
   unstable var _radiuses: List<Double>
   <runtime stability> = Unstable
 }
-unstable class ForceSimulation {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceSimulation {
   stable var started: Boolean
   stable var initForceNode: @[ExtensionFunctionType] Function1<ForceNode<D>, Unit>
   unstable var domainObjects: List<D>
@@ -167,7 +167,7 @@ unstable class ForceSimulation {
   stable var _friction: Double
   <runtime stability> = Unstable
 }
-unstable class ForceX {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceX {
   stable var xGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
   stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
   unstable var _nodes: List<ForceNode<D>>
@@ -175,7 +175,7 @@ unstable class ForceX {
   unstable var _x: List<Double>
   <runtime stability> = Unstable
 }
-unstable class ForceY {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.force.ForceY {
   stable var yGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Double>
   stable var strengthGet: @[ExtensionFunctionType] Function1<ForceNode<D>, Percent>
   unstable var _nodes: List<ForceNode<D>>
@@ -183,12 +183,12 @@ unstable class ForceY {
   unstable var _y: List<Double>
   <runtime stability> = Unstable
 }
-stable class NodePair {
+stable class ly.david.musicsearch.shared.feature.graph.viz.quadtree.NodePair {
   runtime val source: QuadtreeNode<D>
   runtime val target: QuadtreeNode<D>
   <runtime stability> = 
 }
-unstable class InternalNode {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.quadtree.InternalNode {
   runtime var NE_0: QuadtreeNode<D>?
   runtime var NW_1: QuadtreeNode<D>?
   runtime var SE_2: QuadtreeNode<D>?
@@ -198,7 +198,7 @@ unstable class InternalNode {
   stable var y: Double
   <runtime stability> = Unstable
 }
-unstable class LeafNode {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.quadtree.LeafNode {
   runtime val data: D
   unstable var next: LeafNode<D>?
   stable var value: Double?
@@ -206,7 +206,7 @@ unstable class LeafNode {
   stable var y: Double
   <runtime stability> = Unstable
 }
-runtime class Quad {
+runtime class ly.david.musicsearch.shared.feature.graph.viz.quadtree.Quad {
   runtime val node: QuadtreeNode<D>?
   stable val x0: Double
   stable val y0: Double
@@ -214,7 +214,7 @@ runtime class Quad {
   stable val y1: Double
   <runtime stability> = Uncertain(QuadtreeNode)
 }
-unstable class Quadtree {
+unstable class ly.david.musicsearch.shared.feature.graph.viz.quadtree.Quadtree {
   stable val x: Function1<D, Double>
   stable val y: Function1<D, Double>
   runtime var root: QuadtreeNode<D>?

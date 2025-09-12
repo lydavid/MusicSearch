@@ -1,4 +1,4 @@
-stable class ImagesPresenter {
+stable class ly.david.musicsearch.shared.feature.images.ImagesPresenter {
   stable val screen: CoverArtsScreen
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
@@ -6,19 +6,19 @@ stable class ImagesPresenter {
   runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
   <runtime stability> = Stable
 }
-stable class All {
+stable class ly.david.musicsearch.shared.feature.images.ImagesTitle.All {
   <runtime stability> = Stable
 }
-stable class Selected {
+stable class ly.david.musicsearch.shared.feature.images.ImagesTitle.Selected {
   stable val page: Int
   stable val totalPages: Int
   stable val typeAndComment: String
   <runtime stability> = Stable
 }
-stable class ImagesTitle {
+stable class ly.david.musicsearch.shared.feature.images.ImagesTitle {
   <runtime stability> = Stable
 }
-stable class ImagesUiState {
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiState {
   stable val title: ImagesTitle
   stable val subtitle: String
   stable val url: String?
@@ -30,22 +30,26 @@ stable class ImagesUiState {
   stable val selectedImageIndex: Int?
   runtime val selectedImageMetadata: ImageMetadata?
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val showSort: Boolean
   stable val eventSink: Function1<ImagesUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class SelectImage {
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.SelectImage {
   stable val index: Int
   unstable val imageMetadataSnapshot: List<ImageMetadata?>
   <runtime stability> = Stable
 }
-stable class ClickItem {
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.AutoSelectSingleImage {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.ClickItem {
   stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
-stable class UpdateSortOption {
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.UpdateSortOption {
   stable val sortOptionIndex: Int
   <runtime stability> = Stable
 }

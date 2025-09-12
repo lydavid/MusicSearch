@@ -1,37 +1,19 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAppBottomNavigationBar()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppBottomNavigationBar(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.PreviewAppBottomNavigationBar()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppBottomNavigationBar(
   stable currentTopLevelScreen: Screen
-  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static sourceInformationMarkerStart($composer, -1304362298, "CC(remember):AppBottomNavigationBar.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   Screen   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.AppBottomNavigationBar
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>
 )
-restartable skippable fun AppNavigationRail(
+restartable skippable fun ly.david.musicsearch.shared.AppNavigationRail(
   stable currentTopLevelScreen: Screen
-  stable modifier: Modifier? = @static Companion
-  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static sourceInformationMarkerStart($composer, -224104547, "CC(remember):AppNavigationRail.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   Screen   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.AppNavigationRail
+  stable modifier: Modifier? = @static <expression>
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AppRoot(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppRoot(
   stable circuit: Circuit
   stable backStack: SaveableBackStack
   stable navigator: Navigator
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-fun useDarkTheme(
+fun ly.david.musicsearch.shared.useDarkTheme(
   unstable <this>: AppPreferences
 ): Boolean

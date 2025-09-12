@@ -1,118 +1,37 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchSpotifyBottomSheetContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSpotifyHistoryCard()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewNowPlayingHistoryUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchSpotifyBottomSheetContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewSearchSpotifyBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewSpotifyHistoryCard()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewNowPlayingHistoryUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SearchSpotifyBottomSheetContent(
   spotifyHistory: SpotifyHistoryListItemModel?
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -1291989192, "CC(remember):SearchSpotifyBottomSheetContent.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.spotify.history.SearchSpotifyBottomSheetContent
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntityType, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryCard(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryCard(
   spotifyHistory: SpotifyHistoryListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 1729867799, "CC(remember):SpotifyHistoryCard.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryCard
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryPresenter.present(
   stable <this>: SpotifyHistoryPresenter
 ): SpotifyUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi(
   stable state: SpotifyUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable modifier: Modifier? = @static Companion
-  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic TopAppBarFilterState()
-  stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable onBack: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 608852308, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, 608855005, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi
-  stable onMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 608857428, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {     it  :   SpotifyHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi
-  stable onUndoMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 608859700, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp3_group = $composer.cache(false) {
-  {     it  :   SpotifyHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp3_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi
-  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 608861556, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp4_group = $composer.cache(false) {
-  {     it  :   SpotifyHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp4_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi
+  stable modifier: Modifier? = @static <expression>
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
+  stable onMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
+  stable onUndoMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SpotifyHistoryContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic LazyListState()
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -807252606, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryContent
-  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -807250471, "CC(remember):SpotifyHistoryUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   SpotifyHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryContent
+  stable modifier: Modifier? = @static <expression>
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
+  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
 )

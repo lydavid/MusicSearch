@@ -1,28 +1,28 @@
-stable class DatabasePresenter {
+stable class ly.david.musicsearch.share.feature.database.DatabasePresenter {
   stable val navigator: Navigator
   unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
   unstable val observeLocalCount: ObserveLocalCount
   <runtime stability> = Stable
 }
-stable class DatabaseUiState {
+stable class ly.david.musicsearch.share.feature.database.DatabaseUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val lazyListState: LazyListState
   stable val countOfAllImages: Long
   stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Int>
   stable val eventSink: Function1<DatabaseUiEvent, Unit>
 }
-stable class GoToScreen {
+stable class ly.david.musicsearch.share.feature.database.DatabaseUiEvent.GoToScreen {
   stable val screen: Screen
   <runtime stability> = Stable
 }
-stable class AllLocalEntitiesPresenter {
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPresenter {
   stable val screen: AllEntitiesScreen
   stable val navigator: Navigator
   stable val allEntitiesListPresenter: AllEntitiesListPresenter
   stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
   <runtime stability> = Stable
 }
-stable class AllLocalEntitiesUiState {
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiState {
   stable val subtitle: String
   stable val entity: MusicBrainzEntityType
   stable val topAppBarFilterState: TopAppBarFilterState
@@ -31,10 +31,10 @@ stable class AllLocalEntitiesUiState {
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val eventSink: Function1<AllLocalEntitiesUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class ClickItem {
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.ClickItem {
   stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable

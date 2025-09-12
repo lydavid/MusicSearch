@@ -1,4 +1,4 @@
-stable class SearchPresenter {
+stable class ly.david.musicsearch.shared.feature.search.SearchPresenter {
   stable val screen: SearchScreen
   stable val navigator: Navigator
   runtime val getSearchResults: GetSearchResults
@@ -7,7 +7,7 @@ stable class SearchPresenter {
   runtime val deleteSearchHistory: DeleteSearchHistory
   <runtime stability> = Stable
 }
-stable class SearchUiState {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiState {
   stable val query: String
   stable val entity: MusicBrainzEntityType
   runtime val searchResults: LazyPagingItems<ListItemModel>
@@ -16,25 +16,25 @@ stable class SearchUiState {
   stable val searchHistoryListState: LazyListState
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }
-stable class UpdateEntity {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.UpdateEntity {
   stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
-stable class UpdateQuery {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.UpdateQuery {
   stable val query: String
   <runtime stability> = Stable
 }
-stable class RecordSearch {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.RecordSearch {
   <runtime stability> = Stable
 }
-stable class DeleteSearchHistory {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.DeleteSearchHistory {
   runtime val item: SearchHistoryListItemModel
   <runtime stability> = Stable
 }
-stable class DeleteAllEntitySearchHistory {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.DeleteAllEntitySearchHistory {
   <runtime stability> = Stable
 }
-stable class ClickItem {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.ClickItem {
   stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable

@@ -1,42 +1,42 @@
-stable class BroadcastTypes {
+stable class ly.david.musicsearch.shared.feature.spotify.BroadcastTypes {
   stable val SPOTIFY_PACKAGE: String
   stable val PLAYBACK_STATE_CHANGED: String
   stable val QUEUE_CHANGED: String
   stable val METADATA_CHANGED: String
   <runtime stability> = Stable
 }
-unstable class SpotifyBroadcastReceiver {
+unstable class ly.david.musicsearch.shared.feature.spotify.SpotifyBroadcastReceiver {
   unstable val spotifyHistoryRepository$delegate: Lazy<SpotifyHistoryRepository>
   <runtime stability> = Unstable
 }
-stable class SpotifyHistoryPresenter {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryPresenter {
   stable val navigator: Navigator
   unstable val spotifyHistoryRepository: SpotifyHistoryRepository
   <runtime stability> = Stable
 }
-stable class SpotifyUiState {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SpotifyUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class GoToSearch {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.GoToSearch {
   stable val query: String
   stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
 }
-stable class MarkForDeletion {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.MarkForDeletion {
   runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }
-stable class UndoMarkForDeletion {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.UndoMarkForDeletion {
   runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }
-stable class Delete {
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.Delete {
   runtime val history: SpotifyHistoryListItemModel
   <runtime stability> = Stable
 }

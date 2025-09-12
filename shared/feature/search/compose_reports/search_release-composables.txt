@@ -1,113 +1,41 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchUiSearchResults()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchUiSearchHistory()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSearchHistoryListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSearchesHeader(
-  stable onDeleteAllHistory: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -500817875, "CC(remember):RecentSearchesHeader.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.search.RecentSearchesHeader
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchResults()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchHistory()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewRecentSearchesHeader()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchHistoryListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.RecentSearchesHeader(
+  stable onDeleteAllHistory: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchHistoryListItem(
   searchHistory: SearchHistoryListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'query')] String, Unit>? = @static sourceInformationMarkerStart($composer, -823339248, "CC(remember):SearchHistoryListItem.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.search.SearchHistoryListItem
-  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -823337017, "CC(remember):SearchHistoryListItem.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   SearchHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.search.SearchHistoryListItem
+  stable modifier: Modifier? = @static <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'query')] String, Unit>? = @static <expression>
+  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchHistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'query')] String, Unit>? = @static sourceInformationMarkerStart($composer, -815454312, "CC(remember):SearchHistoryUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.search.SearchHistoryUi
-  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, -815452081, "CC(remember):SearchHistoryUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   SearchHistoryListItemModel   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.search.SearchHistoryUi
-  stable onDeleteAllHistory: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -815450769, "CC(remember):SearchHistoryUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.search.SearchHistoryUi
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'query')] String, Unit>? = @static <expression>
+  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static <expression>
+  stable onDeleteAllHistory: Function0<Unit>? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.search.SearchPresenter.present(
   stable <this>: SearchPresenter
 ): SearchUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchResultsUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchResultsUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 993303135, "CC(remember):SearchResultsUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.search.SearchResultsUi
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListItemUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.ListItemUi(
   unstable listItemModel: ListItemModel?
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchUi(
   stable state: SearchUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchUiContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchUiContent(
   stable state: SearchUiState
-  stable modifier: Modifier? = @static Companion
-  stable eventSink: Function1<SearchUiEvent, Unit>? = @static sourceInformationMarkerStart($composer, 1815687671, "CC(remember):SearchUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   SearchUiEvent   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.search.SearchUiContent
+  stable modifier: Modifier? = @static <expression>
+  stable eventSink: Function1<SearchUiEvent, Unit>? = @static <expression>
 )

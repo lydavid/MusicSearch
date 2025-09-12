@@ -1,206 +1,80 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionBottomSheet()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItem(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionBottomSheet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItem(
   stable isRemote: Boolean = @static true
   stable visited: Boolean = @static true
   stable collected: Boolean = @static true
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItemDisabled()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListItemHighlighted()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCreateNewCollectionDialogContentDefaultEntity()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListUiSelection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewCollectionListUiSelectedAll()
-fun present(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemDisabled()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemHighlighted()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContentDefaultEntity()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelectedAll()
+open fun ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter.present(
   stable <this>: AddToCollectionPresenter
 ): AddToCollectionUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AddToCollectionUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi(
   stable state: AddToCollectionUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionBottomSheetContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent(
   collections: LazyPagingItems<CollectionListItemModel>
-  stable modifier: Modifier? = @static Companion
-  stable onCreateCollectionClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -2025431862, "CC(remember):CollectionBottomSheetContent.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
-  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static sourceInformationMarkerStart($composer, -2025429942, "CC(remember):CollectionBottomSheetContent.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
+  stable modifier: Modifier? = @static <expression>
+  stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
+  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListItem(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.CollectionListItem(
   collection: CollectionListItemModel
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable query: String? = @static ""
-  stable onClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -529552842, "CC(remember):CollectionListItem.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
+  stable onClick: Function1<String, Unit>? = @static <expression>
   stable enabled: Boolean = @static true
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -529549674, "CC(remember):CollectionListItem.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.components.CollectionListItem
+  stable onSelect: Function1<String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CreateNewCollectionDialogContent(
-  stable modifier: Modifier? = @static Companion
-  stable defaultEntity: MusicBrainzEntityType? = @static MusicBrainzEntityType.RELEASE
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1574662773, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
-  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, 1574665150, "CC(remember):CreateNewCollectionDialogContent.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent(
+  stable modifier: Modifier? = @static <expression>
+  stable defaultEntity: MusicBrainzEntityType? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheet(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheet(
   stable sortOption: CollectionSortOption
-  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static sourceInformationMarkerStart($composer, 736462288, "CC(remember):CollectionSortBottomSheet.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   CollectionSortOption   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheet
-  stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 736465488, "CC(remember):CollectionSortBottomSheet.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheet
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static <expression>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionSortBottomSheetContent(
-  stable sortOption: CollectionSortOption? = @static CollectionSortOption.ALPHABETICALLY
-  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static sourceInformationMarkerStart($composer, -2032068423, "CC(remember):CollectionSortBottomSheet.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   CollectionSortOption   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheetContent
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheetContent(
+  stable sortOption: CollectionSortOption? = @static <expression>
+  stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionsFilterChipsBar(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar(
   stable sortOption: CollectionSortOption
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable showLocal: Boolean = @static true
-  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static sourceInformationMarkerStart($composer, 295275892, "CC(remember):CollectionsFilterChipsBar.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar
+  stable onShowLocalToggle: Function1<Boolean, Unit>? = @static <expression>
   stable showRemote: Boolean = @static true
-  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static sourceInformationMarkerStart($composer, 295278452, "CC(remember):CollectionsFilterChipsBar.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   Boolean   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar
-  stable onSortClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 295279540, "CC(remember):CollectionsFilterChipsBar.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar
+  stable onShowRemoteToggle: Function1<Boolean, Unit>? = @static <expression>
+  stable onSortClick: Function0<Unit>? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter.present(
   stable <this>: CollectionListPresenter
 ): CollectionsListUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionListUi(
   stable state: CollectionsListUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionListUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionListUi(
   stable state: CollectionsListUiState
-  stable modifier: Modifier? = @static Companion
-  stable onSortClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -948601606, "CC(remember):CollectionsListUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
-  stable onCreateCollectionClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -948600134, "CC(remember):CollectionsListUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.collections.list.CollectionListUi
+  stable modifier: Modifier? = @static <expression>
+  stable onSortClick: Function0<Unit>? = @static <expression>
+  stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
 )
-scheme("[presenter]") fun present(
+open scheme("[presenter]") fun ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter.present(
   stable <this>: CollectionPresenter
 ): CollectionUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CollectionUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.single.CollectionUi(
   stable state: CollectionUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )

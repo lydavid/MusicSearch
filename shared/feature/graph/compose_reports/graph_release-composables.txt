@@ -1,62 +1,26 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistCollaborationGraphUi()
-fun present(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.PreviewArtistCollaborationGraphUi()
+open fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphPresenter.present(
   stable <this>: ArtistCollaborationGraphPresenter
 ): ArtistCollaborationGraphUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi(
   stable state: ArtistCollaborationGraphUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistCollaborationGraphUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi(
   unstable edges: List<GraphEdge>
   unstable nodes: List<GraphNode>
   stable filterText: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable showDebugInfo: Boolean = @static false
-  stable onClick: Function1<@[ParameterName(name = 'transformedTapPosition')] Offset, Unit>? = @static sourceInformationMarkerStart($composer, 886583448, "CC(remember):ArtistCollaborationGraphUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   Offset   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi
+  stable onClick: Function1<@[ParameterName(name = 'transformedTapPosition')] Offset, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheet(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet(
   stable selectedEntity: MusicBrainzEntityType
-  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -2073031074, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
-  stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -2073027874, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EntityCollaborationBottomSheetContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheetContent(
   stable selectedEntity: MusicBrainzEntityType
-  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static sourceInformationMarkerStart($composer, -2095118397, "CC(remember):EntityCollaborationBottomSheet.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   MusicBrainzEntityType   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheetContent
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
 )

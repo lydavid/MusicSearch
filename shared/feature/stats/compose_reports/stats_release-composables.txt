@@ -1,35 +1,35 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddEntityStatsSection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddEntityStatsSectionReleaseGroup()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionAll()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNoRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAddRelationshipsSectionNullLastUpdated()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarNoRemote()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarEmpty()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarHalf()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarFull()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarOverflow()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLocalRemoteProgressBarUnknown()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewStatsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationTypeCountBar(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewAddEntityStatsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewAddEntityStatsSectionReleaseGroup()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewAddRelationshipsSectionAll()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewAddRelationshipsSectionNoRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewAddRelationshipsSectionNullLastUpdated()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarNoRemote()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarHalf()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarFull()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarOverflow()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewLocalRemoteProgressBarUnknown()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.PreviewStatsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.RelationTypeCountBar(
   relationTypeCount: RelationTypeCount
   stable totalRelations: Int
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CompletionProgressBar(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.CompletionProgressBar(
   stable totalCount: Int?
   stable currentCount: Int
   stable formatProgressText: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.stats.StatsPresenter.present(
   stable <this>: StatsPresenter
 ): StatsUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.StatsUi(
   stable state: StatsUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun StatsUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.stats.StatsUi(
   stable tabs: ImmutableList<Tab>
   stable stats: Stats
-  stable modifier: Modifier? = @static Companion
-  stable now: Instant? = @dynamic System.now()
+  stable modifier: Modifier? = @static <expression>
+  stable now: Instant? = @dynamic <expression>
 )

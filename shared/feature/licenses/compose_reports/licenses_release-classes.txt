@@ -1,29 +1,29 @@
-stable class drawable {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.drawable {
   <runtime stability> = Stable
 }
-stable class string {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.string {
   <runtime stability> = Stable
 }
-stable class array {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.array {
   <runtime stability> = Stable
 }
-stable class plurals {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.plurals {
   <runtime stability> = Stable
 }
-stable class font {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.font {
   <runtime stability> = Stable
 }
-stable class Res {
+stable class musicsearch.shared.feature.licenses.generated.resources.Res {
   <runtime stability> = Stable
 }
-stable class LicensesPresenter {
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesPresenter {
   stable val navigator: Navigator
   <runtime stability> = Stable
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class LicensesUiState {
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesUiState {
   stable val eventSink: Function1<LicensesUiEvent, Unit>
   <runtime stability> = Stable
 }

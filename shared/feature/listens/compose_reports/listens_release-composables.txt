@@ -1,85 +1,31 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListenListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiNoUsername()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiBottomSheetContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewListensUiBottomSheetContentVisitedRelease()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListenListItem(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListenListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiNoUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiBottomSheetContentVisitedRelease()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
   listen: ListenListItemModel
-  stable modifier: Modifier? = @static Companion
-  stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 140733193, "CC(remember):ListenListItem.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.listens.ListenListItem
-  stable onClickMoreActions: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static sourceInformationMarkerStart($composer, 140735145, "CC(remember):ListenListItem.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.listens.ListenListItem
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onClickMoreActions: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.listens.ListensPresenter.present(
   stable <this>: ListensPresenter
 ): ListensUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListensUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensUi(
   stable state: ListensUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun UsernameInput(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.UsernameInput(
   stable listenBrainzUrl: String
   stable text: String
   unstable strings: AppStrings
-  stable modifier: Modifier? = @static Companion
-  stable onTextChange: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, 1354576806, "CC(remember):ListensUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.listens.UsernameInput
-  stable onSetUsername: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1354577958, "CC(remember):ListensUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.listens.UsernameInput
+  stable modifier: Modifier? = @static <expression>
+  stable onTextChange: Function1<String, Unit>? = @static <expression>
+  stable onSetUsername: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun BottomSheetContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.BottomSheetContent(
   listen: ListenListItemModel
-  stable onReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static sourceInformationMarkerStart($composer, 171603210, "CC(remember):ListensUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.listens.BottomSheetContent
-  stable onDismiss: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 171604234, "CC(remember):ListensUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.listens.BottomSheetContent
+  stable onReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
 )

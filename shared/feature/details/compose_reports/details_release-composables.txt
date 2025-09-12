@@ -1,621 +1,279 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasListItemPrimaryLightDark()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasListItemEndedLightDark()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasesSectionLightDark()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetails()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsCollapsed()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsError()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaRelationships()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaArtists()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaEvents()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaLabels()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaReleases()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaPlaces()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaStats()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUiCollapsed()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewEventDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewGenreUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewInstrumentDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLabelDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewPlaceDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecordingDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseDetailsUiCollapsed()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTracksInReleaseScreen()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseGroupDetailsUiCollapsed()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSeriesDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewWorkDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AliasListItem(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimaryLightDark()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEndedLightDark()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSectionLightDark()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetails()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsError()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaArtists()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaEvents()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaLabels()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaReleases()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaPlaces()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaStats()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.PreviewEventDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.PreviewGenreUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.PreviewInstrumentDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.PreviewLabelDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetails()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsWithZeroListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiReleases()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiRelationships()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewTracksInReleaseScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUiCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.PreviewSeriesDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewUrlsSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.AliasListItem(
   alias: BasicAlias
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasListItemPrimary()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasListItemEnded()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAliasesSection()
-restartable skippable fun AreaDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimary()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEnded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSection()
+restartable skippable fun ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi(
   area: AreaDetailsModel
   detailsTabUiState: DetailsTabUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 21249592, "CC(remember):AreaDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 21251064, "CC(remember):AreaDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.AreaUi(
   stable state: DetailsUiState<AreaDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun AreaUiInternal(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.shared.feature.details.area.AreaUiInternal(
   stable state: DetailsUiState<AreaDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
-  stable snackbarHostState: SnackbarHostState? = @static sourceInformationMarkerStart($composer, -1555901448, "CC(remember):AreaUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  SnackbarHostState  (  )
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.area.AreaUiInternal
-  unstable scope: CoroutineScope? = @dynamic rememberCoroutineScope(null, $composer, 0, 0b0001)
-  unstable strings: AppStrings? = @dynamic LocalStrings.<get-current>($composer, 0)
-  stable now: Instant? = @dynamic System.now()
-  stable additionalActions: Function2<Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$-84646930
-  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static ComposableSingletons$AreaUiKt.lambda$1644636088
-  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -1555889862, "CC(remember):AreaUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.area.AreaUiInternal
+  stable modifier: Modifier? = @static <expression>
+  stable snackbarHostState: SnackbarHostState? = @static <expression>
+  unstable scope: CoroutineScope? = @dynamic <expression>
+  unstable strings: AppStrings? = @dynamic <expression>
+  stable now: Instant? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi(
   artist: ArtistDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 20744219, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 20746162, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 20747634, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistInformationSection(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistInformationSection(
   <this>: ArtistDetailsModel
   stable filterText: String? = @static ""
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaSection(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.AreaSection(
   areaListItemModel: AreaListItemModel?
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1205572391, "CC(remember):ArtistDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.artist.AreaSection
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistUi(
   stable state: DetailsUiState<ArtistDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable fun EventDetailsTabUi(
+restartable skippable fun ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi(
   event: EventDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -181696940, "CC(remember):EventDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -181695276, "CC(remember):EventDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -181693804, "CC(remember):EventDetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi
+  stable onImageClick: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.EventUi(
   stable state: DetailsUiState<EventDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-fun present(
+open fun ly.david.musicsearch.shared.feature.details.genre.GenrePresenter.present(
   stable <this>: GenrePresenter
 ): GenreUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GenreUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.GenreUi(
   stable state: GenreUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi(
   instrument: InstrumentDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -438335424, "CC(remember):InstrumentDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -438333952, "CC(remember):InstrumentDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi(
   stable state: DetailsUiState<InstrumentDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi(
   label: LabelDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 640438028, "CC(remember):LabelDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 640439500, "CC(remember):LabelDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelUi(
   stable state: DetailsUiState<LabelDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi(
   place: PlaceDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 2020178785, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 2020180728, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 2020182200, "CC(remember):PlaceDetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceUi(
   stable state: DetailsUiState<PlaceDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingDetailsTabUi(
   recording: RecordingDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1960942670, "CC(remember):RecordingDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.recording.RecordingDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1960941198, "CC(remember):RecordingDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.recording.RecordingDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.LastListenedListItem(
+  stable lastListenedMs: Long
+  stable now: Instant
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingUi(
   stable state: DetailsUiState<RecordingDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingUiInternal(
+  stable state: DetailsUiState<RecordingDetailsModel>
+  stable entityId: String
+  stable modifier: Modifier? = @static <expression>
+  stable snackbarHostState: SnackbarHostState? = @static <expression>
+  unstable coroutineScope: CoroutineScope? = @dynamic <expression>
+  unstable strings: AppStrings? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi(
   release: ReleaseDetailsModel
   detailsTabUiState: DetailsTabUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1357051196, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onCollapseExpandReleaseEvents: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1357049532, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1357047868, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1357046396, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
-val tmp3_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp3_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, -1357044755, "CC(remember):ReleaseDetailsTabUi.kt#9igjgp")
-val tmp4_group = $composer.cache(false) {
-  {     <unused var>  :   MusicBrainzEntityType  ,   <unused var>  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp4_group@ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi
+  stable onImageClick: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandReleaseEvents: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.LastListenedListItem(
+  listenWithTrack: ListenWithTrack
+  stable now: Instant
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.ReleaseUi(
   stable state: DetailsUiState<ReleaseDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   stable uiState: TracksByReleaseUiState
-  stable modifier: Modifier? = @static Companion
-  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1412860625, "CC(remember):TracksByReleaseUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
+  stable modifier: Modifier? = @static <expression>
+  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable modifier: Modifier? = @static Companion
-  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
-  unstable collapsedMediumIds: Set<Long>? = @static setOf()
-  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1378573874, "CC(remember):TracksByReleaseUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
-  stable onToggleMedium: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static sourceInformationMarkerStart($composer, 1378575378, "CC(remember):TracksByReleaseUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
+  stable modifier: Modifier? = @static <expression>
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  unstable collapsedMediumIds: Set<Long>? = @static <expression>
+  stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onToggleMedium: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi(
   releaseGroup: ReleaseGroupDetailsModel
   detailsTabUiState: DetailsTabUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1799379402, "CC(remember):ReleaseGroupDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1799377738, "CC(remember):ReleaseGroupDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1799376266, "CC(remember):ReleaseGroupDetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi
+  stable onImageClick: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi(
   stable state: DetailsUiState<ReleaseGroupDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi(
   series: SeriesDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1900307936, "CC(remember):SeriesDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, -1900306464, "CC(remember):SeriesDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.SeriesUi(
   stable state: DetailsUiState<SeriesDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun DetailsHorizontalPager(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager(
   stable pagerState: PagerState
   stable state: DetailsUiState<T>
   browseMethod: ByEntity
   entitiesLazyPagingItems: EntitiesLazyPagingItems
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
-  stable now: Instant? = @dynamic System.now()
-  stable onEditCollectionClick: Function1<String, Unit>? = @static sourceInformationMarkerStart($composer, -405019349, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {     it  :   String   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
-  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType?, Unit>? = @static sourceInformationMarkerStart($composer, -405016172, "CC(remember):DetailsHorizontalPager.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {     <unused var>  :   String  ,   <unused var>  :   MusicBrainzEntityType?   ->
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
+  stable now: Instant? = @dynamic <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+  stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType?, Unit>? = @static <expression>
   stable detailsScreen: Function3<T, Composer, Int, Unit>
 )
-scheme("[presenter]") fun present(
+scheme("[presenter]") fun ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter.present(
   stable <this>: DetailsPresenter<DetailsModel>
 ): DetailsUiState<DetailsModel>
-restartable skippable fun DetailsTabUi(
+restartable skippable fun ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi(
   detailsModel: T
   detailsTabUiState: DetailsTabUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable entityInfoSection: @[ExtensionFunctionType] Function3<T, Composer, Int, Unit>? = @static ComposableSingletons$DetailsTabUiKt.lambda$-1945606579
+  stable entityInfoSection: @[ExtensionFunctionType] Function3<T, Composer, Int, Unit>? = @static <expression>
   stable additionalDetailsSection: @[ExtensionFunctionType] Function3<T, Composer, Int, Unit>? = @static null
-  stable bringYourOwnLabelsSection: @[ExtensionFunctionType] Function1<LazyListScope, Unit>? = @static sourceInformationMarkerStart($composer, 1624041885, "CC(remember):DetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
-  stable onImageClick: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1624043005, "CC(remember):DetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1624044669, "CC(remember):DetailsTabUi.kt#9igjgp")
-val tmp2_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp2_group@ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 1624046141, "CC(remember):DetailsTabUi.kt#9igjgp")
-val tmp3_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp3_group@ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+  stable bringYourOwnLabelsSection: @[ExtensionFunctionType] Function1<LazyListScope, Unit>? = @static <expression>
+  stable onImageClick: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsTabUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi(
   work: WorkDetailsModel
-  stable modifier: Modifier? = @static Companion
-  detailsTabUiState: DetailsTabUiState? = @dynamic DetailsTabUiState()
+  stable modifier: Modifier? = @static <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 244635948, "CC(remember):WorkDetailsTabUi.kt#9igjgp")
-val tmp0_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp0_group@ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi
-  stable onCollapseExpandAliases: Function0<Unit>? = @static sourceInformationMarkerStart($composer, 244637420, "CC(remember):WorkDetailsTabUi.kt#9igjgp")
-val tmp1_group = $composer.cache(false) {
-  {
-
-  }
-
-}
-
-sourceInformationMarkerEnd($composer)
-tmp1_group@ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi
+  stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
+  stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkUi(
   stable state: DetailsUiState<WorkDetailsModel>
   stable entityId: String
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )

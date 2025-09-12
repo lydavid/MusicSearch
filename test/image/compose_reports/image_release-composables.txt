@@ -1,1 +1,1 @@
-restartable skippable fun InitializeFakeImageLoader()
+restartable skippable fun ly.david.musicsearch.test.image.InitializeFakeImageLoader()

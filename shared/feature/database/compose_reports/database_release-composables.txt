@@ -1,21 +1,21 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDatabaseUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewDatabaseUiWithCounts()
-fun present(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.PreviewDatabaseUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.PreviewDatabaseUiWithCounts()
+open fun ly.david.musicsearch.share.feature.database.DatabasePresenter.present(
   stable <this>: DatabasePresenter
 ): DatabaseUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.DatabaseUi(
   stable state: DatabaseUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DatabaseUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.DatabaseUi(
   stable state: DatabaseUiState
   stable onDestinationClick: Function1<Screen, Unit>
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )
-scheme("[presenter]") fun present(
+open scheme("[presenter]") fun ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPresenter.present(
   stable <this>: AllLocalEntitiesPresenter
 ): AllLocalEntitiesUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AllLocalEntitiesUi(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUi(
   stable state: AllLocalEntitiesUiState
-  stable modifier: Modifier? = @static Companion
+  stable modifier: Modifier? = @static <expression>
 )

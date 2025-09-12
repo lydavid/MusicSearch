@@ -1,11 +1,11 @@
-stable class ListensPresenter {
+stable class ly.david.musicsearch.shared.feature.listens.ListensPresenter {
   stable val navigator: Navigator
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
   unstable val listensListRepository: ListensListRepository
   unstable val listenBrainzRepository: ListenBrainzRepository
   <runtime stability> = Stable
 }
-stable class ListensUiState {
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   stable val listenBrainzUrl: String
   stable val username: String
   stable val textFieldText: String
@@ -15,17 +15,17 @@ stable class ListensUiState {
   unstable val listensPagingDataFlow: Flow<PagingData<Identifiable>>
   stable val eventSink: Function1<ListensUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class EditText {
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.EditText {
   stable val text: String
   <runtime stability> = Stable
 }
-stable class SetUsername {
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SetUsername {
   <runtime stability> = Stable
 }
-stable class ClickItem {
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ClickItem {
   stable val entity: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable

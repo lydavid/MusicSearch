@@ -1,29 +1,29 @@
-unstable class NowPlayingNotificationListener {
+unstable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingNotificationListener {
   unstable val coroutineDispatchers$delegate: Lazy<CoroutineDispatchers>
   unstable val coroutineScope: CoroutineScope
   unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepository>
   <runtime stability> = Unstable
 }
-stable class NowPlayingHistoryPresenter {
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPresenter {
   stable val navigator: Navigator
   runtime val getNowPlayingHistory: GetNowPlayingHistory
   runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
   <runtime stability> = Stable
 }
-stable class NowPlayingHistoryUiState {
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
 }
-stable class NavigateUp {
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.NavigateUp {
   <runtime stability> = Stable
 }
-stable class DeleteHistory {
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.DeleteHistory {
   stable val id: String
   <runtime stability> = Stable
 }
-stable class GoToSearch {
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.GoToSearch {
   stable val query: String
   stable val entity: MusicBrainzEntityType
   <runtime stability> = Stable
