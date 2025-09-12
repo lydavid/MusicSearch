@@ -24,8 +24,8 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
-import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -109,25 +109,13 @@ internal class ImagesPresenter(
             }
         }
 
-        val subtitle by rememberRetained(
-            selectedImageMetadata,
-        ) {
-            derivedStateOf {
-                selectedImageMetadata?.getNameWithDisambiguation().orEmpty()
-            }
-        }
+        val subtitle = selectedImageMetadata?.getNameWithDisambiguation().orEmpty()
 
-        val url by rememberRetained(
-            selectedImageMetadata,
-        ) {
-            derivedStateOf {
-                selectedImageMetadata?.largeUrl ?: screen.id?.let { entityId ->
-                    getMusicBrainzCoverArtUrl(
-                        entityId = entityId,
-                        entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
-                    )
-                }
-            }
+        val url = selectedImageMetadata?.largeUrl ?: screen.id?.let { entityId ->
+            getMusicBrainzCoverArtUrl(
+                entityId = entityId,
+                entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
+            )
         }
 
         topAppBarFilterState.show(selectedIndex == null)
