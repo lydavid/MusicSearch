@@ -125,6 +125,12 @@ internal fun ImagesUi(
         }
     }
 
+    LaunchedEffect(imageMetadataLazyPagingItems.itemCount) {
+        if (imageMetadataLazyPagingItems.itemCount == 1) {
+            eventSink(ImagesUiEvent.AutoSelectSingleImage)
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),

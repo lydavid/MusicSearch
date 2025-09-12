@@ -68,6 +68,9 @@ internal class ImagesPresenter(
         var selectedIndex: Int? by rememberRetained {
             mutableStateOf(null)
         }
+        var isSingleImage: Boolean by rememberRetained {
+            mutableStateOf(false)
+        }
         var imageMetadataListSnapshot: ImmutableList<ImageMetadata?> by rememberRetained {
             mutableStateOf(persistentListOf())
         }
@@ -123,7 +126,7 @@ internal class ImagesPresenter(
         fun eventSink(event: ImagesUiEvent) {
             when (event) {
                 ImagesUiEvent.NavigateUp -> {
-                    if (selectedIndex == null) {
+                    if (selectedIndex == null || isSingleImage) {
                         navigator.pop()
                     } else {
                         selectedIndex = null
@@ -141,6 +144,11 @@ internal class ImagesPresenter(
                         imageMetadataListSnapshot = event.imageMetadataSnapshot.toImmutableList()
                     }
                     topAppBarFilterState.toggleFilterMode(false)
+                }
+
+                is ImagesUiEvent.AutoSelectSingleImage -> {
+                    selectedIndex = 0
+                    isSingleImage = true
                 }
 
                 is ImagesUiEvent.ClickItem -> {
@@ -209,6 +217,8 @@ internal sealed interface ImagesUiEvent : CircuitUiEvent {
         val index: Int,
         val imageMetadataSnapshot: List<ImageMetadata?>,
     ) : ImagesUiEvent
+
+    data object AutoSelectSingleImage : ImagesUiEvent
 
     data class ClickItem(
         val entity: MusicBrainzEntityType,
