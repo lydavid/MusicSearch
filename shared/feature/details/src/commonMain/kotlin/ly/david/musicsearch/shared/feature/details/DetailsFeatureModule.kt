@@ -263,7 +263,6 @@ val detailsFeatureModule = module {
 
                         MusicBrainzEntityType.ARTIST -> {
                             ui<DetailsUiState<ArtistDetailsModel>> { state, modifier ->
-                                // TODO: why do we need to pass id here? can we get it from state?
                                 ArtistUi(
                                     state = state,
                                     entityId = screen.id,
