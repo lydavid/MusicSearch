@@ -20,6 +20,20 @@ class ArtistUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun withFilter() {
+        snapshot {
+            PreviewArtistDetailsUiWithFilter()
+        }
+    }
+
+    @Test
+    fun withListens() {
+        snapshot {
+            PreviewArtistDetailsUiWithListens()
+        }
+    }
+
+    @Test
     fun withWikipediaUrlButNoExtract() {
         snapshot {
             PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()

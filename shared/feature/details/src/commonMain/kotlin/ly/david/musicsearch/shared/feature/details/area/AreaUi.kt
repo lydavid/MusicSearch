@@ -280,7 +280,6 @@ internal fun AreaUiInternal(
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
-            now = now,
             onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, _ ->
                 releasesByEntityEventSink(

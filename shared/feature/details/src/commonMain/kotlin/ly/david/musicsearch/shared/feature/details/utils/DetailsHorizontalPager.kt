@@ -23,8 +23,6 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
-import kotlin.time.Clock
-import kotlin.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +33,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     entitiesLazyPagingItems: EntitiesLazyPagingItems,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    now: Instant = Clock.System.now(),
     onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: (entityId: String, entity: MusicBrainzEntityType?) -> Unit = { _, _ -> },
     detailsScreen: @Composable ((T) -> Unit),
@@ -147,7 +144,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 val tabEntity = tab.toMusicBrainzEntity()
                 EntitiesPagingListUi(
                     uiState = uiState,
-                    now = now,
+                    now = state.detailsTabUiState.now,
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(

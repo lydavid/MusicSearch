@@ -132,7 +132,6 @@ internal fun RecordingUiInternal(
     onEditCollectionClick: (String) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     val entity = MusicBrainzEntityType.RECORDING
     val browseMethod = BrowseMethod.ByEntity(entityId, entity)
     val eventSink = state.eventSink
@@ -299,7 +298,6 @@ internal fun RecordingUiInternal(
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
-            now = state.detailsTabUiState.now,
             onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, entity ->
                 releasesByEntityEventSink(EntitiesListUiEvent.RequestForMissingCoverArtUrl(id))

@@ -10,10 +10,14 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
+import ly.david.musicsearch.ui.common.artist.artistTabs
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import kotlin.time.Instant
 
-private val artist = ArtistDetailsModel(
+private val detailsModel = ArtistDetailsModel(
     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
     name = "The Beatles",
     type = "Group",
@@ -95,16 +99,22 @@ private val artist = ArtistDetailsModel(
     ),
 )
 
+private val detailsUiState = DetailsUiState(
+    tabs = artistTabs,
+    selectedTab = Tab.DETAILS,
+    detailsModel = detailsModel,
+    detailsTabUiState = DetailsTabUiState(
+        now = Instant.parse("2025-09-06T18:42:20Z"),
+    ),
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUi() {
     PreviewWithSharedElementTransition {
-        ArtistDetailsTabUi(
-            artist = artist,
-            detailsTabUiState = DetailsTabUiState(
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 3,
-            ),
+        ArtistUiInternal(
+            state = detailsUiState,
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
@@ -113,13 +123,48 @@ internal fun PreviewArtistDetailsUi() {
 @Composable
 internal fun PreviewArtistDetailsUiCollapsed() {
     PreviewWithSharedElementTransition {
-        ArtistDetailsTabUi(
-            artist = artist,
-            detailsTabUiState = DetailsTabUiState(
-                isExternalLinksCollapsed = true,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 3,
+        ArtistUiInternal(
+            state = detailsUiState.copy(
+                detailsTabUiState = detailsUiState.detailsTabUiState.copy(
+                    isExternalLinksCollapsed = true,
+                ),
             ),
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistDetailsUiWithFilter() {
+    PreviewWithSharedElementTransition {
+        val topAppBarFilterState = TopAppBarFilterState()
+        topAppBarFilterState.toggleFilterMode(true)
+        topAppBarFilterState.updateFilterText("https")
+        ArtistUiInternal(
+            state = detailsUiState.copy(
+                detailsTabUiState = detailsUiState.detailsTabUiState.copy(
+                    totalUrls = 3,
+                ),
+                topAppBarFilterState = topAppBarFilterState,
+            ),
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistDetailsUiWithListens() {
+    PreviewWithSharedElementTransition {
+        ArtistUiInternal(
+            state = detailsUiState.copy(
+                detailsModel = detailsModel.copy(
+                    listenCount = 1234,
+                    listenBrainzUrl = "https://listenbrainz.org/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                ),
+            ),
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
