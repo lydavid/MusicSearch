@@ -21,6 +21,7 @@ internal fun ArtistDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
+    onImageClick: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
@@ -30,6 +31,7 @@ internal fun ArtistDetailsTabUi(
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
+        onImageClick = onImageClick,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         entityInfoSection = {
             ArtistInformationSection(

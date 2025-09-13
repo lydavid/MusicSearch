@@ -301,6 +301,9 @@ internal fun ArtistUi(
                     artist = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    onImageClick = {
+                        eventSink(DetailsUiEvent.ClickImage)
+                    },
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
