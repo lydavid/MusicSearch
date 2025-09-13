@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.artist
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -97,7 +96,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         filterText = filterText,
     )
 
-    ipis.ifNotNullOrEmpty {
+    ipis.ifNotEmpty {
         TextWithHeading(
             heading = strings.ipi,
             text = it.joinToString(", "),
@@ -105,7 +104,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         )
     }
 
-    isnis.ifNotNullOrEmpty {
+    isnis.ifNotEmpty {
         TextWithHeading(
             heading = strings.isni,
             text = it.joinToString(", "),

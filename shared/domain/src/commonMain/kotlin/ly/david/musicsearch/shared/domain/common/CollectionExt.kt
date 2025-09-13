@@ -5,3 +5,9 @@ inline fun <T> Collection<T>?.ifNotNullOrEmpty(block: (Collection<T>) -> Unit) {
         block(this)
     }
 }
+
+inline fun <T> Collection<T>.ifNotEmpty(block: (Collection<T>) -> Unit) {
+    if (this.isNotEmpty()) {
+        block(this)
+    }
+}
