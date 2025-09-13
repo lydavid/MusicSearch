@@ -5,6 +5,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -20,6 +22,7 @@ import kotlin.time.Instant
 private val detailsModel = ArtistDetailsModel(
     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
     name = "The Beatles",
+    disambiguation = "UK rock band, “The Fab Four”",
     type = "Group",
     lifeSpan = LifeSpanUiModel(
         begin = "1960",
@@ -27,6 +30,7 @@ private val detailsModel = ArtistDetailsModel(
         ended = true,
     ),
     sortName = "Beatles, The",
+    isnis = persistentListOf("0000000121707484"),
     areaListItemModel = AreaListItemModel(
         id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
         name = "United Kingdom",
@@ -105,6 +109,7 @@ private val detailsUiState = DetailsUiState(
     detailsModel = detailsModel,
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-09-06T18:42:20Z"),
+        totalUrls = 2,
     ),
 )
 
@@ -162,6 +167,38 @@ internal fun PreviewArtistDetailsUiWithListens() {
                 detailsModel = detailsModel.copy(
                     listenCount = 1234,
                     listenBrainzUrl = "https://listenbrainz.org/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                ),
+            ),
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistDetailsUiLoading() {
+    PreviewWithSharedElementTransition {
+        ArtistUiInternal(
+            state = detailsUiState.copy(
+                detailsModel = null,
+            ),
+            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistDetailsUiError() {
+    PreviewWithSharedElementTransition {
+        ArtistUiInternal(
+            state = detailsUiState.copy(
+                detailsModel = null,
+                detailsTabUiState = detailsUiState.detailsTabUiState.copy(
+                    handledException = HandledException(
+                        userMessage = "Error with retry",
+                        errorResolution = ErrorResolution.Retry,
+                    ),
                 ),
             ),
             entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",

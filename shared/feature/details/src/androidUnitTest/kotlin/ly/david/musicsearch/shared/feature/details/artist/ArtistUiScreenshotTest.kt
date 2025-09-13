@@ -34,6 +34,20 @@ class ArtistUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun loading() {
+        snapshot {
+            PreviewArtistDetailsUiLoading()
+        }
+    }
+
+    @Test
+    fun error() {
+        snapshot {
+            PreviewArtistDetailsUiError()
+        }
+    }
+
+    @Test
     fun withWikipediaUrlButNoExtract() {
         snapshot {
             PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
