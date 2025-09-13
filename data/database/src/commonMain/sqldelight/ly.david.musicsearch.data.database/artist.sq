@@ -283,3 +283,11 @@ WHERE (
 GROUP BY artist.id
 ORDER BY artist.`begin`, artist.`end`, artist.name
 LIMIT :limit OFFSET :offset;
+
+getListenCountByArtist:
+SELECT COUNT(*)
+FROM artist_credit_name
+INNER JOIN artist_credit_entity ON artist_credit_entity.artist_credit_id = artist_credit_name.artist_credit_id
+INNER JOIN recording ON recording.id = artist_credit_entity.entity_id
+INNER JOIN listen ON listen.recording_musicbrainz_id = recording.id AND listen.username = :username
+WHERE artist_credit_name.artist_id = :artistId;

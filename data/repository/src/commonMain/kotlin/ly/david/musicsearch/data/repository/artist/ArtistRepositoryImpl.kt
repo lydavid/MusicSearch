@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.artist
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
@@ -11,14 +11,19 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class ArtistRepositoryImpl(
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
     private val areaDao: AreaDao,
     private val aliasDao: AliasDao,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : ArtistRepository {
@@ -32,35 +37,38 @@ class ArtistRepositoryImpl(
             delete(artistId)
         }
 
-        val artistDetailsModel = artistDao.getArtistForDetails(artistId)
+        val cachedData = getCachedData(artistId)
+        return@withContext if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
+            cache(
+                artist = artistMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(artistId) ?: error("Failed to get cached data")
+        }
+    }
+
+    private suspend fun getCachedData(artistId: String): ArtistDetailsModel? {
+        if (!relationRepository.visited(artistId)) return null
+
+        val username = listenBrainzAuthStore.browseUsername.first()
+        val artist = artistDao.getArtistForDetails(
+            artistId = artistId,
+            listenBrainzUsername = username,
+        ) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(artistId)
-        val visited = relationRepository.visited(artistId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.ARTIST,
             mbid = artistId,
         )
 
-        if (
-            artistDetailsModel != null &&
-            visited &&
-            !forceRefresh
-        ) {
-            val artistWithUrls = artistDetailsModel.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-            return@withContext artistWithUrls
-        }
-
-        val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
-        cache(
-            artist = artistMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return@withContext lookupArtist(
-            artistId = artistId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return artist.copy(
+            urls = urlRelations,
+            aliases = aliases,
+            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/artist/${artist.id}",
         )
     }
 

@@ -126,9 +126,6 @@ SELECT
   ) AS hasNullLength,
   details_metadata.last_updated
 FROM `release`
--- LEFT JOIN medium ON `release`.id = medium.release_id
--- LEFT JOIN track ON medium.id = track.medium_id
--- LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
 LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 WHERE `release`.id = :releaseId
 LIMIT 1;

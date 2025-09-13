@@ -58,11 +58,27 @@ class ArtistDao(
         }
     }
 
-    fun getArtistForDetails(artistId: String): ArtistDetailsModel? {
-        return transacter.getArtistForDetails(
+    fun getArtistForDetails(
+        artistId: String,
+        listenBrainzUsername: String,
+    ): ArtistDetailsModel? {
+        val artist = transacter.getArtistForDetails(
             artistId,
             mapper = ::toDetailsModel,
-        ).executeAsOneOrNull()
+        ).executeAsOneOrNull() ?: return null
+
+        val listenCount = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getListenCountByArtist(
+                artistId = artistId,
+                username = listenBrainzUsername,
+            ).executeAsOne()
+        } else {
+            null
+        }
+
+        return artist.copy(
+            listenCount = listenCount,
+        )
     }
 
     private fun toDetailsModel(

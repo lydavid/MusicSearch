@@ -30,6 +30,8 @@ data class ArtistDetailsModel(
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val listenCount: Long? = null,
+    val listenBrainzUrl: String = "",
 ) : Artist, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)

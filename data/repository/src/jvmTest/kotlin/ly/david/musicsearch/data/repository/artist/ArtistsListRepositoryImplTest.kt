@@ -522,6 +522,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         begin = "2016-09-15",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/artist/adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                 ),
                 this,
             )
@@ -542,6 +543,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         begin = "2016-09-15",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/artist/adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                 ),
                 this,
             )
@@ -568,6 +570,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         begin = "2016-09-15",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/artist/adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                 ),
                 this,
             )
@@ -588,6 +591,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         begin = "2016-09-15",
                     ),
                     lastUpdated = testDateTimeInThePast,
+                    listenBrainzUrl = "/artist/adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                 ),
                 this,
             )

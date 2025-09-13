@@ -1,18 +1,25 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
+import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
@@ -49,6 +56,10 @@ internal fun ArtistDetailsTabUi(
                 }
 
                 // TODO: begin area, end area
+
+                listenSection(
+                    artist = this@run,
+                )
             }
         },
         onCollapseExpandAliases = onCollapseExpandAliases,
@@ -138,6 +149,38 @@ private fun AreaSection(
                         id,
                     )
                 },
+            )
+        }
+    }
+}
+
+private fun LazyListScope.listenSection(
+    artist: ArtistDetailsModel,
+) {
+    if (artist.listenCount != null) {
+        item {
+            ListSeparatorHeader(LocalStrings.current.listens)
+        }
+        item {
+            ListItem(
+                headlineContent = {
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = artist.listenCount.toString(),
+                    )
+                },
+            )
+        }
+        // TODO: latest listens by artist
+        item {
+            UrlListItem(
+                relation = RelationListItemModel(
+                    id = "listenbrainz_url",
+                    type = "ListenBrainz",
+                    linkedEntity = MusicBrainzEntityType.URL,
+                    name = artist.listenBrainzUrl,
+                    linkedEntityId = "listenbrainz_url",
+                ),
             )
         }
     }

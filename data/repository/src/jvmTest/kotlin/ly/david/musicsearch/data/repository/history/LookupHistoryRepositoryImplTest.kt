@@ -259,6 +259,7 @@ class LookupHistoryRepositoryImplTest :
                             type = AliasType.ARTIST_NAME,
                         ),
                     ),
+                    listenBrainzUrl = "/artist/14d2a235-30e2-489f-b490-f9dc7d2c0861",
                 ),
                 this,
             )

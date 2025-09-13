@@ -93,6 +93,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
                 isnis = persistentListOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             ),
             artistDetailsModel,
         )
@@ -147,6 +148,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ipis = persistentListOf("00003960406", "00015471209"),
                 isnis = persistentListOf("0000000114448576", "0000000458257298"),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/artist/5441c29d-3602-4898-b1a1-b77fa23b8e50",
             ),
             artistDetailsModel,
         )
@@ -193,7 +195,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         val flow: Flow<PagingData<ArtistListItemModel>> = artistsListRepositoryImpl.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = "area-id",
-                entity = MusicBrainzEntityType.AREA
+                entity = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         )
@@ -257,6 +259,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
                 isnis = persistentListOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             ),
             artistDetailsModel,
         )
@@ -280,6 +283,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             ),
             sparseArtistDetailsModel,
         )
@@ -309,6 +313,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 lastUpdated = testDateTimeInThePast,
+                listenBrainzUrl = "/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             ),
             allDataArtistDetailsModel,
         )
@@ -335,6 +340,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
                 isnis = persistentListOf("0000000121707484"),
                 lastUpdated = testDateTimeInThePast.plus(2.hours),
+                listenBrainzUrl = "/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             ),
             allDataArtistDetailsModel,
         )
