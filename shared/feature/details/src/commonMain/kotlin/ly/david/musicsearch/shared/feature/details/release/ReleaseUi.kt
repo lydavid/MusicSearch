@@ -31,6 +31,7 @@ import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
+import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -172,9 +173,8 @@ internal fun ReleaseUi(
                         tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
-                                Tab.ARTISTS -> artistsLazyPagingItems.refresh()
-                                Tab.RELATIONSHIPS -> relationsLazyPagingItems.refresh()
-                                else -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                Tab.DETAILS -> eventSink(DetailsUiEvent.ForceRefreshDetails)
+                                else -> entitiesLazyPagingItems.getLazyPagingItemsForTab(selectedTab)?.refresh()
                             }
                         },
                     )
