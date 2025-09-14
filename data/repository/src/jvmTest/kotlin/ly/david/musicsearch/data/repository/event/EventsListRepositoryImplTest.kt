@@ -510,7 +510,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     }
 
     @Test
-    fun `refreshing events does not delete the event`() = runTest {
+    fun `refreshing events will update event`() = runTest {
         setupEventsByPlace()
         setupEventsByArea()
 
@@ -519,7 +519,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 id = "new-id-is-considered-a-different-event",
             ),
             aimerAtBudokanEventMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if event is linked to multiple entities",
+                disambiguation = "changes will show up",
             ),
         )
         val eventsListRepository = createEventsListRepository(
@@ -541,13 +541,14 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
                     ),
-                    aimerAtBudokanListItemModel,
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
+                    ),
                 ),
                 this,
             )
         }
 
-        // other entities remain unchanged
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = budokanPlaceMusicBrainzModel.id,
@@ -558,7 +559,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
-                    aimerAtBudokanListItemModel,
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
+                    ),
                 ),
                 this,
             )
@@ -575,7 +578,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
                     ),
-                    aimerAtBudokanListItemModel,
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
+                    ),
                 ),
                 this,
             )
@@ -595,7 +600,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
                     ),
-                    aimerAtBudokanListItemModel,
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
+                    ),
                 ),
                 this,
             )
@@ -611,62 +618,119 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
                     ),
-                    aimerAtBudokanListItemModel,
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
+                    ),
                 ),
                 this,
             )
         }
 
         // now visit the event and refresh it
-        val eventRepository = createEventRepository(
+        createEventRepository(
             aimerAtBudokanEventMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if event is linked to multiple entities",
+                disambiguation = "new changes",
             ),
-        )
-        eventRepository.lookupEvent(
-            eventId = aimerAtBudokanEventMusicBrainzModel.id,
-            forceRefresh = false,
-            lastUpdated = testDateTimeInThePast,
-        ).let { eventDetailsModel ->
-            assertEquals(
-                EventDetailsModel(
-                    id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
-                    name = "Aimer Live in 武道館 ”blanc et noir\"",
-                    type = "Concert",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "2017-08-29",
-                        end = "2017-08-29",
-                        ended = true,
+        ).let { eventRepository ->
+            eventRepository.lookupEvent(
+                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+                forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
+            ).let { eventDetailsModel ->
+                assertEquals(
+                    EventDetailsModel(
+                        id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
+                        name = "Aimer Live in 武道館 ”blanc et noir\"",
+                        disambiguation = "new changes",
+                        type = "Concert",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "2017-08-29",
+                            end = "2017-08-29",
+                            ended = true,
+                        ),
+                        cancelled = false,
+                        time = "18:00",
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    cancelled = false,
-                    time = "18:00",
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                eventDetailsModel,
-            )
+                    eventDetailsModel,
+                )
+            }
+            eventRepository.lookupEvent(
+                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+                forceRefresh = true,
+                lastUpdated = testDateTimeInThePast,
+            ).let { eventDetailsModel ->
+                assertEquals(
+                    EventDetailsModel(
+                        id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
+                        name = "Aimer Live in 武道館 ”blanc et noir\"",
+                        disambiguation = "new changes",
+                        type = "Concert",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "2017-08-29",
+                            end = "2017-08-29",
+                            ended = true,
+                        ),
+                        cancelled = false,
+                        time = "18:00",
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    eventDetailsModel,
+                )
+            }
         }
-        eventRepository.lookupEvent(
-            eventId = aimerAtBudokanEventMusicBrainzModel.id,
-            forceRefresh = true,
-            lastUpdated = testDateTimeInThePast,
-        ).let { eventDetailsModel ->
-            assertEquals(
-                EventDetailsModel(
-                    id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
-                    name = "Aimer Live in 武道館 ”blanc et noir\"",
-                    disambiguation = "changes will be ignored if event is linked to multiple entities",
-                    type = "Concert",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "2017-08-29",
-                        end = "2017-08-29",
-                        ended = true,
+
+        createEventRepository(
+            aimerAtBudokanEventMusicBrainzModel.copy(
+                disambiguation = "newer changes",
+            ),
+        ).let { eventRepository ->
+            eventRepository.lookupEvent(
+                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+                forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
+            ).let { eventDetailsModel ->
+                assertEquals(
+                    EventDetailsModel(
+                        id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
+                        name = "Aimer Live in 武道館 ”blanc et noir\"",
+                        disambiguation = "new changes",
+                        type = "Concert",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "2017-08-29",
+                            end = "2017-08-29",
+                            ended = true,
+                        ),
+                        cancelled = false,
+                        time = "18:00",
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    cancelled = false,
-                    time = "18:00",
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                eventDetailsModel,
-            )
+                    eventDetailsModel,
+                )
+            }
+            eventRepository.lookupEvent(
+                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+                forceRefresh = true,
+                lastUpdated = testDateTimeInThePast,
+            ).let { eventDetailsModel ->
+                assertEquals(
+                    EventDetailsModel(
+                        id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
+                        name = "Aimer Live in 武道館 ”blanc et noir\"",
+                        disambiguation = "newer changes",
+                        type = "Concert",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "2017-08-29",
+                            end = "2017-08-29",
+                            ended = true,
+                        ),
+                        cancelled = false,
+                        time = "18:00",
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    eventDetailsModel,
+                )
+            }
         }
     }
 }

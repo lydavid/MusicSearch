@@ -14,9 +14,36 @@ CREATE TABLE place (
   ended INTEGER AS Boolean NOT NULL
 );
 
-insertPlace:
+upsert {
+UPDATE place
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  address = :address,
+  type = :type,
+  type_id = :type_id,
+  longitude = :longitude,
+  latitude = :latitude,
+  begin = :begin,
+  end = :end,
+  ended = :ended
+WHERE id = :id;
+
 INSERT OR IGNORE INTO place
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :address,
+  :type,
+  :type_id,
+  :longitude,
+  :latitude,
+  :begin,
+  :end,
+  :ended
+);
+}
 
 getPlaceForDetails:
 SELECT

@@ -41,10 +41,11 @@ class RecordingRepositoryImpl(
         } else {
             val recordingMusicBrainzModel = lookupApi.lookupRecording(recordingId)
             cache(
+                oldId = recordingId,
                 recording = recordingMusicBrainzModel,
                 lastUpdated = lastUpdated,
             )
-            getCachedData(recordingId) ?: error("Failed to get cached data")
+            getCachedData(recordingMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
 
@@ -82,11 +83,15 @@ class RecordingRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         recording: RecordingMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         recordingDao.withTransaction {
-            recordingDao.upsert(recording)
+            recordingDao.upsert(
+                oldRecordingId = oldId,
+                recording = recording,
+            )
 
             aliasDao.insertAll(listOf(recording))
 

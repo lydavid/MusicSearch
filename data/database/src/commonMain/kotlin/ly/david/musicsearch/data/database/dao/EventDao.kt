@@ -16,7 +16,6 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Events_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -28,29 +27,36 @@ class EventDao(
 ) : EntityDao {
     override val transacter = database.eventQueries
 
-    fun insert(event: EventMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        event: EventMusicBrainzNetworkModel,
+    ) {
         event.run {
-            transacter.insertEvent(
-                Event(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation.orEmpty(),
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                    time = time.orEmpty(),
-                    cancelled = cancelled == true,
-                    begin = lifeSpan?.begin.orEmpty(),
-                    end = lifeSpan?.end.orEmpty(),
-                    ended = lifeSpan?.ended == true,
-                ),
+            if (oldId != id) {
+                delete(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
+                time = time.orEmpty(),
+                cancelled = cancelled == true,
+                begin = lifeSpan?.begin.orEmpty(),
+                end = lifeSpan?.end.orEmpty(),
+                ended = lifeSpan?.ended == true,
             )
         }
     }
 
-    fun insertAll(events: List<EventMusicBrainzNetworkModel>) {
+    fun upsertAll(events: List<EventMusicBrainzNetworkModel>) {
         transacter.transaction {
             events.forEach { event ->
-                insert(event)
+                upsert(
+                    oldId = event.id,
+                    event = event,
+                )
             }
         }
     }

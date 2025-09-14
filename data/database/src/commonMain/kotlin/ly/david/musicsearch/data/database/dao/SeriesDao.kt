@@ -14,7 +14,6 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -26,24 +25,31 @@ class SeriesDao(
 ) : EntityDao {
     override val transacter: SeriesQueries = database.seriesQueries
 
-    fun insert(series: SeriesMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        series: SeriesMusicBrainzNetworkModel,
+    ) {
         series.run {
-            transacter.insert(
-                Series(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation.orEmpty(),
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                ),
+            if (oldId != id) {
+                delete(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
             )
         }
     }
 
-    fun insertAll(series: List<SeriesMusicBrainzNetworkModel>) {
+    fun upsertAll(series: List<SeriesMusicBrainzNetworkModel>) {
         transacter.transaction {
             series.forEach { series ->
-                insert(series)
+                upsert(
+                    oldId = series.id,
+                    series = series,
+                )
             }
         }
     }

@@ -54,20 +54,24 @@ class AreaDao(
         }
     }
 
-    fun insertReplace(area: AreaMusicBrainzNetworkModel?) {
+    fun upsert(
+        oldAreaId: String,
+        area: AreaMusicBrainzNetworkModel?,
+    ) {
         area?.run {
-            transacter.insertOrReplaceArea(
-                Area(
-                    id = id,
-                    name = name,
-                    sort_name = sortName,
-                    disambiguation = disambiguation.orEmpty(),
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                    begin = lifeSpan?.begin.orEmpty(),
-                    end = lifeSpan?.end.orEmpty(),
-                    ended = lifeSpan?.ended == true,
-                ),
+            if (oldAreaId != id) {
+                delete(oldAreaId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                sort_name = sortName,
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
+                begin = lifeSpan?.begin.orEmpty(),
+                end = lifeSpan?.end.orEmpty(),
+                ended = lifeSpan?.ended == true,
             )
             countryCodeDao.insertCountryCodesForArea(
                 areaId = area.id,
@@ -84,10 +88,13 @@ class AreaDao(
         }
     }
 
-    fun insertReplaceAll(areas: List<AreaMusicBrainzNetworkModel>) {
+    fun upsertAll(areas: List<AreaMusicBrainzNetworkModel>) {
         return transacter.transaction {
             areas.forEach { area ->
-                insertReplace(area)
+                upsert(
+                    oldAreaId = area.id,
+                    area = area,
+                )
             }
         }
     }

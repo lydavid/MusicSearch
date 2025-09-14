@@ -38,8 +38,11 @@ class ReleaseDao(
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
-    fun insertOrUpdate(release: ReleaseMusicBrainzNetworkModel) {
+    fun upsert(oldId: String, release: ReleaseMusicBrainzNetworkModel) {
         release.run {
+            if (oldId != id) {
+                delete(oldId)
+            }
             transacter.upsert(
                 id = id,
                 name = name,

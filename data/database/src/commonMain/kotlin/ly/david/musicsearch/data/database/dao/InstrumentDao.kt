@@ -14,7 +14,6 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
-import lydavidmusicsearchdatadatabase.Instrument
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -25,25 +24,32 @@ class InstrumentDao(
 ) : EntityDao {
     override val transacter = database.instrumentQueries
 
-    fun insert(instrument: InstrumentMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        instrument: InstrumentMusicBrainzNetworkModel,
+    ) {
         instrument.run {
-            transacter.insert(
-                Instrument(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation.orEmpty(),
-                    description = description.orEmpty(),
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                ),
+            if (oldId != id) {
+                delete(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation.orEmpty(),
+                description = description.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
             )
         }
     }
 
-    fun insertAll(instruments: List<InstrumentMusicBrainzNetworkModel>) {
+    fun upsertAll(instruments: List<InstrumentMusicBrainzNetworkModel>) {
         transacter.transaction {
             instruments.forEach { instrument ->
-                insert(instrument)
+                upsert(
+                    oldId = instrument.id,
+                    instrument = instrument,
+                )
             }
         }
     }
@@ -93,21 +99,17 @@ class InstrumentDao(
         }
     }
 
-    fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int> =
-        when (browseMethod) {
-            is BrowseMethod.ByEntity -> {
-                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
-                    collectionId = browseMethod.entityId,
-                )
-            }
-
-            else -> {
-                getCountOfAllInstruments(query = "")
-            }
+    fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int> = when (browseMethod) {
+        is BrowseMethod.ByEntity -> {
+            collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                collectionId = browseMethod.entityId,
+            )
         }
-            .asFlow()
-            .mapToOne(coroutineDispatchers.io)
-            .map { it.toInt() }
+
+        else -> {
+            getCountOfAllInstruments(query = "")
+        }
+    }.asFlow().mapToOne(coroutineDispatchers.io).map { it.toInt() }
 
     private fun getCountOfAllInstruments(
         query: String,

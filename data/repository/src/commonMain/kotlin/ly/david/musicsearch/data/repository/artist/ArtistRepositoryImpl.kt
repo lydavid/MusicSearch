@@ -43,10 +43,11 @@ class ArtistRepositoryImpl(
         } else {
             val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
             cache(
+                oldId = artistId,
                 artist = artistMusicBrainzModel,
                 lastUpdated = lastUpdated,
             )
-            getCachedData(artistId) ?: error("Failed to get cached data")
+            getCachedData(artistMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
 
@@ -83,11 +84,15 @@ class ArtistRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         artist: ArtistMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         artistDao.withTransaction {
-            artistDao.upsert(artist)
+            artistDao.upsert(
+                oldId = oldId,
+                artist = artist,
+            )
 
             aliasDao.insertAll(listOf(artist))
 

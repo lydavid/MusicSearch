@@ -19,13 +19,16 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
-import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
 
 interface ReleaseGroupDao : EntityDao {
-    fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzNetworkModel)
+    fun upsertReleaseGroup(
+        oldId: String,
+        releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
+    )
+
     fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>)
     fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel?
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
@@ -59,19 +62,23 @@ class ReleaseGroupDaoImpl(
 ) : ReleaseGroupDao {
     override val transacter = database.release_groupQueries
 
-    override fun insertReleaseGroup(releaseGroup: ReleaseGroupMusicBrainzNetworkModel) {
+    override fun upsertReleaseGroup(
+        oldId: String,
+        releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
+    ) {
         releaseGroup.run {
-            transacter.insertReleaseGroup(
-                Release_group(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation,
-                    first_release_date = firstReleaseDate,
-                    primary_type = primaryType.orEmpty(),
-                    primary_type_id = primaryTypeId.orEmpty(),
-                    secondary_types = secondaryTypes.orEmpty(),
-                    secondary_type_ids = secondaryTypeIds.orEmpty(),
-                ),
+            if (oldId != id) {
+                deleteReleaseGroup(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation,
+                first_release_date = firstReleaseDate,
+                primary_type = primaryType.orEmpty(),
+                primary_type_id = primaryTypeId.orEmpty(),
+                secondary_types = secondaryTypes.orEmpty(),
+                secondary_type_ids = secondaryTypeIds.orEmpty(),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = releaseGroup.id,
@@ -83,7 +90,10 @@ class ReleaseGroupDaoImpl(
     override fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>) {
         transacter.transaction {
             releaseGroups.forEach { releaseGroup ->
-                insertReleaseGroup(releaseGroup)
+                upsertReleaseGroup(
+                    oldId = releaseGroup.id,
+                    releaseGroup = releaseGroup,
+                )
             }
         }
     }

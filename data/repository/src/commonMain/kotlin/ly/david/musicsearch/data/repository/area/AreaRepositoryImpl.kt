@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.area
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +9,7 @@ import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class AreaRepositoryImpl(
     private val areaDao: AreaDao,
@@ -27,33 +27,34 @@ class AreaRepositoryImpl(
             delete(areaId)
         }
 
-        val area = areaDao.getAreaForDetails(areaId)
+        val cachedData = getCachedData(areaId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val areaMusicBrainzModel = lookupApi.lookupArea(areaId)
+            cache(
+                oldId = areaId,
+                area = areaMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(areaMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(areaId: String): AreaDetailsModel? {
+        if (!relationRepository.visited(areaId)) return null
+
+        val area = areaDao.getAreaForDetails(areaId) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(areaId)
-        val visited = relationRepository.visited(areaId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.AREA,
             mbid = areaId,
         )
 
-        if (area?.type != null &&
-            visited &&
-            !forceRefresh
-        ) {
-            return area.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val areaMusicBrainzModel = lookupApi.lookupArea(areaId)
-        cache(
-            area = areaMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupArea(
-            areaId = areaId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return area.copy(
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -65,14 +66,14 @@ class AreaRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         area: AreaMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         areaDao.withTransaction {
-            areaDao.insertReplace(
-                area.copy(
-                    type = area.type ?: "",
-                ),
+            areaDao.upsert(
+                oldAreaId = oldId,
+                area = area,
             )
 
             aliasDao.insertAll(listOf(area))

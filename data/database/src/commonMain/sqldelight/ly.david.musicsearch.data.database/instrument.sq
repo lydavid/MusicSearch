@@ -7,9 +7,26 @@ CREATE TABLE instrument (
   type_id TEXT NOT NULL
 );
 
-insert:
+upsert {
+UPDATE instrument
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  description = :description,
+  type = :type,
+  type_id = :type_id
+WHERE id = :id;
+
 INSERT OR IGNORE INTO instrument
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :description,
+  :type,
+  :type_id
+);
+}
 
 getInstrumentForDetails:
 SELECT

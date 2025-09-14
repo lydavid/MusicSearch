@@ -40,9 +40,30 @@ GROUP BY release_group.id;
 
 -- queries
 
-insertReleaseGroup:
+upsert {
+UPDATE release_group
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  first_release_date = :first_release_date,
+  primary_type = :primary_type,
+  primary_type_id = :primary_type_id,
+  secondary_types = :secondary_types,
+  secondary_type_ids = :secondary_type_ids
+WHERE id = :id;
+
 INSERT OR IGNORE INTO release_group
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :first_release_date,
+  :primary_type,
+  :primary_type_id,
+  :secondary_types,
+  :secondary_type_ids
+);
+}
 
 getReleaseGroupForDetails:
 SELECT

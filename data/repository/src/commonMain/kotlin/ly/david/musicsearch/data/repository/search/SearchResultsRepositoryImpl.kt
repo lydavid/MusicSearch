@@ -110,7 +110,7 @@ internal class SearchResultsRepositoryImpl(
                     val areas = response.areas
                     areaDao.withTransaction {
                         removeAllSearchResultsOnRefresh()
-                        areaDao.insertReplaceAll(areas = areas)
+                        areaDao.upsertAll(areas = areas)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = areas,
@@ -152,7 +152,7 @@ internal class SearchResultsRepositoryImpl(
                     val events = response.events
                     eventDao.withTransaction {
                         removeAllSearchResultsOnRefresh()
-                        eventDao.insertAll(events)
+                        eventDao.upsertAll(events)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = events,
@@ -173,7 +173,7 @@ internal class SearchResultsRepositoryImpl(
                     val instruments = response.instruments
                     instrumentDao.withTransaction {
                         removeAllSearchResultsOnRefresh()
-                        instrumentDao.insertAll(instruments)
+                        instrumentDao.upsertAll(instruments)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = instruments,
@@ -215,7 +215,7 @@ internal class SearchResultsRepositoryImpl(
                     val places = response.places
                     placeDao.withTransaction {
                         removeAllSearchResultsOnRefresh()
-                        placeDao.insertAll(places)
+                        placeDao.upsertAll(places)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = places,
@@ -299,7 +299,7 @@ internal class SearchResultsRepositoryImpl(
                     val series = response.series
                     seriesDao.withTransaction {
                         removeAllSearchResultsOnRefresh()
-                        seriesDao.insertAll(series)
+                        seriesDao.upsertAll(series)
                         insertIntoCommonTables(
                             entityType = entity,
                             entities = series,

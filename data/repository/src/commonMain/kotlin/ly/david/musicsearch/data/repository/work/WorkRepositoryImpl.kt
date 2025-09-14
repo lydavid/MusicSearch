@@ -30,32 +30,35 @@ class WorkRepositoryImpl(
             delete(workId)
         }
 
-        val work = workDao.getWorkForDetails(workId)
+        val cachedData = getCachedData(workId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)
+            cache(
+                oldId = workId,
+                work = workMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(workMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(workId: String): WorkDetailsModel? {
+        if (!relationRepository.visited(workId)) return null
+        val work = workDao.getWorkForDetails(workId) ?: return null
+
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
         val urlRelations = relationRepository.getRelationshipsByType(workId)
-        val visited = relationRepository.visited(workId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.WORK,
             mbid = workId,
         )
 
-        if (work != null && visited) {
-            return work.copy(
-                attributes = workAttributes.toPersistentList(),
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)
-        cache(
-            work = workMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupWork(
-            workId = workId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return work.copy(
+            attributes = workAttributes.toPersistentList(),
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -67,11 +70,15 @@ class WorkRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         work: WorkMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         workDao.withTransaction {
-            workDao.upsert(work)
+            workDao.upsert(
+                oldId = oldId,
+                work = work,
+            )
             workAttributeDao.insertAttributesForWork(
                 workId = work.id,
                 work.attributes,

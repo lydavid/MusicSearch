@@ -479,7 +479,6 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             )
         }
 
-        // other entities remain unchanged
         artistsListRepository.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,

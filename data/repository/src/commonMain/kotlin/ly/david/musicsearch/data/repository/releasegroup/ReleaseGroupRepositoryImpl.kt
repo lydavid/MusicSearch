@@ -36,6 +36,7 @@ class ReleaseGroupRepositoryImpl(
         } else {
             val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
             cache(
+                oldId = releaseGroupId,
                 releaseGroup = releaseGroupMusicBrainzModel,
                 lastUpdated = lastUpdated,
             )
@@ -73,11 +74,15 @@ class ReleaseGroupRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         releaseGroupDao.withTransaction {
-            releaseGroupDao.insertReleaseGroup(releaseGroup)
+            releaseGroupDao.upsertReleaseGroup(
+                oldId = oldId,
+                releaseGroup = releaseGroup,
+            )
 
             aliasDao.insertAll(listOf(releaseGroup))
 

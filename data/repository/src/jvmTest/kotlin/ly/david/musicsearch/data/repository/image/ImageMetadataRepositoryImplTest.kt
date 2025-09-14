@@ -447,8 +447,9 @@ class ImageMetadataRepositoryImplTest :
             },
         )
 
-        eventDao.insert(
-            EventMusicBrainzNetworkModel(
+        eventDao.upsert(
+            oldId = eventId,
+            event = EventMusicBrainzNetworkModel(
                 id = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
@@ -501,8 +502,9 @@ class ImageMetadataRepositoryImplTest :
         val releaseGroupId = "release-group-id"
         val releaseGroupName = "release group name"
         val releaseGroupDisambiguation = "d"
-        releaseGroupDao.insertReleaseGroup(
-            ReleaseGroupMusicBrainzNetworkModel(
+        releaseGroupDao.upsertReleaseGroup(
+            oldId = releaseGroupId,
+            releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                 id = releaseGroupId,
                 name = releaseGroupName,
                 disambiguation = releaseGroupDisambiguation,
@@ -516,11 +518,11 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata =
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                    ),
+                ImageMetadata(
+                    imageId = ImageId(3L),
+                    thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                    largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                ),
                 count = 1,
             ),
             releaseGroupImageMetadata,

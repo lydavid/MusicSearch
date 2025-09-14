@@ -28,8 +28,14 @@ class WorkDao(
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
 
-    fun upsert(work: WorkMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        work: WorkMusicBrainzNetworkModel,
+    ) {
         work.run {
+            if (oldId != id) {
+                delete(oldId)
+            }
             transacter.upsert(
                 id = id,
                 name = name,
@@ -45,7 +51,10 @@ class WorkDao(
     fun upsertAll(works: List<WorkMusicBrainzNetworkModel>) {
         transacter.transaction {
             works.forEach { work ->
-                upsert(work)
+                upsert(
+                    oldId = work.id,
+                    work = work,
+                )
             }
         }
     }
@@ -77,6 +86,7 @@ class WorkDao(
 
     fun delete(id: String) {
         transacter.deleteWork(id)
+        // work attributes are deleted by cascade
     }
 
     fun insertWorksByEntity(

@@ -29,8 +29,20 @@ class RecordingDao(
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
-    fun upsert(recording: RecordingMusicBrainzNetworkModel) {
+    fun upsert(
+        oldRecordingId: String,
+        recording: RecordingMusicBrainzNetworkModel,
+    ) {
         recording.run {
+            if (oldRecordingId != id) {
+                // TODO: propagate update to tracks and listens?
+                // We don't need to update other lists, let them handle it themselves,
+                // though by deleting the old recording that they linked to, they will be incomplete,
+                // forcing them to fetch from remote. It's possible their paging gets messed up because of this.
+                // It's possible to fix by refreshing those lists.
+                // A similar thing happens when refreshing a recording that has changed its id.
+                delete(oldRecordingId)
+            }
             transacter.upsert(
                 id = id,
                 name = name,
@@ -51,7 +63,7 @@ class RecordingDao(
     fun upsertAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->
-                upsert(recording)
+                upsert(oldRecordingId = recording.id, recording = recording)
             }
         }
     }

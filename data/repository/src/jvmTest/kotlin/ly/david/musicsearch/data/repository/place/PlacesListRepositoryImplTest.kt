@@ -326,7 +326,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     }
 
     @Test
-    fun `refreshing places does not delete the place`() = runTest {
+    fun `refreshing places will update place`() = runTest {
         setUpMarunouchiPlaces()
         setUpChiyodaPlaces()
 
@@ -352,7 +352,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }.run {
             assertEquals(
                 listOf(
-                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumPlaceListItemModel.copy(
+                        address = "some new address",
+                    ),
                     tokyoInternationForumHallAPlaceListItemModel,
                 ),
                 this,
@@ -369,7 +371,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    tokyoInternationForumPlaceListItemModel,
+                    tokyoInternationForumPlaceListItemModel.copy(
+                        address = "some new address",
+                    ),
                     tokyoInternationForumHallAPlaceListItemModel,
                 ),
                 this,
@@ -377,67 +381,130 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }
 
         // now visit the place and refresh it
-        val placeRepository = createPlaceRepository(
+        createPlaceRepository(
             tokyoInternationForumPlaceMusicBrainzModel.copy(
-                address = "some new address",
+                address = "some newer address",
             ),
-        )
-        // the first lookup will replace existing data
-        placeRepository.lookupPlace(
-            placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
-            forceRefresh = false,
-            lastUpdated = testDateTimeInThePast,
-        ).run {
-            assertEquals(
-                PlaceDetailsModel(
-                    id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
-                    name = "東京国際フォーラム",
-                    disambiguation = "complex; use ONLY if no more specific venue info is available!",
-                    address = "〒100-0005 東京都千代田区丸の内三丁目5番1号",
-                    type = "Other",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "1997-01-10",
-                        ended = false,
+        ).let { placeRepository ->
+            placeRepository.lookupPlace(
+                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+                forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
+            ).run {
+                assertEquals(
+                    PlaceDetailsModel(
+                        id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                        name = "東京国際フォーラム",
+                        disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                        address = "some newer address",
+                        type = "Other",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "1997-01-10",
+                            ended = false,
+                        ),
+                        coordinates = CoordinatesUiModel(
+                            longitude = 139.7642,
+                            latitude = 35.676925,
+                        ),
+                        area = marunouchiAreaListItemModel.copy(
+                            type = "",
+                        ),
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    coordinates = CoordinatesUiModel(
-                        longitude = 139.7642,
-                        latitude = 35.676925,
+                    this,
+                )
+            }
+            placeRepository.lookupPlace(
+                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+                forceRefresh = true,
+                lastUpdated = testDateTimeInThePast,
+            ).run {
+                assertEquals(
+                    PlaceDetailsModel(
+                        id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                        name = "東京国際フォーラム",
+                        disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                        address = "some newer address",
+                        type = "Other",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "1997-01-10",
+                            ended = false,
+                        ),
+                        coordinates = CoordinatesUiModel(
+                            longitude = 139.7642,
+                            latitude = 35.676925,
+                        ),
+                        area = marunouchiAreaListItemModel.copy(
+                            type = "",
+                        ),
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    area = marunouchiAreaListItemModel.copy(
-                        type = "",
-                    ),
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                this,
-            )
+                    this,
+                )
+            }
         }
-        placeRepository.lookupPlace(
-            placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
-            forceRefresh = true,
-            lastUpdated = testDateTimeInThePast,
-        ).run {
-            assertEquals(
-                PlaceDetailsModel(
-                    id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
-                    name = "東京国際フォーラム",
-                    disambiguation = "complex; use ONLY if no more specific venue info is available!",
-                    address = "some new address",
-                    type = "Other",
-                    lifeSpan = LifeSpanUiModel(
-                        begin = "1997-01-10",
-                        ended = false,
+
+        createPlaceRepository(
+            tokyoInternationForumPlaceMusicBrainzModel.copy(
+                address = "newest address",
+            ),
+        ).let { placeRepository ->
+            placeRepository.lookupPlace(
+                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+                forceRefresh = false,
+                lastUpdated = testDateTimeInThePast,
+            ).run {
+                assertEquals(
+                    PlaceDetailsModel(
+                        id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                        name = "東京国際フォーラム",
+                        disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                        address = "some newer address",
+                        type = "Other",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "1997-01-10",
+                            ended = false,
+                        ),
+                        coordinates = CoordinatesUiModel(
+                            longitude = 139.7642,
+                            latitude = 35.676925,
+                        ),
+                        area = marunouchiAreaListItemModel.copy(
+                            type = "",
+                        ),
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    coordinates = CoordinatesUiModel(
-                        longitude = 139.7642,
-                        latitude = 35.676925,
+                    this,
+                )
+            }
+            placeRepository.lookupPlace(
+                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+                forceRefresh = true,
+                lastUpdated = testDateTimeInThePast,
+            ).run {
+                assertEquals(
+                    PlaceDetailsModel(
+                        id = "623d61ce-d422-4d3a-b6bb-c02cd64c715d",
+                        name = "東京国際フォーラム",
+                        disambiguation = "complex; use ONLY if no more specific venue info is available!",
+                        address = "newest address",
+                        type = "Other",
+                        lifeSpan = LifeSpanUiModel(
+                            begin = "1997-01-10",
+                            ended = false,
+                        ),
+                        coordinates = CoordinatesUiModel(
+                            longitude = 139.7642,
+                            latitude = 35.676925,
+                        ),
+                        area = marunouchiAreaListItemModel.copy(
+                            type = "",
+                        ),
+                        lastUpdated = testDateTimeInThePast,
                     ),
-                    area = marunouchiAreaListItemModel.copy(
-                        type = "",
-                    ),
-                    lastUpdated = testDateTimeInThePast,
-                ),
-                this,
-            )
+                    this,
+                )
+            }
         }
     }
 }

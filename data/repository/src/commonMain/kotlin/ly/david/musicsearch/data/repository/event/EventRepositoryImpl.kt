@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.event
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +9,7 @@ import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class EventRepositoryImpl(
     private val eventDao: EventDao,
@@ -27,33 +27,33 @@ class EventRepositoryImpl(
             delete(eventId)
         }
 
-        val event = eventDao.getEventForDetails(eventId)
+        val cachedData = getCachedData(eventId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
+            cache(
+                oldId = eventId,
+                event = eventMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(eventMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(eventId: String): EventDetailsModel? {
+        if (!relationRepository.visited(eventId)) return null
+        val event = eventDao.getEventForDetails(eventId) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(eventId)
-        val visited = relationRepository.visited(eventId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.EVENT,
             mbid = eventId,
         )
 
-        if (event != null &&
-            visited &&
-            !forceRefresh
-        ) {
-            return event.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
-        cache(
-            event = eventMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupEvent(
-            eventId = eventId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return event.copy(
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -65,11 +65,15 @@ class EventRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         event: EventMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         eventDao.withTransaction {
-            eventDao.insert(event)
+            eventDao.upsert(
+                oldId = oldId,
+                event = event,
+            )
 
             aliasDao.insertAll(listOf(event))
 

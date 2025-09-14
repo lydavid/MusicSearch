@@ -76,10 +76,11 @@ class ReleaseRepositoryImpl(
         } else {
             val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
             cache(
+                oldId = releaseId,
                 release = releaseMusicBrainzModel,
                 lastUpdated = lastUpdated,
             )
-            getCachedData(releaseId) ?: error("Failed to get cached data")
+            getCachedData(releaseMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
 
@@ -127,23 +128,31 @@ class ReleaseRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         release: ReleaseMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
-                releaseGroupDao.insertReleaseGroup(releaseGroup)
+                releaseGroupDao.upsertReleaseGroup(
+                    oldId = releaseGroup.id,
+                    releaseGroup = releaseGroup,
+                )
                 releaseReleaseGroupDao.insert(
                     releaseId = release.id,
                     releaseGroupId = releaseGroup.id,
                 )
             }
-            releaseDao.insertOrUpdate(release)
+            releaseDao.upsert(
+                oldId = oldId,
+                release = release,
+            )
 
             aliasDao.insertAll(listOf(release))
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
+            // Lifespan is not included, so do not upsert.
             labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
             labelDao.insertLabelsByRelease(
                 releaseId = release.id,

@@ -13,9 +13,34 @@ CREATE TABLE event (
   ended INTEGER AS Boolean NOT NULL
 );
 
-insertEvent:
+upsert {
+UPDATE event
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  type = :type,
+  type_id = :type_id,
+  time = :time,
+  cancelled = :cancelled,
+  begin = :begin,
+  end = :end,
+  ended = :ended
+WHERE id = :id;
+
 INSERT OR IGNORE INTO event
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :type,
+  :type_id,
+  :time,
+  :cancelled,
+  :begin,
+  :end,
+  :ended
+);
+}
 
 deleteEvent:
 DELETE FROM event

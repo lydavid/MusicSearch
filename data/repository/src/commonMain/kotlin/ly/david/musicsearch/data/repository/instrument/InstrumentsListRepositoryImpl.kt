@@ -92,7 +92,7 @@ class InstrumentsListRepositoryImpl(
         entity: MusicBrainzEntityType,
         musicBrainzModels: List<InstrumentMusicBrainzNetworkModel>,
     ) {
-        instrumentDao.insertAll(musicBrainzModels)
+        instrumentDao.upsertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(

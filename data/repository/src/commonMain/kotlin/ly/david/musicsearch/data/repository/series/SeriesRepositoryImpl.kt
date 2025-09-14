@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.series
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +9,7 @@ import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
+import kotlin.time.Instant
 
 class SeriesRepositoryImpl(
     private val seriesDao: SeriesDao,
@@ -27,33 +27,33 @@ class SeriesRepositoryImpl(
             delete(seriesId)
         }
 
-        val series = seriesDao.getSeriesForDetails(seriesId)
+        val cachedData = getCachedData(seriesId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val seriesMusicBrainzModel = lookupApi.lookupSeries(seriesId)
+            cache(
+                oldId = seriesId,
+                series = seriesMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(seriesMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(seriesId: String): SeriesDetailsModel? {
+        if (!relationRepository.visited(seriesId)) return null
+        val series = seriesDao.getSeriesForDetails(seriesId) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(seriesId)
-        val visited = relationRepository.visited(seriesId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.SERIES,
             mbid = seriesId,
         )
 
-        if (series != null &&
-            visited &&
-            !forceRefresh
-        ) {
-            return series.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val seriesMusicBrainzModel = lookupApi.lookupSeries(seriesId)
-        cache(
-            series = seriesMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupSeries(
-            seriesId = seriesId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return series.copy(
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -65,11 +65,15 @@ class SeriesRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         series: SeriesMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         seriesDao.withTransaction {
-            seriesDao.insert(series)
+            seriesDao.upsert(
+                oldId = oldId,
+                series = series,
+            )
 
             aliasDao.insertAll(listOf(series))
 

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.instrument
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +9,7 @@ import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class InstrumentRepositoryImpl(
     private val instrumentDao: InstrumentDao,
@@ -27,30 +27,33 @@ class InstrumentRepositoryImpl(
             delete(instrumentId)
         }
 
-        val instrument = instrumentDao.getInstrumentForDetails(instrumentId)
+        val cachedData = getCachedData(instrumentId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)
+            cache(
+                oldId = instrumentId,
+                instrument = instrumentMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(instrumentMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(instrumentId: String): InstrumentDetailsModel? {
+        if (!relationRepository.visited(instrumentId)) return null
+        val instrument = instrumentDao.getInstrumentForDetails(instrumentId) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(instrumentId)
-        val visited = relationRepository.visited(instrumentId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.INSTRUMENT,
             mbid = instrumentId,
         )
 
-        if (instrument != null && visited) {
-            return instrument.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)
-        cache(
-            instrument = instrumentMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupInstrument(
-            instrumentId = instrumentId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return instrument.copy(
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -62,11 +65,15 @@ class InstrumentRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         instrument: InstrumentMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         instrumentDao.withTransaction {
-            instrumentDao.insert(instrument)
+            instrumentDao.upsert(
+                oldId = oldId,
+                instrument = instrument,
+            )
 
             aliasDao.insertAll(listOf(instrument))
 

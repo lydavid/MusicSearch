@@ -6,9 +6,24 @@ CREATE TABLE series (
   type_id TEXT NOT NULL
 );
 
-insert:
+upsert {
+UPDATE series
+SET
+  name = :name,
+  disambiguation = :disambiguation,
+  type = :type,
+  type_id = :type_id
+WHERE id = :id;
+
 INSERT OR IGNORE INTO series
-VALUES ?;
+VALUES (
+  :id,
+  :name,
+  :disambiguation,
+  :type,
+  :type_id
+);
+}
 
 getSeriesForDetails:
 SELECT

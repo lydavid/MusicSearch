@@ -18,7 +18,6 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import lydavidmusicsearchdatadatabase.Area_place
-import lydavidmusicsearchdatadatabase.Place
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -29,30 +28,37 @@ class PlaceDao(
 ) : EntityDao {
     override val transacter = database.placeQueries
 
-    fun insert(place: PlaceMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        place: PlaceMusicBrainzNetworkModel,
+    ) {
         place.run {
-            transacter.insertPlace(
-                Place(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation.orEmpty(),
-                    address = address,
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                    longitude = coordinates?.longitude,
-                    latitude = coordinates?.latitude,
-                    begin = lifeSpan?.begin.orEmpty(),
-                    end = lifeSpan?.end.orEmpty(),
-                    ended = lifeSpan?.ended == true,
-                ),
+            if (oldId != id) {
+                delete(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation.orEmpty(),
+                address = address,
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
+                longitude = coordinates?.longitude,
+                latitude = coordinates?.latitude,
+                begin = lifeSpan?.begin.orEmpty(),
+                end = lifeSpan?.end.orEmpty(),
+                ended = lifeSpan?.ended == true,
             )
         }
     }
 
-    fun insertAll(places: List<PlaceMusicBrainzNetworkModel>) {
+    fun upsertAll(places: List<PlaceMusicBrainzNetworkModel>) {
         transacter.transaction {
             places.forEach { place ->
-                insert(place)
+                upsert(
+                    oldId = place.id,
+                    place = place,
+                )
             }
         }
     }

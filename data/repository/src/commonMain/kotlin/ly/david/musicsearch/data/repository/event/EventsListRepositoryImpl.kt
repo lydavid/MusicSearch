@@ -89,7 +89,7 @@ class EventsListRepositoryImpl(
         entity: MusicBrainzEntityType,
         musicBrainzModels: List<EventMusicBrainzNetworkModel>,
     ) {
-        eventDao.insertAll(musicBrainzModels)
+        eventDao.upsertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(

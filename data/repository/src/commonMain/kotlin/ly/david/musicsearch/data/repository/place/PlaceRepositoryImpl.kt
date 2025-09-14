@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.place
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -11,6 +10,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class PlaceRepositoryImpl(
     private val placeDao: PlaceDao,
@@ -29,35 +29,35 @@ class PlaceRepositoryImpl(
             delete(placeId)
         }
 
-        val place = placeDao.getPlaceForDetails(placeId)
+        val cachedData = getCachedData(placeId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)
+            cache(
+                oldId = placeId,
+                place = placeMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(placeMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(placeId: String): PlaceDetailsModel? {
+        if (!relationRepository.visited(placeId)) return null
+        val place = placeDao.getPlaceForDetails(placeId) ?: return null
+
         val area = areaDao.getAreaByPlace(placeId)
         val urlRelations = relationRepository.getRelationshipsByType(placeId)
-        val visited = relationRepository.visited(placeId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.PLACE,
             mbid = placeId,
         )
 
-        if (place != null &&
-            visited &&
-            !forceRefresh
-        ) {
-            return place.copy(
-                area = area,
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)
-        cache(
-            place = placeMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupPlace(
-            placeId = placeId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return place.copy(
+            area = area,
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -70,11 +70,15 @@ class PlaceRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         place: PlaceMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         placeDao.withTransaction {
-            placeDao.insert(place)
+            placeDao.upsert(
+                oldId = oldId,
+                place = place,
+            )
 
             aliasDao.insertAll(listOf(place))
 

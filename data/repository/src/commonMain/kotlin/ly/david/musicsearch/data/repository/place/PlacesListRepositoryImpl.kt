@@ -91,7 +91,7 @@ class PlacesListRepositoryImpl(
         entity: MusicBrainzEntityType,
         musicBrainzModels: List<PlaceMusicBrainzNetworkModel>,
     ) {
-        placeDao.insertAll(musicBrainzModels)
+        placeDao.upsertAll(musicBrainzModels)
         when (entity) {
             MusicBrainzEntityType.AREA -> {
                 placeDao.insertPlacesByArea(

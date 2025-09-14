@@ -31,22 +31,26 @@ class LabelDao(
 ) : EntityDao {
     override val transacter = database.labelQueries
 
-    fun insert(label: LabelMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        label: LabelMusicBrainzNetworkModel,
+    ) {
         label.run {
-            transacter.insertLabel(
-                Label(
-                    id = id,
-                    name = name,
-                    disambiguation = disambiguation.orEmpty(),
-                    type = type.orEmpty(),
-                    type_id = typeId.orEmpty(),
-                    label_code = labelCode,
-                    ipis = ipis.orEmpty(),
-                    isnis = isnis.orEmpty(),
-                    begin = label.lifeSpan?.begin.orEmpty(),
-                    end = label.lifeSpan?.end.orEmpty(),
-                    ended = label.lifeSpan?.ended == true,
-                ),
+            if (oldId != id) {
+                delete(oldId)
+            }
+            transacter.upsert(
+                id = id,
+                name = name,
+                disambiguation = disambiguation.orEmpty(),
+                type = type.orEmpty(),
+                type_id = typeId.orEmpty(),
+                label_code = labelCode,
+                ipis = ipis.orEmpty(),
+                isnis = isnis.orEmpty(),
+                begin = label.lifeSpan?.begin.orEmpty(),
+                end = label.lifeSpan?.end.orEmpty(),
+                ended = label.lifeSpan?.ended == true,
             )
         }
     }
@@ -54,7 +58,23 @@ class LabelDao(
     fun insertAll(labels: List<LabelMusicBrainzNetworkModel>?) {
         transacter.transaction {
             labels?.forEach { label ->
-                insert(label)
+                label.run {
+                    transacter.insertIgnore(
+                        label = Label(
+                            id = id,
+                            name = name,
+                            disambiguation = disambiguation.orEmpty(),
+                            type = type.orEmpty(),
+                            type_id = typeId.orEmpty(),
+                            label_code = labelCode,
+                            ipis = ipis.orEmpty(),
+                            isnis = isnis.orEmpty(),
+                            begin = label.lifeSpan?.begin.orEmpty(),
+                            end = label.lifeSpan?.end.orEmpty(),
+                            ended = label.lifeSpan?.ended == true,
+                        ),
+                    )
+                }
             }
         }
     }

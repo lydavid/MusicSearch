@@ -29,8 +29,14 @@ class ArtistDao(
 ) : EntityDao {
     override val transacter = database.artistQueries
 
-    fun upsert(artist: ArtistMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        artist: ArtistMusicBrainzNetworkModel,
+    ) {
         artist.run {
+            if (oldId != id) {
+                delete(oldId)
+            }
             transacter.upsert(
                 id = id,
                 name = name,
@@ -53,7 +59,10 @@ class ArtistDao(
     fun upsertAll(artists: List<ArtistMusicBrainzNetworkModel>) {
         transacter.transaction {
             artists.forEach { artist ->
-                upsert(artist)
+                upsert(
+                    oldId = artist.id,
+                    artist = artist,
+                )
             }
         }
     }

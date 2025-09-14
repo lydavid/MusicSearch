@@ -16,9 +16,32 @@ insertArea:
 INSERT OR IGNORE INTO area
 VALUES ?;
 
-insertOrReplaceArea:
-INSERT OR REPLACE INTO area
-VALUES ?;
+upsert {
+UPDATE area
+SET
+  name = :name,
+  sort_name = :sort_name,
+  disambiguation = :disambiguation,
+  type = :type,
+  type_id = :type_id,
+  begin = :begin,
+  end = :end,
+  ended = :ended
+WHERE id = :id;
+
+INSERT OR IGNORE INTO area
+VALUES (
+  :id,
+  :name,
+  :sort_name,
+  :disambiguation,
+  :type,
+  :type_id,
+  :begin,
+  :end,
+  :ended
+);
+}
 
 deleteArea:
 DELETE FROM area

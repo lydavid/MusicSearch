@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.repository.label
 
-import kotlin.time.Instant
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -10,6 +9,7 @@ import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Instant
 
 class LabelRepositoryImpl(
     private val labelDao: LabelDao,
@@ -27,30 +27,33 @@ class LabelRepositoryImpl(
             delete(labelId)
         }
 
-        val label = labelDao.getLabelForDetails(labelId)
+        val cachedData = getCachedData(labelId)
+        return if (cachedData != null && !forceRefresh) {
+            cachedData
+        } else {
+            val labelMusicBrainzModel = lookupApi.lookupLabel(labelId)
+            cache(
+                oldId = labelId,
+                label = labelMusicBrainzModel,
+                lastUpdated = lastUpdated,
+            )
+            getCachedData(labelMusicBrainzModel.id) ?: error("Failed to get cached data")
+        }
+    }
+
+    private fun getCachedData(labelId: String): LabelDetailsModel? {
+        if (!relationRepository.visited(labelId)) return null
+        val label = labelDao.getLabelForDetails(labelId) ?: return null
+
         val urlRelations = relationRepository.getRelationshipsByType(labelId)
-        val visited = relationRepository.visited(labelId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.LABEL,
             mbid = labelId,
         )
 
-        if (label != null && visited) {
-            return label.copy(
-                urls = urlRelations,
-                aliases = aliases,
-            )
-        }
-
-        val labelMusicBrainzModel = lookupApi.lookupLabel(labelId)
-        cache(
-            label = labelMusicBrainzModel,
-            lastUpdated = lastUpdated,
-        )
-        return lookupLabel(
-            labelId = labelId,
-            forceRefresh = false,
-            lastUpdated = lastUpdated,
+        return label.copy(
+            urls = urlRelations,
+            aliases = aliases,
         )
     }
 
@@ -62,11 +65,15 @@ class LabelRepositoryImpl(
     }
 
     private fun cache(
+        oldId: String,
         label: LabelMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         labelDao.withTransaction {
-            labelDao.insert(label)
+            labelDao.upsert(
+                oldId = oldId,
+                label = label,
+            )
 
             aliasDao.insertAll(listOf(label))
 

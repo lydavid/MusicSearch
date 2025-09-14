@@ -502,7 +502,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 id = "new-id-is-considered-a-different-release-group",
             ),
             tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                disambiguation = "changes will show up",
             ),
         )
         val releaseGroupsListRepository = createReleaseGroupsListRepository(
@@ -532,6 +532,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        disambiguation = "changes will show up",
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -540,7 +541,6 @@ class ReleaseGroupsListRepositoryImplTest :
             )
         }
 
-        // other entities remain unchanged
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = tchaikovskyArtistMusicBrainzModel.id,
@@ -556,6 +556,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        disambiguation = "changes will show up",
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -579,6 +580,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         collected = true,
+                        disambiguation = "changes will show up",
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -594,6 +596,7 @@ class ReleaseGroupsListRepositoryImplTest :
             assertEquals(
                 listOf(
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        disambiguation = "changes will show up",
                         collected = true,
                     ),
                     nutcrackerReleaseGroupListItemModel,
@@ -611,7 +614,7 @@ class ReleaseGroupsListRepositoryImplTest :
         // now visit the releaseGroup and refresh it
         val releaseGroupRepository = createReleaseGroupRepository(
             tchaikovskyOverturesReleaseGroupMusicBrainzModel.copy(
-                disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                disambiguation = "new changes",
             ),
         )
         releaseGroupRepository.lookupReleaseGroup(
@@ -642,7 +645,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     ),
                     primaryType = "Album",
                     firstReleaseDate = "2000-02-01",
-                    disambiguation = "",
+                    disambiguation = "new changes",
                     lastUpdated = testDateTimeInThePast,
                 ),
                 releaseGroupDetailsModel,
@@ -676,7 +679,7 @@ class ReleaseGroupsListRepositoryImplTest :
                     ),
                     primaryType = "Album",
                     firstReleaseDate = "2000-02-01",
-                    disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                    disambiguation = "new changes",
                     lastUpdated = testDateTimeInThePast,
                 ),
                 releaseGroupDetailsModel,
@@ -691,7 +694,7 @@ class ReleaseGroupsListRepositoryImplTest :
             assertEquals(
                 listOf(
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
-                        disambiguation = "changes will be ignored if release group is linked to multiple entities",
+                        disambiguation = "new changes",
                         visited = true,
                         collected = true,
                     ),

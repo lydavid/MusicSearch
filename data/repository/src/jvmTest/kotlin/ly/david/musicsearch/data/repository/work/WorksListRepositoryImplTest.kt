@@ -372,7 +372,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         )
     }
 
-    // Works are the first entity type to upsert in both list items and details
+    // Works were the first entity type to upsert in both list items and details
     // which works nicely to allow refreshing data in lists without deleting the item, which may mess up paging on
     // other screens.
     @Test
@@ -417,7 +417,6 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
             )
         }
 
-        // other entities remain unchanged
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = queenArtistMusicBrainzModel.id,
