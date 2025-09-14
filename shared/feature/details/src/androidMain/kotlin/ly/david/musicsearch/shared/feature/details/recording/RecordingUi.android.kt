@@ -131,6 +131,21 @@ internal fun PreviewRecordingUiDetails() {
 
 @PreviewLightDark
 @Composable
+internal fun PreviewRecordingUiDetailsVideo() {
+    PreviewWithSharedElementTransition {
+        RecordingUiInternal(
+            state = detailsUiState.copy(
+                detailsModel = detailsModel.copy(
+                    video = true,
+                ),
+            ),
+            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewRecordingUiDetailsWithListens() {
     PreviewWithSharedElementTransition {
         RecordingUiInternal(

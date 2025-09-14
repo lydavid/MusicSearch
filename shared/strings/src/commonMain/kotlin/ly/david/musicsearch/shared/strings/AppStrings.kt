@@ -201,6 +201,7 @@ data class AppStrings(
     val pseudoRelease: String,
     val withdrawn: String,
     val expunged: String,
+    val video: String,
 )
 
 object Locales {

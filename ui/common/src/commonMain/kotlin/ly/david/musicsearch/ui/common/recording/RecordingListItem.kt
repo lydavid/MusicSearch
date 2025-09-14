@@ -3,10 +3,14 @@ package ly.david.musicsearch.ui.common.recording
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -15,10 +19,14 @@ import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackListItem
 
@@ -49,16 +57,30 @@ fun RecordingListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
-                val dateAndLength = listOfNotNull(
-                    recording.firstReleaseDate?.takeIf { it.isNotEmpty() },
-                    recording.length.toDisplayTime(),
-                ).joinToString("・")
-                Text(
-                    text = dateAndLength,
+                Row(
                     modifier = Modifier.padding(top = 4.dp),
-                    style = TextStyles.getCardBodySubTextStyle(),
-                    fontWeight = recording.fontWeight,
-                )
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val dateAndLength = listOfNotNull(
+                        recording.firstReleaseDate.takeIf { it.isNotEmpty() },
+                        recording.length.toDisplayTime(),
+                    ).joinToString("・")
+                    Text(
+                        text = dateAndLength,
+                        style = TextStyles.getCardBodySubTextStyle(),
+                        fontWeight = recording.fontWeight,
+                    )
+
+                    if (recording.video) {
+                        Icon(
+                            imageVector = CustomIcons.MusicVideo,
+                            modifier = Modifier
+                                .padding(start = 4.dp)
+                                .size(TINY_ICON_SIZE.dp),
+                            contentDescription = LocalStrings.current.video,
+                        )
+                    }
+                }
 
                 recording.formattedArtistCredits.ifNotNullOrEmpty {
                     Text(

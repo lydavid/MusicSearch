@@ -29,7 +29,7 @@ internal fun PreviewRecordingListItemAllInfo() {
                 firstReleaseDate = "2022-05-23",
                 disambiguation = "that one",
                 length = 25300000,
-                video = false,
+                video = true,
                 formattedArtistCredits = "Some artist feat. Other artist",
             ),
         )
@@ -47,7 +47,7 @@ internal fun PreviewRecordingListItemVisited() {
                 firstReleaseDate = "2022-05-23",
                 disambiguation = "that one",
                 length = 25300000,
-                video = false,
+                video = true,
                 formattedArtistCredits = "Some artist feat. Other artist",
                 visited = true,
             ),

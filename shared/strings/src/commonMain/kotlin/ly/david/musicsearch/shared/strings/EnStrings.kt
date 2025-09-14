@@ -362,4 +362,5 @@ val EnStrings = AppStrings(
     pseudoRelease = "Pseudo-Release",
     withdrawn = "Withdrawn",
     expunged = "Expunged",
+    video = "Video",
 )

@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
+import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
@@ -50,6 +51,16 @@ internal fun RecordingDetailsTabUi(
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
+            if (video) {
+                TextWithIcon(
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+                    imageVector = CustomIcons.MusicVideo,
+                    text = strings.video,
+                )
+            }
             length?.ifNotNull {
                 TextWithHeading(
                     heading = strings.length,

@@ -13,6 +13,13 @@ class RecordingUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun detailsVideo() {
+        snapshot {
+            PreviewRecordingUiDetailsVideo()
+        }
+    }
+
+    @Test
     fun detailsWithListens() {
         snapshot {
             PreviewRecordingUiDetailsWithListens()
