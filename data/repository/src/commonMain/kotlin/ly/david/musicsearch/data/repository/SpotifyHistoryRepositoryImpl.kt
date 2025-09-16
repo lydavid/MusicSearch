@@ -17,7 +17,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toSpotifyHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
-import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 
 class SpotifyHistoryRepositoryImpl(

@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
-import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel

@@ -17,6 +17,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -232,6 +233,14 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
+                is DetailsUiEvent.GoToScreen -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            event.screen,
+                        ),
+                    )
+                }
+
                 DetailsUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -350,6 +359,10 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entity: MusicBrainzEntityType,
         val id: String,
+    ) : DetailsUiEvent
+
+    data class GoToScreen(
+        val screen: Screen,
     ) : DetailsUiEvent
 
     data object ClickImage : DetailsUiEvent

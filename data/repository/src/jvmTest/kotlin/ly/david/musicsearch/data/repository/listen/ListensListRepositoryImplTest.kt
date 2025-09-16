@@ -277,11 +277,11 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = USERNAME,
                     query = query,
-                    reachedLatest = false,
-                    reachedOldest = false,
+                    recordingId = "",
+                    stopPrepending = false,
+                    stopAppending = false,
                     onReachedLatest = {},
-                    onReachedOldest = {},
-                )
+                ) {}
             },
             testCases = listOf(
                 FilterTestCase(
@@ -423,6 +423,45 @@ class ListensListRepositoryImplTest :
                             listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
+                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageId = ImageId(2),
+                            release = ListenRelease(
+                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                                name = "Persona 3 Reload Original Soundtrack",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                listensListRepository.observeListens(
+                    username = USERNAME,
+                    query = query,
+                    recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                    stopPrepending = false,
+                    stopAppending = false,
+                    onReachedLatest = {},
+                ) {}
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "facet by recording",
+                    query = "",
+                    expectedResult = listOf(
+                        ListSeparator(
+                            id = "1755100633",
+                            text = "Wednesday, August 13, 2025",
+                        ),
+                        ListenListItemModel(
+                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
+                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(

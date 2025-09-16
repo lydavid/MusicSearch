@@ -20,6 +20,8 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
@@ -38,6 +40,7 @@ internal fun RecordingDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
+    onSeeAllListensClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
@@ -87,6 +90,7 @@ internal fun RecordingDetailsTabUi(
             listenSection(
                 recording = recording,
                 now = detailsTabUiState.now,
+                onSeeAllListensClick = onSeeAllListensClick,
             )
         },
     )
@@ -95,6 +99,7 @@ internal fun RecordingDetailsTabUi(
 private fun LazyListScope.listenSection(
     recording: RecordingDetailsModel,
     now: Instant,
+    onSeeAllListensClick: () -> Unit = {},
 ) {
     if (recording.listenCount != null) {
         item {
@@ -116,15 +121,13 @@ private fun LazyListScope.listenSection(
                 now = now,
             )
         }
-        // TODO: see all listens for a recording
-        //  possibly go to the screen with all listens but with a filter applied, which the user can dismiss
-//        item {
-//            ClickableItem(
-//                title = "See all listens",
-//                endIcon = CustomIcons.ChevronRight,
-//                onClick = {},
-//            )
-//        }
+        item {
+            ClickableItem(
+                title = "See all listens",
+                endIcon = CustomIcons.ChevronRight,
+                onClick = onSeeAllListensClick,
+            )
+        }
         item {
             UrlListItem(
                 relation = RelationListItemModel(

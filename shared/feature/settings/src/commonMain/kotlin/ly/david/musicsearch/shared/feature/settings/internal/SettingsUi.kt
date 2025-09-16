@@ -217,7 +217,7 @@ internal fun SettingsUi(
                 title = strings.listens,
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
-                    eventSink(SettingsUiEvent.GoToScreen(ListensScreen))
+                    eventSink(SettingsUiEvent.GoToScreen(ListensScreen()))
                 },
             )
 

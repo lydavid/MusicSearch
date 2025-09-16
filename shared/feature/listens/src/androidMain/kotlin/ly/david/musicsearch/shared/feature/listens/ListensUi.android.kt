@@ -3,13 +3,14 @@ package ly.david.musicsearch.shared.feature.listens
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.paging.PagingData
+import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import kotlin.time.Instant
 
@@ -55,6 +56,42 @@ internal fun PreviewListensUi() {
 
 @PreviewLightDark
 @Composable
+internal fun PreviewListensUiWithRecordingFacet() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            val listens = MutableStateFlow(
+                PagingData.from(
+                    data = listOf(
+                        ListSeparator(
+                            id = 1755655177000.toString(),
+                            text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
+                        ),
+                        ListenListItemModel(
+                            id = "2",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                            listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                            durationMs = 227240,
+                            visited = true,
+                        ),
+                    ),
+                ),
+            )
+            ListensUi(
+                state = ListensUiState(
+                    username = "user",
+                    listensPagingDataFlow = listens,
+                    recordingFacetUiState = RecordingFacetUiState(
+                        selectedRecordingFacetId = "2",
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewListensUiNoUsername() {
     PreviewWithSharedElementTransition {
         Surface {
@@ -74,10 +111,10 @@ internal fun PreviewListensUiNoUsername() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewListensUiBottomSheetContent() {
+internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
     PreviewWithSharedElementTransition {
         Surface {
-            BottomSheetContent(
+            ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
                     id = "2",
                     name = "Color Your Night",
@@ -95,10 +132,10 @@ internal fun PreviewListensUiBottomSheetContent() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewListensUiBottomSheetContentVisitedRelease() {
+internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentVisitedRelease() {
     PreviewWithSharedElementTransition {
         Surface {
-            BottomSheetContent(
+            ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
                     id = "2",
                     name = "Color Your Night",
@@ -109,6 +146,40 @@ internal fun PreviewListensUiBottomSheetContentVisitedRelease() {
                         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
                         visited = true,
                     ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiRecordingFacetBottomSheetContent() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            val recordingFacets = MutableStateFlow(
+                PagingData.from(
+                    data = listOf(
+                        RecordingFacet(
+                            id = "1",
+                            name = "COLORS",
+                            formattedArtistCredits = "FLOW",
+                            count = 12,
+                        ),
+                        RecordingFacet(
+                            id = "2",
+                            name = "Color Your Night",
+                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                            count = 9,
+                        ),
+                    ),
+                ),
+            )
+            RecordingFacetBottomSheetContent(
+                recordingFacetUiState = RecordingFacetUiState(
+                    selectedRecordingFacetId = "2",
+                    query = "Color",
+                    recordingFacetsPagingDataFlow = recordingFacets,
                 ),
             )
         }

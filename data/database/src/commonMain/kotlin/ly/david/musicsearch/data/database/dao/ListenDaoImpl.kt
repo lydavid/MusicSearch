@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 import kotlin.time.Instant
 
 class ListenDaoImpl(
@@ -138,24 +139,50 @@ class ListenDaoImpl(
     override fun getListensByUser(
         username: String,
         query: String,
+        recordingId: String,
     ): PagingSource<Int, ListenListItemModel> {
         val queryWithWildcards = "%$query%"
         return QueryPagingSource(
             countQuery = listenTransacter.getCountOfListensByUser(
                 username = username,
                 query = queryWithWildcards,
+                recordingId = recordingId,
             ),
             transacter = listenTransacter,
             context = coroutineDispatchers.io,
             queryProvider = { limit, offset ->
-                listenTransacter
-                    .getListensByUser(
-                        username = username,
-                        query = queryWithWildcards,
-                        limit = limit,
-                        offset = offset,
-                        mapper = ::mapToListenListItemModel,
-                    )
+                listenTransacter.getListensByUser(
+                    username = username,
+                    query = queryWithWildcards,
+                    recordingId = recordingId,
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToListenListItemModel,
+                )
+            },
+        )
+    }
+
+    override fun getRecordingFacetsByUser(
+        username: String,
+        query: String,
+    ): PagingSource<Int, RecordingFacet> {
+        val queryWithWildcards = "%$query%"
+        return QueryPagingSource(
+            countQuery = listenTransacter.getCountOfRecordingFacets(
+                username = username,
+                query = queryWithWildcards,
+            ),
+            transacter = listenTransacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                listenTransacter.getRecordingFacets(
+                    username = username,
+                    query = queryWithWildcards,
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToRecordingFacet,
+                )
             },
         )
     }
@@ -220,4 +247,18 @@ private fun mapToListenListItemModel(
         visited = visitedRelease,
     ),
     aliases = combineToAliases(aliasNames, aliasLocales),
+)
+
+private fun mapToRecordingFacet(
+    recordingMusicbrainzId: String?,
+    recordingName: String,
+    disambiguation: String,
+    artistCreditNames: String?,
+    count: Long,
+) = RecordingFacet(
+    id = recordingMusicbrainzId.orEmpty(),
+    name = recordingName,
+    disambiguation = disambiguation,
+    formattedArtistCredits = artistCreditNames.orEmpty(),
+    count = count.toInt(),
 )

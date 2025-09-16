@@ -13,6 +13,13 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun withRecordingFacet() {
+        snapshot {
+            PreviewListensUiWithRecordingFacet()
+        }
+    }
+
+    @Test
     fun noUsername() {
         snapshot {
             PreviewListensUiNoUsername()
@@ -20,16 +27,23 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
-    fun bottomSheetContent() {
+    fun additionalActionsBottomSheetContent() {
         snapshot {
-            PreviewListensUiBottomSheetContent()
+            PreviewListensUiListenAdditionalActionsBottomSheetContent()
         }
     }
 
     @Test
-    fun bottomSheetContentVisitedRelease() {
+    fun additionalActionsBottomSheetContentVisitedRelease() {
         snapshot {
-            PreviewListensUiBottomSheetContentVisitedRelease()
+            PreviewListensUiListenAdditionalActionsBottomSheetContentVisitedRelease()
+        }
+    }
+
+    @Test
+    fun recordingFacetBottomSheetContent() {
+        snapshot {
+            PreviewListensUiRecordingFacetBottomSheetContent()
         }
     }
 }

@@ -94,4 +94,6 @@ data object NowPlayingHistoryScreen : Screen
 data object SpotifyHistoryScreen : Screen
 
 @Parcelize
-data object ListensScreen : Screen
+data class ListensScreen(
+    val recordingId: String = "",
+) : Screen

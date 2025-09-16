@@ -12,6 +12,7 @@ val listensFeatureModule = module {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is ListensScreen -> ListensPresenter(
+                    screen = screen,
                     navigator = navigator,
                     listenBrainzAuthStore = get(),
                     listensListRepository = get(),

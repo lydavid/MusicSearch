@@ -5,7 +5,6 @@ import androidx.paging.TerminalSeparatorType
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import app.cash.paging.Pager
-import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +18,8 @@ import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 
 class ListensListRepositoryImpl(
     private val listenDao: ListenDao,
@@ -28,8 +29,9 @@ class ListensListRepositoryImpl(
     override fun observeListens(
         username: String,
         query: String,
-        reachedLatest: Boolean,
-        reachedOldest: Boolean,
+        recordingId: String,
+        stopPrepending: Boolean,
+        stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
         onReachedOldest: (Boolean) -> Unit,
     ): Flow<PagingData<Identifiable>> {
@@ -39,8 +41,9 @@ class ListensListRepositoryImpl(
             pagerFlow(
                 username = username,
                 query = query,
-                reachedLatest = reachedLatest,
-                reachedOldest = reachedOldest,
+                recordingId = recordingId,
+                stopPrepending = stopPrepending,
+                stopAppending = stopAppending,
                 onReachedLatest = onReachedLatest,
                 onReachedOldest = onReachedOldest,
             )
@@ -53,30 +56,30 @@ class ListensListRepositoryImpl(
     private fun pagerFlow(
         username: String,
         query: String,
-        reachedLatest: Boolean,
-        reachedOldest: Boolean,
+        recordingId: String,
+        stopPrepending: Boolean,
+        stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
         onReachedOldest: (Boolean) -> Unit,
     ): Flow<PagingData<Identifiable>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 100,
-                initialLoadSize = 100,
-                prefetchDistance = 100,
-            ),
+            config = CommonPagingConfig.pagingConfig,
             remoteMediator = ListenRemoteMediator(
                 username = username,
                 listenDao = listenDao,
                 listenBrainzApi = listenBrainzApi,
-                reachedLatest = reachedLatest,
-                reachedOldest = reachedOldest,
+                reachedLatest = stopPrepending,
+                reachedOldest = stopAppending,
                 onReachedLatest = onReachedLatest,
                 onReachedOldest = onReachedOldest,
-            ),
+            )
+                // Provide a smoother experience if we don't try to load data while the user is faceting on a recording
+                .takeIf { recordingId.isEmpty() },
             pagingSourceFactory = {
                 listenDao.getListensByUser(
                     username = username,
                     query = query,
+                    recordingId = recordingId,
                 )
             },
         ).flow.map { pagingData ->
@@ -111,5 +114,20 @@ class ListensListRepositoryImpl(
 
     override fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?> {
         return listenDao.observeUnfilteredCountOfListensByUser(username = username)
+    }
+
+    override fun observeRecordingFacets(
+        username: String,
+        query: String,
+    ): Flow<PagingData<RecordingFacet>> {
+        return Pager(
+            config = CommonPagingConfig.pagingConfig,
+            pagingSourceFactory = {
+                listenDao.getRecordingFacetsByUser(
+                    username = username,
+                    query = query,
+                )
+            },
+        ).flow
     }
 }

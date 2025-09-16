@@ -76,9 +76,14 @@ FROM (
   LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
   LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
     AND recording_alias.is_primary
-  WHERE listen.username = :username AND
-  (
+  WHERE listen.username = :username
+  AND CASE
+    WHEN :recordingId = '' THEN 1
+    ELSE recording_musicbrainz_id = :recordingId
+  END
+  AND (
     recording.name LIKE :query OR
+    recording.disambiguation LIKE :query OR
     track_name LIKE :query OR
     artist_credit.name LIKE :query OR
     artist_name LIKE :query OR
@@ -118,9 +123,14 @@ LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
 LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
   AND recording_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
-WHERE listen.username = :username AND
-(
+WHERE listen.username = :username
+AND CASE
+  WHEN :recordingId = '' THEN 1
+  ELSE recording_musicbrainz_id = :recordingId
+END
+AND (
   recordingName LIKE :query OR
+  recording.disambiguation LIKE :query OR
   track_name LIKE :query OR
   artistCreditNames LIKE :query OR
   artist_name LIKE :query OR
@@ -129,4 +139,48 @@ WHERE listen.username = :username AND
 )
 GROUP BY listened_at_ms, username, recording_messybrainz_id
 ORDER BY listened_at_ms DESC
+LIMIT :limit OFFSET :offset;
+
+getCountOfRecordingFacets:
+SELECT COUNT(*)
+FROM (
+  SELECT listen.recording_musicbrainz_id
+  FROM recording
+  LEFT JOIN listen ON recording.id = listen.recording_musicbrainz_id
+  LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
+  LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+  WHERE listen.username = :username
+  AND (
+    recording.name LIKE :query OR
+    track_name LIKE :query OR
+    recording.disambiguation LIKE :query OR
+    artist_credit.name LIKE :query OR
+    artist_name LIKE :query OR
+    release_name LIKE :query
+  )
+  GROUP BY listen.recording_musicbrainz_id
+);
+
+getRecordingFacets:
+SELECT
+  listen.recording_musicbrainz_id,
+  recording.name AS recordingName,
+  recording.disambiguation,
+  artist_credit.name AS artistCreditNames,
+  COUNT(listen.recording_musicbrainz_id)
+FROM recording
+LEFT JOIN listen ON recording.id = listen.recording_musicbrainz_id
+LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
+LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+WHERE listen.username = :username
+AND (
+  recording.name LIKE :query OR
+  track_name LIKE :query OR
+  recording.disambiguation LIKE :query OR
+  artist_credit.name LIKE :query OR
+  artist_name LIKE :query OR
+  release_name LIKE :query
+)
+GROUP BY listen.recording_musicbrainz_id
+ORDER BY COUNT(listen.recording_musicbrainz_id) DESC
 LIMIT :limit OFFSET :offset;

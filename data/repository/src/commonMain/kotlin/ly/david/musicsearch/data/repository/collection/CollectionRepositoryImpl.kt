@@ -4,13 +4,11 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import kotlin.time.Clock
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
-import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
@@ -21,6 +19,8 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
+import kotlin.time.Clock
 
 class CollectionRepositoryImpl(
     private val collectionApi: CollectionApi,

@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toNowPlayingHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
-import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 
 class NowPlayingHistoryRepositoryImpl(
