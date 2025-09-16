@@ -67,7 +67,7 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 coil-test = { module = "io.coil-kt.coil3:coil-test", version.ref = "coil" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
-compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0-beta05"
+compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0-beta06"
 compose-runtime = "androidx.compose.runtime:runtime:1.9.1"
 compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.8.2"
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.9.1"
