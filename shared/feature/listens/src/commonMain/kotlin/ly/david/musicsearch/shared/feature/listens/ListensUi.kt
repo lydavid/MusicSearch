@@ -417,7 +417,7 @@ internal fun RecordingFacetBottomSheetContent(
                     ) {
                         val hasUnknownRecordingId = recordingFacet.id.isEmpty()
                         val title = if (hasUnknownRecordingId) {
-                            "(No linked recording)"
+                            "(Unlinked listens)"
                         } else {
                             recordingFacet.getNameWithDisambiguation()
                         }
