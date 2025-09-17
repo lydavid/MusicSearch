@@ -11,7 +11,7 @@ CREATE TABLE listen (
   recording_messybrainz_id TEXT NOT NULL,
   username TEXT NOT NULL,
 
-  recording_musicbrainz_id TEXT,
+  recording_musicbrainz_id TEXT NOT NULL,
   caa_id INTEGER,
   caa_release_mbid TEXT,
 
@@ -78,7 +78,7 @@ FROM (
     AND recording_alias.is_primary
   WHERE listen.username = :username
   AND CASE
-    WHEN :recordingId = '' THEN 1
+    WHEN :recordingId IS NULL THEN 1
     ELSE recording_musicbrainz_id = :recordingId
   END
   AND (
@@ -125,7 +125,7 @@ LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.r
 LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
 WHERE listen.username = :username
 AND CASE
-  WHEN :recordingId = '' THEN 1
+  WHEN :recordingId IS NULL THEN 1
   ELSE recording_musicbrainz_id = :recordingId
 END
 AND (
@@ -144,9 +144,9 @@ LIMIT :limit OFFSET :offset;
 getCountOfRecordingFacets:
 SELECT COUNT(*)
 FROM (
-  SELECT listen.recording_musicbrainz_id
-  FROM recording
-  LEFT JOIN listen ON recording.id = listen.recording_musicbrainz_id
+  SELECT *
+  FROM listen
+  LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
   LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
   LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
   WHERE listen.username = :username
@@ -167,9 +167,9 @@ SELECT
   recording.name AS recordingName,
   recording.disambiguation,
   artist_credit.name AS artistCreditNames,
-  COUNT(listen.recording_musicbrainz_id)
-FROM recording
-LEFT JOIN listen ON recording.id = listen.recording_musicbrainz_id
+  COUNT(*)
+FROM listen
+LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
 WHERE listen.username = :username
@@ -182,5 +182,5 @@ AND (
   release_name LIKE :query
 )
 GROUP BY listen.recording_musicbrainz_id
-ORDER BY COUNT(listen.recording_musicbrainz_id) DESC
+ORDER BY COUNT(*) DESC
 LIMIT :limit OFFSET :offset;

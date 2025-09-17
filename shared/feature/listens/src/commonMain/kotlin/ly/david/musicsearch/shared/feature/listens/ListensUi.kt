@@ -161,6 +161,7 @@ internal fun ListensUi(
             )
         }
     }
+    val selectedRecordingFacetId = state.recordingFacetUiState.selectedRecordingFacetId
     val additionalBar: @Composable (() -> Unit) = if (noUsernameSet) {
         {}
     } else {
@@ -169,7 +170,7 @@ internal fun ListensUi(
                 modifier = Modifier.padding(horizontal = 16.dp),
             ) {
                 InputChip(
-                    selected = state.recordingFacetUiState.selectedRecordingFacetId.isNotEmpty(),
+                    selected = selectedRecordingFacetId != null,
                     leadingIcon = {
                         Icon(
                             imageVector = CustomIcons.Mic,
@@ -243,7 +244,6 @@ internal fun ListensUi(
                 ModalBottomSheet(
                     onDismissRequest = { showBottomSheetForListen = null },
                 ) {
-                    val selectedRecordingFacetId = state.recordingFacetUiState.selectedRecordingFacetId
                     ListenAdditionalActionsBottomSheetContent(
                         listen = listen,
                         filteringByThisRecording = listen.recordingId == selectedRecordingFacetId,
@@ -415,15 +415,24 @@ internal fun RecordingFacetBottomSheetContent(
                             .fillMaxWidth()
                             .padding(end = 32.dp),
                     ) {
+                        val hasUnknownRecordingId = recordingFacet.id.isEmpty()
+                        val title = if (hasUnknownRecordingId) {
+                            "(No linked recording)"
+                        } else {
+                            recordingFacet.getNameWithDisambiguation()
+                        }
                         Text(
-                            text = "${recordingFacet.getNameWithDisambiguation()} (${recordingFacet.count})",
+                            text = "$title (${recordingFacet.count})",
+                            modifier = Modifier.padding(vertical = if (hasUnknownRecordingId) 8.dp else 0.dp),
                             style = TextStyles.getCardBodyTextStyle(),
                         )
-                        Text(
-                            text = recordingFacet.formattedArtistCredits,
-                            modifier = Modifier.padding(top = 4.dp),
-                            style = TextStyles.getCardBodySubTextStyle(),
-                        )
+                        if (!hasUnknownRecordingId) {
+                            Text(
+                                text = recordingFacet.formattedArtistCredits,
+                                modifier = Modifier.padding(top = 4.dp),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
                     }
                     if (selected) {
                         Icon(
@@ -498,25 +507,34 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             )
         }
 
-        listen.recordingId?.let { recordingId ->
-            ClickableItem(
-                title = if (filteringByThisRecording) {
+        val recordingId = listen.recordingId
+        val hasRecordingId = recordingId.isNotEmpty()
+        ClickableItem(
+            title = when {
+                filteringByThisRecording && hasRecordingId -> {
                     "Stop filtering by this song"
-                } else {
+                }
+                hasRecordingId -> {
                     "Filter listens by this song"
-                },
-                startIcon = CustomIcons.Mic,
-                endIcon = if (filteringByThisRecording) {
-                    CustomIcons.FilterAltOff
-                } else {
-                    CustomIcons.FilterAlt
-                },
-                onClick = {
-                    onFilterByRecordingClick(recordingId)
-                    onDismiss()
-                },
-            )
-        }
+                }
+                filteringByThisRecording -> {
+                    "Stop filtering by unlinked songs"
+                }
+                else -> {
+                    "Filter listens by unlinked songs"
+                }
+            },
+            startIcon = CustomIcons.Mic,
+            endIcon = if (filteringByThisRecording) {
+                CustomIcons.FilterAltOff
+            } else {
+                CustomIcons.FilterAlt
+            },
+            onClick = {
+                onFilterByRecordingClick(recordingId)
+                onDismiss()
+            },
+        )
 
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
     }

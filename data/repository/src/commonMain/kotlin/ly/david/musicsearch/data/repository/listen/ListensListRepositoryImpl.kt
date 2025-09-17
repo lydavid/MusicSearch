@@ -29,7 +29,7 @@ class ListensListRepositoryImpl(
     override fun observeListens(
         username: String,
         query: String,
-        recordingId: String,
+        recordingId: String?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -56,7 +56,7 @@ class ListensListRepositoryImpl(
     private fun pagerFlow(
         username: String,
         query: String,
-        recordingId: String,
+        recordingId: String?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -74,7 +74,7 @@ class ListensListRepositoryImpl(
                 onReachedOldest = onReachedOldest,
             )
                 // Provide a smoother experience if we don't try to load data while the user is faceting on a recording
-                .takeIf { recordingId.isEmpty() },
+                .takeIf { recordingId == null },
             pagingSourceFactory = {
                 listenDao.getListensByUser(
                     username = username,

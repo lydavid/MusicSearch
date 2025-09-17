@@ -108,7 +108,7 @@ internal class ListensPresenter(
                 is ListensUiEvent.ToggleRecordingFacet -> {
                     val newId = event.recordingId
                     selectedRecordingFacetId = if (selectedRecordingFacetId == newId) {
-                        ""
+                        null
                     } else {
                         newId
                     }
@@ -156,7 +156,7 @@ internal data class ListensUiState(
 }
 
 internal data class RecordingFacetUiState(
-    val selectedRecordingFacetId: String = "",
+    val selectedRecordingFacetId: String? = null,
     val query: String = "",
     val recordingFacetsPagingDataFlow: Flow<PagingData<RecordingFacet>> = emptyFlow(),
 )

@@ -277,7 +277,7 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = USERNAME,
                     query = query,
-                    recordingId = "",
+                    recordingId = null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
