@@ -136,9 +136,6 @@ class ListenDaoImpl(
             .mapToOne(coroutineDispatchers.io)
     }
 
-    // TODO: reverse join order to get all listens without a recording id
-    // TODO: migrate recording_musicbrainz_id to be not null with empty string when missing?
-    //  then we can filter for empty string id, and use null for no filters
     override fun getListensByUser(
         username: String,
         query: String,
