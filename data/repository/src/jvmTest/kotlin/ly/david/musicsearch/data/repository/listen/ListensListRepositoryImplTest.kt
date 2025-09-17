@@ -474,6 +474,37 @@ class ListensListRepositoryImplTest :
             ),
         )
 
+        testFilter(
+            pagingFlowProducer = { query ->
+                listensListRepository.observeListens(
+                    username = USERNAME,
+                    query = query,
+                    recordingId = "",
+                    stopPrepending = false,
+                    stopAppending = false,
+                    onReachedLatest = {},
+                ) {}
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "facet by unlinked recording",
+                    query = "",
+                    expectedResult = listOf(
+                        ListSeparator(
+                            id = "1755100631",
+                            text = "Wednesday, August 13, 2025",
+                        ),
+                        ListenListItemModel(
+                            id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
+                            name = "Absolute zero",
+                            formattedArtistCredits = "Tsukuyomi",
+                            listenedAt = Instant.fromEpochSeconds(track4ListenedAtS),
+                        ),
+                    ),
+                ),
+            ),
+        )
+
         testImageExists()
         testReleaseStubExists()
         testRecordingShowsListens()
