@@ -73,6 +73,8 @@ internal class ListensPresenter(
             )
         }
 
+        topAppBarFilterState.show(username.isNotEmpty())
+
         fun eventSink(event: ListensUiEvent) {
             when (event) {
                 is ListensUiEvent.NavigateUp -> {
@@ -147,6 +149,8 @@ internal data class ListensUiState(
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
+    val noUsernameSet: Boolean
+        get() = username.isEmpty()
     val userListensUrl: String
         get() = "$listenBrainzUrl/user/$username"
 }

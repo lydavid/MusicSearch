@@ -129,7 +129,12 @@ internal fun ListensUi(
         }
     }
 
-    val noUsernameSet = state.username.isEmpty()
+    val noUsernameSet = state.noUsernameSet
+    val title = if (state.noUsernameSet) {
+        strings.listens
+    } else {
+        strings.xListens(state.username)
+    }
     val lazyPagingItems = state.listensPagingDataFlow.collectAsLazyPagingItems()
     val overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = if (noUsernameSet) {
         null
@@ -154,10 +159,39 @@ internal fun ListensUi(
             )
         }
     }
-    val title = if (noUsernameSet) {
-        strings.listens
+    val additionalBar: @Composable (() -> Unit) = if (noUsernameSet) {
+        {}
     } else {
-        strings.xListens(state.username)
+        {
+            Row(
+                modifier = Modifier.padding(horizontal = 16.dp),
+            ) {
+                InputChip(
+                    selected = state.recordingFacetUiState.selectedRecordingFacetId.isNotEmpty(),
+                    leadingIcon = {
+                        Icon(
+                            imageVector = CustomIcons.Mic,
+                            contentDescription = null,
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = CustomIcons.ChevronRight,
+                            modifier = Modifier.rotate(ROTATE_DOWN),
+                            contentDescription = null,
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = strings.recording,
+                        )
+                    },
+                    onClick = {
+                        showRecordingFacetBottomSheet = true
+                    },
+                )
+            }
+        }
     }
     Scaffold(
         modifier = modifier,
@@ -172,36 +206,7 @@ internal fun ListensUi(
                 subtitle = state.totalCountOfListens?.let { "$it songs" }.orEmpty(),
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
-                additionalBar = {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                    ) {
-                        InputChip(
-                            selected = state.recordingFacetUiState.selectedRecordingFacetId.isNotEmpty(),
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = CustomIcons.Mic,
-                                    contentDescription = null,
-                                )
-                            },
-                            trailingIcon = {
-                                Icon(
-                                    imageVector = CustomIcons.ChevronRight,
-                                    modifier = Modifier.rotate(ROTATE_DOWN),
-                                    contentDescription = null,
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = strings.recording,
-                                )
-                            },
-                            onClick = {
-                                showRecordingFacetBottomSheet = true
-                            },
-                        )
-                    }
-                },
+                additionalBar = additionalBar,
             )
         },
         snackbarHost = {
