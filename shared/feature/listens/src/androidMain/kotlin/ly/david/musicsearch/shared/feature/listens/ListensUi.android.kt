@@ -120,11 +120,13 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
                     listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                    recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                     release = ListenRelease(
                         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
                         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
                     ),
                 ),
+                filteringByThisRecording = false,
             )
         }
     }
@@ -132,7 +134,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentVisitedRelease() {
+internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative() {
     PreviewWithSharedElementTransition {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
@@ -141,12 +143,14 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentVisitedRel
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
                     listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                    recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                     release = ListenRelease(
                         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
                         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
                         visited = true,
                     ),
                 ),
+                filteringByThisRecording = true,
             )
         }
     }

@@ -65,6 +65,8 @@ import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.FilterAlt
+import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -241,15 +243,20 @@ internal fun ListensUi(
                 ModalBottomSheet(
                     onDismissRequest = { showBottomSheetForListen = null },
                 ) {
+                    val selectedRecordingFacetId = state.recordingFacetUiState.selectedRecordingFacetId
                     ListenAdditionalActionsBottomSheetContent(
                         listen = listen,
-                        onReleaseClick = { releaseId ->
+                        filteringByThisRecording = listen.recordingId == selectedRecordingFacetId,
+                        onGoToReleaseClick = { releaseId ->
                             eventSink(
                                 ListensUiEvent.ClickItem(
                                     entity = MusicBrainzEntityType.RELEASE,
                                     id = releaseId,
                                 ),
                             )
+                        },
+                        onFilterByRecordingClick = {
+                            eventSink(ListensUiEvent.ToggleRecordingFacet(it))
                         },
                         onDismiss = { showBottomSheetForListen = null },
                     )
@@ -434,7 +441,9 @@ internal fun RecordingFacetBottomSheetContent(
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
-    onReleaseClick: (releaseId: String) -> Unit = {},
+    filteringByThisRecording: Boolean,
+    onGoToReleaseClick: (releaseId: String) -> Unit = {},
+    onFilterByRecordingClick: (recordingId: String) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
     val release = listen.release
@@ -471,7 +480,6 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                             fontWeight = release.fontWeight,
                         )
                     }
-                    // TODO: allow faceting on this recording if exists
                 }
             }
         }
@@ -484,11 +492,32 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 endIcon = CustomIcons.ChevronRight,
                 fontWeight = release.fontWeight,
                 onClick = {
-                    onReleaseClick(releaseId)
+                    onGoToReleaseClick(releaseId)
                     onDismiss()
                 },
             )
         }
+
+        listen.recordingId?.let { recordingId ->
+            ClickableItem(
+                title = if (filteringByThisRecording) {
+                    "Stop filtering by this song"
+                } else {
+                    "Filter listens by this song"
+                },
+                startIcon = CustomIcons.Mic,
+                endIcon = if (filteringByThisRecording) {
+                    CustomIcons.FilterAltOff
+                } else {
+                    CustomIcons.FilterAlt
+                },
+                onClick = {
+                    onFilterByRecordingClick(recordingId)
+                    onDismiss()
+                },
+            )
+        }
+
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
     }
 }

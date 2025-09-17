@@ -34,9 +34,9 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
-    fun additionalActionsBottomSheetContentVisitedRelease() {
+    fun additionalActionsBottomSheetContentAlternative() {
         snapshot {
-            PreviewListensUiListenAdditionalActionsBottomSheetContentVisitedRelease()
+            PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative()
         }
     }
 
