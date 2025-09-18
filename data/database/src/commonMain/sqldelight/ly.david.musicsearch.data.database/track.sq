@@ -20,6 +20,11 @@ insert:
 INSERT OR IGNORE INTO track
 VALUES ?;
 
+updateTracksRecordingId:
+UPDATE track
+SET recording_id = :newId
+WHERE recording_id = :oldId;
+
 getNumberOfTracksByRelease:
 SELECT IFNULL(
   (

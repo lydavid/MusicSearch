@@ -89,7 +89,7 @@ class RecordingRepositoryImpl(
     ) {
         recordingDao.withTransaction {
             recordingDao.upsert(
-                oldRecordingId = oldId,
+                oldId = oldId,
                 recording = recording,
             )
 

@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.Query
+import app.cash.sqldelight.TransactionWithoutReturn
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -22,26 +23,29 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 
 class RecordingDao(
-    database: Database,
+    private val database: Database,
     private val artistCreditDao: ArtistCreditDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
+    context(_: TransactionWithoutReturn)
     fun upsert(
-        oldRecordingId: String,
+        oldId: String,
         recording: RecordingMusicBrainzNetworkModel,
     ) {
         recording.run {
-            if (oldRecordingId != id) {
-                // TODO: propagate update to tracks and listens?
-                // We don't need to update other lists, let them handle it themselves,
-                // though by deleting the old recording that they linked to, they will be incomplete,
-                // forcing them to fetch from remote. It's possible their paging gets messed up because of this.
-                // It's possible to fix by refreshing those lists.
-                // A similar thing happens when refreshing a recording that has changed its id.
-                delete(oldRecordingId)
+            if (oldId != id) {
+                database.trackQueries.updateTracksRecordingId(
+                    newId = id,
+                    oldId = oldId,
+                )
+                database.listenQueries.updateListensRecordingId(
+                    newId = id,
+                    oldId = oldId,
+                )
+                delete(oldId)
             }
             transacter.upsert(
                 id = id,
@@ -63,7 +67,7 @@ class RecordingDao(
     fun upsertAll(recordings: List<RecordingMusicBrainzNetworkModel>) {
         transacter.transaction {
             recordings.forEach { recording ->
-                upsert(oldRecordingId = recording.id, recording = recording)
+                upsert(oldId = recording.id, recording = recording)
             }
         }
     }

@@ -40,6 +40,7 @@ subprojects {
             freeCompilerArgs.addAll(
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.time.ExperimentalTime",
+                "-Xcontext-parameters"
             )
 
             if (project.findProperty("musicsearch.enableComposeCompilerReports") == "true") {
