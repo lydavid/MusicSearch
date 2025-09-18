@@ -16,7 +16,7 @@ interface ListenDao {
     fun getListensByUser(
         username: String,
         query: String,
-        recordingId: String,
+        recordingId: String?,
     ): PagingSource<Int, ListenListItemModel>
 
     fun getRecordingFacetsByUser(

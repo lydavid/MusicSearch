@@ -9,7 +9,7 @@ interface ListensListRepository {
     fun observeListens(
         username: String,
         query: String,
-        recordingId: String,
+        recordingId: String?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,

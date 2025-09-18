@@ -41,6 +41,20 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun additionalActionsBottomSheetContentUnlinked() {
+        snapshot {
+            PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
+        }
+    }
+
+    @Test
+    fun additionalActionsBottomSheetContentFilteringByUnlinked() {
+        snapshot {
+            PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringByUnlinked()
+        }
+    }
+
+    @Test
     fun recordingFacetBottomSheetContent() {
         snapshot {
             PreviewListensUiRecordingFacetBottomSheetContent()

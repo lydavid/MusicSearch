@@ -15,7 +15,7 @@ data class ListenListItemModel(
     override val disambiguation: String = "",
     val formattedArtistCredits: String,
     val listenedAt: Instant,
-    val recordingId: String? = null,
+    val recordingId: String = "",
     val durationMs: Int? = null,
     val imageUrl: String? = null,
     val imageId: ImageId? = null,

@@ -158,12 +158,54 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
 
 @PreviewLightDark
 @Composable
+internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            ListenAdditionalActionsBottomSheetContent(
+                listen = ListenListItemModel(
+                    id = "2",
+                    name = "Color Your Night",
+                    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                ),
+                filteringByThisRecording = false,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringByUnlinked() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            ListenAdditionalActionsBottomSheetContent(
+                listen = ListenListItemModel(
+                    id = "2",
+                    name = "Color Your Night",
+                    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
+                ),
+                filteringByThisRecording = true,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewListensUiRecordingFacetBottomSheetContent() {
     PreviewWithSharedElementTransition {
         Surface {
             val recordingFacets = MutableStateFlow(
                 PagingData.from(
                     data = listOf(
+                        RecordingFacet(
+                            id = "",
+                            name = "",
+                            formattedArtistCredits = "",
+                            count = 123,
+                        ),
                         RecordingFacet(
                             id = "1",
                             name = "COLORS",

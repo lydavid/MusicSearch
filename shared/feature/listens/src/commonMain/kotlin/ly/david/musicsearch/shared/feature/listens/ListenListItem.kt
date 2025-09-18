@@ -54,7 +54,8 @@ fun ListenListItem(
             )
         },
         modifier = modifier.clickable {
-            listen.recordingId?.let { onClick(it) }
+            val recordingId = listen.recordingId
+            if (recordingId.isNotEmpty()) { onClick(recordingId) }
         },
         supportingContent = {
             Column {

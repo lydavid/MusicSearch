@@ -47,7 +47,7 @@ class ListenDaoImpl(
                         listened_at_ms = listen.listenedAtMs,
                         recording_messybrainz_id = listen.recordingMessybrainzId,
                         username = listen.username,
-                        recording_musicbrainz_id = recordingMusicbrainzId,
+                        recording_musicbrainz_id = recordingMusicbrainzId.orEmpty(),
                         caa_id = coverArtId,
                         caa_release_mbid = coverArtReleaseMbid,
                         artist_name = listen.artistName,
@@ -139,7 +139,7 @@ class ListenDaoImpl(
     override fun getListensByUser(
         username: String,
         query: String,
-        recordingId: String,
+        recordingId: String?,
     ): PagingSource<Int, ListenListItemModel> {
         val queryWithWildcards = "%$query%"
         return QueryPagingSource(
@@ -206,7 +206,7 @@ private fun mapToListenListItemModel(
     listenedAtMs: Long,
     username: String,
     recordingMessybrainzId: String,
-    recordingMusicbrainzId: String?,
+    recordingMusicbrainzId: String,
     recordingName: String?,
     recordingDisambiguation: String?,
     fallbackName: String,
@@ -251,14 +251,14 @@ private fun mapToListenListItemModel(
 
 private fun mapToRecordingFacet(
     recordingMusicbrainzId: String?,
-    recordingName: String,
-    disambiguation: String,
+    recordingName: String?,
+    disambiguation: String?,
     artistCreditNames: String?,
     count: Long,
 ) = RecordingFacet(
     id = recordingMusicbrainzId.orEmpty(),
-    name = recordingName,
-    disambiguation = disambiguation,
+    name = recordingName.orEmpty(),
+    disambiguation = disambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames.orEmpty(),
     count = count.toInt(),
 )

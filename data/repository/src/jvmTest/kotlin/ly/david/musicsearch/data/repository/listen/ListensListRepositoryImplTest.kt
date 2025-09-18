@@ -277,7 +277,7 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = USERNAME,
                     query = query,
-                    recordingId = "",
+                    recordingId = null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
@@ -468,6 +468,37 @@ class ListensListRepositoryImplTest :
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
                             ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                listensListRepository.observeListens(
+                    username = USERNAME,
+                    query = query,
+                    recordingId = "",
+                    stopPrepending = false,
+                    stopAppending = false,
+                    onReachedLatest = {},
+                ) {}
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "facet by unlinked recording",
+                    query = "",
+                    expectedResult = listOf(
+                        ListSeparator(
+                            id = "1755100631",
+                            text = "Wednesday, August 13, 2025",
+                        ),
+                        ListenListItemModel(
+                            id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
+                            name = "Absolute zero",
+                            formattedArtistCredits = "Tsukuyomi",
+                            listenedAt = Instant.fromEpochSeconds(track4ListenedAtS),
                         ),
                     ),
                 ),
