@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.history
 import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSearchApi
 import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
@@ -50,6 +49,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Instant
 
 class LookupHistoryRepositoryImplTest :
     KoinTest,
@@ -86,54 +86,136 @@ class LookupHistoryRepositoryImplTest :
             lookupHistoryDao = lookupHistoryDao,
         )
 
-        val emptyListItemModelList: List<ListItemModel> = lookupHistoryRepository.observeAllLookupHistory(
+        lookupHistoryRepository.observeAllLookupHistory(
             query = "",
             sortOption = HistorySortOption.RECENTLY_VISITED,
-        ).asSnapshot()
-        Assert.assertEquals(
-            listOf<ListItemModel>(),
-            emptyListItemModelList,
-        )
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf<ListItemModel>(),
+                this,
+            )
+        }
 
         val currentTime = Instant.parse("2025-02-09T13:37:02Z")
-
         lookupHistoryRepository.upsert(
-            LookupHistory(
+            oldId = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            lookupHistory = LookupHistory(
                 mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 title = "欠けた心象、世のよすが",
                 entity = MusicBrainzEntityType.RELEASE_GROUP,
                 lastAccessed = currentTime,
             ),
         )
-        val listItemModelList: List<ListItemModel> = lookupHistoryRepository.observeAllLookupHistory(
+        lookupHistoryRepository.observeAllLookupHistory(
             query = "",
             sortOption = HistorySortOption.RECENTLY_VISITED,
-        ).asSnapshot()
-        Assert.assertEquals(
-            listOf(
-                ListSeparator(
-                    id = "1739108222",
-                    text = "Sunday, February 9, 2025",
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = "1739108222",
+                        text = "Sunday, February 9, 2025",
+                    ),
+                    LookupHistoryListItemModel(
+                        title = "欠けた心象、世のよすが",
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
+                        id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                        numberOfVisits = 1,
+                        lastAccessed = currentTime,
+                    ),
                 ),
-                LookupHistoryListItemModel(
-                    title = "欠けた心象、世のよすが",
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
-                    id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-                    numberOfVisits = 1,
-                    lastAccessed = currentTime,
-                ),
-            ),
-            listItemModelList,
-        )
+                this,
+            )
+        }
 
-        val filteredListItemModelList: List<ListItemModel> = lookupHistoryRepository.observeAllLookupHistory(
+        lookupHistoryRepository.observeAllLookupHistory(
             query = "not found",
             sortOption = HistorySortOption.RECENTLY_VISITED,
-        ).asSnapshot()
-        Assert.assertEquals(
-            listOf<ListItemModel>(),
-            filteredListItemModelList,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf<ListItemModel>(),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `old id is replaced while its visits are merged`() = runTest {
+        val lookupHistoryRepository: LookupHistoryRepository = LookupHistoryRepositoryImpl(
+            lookupHistoryDao = lookupHistoryDao,
         )
+
+        val currentTime = Instant.parse("2025-02-09T13:37:02Z")
+        lookupHistoryRepository.upsert(
+            oldId = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            lookupHistory = LookupHistory(
+                mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                title = "欠けた心象、世のよすが",
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
+                lastAccessed = currentTime,
+            ),
+        )
+        lookupHistoryRepository.upsert(
+            oldId = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            lookupHistory = LookupHistory(
+                mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                title = "欠けた心象、世のよすが",
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
+                lastAccessed = currentTime,
+            ),
+        )
+        lookupHistoryRepository.observeAllLookupHistory(
+            query = "",
+            sortOption = HistorySortOption.RECENTLY_VISITED,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = "1739108222",
+                        text = "Sunday, February 9, 2025",
+                    ),
+                    LookupHistoryListItemModel(
+                        title = "欠けた心象、世のよすが",
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
+                        id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                        numberOfVisits = 2,
+                        lastAccessed = currentTime,
+                    ),
+                ),
+                this,
+            )
+        }
+
+        lookupHistoryRepository.upsert(
+            oldId = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            lookupHistory = LookupHistory(
+                mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
+                title = "欠けた心象、世のよすが",
+                entity = MusicBrainzEntityType.RELEASE_GROUP,
+                lastAccessed = currentTime,
+            ),
+        )
+        lookupHistoryRepository.observeAllLookupHistory(
+            query = "",
+            sortOption = HistorySortOption.RECENTLY_VISITED,
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = "1739108222",
+                        text = "Sunday, February 9, 2025",
+                    ),
+                    LookupHistoryListItemModel(
+                        title = "欠けた心象、世のよすが",
+                        entity = MusicBrainzEntityType.RELEASE_GROUP,
+                        id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
+                        numberOfVisits = 3,
+                        lastAccessed = currentTime,
+                    ),
+                ),
+                this,
+            )
+        }
     }
 
     @Test
@@ -270,7 +352,8 @@ class LookupHistoryRepositoryImplTest :
         )
         // Have to simulate visiting the artist page
         lookupHistoryRepository.upsert(
-            LookupHistory(
+            oldId = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            lookupHistory = LookupHistory(
                 mbid = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                 title = "ずっと真夜中でいいのに",
                 entity = MusicBrainzEntityType.ARTIST,

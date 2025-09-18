@@ -130,7 +130,8 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         }
 
         RecordVisit(
-            mbid = screen.id,
+            oldId = screen.id,
+            mbid = detailsModel?.id,
             title = detailsModel.getAnnotatedName().text,
             entity = screen.entity,
             searchHint = getSearchHint(detailsModel),

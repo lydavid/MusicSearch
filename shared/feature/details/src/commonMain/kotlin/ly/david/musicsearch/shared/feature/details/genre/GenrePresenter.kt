@@ -55,7 +55,8 @@ internal class GenrePresenter(
         }
 
         RecordVisit(
-            mbid = screen.id,
+            oldId = screen.id,
+            mbid = genre?.id,
             title = title,
             entity = screen.entity,
             searchHint = "",

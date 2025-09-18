@@ -5,7 +5,10 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 interface LookupHistoryRepository {
-    fun upsert(lookupHistory: LookupHistory)
+    fun upsert(
+        oldId: String,
+        lookupHistory: LookupHistory,
+    )
     fun observeAllLookupHistory(query: String, sortOption: HistorySortOption): Flow<PagingData<ListItemModel>>
     fun markHistoryAsDeleted(mbid: String)
     fun undoDeleteHistory(mbid: String)

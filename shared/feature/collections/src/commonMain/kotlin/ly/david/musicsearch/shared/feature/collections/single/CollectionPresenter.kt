@@ -93,7 +93,8 @@ internal class CollectionPresenter(
         }
 
         RecordVisit(
-            mbid = collectionId,
+            oldId = screen.collectionId,
+            mbid = collection?.id,
             title = title,
             entity = MusicBrainzEntityType.COLLECTION,
             searchHint = "",

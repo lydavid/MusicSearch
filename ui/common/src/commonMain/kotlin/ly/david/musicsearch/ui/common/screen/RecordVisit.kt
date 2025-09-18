@@ -14,9 +14,11 @@ interface RecordVisit {
 
     val incrementLookupHistory: IncrementLookupHistory
 
+    @Suppress("NotConstructor")
     @Composable
     fun RecordVisit(
-        mbid: String,
+        oldId: String,
+        mbid: String?,
         title: String,
         entity: MusicBrainzEntityType,
         searchHint: String?,
@@ -25,9 +27,10 @@ interface RecordVisit {
 
         if (!recordedHistory) {
             LaunchedEffect(title, searchHint) {
-                if (title.isNotEmpty() && searchHint != null) {
+                if (mbid != null && title.isNotEmpty() && searchHint != null) {
                     incrementLookupHistory(
-                        LookupHistory(
+                        oldId = oldId,
+                        lookupHistory = LookupHistory(
                             mbid = mbid,
                             title = title,
                             entity = entity,

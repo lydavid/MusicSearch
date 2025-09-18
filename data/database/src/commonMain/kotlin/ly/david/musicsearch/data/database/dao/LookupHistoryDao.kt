@@ -2,13 +2,13 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import kotlin.time.Instant
 
 class LookupHistoryDao(
     database: Database,
@@ -16,17 +16,29 @@ class LookupHistoryDao(
 ) : EntityDao {
     override val transacter = database.lookup_historyQueries
 
-    fun upsert(lookupHistory: LookupHistory) {
-        lookupHistory.run {
-            transacter.upsert(
-                mbid = mbid,
-                title = title,
-                entity = entity,
-                numberOfVisits = numberOfVisits,
-                lastAccessed = lastAccessed,
-                searchHint = searchHint,
-                deleted = deleted,
-            )
+    fun upsert(
+        oldId: String,
+        lookupHistory: LookupHistory,
+    ) {
+        withTransaction {
+            lookupHistory.run {
+                val combinedVisits = if (oldId != mbid) {
+                    val numberOfVisitsToOldId = transacter.getNumberOfVisits(oldId).executeAsOneOrNull() ?: 0
+                    delete(oldId)
+                    numberOfVisitsToOldId + numberOfVisits
+                } else {
+                    numberOfVisits
+                }
+                transacter.upsert(
+                    mbid = mbid,
+                    title = title,
+                    entity = entity,
+                    numberOfVisits = combinedVisits,
+                    lastAccessed = lastAccessed,
+                    searchHint = searchHint,
+                    deleted = deleted,
+                )
+            }
         }
     }
 

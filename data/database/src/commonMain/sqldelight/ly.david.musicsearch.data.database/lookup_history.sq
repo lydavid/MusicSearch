@@ -33,6 +33,11 @@ upsert {
   );
 }
 
+getNumberOfVisits:
+SELECT number_of_visits
+FROM lookup_history
+WHERE mbid = :mbid;
+
 getAllLookupHistoryCount:
 SELECT COUNT(DISTINCT lookup_history.mbid)
 FROM lookup_history

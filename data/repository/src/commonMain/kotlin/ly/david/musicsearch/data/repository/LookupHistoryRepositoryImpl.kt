@@ -6,7 +6,6 @@ import app.cash.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
-import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.LookupHistory
@@ -14,12 +13,19 @@ import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 
 class LookupHistoryRepositoryImpl(
     private val lookupHistoryDao: LookupHistoryDao,
 ) : LookupHistoryRepository {
-    override fun upsert(lookupHistory: LookupHistory) {
-        lookupHistoryDao.upsert(lookupHistory)
+    override fun upsert(
+        oldId: String,
+        lookupHistory: LookupHistory,
+    ) {
+        lookupHistoryDao.upsert(
+            oldId = oldId,
+            lookupHistory = lookupHistory,
+        )
     }
 
     override fun observeAllLookupHistory(
