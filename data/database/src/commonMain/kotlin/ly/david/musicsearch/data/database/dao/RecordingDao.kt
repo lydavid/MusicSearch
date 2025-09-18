@@ -1,3 +1,6 @@
+// https://github.com/detekt/detekt/issues/8140
+@file:Suppress("SpacingAroundColon", "NoUnusedImports", "Wrapping")
+
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
