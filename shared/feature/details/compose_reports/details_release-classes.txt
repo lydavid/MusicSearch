@@ -136,6 +136,10 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.Cl
   stable val id: String
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ClickImage {
   <runtime stability> = Stable
 }

@@ -284,6 +284,7 @@ stable class ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
+  stable val recordingId: String?
   runtime var CREATOR: Creator<ListensScreen>
   <runtime stability> = Stable
 }

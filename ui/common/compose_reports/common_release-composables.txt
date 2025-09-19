@@ -460,7 +460,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
 open fun ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit(
-  stable mbid: String
+  stable oldId: String
+  stable mbid: String?
   stable title: String
   stable entity: MusicBrainzEntityType
   stable searchHint: String?

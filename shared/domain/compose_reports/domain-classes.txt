@@ -124,6 +124,8 @@ stable class ly.david.musicsearch.shared.domain.details.ArtistDetailsModel {
   stable val urls: ImmutableList<RelationListItemModel>
   stable val wikipediaExtract: WikipediaExtract
   stable val aliases: ImmutableList<BasicAlias>
+  stable val listenCount: Long?
+  stable val listenBrainzUrl: String
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.details.EventDetailsModel {
@@ -407,7 +409,7 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenListItemModel {
   stable val disambiguation: String
   stable val formattedArtistCredits: String
   stable val listenedAt: Instant
-  stable val recordingId: String?
+  stable val recordingId: String
   stable val durationMs: Int?
   stable val imageUrl: String?
   stable val imageId: ImageId?
@@ -734,9 +736,23 @@ unstable class ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayi
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
+unstable class ly.david.musicsearch.shared.domain.paging.CommonPagingConfig {
+  stable val PAGING_PAGE_SIZE: Int
+  stable val PREFETCH_DISTANCE: Int
+  unstable val pagingConfig: PagingConfig
+  <runtime stability> = Unstable
+}
 stable class ly.david.musicsearch.shared.domain.place.CoordinatesUiModel {
   stable val longitude: Double?
   stable val latitude: Double?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.recording.RecordingFacet {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String
+  stable val formattedArtistCredits: String
+  stable val count: Int
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.relation.RelationStats {

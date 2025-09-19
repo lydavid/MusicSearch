@@ -13,6 +13,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaStats()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiLoading()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiError()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.PreviewEventDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.PreviewGenreUi()
@@ -20,6 +24,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.PreviewLabelDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetails()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsVideo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsWithListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsWithZeroListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiReleases()
@@ -60,7 +65,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable snackbarHostState: SnackbarHostState? = @static <expression>
   unstable scope: CoroutineScope? = @dynamic <expression>
   unstable strings: AppStrings? = @dynamic <expression>
-  stable now: Instant? = @dynamic <expression>
+  unused stable now: Instant? = @dynamic <expression>
   stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
   stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
@@ -70,6 +75,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
+  stable onImageClick: Function0<Unit>? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
@@ -87,6 +93,17 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: DetailsUiState<ArtistDetailsModel>
   stable entityId: String
   stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistUiInternal(
+  stable state: DetailsUiState<ArtistDetailsModel>
+  stable entityId: String
+  stable modifier: Modifier? = @static <expression>
+  stable snackbarHostState: SnackbarHostState? = @static <expression>
+  unstable coroutineScope: CoroutineScope? = @dynamic <expression>
+  unstable strings: AppStrings? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
 restartable skippable fun ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi(
   event: EventDetailsModel
@@ -154,6 +171,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
+  stable onSeeAllListensClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
@@ -244,7 +262,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   entitiesLazyPagingItems: EntitiesLazyPagingItems
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
-  stable now: Instant? = @dynamic <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
   stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType?, Unit>? = @static <expression>
   stable detailsScreen: Function3<T, Composer, Int, Unit>
