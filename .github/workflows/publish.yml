@@ -156,7 +156,7 @@ jobs:
 
       - name: Create desktop distributions
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
-        uses: hydraulic-software/conveyor/actions/build@bd7d6a28dca697e0d09dd0798b13a9017002c598 # v19.0
+        uses: hydraulic-software/conveyor/actions/build@236d305f1c07f3c8d08edf51ed5a10401da14562 # v20.0
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
           agree_to_license: 1
