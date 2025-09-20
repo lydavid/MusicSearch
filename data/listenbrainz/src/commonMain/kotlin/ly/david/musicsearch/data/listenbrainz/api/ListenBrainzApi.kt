@@ -13,8 +13,8 @@ import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import io.ktor.http.auth.HttpAuthHeader
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
-import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 
 private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
 
@@ -28,6 +28,14 @@ interface ListenBrainzApi {
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
     ): ListensResponse
+
+    suspend fun getManualMapping(
+        recordingMessyBrainzId: String,
+    ): ManualMappingResponse
+
+    suspend fun getRecordingMetadata(
+        recordingMusicBrainzId: String,
+    ): RecordingMetadata?
 
     companion object {
         fun create(
@@ -98,5 +106,24 @@ class ListenBrainzApiImpl(
                 parameter("max_ts", maxTimestamp)
             }
         }.body()
+    }
+
+    override suspend fun getManualMapping(recordingMessyBrainzId: String): ManualMappingResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("metadata/get_manual_mapping/")
+                parameter("recording_msid", recordingMessyBrainzId)
+            }
+        }.body()
+    }
+
+    override suspend fun getRecordingMetadata(recordingMusicBrainzId: String): RecordingMetadata? {
+        return httpClient.get {
+            url {
+                appendPathSegments("metadata/recording/")
+                parameter("recording_mbids", recordingMusicBrainzId)
+                parameter("inc", "artist release")
+            }
+        }.body<Map<String, RecordingMetadata>>()[recordingMusicBrainzId]
     }
 }

@@ -21,7 +21,7 @@ import ly.david.musicsearch.data.repository.helpers.TestListensListRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testListens
-import ly.david.musicsearch.data.repository.helpers.track2ListenedAtS
+import ly.david.musicsearch.data.repository.helpers.track2ListenedAtMs
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
@@ -39,7 +39,6 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Duration.Companion.days
-import kotlin.time.Instant
 
 class RecordingRepositoryImplTest :
     KoinTest,
@@ -211,14 +210,15 @@ class RecordingRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ListSeparator(
-                        id = "1755100633",
+                        id = track2ListenedAtMs.toString(),
                         text = "Wednesday, August 13, 2025",
                     ),
                     ListenListItemModel(
-                        id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                        listenedAtMs = track2ListenedAtMs,
+                        username = "user",
+                        recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                         name = "Color Your Night",
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                        listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                         durationMs = 227240,
                         imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -307,14 +307,15 @@ class RecordingRepositoryImplTest :
             Assert.assertEquals(
                 listOf(
                     ListSeparator(
-                        id = "1755100633",
+                        id = track2ListenedAtMs.toString(),
                         text = "Wednesday, August 13, 2025",
                     ),
                     ListenListItemModel(
-                        id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                        listenedAtMs = track2ListenedAtMs,
+                        username = "user",
+                        recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                         name = "Color Your Night",
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                        listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda2",
                         durationMs = 227240,
                         imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",

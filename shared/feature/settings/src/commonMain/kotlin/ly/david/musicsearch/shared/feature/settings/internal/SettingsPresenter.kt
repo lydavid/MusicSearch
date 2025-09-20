@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.settings.internal
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -54,7 +55,7 @@ internal class SettingsPresenter(
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
         val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsRetainedState(false)
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsRetainedState(false)
-        var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
+        var snackbarMessage: String? by remember { mutableStateOf(null) }
 
         val coroutineScope = rememberCoroutineScope()
         val loginUiState = musicBrainzLoginPresenter.present()

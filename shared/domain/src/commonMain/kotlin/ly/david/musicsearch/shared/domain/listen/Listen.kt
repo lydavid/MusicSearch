@@ -7,13 +7,8 @@ data class Listen(
     val listenedAtMs: Long,
     val recordingMessybrainzId: String,
     val username: String,
-    val recordingMusicbrainzId: String?,
-    val caaId: Long?,
-    val caaReleaseMbid: String?,
     val artistName: String,
     val trackName: String,
-    val releaseName: String?,
-    val durationMs: Long?,
     val mediaPlayer: String?,
     val submissionClient: String?,
     val musicService: String?,
@@ -23,6 +18,15 @@ data class Listen(
     val spotifyAlbumId: String?,
     val spotifyArtistIds: List<String>?,
     val spotifyId: String?,
-    val recordingName: String?,
-    val artistCredits: List<ArtistCreditUiModel>,
-)
+    val entityMapping: EntityMapping,
+) {
+    data class EntityMapping(
+        val recordingMusicbrainzId: String?,
+        val recordingName: String?,
+        val durationMs: Long?,
+        val caaId: Long?,
+        val caaReleaseMbid: String?,
+        val releaseName: String?,
+        val artistCredits: List<ArtistCreditUiModel>,
+    )
+}

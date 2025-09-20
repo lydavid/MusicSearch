@@ -24,10 +24,10 @@ import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.data.repository.helpers.testListens
-import ly.david.musicsearch.data.repository.helpers.track1ListenedAtS
-import ly.david.musicsearch.data.repository.helpers.track2ListenedAtS
-import ly.david.musicsearch.data.repository.helpers.track3ListenedAtS
-import ly.david.musicsearch.data.repository.helpers.track4ListenedAtS
+import ly.david.musicsearch.data.repository.helpers.track1ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track2ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track3ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track4ListenedAtMs
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -49,7 +49,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import kotlin.time.Instant
 
 @Suppress("MaxLineLength")
 class ListensListRepositoryImplTest :
@@ -99,14 +98,15 @@ class ListensListRepositoryImplTest :
                     query = "",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1756100634",
+                            id = track1ListenedAtMs.toString(),
                             text = "Monday, August 25, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1756100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
+                            listenedAtMs = track1ListenedAtMs,
+                            username = "user",
+                            recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
@@ -117,14 +117,15 @@ class ListensListRepositoryImplTest :
                             ),
                         ),
                         ListSeparator(
-                            id = "1755100633",
+                            id = track2ListenedAtMs.toString(),
                             text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            listenedAtMs = track2ListenedAtMs,
+                            username = "user",
+                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -135,10 +136,11 @@ class ListensListRepositoryImplTest :
                             ),
                         ),
                         ListenListItemModel(
-                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            username = "user",
+                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
                             name = "Full Moon Full Life",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -149,10 +151,11 @@ class ListensListRepositoryImplTest :
                             ),
                         ),
                         ListenListItemModel(
-                            id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
+                            username = "user",
+                            recordingMessybrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
                             name = "Absolute zero",
                             formattedArtistCredits = "Tsukuyomi",
-                            listenedAt = Instant.fromEpochSeconds(track4ListenedAtS),
+                            listenedAtMs = track4ListenedAtMs,
                         ),
                     ),
                 ),
@@ -161,14 +164,15 @@ class ListensListRepositoryImplTest :
                     query = "full",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1755100632",
+                            id = track3ListenedAtMs.toString(),
                             text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            username = "user",
+                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
                             name = "Full Moon Full Life",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -185,14 +189,15 @@ class ListensListRepositoryImplTest :
                     query = "feat",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1756100634",
+                            id = track1ListenedAtMs.toString(),
                             text = "Monday, August 25, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1756100634000_f5700f45-6003-40ee-9c01-3ea270c77cd3_user",
+                            username = "user",
+                            recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAt = Instant.fromEpochSeconds(track1ListenedAtS),
+                            listenedAtMs = track1ListenedAtMs,
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
@@ -209,14 +214,15 @@ class ListensListRepositoryImplTest :
                     query = "persona",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1755100633",
+                            id = track2ListenedAtMs.toString(),
                             text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            username = "user",
+                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
+                            listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -227,10 +233,11 @@ class ListensListRepositoryImplTest :
                             ),
                         ),
                         ListenListItemModel(
-                            id = "1755100632000_9e164036-5379-4bbd-8a9b-fb7b9e697993_user",
+                            username = "user",
+                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
                             name = "Full Moon Full Life",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track3ListenedAtS),
+                            listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -263,14 +270,15 @@ class ListensListRepositoryImplTest :
                     query = "",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1755100633",
+                            id = track2ListenedAtMs.toString(),
                             text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1755100633000_28f390ae-b7a3-4636-82bc-7d39a7348978_user",
+                            username = "user",
+                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochSeconds(track2ListenedAtS),
+                            listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
                             imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -303,14 +311,15 @@ class ListensListRepositoryImplTest :
                     query = "",
                     expectedResult = listOf(
                         ListSeparator(
-                            id = "1755100631",
+                            id = track4ListenedAtMs.toString(),
                             text = "Wednesday, August 13, 2025",
                         ),
                         ListenListItemModel(
-                            id = "1755100631000_e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2_user",
+                            username = "user",
+                            recordingMessybrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
                             name = "Absolute zero",
                             formattedArtistCredits = "Tsukuyomi",
-                            listenedAt = Instant.fromEpochSeconds(track4ListenedAtS),
+                            listenedAtMs = track4ListenedAtMs,
                         ),
                     ),
                 ),

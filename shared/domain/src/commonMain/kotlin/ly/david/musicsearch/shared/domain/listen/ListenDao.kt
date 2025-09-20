@@ -27,4 +27,10 @@ interface ListenDao {
     fun getLatestTimestampMsByUser(username: String): Long?
 
     fun getOldestTimestampMsByUser(username: String): Long?
+
+    fun updateMetadata(
+        recordingMessyBrainzId: String,
+        artistName: String?,
+        entityMapping: Listen.EntityMapping,
+    )
 }

@@ -8,9 +8,10 @@ import io.ktor.client.statement.request
 import io.ktor.http.HttpStatusCode
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.ErrorType
 import ly.david.musicsearch.shared.domain.error.HandledException
 
-@Suppress("ThrowsCount")
+@Suppress("ThrowsCount", "LongMethod")
 internal suspend fun handleRecoverableException(
     logger: Logger,
     exception: Throwable,
@@ -18,7 +19,10 @@ internal suspend fun handleRecoverableException(
     when (exception) {
         is NoTransformationFoundException -> {
             logger.e(exception)
-            throw HandledException("Requested json but got xml.", ErrorResolution.Retry)
+            throw HandledException(
+                userMessage = "Requested json but got xml.",
+                errorResolution = ErrorResolution.Retry,
+            )
         }
 
         // https://ktor.io/docs/client-response-validation.html#non-2xx
@@ -27,20 +31,36 @@ internal suspend fun handleRecoverableException(
             val handledException: HandledException
             when (exceptionResponse.status) {
                 HttpStatusCode.BadRequest -> {
-                    handledException = HandledException("Bad request.", ErrorResolution.None)
+                    handledException = HandledException(
+                        userMessage = "Bad request.",
+                        errorType = ErrorType.BadRequest,
+                        errorResolution = ErrorResolution.None,
+                    )
                 }
 
                 HttpStatusCode.Unauthorized -> {
-                    handledException = HandledException("You are not logged in.", ErrorResolution.Login)
+                    handledException = HandledException(
+                        userMessage = "You are not logged in.",
+                        errorType = ErrorType.Unauthorized,
+                        errorResolution = ErrorResolution.Login,
+                    )
                 }
 
                 HttpStatusCode.Forbidden -> {
                     handledException =
-                        HandledException("You do not have permission to access this item.", ErrorResolution.None)
+                        HandledException(
+                            userMessage = "You do not have permission to access this item.",
+                            errorType = ErrorType.Forbidden,
+                            errorResolution = ErrorResolution.None,
+                        )
                 }
 
                 HttpStatusCode.NotFound -> {
-                    handledException = HandledException("This item does not exist.", ErrorResolution.None)
+                    handledException = HandledException(
+                        userMessage = "This item does not exist.",
+                        errorType = ErrorType.NotFound,
+                        errorResolution = ErrorResolution.None,
+                    )
                 }
 
                 else -> {
@@ -58,8 +78,10 @@ internal suspend fun handleRecoverableException(
             when (exceptionResponse.status) {
                 HttpStatusCode.InternalServerError -> {
                     handledException = HandledException(
-                        "${exception.response.request.url.host} may be experiencing issues. Try again later.",
-                        ErrorResolution.Retry,
+                        userMessage = "${exception.response.request.url.host} " +
+                            "may be experiencing issues. Try again later.",
+                        errorType = ErrorType.InternalServerError,
+                        errorResolution = ErrorResolution.Retry,
                     )
                 }
 

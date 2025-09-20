@@ -8,7 +8,6 @@ import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
-import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -17,10 +16,11 @@ internal fun PreviewListenListItem() {
         Surface {
             ListenListItem(
                 listen = ListenListItemModel(
-                    id = "1",
+                    listenedAtMs = 1755655177000,
+                    recordingMessybrainzId = "bf2c5a43-19d8-46f7-8131-df986ed24845",
+                    username = "user",
                     name = "絶絶絶絶対聖域",
                     formattedArtistCredits = "ano feat. 幾田りら",
-                    listenedAt = Instant.fromEpochMilliseconds(1755655177000),
                     durationMs = 213868,
                     aliases = persistentListOf(
                         BasicAlias(

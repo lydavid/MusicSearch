@@ -10,10 +10,14 @@ import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
 
 const val TEST_USERNAME = "user"
 
-val track1ListenedAtS = 1756100634L
-val track2ListenedAtS = 1755100633L
-val track3ListenedAtS = 1755100632L
-val track4ListenedAtS = 1755100631L
+const val track1ListenedAtS = 1756100634L
+const val track1ListenedAtMs = track1ListenedAtS * 1000
+const val track2ListenedAtS = 1755100633L
+const val track2ListenedAtMs = track2ListenedAtS * 1000
+const val track3ListenedAtS = 1755100632L
+const val track3ListenedAtMs = track3ListenedAtS * 1000
+const val track4ListenedAtS = 1755100631L
+const val track4ListenedAtMs = track4ListenedAtS * 1000
 
 val testListens = ListensResponse(
     payload = Payload(

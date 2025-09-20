@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.domain.listen
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 
 interface ListensListRepository {
@@ -22,4 +23,8 @@ interface ListensListRepository {
         username: String,
         query: String,
     ): Flow<PagingData<RecordingFacet>>
+
+    suspend fun refreshMapping(
+        recordingMessyBrainzId: String,
+    ): ActionableResult
 }

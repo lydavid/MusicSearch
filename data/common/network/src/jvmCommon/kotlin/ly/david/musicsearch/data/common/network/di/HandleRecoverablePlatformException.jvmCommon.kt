@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.common.network.di
 
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.ErrorType
 import ly.david.musicsearch.shared.domain.error.HandledException
 
 actual fun handleRecoverablePlatformException(exception: Throwable) {
@@ -9,7 +10,11 @@ actual fun handleRecoverablePlatformException(exception: Throwable) {
         is java.net.UnknownHostException,
         is java.net.SocketTimeoutException,
         -> {
-            throw HandledException("Network error. Check your internet connection.", ErrorResolution.Retry)
+            throw HandledException(
+                userMessage = "Network error. Check your internet connection.",
+                errorType = ErrorType.LocalNetworkProblem,
+                errorResolution = ErrorResolution.Retry,
+            )
         }
     }
 }

@@ -10,11 +10,12 @@ import ly.david.musicsearch.shared.domain.listitem.Visitable
 import kotlin.time.Instant
 
 data class ListenListItemModel(
-    override val id: String,
+    val listenedAtMs: Long,
+    val username: String,
+    val recordingMessybrainzId: String,
     override val name: String,
     override val disambiguation: String = "",
     val formattedArtistCredits: String,
-    val listenedAt: Instant,
     val recordingId: String = "",
     val durationMs: Int? = null,
     val imageUrl: String? = null,
@@ -23,6 +24,9 @@ data class ListenListItemModel(
     val release: ListenRelease = ListenRelease(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Identifiable, Visitable, NameWithDisambiguationAndAliases {
+    override val id: String = "${listenedAtMs}_${username}_$recordingMessybrainzId"
+    val listenedAt: Instant = Instant.fromEpochMilliseconds(listenedAtMs)
+
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }

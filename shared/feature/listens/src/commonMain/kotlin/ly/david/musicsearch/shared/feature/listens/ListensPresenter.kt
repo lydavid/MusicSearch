@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
@@ -40,29 +41,31 @@ internal class ListensPresenter(
 ) : Presenter<ListensUiState> {
     @Composable
     override fun present(): ListensUiState {
-        val username by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
+        val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
+        val browseUsername by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
         var textFieldText by rememberSaveable { mutableStateOf("") }
+        var actionableResult by remember { mutableStateOf<ActionableResult?>(null) }
 
         val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
         val totalCountOfListens: Long? by
-            listensListRepository.observeUnfilteredCountOfListensByUser(username).collectAsRetainedState(null)
+            listensListRepository.observeUnfilteredCountOfListensByUser(browseUsername).collectAsRetainedState(null)
 
         var selectedRecordingFacetId by rememberSaveable { mutableStateOf(screen.recordingId) }
         var facetQuery by rememberSaveable { mutableStateOf("") }
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val listensQuery = topAppBarFilterState.filterText
-        var hasReachedOldest by remember(username) { mutableStateOf(false) }
-        var hasReachedLatest by remember(username) { mutableStateOf(false) }
+        var hasReachedOldest by remember(browseUsername) { mutableStateOf(false) }
+        var hasReachedLatest by remember(browseUsername) { mutableStateOf(false) }
         val listens: Flow<PagingData<Identifiable>> by rememberRetained(
-            username,
+            browseUsername,
             listensQuery,
             selectedRecordingFacetId,
         ) {
             mutableStateOf(
                 listensListRepository.observeListens(
-                    username = username,
+                    username = browseUsername,
                     query = listensQuery,
                     recordingId = selectedRecordingFacetId,
                     stopPrepending = hasReachedLatest,
@@ -73,7 +76,7 @@ internal class ListensPresenter(
             )
         }
 
-        topAppBarFilterState.show(username.isNotEmpty())
+        topAppBarFilterState.show(browseUsername.isNotEmpty())
 
         fun eventSink(event: ListensUiEvent) {
             when (event) {
@@ -113,25 +116,35 @@ internal class ListensPresenter(
                         newId
                     }
                 }
+
+                is ListensUiEvent.RefreshMapping -> {
+                    coroutineScope.launch {
+                        actionableResult = listensListRepository.refreshMapping(
+                            recordingMessyBrainzId = event.recordingMessyBrainzId,
+                        )
+                    }
+                }
             }
         }
 
         return ListensUiState(
             listenBrainzUrl = listenBrainzRepository.getBaseUrl(),
-            username = username,
+            username = browseUsername,
             textFieldText = textFieldText,
+            actionableResult = actionableResult,
             totalCountOfListens = totalCountOfListens,
             topAppBarFilterState = topAppBarFilterState,
             recordingFacetUiState = RecordingFacetUiState(
                 selectedRecordingFacetId = selectedRecordingFacetId,
                 query = facetQuery,
                 recordingFacetsPagingDataFlow = listensListRepository.observeRecordingFacets(
-                    username = username,
+                    username = browseUsername,
                     query = facetQuery,
                 ),
             ),
             lazyListState = lazyListState,
             listensPagingDataFlow = listens,
+            browsingUserIsSameAsLoggedInUser = loggedInUsername.isNotBlank() && browseUsername == loggedInUsername,
             eventSink = ::eventSink,
         )
     }
@@ -142,11 +155,13 @@ internal data class ListensUiState(
     val listenBrainzUrl: String = "",
     val username: String = "",
     val textFieldText: String = "",
+    val actionableResult: ActionableResult? = null,
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val recordingFacetUiState: RecordingFacetUiState = RecordingFacetUiState(),
     val lazyListState: LazyListState = LazyListState(),
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
+    val browsingUserIsSameAsLoggedInUser: Boolean = false,
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
     val noUsernameSet: Boolean
@@ -181,5 +196,9 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
 
     data class ToggleRecordingFacet(
         val recordingId: String,
+    ) : ListensUiEvent
+
+    data class RefreshMapping(
+        val recordingMessyBrainzId: String,
     ) : ListensUiEvent
 }

@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +69,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
+import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
@@ -196,6 +198,15 @@ internal fun ListensUi(
             }
         }
     }
+
+    state.actionableResult?.let {
+        LaunchedEffect(it) {
+            snackbarHostState.showSnackbar(
+                message = it.message,
+            )
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -247,6 +258,7 @@ internal fun ListensUi(
                     ListenAdditionalActionsBottomSheetContent(
                         listen = listen,
                         filteringByThisRecording = listen.recordingId == selectedRecordingFacetId,
+                        allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
                         onGoToReleaseClick = { releaseId ->
                             eventSink(
                                 ListensUiEvent.ClickItem(
@@ -257,6 +269,9 @@ internal fun ListensUi(
                         },
                         onFilterByRecordingClick = {
                             eventSink(ListensUiEvent.ToggleRecordingFacet(it))
+                        },
+                        onRefreshMapping = {
+                            eventSink(ListensUiEvent.RefreshMapping(it))
                         },
                         onDismiss = { showBottomSheetForListen = null },
                     )
@@ -451,8 +466,10 @@ internal fun RecordingFacetBottomSheetContent(
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
     filteringByThisRecording: Boolean,
+    allowedToEdit: Boolean,
     onGoToReleaseClick: (releaseId: String) -> Unit = {},
     onFilterByRecordingClick: (recordingId: String) -> Unit = {},
+    onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
     val release = listen.release
@@ -514,12 +531,15 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 filteringByThisRecording && hasRecordingId -> {
                     "Stop filtering by this song"
                 }
+
                 hasRecordingId -> {
                     "Filter listens by this song"
                 }
+
                 filteringByThisRecording -> {
                     "Stop filtering by unlinked songs"
                 }
+
                 else -> {
                     "Filter listens by unlinked songs"
                 }
@@ -535,6 +555,17 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 onDismiss()
             },
         )
+
+        if (allowedToEdit) {
+            ClickableItem(
+                title = "Refresh mapping",
+                startIcon = CustomIcons.Refresh,
+                onClick = {
+                    onRefreshMapping(listen.recordingMessybrainzId)
+                    onDismiss()
+                },
+            )
+        }
 
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
     }

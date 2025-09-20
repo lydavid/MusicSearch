@@ -27,17 +27,19 @@ internal fun PreviewListensUi() {
                             text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
                         ),
                         ListenListItemModel(
-                            id = "1",
+                            listenedAtMs = 1755655177000,
+                            username = "user",
+                            recordingMessybrainzId = "bf2c5a43-19d8-46f7-8131-df986ed24845",
                             name = "絶絶絶絶対聖域",
                             formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAt = Instant.fromEpochMilliseconds(1755655177000),
                             durationMs = null,
                         ),
                         ListenListItemModel(
-                            id = "2",
+                            listenedAtMs = 1755645177000,
+                            username = "user",
+                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                             durationMs = 227240,
                             visited = true,
                         ),
@@ -67,10 +69,11 @@ internal fun PreviewListensUiWithRecordingFacet() {
                             text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
                         ),
                         ListenListItemModel(
-                            id = "2",
+                            listenedAtMs = 1755645177000,
+                            username = "user",
+                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                             name = "Color Your Night",
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                             durationMs = 227240,
                             visited = true,
                         ),
@@ -116,16 +119,18 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
-                    id = "2",
+                    listenedAtMs = 1755645177000,
+                    username = "user",
+                    recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                     recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                     release = ListenRelease(
                         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
                         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
                     ),
                 ),
+                allowedToEdit = false,
                 filteringByThisRecording = false,
             )
         }
@@ -139,10 +144,11 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
-                    id = "2",
+                    listenedAtMs = 1755645177000,
+                    username = "user",
+                    recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                     recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                     release = ListenRelease(
                         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
@@ -150,6 +156,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
                         visited = true,
                     ),
                 ),
+                allowedToEdit = true,
                 filteringByThisRecording = true,
             )
         }
@@ -163,11 +170,13 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
-                    id = "2",
+                    listenedAtMs = 1755645177000,
+                    username = "user",
+                    recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                 ),
+                allowedToEdit = false,
                 filteringByThisRecording = false,
             )
         }
@@ -181,11 +190,13 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
-                    id = "2",
+                    listenedAtMs = 1755645177000,
+                    username = "user",
+                    recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                    listenedAt = Instant.fromEpochMilliseconds(1755645177000),
                 ),
+                allowedToEdit = false,
                 filteringByThisRecording = true,
             )
         }

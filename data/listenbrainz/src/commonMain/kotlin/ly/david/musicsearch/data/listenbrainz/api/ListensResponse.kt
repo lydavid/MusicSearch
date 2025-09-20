@@ -148,13 +148,8 @@ fun ListensResponse.asListOfListens(): List<Listen> {
             listenedAtMs = listen.listenedAtS * MS_IN_SECOND,
             recordingMessybrainzId = listen.recording_msid,
             username = listen.user_name,
-            recordingMusicbrainzId = recordingMusicbrainzId,
-            caaId = mbidMapping?.caa_id,
-            caaReleaseMbid = mbidMapping?.caa_release_mbid,
             artistName = trackMetadata.artist_name,
             trackName = trackMetadata.track_name,
-            releaseName = trackMetadata.release_name,
-            durationMs = durationMs,
             mediaPlayer = additionalInfo?.media_player,
             submissionClient = additionalInfo?.submission_client,
             musicService = additionalInfo?.music_service,
@@ -164,14 +159,21 @@ fun ListensResponse.asListOfListens(): List<Listen> {
             spotifyAlbumId = additionalInfo?.spotify_album_id,
             spotifyArtistIds = additionalInfo?.spotify_artist_ids,
             spotifyId = additionalInfo?.spotify_id,
-            recordingName = mbidMapping?.recording_name,
-            artistCredits = mbidMapping?.artists?.map { artist ->
-                ArtistCreditUiModel(
-                    artistId = artist.artist_mbid,
-                    name = artist.artist_credit_name,
-                    joinPhrase = artist.join_phrase,
-                )
-            }.orEmpty(),
+            entityMapping = Listen.EntityMapping(
+                recordingMusicbrainzId = recordingMusicbrainzId,
+                recordingName = mbidMapping?.recording_name,
+                durationMs = durationMs,
+                caaId = mbidMapping?.caa_id,
+                caaReleaseMbid = mbidMapping?.caa_release_mbid,
+                releaseName = trackMetadata.release_name,
+                artistCredits = mbidMapping?.artists?.map { artist ->
+                    ArtistCreditUiModel(
+                        artistId = artist.artist_mbid,
+                        name = artist.artist_credit_name,
+                        joinPhrase = artist.join_phrase,
+                    )
+                }.orEmpty(),
+            ),
         )
     }
 }

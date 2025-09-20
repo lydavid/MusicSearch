@@ -52,6 +52,16 @@ UPDATE listen
 SET recording_musicbrainz_id = :newId
 WHERE recording_musicbrainz_id = :oldId;
 
+updateMetadata:
+UPDATE listen
+SET
+  recording_musicbrainz_id = :recording_musicbrainz_id,
+  caa_id = :caa_id,
+  caa_release_mbid = :caa_release_mbid,
+  release_name = :release_name,
+  duration_ms = :duration_ms
+WHERE recording_messybrainz_id = :recording_messybrainz_id;
+
 deleteByUser:
 DELETE FROM listen
 WHERE listen.username = :username;

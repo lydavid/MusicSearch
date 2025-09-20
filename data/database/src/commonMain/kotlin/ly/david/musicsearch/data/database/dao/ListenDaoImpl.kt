@@ -18,7 +18,6 @@ import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.recording.RecordingFacet
-import kotlin.time.Instant
 
 class ListenDaoImpl(
     database: Database,
@@ -30,30 +29,24 @@ class ListenDaoImpl(
     private val recordingTransacter = database.recordingQueries
     private val releaseTransacter = database.releaseQueries
 
-    @Suppress("LongMethod")
     override fun insert(
         listens: List<Listen>,
     ) {
         listenTransacter.transaction {
             listens.forEach { listen ->
-                val recordingMusicbrainzId = listen.recordingMusicbrainzId
-                val durationMs = listen.durationMs
-                val coverArtId = listen.caaId
-                val coverArtReleaseMbid = listen.caaReleaseMbid
-                val releaseName = listen.releaseName
                 listenTransacter.insert(
                     listen = lydavidmusicsearchdatadatabase.Listen(
                         inserted_at_ms = listen.insertedAtMs,
                         listened_at_ms = listen.listenedAtMs,
                         recording_messybrainz_id = listen.recordingMessybrainzId,
                         username = listen.username,
-                        recording_musicbrainz_id = recordingMusicbrainzId.orEmpty(),
-                        caa_id = coverArtId,
-                        caa_release_mbid = coverArtReleaseMbid,
+                        recording_musicbrainz_id = listen.entityMapping.recordingMusicbrainzId.orEmpty(),
+                        caa_id = listen.entityMapping.caaId,
+                        caa_release_mbid = listen.entityMapping.caaReleaseMbid,
                         artist_name = listen.artistName,
                         track_name = listen.trackName,
-                        release_name = releaseName,
-                        duration_ms = durationMs,
+                        release_name = listen.entityMapping.releaseName,
+                        duration_ms = listen.entityMapping.durationMs,
                         media_player = listen.mediaPlayer,
                         submission_client = listen.submissionClient,
                         music_service = listen.musicService,
@@ -65,68 +58,99 @@ class ListenDaoImpl(
                         spotify_id = listen.spotifyId,
                     ),
                 )
-
-                // Add stub recording so that we can link it with artist credits
-                val recordingName = listen.recordingName
-                if (recordingMusicbrainzId == null || recordingName == null) return@forEach
-                recordingTransacter.insert(
-                    id = recordingMusicbrainzId,
-                    name = recordingName,
-                    disambiguation = "",
-                    firstReleaseDate = "",
-                    length = durationMs?.toInt(),
-                    video = false,
-                    isrcs = emptyList(),
-                )
-
-                artistCreditDao.insertArtistCredits(
-                    entityId = recordingMusicbrainzId,
-                    artistCredits = listen.artistCredits.map { artist ->
-                        ArtistCreditMusicBrainzModel(
-                            artist = ArtistMusicBrainzNetworkModel(
-                                id = artist.artistId,
-                            ),
-                            name = artist.name,
-                            joinPhrase = artist.joinPhrase,
-                        )
-                    },
-                )
-
-                if (coverArtReleaseMbid == null || coverArtId == null) return@forEach
-                val coverArtUrl = "https://coverartarchive.org/release/$coverArtReleaseMbid/$coverArtId"
-                imageUrlDao.saveImageMetadata(
-                    mbid = coverArtReleaseMbid,
-                    imageMetadataList = listOf(
-                        ImageMetadata(
-                            thumbnailUrl = "$coverArtUrl-250",
-                            largeUrl = "$coverArtUrl-1200",
-                        ),
-                    ),
-                )
-
-                // Add stub release so that we can link it with its cover art
-                if (releaseName == null) return@forEach
-                releaseTransacter.insert(
-                    id = coverArtReleaseMbid,
-                    name = releaseName,
-                    disambiguation = "",
-                    date = "",
-                    barcode = "",
-                    status_id = "",
-                    country_code = "",
-                    packaging = "",
-                    packaging_id = "",
-                    asin = "",
-                    quality = "",
-                    script = "",
-                    language = "",
-                )
+                insertLinkedEntities(entityMapping = listen.entityMapping)
             }
         }
     }
 
+    @Suppress("ReturnCount")
+    private fun insertLinkedEntities(
+        entityMapping: Listen.EntityMapping,
+    ) {
+        // Add stub recording so that we can link it with artist credits
+        val recordingMusicbrainzId = entityMapping.recordingMusicbrainzId
+        val recordingName = entityMapping.recordingName
+        if (recordingMusicbrainzId == null || recordingName == null) return
+        recordingTransacter.insert(
+            id = recordingMusicbrainzId,
+            name = recordingName,
+            disambiguation = "",
+            firstReleaseDate = "",
+            length = entityMapping.durationMs?.toInt(),
+            video = false,
+            isrcs = emptyList(),
+        )
+
+        artistCreditDao.insertArtistCredits(
+            entityId = recordingMusicbrainzId,
+            artistCredits = entityMapping.artistCredits.map { artist ->
+                ArtistCreditMusicBrainzModel(
+                    artist = ArtistMusicBrainzNetworkModel(
+                        id = artist.artistId,
+                    ),
+                    name = artist.name,
+                    joinPhrase = artist.joinPhrase,
+                )
+            },
+        )
+
+        val coverArtId = entityMapping.caaId
+        val coverArtReleaseMbid = entityMapping.caaReleaseMbid
+        if (coverArtReleaseMbid == null || coverArtId == null) return
+        val coverArtUrl = "https://coverartarchive.org/release/$coverArtReleaseMbid/$coverArtId"
+        imageUrlDao.saveImageMetadata(
+            mbid = coverArtReleaseMbid,
+            imageMetadataList = listOf(
+                ImageMetadata(
+                    thumbnailUrl = "$coverArtUrl-250",
+                    largeUrl = "$coverArtUrl-1200",
+                ),
+            ),
+        )
+
+        // Add stub release so that we can link it with its cover art
+        val releaseName = entityMapping.releaseName
+        if (releaseName == null) return
+        releaseTransacter.insert(
+            // TODO: pass in release mbid instead which is available from metadata mapping and listens
+            id = coverArtReleaseMbid,
+            name = releaseName,
+            disambiguation = "",
+            date = "",
+            barcode = "",
+            status_id = "",
+            country_code = "",
+            packaging = "",
+            packaging_id = "",
+            asin = "",
+            quality = "",
+            script = "",
+            language = "",
+        )
+    }
+
     override fun deleteListensByUser(username: String) {
         listenTransacter.deleteByUser(username = username)
+    }
+
+    override fun updateMetadata(
+        recordingMessyBrainzId: String,
+        artistName: String?,
+        entityMapping: Listen.EntityMapping,
+    ) {
+        listenTransacter.transaction {
+            // Do not update track name or artist name because they are guaranteed fields uploaded by the submission client.
+            // They can serve as useful fallback when filtering.
+            listenTransacter.updateMetadata(
+                recording_musicbrainz_id = entityMapping.recordingMusicbrainzId.orEmpty(),
+                caa_id = entityMapping.caaId,
+                caa_release_mbid = entityMapping.caaReleaseMbid,
+                release_name = entityMapping.releaseName,
+                duration_ms = entityMapping.durationMs,
+                recording_messybrainz_id = recordingMessyBrainzId,
+            )
+            insertLinkedEntities(entityMapping = entityMapping)
+        }
     }
 
     override fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?> {
@@ -204,8 +228,8 @@ class ListenDaoImpl(
 
 private fun mapToListenListItemModel(
     listenedAtMs: Long,
-    username: String,
     recordingMessybrainzId: String,
+    username: String,
     recordingMusicbrainzId: String,
     recordingName: String?,
     recordingDisambiguation: String?,
@@ -231,11 +255,12 @@ private fun mapToListenListItemModel(
     aliasNames: String?,
     aliasLocales: String?,
 ) = ListenListItemModel(
-    id = "${listenedAtMs}_${username}_$recordingMessybrainzId",
     name = recordingName ?: fallbackName,
+    username = username,
+    recordingMessybrainzId = recordingMessybrainzId,
     disambiguation = recordingDisambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames ?: fallbackArtistCreditNames,
-    listenedAt = Instant.fromEpochMilliseconds(listenedAtMs),
+    listenedAtMs = listenedAtMs,
     recordingId = recordingMusicbrainzId,
     durationMs = durationMs?.toInt(),
     imageUrl = imageUrl,

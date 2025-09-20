@@ -13,7 +13,13 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.ErrorType
+import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
@@ -107,7 +113,7 @@ class ListensListRepositoryImpl(
         if (beforeDate == afterDate) return null
 
         return ListSeparator(
-            id = after.listenedAt.epochSeconds.toString(),
+            id = after.listenedAtMs.toString(),
             text = afterDate,
         )
     }
@@ -129,5 +135,57 @@ class ListensListRepositoryImpl(
                 )
             },
         ).flow
+    }
+
+    override suspend fun refreshMapping(
+        recordingMessyBrainzId: String,
+    ): ActionableResult {
+        return try {
+            val manualMappingResponse = listenBrainzApi.getManualMapping(recordingMessyBrainzId)
+            val recordingId = manualMappingResponse.mapping.recordingMbid
+            val recordingMetadata = listenBrainzApi.getRecordingMetadata(recordingMusicBrainzId = recordingId)
+            listenDao.updateMetadata(
+                recordingMessyBrainzId = recordingMessyBrainzId,
+                artistName = recordingMetadata?.artistCredit?.name,
+                entityMapping = Listen.EntityMapping(
+                    recordingMusicbrainzId = recordingId,
+                    recordingName = recordingMetadata?.recording?.name,
+                    durationMs = recordingMetadata?.recording?.length,
+                    caaId = recordingMetadata?.release?.caaId,
+                    caaReleaseMbid = recordingMetadata?.release?.caaReleaseMbid,
+                    releaseName = recordingMetadata?.release?.name,
+                    artistCredits = recordingMetadata?.artistCredit?.artists?.map { artist ->
+                        ArtistCreditUiModel(
+                            artistId = artist.artistMbid,
+                            name = artist.name,
+                            joinPhrase = artist.joinPhrase,
+                        )
+                    }.orEmpty(),
+                ),
+            )
+            ActionableResult(
+                message = "Updated",
+            )
+        } catch (ex: HandledException) {
+            when {
+                ex.errorResolution == ErrorResolution.Login -> {
+                    ActionableResult(
+                        message = "You need to be logged in to update this listen's mapping",
+                    )
+                }
+
+                ex.errorType == ErrorType.NotFound -> {
+                    ActionableResult(
+                        message = "No manual mapping found for this listen",
+                    )
+                }
+
+                else -> {
+                    ActionableResult(
+                        message = ex.message ?: "Unknown error",
+                    )
+                }
+            }
+        }
     }
 }
