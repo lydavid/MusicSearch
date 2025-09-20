@@ -94,6 +94,7 @@ internal class SettingsPresenter(
                 is SettingsUiEvent.ListenBrainzLogin -> {
                     coroutineScope.launch {
                         listenBrainzLoginState = updateListenBrainzToken(token = textFieldText)
+                        textFieldText = ""
                     }
                 }
 
