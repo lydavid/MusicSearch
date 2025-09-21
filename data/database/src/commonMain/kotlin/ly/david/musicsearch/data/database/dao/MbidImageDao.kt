@@ -8,8 +8,8 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
@@ -31,14 +31,19 @@ class MbidImageDao(
             imageMetadataList.forEach { urls ->
                 transacter.insert(
                     mbid = mbid,
-                    thumbnailUrl = urls.thumbnailUrl,
-                    largeUrl = urls.largeUrl,
+                    thumbnailUrl = urls.thumbnailUrl.trimProtocolAndExtension(),
+                    largeUrl = urls.largeUrl.trimProtocolAndExtension(),
                     types = urls.types,
                     comment = urls.comment,
                 )
             }
         }
     }
+
+    private fun String.trimProtocolAndExtension(): String = this
+        .removePrefix("https://")
+        .removePrefix("http://")
+        .removeSuffix(".jpg")
 
     override fun saveImageMetadata(mbidToImageMetadataMap: Map<String, List<ImageMetadata>>) {
         transacter.transaction {

@@ -1,0 +1,52 @@
+-- Delete records with no types, no comment if better duplicates would exist after cleaning
+DELETE FROM mbid_image 
+WHERE id IN (
+    SELECT a.id
+    FROM mbid_image a
+    WHERE (a.types IS NULL OR a.types = '') 
+      AND (a.comment IS NULL OR a.comment = '')
+      AND EXISTS (
+          SELECT 1 FROM mbid_image b 
+          WHERE b.mbid = a.mbid 
+            AND b.id != a.id
+            -- Check if URLs would be the same after cleaning
+            AND replace(replace(replace(b.thumbnail_url, 'https://', ''), 'http://', ''), '.jpg', '') = 
+                replace(replace(replace(a.thumbnail_url, 'https://', ''), 'http://', ''), '.jpg', '')
+            AND (
+                (b.types IS NOT NULL AND b.types != '') OR 
+                (b.comment IS NOT NULL AND b.comment != '')
+            )
+      )
+);
+
+-- Handle remaining exact duplicates by keeping the one with smallest ID (oldest)
+DELETE FROM mbid_image
+WHERE id IN (
+    SELECT a.id
+    FROM mbid_image a
+    WHERE EXISTS (
+        SELECT 1 FROM mbid_image b
+        WHERE b.mbid = a.mbid
+          AND b.id < a.id  -- Keep the one with smaller ID
+          -- Check if URLs would be the same after cleaning
+          AND replace(replace(replace(b.thumbnail_url, 'https://', ''), 'http://', ''), '.jpg', '') =
+              replace(replace(replace(a.thumbnail_url, 'https://', ''), 'http://', ''), '.jpg', '')
+    )
+);
+
+-- trim the protocols and extensions so that it's easier to detect duplicates in the future
+UPDATE mbid_image 
+SET thumbnail_url = replace(
+    replace(
+        replace(thumbnail_url, 'https://', ''), 
+        'http://', ''
+    ), 
+    '.jpg', ''
+),
+large_url = replace(
+    replace(
+        replace(large_url, 'https://', ''), 
+        'http://', ''
+    ), 
+    '.jpg', ''
+);

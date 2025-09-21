@@ -109,7 +109,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
-                            imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                            imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
                                 id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
@@ -128,7 +128,7 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -143,7 +143,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -175,7 +175,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -200,7 +200,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track1ListenedAtMs,
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
-                            imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                            imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
                                 id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
@@ -225,7 +225,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -240,7 +240,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -281,7 +281,7 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                             imageId = ImageId(2),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -346,8 +346,8 @@ class ListensListRepositoryImplTest :
             listOf(
                 ImageMetadata(
                     imageId = ImageId(2L),
-                    thumbnailUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                    largeUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
+                    thumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                    largeUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
                     mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                     name = "Persona 3 Reload Original Soundtrack",
                     disambiguation = "",
@@ -355,8 +355,8 @@ class ListensListRepositoryImplTest :
                 ),
                 ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                    largeUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-1200",
+                    thumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                    largeUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-1200",
                     mbid = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
                     disambiguation = "",
@@ -382,13 +382,13 @@ class ListensListRepositoryImplTest :
                     id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                     name = "Persona 3 Reload Original Soundtrack",
                     imageId = ImageId(2L),
-                    imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                    imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                 ),
                 ReleaseListItemModel(
                     id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
                     imageId = ImageId(1L),
-                    imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                    imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                 ),
             ),
             releases,

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
+import ly.david.musicsearch.shared.domain.common.prependHttps
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -114,12 +115,13 @@ internal class ImagesPresenter(
 
         val subtitle = selectedImageMetadata?.getNameWithDisambiguation().orEmpty()
 
-        val url = selectedImageMetadata?.largeUrl ?: screen.id?.let { entityId ->
-            getMusicBrainzCoverArtUrl(
-                entityId = entityId,
-                entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
-            )
-        }
+        val url = selectedImageMetadata?.largeUrl?.prependHttps()
+            ?: screen.id?.let { entityId ->
+                getMusicBrainzCoverArtUrl(
+                    entityId = entityId,
+                    entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
+                )
+            }
 
         topAppBarFilterState.show(selectedIndex == null)
 
