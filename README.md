@@ -13,11 +13,6 @@ Multiplatform distributions are heavily WIP. Only the Android app is considered 
 
 ## Releases
 
-<a href="https://www.androidfreeware.net/download-musicsearch-apk.html">
-    <img alt="Get it on AndroidFreeware" height="80"
-        src="https://www.androidfreeware.net/images/androidfreeware-badge.png" />
-</a>
-
 <a href="https://f-droid.org/packages/io.github.lydavid.musicsearch">
     <img alt="Get it on F-Droid" height="80"
         src="https://f-droid.org/badge/get-it-on.png" />
