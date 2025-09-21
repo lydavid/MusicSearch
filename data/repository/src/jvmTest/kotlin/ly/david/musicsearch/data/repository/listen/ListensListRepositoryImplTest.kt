@@ -112,7 +112,7 @@ class ListensListRepositoryImplTest :
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
-                                id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                                id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
                                 name = "絶絶絶絶対聖域",
                             ),
                         ),
@@ -203,7 +203,7 @@ class ListensListRepositoryImplTest :
                             imageUrl = "https://coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
                             imageId = ImageId(1),
                             release = ListenRelease(
-                                id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                                id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
                                 name = "絶絶絶絶対聖域",
                             ),
                         ),

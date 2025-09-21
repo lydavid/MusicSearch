@@ -26,6 +26,7 @@ data class Listen(
         val durationMs: Long?,
         val caaId: Long?,
         val caaReleaseMbid: String?,
+        val releaseMbid: String?,
         val releaseName: String?,
         val artistCredits: List<ArtistCreditUiModel>,
     )

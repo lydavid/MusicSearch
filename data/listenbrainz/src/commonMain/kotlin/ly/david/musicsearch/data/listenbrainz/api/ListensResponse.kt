@@ -165,6 +165,7 @@ fun ListensResponse.asListOfListens(): List<Listen> {
                 durationMs = durationMs,
                 caaId = mbidMapping?.caa_id,
                 caaReleaseMbid = mbidMapping?.caa_release_mbid,
+                releaseMbid = mbidMapping?.release_mbid,
                 releaseName = trackMetadata.release_name,
                 artistCredits = mbidMapping?.artists?.map { artist ->
                     ArtistCreditUiModel(

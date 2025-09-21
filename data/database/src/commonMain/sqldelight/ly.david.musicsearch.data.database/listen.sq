@@ -12,6 +12,7 @@ CREATE TABLE listen (
   username TEXT NOT NULL,
 
   recording_musicbrainz_id TEXT NOT NULL,
+  release_mbid TEXT,
   caa_id INTEGER,
   caa_release_mbid TEXT,
 
@@ -56,6 +57,7 @@ updateMetadata:
 UPDATE listen
 SET
   recording_musicbrainz_id = :recording_musicbrainz_id,
+  release_mbid = :release_mbid,
   caa_id = :caa_id,
   caa_release_mbid = :caa_release_mbid,
   release_name = :release_name,
@@ -99,35 +101,37 @@ FROM (
   AND (
     recording.name LIKE :query OR
     recording.disambiguation LIKE :query OR
-    track_name LIKE :query OR
+    listen.track_name LIKE :query OR
     artist_credit.name LIKE :query OR
-    artist_name LIKE :query OR
-    release_name LIKE :query OR
+    listen.artist_name LIKE :query OR
+    listen.release_name LIKE :query OR
     recording_alias.name LIKE :query
   )
 );
 
 getListensByUser:
 SELECT
-  listened_at_ms,
-  recording_messybrainz_id,
-  username,
-  recording_musicbrainz_id,
+  listen.listened_at_ms,
+  listen.recording_messybrainz_id,
+  listen.username,
+  listen.recording_musicbrainz_id,
   recording.name AS recordingName,
   recording.disambiguation,
-  track_name AS fallbackName,
-  duration_ms,
+  listen.track_name AS fallbackName,
+  listen.duration_ms,
   artist_credit.name AS artistCreditNames,
-  artist_name AS fallbackArtistCreditNames,
-  release_name,
-  caa_release_mbid AS releaseId,
+  listen.artist_name AS fallbackArtistCreditNames,
+  listen.release_name,
+  COALESCE(listen.release_mbid, listen.caa_release_mbid) AS releaseId,
   mi.thumbnail_url,
   mi.id AS imageId,
   EXISTS (
-    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = listen.recording_musicbrainz_id
+    SELECT 1 FROM details_metadata
+    WHERE details_metadata.entity_id = listen.recording_musicbrainz_id
   ) AS visitedRecording,
   EXISTS (
-    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = listen.caa_release_mbid
+    SELECT 1 FROM details_metadata
+    WHERE details_metadata.entity_id = COALESCE(listen.release_mbid, listen.caa_release_mbid)
   ) AS visitedRelease,
   GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
@@ -144,12 +148,12 @@ AND CASE
   ELSE recording_musicbrainz_id = :recordingId
 END
 AND (
-  recordingName LIKE :query OR
+  recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
-  track_name LIKE :query OR
-  artistCreditNames LIKE :query OR
-  artist_name LIKE :query OR
-  release_name LIKE :query OR
+  listen.track_name LIKE :query OR
+  artist_credit.name LIKE :query OR
+  listen.artist_name LIKE :query OR
+  listen.release_name LIKE :query OR
   recording_alias.name LIKE :query
 )
 GROUP BY listened_at_ms, username, recording_messybrainz_id

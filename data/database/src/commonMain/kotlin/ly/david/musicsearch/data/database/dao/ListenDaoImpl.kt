@@ -41,6 +41,7 @@ class ListenDaoImpl(
                         recording_messybrainz_id = listen.recordingMessybrainzId,
                         username = listen.username,
                         recording_musicbrainz_id = listen.entityMapping.recordingMusicbrainzId.orEmpty(),
+                        release_mbid = listen.entityMapping.releaseMbid,
                         caa_id = listen.entityMapping.caaId,
                         caa_release_mbid = listen.entityMapping.caaReleaseMbid,
                         artist_name = listen.artistName,
@@ -108,11 +109,13 @@ class ListenDaoImpl(
             ),
         )
 
-        // Add stub release so that we can link it with its cover art
+        // Add stub release so that we can link it with its cover art.
+        // We want this release to use the cover art release mbid.
+        // The release mbid on the listen may not be the same as this, but when the user navigates to that release
+        // for the first time, they will get its cover art if it has any.
         val releaseName = entityMapping.releaseName
         if (releaseName == null) return
         releaseTransacter.insert(
-            // TODO: pass in release mbid instead which is available from metadata mapping and listens
             id = coverArtReleaseMbid,
             name = releaseName,
             disambiguation = "",
@@ -139,10 +142,12 @@ class ListenDaoImpl(
         entityMapping: Listen.EntityMapping,
     ) {
         listenTransacter.transaction {
-            // Do not update track name or artist name because they are guaranteed fields uploaded by the submission client.
-            // They can serve as useful fallback when filtering.
+            // Do not update track name or artist name because they are guaranteed fields uploaded by the submission client
+            // that can be useful fallbacks when filtering, especially when the recording is in a different language
+            // without aliases.
             listenTransacter.updateMetadata(
                 recording_musicbrainz_id = entityMapping.recordingMusicbrainzId.orEmpty(),
+                release_mbid = entityMapping.releaseMbid,
                 caa_id = entityMapping.caaId,
                 caa_release_mbid = entityMapping.caaReleaseMbid,
                 release_name = entityMapping.releaseName,

@@ -153,6 +153,7 @@ class ListensListRepositoryImpl(
                     durationMs = recordingMetadata?.recording?.length,
                     caaId = recordingMetadata?.release?.caaId,
                     caaReleaseMbid = recordingMetadata?.release?.caaReleaseMbid,
+                    releaseMbid = recordingMetadata?.release?.mbid,
                     releaseName = recordingMetadata?.release?.name,
                     artistCredits = recordingMetadata?.artistCredit?.artists?.map { artist ->
                         ArtistCreditUiModel(
