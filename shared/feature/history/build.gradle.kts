@@ -29,6 +29,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(compose.preview)
+                implementation(projects.test.image)
             }
         }
         val androidUnitTest by getting {

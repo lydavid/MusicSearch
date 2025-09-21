@@ -219,7 +219,7 @@ internal fun PreviewReleaseListItemWithCoverArt() {
             release = ReleaseListItemModel(
                 id = "1",
                 name = "Release title",
-                imageUrl = "https://www.example.com/image.jpg",
+                imageUrl = "www.example.com/image",
             ),
             showMoreInfo = true,
         )
