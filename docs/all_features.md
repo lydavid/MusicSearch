@@ -150,6 +150,19 @@ Inspired by [Obsidian](https://github.com/obsidianmd/obsidian-releases)'s graph 
 Enter your [ListenBrainz](https://listenbrainz.org) username to explore your listens.
 Or you can enter someone else's username to explore their listens.
 
+You can filter your listens by text, which searches their title, artist credit, album, and
+the linked recording's name, disambiguation and aliases.
+
+You can also filter by facets such as by:
+- recording
+
+The facets are organized by most listened first. The facets can also be filtered by text.
+
+Some features are only available if you log in with [your user token](https://listenbrainz.org/settings/).
+These include:
+- refreshing individual listen metadata
+
+
 ## Local Database
 
 Browse all entities that have been cached locally in the app's database while you were searching.
