@@ -127,10 +127,10 @@ class ImageMetadataRepositoryImplTest :
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         ),
                     ),
                 )
@@ -145,8 +145,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -166,8 +166,8 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadata(
                 imageId = ImageId(1L),
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 mbid = eventId,
                 name = eventName,
                 disambiguation = eventDisambiguation,
@@ -212,17 +212,17 @@ class ImageMetadataRepositoryImplTest :
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        imageUrl = "https://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                            resolution250Url = "https://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         ),
                     ),
                     CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.jpg",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.jpg",
                         ),
                     ),
                 )
@@ -237,8 +237,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 2,
             ),
@@ -259,8 +259,8 @@ class ImageMetadataRepositoryImplTest :
             listOf(
                 ImageMetadata(
                     imageId = ImageId(2L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
                     mbid = releaseId,
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
@@ -268,8 +268,8 @@ class ImageMetadataRepositoryImplTest :
                 ),
                 ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                     mbid = releaseId,
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
@@ -297,10 +297,10 @@ class ImageMetadataRepositoryImplTest :
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         ),
                     ),
                 )
@@ -315,8 +315,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -337,8 +337,8 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadata(
                 imageId = ImageId(1L),
-                thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 mbid = releaseId,
                 name = null,
                 disambiguation = null,
@@ -378,10 +378,10 @@ class ImageMetadataRepositoryImplTest :
             coverArtUrlsProducer = { _, _ ->
                 listOf(
                     CoverArtUrls(
-                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                        imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                            resolution250Url = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.jpg",
                         ),
                     ),
                 )
@@ -396,8 +396,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -416,8 +416,8 @@ class ImageMetadataRepositoryImplTest :
             Assert.assertEquals(
                 ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    largeUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
+                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                     mbid = releaseGroupId,
                     name = releaseGroupName,
                     disambiguation = releaseGroupDisambiguation,
@@ -440,7 +440,7 @@ class ImageMetadataRepositoryImplTest :
                         imageUrl = "not used right now",
                         front = true,
                         thumbnailsUrls = ThumbnailsUrls(
-                            resolution250Url = "http://someartarchive.org/${entity.resourceUri}/$mbid/1.png",
+                            resolution250Url = "https://someartarchive.org/${entity.resourceUri}/$mbid/1.jpg",
                         ),
                     ),
                 )
@@ -464,8 +464,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                    largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                    thumbnailUrl = "someartarchive.org/event/$eventId/1",
+                    largeUrl = "someartarchive.org/event/$eventId/1",
                 ),
                 count = 1,
             ),
@@ -491,8 +491,8 @@ class ImageMetadataRepositoryImplTest :
             ImageMetadataWithCount(
                 imageMetadata = ImageMetadata(
                     imageId = ImageId(2L),
-                    thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                    largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                    thumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                    largeUrl = "someartarchive.org/release/$releaseId/1",
                 ),
                 count = 1,
             ),
@@ -520,8 +520,8 @@ class ImageMetadataRepositoryImplTest :
                 imageMetadata =
                 ImageMetadata(
                     imageId = ImageId(3L),
-                    thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                    largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                    thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                    largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                 ),
                 count = 1,
             ),
@@ -541,8 +541,8 @@ class ImageMetadataRepositoryImplTest :
                 listOf(
                     ImageMetadata(
                         imageId = ImageId(3L),
-                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
@@ -550,8 +550,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
-                        thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                        largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                        largeUrl = "someartarchive.org/release/$releaseId/1",
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
@@ -559,8 +559,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(1L),
-                        thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                        largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
+                        largeUrl = "someartarchive.org/event/$eventId/1",
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
@@ -584,8 +584,8 @@ class ImageMetadataRepositoryImplTest :
                 listOf(
                     ImageMetadata(
                         imageId = ImageId(1L),
-                        thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                        largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
+                        largeUrl = "someartarchive.org/event/$eventId/1",
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
@@ -593,8 +593,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
-                        thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                        largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                        largeUrl = "someartarchive.org/release/$releaseId/1",
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
@@ -602,8 +602,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
-                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
@@ -627,8 +627,8 @@ class ImageMetadataRepositoryImplTest :
                 listOf(
                     ImageMetadata(
                         imageId = ImageId(1L),
-                        thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                        largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
+                        largeUrl = "someartarchive.org/event/$eventId/1",
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,
@@ -636,8 +636,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
-                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
@@ -645,8 +645,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(2L),
-                        thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                        largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                        largeUrl = "someartarchive.org/release/$releaseId/1",
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
@@ -670,8 +670,8 @@ class ImageMetadataRepositoryImplTest :
                 listOf(
                     ImageMetadata(
                         imageId = ImageId(2L),
-                        thumbnailUrl = "http://someartarchive.org/release/$releaseId/1.png",
-                        largeUrl = "http://someartarchive.org/release/$releaseId/1.png",
+                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                        largeUrl = "someartarchive.org/release/$releaseId/1",
                         mbid = releaseId,
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
@@ -679,8 +679,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(3L),
-                        thumbnailUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
-                        largeUrl = "http://someartarchive.org/release-group/$releaseGroupId/1.png",
+                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                         mbid = releaseGroupId,
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
@@ -688,8 +688,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                     ImageMetadata(
                         imageId = ImageId(1L),
-                        thumbnailUrl = "http://someartarchive.org/event/$eventId/1.png",
-                        largeUrl = "http://someartarchive.org/event/$eventId/1.png",
+                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
+                        largeUrl = "someartarchive.org/event/$eventId/1",
                         mbid = eventId,
                         name = eventName,
                         disambiguation = eventDisambiguation,

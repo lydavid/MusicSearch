@@ -18,9 +18,8 @@ fun String.getYear(): String =
 
 /**
  * Ensure we use https because Coil doesn't accept it otherwise.
- * Cover Art Archive gives us urls with http.
  */
-fun String.useHttps(): String = replace("http://", "https://")
+fun String.prependHttps(): String = "https://$this"
 
 inline fun String.ifNotEmpty(block: (String) -> Unit) {
     if (this.isNotEmpty()) {

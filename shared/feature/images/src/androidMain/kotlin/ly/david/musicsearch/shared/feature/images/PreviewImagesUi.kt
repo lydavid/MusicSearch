@@ -8,23 +8,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import ly.david.musicsearch.ui.common.preview.PreviewManyDevices
+import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 
 val images = MutableStateFlow(
     PagingData.from(
         listOf(
             ImageMetadata(
                 imageId = ImageId(1),
-                thumbnailUrl = "https://www.example.com/blue.jpg",
-                largeUrl = "https://www.example.com/blue.jpg",
+                thumbnailUrl = "www.example.com/blue",
+                largeUrl = "www.example.com/blue",
                 types = persistentListOf("Front"),
                 comment = "",
             ),
             ImageMetadata(
                 imageId = ImageId(2),
-                thumbnailUrl = "https://www.example.com/red.jpg",
-                largeUrl = "https://www.example.com/red.jpg",
+                thumbnailUrl = "www.example.com/red",
+                largeUrl = "www.example.com/red",
                 types = persistentListOf("Back"),
                 comment = "",
             ),

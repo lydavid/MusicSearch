@@ -104,7 +104,7 @@ internal fun PreviewArtistListItemWithCoverArt() {
                 id = "1",
                 name = "Artist name",
                 sortName = "",
-                imageUrl = "https://www.example.com/image.jpg",
+                imageUrl = "www.example.com/image",
             ),
         )
     }

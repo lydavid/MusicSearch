@@ -577,7 +577,7 @@ class RelationRepositoryImplTest :
                         linkedEntity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                         isForwardDirection = false,
-                        imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250.jpg",
+                        imageUrl = "coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250",
                         imageId = ImageId(1),
                         lastUpdated = testDateTimeInThePast,
                     ),

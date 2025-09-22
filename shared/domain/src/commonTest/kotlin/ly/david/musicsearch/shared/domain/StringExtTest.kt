@@ -1,8 +1,8 @@
 package ly.david.musicsearch.shared.domain
 
 import ly.david.musicsearch.shared.domain.common.getYear
+import ly.david.musicsearch.shared.domain.common.prependHttps
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
-import ly.david.musicsearch.shared.domain.common.useHttps
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -69,10 +69,10 @@ internal class StringExtTest {
 
     // region useHttps
     @Test
-    fun `convert http to https`() {
+    fun `prepend https`() {
         assertEquals(
-            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185.jpg",
-            "http://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185.jpg".useHttps()
+            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185",
+            "coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".prependHttps(),
         )
     }
     // endregion

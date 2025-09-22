@@ -14,7 +14,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
-import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.shared.domain.common.prependHttps
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
 import net.engawapg.lib.zoomable.rememberZoomState
@@ -95,7 +95,7 @@ fun LargeImage(
             AsyncImage(
                 modifier = clickableZoomableImageModifier,
                 model = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(url.useHttps())
+                    .data(url.prependHttps())
                     .crossfade(true)
                     .placeholderMemoryCacheKey(imageId?.value?.toString().orEmpty())
                     .build(),

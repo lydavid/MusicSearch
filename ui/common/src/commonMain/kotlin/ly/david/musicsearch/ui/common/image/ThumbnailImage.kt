@@ -22,7 +22,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.size.Scale
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
-import ly.david.musicsearch.shared.domain.common.useHttps
+import ly.david.musicsearch.shared.domain.common.prependHttps
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -83,7 +83,7 @@ fun ThumbnailImage(
                         colorFilter = ColorFilter.tint(LocalContentColor.current),
                     ),
                     model = ImageRequest.Builder(LocalPlatformContext.current)
-                        .data(url.useHttps())
+                        .data(url.prependHttps())
                         .scale(Scale.FILL)
                         .crossfade(true)
                         .memoryCacheKey(imageId?.value?.toString())

@@ -118,7 +118,7 @@ internal fun PreviewEventListItemWithCoverArt() {
                     end = "2024-12-30",
                     ended = true,
                 ),
-                imageUrl = "https://www.example.com/image.jpg",
+                imageUrl = "www.example.com/image",
                 imageId = ImageId(1L),
             ),
         )

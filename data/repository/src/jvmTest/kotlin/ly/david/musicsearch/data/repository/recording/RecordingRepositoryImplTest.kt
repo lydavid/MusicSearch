@@ -221,7 +221,7 @@ class RecordingRepositoryImplTest :
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                         durationMs = 227240,
-                        imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                         imageId = ImageId(2),
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
@@ -318,7 +318,7 @@ class RecordingRepositoryImplTest :
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda2",
                         durationMs = 227240,
-                        imageUrl = "https://coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                         imageId = ImageId(2),
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
