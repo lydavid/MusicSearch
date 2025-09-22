@@ -87,7 +87,7 @@ val EnStrings = AppStrings(
 
     no = "No",
 
-    recentHistory = "Recent History",
+    recentHistory = "Recent history",
 
     clearHistory = "Clear history",
 

@@ -22,7 +22,8 @@ fun OverflowMenuScope.RefreshMenuItem(
     val title = if (tabTitle == null) {
         strings.refresh
     } else {
-        strings.refreshXTab(tabTitle)
+        // This is fine until we support multiple languages
+        strings.refreshXTab(tabTitle.lowercase())
     }
 
     if (show) {
