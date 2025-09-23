@@ -34,6 +34,13 @@ interface TestListensListRepository {
                     return response
                 }
 
+                override suspend fun submitManualMapping(
+                    recordingMessyBrainzId: String,
+                    recordingMusicBrainzId: String,
+                ) {
+                    // no-op
+                }
+
                 override suspend fun getManualMapping(recordingMessyBrainzId: String): ManualMappingResponse {
                     return ManualMappingResponse(
                         mapping = ManualMappingResponse.Mapping(

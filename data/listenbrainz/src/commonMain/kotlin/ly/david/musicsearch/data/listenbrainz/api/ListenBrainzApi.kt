@@ -10,8 +10,12 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.appendPathSegments
 import io.ktor.http.auth.HttpAuthHeader
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -28,6 +32,11 @@ interface ListenBrainzApi {
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
     ): ListensResponse
+
+    suspend fun submitManualMapping(
+        recordingMessyBrainzId: String,
+        recordingMusicBrainzId: String,
+    )
 
     suspend fun getManualMapping(
         recordingMessyBrainzId: String,
@@ -106,6 +115,32 @@ class ListenBrainzApiImpl(
                 parameter("max_ts", maxTimestamp)
             }
         }.body()
+    }
+
+    @Serializable
+    private data class ManualMappingBody(
+        @SerialName("recording_msid")
+        val recordingMessyBrainzId: String,
+        @SerialName("recording_mbid")
+        val recordingMusicBrainzId: String,
+    )
+
+    override suspend fun submitManualMapping(
+        recordingMessyBrainzId: String,
+        recordingMusicBrainzId: String,
+    ) {
+        httpClient.post {
+            url {
+                appendPathSegments("metadata/submit_manual_mapping/")
+                header("Content-Type", "application/json")
+                setBody(
+                    ManualMappingBody(
+                        recordingMessyBrainzId = recordingMessyBrainzId,
+                        recordingMusicBrainzId = recordingMusicBrainzId,
+                    ),
+                )
+            }
+        }
     }
 
     override suspend fun getManualMapping(recordingMessyBrainzId: String): ManualMappingResponse {

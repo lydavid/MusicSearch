@@ -24,6 +24,11 @@ interface ListensListRepository {
         query: String,
     ): Flow<PagingData<RecordingFacet>>
 
+    suspend fun submitManualMapping(
+        recordingMessyBrainzId: String,
+        rawRecordingMusicBrainzId: String,
+    ): ActionableResult
+
     suspend fun refreshMapping(
         recordingMessyBrainzId: String,
     ): ActionableResult

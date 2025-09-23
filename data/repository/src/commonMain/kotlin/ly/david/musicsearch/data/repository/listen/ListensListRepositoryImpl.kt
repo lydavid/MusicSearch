@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.common.toUUID
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.ErrorType
@@ -26,6 +27,7 @@ import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.recording.RecordingFacet
+import kotlin.uuid.ExperimentalUuidApi
 
 class ListensListRepositoryImpl(
     private val listenDao: ListenDao,
@@ -135,6 +137,35 @@ class ListensListRepositoryImpl(
                 )
             },
         ).flow
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    override suspend fun submitManualMapping(
+        recordingMessyBrainzId: String,
+        rawRecordingMusicBrainzId: String,
+    ): ActionableResult {
+        return try {
+            val recordingId = rawRecordingMusicBrainzId.toUUID()
+            listenBrainzApi.submitManualMapping(
+                recordingMessyBrainzId = recordingMessyBrainzId,
+                recordingMusicBrainzId = recordingId.toHexDashString(),
+            )
+
+            refreshMapping(recordingMessyBrainzId = recordingMessyBrainzId)
+        } catch (ex: IllegalArgumentException) {
+            ActionableResult(
+                message = "Invalid MusicBrainz ID: ${ex.message}",
+            )
+        } catch (ex: HandledException) {
+            ActionableResult(
+                message = when {
+                    ex.errorResolution == ErrorResolution.Login ->
+                        "You need to be logged in to submit manual mappings"
+
+                    else -> ex.message ?: "Failed to submit manual mapping"
+                },
+            )
+        }
     }
 
     override suspend fun refreshMapping(

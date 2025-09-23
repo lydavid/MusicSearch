@@ -1,6 +1,8 @@
 package ly.david.musicsearch.shared.domain.common
 
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 private const val YEAR_FIRST_INDEX = 0
 private const val YEAR_LAST_INDEX = 4
@@ -111,3 +113,20 @@ private fun StringBuilder.appendCodePoint(codePoint: Int): StringBuilder {
 
 fun String.appendOptionalText(optionalText: String?): String =
     this + optionalText.transformThisIfNotNullOrEmpty { " ($it)" }
+
+/**
+ * Converts possibly messy user-inputted MusicBrainz ID or URL to a UUID.
+ */
+@OptIn(ExperimentalUuidApi::class)
+fun String.toUUID(): Uuid {
+    val uuidRegex = Regex(
+        pattern = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+        option = RegexOption.IGNORE_CASE,
+    )
+    val matchResult = uuidRegex.find(this)
+    val uuidString = matchResult?.value?.lowercase()
+
+    // .orEmpty() would say the input string is "" which be misleading,
+    // so let this Uuid library give us its error with the original string when we fail to match.
+    return Uuid.parse(uuidString ?: this)
+}

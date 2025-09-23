@@ -31,16 +31,14 @@ private const val CONTENT_WEIGHT = 0.8f
 @Composable
 fun TextInput(
     instructions: AnnotatedString,
-    textLabel: String,
-    textHint: String,
+    textLabel: String?,
+    textHint: String?,
     text: String,
     buttonText: String,
     modifier: Modifier = Modifier,
     onTextChange: (String) -> Unit = {},
     onButtonClick: () -> Unit = {},
 ) {
-    val focusRequester = remember { FocusRequester() }
-
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -58,34 +56,12 @@ fun TextInput(
                 text = instructions,
                 textAlign = TextAlign.Center,
             )
-            TextField(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxWidth(),
-                shape = RectangleShape,
-                value = text,
-                label = { Text(textLabel) },
-                placeholder = { Text(textHint) },
-                maxLines = 1,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                trailingIcon = {
-                    if (text.isEmpty()) return@TextField
-                    IconButton(onClick = {
-                        onTextChange("")
-                        focusRequester.requestFocus()
-                    }) {
-                        Icon(
-                            CustomIcons.Clear,
-                            contentDescription = "Clear",
-                        )
-                    }
-                },
-                onValueChange = { newText ->
-                    if (!newText.contains("\n")) {
-                        onTextChange(newText)
-                    }
-                },
+            SingleLineTextField(
+                text = text,
+                textLabel = textLabel,
+                textHint = textHint,
+                onTextChange = onTextChange,
+                modifier = Modifier.padding(top = 16.dp),
             )
             Button(
                 modifier = Modifier
@@ -97,4 +73,43 @@ fun TextInput(
         }
         Spacer(modifier = Modifier.weight(SPACER_WEIGHT))
     }
+}
+
+@Composable
+fun SingleLineTextField(
+    text: String,
+    textLabel: String?,
+    textHint: String?,
+    onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val focusRequester = remember { FocusRequester() }
+    TextField(
+        modifier = modifier
+            .fillMaxWidth(),
+        shape = RectangleShape,
+        value = text,
+        label = textLabel?.let { { Text(textLabel) } },
+        placeholder = textHint?.let { { Text(textHint) } },
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        trailingIcon = {
+            if (text.isEmpty()) return@TextField
+            IconButton(onClick = {
+                onTextChange("")
+                focusRequester.requestFocus()
+            }) {
+                Icon(
+                    CustomIcons.Clear,
+                    contentDescription = "Clear",
+                )
+            }
+        },
+        onValueChange = { newText ->
+            if (!newText.contains("\n")) {
+                onTextChange(newText)
+            }
+        },
+    )
 }

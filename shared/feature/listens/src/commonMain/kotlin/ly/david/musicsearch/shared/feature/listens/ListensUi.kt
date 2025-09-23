@@ -60,6 +60,7 @@ import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.getIcon
+import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Check
@@ -270,6 +271,14 @@ internal fun ListensUi(
                         onFilterByRecordingClick = {
                             eventSink(ListensUiEvent.ToggleRecordingFacet(it))
                         },
+                        onSubmitMapping = { recordingMessyBrainzId, recordingId ->
+                            eventSink(
+                                ListensUiEvent.SubmitMapping(
+                                    recordingMessyBrainzId = recordingMessyBrainzId,
+                                    recordingMusicBrainzId = recordingId,
+                                ),
+                            )
+                        },
                         onRefreshMapping = {
                             eventSink(ListensUiEvent.RefreshMapping(it))
                         },
@@ -469,6 +478,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     allowedToEdit: Boolean,
     onGoToReleaseClick: (releaseId: String) -> Unit = {},
     onFilterByRecordingClick: (recordingId: String) -> Unit = {},
+    onSubmitMapping: (recordingMessyBrainzId: String, recordingId: String) -> Unit = { _, _ -> },
     onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
@@ -557,6 +567,15 @@ internal fun ListenAdditionalActionsBottomSheetContent(
         )
 
         if (allowedToEdit) {
+            HorizontalDivider()
+
+            LinkWithMusicBrainzItem(
+                onSubmitMapping = {
+                    onSubmitMapping(listen.recordingMessybrainzId, it)
+                    onDismiss()
+                },
+            )
+
             ClickableItem(
                 title = "Refresh mapping",
                 startIcon = CustomIcons.Refresh,
@@ -569,4 +588,40 @@ internal fun ListenAdditionalActionsBottomSheetContent(
 
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
     }
+}
+
+@Composable
+private fun LinkWithMusicBrainzItem(
+    onSubmitMapping: (recordingMessyBrainzId: String) -> Unit,
+) {
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+    var mbid by rememberSaveable { mutableStateOf("") }
+    if (showDialog) {
+        DialogWithCloseButton(
+            onDismiss = { showDialog = false },
+        ) {
+            TextInput(
+                instructions = buildAnnotatedString {
+                    append("Link listen with MusicBrainz to get metadata")
+                },
+                text = mbid,
+                textLabel = "MusicBrainz URL/MBID",
+                textHint = null,
+                onTextChange = { mbid = it },
+                buttonText = "Add mapping",
+                onButtonClick = {
+                    onSubmitMapping(mbid)
+                },
+                modifier = Modifier,
+            )
+        }
+    }
+
+    ClickableItem(
+        title = "Link with MusicBrainz",
+        startIcon = CustomIcons.AddLink,
+        onClick = {
+            showDialog = true
+        },
+    )
 }

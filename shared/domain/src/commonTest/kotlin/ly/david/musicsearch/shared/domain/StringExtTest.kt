@@ -3,8 +3,11 @@ package ly.david.musicsearch.shared.domain
 import ly.david.musicsearch.shared.domain.common.getYear
 import ly.david.musicsearch.shared.domain.common.prependHttps
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
+import ly.david.musicsearch.shared.domain.common.toUUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.uuid.ExperimentalUuidApi
 
 internal class StringExtTest {
 
@@ -74,6 +77,48 @@ internal class StringExtTest {
             "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185",
             "coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".prependHttps(),
         )
+    }
+    // endregion
+
+    // region toUUID
+    @OptIn(ExperimentalUuidApi::class)
+    @Test
+    fun `valid UUIDs`() {
+        assertEquals(
+            "f81cbdf9-4390-4738-b6b2-124f5bceafe3",
+            "f81cbdf9-4390-4738-b6b2-124f5bceafe3".toUUID().toHexDashString(),
+        )
+        assertEquals(
+            "f81cbdf9-4390-4738-b6b2-124f5bceafe3",
+            "F81CBDF9-4390-4738-B6B2-124F5BCEAFE3".toUUID().toHexDashString(),
+        )
+        assertEquals(
+            "862e2705-220f-4029-bed5-b46c2ed0af24",
+            "https://musicbrainz.org/recording/862e2705-220f-4029-bed5-b46c2ed0af24".toUUID().toHexDashString(),
+        )
+        assertEquals(
+            "862e2705-220f-4029-bed5-b46c2ed0af24",
+            "https://musicbrainz.org/recording/862e2705-220f-4029-bed5-b46c2ed0af24/".toUUID().toHexDashString(),
+        )
+        assertEquals(
+            "993169b9-ed8e-49aa-8f6a-81e8bbcf84ba",
+            "listenbrainz.org/track/993169b9-ed8e-49aa-8f6a-81e8bbcf84ba".toUUID().toHexDashString(),
+        )
+        assertEquals(
+            "f81cbdf9-4390-4738-b6b2-124f5bceafe3",
+            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".toUUID()
+                .toHexDashString(),
+        )
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    @Test
+    fun `invalid UUIDs`() {
+        assertFailsWith<IllegalArgumentException> { "".toUUID() }
+        assertFailsWith<IllegalArgumentException> { " ".toUUID() }
+        assertFailsWith<IllegalArgumentException> { "\n".toUUID() }
+        assertFailsWith<IllegalArgumentException> { "f81cbdf9-4390-4738-b6b2-124f5bceafe".toUUID() }
+        assertFailsWith<IllegalArgumentException> { "f81cbdf9-4390-4738-b6b2-124f5bceafex".toUUID() }
     }
     // endregion
 }

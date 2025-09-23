@@ -117,6 +117,15 @@ internal class ListensPresenter(
                     }
                 }
 
+                is ListensUiEvent.SubmitMapping -> {
+                    coroutineScope.launch {
+                        actionableResult = listensListRepository.submitManualMapping(
+                            recordingMessyBrainzId = event.recordingMessyBrainzId,
+                            rawRecordingMusicBrainzId = event.recordingMusicBrainzId,
+                        )
+                    }
+                }
+
                 is ListensUiEvent.RefreshMapping -> {
                     coroutineScope.launch {
                         actionableResult = listensListRepository.refreshMapping(
@@ -196,6 +205,11 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
 
     data class ToggleRecordingFacet(
         val recordingId: String,
+    ) : ListensUiEvent
+
+    data class SubmitMapping(
+        val recordingMessyBrainzId: String,
+        val recordingMusicBrainzId: String,
     ) : ListensUiEvent
 
     data class RefreshMapping(
