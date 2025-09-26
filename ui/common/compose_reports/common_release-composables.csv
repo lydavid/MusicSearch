@@ -172,6 +172,7 @@ ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem,ReleaseGroupLis
 ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit,RecordVisit,1,0,0,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.series.SeriesListItem,SeriesListItem,1,1,1,0,0,0,0,0,1,5,
 ly.david.musicsearch.ui.common.text.TextInput,TextInput,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.ui.common.text.SingleLineTextField,SingleLineTextField,1,1,1,0,0,0,0,0,5,2,
 ly.david.musicsearch.ui.common.text.TextWithHeading,TextWithHeading,1,1,1,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.text.TextWithIcon,TextWithIcon,1,1,1,0,0,0,1,0,2,2,
 ly.david.musicsearch.ui.common.theme.BaseTheme,BaseTheme,1,1,1,0,0,0,1,0,4,7,

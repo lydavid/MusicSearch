@@ -477,13 +477,20 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextInput(
   stable instructions: AnnotatedString
-  stable textLabel: String
-  stable textHint: String
+  stable textLabel: String?
+  stable textHint: String?
   stable text: String
   stable buttonText: String
   stable modifier: Modifier? = @static <expression>
   stable onTextChange: Function1<String, Unit>? = @static <expression>
   stable onButtonClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
+  stable text: String
+  stable textLabel: String?
+  stable textHint: String?
+  stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextWithHeading(
   stable heading: String

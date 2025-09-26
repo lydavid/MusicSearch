@@ -1,11 +1,11 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryReleaseGroup(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+  stable imageUrl: String? = @static "www.example.com/image"
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryRelease(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+  stable imageUrl: String? = @static "www.example.com/image"
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryArtist(
-  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+  stable imageUrl: String? = @static "www.example.com/image"
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.internal.HistoryListItem(
   lookupHistory: LookupHistoryListItemModel
