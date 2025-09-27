@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common.topappbar
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +15,7 @@ fun TabsBar(
     onSelectTabIndex: (Int) -> Unit = {},
 ) {
     if (tabsTitle.isNotEmpty()) {
-        ScrollableTabRow(
+        SecondaryScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             modifier = modifier,
         ) {
