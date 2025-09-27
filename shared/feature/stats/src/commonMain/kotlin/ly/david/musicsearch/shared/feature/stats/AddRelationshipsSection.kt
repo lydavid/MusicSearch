@@ -58,8 +58,8 @@ internal fun LazyListScope.addRelationshipsSection(
         lastUpdated?.let { lastUpdated ->
             LastUpdatedText(
                 lastUpdated = lastUpdated,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 now = now,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
         }
         Spacer(modifier = Modifier.padding(top = 16.dp))

@@ -17,14 +17,13 @@ import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
-import kotlin.time.Clock
 import kotlin.time.Instant
 
 @Composable
 fun LastUpdatedFooterItem(
     lastUpdated: Instant,
+    now: Instant,
     modifier: Modifier = Modifier,
-    now: Instant = Clock.System.now(),
 ) {
     Column(
         modifier = modifier
@@ -49,8 +48,8 @@ fun LastUpdatedFooterItem(
 @Composable
 fun LastUpdatedText(
     lastUpdated: Instant,
+    now: Instant,
     modifier: Modifier = Modifier,
-    now: Instant = Clock.System.now(),
 ) {
     val strings = LocalStrings.current
     SelectionContainer(modifier = modifier) {

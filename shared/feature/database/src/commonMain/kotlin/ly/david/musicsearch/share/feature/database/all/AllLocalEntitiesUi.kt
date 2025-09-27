@@ -37,6 +37,8 @@ import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 @Suppress("CyclomaticComplexMethod")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +46,7 @@ import ly.david.musicsearch.ui.common.topappbar.toTab
 internal fun AllLocalEntitiesUi(
     state: AllLocalEntitiesUiState,
     modifier: Modifier = Modifier,
+    now: Instant = Clock.System.now(),
 ) {
     val entity = state.entity
     val eventSink = state.eventSink
@@ -259,6 +262,7 @@ internal fun AllLocalEntitiesUi(
         }
         EntitiesPagingListUi(
             uiState = uiState,
+            now = now,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()

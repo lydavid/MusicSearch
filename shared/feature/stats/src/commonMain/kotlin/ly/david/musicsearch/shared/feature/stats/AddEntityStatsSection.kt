@@ -13,13 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal fun LazyListScope.addEntityStatsSection(
     entityStats: EntityStats,
@@ -81,8 +81,8 @@ internal fun LazyListScope.addEntityStatsSection(
         entityStats.lastUpdated?.let { lastUpdated ->
             LastUpdatedText(
                 lastUpdated = lastUpdated,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 now = now,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
         }
         Spacer(modifier = Modifier.padding(top = 16.dp))

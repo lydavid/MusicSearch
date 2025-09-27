@@ -45,6 +45,8 @@ import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 /**
  * A single MusicBrainz collection.
@@ -58,6 +60,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal fun CollectionUi(
     state: CollectionUiState,
     modifier: Modifier = Modifier,
+    now: Instant = Clock.System.now(),
 ) {
     val collection = state.collection
     val entity = collection?.entity
@@ -351,6 +354,7 @@ internal fun CollectionUi(
             }
             EntitiesPagingListUi(
                 uiState = uiState,
+                now = now,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()

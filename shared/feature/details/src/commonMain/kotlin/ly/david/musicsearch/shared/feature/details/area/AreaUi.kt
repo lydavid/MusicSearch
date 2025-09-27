@@ -19,8 +19,6 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.time.Clock
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -127,7 +125,6 @@ internal fun AreaUiInternal(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
     strings: AppStrings = LocalStrings.current,
-    now: Instant = Clock.System.now(),
     additionalActions: @Composable () -> Unit = {},
     additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
     onEditCollectionClick: (String) -> Unit = {},

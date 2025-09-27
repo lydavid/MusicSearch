@@ -37,16 +37,15 @@ import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
-import kotlin.time.Clock
 import kotlin.time.Instant
 
 @Suppress("CyclomaticComplexMethod")
 @Composable
 fun EntitiesPagingListUi(
     uiState: EntitiesPagingListUiState,
+    now: Instant,
     modifier: Modifier = Modifier,
     selectedIds: ImmutableSet<String> = persistentSetOf(),
-    now: Instant = Clock.System.now(),
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},

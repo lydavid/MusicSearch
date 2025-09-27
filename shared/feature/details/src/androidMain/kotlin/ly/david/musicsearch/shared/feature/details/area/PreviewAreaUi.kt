@@ -190,23 +190,6 @@ internal val events = MutableStateFlow(
                     begin = "1972-08",
                 ),
             ),
-            EventListItemModel(
-                id = "bette_midler_massey_hall_1973",
-                name = "Bette Midler at Massey Hall",
-                type = "Concert",
-                lifeSpan = LifeSpanUiModel(
-                    begin = "1973-02-26",
-                ),
-            ),
-            EventListItemModel(
-                id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
-                name = "1973-03-06: Vancouver Gardens, Vancouver, BC, Canada",
-                type = "Concert",
-                lifeSpan = LifeSpanUiModel(
-                    begin = "1973-03-06",
-                ),
-                cancelled = true,
-            ),
             LastUpdatedFooter(
                 lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
             ),
@@ -260,21 +243,6 @@ internal val labels = MutableStateFlow(
                 name = "Audio Research Records",
                 type = "Original Production",
             ),
-            LabelListItemModel(
-                id = "amp_records",
-                name = "AMP Records",
-                disambiguation = "Canadian punk label",
-            ),
-            LabelListItemModel(
-                id = "arbutus_records",
-                name = "Arbutus Records",
-                type = "Publisher",
-            ),
-            LabelListItemModel(
-                id = "audira_music",
-                name = "Audira Music",
-                type = "Publisher",
-            ),
             LastUpdatedFooter(
                 lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
             ),
@@ -294,7 +262,7 @@ internal val places = MutableStateFlow(
             PlaceListItemModel(
                 id = "14_blue_records",
                 name = "14 Blue Records",
-                address = "", // Address not provided in the image
+                address = "",
             ),
             PlaceListItemModel(
                 id = "299_queen_street_west",
@@ -307,7 +275,7 @@ internal val places = MutableStateFlow(
                 id = "4_walls",
                 name = "4 Walls",
                 type = "Studio",
-                address = "", // Address not provided in the image
+                address = "",
             ),
             PlaceListItemModel(
                 id = "6_nassau",
@@ -318,18 +286,6 @@ internal val places = MutableStateFlow(
                     begin = "2009-02",
                     end = "2016-06-30",
                 ),
-            ),
-            PlaceListItemModel(
-                id = "612_collective",
-                name = "612 Collective",
-                type = "Venue",
-                address = "", // Address not provided in the image
-            ),
-            PlaceListItemModel(
-                id = "669_studios",
-                name = "669 Studios",
-                type = "Studio",
-                address = "", // Address not provided in the image
             ),
             PlaceListItemModel(
                 id = "86th_st_music_hall",
@@ -560,7 +516,6 @@ internal fun PreviewAreaDetails() {
                 ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -578,7 +533,6 @@ internal fun PreviewAreaDetailsCollapsed() {
                 ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -588,8 +542,7 @@ internal fun PreviewAreaDetailsCollapsed() {
 internal fun PreviewAreaDetailsError() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state =
-            detailsUiState.copy(
+            state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     handledException = HandledException(
                         userMessage = "Network error. Check your internet connection.",
@@ -598,7 +551,6 @@ internal fun PreviewAreaDetailsError() {
                 ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -608,33 +560,10 @@ internal fun PreviewAreaDetailsError() {
 internal fun PreviewAreaRelationships() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -644,33 +573,10 @@ internal fun PreviewAreaRelationships() {
 internal fun PreviewAreaArtists() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.ARTISTS,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -680,33 +586,10 @@ internal fun PreviewAreaArtists() {
 internal fun PreviewAreaEvents() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.EVENTS,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -716,33 +599,10 @@ internal fun PreviewAreaEvents() {
 internal fun PreviewAreaLabels() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.LABELS,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -752,33 +612,10 @@ internal fun PreviewAreaLabels() {
 internal fun PreviewAreaReleases() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -788,33 +625,10 @@ internal fun PreviewAreaReleases() {
 internal fun PreviewAreaPlaces() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.PLACES,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
@@ -825,33 +639,10 @@ internal fun PreviewAreaPlaces() {
 internal fun PreviewAreaStats() {
     PreviewWithSharedElementTransition {
         AreaUiInternal(
-            state = DetailsUiState(
-                tabs = areaTabs,
+            state = detailsUiState.copy(
                 selectedTab = Tab.STATS,
-                detailsModel = country,
-                allEntitiesListUiState = AllEntitiesListUiState(
-                    artistsListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianArtists,
-                    ),
-                    eventsListUiState = EntitiesListUiState(
-                        pagingDataFlow = events,
-                    ),
-                    labelsListUiState = EntitiesListUiState(
-                        pagingDataFlow = labels,
-                    ),
-                    placesListUiState = EntitiesListUiState(
-                        pagingDataFlow = places,
-                    ),
-                    releasesListUiState = EntitiesListUiState(
-                        pagingDataFlow = canadianReleases,
-                    ),
-                    relationsUiState = RelationsUiState(
-                        pagingDataFlow = canadianRelations,
-                    ),
-                ),
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-            now = Instant.parse("2025-04-26T16:42:20Z"),
         )
     }
 }
