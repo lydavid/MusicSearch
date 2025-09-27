@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -133,8 +134,8 @@ internal fun RecordingUiInternal(
     onEditCollectionClick: (String) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val entity = MusicBrainzEntityType.RECORDING
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
+    val entityType = MusicBrainzEntityType.RECORDING
+    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
@@ -210,7 +211,7 @@ internal fun RecordingUiInternal(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
@@ -312,7 +313,10 @@ internal fun RecordingUiInternal(
                         eventSink(
                             DetailsUiEvent.GoToScreen(
                                 screen = ListensScreen(
-                                    recordingId = entityId,
+                                    entityFacet = MusicBrainzEntity(
+                                        id = entityId,
+                                        type = entityType,
+                                    ),
                                 ),
                             ),
                         )

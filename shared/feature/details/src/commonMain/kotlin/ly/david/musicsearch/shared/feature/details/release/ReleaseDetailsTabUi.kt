@@ -27,6 +27,8 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.label.LabelListItem
@@ -52,6 +54,7 @@ internal fun ReleaseDetailsTabUi(
     onCollapseExpandReleaseEvents: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
+    onSeeAllListensClick: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val strings = LocalStrings.current
@@ -201,6 +204,7 @@ internal fun ReleaseDetailsTabUi(
                 listenSection(
                     release = this@run,
                     now = detailsTabUiState.now,
+                    onSeeAllListensClick = onSeeAllListensClick,
                 )
             }
     }
@@ -255,6 +259,7 @@ private fun LazyListScope.releaseEventsSection(
 private fun LazyListScope.listenSection(
     release: ReleaseDetailsModel,
     now: Instant,
+    onSeeAllListensClick: () -> Unit,
 ) {
     if (release.listenCount != null) {
         item {
@@ -276,14 +281,13 @@ private fun LazyListScope.listenSection(
                 now = now,
             )
         }
-        // TODO: see all listens for a release
-//        item {
-//            ClickableItem(
-//                title = "See all listens",
-//                endIcon = CustomIcons.ChevronRight,
-//                onClick = {},
-//            )
-//        }
+        item {
+            ClickableItem(
+                title = "See all listens",
+                endIcon = CustomIcons.ChevronRight,
+                onClick = onSeeAllListensClick,
+            )
+        }
         item {
             UrlListItem(
                 relation = RelationListItemModel(

@@ -57,7 +57,14 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     @Test
     fun recordingFacetBottomSheetContent() {
         snapshot {
-            PreviewListensUiRecordingFacetBottomSheetContent()
+            PreviewFacetsBottomSheetContentRecordings()
+        }
+    }
+
+    @Test
+    fun releaseFacetBottomSheetContent() {
+        snapshot {
+            PreviewFacetsBottomSheetContentReleases()
         }
     }
 }

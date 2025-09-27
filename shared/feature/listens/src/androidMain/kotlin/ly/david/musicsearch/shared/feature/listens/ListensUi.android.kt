@@ -10,7 +10,8 @@ import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
-import ly.david.musicsearch.shared.domain.recording.RecordingFacet
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
 import kotlin.time.Instant
 
@@ -84,8 +85,11 @@ internal fun PreviewListensUiWithRecordingFacet() {
                 state = ListensUiState(
                     username = "user",
                     listensPagingDataFlow = listens,
-                    recordingFacetUiState = RecordingFacetUiState(
-                        selectedRecordingFacetId = "2",
+                    facetsUiState = FacetsUiState(
+                        selectedEntityFacet = MusicBrainzEntity(
+                            id = "2",
+                            type = MusicBrainzEntityType.RECORDING,
+                        ),
                     ),
                 ),
             )
@@ -198,46 +202,6 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
                 ),
                 allowedToEdit = false,
                 filteringByThisRecording = true,
-            )
-        }
-    }
-}
-
-@PreviewLightDark
-@Composable
-internal fun PreviewListensUiRecordingFacetBottomSheetContent() {
-    PreviewWithSharedElementTransition {
-        Surface {
-            val recordingFacets = MutableStateFlow(
-                PagingData.from(
-                    data = listOf(
-                        RecordingFacet(
-                            id = "",
-                            name = "",
-                            formattedArtistCredits = "",
-                            count = 123,
-                        ),
-                        RecordingFacet(
-                            id = "1",
-                            name = "COLORS",
-                            formattedArtistCredits = "FLOW",
-                            count = 12,
-                        ),
-                        RecordingFacet(
-                            id = "2",
-                            name = "Color Your Night",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            count = 9,
-                        ),
-                    ),
-                ),
-            )
-            RecordingFacetBottomSheetContent(
-                recordingFacetUiState = RecordingFacetUiState(
-                    selectedRecordingFacetId = "2",
-                    query = "Color",
-                    recordingFacetsPagingDataFlow = recordingFacets,
-                ),
             )
         }
     }

@@ -3,6 +3,8 @@ package ly.david.musicsearch.ui.common.topappbar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -50,6 +52,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -137,12 +140,25 @@ internal fun TopAppBarWithFilterInternal(
 ) {
     val strings = LocalStrings.current
 
+    val enterTransition = when (topAppBarFilterState.transitionType) {
+        TopAppBarFilterState.TransitionType.Vertical -> expandVertically()
+        TopAppBarFilterState.TransitionType.Horizontal -> slideIn(
+            initialOffset = { IntOffset(it.width, 0) },
+        )
+    }
+    val exitTransition = when (topAppBarFilterState.transitionType) {
+        TopAppBarFilterState.TransitionType.Vertical -> shrinkVertically()
+        TopAppBarFilterState.TransitionType.Horizontal -> slideOut(
+            targetOffset = { IntOffset(it.width, 0) },
+        )
+    }
+
     Box(modifier = modifier) {
         AnimatedVisibility(
             visible = topAppBarFilterState.isFilterMode,
             modifier = Modifier.zIndex(1f),
-            enter = expandVertically(),
-            exit = shrinkVertically(),
+            enter = enterTransition,
+            exit = exitTransition,
         ) {
             val focusRequester = remember { FocusRequester() }
             val focusManager = LocalFocusManager.current
@@ -156,9 +172,16 @@ internal fun TopAppBarWithFilterInternal(
                 focusRequester.requestFocus()
             }
 
+            val topPadding = when (topAppBarFilterState.transitionType) {
+                TopAppBarFilterState.TransitionType.Vertical -> {
+                    WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
+                }
+
+                TopAppBarFilterState.TransitionType.Horizontal -> 0.dp
+            }
             Surface(
                 modifier = Modifier.padding(
-                    top = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding(),
+                    top = topPadding,
                 ),
             ) {
                 Column {

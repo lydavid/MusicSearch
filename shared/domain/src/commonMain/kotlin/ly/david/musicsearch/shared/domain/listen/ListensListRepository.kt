@@ -4,13 +4,15 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ActionableResult
-import ly.david.musicsearch.shared.domain.recording.RecordingFacet
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.list.FacetListItem
 
 interface ListensListRepository {
     fun observeListens(
         username: String,
         query: String,
-        recordingId: String?,
+        entityFacet: MusicBrainzEntity?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -19,10 +21,11 @@ interface ListensListRepository {
 
     fun observeUnfilteredCountOfListensByUser(username: String): Flow<Long?>
 
-    fun observeRecordingFacets(
+    fun observeFacets(
+        entityType: MusicBrainzEntityType,
         username: String,
         query: String,
-    ): Flow<PagingData<RecordingFacet>>
+    ): Flow<PagingData<FacetListItem>>
 
     suspend fun submitManualMapping(
         recordingMessyBrainzId: String,

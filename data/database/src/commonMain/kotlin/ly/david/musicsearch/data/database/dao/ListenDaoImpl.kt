@@ -13,11 +13,13 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
-import ly.david.musicsearch.shared.domain.recording.RecordingFacet
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class ListenDaoImpl(
     database: Database,
@@ -168,14 +170,17 @@ class ListenDaoImpl(
     override fun getListensByUser(
         username: String,
         query: String,
-        recordingId: String?,
+        facetEntity: MusicBrainzEntity?,
     ): PagingSource<Int, ListenListItemModel> {
         val queryWithWildcards = "%$query%"
+        val recordingId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RECORDING }?.id
+        val releaseId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RELEASE }?.id
         return QueryPagingSource(
             countQuery = listenTransacter.getCountOfListensByUser(
                 username = username,
                 query = queryWithWildcards,
                 recordingId = recordingId,
+                releaseId = releaseId,
             ),
             transacter = listenTransacter,
             context = coroutineDispatchers.io,
@@ -184,6 +189,7 @@ class ListenDaoImpl(
                     username = username,
                     query = queryWithWildcards,
                     recordingId = recordingId,
+                    releaseId = releaseId,
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToListenListItemModel,
@@ -192,28 +198,53 @@ class ListenDaoImpl(
         )
     }
 
-    override fun getRecordingFacetsByUser(
+    override fun getFacetsByUser(
+        entityType: MusicBrainzEntityType,
         username: String,
         query: String,
-    ): PagingSource<Int, RecordingFacet> {
+    ): PagingSource<Int, FacetListItem> {
         val queryWithWildcards = "%$query%"
-        return QueryPagingSource(
-            countQuery = listenTransacter.getCountOfRecordingFacets(
-                username = username,
-                query = queryWithWildcards,
-            ),
-            transacter = listenTransacter,
-            context = coroutineDispatchers.io,
-            queryProvider = { limit, offset ->
-                listenTransacter.getRecordingFacets(
-                    username = username,
-                    query = queryWithWildcards,
-                    limit = limit,
-                    offset = offset,
-                    mapper = ::mapToRecordingFacet,
+        return when (entityType) {
+            MusicBrainzEntityType.RECORDING -> {
+                QueryPagingSource(
+                    countQuery = listenTransacter.getCountOfRecordingFacets(
+                        username = username,
+                        query = queryWithWildcards,
+                    ),
+                    transacter = listenTransacter,
+                    context = coroutineDispatchers.io,
+                    queryProvider = { limit, offset ->
+                        listenTransacter.getRecordingFacets(
+                            username = username,
+                            query = queryWithWildcards,
+                            limit = limit,
+                            offset = offset,
+                            mapper = ::mapToRecordingFacet,
+                        )
+                    },
                 )
-            },
-        )
+            }
+            MusicBrainzEntityType.RELEASE -> {
+                QueryPagingSource(
+                    countQuery = listenTransacter.getCountOfReleaseFacets(
+                        username = username,
+                        query = queryWithWildcards,
+                    ),
+                    transacter = listenTransacter,
+                    context = coroutineDispatchers.io,
+                    queryProvider = { limit, offset ->
+                        listenTransacter.getReleaseFacets(
+                            username = username,
+                            query = queryWithWildcards,
+                            limit = limit,
+                            offset = offset,
+                            mapper = ::mapToReleaseFacet,
+                        )
+                    },
+                )
+            }
+            else -> error("Unsupported entity type: $entityType")
+        }
     }
 
     override fun getLatestTimestampMsByUser(username: String): Long? {
@@ -279,16 +310,37 @@ private fun mapToListenListItemModel(
     aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
+// TODO: include recording aliases in facets list
 private fun mapToRecordingFacet(
     recordingMusicbrainzId: String?,
     recordingName: String?,
     disambiguation: String?,
     artistCreditNames: String?,
     count: Long,
-) = RecordingFacet(
+) = FacetListItem(
     id = recordingMusicbrainzId.orEmpty(),
     name = recordingName.orEmpty(),
     disambiguation = disambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames.orEmpty(),
+    count = count.toInt(),
+)
+
+private fun mapToReleaseFacet(
+    recordingMusicbrainzId: String?,
+    recordingName: String?,
+    disambiguation: String?,
+    artistCreditNames: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
+    count: Long,
+) = FacetListItem(
+    id = recordingMusicbrainzId.orEmpty(),
+    name = recordingName.orEmpty(),
+    disambiguation = disambiguation.orEmpty(),
+    formattedArtistCredits = artistCreditNames.orEmpty(),
+    aliases = combineToAliases(
+        aliasNames = aliasNames,
+        aliasLocales = aliasLocales,
+    ),
     count = count.toInt(),
 )

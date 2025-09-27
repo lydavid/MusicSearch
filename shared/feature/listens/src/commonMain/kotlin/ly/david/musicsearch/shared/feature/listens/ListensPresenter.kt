@@ -22,15 +22,19 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toTab
 
 internal class ListensPresenter(
     private val screen: ListensScreen,
@@ -39,6 +43,7 @@ internal class ListensPresenter(
     private val listensListRepository: ListensListRepository,
     private val listenBrainzRepository: ListenBrainzRepository,
 ) : Presenter<ListensUiState> {
+    @Suppress("CyclomaticComplexMethod")
     @Composable
     override fun present(): ListensUiState {
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
@@ -51,8 +56,12 @@ internal class ListensPresenter(
         val totalCountOfListens: Long? by
             listensListRepository.observeUnfilteredCountOfListensByUser(browseUsername).collectAsRetainedState(null)
 
-        var selectedRecordingFacetId by rememberSaveable { mutableStateOf(screen.recordingId) }
-        var facetQuery by rememberSaveable { mutableStateOf("") }
+        var selectedEntityFacet by rememberSaveable { mutableStateOf(screen.entityFacet) }
+        val facetFilterState = rememberTopAppBarFilterState(
+            transitionType = TopAppBarFilterState.TransitionType.Horizontal,
+        )
+        val facetQuery = facetFilterState.filterText
+        var selectedTab by rememberSaveable { mutableStateOf(screen.entityFacet?.type?.toTab() ?: Tab.RECORDINGS) }
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val listensQuery = topAppBarFilterState.filterText
@@ -61,18 +70,17 @@ internal class ListensPresenter(
         val listens: Flow<PagingData<Identifiable>> by rememberRetained(
             browseUsername,
             listensQuery,
-            selectedRecordingFacetId,
+            selectedEntityFacet,
         ) {
             mutableStateOf(
                 listensListRepository.observeListens(
                     username = browseUsername,
                     query = listensQuery,
-                    recordingId = selectedRecordingFacetId,
+                    entityFacet = selectedEntityFacet,
                     stopPrepending = hasReachedLatest,
                     stopAppending = hasReachedOldest,
                     onReachedLatest = { hasReachedLatest = it },
-                    onReachedOldest = { hasReachedOldest = it },
-                ),
+                ) { hasReachedOldest = it },
             )
         }
 
@@ -105,15 +113,19 @@ internal class ListensPresenter(
                 }
 
                 is ListensUiEvent.UpdateFacetQuery -> {
-                    facetQuery = event.query
+                    facetFilterState.updateFilterText(event.query)
                 }
 
-                is ListensUiEvent.ToggleRecordingFacet -> {
-                    val newId = event.recordingId
-                    selectedRecordingFacetId = if (selectedRecordingFacetId == newId) {
+                is ListensUiEvent.UpdateFacetTab -> {
+                    selectedTab = event.tab
+                }
+
+                is ListensUiEvent.ToggleFacet -> {
+                    val newEntityFacet = event.entityFacet
+                    selectedEntityFacet = if (selectedEntityFacet == newEntityFacet) {
                         null
                     } else {
-                        newId
+                        newEntityFacet
                     }
                 }
 
@@ -143,10 +155,12 @@ internal class ListensPresenter(
             actionableResult = actionableResult,
             totalCountOfListens = totalCountOfListens,
             topAppBarFilterState = topAppBarFilterState,
-            recordingFacetUiState = RecordingFacetUiState(
-                selectedRecordingFacetId = selectedRecordingFacetId,
-                query = facetQuery,
-                recordingFacetsPagingDataFlow = listensListRepository.observeRecordingFacets(
+            facetsUiState = FacetsUiState(
+                selectedEntityFacet = selectedEntityFacet,
+                selectedTab = selectedTab,
+                filterState = facetFilterState,
+                facetsPagingDataFlow = listensListRepository.observeFacets(
+                    entityType = selectedTab.toMusicBrainzEntity() ?: MusicBrainzEntityType.RECORDING,
                     username = browseUsername,
                     query = facetQuery,
                 ),
@@ -167,7 +181,7 @@ internal data class ListensUiState(
     val actionableResult: ActionableResult? = null,
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    val recordingFacetUiState: RecordingFacetUiState = RecordingFacetUiState(),
+    val facetsUiState: FacetsUiState = FacetsUiState(),
     val lazyListState: LazyListState = LazyListState(),
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val browsingUserIsSameAsLoggedInUser: Boolean = false,
@@ -179,10 +193,11 @@ internal data class ListensUiState(
         get() = "$listenBrainzUrl/user/$username"
 }
 
-internal data class RecordingFacetUiState(
-    val selectedRecordingFacetId: String? = null,
-    val query: String = "",
-    val recordingFacetsPagingDataFlow: Flow<PagingData<RecordingFacet>> = emptyFlow(),
+internal data class FacetsUiState(
+    val selectedEntityFacet: MusicBrainzEntity? = null,
+    val selectedTab: Tab = Tab.RECORDINGS,
+    val filterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val facetsPagingDataFlow: Flow<PagingData<FacetListItem>> = emptyFlow(),
 )
 
 internal sealed interface ListensUiEvent : CircuitUiEvent {
@@ -203,8 +218,12 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
         val query: String,
     ) : ListensUiEvent
 
-    data class ToggleRecordingFacet(
-        val recordingId: String,
+    data class UpdateFacetTab(
+        val tab: Tab,
+    ) : ListensUiEvent
+
+    data class ToggleFacet(
+        val entityFacet: MusicBrainzEntity,
     ) : ListensUiEvent
 
     data class SubmitMapping(

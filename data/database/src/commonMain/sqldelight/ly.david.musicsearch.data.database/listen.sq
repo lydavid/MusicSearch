@@ -93,19 +93,31 @@ FROM (
   LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
   LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
     AND recording_alias.is_primary
+  LEFT JOIN track ON track.recording_id = recording.id
+  LEFT JOIN medium ON medium.id = track.medium_id
+  LEFT JOIN `release` ON `release`.id = medium.release_id
+  LEFT JOIN release_alias ON release_alias.release_id = `release`.id
+    AND release_alias.is_primary
   WHERE listen.username = :username
   AND CASE
     WHEN :recordingId IS NULL THEN 1
     ELSE recording_musicbrainz_id = :recordingId
   END
+  AND CASE
+    WHEN :releaseId IS NULL THEN 1
+    ELSE COALESCE(`release`.id, '') = :releaseId
+  END
   AND (
     recording.name LIKE :query OR
     recording.disambiguation LIKE :query OR
+    recording_alias.name LIKE :query OR
     listen.track_name LIKE :query OR
     artist_credit.name LIKE :query OR
     listen.artist_name LIKE :query OR
     listen.release_name LIKE :query OR
-    recording_alias.name LIKE :query
+    release.name LIKE :query OR
+    release.disambiguation LIKE :query OR
+    release_alias.name LIKE :query
   )
 );
 
@@ -141,20 +153,32 @@ LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit
 LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
 LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
   AND recording_alias.is_primary
+LEFT JOIN track ON track.recording_id = recording.id
+LEFT JOIN medium ON medium.id = track.medium_id
+LEFT JOIN `release` ON `release`.id = medium.release_id
+LEFT JOIN release_alias ON release_alias.release_id = `release`.id
+  AND release_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
 WHERE listen.username = :username
 AND CASE
   WHEN :recordingId IS NULL THEN 1
   ELSE recording_musicbrainz_id = :recordingId
 END
+AND CASE
+  WHEN :releaseId IS NULL THEN 1
+  ELSE COALESCE(`release`.id, '') = :releaseId
+END
 AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
+  recording_alias.name LIKE :query OR
   listen.track_name LIKE :query OR
   artist_credit.name LIKE :query OR
   listen.artist_name LIKE :query OR
   listen.release_name LIKE :query OR
-  recording_alias.name LIKE :query
+  release.name LIKE :query OR
+  release.disambiguation LIKE :query OR
+  release_alias.name LIKE :query
 )
 GROUP BY listened_at_ms, username, recording_messybrainz_id
 ORDER BY listened_at_ms DESC
@@ -201,5 +225,113 @@ AND (
   release_name LIKE :query
 )
 GROUP BY listen.recording_musicbrainz_id
+ORDER BY COUNT(*) DESC
+LIMIT :limit OFFSET :offset;
+
+getCountOfReleaseFacets:
+SELECT COUNT(*)
+FROM (
+  SELECT release_info.release_id
+  FROM (
+    SELECT DISTINCT
+      listen.listened_at_ms,
+      listen.recording_messybrainz_id,
+      listen.username,
+      COALESCE(`release`.id, '') AS release_id,
+      COALESCE(`release`.name, listen.release_name) AS release_name,
+      `release`.disambiguation AS release_disambiguation,
+      COALESCE(artist_credit.name, listen.artist_name) AS artistCreditNames
+    FROM listen
+    LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+    LEFT JOIN track ON track.recording_id = recording.id
+    LEFT JOIN medium ON medium.id = track.medium_id
+    LEFT JOIN `release` ON `release`.id = medium.release_id
+    LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = `release`.id
+    LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+    WHERE listen.username = :username
+  ) AS release_info
+  LEFT JOIN (
+    SELECT
+      release_alias.release_id,
+      GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+      GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+    FROM release_alias
+    WHERE release_alias.is_primary AND release_alias.release_id IN (
+      SELECT DISTINCT `release`.id
+      FROM listen
+      LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+      LEFT JOIN track ON track.recording_id = recording.id
+      LEFT JOIN medium ON medium.id = track.medium_id
+      LEFT JOIN `release` ON `release`.id = medium.release_id
+      WHERE listen.username = :username
+      AND `release`.id IS NOT NULL
+    )
+    GROUP BY release_alias.release_id
+  ) AS aliases ON aliases.release_id = release_info.release_id
+  WHERE (
+    release_info.release_name LIKE :query OR
+    release_info.release_disambiguation LIKE :query OR
+    release_info.artistCreditNames LIKE :query OR
+    aliases.alias_names LIKE :query OR
+    aliases.alias_locales LIKE :query
+  )
+  GROUP BY release_info.release_id
+) AS counted_releases;
+
+-- These are not from the release id attached to the listen because we want to be able to
+-- filter on all listens for any given release.
+getReleaseFacets:
+SELECT
+  release_info.release_id,
+  release_info.release_name,
+  release_info.release_disambiguation,
+  release_info.artistCreditNames,
+  aliases.alias_names,
+  aliases.alias_locales,
+  COUNT(*) AS listen_count
+FROM (
+  SELECT DISTINCT
+    listen.listened_at_ms,
+    listen.recording_messybrainz_id,
+    listen.username,
+    COALESCE(`release`.id, '') AS release_id,
+    COALESCE(`release`.name, listen.release_name) AS release_name,
+    `release`.disambiguation AS release_disambiguation,
+    COALESCE(artist_credit.name, listen.artist_name) AS artistCreditNames
+  FROM listen
+  LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+  LEFT JOIN track ON track.recording_id = recording.id
+  LEFT JOIN medium ON medium.id = track.medium_id
+  LEFT JOIN `release` ON `release`.id = medium.release_id
+  LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = `release`.id
+  LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+  WHERE listen.username = :username
+) AS release_info
+LEFT JOIN (
+  SELECT
+    release_alias.release_id,
+    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE release_alias.is_primary AND release_alias.release_id IN (
+    SELECT DISTINCT `release`.id
+    FROM listen
+    LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+    LEFT JOIN track ON track.recording_id = recording.id
+    LEFT JOIN medium ON medium.id = track.medium_id
+    LEFT JOIN `release` ON `release`.id = medium.release_id
+    WHERE listen.username = :username
+    AND `release`.id IS NOT NULL
+  )
+  GROUP BY release_alias.release_id
+) AS aliases ON aliases.release_id = release_info.release_id
+WHERE (
+  release_info.release_name LIKE :query OR
+  release_info.release_disambiguation LIKE :query OR
+  release_info.artistCreditNames LIKE :query OR
+  aliases.alias_names LIKE :query OR
+  aliases.alias_locales LIKE :query
+)
+GROUP BY release_info.release_id
 ORDER BY COUNT(*) DESC
 LIMIT :limit OFFSET :offset;

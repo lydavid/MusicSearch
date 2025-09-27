@@ -43,6 +43,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
 import org.junit.Rule
@@ -85,7 +86,7 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = TEST_USERNAME,
                     query = query,
-                    recordingId = null,
+                    entityFacet = null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
@@ -257,7 +258,10 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = TEST_USERNAME,
                     query = query,
-                    recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                    entityFacet = MusicBrainzEntity(
+                        id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                        type = MusicBrainzEntityType.RECORDING,
+                    ),
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
@@ -298,12 +302,14 @@ class ListensListRepositoryImplTest :
                 listensListRepository.observeListens(
                     username = TEST_USERNAME,
                     query = query,
-                    recordingId = "",
+                    entityFacet = MusicBrainzEntity(
+                        id = "",
+                        type = MusicBrainzEntityType.RECORDING,
+                    ),
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
-                    onReachedOldest = {},
-                )
+                ) {}
             },
             testCases = listOf(
                 FilterTestCase(

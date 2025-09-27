@@ -201,7 +201,7 @@ class RecordingRepositoryImplTest :
         listensListRepository.observeListens(
             username = TEST_USERNAME,
             query = "color",
-            recordingId = null,
+            entityFacet = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},
@@ -298,7 +298,7 @@ class RecordingRepositoryImplTest :
         listensListRepository.observeListens(
             username = TEST_USERNAME,
             query = "color",
-            recordingId = null,
+            entityFacet = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},

@@ -20,13 +20,15 @@ import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.ErrorType
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
-import ly.david.musicsearch.shared.domain.recording.RecordingFacet
 import kotlin.uuid.ExperimentalUuidApi
 
 class ListensListRepositoryImpl(
@@ -37,7 +39,7 @@ class ListensListRepositoryImpl(
     override fun observeListens(
         username: String,
         query: String,
-        recordingId: String?,
+        entityFacet: MusicBrainzEntity?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -49,7 +51,7 @@ class ListensListRepositoryImpl(
             pagerFlow(
                 username = username,
                 query = query,
-                recordingId = recordingId,
+                facetEntity = entityFacet,
                 stopPrepending = stopPrepending,
                 stopAppending = stopAppending,
                 onReachedLatest = onReachedLatest,
@@ -64,7 +66,7 @@ class ListensListRepositoryImpl(
     private fun pagerFlow(
         username: String,
         query: String,
-        recordingId: String?,
+        facetEntity: MusicBrainzEntity?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -82,12 +84,12 @@ class ListensListRepositoryImpl(
                 onReachedOldest = onReachedOldest,
             )
                 // Provide a smoother experience if we don't try to load data while the user is faceting on a recording
-                .takeIf { recordingId == null },
+                .takeIf { facetEntity == null },
             pagingSourceFactory = {
                 listenDao.getListensByUser(
                     username = username,
                     query = query,
-                    recordingId = recordingId,
+                    facetEntity = facetEntity,
                 )
             },
         ).flow.map { pagingData ->
@@ -124,14 +126,16 @@ class ListensListRepositoryImpl(
         return listenDao.observeUnfilteredCountOfListensByUser(username = username)
     }
 
-    override fun observeRecordingFacets(
+    override fun observeFacets(
+        entityType: MusicBrainzEntityType,
         username: String,
         query: String,
-    ): Flow<PagingData<RecordingFacet>> {
+    ): Flow<PagingData<FacetListItem>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             pagingSourceFactory = {
-                listenDao.getRecordingFacetsByUser(
+                listenDao.getFacetsByUser(
+                    entityType = entityType,
                     username = username,
                     query = query,
                 )

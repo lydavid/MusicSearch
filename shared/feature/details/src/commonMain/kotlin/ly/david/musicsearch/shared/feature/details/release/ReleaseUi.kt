@@ -22,6 +22,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -33,6 +34,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -60,8 +62,8 @@ internal fun ReleaseUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntityType.RELEASE
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
+    val entityType = MusicBrainzEntityType.RELEASE
+    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
@@ -137,7 +139,7 @@ internal fun ReleaseUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
@@ -155,7 +157,7 @@ internal fun ReleaseUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entity,
+                        entity = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -271,6 +273,18 @@ internal fun ReleaseUi(
                     },
                     onCollapseExpandAliases = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
+                    onSeeAllListensClick = {
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    entityFacet = MusicBrainzEntity(
+                                        id = entityId,
+                                        type = entityType,
+                                    ),
+                                ),
+                            ),
+                        )
                     },
                     onItemClick = { entity, id ->
                         eventSink(
