@@ -170,4 +170,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.0"
+version-catalog-update = "nl.littlerobots.version-catalog-update:1.0.1"
