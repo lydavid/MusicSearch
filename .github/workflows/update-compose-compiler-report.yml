@@ -59,8 +59,9 @@ jobs:
 
       - name: Commit
         run: |
-          git add '**\/compose_reports\/**'
+          git pull --rebase --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
+          git add '**\/compose_reports\/**'
           git commit -m "chore: update compose compiler report [skip ci]"
           git push

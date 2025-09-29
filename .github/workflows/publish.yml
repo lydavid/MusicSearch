@@ -167,15 +167,15 @@ jobs:
           mv output/icon.svg .
         if: always() && steps.get-next-version.outputs.new-release-published == 'true'
 
-      - run: git pull --rebase --autostash
-
       - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         if: always()
-        with:
-          commit_message: 'chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]'
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          file_pattern: 'gradle.properties download.html icon.svg'
+        run: |
+          git pull --rebase --autostash
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add gradle.properties download.html icon.svg
+          git commit -m "chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]"
+          git push
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
