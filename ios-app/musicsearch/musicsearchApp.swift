@@ -8,16 +8,18 @@
 import SwiftUI
 import shared
 import FirebaseCore
+import NSExceptionKtCrashlytics
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-
-  func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
-  ) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool {
+        FirebaseApp.configure()
+        NSExceptionKt.addReporter(.crashlytics(causedByStrategy: .append))
+        return true
+    }
 }
 
 

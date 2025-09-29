@@ -14,6 +14,7 @@
 		631D2DCC2BBF8AE700C6F58F /* musicsearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DCB2BBF8AE700C6F58F /* musicsearchTests.swift */; };
 		631D2DD62BBF8AE700C6F58F /* musicsearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */; };
 		631D2DD82BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */; };
+		6331ECBC2E8A2B99007B979C /* NSExceptionKtCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6331ECBB2E8A2B99007B979C /* NSExceptionKtCrashlytics */; };
 		63BCAF5E2E233BDA00015E39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63BCAF5D2E233BDA00015E39 /* GoogleService-Info.plist */; };
 		63BCAF642E233F9000015E39 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63BCAF632E233F9000015E39 /* FirebaseAnalytics */; };
 		63BCAF662E233F9000015E39 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63BCAF652E233F9000015E39 /* FirebaseCrashlytics */; };
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6331ECBC2E8A2B99007B979C /* NSExceptionKtCrashlytics in Frameworks */,
 				63BCAF662E233F9000015E39 /* FirebaseCrashlytics in Frameworks */,
 				63BCAF642E233F9000015E39 /* FirebaseAnalytics in Frameworks */,
 				63CD86352DC0FB94003F4B6D /* libsqlite3.tbd in Frameworks */,
@@ -240,6 +242,7 @@
 			mainGroup = 631D2DAE2BBF8AE600C6F58F;
 			packageReferences = (
 				63BCAF622E233F9000015E39 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				6331ECBA2E8A2B99007B979C /* XCRemoteSwiftPackageReference "NSExceptionKt" */,
 			);
 			productRefGroup = 631D2DB82BBF8AE600C6F58F /* Products */;
 			projectDirPath = "";
@@ -671,6 +674,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6331ECBA2E8A2B99007B979C /* XCRemoteSwiftPackageReference "NSExceptionKt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rickclephas/NSExceptionKt.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 		63BCAF622E233F9000015E39 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -682,6 +693,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6331ECBB2E8A2B99007B979C /* NSExceptionKtCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6331ECBA2E8A2B99007B979C /* XCRemoteSwiftPackageReference "NSExceptionKt" */;
+			productName = NSExceptionKtCrashlytics;
+		};
 		63BCAF632E233F9000015E39 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63BCAF622E233F9000015E39 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

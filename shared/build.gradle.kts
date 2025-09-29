@@ -59,7 +59,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation(libs.crashkios)
+                api(libs.nsexception)
             }
         }
 
@@ -67,6 +67,7 @@ kotlin {
             binaries.framework {
                 baseName = "shared"
                 isStatic = true
+                export(libs.nsexception)
             }
             binaries.configureEach {
                 // https://github.com/touchlab/SQLiter/issues/77

@@ -20,10 +20,6 @@ kotlin {
                 implementation(libs.timber)
             }
         }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.crashkios)
-            }
-        }
+        val iosMain by getting
     }
 }

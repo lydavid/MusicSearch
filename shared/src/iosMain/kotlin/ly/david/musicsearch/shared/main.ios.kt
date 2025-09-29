@@ -1,8 +1,6 @@
 package ly.david.musicsearch.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
-import co.touchlab.crashkios.crashlytics.enableCrashlytics
-import co.touchlab.crashkios.crashlytics.setCrashlyticsUnhandledExceptionHook
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
@@ -25,9 +23,6 @@ fun initializeApp() {
             sharedModule,
         )
     }.koin
-
-    enableCrashlytics()
-    setCrashlyticsUnhandledExceptionHook()
 }
 
 class AppComponent : KoinComponent {
