@@ -26,9 +26,17 @@ platform :ios do
     )
   end
 
-  lane :publish do
+  lane :publish do |options|
+    path = "ios-app/musicsearch.xcodeproj"
+    version = options[:version]
+    if version != nil
+      increment_version_number(
+        version_number: version,
+        xcodeproj: path
+      )
+    end
     build_app(
-      project: "ios-app/musicsearch.xcodeproj",
+      project: path,
       scheme: "Release",
       export_options: {
         "signingStyle": "automatic"
