@@ -17,3 +17,7 @@ SPOTIFY_CLIENT_SECRET=<your Spotify client secret>
 - Go to https://developer.spotify.com/dashboard
 - Create an app
 - Find the client id and secret from settings and copy them into `secrets.properties`
+
+## iOS
+- Create a [Fastlane JSON API key file](https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file) using data from https://appstoreconnect.apple.com/access/integrations/api 
+- Use [Fastlane Match](https://docs.fastlane.tools/actions/match/) to store certificates and profiles in a private repository: e.g. https://github.com/lydavid/musicsearch-fastlane-match

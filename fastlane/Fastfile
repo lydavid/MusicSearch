@@ -13,26 +13,36 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-default_platform(:android)
+default_platform(:ios)
 
-platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
+platform :ios do
+  lane :matchAppStore do
+    match(
+      type: "appstore",
+      api_key_path: "app_store_api_key.json",
+      app_identifier: "io.github.lydavid.musicsearch",
+      team_id: "29HRCHW674",
+      readonly: is_ci
+    )
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+  lane :publish do
+    build_app(
+      project: "ios-app/musicsearch.xcodeproj",
+      scheme: "Release",
+      export_options: {
+        "signingStyle": "automatic"
+      },
+      export_xcargs: "-allowProvisioningUpdates"
+    )
+    upload_to_app_store(
+      api_key_path: "app_store_api_key.json",
+      metadata_path: "fastlane/metadata/ios",
+      force: true,
+      submit_for_review: false,
+      automatic_release: true,
+      phased_release: true,
+      precheck_include_in_app_purchases: false
+    )
   end
 end

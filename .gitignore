@@ -24,6 +24,11 @@ GoogleService-Info.plist
 # Generated credentials from google-github-actions/auth
 gha-creds-*.json
 
+# Apple
+app_store_api_key.json
+musicsearch.app.dSYM.zip
+musicsearch.ipa
+
 # We only need this file for building locally.
 # CI environments will set these using ORG_GRADLE_PROJECT_ prefix as env.
 # MUSICBRAINZ_CLIENT_ID
