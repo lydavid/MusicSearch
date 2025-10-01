@@ -8,55 +8,55 @@ WHERE collection_entity.id = :collectionId;
 -- by entity
 
 getCountOfCollectedAreasByEntity:
-SELECT COUNT(DISTINCT areas_by_entity.entity_id)
+SELECT COUNT(DISTINCT areas_by_entity.area_id)
 FROM areas_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = areas_by_entity.area_id
 WHERE areas_by_entity.entity_id = :entityId;
 
 getCountOfCollectedArtistsByEntity:
-SELECT COUNT(DISTINCT artists_by_entity.entity_id)
+SELECT COUNT(DISTINCT artists_by_entity.artist_id)
 FROM artists_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = artists_by_entity.artist_id
 WHERE artists_by_entity.entity_id = :entityId;
 
 getCountOfCollectedEventsByEntity:
-SELECT COUNT(DISTINCT events_by_entity.entity_id)
+SELECT COUNT(DISTINCT events_by_entity.event_id)
 FROM events_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = events_by_entity.event_id
 WHERE events_by_entity.entity_id = :entityId;
 
 getCountOfCollectedLabelsByEntity:
-SELECT COUNT(DISTINCT labels_by_entity.entity_id)
+SELECT COUNT(DISTINCT labels_by_entity.label_id)
 FROM labels_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = labels_by_entity.label_id
 WHERE labels_by_entity.entity_id = :entityId;
 
 getCountOfCollectedPlacesByEntity:
-SELECT COUNT(DISTINCT area_place.area_id)
+SELECT COUNT(DISTINCT area_place.place_id)
 FROM area_place
 INNER JOIN collection_entity ON collection_entity.entity_id = area_place.place_id
 WHERE area_place.area_id = :entityId;
 
 getCountOfCollectedRecordingsByEntity:
-SELECT COUNT(DISTINCT recordings_by_entity.entity_id)
+SELECT COUNT(DISTINCT recordings_by_entity.recording_id)
 FROM recordings_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = recordings_by_entity.recording_id
 WHERE recordings_by_entity.entity_id = :entityId;
 
 getCountOfCollectedReleasesByEntity:
-SELECT COUNT(DISTINCT releases_by_entity.entity_id)
+SELECT COUNT(DISTINCT releases_by_entity.release_id)
 FROM releases_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = releases_by_entity.release_id
 WHERE releases_by_entity.entity_id = :entityId;
 
 getCountOfCollectedReleaseGroupsByEntity:
-SELECT COUNT(DISTINCT release_groups_by_entity.entity_id)
+SELECT COUNT(DISTINCT release_groups_by_entity.release_group_id)
 FROM release_groups_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = release_groups_by_entity.release_group_id
 WHERE release_groups_by_entity.entity_id = :entityId;
 
 getCountOfCollectedWorksByEntity:
-SELECT COUNT(DISTINCT works_by_entity.entity_id)
+SELECT COUNT(DISTINCT works_by_entity.work_id)
 FROM works_by_entity
 INNER JOIN collection_entity ON collection_entity.entity_id = works_by_entity.work_id
 WHERE works_by_entity.entity_id = :entityId;
