@@ -1,0 +1,50 @@
+name: Publish iOS
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    timeout-minutes: 60
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@f46300cd8952454b9f0a21a3d133d4bd5684cfc2 # v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: true
+
+      - name: Setup gradle
+        uses: ./.github/actions/setup
+
+      # Necessary because the debug and release version of the app has a different redirect
+      - name: Replace debug MusicBrainz client id/secret with release versions
+        run: |
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
+
+      - name: Replace application id
+        run: sed -i -e 's/\.debug//' shared/domain/src/commonMain/kotlin/ly/david/musicsearch/shared/domain/Constants.kt
+
+      - name: Create secret files
+        run: |
+          echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}" | base64 -d > ios-app/musicsearch/GoogleService-Info.plist
+          echo "${{ secrets.APP_STORE_API_KEY_JSON_BASE64 }}" | base64 -d > app_store_api_key.json
+
+      - name: Build and upload iOS app to App Store Connect
+        run: fastlane publish
+        env:
+          ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
+          ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
