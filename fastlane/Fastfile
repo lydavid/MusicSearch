@@ -36,7 +36,7 @@ platform :ios do
       export_options: {
         "signingStyle": "automatic"
       },
-      export_xcargs: "-allowProvisioningUpdates"
+      xcargs: "-allowProvisioningUpdates"
     )
     upload_to_app_store(
       api_key_path: "app_store_api_key.json",
