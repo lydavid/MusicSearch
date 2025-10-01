@@ -18,6 +18,7 @@ A place to document my development, testing, and release processes.
 
 - [Automated Nightly Release](./release/automated_beta_release.md)
 - [Production Release](./release/production_release.md)
+- [Build secrets](release/build_secrets.md)
 
 ## Dev Journal
 

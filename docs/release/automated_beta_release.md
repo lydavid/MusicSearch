@@ -18,10 +18,4 @@ We commit them in this job so that we guarantee a unique version, and ensure tha
 
 ### Secrets
 
-- `PAT`: Since we may git commit with this job, we need to pass in a GitHub Personal Access Token (PAT) that has push access
-- `RELEASE_STORE_PASSWORD`: The store password to `release-keystore.jks`
-- `RELEASE_KEY_PASSWORD`: The key password to `release-keystore.jks`
-- `GOOGLE_SERVICES_JSON_BASE64`: The base64 encoding of `google-services.json` used for Firebase
-- `RELEASE_KEYSTORE_JKS_BASE64`: The base64 encoding of `release-keystore.jks` used for publishing our app
-- `WORKLOAD_IDENTITY_PROVIDER`: See https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1
-- `SERVICE_ACCOUNT`: See https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1
+See [build secrets](build_secrets.md).

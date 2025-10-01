@@ -20,4 +20,4 @@ SPOTIFY_CLIENT_SECRET=<your Spotify client secret>
 
 ## iOS
 - Create a [Fastlane JSON API key file](https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file) using data from https://appstoreconnect.apple.com/access/integrations/api 
-- Use [Fastlane Match](https://docs.fastlane.tools/actions/match/) to store certificates and profiles in a private repository: e.g. https://github.com/lydavid/musicsearch-fastlane-match
+- Use [Fastlane Match](https://docs.fastlane.tools/actions/match/) to store distribution certificates and provisioning profiles in a private repository: e.g. https://github.com/lydavid/musicsearch-fastlane-match
