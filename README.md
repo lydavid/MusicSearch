@@ -68,4 +68,5 @@ There are external links to various streaming platforms which will open the albu
 
 ## Privacy Policy
 
-See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
+See [PRIVACY_POLICY.md](PRIVACY_POLICY.md) for Android and Desktop.
+See [PRIVACY_POLICY_IOS.md](PRIVACY_POLICY_IOS.md) for iOS.
