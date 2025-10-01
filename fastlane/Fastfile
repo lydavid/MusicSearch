@@ -23,7 +23,7 @@ platform :ios do
       app_identifier: "io.github.lydavid.musicsearch",
       team_id: "29HRCHW674",
       git_url: is_ci ? "https://github.com/lydavid/MusicSearch.git" : "git@github.com:lydavid/musicsearch-fastlane-match.git",
-      readonly: is_ci
+      readonly: false
     )
   end
 
