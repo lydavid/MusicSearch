@@ -34,7 +34,9 @@ jobs:
           echo "${{ secrets.APP_STORE_API_KEY_JSON_BASE64 }}" | base64 -d > app_store_api_key.json
 
       - name: Build and upload iOS app to App Store Connect
-        run: fastlane publish
+        run: |
+          df -h
+          fastlane publish
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_BASE64 }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
