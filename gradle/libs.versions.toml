@@ -1,5 +1,5 @@
 [versions]
-aboutlibraries = "13.0.0-a02"
+aboutlibraries = "13.0.0-rc01"
 androidGradlePlugin = "8.11.1"
 baselineprofile = "1.4.1"
 benchmarkMacroJunit4 = "1.4.1"
