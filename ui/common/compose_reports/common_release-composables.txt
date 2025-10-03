@@ -317,13 +317,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem(
   stable lastUpdated: Instant
+  stable now: Instant
   stable modifier: Modifier? = @static <expression>
-  stable now: Instant? = @dynamic <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LastUpdatedText(
   stable lastUpdated: Instant
+  stable now: Instant
   stable modifier: Modifier? = @static <expression>
-  stable now: Instant? = @dynamic <expression>
 )
 fun ly.david.musicsearch.ui.common.listitem.formatPeriod(
   unstable period: DateTimePeriod
@@ -375,9 +375,9 @@ abstract fun ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresente
 ): MusicBrainzLoginUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi(
   uiState: EntitiesPagingListUiState
+  stable now: Instant
   stable modifier: Modifier? = @static <expression>
   stable selectedIds: ImmutableSet<String>? = @static <expression>
-  stable now: Instant? = @dynamic <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
@@ -660,6 +660,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 fun ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState(
   stable initialFilterText: String? = @static ""
   stable initialIsFilterMode: Boolean = @static false
+  stable transitionType: TransitionType? = @static <expression>
 ): TopAppBarFilterState
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter(
   stable modifier: Modifier? = @static <expression>

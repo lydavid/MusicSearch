@@ -18,4 +18,5 @@ open scheme("[presenter]") fun ly.david.musicsearch.share.feature.database.all.A
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUi(
   stable state: AllLocalEntitiesUiState
   stable modifier: Modifier? = @static <expression>
+  stable now: Instant? = @dynamic <expression>
 )

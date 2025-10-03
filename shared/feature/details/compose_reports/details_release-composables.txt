@@ -65,7 +65,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable snackbarHostState: SnackbarHostState? = @static <expression>
   unstable scope: CoroutineScope? = @dynamic <expression>
   unstable strings: AppStrings? = @dynamic <expression>
-  unused stable now: Instant? = @dynamic <expression>
   stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
   stable additionalOverflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
@@ -204,6 +203,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onCollapseExpandReleaseEvents: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
+  stable onSeeAllListensClick: Function0<Unit>? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.LastListenedListItem(

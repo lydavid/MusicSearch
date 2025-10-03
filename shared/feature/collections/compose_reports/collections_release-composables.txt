@@ -77,4 +77,5 @@ open scheme("[presenter]") fun ly.david.musicsearch.shared.feature.collections.s
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.single.CollectionUi(
   stable state: CollectionUiState
   stable modifier: Modifier? = @static <expression>
+  stable now: Instant? = @dynamic <expression>
 )

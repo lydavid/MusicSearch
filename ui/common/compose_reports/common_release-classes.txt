@@ -284,7 +284,7 @@ stable class ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
-  stable val recordingId: String?
+  runtime val entityFacet: MusicBrainzEntity?
   runtime var CREATOR: Creator<ListensScreen>
   <runtime stability> = Stable
 }
@@ -316,6 +316,7 @@ stable class ly.david.musicsearch.ui.common.topappbar.SelectionState {
   stable var selectedIds$delegate: MutableState<PersistentSet<String>>
 }
 stable class ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState {
+  stable val transitionType: TransitionType
   stable var filterText$delegate: MutableState<String>
   stable var isFilterMode$delegate: MutableState<Boolean>
   stable var show$delegate: MutableState<Boolean>

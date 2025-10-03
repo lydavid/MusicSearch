@@ -1,3 +1,5 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentRecordings()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentReleases()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListenListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithRecordingFacet()
@@ -6,7 +8,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringByUnlinked()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiRecordingFacetBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetsBottomSheetContent(
+  unstable state: FacetsUiState
+  stable onUpdateTab: Function1<@[ParameterName(name = 'tab')] Tab, Unit>? = @static <expression>
+  stable onFacetClick: Function1<@[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
   listen: ListenListItemModel
   stable modifier: Modifier? = @static <expression>
@@ -27,12 +34,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable onTextChange: Function1<String, Unit>? = @static <expression>
   stable onSetUsername: Function0<Unit>? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.RecordingFacetBottomSheetContent(
-  unstable recordingFacetUiState: RecordingFacetUiState
-  stable onQueryChange: Function1<String, Unit>? = @static <expression>
-  stable onRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
-  stable onDismiss: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
   listen: ListenListItemModel

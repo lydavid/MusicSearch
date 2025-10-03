@@ -13,16 +13,17 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   runtime val actionableResult: ActionableResult?
   stable val totalCountOfListens: Long?
   stable val topAppBarFilterState: TopAppBarFilterState
-  unstable val recordingFacetUiState: RecordingFacetUiState
+  unstable val facetsUiState: FacetsUiState
   stable val lazyListState: LazyListState
   unstable val listensPagingDataFlow: Flow<PagingData<Identifiable>>
   stable val browsingUserIsSameAsLoggedInUser: Boolean
   stable val eventSink: Function1<ListensUiEvent, Unit>
 }
-unstable class ly.david.musicsearch.shared.feature.listens.RecordingFacetUiState {
-  stable val selectedRecordingFacetId: String?
-  stable val query: String
-  unstable val recordingFacetsPagingDataFlow: Flow<PagingData<RecordingFacet>>
+unstable class ly.david.musicsearch.shared.feature.listens.FacetsUiState {
+  runtime val selectedEntityFacet: MusicBrainzEntity?
+  stable val selectedTab: Tab
+  stable val filterState: TopAppBarFilterState
+  unstable val facetsPagingDataFlow: Flow<PagingData<FacetListItem>>
   <runtime stability> = Unstable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.NavigateUp {
@@ -44,8 +45,12 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UpdateFa
   stable val query: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleRecordingFacet {
-  stable val recordingId: String
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UpdateFacetTab {
+  stable val tab: Tab
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleFacet {
+  runtime val entityFacet: MusicBrainzEntity
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SubmitMapping {

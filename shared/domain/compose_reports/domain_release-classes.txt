@@ -389,6 +389,15 @@ stable class ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount {
   stable val count: Int
   <runtime stability> = 
 }
+stable class ly.david.musicsearch.shared.domain.list.FacetListItem {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String
+  stable val aliases: ImmutableList<BasicAlias>
+  stable val formattedArtistCredits: String
+  stable val count: Int
+  <runtime stability> = 
+}
 unstable class ly.david.musicsearch.shared.domain.list.GetEntitiesImpl {
   runtime val entitiesListRepository: EntitiesListRepository
   runtime val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository
@@ -748,6 +757,12 @@ stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel {
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
 }
+runtime class ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity {
+  stable val id: String
+  stable val type: MusicBrainzEntityType
+  runtime var CREATOR: Creator<MusicBrainzEntity>
+  <runtime stability> = Uncertain(Creator)
+}
 runtime class ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl {
   runtime val getMusicBrainzUrl: GetMusicBrainzUrl
   <runtime stability> = Uncertain(GetMusicBrainzUrl)
@@ -775,15 +790,6 @@ stable class ly.david.musicsearch.shared.domain.place.CoordinatesUiModel {
   stable val longitude: Double?
   stable val latitude: Double?
   <runtime stability> = Stable
-}
-runtime class ly.david.musicsearch.shared.domain.recording.RecordingFacet {
-  stable val id: String
-  stable val name: String
-  stable val disambiguation: String
-  stable val formattedArtistCredits: String
-  stable val count: Int
-  runtime var CREATOR: Creator<RecordingFacet>
-  <runtime stability> = Uncertain(Creator)
 }
 stable class ly.david.musicsearch.shared.domain.relation.RelationStats {
   stable val relationTypeCounts: ImmutableList<RelationTypeCount>
