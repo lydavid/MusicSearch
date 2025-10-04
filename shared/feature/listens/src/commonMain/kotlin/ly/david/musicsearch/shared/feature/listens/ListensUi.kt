@@ -107,7 +107,6 @@ internal fun ListensUi(
         ModalBottomSheet(
             onDismissRequest = {
                 showFacetsBottomSheet = false
-                eventSink(ListensUiEvent.UpdateFacetQuery(query = ""))
             },
         ) {
             FacetsBottomSheetContent(
@@ -120,7 +119,6 @@ internal fun ListensUi(
                 },
                 onDismiss = {
                     showFacetsBottomSheet = false
-                    eventSink(ListensUiEvent.UpdateFacetQuery(query = ""))
                 },
             )
         }
