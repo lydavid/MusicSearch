@@ -13,6 +13,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -53,6 +54,7 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.ChevronRight
+import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
@@ -160,10 +162,27 @@ internal fun ListensUi(
     } else {
         {
             Row(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier = Modifier.padding(end = 16.dp),
             ) {
+                val selectedFacet = selectedEntityFacet != null
+                if (selectedFacet) {
+                    IconButton(
+                        modifier = Modifier.padding(start = 4.dp),
+                        onClick = {
+                            eventSink(ListensUiEvent.ToggleFacet(selectedEntityFacet))
+                        },
+                    ) {
+                        Icon(
+                            imageVector = CustomIcons.Clear,
+                            contentDescription = "Clear facets",
+                        )
+                    }
+                }
                 InputChip(
-                    selected = selectedEntityFacet != null,
+                    modifier = Modifier.padding(
+                        start = if (selectedFacet) 4.dp else 16.dp,
+                    ),
+                    selected = selectedFacet,
                     leadingIcon = {
                         Icon(
                             imageVector = CustomIcons.FilterAlt,
