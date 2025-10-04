@@ -138,6 +138,8 @@ INNER JOIN `release` r ON m.release_id = r.id
 WHERE r.id = :releaseId
 GROUP BY m.id;
 
+-- listens
+
 getListenCountByRelease:
 SELECT COUNT(listen.recording_musicbrainz_id)
 FROM `release`

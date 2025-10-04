@@ -310,18 +310,23 @@ private fun mapToListenListItemModel(
     aliases = combineToAliases(aliasNames, aliasLocales),
 )
 
-// TODO: include recording aliases in facets list
 private fun mapToRecordingFacet(
     recordingMusicbrainzId: String?,
     recordingName: String?,
     disambiguation: String?,
     artistCreditNames: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
     count: Long,
 ) = FacetListItem(
     id = recordingMusicbrainzId.orEmpty(),
     name = recordingName.orEmpty(),
     disambiguation = disambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames.orEmpty(),
+    aliases = combineToAliases(
+        aliasNames = aliasNames,
+        aliasLocales = aliasLocales,
+    ),
     count = count.toInt(),
 )
 

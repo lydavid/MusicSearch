@@ -284,6 +284,8 @@ GROUP BY artist.id
 ORDER BY artist.`begin`, artist.`end`, artist.name
 LIMIT :limit OFFSET :offset;
 
+-- listens
+
 getListenCountByArtist:
 SELECT COUNT(*)
 FROM artist_credit_name
