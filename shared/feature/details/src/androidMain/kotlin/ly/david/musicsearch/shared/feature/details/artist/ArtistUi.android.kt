@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -166,6 +167,20 @@ internal fun PreviewArtistDetailsUiWithListens() {
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
                     listenCount = 1234,
+                    latestListens = persistentListOf(
+                        ListenWithRecording(
+                            id = "1",
+                            name = "For You Blue",
+                            disambiguation = "",
+                            listenedMs = 1757116212000,
+                        ),
+                        ListenWithRecording(
+                            id = "2",
+                            name = "The Long & Winding Road",
+                            disambiguation = "",
+                            listenedMs = 1757116212000 - 118706,
+                        ),
+                    ),
                     listenBrainzUrl = "https://listenbrainz.org/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 ),
             ),

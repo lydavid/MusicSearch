@@ -5,6 +5,7 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,8 +14,10 @@ import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -85,8 +88,27 @@ class ArtistDao(
             null
         }
 
+        val latestListens = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getLatestListensByArtist(
+                artistId = artistId,
+                username = listenBrainzUsername,
+                limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
+                mapper = { id, name, disambiguation, listenedAtMs ->
+                    ListenWithRecording(
+                        id = id,
+                        name = name,
+                        disambiguation = disambiguation,
+                        listenedMs = listenedAtMs,
+                    )
+                },
+            ).executeAsList().toPersistentList()
+        } else {
+            persistentListOf()
+        }
+
         return artist.copy(
             listenCount = listenCount,
+            latestListens = latestListens,
         )
     }
 

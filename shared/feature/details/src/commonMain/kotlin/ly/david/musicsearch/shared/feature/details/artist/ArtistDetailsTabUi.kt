@@ -1,11 +1,20 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
+import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -17,10 +26,12 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.LocalStrings
+import kotlin.time.Instant
 
 @Composable
 internal fun ArtistDetailsTabUi(
@@ -59,6 +70,7 @@ internal fun ArtistDetailsTabUi(
 
                 listenSection(
                     artist = this@run,
+                    now = detailsTabUiState.now,
                 )
             }
         },
@@ -156,6 +168,7 @@ private fun AreaSection(
 
 private fun LazyListScope.listenSection(
     artist: ArtistDetailsModel,
+    now: Instant,
 ) {
     if (artist.listenCount != null) {
         item {
@@ -171,7 +184,12 @@ private fun LazyListScope.listenSection(
                 },
             )
         }
-        // TODO: latest listens by artist
+        items(artist.latestListens) {
+            LastListenedListItem(
+                listen = it,
+                now = now,
+            )
+        }
         item {
             UrlListItem(
                 relation = RelationListItemModel(
@@ -184,4 +202,26 @@ private fun LazyListScope.listenSection(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LastListenedListItem(
+    listen: ListenWithRecording,
+    now: Instant,
+) {
+    val instant = Instant.fromEpochMilliseconds(listen.listenedMs)
+    val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
+    val formattedDateTime = instant.getDateTimeFormatted()
+
+    val text = buildString {
+        append(formattedDateTimePeriod)
+        append(" ($formattedDateTime)")
+        append(" - ")
+        append(listen.getNameWithDisambiguation())
+    }
+    Text(
+        text = text,
+        modifier = Modifier.padding(horizontal = 16.dp),
+    )
 }

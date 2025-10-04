@@ -277,7 +277,7 @@ private fun LazyListScope.listenSection(
         }
         items(release.latestListens) {
             LastListenedListItem(
-                listenWithTrack = it,
+                listen = it,
                 now = now,
             )
         }
@@ -305,10 +305,10 @@ private fun LazyListScope.listenSection(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LastListenedListItem(
-    listenWithTrack: ListenWithTrack,
+    listen: ListenWithTrack,
     now: Instant,
 ) {
-    val instant = Instant.fromEpochMilliseconds(listenWithTrack.listenedMs)
+    val instant = Instant.fromEpochMilliseconds(listen.listenedMs)
     val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
     val formattedDateTime = instant.getDateTimeFormatted()
 
@@ -316,11 +316,11 @@ private fun LastListenedListItem(
         append(formattedDateTimePeriod)
         append(" ($formattedDateTime)")
         append(" - ")
-        append(listenWithTrack.mediumPosition)
+        append(listen.mediumPosition)
         append(".")
-        append(listenWithTrack.trackNumber)
+        append(listen.trackNumber)
         append(". ")
-        append(listenWithTrack.trackName)
+        append(listen.trackName)
     }
     Text(
         text = text,

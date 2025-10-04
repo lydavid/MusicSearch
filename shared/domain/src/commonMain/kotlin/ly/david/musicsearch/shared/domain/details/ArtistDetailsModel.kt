@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.Artist
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
@@ -31,6 +32,7 @@ data class ArtistDetailsModel(
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenCount: Long? = null,
+    val latestListens: ImmutableList<ListenWithRecording> = persistentListOf(),
     val listenBrainzUrl: String = "",
 ) : Artist, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
