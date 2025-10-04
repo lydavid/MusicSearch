@@ -22,6 +22,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
@@ -120,13 +121,18 @@ internal fun FacetsBottomSheetContent(
                                     .padding(end = 32.dp),
                             ) {
                                 val hasUnknownId = facet.id.isEmpty()
-                                val title = if (hasUnknownId) {
-                                    "(Unlinked listens)"
-                                } else {
-                                    facet.getAnnotatedName()
+                                val title = buildAnnotatedString {
+                                    append(
+                                        if (hasUnknownId) {
+                                            "(Unlinked listens)"
+                                        } else {
+                                            facet.getAnnotatedName()
+                                        },
+                                    )
+                                    append(" (${facet.count})")
                                 }
                                 Text(
-                                    text = "$title (${facet.count})",
+                                    text = title,
                                     modifier = Modifier.padding(vertical = if (hasUnknownId) 8.dp else 0.dp),
                                     style = TextStyles.getCardBodyTextStyle(),
                                 )
