@@ -6,6 +6,8 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -19,6 +21,7 @@ internal fun LabelDetailsTabUi(
     filterText: String = "",
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
+    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val strings = LocalStrings.current
 
@@ -78,7 +81,11 @@ internal fun LabelDetailsTabUi(
                 }
             }
 
-            // TODO: area: its type is always null
+            AreaSection(
+                areaListItemModel = area,
+                filterText = filterText,
+                onItemClick = onItemClick,
+            )
         },
     )
 }

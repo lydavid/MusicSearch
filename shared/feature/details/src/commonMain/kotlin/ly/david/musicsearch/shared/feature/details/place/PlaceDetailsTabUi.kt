@@ -5,12 +5,10 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
-import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -68,22 +66,11 @@ internal fun PlaceDetailsTabUi(
             }
 
             area?.ifNotNull {
-                val areaName = it.getNameWithDisambiguation()
-                if (areaName.contains(filterText, ignoreCase = true)) {
-                    ListSeparatorHeader(strings.area)
-                    AreaListItem(
-                        area = it,
-                        showType = false,
-                        showIcon = false,
-                        showEditCollection = false,
-                        onAreaClick = {
-                            onItemClick(
-                                MusicBrainzEntityType.AREA,
-                                id,
-                            )
-                        },
-                    )
-                }
+                AreaSection(
+                    areaListItemModel = it,
+                    filterText = filterText,
+                    onItemClick = onItemClick,
+                )
             }
 
             coordinates.let {

@@ -19,6 +19,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
@@ -162,6 +163,12 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                     begin = "2002-06",
                     end = "2023-02",
                     ended = true,
+                ),
+                area = AreaListItemModel(
+                    id = "2db42837-c832-3c27-b4a3-08198f75693c",
+                    name = "Japan",
+                    countryCodes = persistentListOf("JP"),
+                    visited = false,
                 ),
                 lastUpdated = testDateTimeInThePast.plus(2.milliseconds),
                 urls = persistentListOf(

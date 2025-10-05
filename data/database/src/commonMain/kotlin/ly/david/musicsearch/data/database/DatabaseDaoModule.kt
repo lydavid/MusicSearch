@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.AreaDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDaoImpl
@@ -50,7 +51,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
-    singleOf(::AreaDao)
+    singleOf(::AreaDaoImpl) bind AreaDao::class
     singleOf(::ArtistCreditDaoImpl) bind ArtistCreditDao::class
     singleOf(::ArtistDao)
     single { ArtistCollaborationDao(get()) }

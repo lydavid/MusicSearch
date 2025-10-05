@@ -1,0 +1,2 @@
+ALTER TABLE label ADD COLUMN area_id TEXT;
+CREATE INDEX idx_label_area_id ON label(area_id);

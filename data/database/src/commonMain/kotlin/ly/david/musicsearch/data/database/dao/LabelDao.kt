@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Label
@@ -25,6 +26,7 @@ import kotlin.time.Instant
 
 class LabelDao(
     database: Database,
+    private val areaDao: AreaDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
@@ -51,7 +53,9 @@ class LabelDao(
                 begin = label.lifeSpan?.begin.orEmpty(),
                 end = label.lifeSpan?.end.orEmpty(),
                 ended = label.lifeSpan?.ended == true,
+                area_id = area?.id,
             )
+            areaDao.insert(area)
         }
     }
 
@@ -72,6 +76,7 @@ class LabelDao(
                             begin = label.lifeSpan?.begin.orEmpty(),
                             end = label.lifeSpan?.end.orEmpty(),
                             ended = label.lifeSpan?.ended == true,
+                            area_id = area?.id,
                         ),
                     )
                 }
@@ -98,6 +103,10 @@ class LabelDao(
         end: String,
         ended: Boolean,
         lastUpdated: Instant?,
+        areaId: String?,
+        areaName: String?,
+        countryCode: String?,
+        visitedArea: Boolean,
     ) = LabelDetailsModel(
         id = id,
         name = name,
@@ -111,6 +120,14 @@ class LabelDao(
             end = end,
             ended = ended,
         ),
+        area = areaId?.let { areaId ->
+            AreaListItemModel(
+                id = areaId,
+                name = areaName.orEmpty(),
+                countryCodes = listOfNotNull(countryCode).toPersistentList(),
+                visited = visitedArea,
+            )
+        },
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

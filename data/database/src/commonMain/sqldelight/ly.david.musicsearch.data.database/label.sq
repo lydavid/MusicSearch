@@ -14,8 +14,11 @@ CREATE TABLE label (
   isnis TEXT AS List<String> NOT NULL,
   begin TEXT NOT NULL,
   end TEXT NOT NULL,
-  ended INTEGER AS Boolean NOT NULL
+  ended INTEGER AS Boolean NOT NULL,
+  area_id TEXT
 );
+
+CREATE INDEX idx_label_area_id ON label(area_id);
 
 upsert {
 UPDATE label
@@ -29,7 +32,8 @@ SET
   isnis = :isnis,
   begin = :begin,
   end = :end,
-  ended = :ended
+  ended = :ended,
+  area_id = :area_id
 WHERE id = :id;
 
 INSERT OR IGNORE INTO label
@@ -44,7 +48,8 @@ VALUES (
   :isnis,
   :begin,
   :end,
-  :ended
+  :ended,
+  :area_id
 );
 }
 
@@ -54,20 +59,28 @@ VALUES ?;
 
 getLabelForDetails:
 SELECT
-  id,
-  name,
-  disambiguation,
-  type,
-  label_code,
-  ipis,
-  isnis,
-  begin,
-  end,
-  ended,
-  details_metadata.last_updated
+  label.id,
+  label.name,
+  label.disambiguation,
+  label.type,
+  label.label_code,
+  label.ipis,
+  label.isnis,
+  label.`begin`,
+  label.`end`,
+  label.ended,
+  details_metadata.last_updated,
+  area.id,
+  area.name,
+  country_code.code,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = area.id
+  )
 FROM label
-LEFT JOIN details_metadata ON details_metadata.entity_id = id
-WHERE id = :labelId;
+LEFT JOIN area ON area.id = label.area_id
+LEFT JOIN country_code ON area.id = country_code.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = label.id
+WHERE label.id = :labelId;
 
 deleteLabel:
 DELETE FROM label
