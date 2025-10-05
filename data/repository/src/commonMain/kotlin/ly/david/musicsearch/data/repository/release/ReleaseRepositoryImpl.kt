@@ -25,7 +25,6 @@ import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
-import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
@@ -40,6 +39,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import kotlin.time.Instant
@@ -66,20 +66,21 @@ class ReleaseRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): ReleaseDetailsModel = withContext(coroutineDispatchers.io) {
-        if (forceRefresh) {
-            delete(releaseId)
-        }
-
         val cachedData = getCachedData(releaseId)
         return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
-            cache(
-                oldId = releaseId,
-                release = releaseMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            releaseDao.withTransaction {
+                if (forceRefresh) {
+                    delete(releaseId)
+                }
+                cache(
+                    oldId = releaseId,
+                    release = releaseMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(releaseMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -132,58 +133,56 @@ class ReleaseRepositoryImpl(
         release: ReleaseMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        releaseDao.withTransaction {
-            release.releaseGroup?.let { releaseGroup ->
-                releaseGroupDao.upsertReleaseGroup(
-                    oldId = releaseGroup.id,
-                    releaseGroup = releaseGroup,
-                )
-                releaseReleaseGroupDao.insert(
-                    releaseId = release.id,
-                    releaseGroupId = releaseGroup.id,
-                )
-            }
-            releaseDao.upsert(
-                oldId = oldId,
-                release = release,
+        release.releaseGroup?.let { releaseGroup ->
+            releaseGroupDao.upsertReleaseGroup(
+                oldId = releaseGroup.id,
+                releaseGroup = releaseGroup,
             )
-
-            aliasDao.insertAll(listOf(release))
-
-            // This serves as a replacement for browsing labels by release.
-            // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
-            // Lifespan is not included, so do not upsert.
-            labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
-            labelDao.insertLabelsByRelease(
+            releaseReleaseGroupDao.insert(
                 releaseId = release.id,
-                labelInfoList = release.labelInfoList,
-            )
-
-            areaDao.insertAll(
-                release.releaseEvents?.mapNotNull { event ->
-                    event.area?.let { area ->
-                        val isCountry = !NonCountryAreaWithCode.entries.any {
-                            it.code == area.countryCodes?.firstOrNull().orEmpty()
-                        }
-
-                        area.copy(
-                            type = if (isCountry) AreaType.COUNTRY else null,
-                        )
-                    }
-                }.orEmpty(),
-            )
-            areaDao.linkCountriesByRelease(
-                releaseId = release.id,
-                releaseEvents = release.releaseEvents,
-            )
-
-            val relationWithOrderList = release.relations.toRelationWithOrderList(release.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = release.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
+                releaseGroupId = releaseGroup.id,
             )
         }
+        releaseDao.upsert(
+            oldId = oldId,
+            release = release,
+        )
+
+        aliasDao.insertAll(listOf(release))
+
+        // This serves as a replacement for browsing labels by release.
+        // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
+        // Lifespan is not included, so do not upsert.
+        labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
+        labelDao.insertLabelsByRelease(
+            releaseId = release.id,
+            labelInfoList = release.labelInfoList,
+        )
+
+        areaDao.insertAll(
+            release.releaseEvents?.mapNotNull { event ->
+                event.area?.let { area ->
+                    val isCountry = !NonCountryAreaWithCode.entries.any {
+                        it.code == area.countryCodes?.firstOrNull().orEmpty()
+                    }
+
+                    area.copy(
+                        type = if (isCountry) AreaType.COUNTRY else null,
+                    )
+                }
+            }.orEmpty(),
+        )
+        areaDao.linkCountriesByRelease(
+            releaseId = release.id,
+            releaseEvents = release.releaseEvents,
+        )
+
+        val relationWithOrderList = release.relations.toRelationWithOrderList(release.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = release.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 
     // region tracks by release

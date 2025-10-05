@@ -23,20 +23,21 @@ class InstrumentRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): InstrumentDetailsModel {
-        if (forceRefresh) {
-            delete(instrumentId)
-        }
-
         val cachedData = getCachedData(instrumentId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)
-            cache(
-                oldId = instrumentId,
-                instrument = instrumentMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            instrumentDao.withTransaction {
+                if (forceRefresh) {
+                    delete(instrumentId)
+                }
+                cache(
+                    oldId = instrumentId,
+                    instrument = instrumentMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(instrumentMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -58,10 +59,8 @@ class InstrumentRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        instrumentDao.withTransaction {
-            instrumentDao.delete(id)
-            relationRepository.deleteRelationshipsByType(id)
-        }
+        instrumentDao.delete(id)
+        relationRepository.deleteRelationshipsByType(id)
     }
 
     private fun cache(
@@ -69,20 +68,18 @@ class InstrumentRepositoryImpl(
         instrument: InstrumentMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        instrumentDao.withTransaction {
-            instrumentDao.upsert(
-                oldId = oldId,
-                instrument = instrument,
-            )
+        instrumentDao.upsert(
+            oldId = oldId,
+            instrument = instrument,
+        )
 
-            aliasDao.insertAll(listOf(instrument))
+        aliasDao.insertAll(listOf(instrument))
 
-            val relationWithOrderList = instrument.relations.toRelationWithOrderList(instrument.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = instrument.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = instrument.relations.toRelationWithOrderList(instrument.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = instrument.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

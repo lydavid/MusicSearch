@@ -33,20 +33,21 @@ class ArtistRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): ArtistDetailsModel = withContext(coroutineDispatchers.io) {
-        if (forceRefresh) {
-            delete(artistId)
-        }
-
         val cachedData = getCachedData(artistId)
         return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
-            cache(
-                oldId = artistId,
-                artist = artistMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            artistDao.withTransaction {
+                if (forceRefresh) {
+                    delete(artistId)
+                }
+                cache(
+                    oldId = artistId,
+                    artist = artistMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(artistMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -74,13 +75,11 @@ class ArtistRepositoryImpl(
     }
 
     private fun delete(artistId: String) {
-        artistDao.withTransaction {
-            artistDao.delete(artistId = artistId)
-            relationRepository.deleteRelationshipsByType(
-                entityId = artistId,
-                entity = MusicBrainzEntityType.URL,
-            )
-        }
+        artistDao.delete(artistId = artistId)
+        relationRepository.deleteRelationshipsByType(
+            entityId = artistId,
+            entity = MusicBrainzEntityType.URL,
+        )
     }
 
     private fun cache(
@@ -88,24 +87,22 @@ class ArtistRepositoryImpl(
         artist: ArtistMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        artistDao.withTransaction {
-            artistDao.upsert(
-                oldId = oldId,
-                artist = artist,
-            )
+        artistDao.upsert(
+            oldId = oldId,
+            artist = artist,
+        )
 
-            aliasDao.insertAll(listOf(artist))
+        aliasDao.insertAll(listOf(artist))
 
-            artist.area?.let { area ->
-                areaDao.insert(area)
-            }
-
-            val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = artist.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
+        artist.area?.let { area ->
+            areaDao.insert(area)
         }
+
+        val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = artist.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

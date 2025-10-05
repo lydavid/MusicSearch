@@ -23,20 +23,21 @@ class SeriesRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): SeriesDetailsModel {
-        if (forceRefresh) {
-            delete(seriesId)
-        }
-
         val cachedData = getCachedData(seriesId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val seriesMusicBrainzModel = lookupApi.lookupSeries(seriesId)
-            cache(
-                oldId = seriesId,
-                series = seriesMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            seriesDao.withTransaction {
+                if (forceRefresh) {
+                    delete(seriesId)
+                }
+                cache(
+                    oldId = seriesId,
+                    series = seriesMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(seriesMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -58,10 +59,8 @@ class SeriesRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        seriesDao.withTransaction {
-            seriesDao.delete(id)
-            relationRepository.deleteRelationshipsByType(id)
-        }
+        seriesDao.delete(id)
+        relationRepository.deleteRelationshipsByType(id)
     }
 
     private fun cache(
@@ -69,20 +68,18 @@ class SeriesRepositoryImpl(
         series: SeriesMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        seriesDao.withTransaction {
-            seriesDao.upsert(
-                oldId = oldId,
-                series = series,
-            )
+        seriesDao.upsert(
+            oldId = oldId,
+            series = series,
+        )
 
-            aliasDao.insertAll(listOf(series))
+        aliasDao.insertAll(listOf(series))
 
-            val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = series.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = series.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

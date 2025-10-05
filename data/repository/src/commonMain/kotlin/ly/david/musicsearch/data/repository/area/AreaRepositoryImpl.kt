@@ -23,20 +23,21 @@ class AreaRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): AreaDetailsModel {
-        if (forceRefresh) {
-            delete(areaId)
-        }
-
         val cachedData = getCachedData(areaId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val areaMusicBrainzModel = lookupApi.lookupArea(areaId)
-            cache(
-                oldId = areaId,
-                area = areaMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            areaDao.withTransaction {
+                if (forceRefresh) {
+                    delete(areaId)
+                }
+                cache(
+                    oldId = areaId,
+                    area = areaMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(areaMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -59,10 +60,8 @@ class AreaRepositoryImpl(
     }
 
     private fun delete(areaId: String) {
-        areaDao.withTransaction {
-            areaDao.delete(areaId)
-            relationRepository.deleteRelationshipsByType(entityId = areaId)
-        }
+        areaDao.delete(areaId)
+        relationRepository.deleteRelationshipsByType(entityId = areaId)
     }
 
     private fun cache(
@@ -70,20 +69,18 @@ class AreaRepositoryImpl(
         area: AreaMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        areaDao.withTransaction {
-            areaDao.upsert(
-                oldAreaId = oldId,
-                area = area,
-            )
+        areaDao.upsert(
+            oldAreaId = oldId,
+            area = area,
+        )
 
-            aliasDao.insertAll(listOf(area))
+        aliasDao.insertAll(listOf(area))
 
-            val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = area.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = area.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

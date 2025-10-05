@@ -1,5 +1,9 @@
+// https://github.com/detekt/detekt/issues/8140
+@file:Suppress("SpacingAroundColon", "NoUnusedImports", "Wrapping")
+
 package ly.david.musicsearch.data.repository.recording
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -31,20 +35,21 @@ class RecordingRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): RecordingDetailsModel {
-        if (forceRefresh) {
-            delete(recordingId)
-        }
-
         val cachedData = getCachedData(recordingId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val recordingMusicBrainzModel = lookupApi.lookupRecording(recordingId)
-            cache(
-                oldId = recordingId,
-                recording = recordingMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            recordingDao.withTransaction {
+                if (forceRefresh) {
+                    delete(recordingId)
+                }
+                cache(
+                    oldId = recordingId,
+                    recording = recordingMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(recordingMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -75,32 +80,29 @@ class RecordingRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        recordingDao.withTransaction {
-            recordingDao.delete(id)
-            relationRepository.deleteRelationshipsByType(id)
-            artistCreditDao.deleteArtistCreditsForEntity(id)
-        }
+        recordingDao.delete(id)
+        relationRepository.deleteRelationshipsByType(id)
+        artistCreditDao.deleteArtistCreditsForEntity(id)
     }
 
+    context(_: TransactionWithoutReturn)
     private fun cache(
         oldId: String,
         recording: RecordingMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        recordingDao.withTransaction {
-            recordingDao.upsert(
-                oldId = oldId,
-                recording = recording,
-            )
+        recordingDao.upsert(
+            oldId = oldId,
+            recording = recording,
+        )
 
-            aliasDao.insertAll(listOf(recording))
+        aliasDao.insertAll(listOf(recording))
 
-            val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = recording.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = recording.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

@@ -23,20 +23,21 @@ class LabelRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): LabelDetailsModel {
-        if (forceRefresh) {
-            delete(labelId)
-        }
-
         val cachedData = getCachedData(labelId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val labelMusicBrainzModel = lookupApi.lookupLabel(labelId)
-            cache(
-                oldId = labelId,
-                label = labelMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            labelDao.withTransaction {
+                if (forceRefresh) {
+                    delete(labelId)
+                }
+                cache(
+                    oldId = labelId,
+                    label = labelMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(labelMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -58,10 +59,8 @@ class LabelRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        labelDao.withTransaction {
-            labelDao.delete(id)
-            relationRepository.deleteRelationshipsByType(id)
-        }
+        labelDao.delete(id)
+        relationRepository.deleteRelationshipsByType(id)
     }
 
     private fun cache(
@@ -69,20 +68,18 @@ class LabelRepositoryImpl(
         label: LabelMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        labelDao.withTransaction {
-            labelDao.upsert(
-                oldId = oldId,
-                label = label,
-            )
+        labelDao.upsert(
+            oldId = oldId,
+            label = label,
+        )
 
-            aliasDao.insertAll(listOf(label))
+        aliasDao.insertAll(listOf(label))
 
-            val relationWithOrderList = label.relations.toRelationWithOrderList(label.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = label.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = label.relations.toRelationWithOrderList(label.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = label.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

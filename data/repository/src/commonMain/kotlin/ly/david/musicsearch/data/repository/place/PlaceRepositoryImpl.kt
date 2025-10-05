@@ -25,20 +25,21 @@ class PlaceRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): PlaceDetailsModel {
-        if (forceRefresh) {
-            delete(placeId)
-        }
-
         val cachedData = getCachedData(placeId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)
-            cache(
-                oldId = placeId,
-                place = placeMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            placeDao.withTransaction {
+                if (forceRefresh) {
+                    delete(placeId)
+                }
+                cache(
+                    oldId = placeId,
+                    place = placeMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(placeMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -62,11 +63,9 @@ class PlaceRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        placeDao.withTransaction {
-            placeDao.delete(id)
-            areaDao.deleteAreaPlaceLink(id)
-            relationRepository.deleteRelationshipsByType(id)
-        }
+        placeDao.delete(id)
+        areaDao.deleteAreaPlaceLink(id)
+        relationRepository.deleteRelationshipsByType(id)
     }
 
     private fun cache(
@@ -74,28 +73,26 @@ class PlaceRepositoryImpl(
         place: PlaceMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        placeDao.withTransaction {
-            placeDao.upsert(
-                oldId = oldId,
-                place = place,
-            )
+        placeDao.upsert(
+            oldId = oldId,
+            place = place,
+        )
 
-            aliasDao.insertAll(listOf(place))
+        aliasDao.insertAll(listOf(place))
 
-            place.area?.let { areaMusicBrainzModel ->
-                areaDao.insert(areaMusicBrainzModel)
-                placeDao.insertPlaceByArea(
-                    entityId = areaMusicBrainzModel.id,
-                    placeId = place.id,
-                )
-            }
-
-            val relationWithOrderList = place.relations.toRelationWithOrderList(place.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = place.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
+        place.area?.let { areaMusicBrainzModel ->
+            areaDao.insert(areaMusicBrainzModel)
+            placeDao.insertPlaceByArea(
+                entityId = areaMusicBrainzModel.id,
+                placeId = place.id,
             )
         }
+
+        val relationWithOrderList = place.relations.toRelationWithOrderList(place.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = place.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

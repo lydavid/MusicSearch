@@ -26,20 +26,21 @@ class WorkRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): WorkDetailsModel {
-        if (forceRefresh) {
-            delete(workId)
-        }
-
         val cachedData = getCachedData(workId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)
-            cache(
-                oldId = workId,
-                work = workMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            workDao.withTransaction {
+                if (forceRefresh) {
+                    delete(workId)
+                }
+                cache(
+                    oldId = workId,
+                    work = workMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(workMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -63,10 +64,8 @@ class WorkRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        workDao.withTransaction {
-            workDao.delete(id)
-            relationRepository.deleteRelationshipsByType(id)
-        }
+        workDao.delete(id)
+        relationRepository.deleteRelationshipsByType(id)
     }
 
     private fun cache(
@@ -74,24 +73,22 @@ class WorkRepositoryImpl(
         work: WorkMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        workDao.withTransaction {
-            workDao.upsert(
-                oldId = oldId,
-                work = work,
-            )
-            workAttributeDao.insertAttributesForWork(
-                workId = work.id,
-                work.attributes,
-            )
+        workDao.upsert(
+            oldId = oldId,
+            work = work,
+        )
+        workAttributeDao.insertAttributesForWork(
+            workId = work.id,
+            work.attributes,
+        )
 
-            aliasDao.insertAll(listOf(work))
+        aliasDao.insertAll(listOf(work))
 
-            val relationWithOrderList = work.relations.toRelationWithOrderList(work.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = work.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = work.relations.toRelationWithOrderList(work.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = work.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

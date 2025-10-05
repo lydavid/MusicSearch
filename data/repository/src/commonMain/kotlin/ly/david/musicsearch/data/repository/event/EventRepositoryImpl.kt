@@ -23,20 +23,21 @@ class EventRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): EventDetailsModel {
-        if (forceRefresh) {
-            delete(eventId)
-        }
-
         val cachedData = getCachedData(eventId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
-            cache(
-                oldId = eventId,
-                event = eventMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            eventDao.withTransaction {
+                if (forceRefresh) {
+                    delete(eventId)
+                }
+                cache(
+                    oldId = eventId,
+                    event = eventMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(eventMusicBrainzModel.id) ?: error("Failed to get cached data")
         }
     }
@@ -58,10 +59,8 @@ class EventRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        eventDao.withTransaction {
-            eventDao.delete(id)
-            relationRepository.deleteRelationshipsByType(entityId = id)
-        }
+        eventDao.delete(id)
+        relationRepository.deleteRelationshipsByType(entityId = id)
     }
 
     private fun cache(
@@ -69,20 +68,18 @@ class EventRepositoryImpl(
         event: EventMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        eventDao.withTransaction {
-            eventDao.upsert(
-                oldId = oldId,
-                event = event,
-            )
+        eventDao.upsert(
+            oldId = oldId,
+            event = event,
+        )
 
-            aliasDao.insertAll(listOf(event))
+        aliasDao.insertAll(listOf(event))
 
-            val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = event.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = event.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }

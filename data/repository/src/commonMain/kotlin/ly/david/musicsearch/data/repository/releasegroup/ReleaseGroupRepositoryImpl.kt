@@ -26,20 +26,21 @@ class ReleaseGroupRepositoryImpl(
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): ReleaseGroupDetailsModel {
-        if (forceRefresh) {
-            delete(releaseGroupId)
-        }
-
         val cachedData = getCachedData(releaseGroupId)
         return if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
-            cache(
-                oldId = releaseGroupId,
-                releaseGroup = releaseGroupMusicBrainzModel,
-                lastUpdated = lastUpdated,
-            )
+            releaseGroupDao.withTransaction {
+                if (forceRefresh) {
+                    delete(releaseGroupId)
+                }
+                cache(
+                    oldId = releaseGroupId,
+                    releaseGroup = releaseGroupMusicBrainzModel,
+                    lastUpdated = lastUpdated,
+                )
+            }
             getCachedData(releaseGroupId) ?: error("Failed to get cached data")
         }
     }
@@ -66,11 +67,9 @@ class ReleaseGroupRepositoryImpl(
     }
 
     private fun delete(id: String) {
-        releaseGroupDao.withTransaction {
-            releaseGroupDao.deleteReleaseGroup(id)
-            relationRepository.deleteRelationshipsByType(id)
-            artistCreditDao.deleteArtistCreditsForEntity(id)
-        }
+        releaseGroupDao.deleteReleaseGroup(id)
+        relationRepository.deleteRelationshipsByType(id)
+        artistCreditDao.deleteArtistCreditsForEntity(id)
     }
 
     private fun cache(
@@ -78,20 +77,18 @@ class ReleaseGroupRepositoryImpl(
         releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        releaseGroupDao.withTransaction {
-            releaseGroupDao.upsertReleaseGroup(
-                oldId = oldId,
-                releaseGroup = releaseGroup,
-            )
+        releaseGroupDao.upsertReleaseGroup(
+            oldId = oldId,
+            releaseGroup = releaseGroup,
+        )
 
-            aliasDao.insertAll(listOf(releaseGroup))
+        aliasDao.insertAll(listOf(releaseGroup))
 
-            val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
-            relationRepository.insertAllUrlRelations(
-                entityId = releaseGroup.id,
-                relationWithOrderList = relationWithOrderList,
-                lastUpdated = lastUpdated,
-            )
-        }
+        val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
+        relationRepository.insertAllUrlRelations(
+            entityId = releaseGroup.id,
+            relationWithOrderList = relationWithOrderList,
+            lastUpdated = lastUpdated,
+        )
     }
 }
