@@ -175,12 +175,14 @@ class ListenDaoImpl(
         val queryWithWildcards = "%$query%"
         val recordingId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RECORDING }?.id
         val releaseId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RELEASE }?.id
+        val artistId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.ARTIST }?.id
         return QueryPagingSource(
             countQuery = listenTransacter.getCountOfListensByUser(
                 username = username,
                 query = queryWithWildcards,
                 recordingId = recordingId,
                 releaseId = releaseId,
+                artistId = artistId,
             ),
             transacter = listenTransacter,
             context = coroutineDispatchers.io,
@@ -190,6 +192,7 @@ class ListenDaoImpl(
                     query = queryWithWildcards,
                     recordingId = recordingId,
                     releaseId = releaseId,
+                    artistId = artistId,
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToListenListItemModel,
@@ -198,6 +201,7 @@ class ListenDaoImpl(
         )
     }
 
+    @Suppress("LongMethod")
     override fun getFacetsByUser(
         entityType: MusicBrainzEntityType,
         username: String,
@@ -224,6 +228,7 @@ class ListenDaoImpl(
                     },
                 )
             }
+
             MusicBrainzEntityType.RELEASE -> {
                 QueryPagingSource(
                     countQuery = listenTransacter.getCountOfReleaseFacets(
@@ -243,6 +248,27 @@ class ListenDaoImpl(
                     },
                 )
             }
+
+            MusicBrainzEntityType.ARTIST -> {
+                QueryPagingSource(
+                    countQuery = listenTransacter.getCountOfArtistFacets(
+                        username = username,
+                        query = queryWithWildcards,
+                    ),
+                    transacter = listenTransacter,
+                    context = coroutineDispatchers.io,
+                    queryProvider = { limit, offset ->
+                        listenTransacter.getArtistFacets(
+                            username = username,
+                            query = queryWithWildcards,
+                            limit = limit,
+                            offset = offset,
+                            mapper = ::mapToArtistFacet,
+                        )
+                    },
+                )
+            }
+
             else -> error("Unsupported entity type: $entityType")
         }
     }
@@ -343,6 +369,24 @@ private fun mapToReleaseFacet(
     name = recordingName.orEmpty(),
     disambiguation = disambiguation.orEmpty(),
     formattedArtistCredits = artistCreditNames.orEmpty(),
+    aliases = combineToAliases(
+        aliasNames = aliasNames,
+        aliasLocales = aliasLocales,
+    ),
+    count = count.toInt(),
+)
+
+private fun mapToArtistFacet(
+    id: String?,
+    name: String?,
+    disambiguation: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
+    count: Long,
+) = FacetListItem(
+    id = id.orEmpty(),
+    name = name.orEmpty(),
+    disambiguation = disambiguation.orEmpty(),
     aliases = combineToAliases(
         aliasNames = aliasNames,
         aliasLocales = aliasLocales,

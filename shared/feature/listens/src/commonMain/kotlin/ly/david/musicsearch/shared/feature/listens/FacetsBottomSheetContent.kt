@@ -42,6 +42,7 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 internal val tabs = persistentListOf(
     Tab.RECORDINGS,
     Tab.RELEASES,
+    Tab.ARTISTS,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -131,12 +132,13 @@ internal fun FacetsBottomSheetContent(
                                     )
                                     append(" (${facet.count})")
                                 }
+                                val hasSubtitle = !hasUnknownId && facet.formattedArtistCredits.isNotEmpty()
                                 Text(
                                     text = title,
-                                    modifier = Modifier.padding(vertical = if (hasUnknownId) 8.dp else 0.dp),
+                                    modifier = Modifier.padding(vertical = if (hasSubtitle) 0.dp else 8.dp),
                                     style = TextStyles.getCardBodyTextStyle(),
                                 )
-                                if (!hasUnknownId) {
+                                if (hasSubtitle) {
                                     Text(
                                         text = facet.formattedArtistCredits,
                                         modifier = Modifier.padding(top = 4.dp),

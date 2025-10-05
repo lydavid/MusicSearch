@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -39,6 +40,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -140,8 +142,8 @@ internal fun ArtistUiInternal(
     onEditCollectionClick: (String) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val entity = MusicBrainzEntityType.ARTIST
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
+    val entityType = MusicBrainzEntityType.ARTIST
+    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val eventSink = state.eventSink
     val pagerState: PagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
@@ -220,7 +222,7 @@ internal fun ArtistUiInternal(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = additionalActions,
@@ -337,6 +339,24 @@ internal fun ArtistUiInternal(
                     onImageClick = {
                         eventSink(DetailsUiEvent.ClickImage)
                     },
+                    onCollapseExpandExternalLinks = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                    },
+                    onCollapseExpandAliases = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
+                    onSeeAllListensClick = {
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    entityFacet = MusicBrainzEntity(
+                                        id = entityId,
+                                        type = entityType,
+                                    ),
+                                ),
+                            ),
+                        )
+                    },
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
@@ -344,12 +364,6 @@ internal fun ArtistUiInternal(
                                 id = id,
                             ),
                         )
-                    },
-                    onCollapseExpandExternalLinks = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
-                    },
-                    onCollapseExpandAliases = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
                     },
                 )
             },

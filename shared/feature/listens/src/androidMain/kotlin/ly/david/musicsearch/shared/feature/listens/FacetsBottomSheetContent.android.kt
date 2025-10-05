@@ -4,7 +4,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -95,6 +97,57 @@ internal fun PreviewFacetsBottomSheetContentReleases() {
                         type = MusicBrainzEntityType.RELEASE,
                     ),
                     selectedTab = Tab.RELEASES,
+                    facetsPagingDataFlow = facets,
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewFacetsBottomSheetContentArtists() {
+    PreviewWithSharedElementTransition {
+        Surface {
+            val facets = MutableStateFlow(
+                PagingData.from(
+                    data = listOf(
+                        FacetListItem(
+                            id = "dfc6a151-3792-4695-8fda-f64723eaa788",
+                            name = "ヨルシカ",
+                            count = 543,
+                            aliases = persistentListOf(
+                                BasicAlias(
+                                    name = "Yorushika",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                                BasicAlias(
+                                    name = "ヨルシカ",
+                                    locale = "ja",
+                                    isPrimary = true,
+                                ),
+                            ),
+                        ),
+                        FacetListItem(
+                            id = "be5ae183-78b6-4564-93e1-553d752d3b84",
+                            name = "美波",
+                            disambiguation = "J-pop/rock singer-songwriter",
+                            count = 373,
+                            aliases = persistentListOf(
+                                BasicAlias(
+                                    name = "Minami",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+            FacetsBottomSheetContent(
+                state = FacetsUiState(
+                    selectedTab = Tab.ARTISTS,
                     facetsPagingDataFlow = facets,
                 ),
             )

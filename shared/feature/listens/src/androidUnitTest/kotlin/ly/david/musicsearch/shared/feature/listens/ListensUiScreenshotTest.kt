@@ -67,4 +67,11 @@ class ListensUiScreenshotTest : ScreenshotTest() {
             PreviewFacetsBottomSheetContentReleases()
         }
     }
+
+    @Test
+    fun artistFacetBottomSheetContent() {
+        snapshot {
+            PreviewFacetsBottomSheetContentArtists()
+        }
+    }
 }

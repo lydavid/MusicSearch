@@ -22,6 +22,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
@@ -43,6 +45,7 @@ internal fun ArtistDetailsTabUi(
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
+    onSeeAllListensClick: () -> Unit = {},
 ) {
     DetailsTabUi(
         detailsModel = artist,
@@ -71,6 +74,7 @@ internal fun ArtistDetailsTabUi(
                 listenSection(
                     artist = this@run,
                     now = detailsTabUiState.now,
+                    onSeeAllListensClick = onSeeAllListensClick,
                 )
             }
         },
@@ -169,6 +173,7 @@ private fun AreaSection(
 private fun LazyListScope.listenSection(
     artist: ArtistDetailsModel,
     now: Instant,
+    onSeeAllListensClick: () -> Unit,
 ) {
     if (artist.listenCount != null) {
         item {
@@ -188,6 +193,13 @@ private fun LazyListScope.listenSection(
             LastListenedListItem(
                 listen = it,
                 now = now,
+            )
+        }
+        item {
+            ClickableItem(
+                title = "See all listens",
+                endIcon = CustomIcons.ChevronRight,
+                onClick = onSeeAllListensClick,
             )
         }
         item {
