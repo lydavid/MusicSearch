@@ -14,6 +14,8 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.artist.ArtistCollaborationRepository
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
@@ -106,8 +108,8 @@ internal data class ArtistCollaborationGraphUiState(
     val artistName: String,
     val topAppBarFilterState: TopAppBarFilterState,
     val collaborationEntityType: MusicBrainzEntityType = MusicBrainzEntityType.RECORDING,
-    val edges: List<GraphEdge> = listOf(),
-    val nodes: List<GraphNode> = listOf(),
+    val edges: ImmutableList<GraphEdge> = persistentListOf(),
+    val nodes: ImmutableList<GraphNode> = persistentListOf(),
     val isDeveloperMode: Boolean = false,
     val eventSink: (ArtistCollaborationGraphUiEvent) -> Unit,
 ) : CircuitUiState

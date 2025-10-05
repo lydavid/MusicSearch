@@ -402,7 +402,6 @@ FROM (
   GROUP BY artist_info.artist_id
 );
 
-
 getArtistFacets:
 SELECT
   artist_info.artist_id,
