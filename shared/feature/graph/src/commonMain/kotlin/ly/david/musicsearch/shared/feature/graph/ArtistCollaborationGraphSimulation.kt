@@ -89,33 +89,27 @@ class ArtistCollaborationGraphSimulation {
 
             forceLinks = forceLink {
                 linkGet = {
-                    when (this.domain.entity) {
-                        MusicBrainzEntityType.ARTIST -> artistEntityLinks.filter { it.artistId == this.domain.id }
-                        else -> artistEntityLinks.filter { it.entityId == this.domain.id }
-                    }.mapNotNull { artistEntity ->
-                        val sourceId = if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
-                            this.domain.id
-                        } else {
-                            artistEntity.artistId
-                        }
-                        val targetId = if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
-                            artistEntity.entityId
-                        } else {
-                            this.domain.id
-                        }
+                    // All artists must link to a recording/release/release group,
+                    // so we don't have to repeat the links from the other direction.
+                    if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
+                        artistEntityLinks
+                            .filter { it.artistId == this.domain.id }
+                            .mapNotNull { artistEntity ->
+                                val source = this
+                                val target = nodes.find { it.domain.id == artistEntity.entityId }
 
-                        val source = nodes.find { it.domain.id == sourceId }
-                        val target = nodes.find { it.domain.id == targetId }
-
-                        if (source != null && target != null) {
-                            Link(
-                                source = source,
-                                target = target,
-                                distance = LINK_DISTANCE,
-                            )
-                        } else {
-                            null
-                        }
+                                if (target != null) {
+                                    Link(
+                                        source = source,
+                                        target = target,
+                                        distance = LINK_DISTANCE,
+                                    )
+                                } else {
+                                    null
+                                }
+                            }
+                    } else {
+                        emptyList()
                     }
                 }
             }

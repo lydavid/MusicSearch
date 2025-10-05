@@ -34,16 +34,17 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderEdge
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderNode
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderText
+import ly.david.musicsearch.ui.common.theme.ExtendedColors
+import ly.david.musicsearch.ui.common.theme.LocalExtendedColors
+import ly.david.musicsearch.ui.common.theme.LocalStrings
+import ly.david.musicsearch.ui.common.theme.getSubTextColor
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.theme.ExtendedColors
-import ly.david.musicsearch.ui.common.theme.LocalExtendedColors
-import ly.david.musicsearch.ui.common.theme.getSubTextColor
 
 private const val MIN_SCALE = 0.1f
 private const val MAX_SCALE = 3f
@@ -147,8 +148,8 @@ internal fun ArtistCollaborationGraphUi(
 
 @Composable
 internal fun ArtistCollaborationGraphUi(
-    edges: List<GraphEdge>,
-    nodes: List<GraphNode>,
+    edges: ImmutableList<GraphEdge>,
+    nodes: ImmutableList<GraphNode>,
     filterText: String,
     modifier: Modifier = Modifier,
     showDebugInfo: Boolean = false,

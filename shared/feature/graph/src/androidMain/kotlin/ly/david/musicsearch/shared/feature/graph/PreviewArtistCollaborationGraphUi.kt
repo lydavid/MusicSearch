@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.graph
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
@@ -12,37 +13,7 @@ internal fun PreviewArtistCollaborationGraphUi() {
     PreviewTheme {
         Surface {
             ArtistCollaborationGraphUi(
-                edges = listOf(
-                    GraphEdge(
-                        x0 = -7.010541039928112,
-                        y0 = 148.53020774179376,
-                        x1 = 34.442058589085114,
-                        y1 = -98.70221015951988,
-                    ),
-                    GraphEdge(
-                        x0 = -7.010541039928112,
-                        y0 = 148.53020774179376,
-                        x1 = 107.57529725372356,
-                        y1 = -59.45777853885758,
-                    ),
-                    GraphEdge(
-                        x0 = -7.010541039928112,
-                        y0 = 148.53020774179376,
-                        x1 = -47.58660614527603,
-                        y1 = -111.3471010505625,
-                    ),
-                    GraphEdge(
-                        x0 = -87.41917955713517,
-                        y0 = 120.97761778046068,
-                        x1 = 107.57529725372356,
-                        y1 = -59.45777853885758,
-                    ),
-                    GraphEdge(
-                        x0 = -87.41917955713517,
-                        y0 = 120.97761778046068,
-                        x1 = -47.58660614527603,
-                        y1 = -111.3471010505625,
-                    ),
+                edges = persistentListOf(
                     GraphEdge(
                         x0 = -7.010541039928112,
                         y0 = 148.53020774179376,
@@ -52,32 +23,20 @@ internal fun PreviewArtistCollaborationGraphUi() {
                     GraphEdge(
                         x0 = -87.41917955713517,
                         y0 = 120.97761778046068,
-                        x1 = 107.57529725372356,
-                        y1 = -59.45777853885758,
-                    ),
-                    GraphEdge(
-                        x0 = -7.010541039928112,
-                        y0 = 148.53020774179376,
-                        x1 = 107.57529725372356,
-                        y1 = -59.45777853885758,
+                        x1 = -47.58660614527603,
+                        y1 = -111.3471010505625,
                     ),
                     GraphEdge(
                         x0 = -87.41917955713517,
                         y0 = 120.97761778046068,
-                        x1 = -47.58660614527603,
-                        y1 = -111.3471010505625,
-                    ),
-                    GraphEdge(
-                        x0 = -7.010541039928112,
-                        y0 = 148.53020774179376,
-                        x1 = -47.58660614527603,
-                        y1 = -111.3471010505625,
+                        x1 = 107.57529725372356,
+                        y1 = -59.45777853885758,
                     ),
                 ),
-                nodes = listOf(
+                nodes = persistentListOf(
                     GraphNode(
-                        id = "b2de971f-b3d6-409f-9ed0-ecfc09e8b4e3",
-                        name = "suis",
+                        id = "6114677c-fa8f-4d87-960a-3f1169aaef89",
+                        name = "TK from 凛として時雨",
                         entity = MusicBrainzEntityType.ARTIST,
                         radius = 26.0,
                         x = -7.010541039928112,
@@ -92,8 +51,8 @@ internal fun PreviewArtistCollaborationGraphUi() {
                         y = 120.97761778046068,
                     ),
                     GraphNode(
-                        id = "58576a03-f302-4f68-9a97-113a6afc753f",
-                        name = "星めぐる詩",
+                        id = "51999312-1044-4f91-92b0-ed23974929ca",
+                        name = "melt",
                         entity = MusicBrainzEntityType.RECORDING,
                         radius = 24.0,
                         x = 34.442058589085114,
