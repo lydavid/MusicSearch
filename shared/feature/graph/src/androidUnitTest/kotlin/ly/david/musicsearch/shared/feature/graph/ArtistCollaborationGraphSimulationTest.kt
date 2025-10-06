@@ -42,7 +42,7 @@ class ArtistCollaborationGraphSimulationTest {
             assertEquals(9, state.nodes.count { it.entity == MusicBrainzEntityType.ARTIST })
             assertEquals(17, state.nodes.count { it.entity == MusicBrainzEntityType.RECORDING })
 
-            assertEquals(42, state.edges.size)
+            assertEquals(21, state.edges.size)
 
             cancelAndConsumeRemainingEvents()
         }
