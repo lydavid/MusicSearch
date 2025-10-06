@@ -15,13 +15,12 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -139,34 +138,6 @@ private fun ArtistDetailsModel.ArtistInformationSection(
             text = it.joinToString(", "),
             filterText = filterText,
         )
-    }
-}
-
-@Composable
-private fun AreaSection(
-    areaListItemModel: AreaListItemModel?,
-    filterText: String = "",
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
-) {
-    val strings = LocalStrings.current
-
-    areaListItemModel?.run {
-        ListSeparatorHeader(text = strings.area)
-
-        if (name.contains(filterText, ignoreCase = true)) {
-            AreaListItem(
-                area = this,
-                showType = false,
-                showIcon = false,
-                showEditCollection = false,
-                onAreaClick = {
-                    onItemClick(
-                        MusicBrainzEntityType.AREA,
-                        id,
-                    )
-                },
-            )
-        }
     }
 }
 

@@ -256,6 +256,14 @@ internal fun LabelUi(
                     onCollapseExpandAliases = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
                     },
+                    onItemClick = { entity, id ->
+                        eventSink(
+                            DetailsUiEvent.ClickItem(
+                                entity = entity,
+                                id = id,
+                            ),
+                        )
+                    },
                 )
             },
         )

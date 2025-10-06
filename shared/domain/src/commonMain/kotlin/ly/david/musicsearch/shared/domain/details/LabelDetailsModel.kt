@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.label.Label
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import kotlin.time.Clock
@@ -21,6 +22,7 @@ data class LabelDetailsModel(
     val ipis: ImmutableList<String> = persistentListOf(),
     val isnis: ImmutableList<String> = persistentListOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
+    val area: AreaListItemModel? = null,
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val imageMetadata: ImageMetadata = ImageMetadata(),

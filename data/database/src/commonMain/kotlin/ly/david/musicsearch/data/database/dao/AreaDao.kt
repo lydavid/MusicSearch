@@ -23,16 +23,47 @@ import lydavidmusicsearchdatadatabase.Areas_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-class AreaDao(
+interface AreaDao : EntityDao {
+    fun insert(area: AreaMusicBrainzNetworkModel?)
+    fun upsert(
+        oldAreaId: String,
+        area: AreaMusicBrainzNetworkModel?,
+    )
+
+    fun getAreaForDetails(areaId: String): AreaDetailsModel?
+    fun delete(areaId: String)
+
+    fun insertAll(areas: List<AreaMusicBrainzNetworkModel>)
+    fun upsertAll(areas: List<AreaMusicBrainzNetworkModel>)
+    fun getAreas(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): PagingSource<Int, AreaListItemModel>
+
+    fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int>
+
+    fun getAreaByPlace(placeId: String): AreaListItemModel?
+    fun deleteAreaPlaceLink(placeId: String)
+
+    fun getCountriesByRelease(releaseId: String): List<ReleaseEvent>
+    fun linkCountriesByRelease(
+        releaseId: String,
+        releaseEvents: List<ReleaseEventMusicBrainzModel>?,
+    )
+
+    fun deleteCountriesByReleaseLinks(releaseId: String)
+}
+
+class AreaDaoImpl(
     database: Database,
     private val countryCodeDao: CountryCodeDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
-) : EntityDao {
+) : AreaDao {
     override val transacter: AreaQueries = database.areaQueries
 
-    fun insert(area: AreaMusicBrainzNetworkModel?) {
+    override fun insert(area: AreaMusicBrainzNetworkModel?) {
         area?.run {
             transacter.insertArea(
                 Area(
@@ -54,7 +85,7 @@ class AreaDao(
         }
     }
 
-    fun upsert(
+    override fun upsert(
         oldAreaId: String,
         area: AreaMusicBrainzNetworkModel?,
     ) {
@@ -80,7 +111,46 @@ class AreaDao(
         }
     }
 
-    fun insertAll(areas: List<AreaMusicBrainzNetworkModel>) {
+    override fun getAreaForDetails(areaId: String): AreaDetailsModel? {
+        return transacter.getAreaForDetails(
+            areaId = areaId,
+            mapper = ::toDetailsModel,
+        ).executeAsOneOrNull()
+    }
+
+    private fun toDetailsModel(
+        id: String,
+        name: String,
+        disambiguation: String,
+        type: String,
+        begin: String,
+        end: String,
+        ended: Boolean,
+        countryCode: String?,
+        lastUpdated: Instant?,
+    ) = AreaDetailsModel(
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
+        countryCode = countryCode.orEmpty(),
+        lastUpdated = lastUpdated ?: Clock.System.now(),
+    )
+
+    override fun delete(areaId: String) {
+        withTransaction {
+            countryCodeDao.delete(areaId)
+            transacter.deleteArea(areaId)
+        }
+    }
+
+    // region areas
+    override fun insertAll(areas: List<AreaMusicBrainzNetworkModel>) {
         return transacter.transaction {
             areas.forEach { area ->
                 insert(area)
@@ -88,7 +158,7 @@ class AreaDao(
         }
     }
 
-    fun upsertAll(areas: List<AreaMusicBrainzNetworkModel>) {
+    override fun upsertAll(areas: List<AreaMusicBrainzNetworkModel>) {
         return transacter.transaction {
             areas.forEach { area ->
                 upsert(
@@ -99,14 +169,7 @@ class AreaDao(
         }
     }
 
-    fun getAreaForDetails(areaId: String): AreaDetailsModel? {
-        return transacter.getAreaForDetails(
-            areaId = areaId,
-            mapper = ::toDetailsModel,
-        ).executeAsOneOrNull()
-    }
-
-    fun getAreas(
+    override fun getAreas(
         browseMethod: BrowseMethod,
         query: String,
     ): PagingSource<Int, AreaListItemModel> = when (browseMethod) {
@@ -124,7 +187,7 @@ class AreaDao(
         }
     }
 
-    fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int> =
+    override fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 collectionEntityDao.getCountOfEntitiesByCollectionQuery(
@@ -184,37 +247,13 @@ class AreaDao(
             )
         },
     )
+    // endregion
 
-    private fun toDetailsModel(
-        id: String,
-        name: String,
-        disambiguation: String,
-        type: String,
-        begin: String,
-        end: String,
-        ended: Boolean,
-        countryCode: String?,
-        lastUpdated: Instant?,
-    ) = AreaDetailsModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
-        ),
-        countryCode = countryCode.orEmpty(),
-        lastUpdated = lastUpdated ?: Clock.System.now(),
-    )
-
-    fun delete(areaId: String) {
-        withTransaction {
-            countryCodeDao.delete(areaId)
-            transacter.deleteArea(areaId)
-        }
-    }
+    override fun getAreaByPlace(placeId: String): AreaListItemModel? =
+        transacter.getAreasByPlace(
+            placeId = placeId,
+            mapper = ::mapToAreaListItemModel,
+        ).executeAsList().findByTypePriority()
 
     // TODO: may be inaccurate if an area is contained within another area but has the same type
     private fun List<AreaListItemModel>.findByTypePriority(
@@ -234,18 +273,12 @@ class AreaDao(
         return null
     }
 
-    fun getAreaByPlace(placeId: String): AreaListItemModel? =
-        transacter.getAreasByPlace(
-            placeId = placeId,
-            mapper = ::mapToAreaListItemModel,
-        ).executeAsList().findByTypePriority()
-
-    fun deleteAreaPlaceLink(placeId: String) {
+    override fun deleteAreaPlaceLink(placeId: String) {
         transacter.deleteAreaPlaceLink(placeId = placeId)
     }
 
     // region countries by release
-    fun linkCountriesByRelease(
+    override fun linkCountriesByRelease(
         releaseId: String,
         releaseEvents: List<ReleaseEventMusicBrainzModel>?,
     ) {
@@ -267,7 +300,7 @@ class AreaDao(
         }
     }
 
-    fun getCountriesByRelease(
+    override fun getCountriesByRelease(
         releaseId: String,
     ): List<ReleaseEvent> = transacter.getCountriesByRelease(
         releaseId = releaseId,
@@ -282,7 +315,7 @@ class AreaDao(
         },
     ).executeAsList()
 
-    fun deleteCountriesByReleaseLinks(releaseId: String) {
+    override fun deleteCountriesByReleaseLinks(releaseId: String) {
         releaseCountryDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
     }
     // endregion
