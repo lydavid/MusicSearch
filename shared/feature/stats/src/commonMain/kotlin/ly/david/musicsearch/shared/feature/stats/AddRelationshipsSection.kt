@@ -81,7 +81,7 @@ private fun RelationTypeCountBar(
         TextWithIcon(
             imageVector = linkedEntity.getIcon() ?: return,
             text = "${linkedEntity.getName(LocalStrings.current)}: ${relationTypeCount.count}",
-            style = TextStyles.getCardBodySubTextStyle(),
+            textStyle = TextStyles.getCardBodySubTextStyle(),
         )
 
         if (totalRelations != 0) {

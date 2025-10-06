@@ -82,7 +82,7 @@ fun TrackListItem(
                         imageVector = CustomIcons.Headphones,
                         text = listenCount.toString(),
                         iconSize = TINY_ICON_SIZE,
-                        style = TextStyles.getCardBodySubTextStyle(),
+                        textStyle = TextStyles.getCardBodySubTextStyle(),
                     )
                     LinearProgressIndicator(
                         progress = { listenCount / maxOf(track.mostListenedTrackCount, 1).toFloat() },

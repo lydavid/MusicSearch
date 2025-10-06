@@ -114,7 +114,8 @@ internal fun PreviewReleaseDetailsUiWithListens() {
     PreviewWithSharedElementTransition {
         ReleaseDetailsTabUi(
             release = release.copy(
-                listenCount = 10,
+                completeListenCount = 2,
+                listenCount = 35,
                 latestListens = persistentListOf(
                     ListenWithTrack(
                         mediumPosition = 1,

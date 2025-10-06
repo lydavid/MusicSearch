@@ -53,6 +53,7 @@ data class ReleaseDetailsModel(
     val latestListens: ImmutableList<ListenWithTrack> = persistentListOf(),
     val listenBrainzUrl: String = "",
     val mostListenedTrackCount: Long = 0,
+    val completeListenCount: Long = 0,
 ) : Release, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)

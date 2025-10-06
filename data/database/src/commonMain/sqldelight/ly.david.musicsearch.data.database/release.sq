@@ -140,24 +140,20 @@ GROUP BY m.id;
 
 -- listens
 
-getListenCountByRelease:
-SELECT COUNT(listen.recording_musicbrainz_id)
-FROM `release`
-INNER JOIN medium ON medium.release_id = `release`.id
-INNER JOIN track ON track.medium_id = medium.id
-INNER JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-WHERE `release`.id = :releaseId;
-
-getMostListenedTrackCountByRelease:
-SELECT COUNT(listen.recording_musicbrainz_id)
-FROM `release`
-INNER JOIN medium ON medium.release_id = `release`.id
-INNER JOIN track ON track.medium_id = medium.id
-INNER JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-WHERE `release`.id = :releaseId
-GROUP BY listen.recording_musicbrainz_id
-ORDER BY COUNT(listen.recording_musicbrainz_id) DESC
-LIMIT 1;
+getListenCountsByRelease:
+SELECT
+  SUM(track_listen_counts.count) AS total_listens,
+  MAX(track_listen_counts.count) AS most_listened_track_count,
+  MIN(track_listen_counts.count) AS complete_listen_count
+FROM (
+  SELECT
+    COUNT(listen.recording_musicbrainz_id) AS count
+  FROM track
+  INNER JOIN medium ON track.medium_id = medium.id
+  LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+  WHERE medium.release_id = :releaseId
+  GROUP BY track.id
+) AS track_listen_counts;
 
 getLatestListensByRelease:
 SELECT

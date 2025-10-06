@@ -135,8 +135,8 @@ class ReleaseDao(
             persistentListOf()
         }
 
-        val listenCount = if (listenBrainzUsername.isNotEmpty()) {
-            transacter.getListenCountByRelease(
+        val listenCounts = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getListenCountsByRelease(
                 releaseId = releaseId,
                 username = listenBrainzUsername,
             ).executeAsOne()
@@ -144,21 +144,13 @@ class ReleaseDao(
             null
         }
 
-        val mostListenedTrackCount = if (listenBrainzUsername.isNotEmpty()) {
-            transacter.getMostListenedTrackCountByRelease(
-                releaseId = releaseId,
-                username = listenBrainzUsername,
-            ).executeAsOneOrNull()
-        } else {
-            0
-        }
-
         return release?.copy(
             formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
             formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
             latestListens = latestListens,
-            listenCount = listenCount,
-            mostListenedTrackCount = mostListenedTrackCount ?: 0,
+            listenCount = listenCounts?.total_listens,
+            mostListenedTrackCount = listenCounts?.most_listened_track_count ?: 0,
+            completeListenCount = listenCounts?.complete_listen_count ?: 0,
         )
     }
 
