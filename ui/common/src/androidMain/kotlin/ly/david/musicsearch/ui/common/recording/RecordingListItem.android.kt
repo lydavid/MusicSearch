@@ -31,6 +31,7 @@ internal fun PreviewRecordingListItemAllInfo() {
                 length = 25300000,
                 video = true,
                 formattedArtistCredits = "Some artist feat. Other artist",
+                listenCount = 38,
             ),
         )
     }

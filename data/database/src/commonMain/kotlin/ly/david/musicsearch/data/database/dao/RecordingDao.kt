@@ -163,10 +163,12 @@ class RecordingDao(
     fun getRecordings(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
     ): PagingSource<Int, RecordingListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllRecordings(
                 query = query,
+                username = username,
             )
         }
 
@@ -175,11 +177,13 @@ class RecordingDao(
                 getRecordingsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    username = username,
                 )
             } else {
                 getRecordingsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    username = username,
                 )
             }
         }
@@ -216,6 +220,7 @@ class RecordingDao(
 
     private fun getAllRecordings(
         query: String,
+        username: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllRecordings(
             query = query,
@@ -225,6 +230,7 @@ class RecordingDao(
         queryProvider = { limit, offset ->
             transacter.getAllRecordings(
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -235,6 +241,7 @@ class RecordingDao(
     private fun getRecordingsByEntity(
         entityId: String,
         query: String,
+        username: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = getCountOfRecordingsByEntityQuery(entityId, query),
         transacter = transacter,
@@ -243,6 +250,7 @@ class RecordingDao(
             transacter.getRecordingsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -261,6 +269,7 @@ class RecordingDao(
     private fun getRecordingsByCollection(
         collectionId: String,
         query: String,
+        username: String,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByCollection(
             collectionId = collectionId,
@@ -272,6 +281,7 @@ class RecordingDao(
             transacter.getRecordingsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,

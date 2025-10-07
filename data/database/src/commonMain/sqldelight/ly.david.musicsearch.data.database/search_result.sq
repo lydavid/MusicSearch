@@ -243,7 +243,8 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
   ) AS collected,
   GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  CAST(NULL AS INTEGER)
 FROM search_result sr
 INNER JOIN recording ON sr.entity_id = recording.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id

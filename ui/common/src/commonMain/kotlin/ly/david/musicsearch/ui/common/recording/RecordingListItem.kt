@@ -20,10 +20,12 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
+import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
@@ -89,6 +91,29 @@ fun RecordingListItem(
                         style = TextStyles.getCardBodySubTextStyle(),
                         fontWeight = recording.fontWeight,
                     )
+                }
+
+                val listenCount = recording.listenCount
+                if (listenCount != null) {
+                    TextWithIcon(
+                        modifier = Modifier.padding(top = 4.dp),
+                        imageVector = CustomIcons.Headphones,
+                        text = listenCount.toString(),
+                        iconSize = TINY_ICON_SIZE,
+                        textStyle = TextStyles.getCardBodySubTextStyle(),
+                    )
+                    // TODO: show relatively how often you've listened to a recording compared to other recordings
+                    //  by a browse method
+                    //  Each details entity that can show a list of recordings need to fetch their most listened recording
+                    //  and pass it here.
+//                    LinearProgressIndicator(
+//                        progress = { listenCount / maxOf(track.mostListenedTrackCount, 1).toFloat() },
+//                        modifier = Modifier
+//                            .height(4.dp)
+//                            .fillMaxWidth(),
+//                        color = MaterialTheme.colorScheme.primary,
+//                        trackColor = Color.Transparent,
+//                    )
                 }
             }
         },

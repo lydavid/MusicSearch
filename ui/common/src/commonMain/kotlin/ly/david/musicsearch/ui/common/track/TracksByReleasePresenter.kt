@@ -31,7 +31,6 @@ class TracksByReleasePresenter(
             mutableStateOf(
                 getTracksByRelease(
                     releaseId = releaseId,
-                    mostListenedTrackCount = mostListenedTrackCount,
                     query = query,
                 ),
             )
@@ -43,6 +42,7 @@ class TracksByReleasePresenter(
             pagingDataFlow = tracksListItems,
             lazyListState = lazyListState,
             collapsedMediumIds = collapsedMediumIds,
+            mostListenedTrackCount = mostListenedTrackCount,
             eventSink = { event ->
                 handleEvent(
                     event = event,
@@ -92,6 +92,7 @@ data class TracksByReleaseUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
     val collapsedMediumIds: Set<Long> = setOf(),
+    val mostListenedTrackCount: Long = 0L,
     val eventSink: (TracksByReleaseUiEvent) -> Unit = {},
 ) : CircuitUiState
 

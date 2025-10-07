@@ -974,7 +974,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         )
         val tracksFlowBeforeEdit = releaseRepositoryBeforeEdit.observeTracksByRelease(
             releaseId = releaseId,
-            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -994,7 +993,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     mediumId = 1,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",
                     formattedArtistCredits = "アトラスサウンドチーム",
-                    visited = false,
                     mediumPosition = 1,
                     mediumName = "SFC版「真・女神転生」",
                     trackCount = 1,
@@ -1047,7 +1045,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         )
         val tracksFlowAfterEdit = releaseRepositoryAfterEdit.observeTracksByRelease(
             releaseId = releaseId,
-            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -1069,7 +1066,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     mediumId = 2,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",
                     formattedArtistCredits = "増子司",
-                    visited = false,
                     mediumPosition = 1,
                     mediumName = "SFC版「真・女神転生」",
                     trackCount = 1,
@@ -1187,7 +1183,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
         )
         val flow = releaseRepositoryBeforeEdit.observeTracksByRelease(
             releaseId = releaseId,
-            mostListenedTrackCount = 0,
             query = "",
             lastUpdated = testDateTimeInThePast,
         )
@@ -1212,7 +1207,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         mediumId = 1,
                         recordingId = "994b2961-3527-43f7-830d-7c817d286577",
                         formattedArtistCredits = "アトラスサウンドチーム",
-                        visited = false,
                         mediumPosition = 1,
                         mediumName = "SFC版「真・女神転生」",
                         trackCount = trackCount,
@@ -1245,7 +1239,6 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         mediumId = 1,
                         recordingId = "994b2961-3527-43f7-830d-7c817d286577",
                         formattedArtistCredits = "アトラスサウンドチーム",
-                        visited = false,
                         mediumPosition = 1,
                         mediumName = "SFC版「真・女神転生」",
                         trackCount = trackCount,

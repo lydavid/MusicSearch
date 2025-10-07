@@ -189,7 +189,6 @@ class ReleaseRepositoryImpl(
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override fun observeTracksByRelease(
         releaseId: String,
-        mostListenedTrackCount: Long,
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
@@ -199,7 +198,6 @@ class ReleaseRepositoryImpl(
                 lastUpdated = lastUpdated,
                 query = query,
                 username = username,
-                mostListenedTrackCount = mostListenedTrackCount,
             )
         }
     }
@@ -210,7 +208,6 @@ class ReleaseRepositoryImpl(
         lastUpdated: Instant,
         query: String,
         username: String,
-        mostListenedTrackCount: Long,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -229,14 +226,14 @@ class ReleaseRepositoryImpl(
             pagingSourceFactory = {
                 trackDao.getTracksByRelease(
                     releaseId = releaseId,
-                    query = "%$query%",
+                    query = query,
                     username = username,
                 )
             },
         ).flow
             .map { pagingData ->
                 pagingData
-                    .map { it.toTrackListItemModel(mostListenedTrackCount = mostListenedTrackCount) }
+                    .map { it.toTrackListItemModel() }
                     .insertSeparators(
                         terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
                     ) { before: TrackListItemModel?, after: TrackListItemModel? ->
@@ -263,7 +260,7 @@ class ReleaseRepositoryImpl(
     // endregion
 }
 
-private fun TrackAndMedium.toTrackListItemModel(mostListenedTrackCount: Long) =
+private fun TrackAndMedium.toTrackListItemModel() =
     TrackListItemModel(
         id = id,
         position = position,
@@ -280,5 +277,4 @@ private fun TrackAndMedium.toTrackListItemModel(mostListenedTrackCount: Long) =
         format = format,
         aliases = aliases,
         listenCount = listenCount,
-        mostListenedTrackCount = mostListenedTrackCount,
     )

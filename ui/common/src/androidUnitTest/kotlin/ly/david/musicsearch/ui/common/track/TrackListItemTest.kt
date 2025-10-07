@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.release
+package ly.david.musicsearch.ui.common.track
 
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test

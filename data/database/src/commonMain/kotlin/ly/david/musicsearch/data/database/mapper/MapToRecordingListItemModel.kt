@@ -14,6 +14,7 @@ internal fun mapToRecordingListItemModel(
     collected: Boolean?,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long?,
 ) = RecordingListItemModel(
     id = id,
     name = name,
@@ -25,4 +26,5 @@ internal fun mapToRecordingListItemModel(
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),
+    listenCount = listenCount,
 )

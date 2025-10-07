@@ -25,6 +25,7 @@ internal fun TracksByReleaseUi(
 
     TracksByReleaseUi(
         lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
+        mostListenedTrackCount = uiState.mostListenedTrackCount,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
         collapsedMediumIds = uiState.collapsedMediumIds,
@@ -44,6 +45,7 @@ internal fun TracksByReleaseUi(
 @Composable
 internal fun TracksByReleaseUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     collapsedMediumIds: Set<Long> = setOf(),
@@ -60,6 +62,7 @@ internal fun TracksByReleaseUi(
                 if (!collapsedMediumIds.contains(listItemModel.mediumId)) {
                     TrackListItem(
                         track = listItemModel,
+                        mostListenedTrackCount = mostListenedTrackCount,
                         onRecordingClick = onRecordingClick,
                     )
                 }

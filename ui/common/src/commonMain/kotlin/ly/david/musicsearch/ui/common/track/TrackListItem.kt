@@ -31,6 +31,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun TrackListItem(
     track: TrackListItemModel,
+    mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
 ) {
@@ -85,7 +86,7 @@ fun TrackListItem(
                         textStyle = TextStyles.getCardBodySubTextStyle(),
                     )
                     LinearProgressIndicator(
-                        progress = { listenCount / maxOf(track.mostListenedTrackCount, 1).toFloat() },
+                        progress = { listenCount / maxOf(mostListenedTrackCount, 1).toFloat() },
                         modifier = Modifier
                             .height(4.dp)
                             .fillMaxWidth(),

@@ -15,7 +15,6 @@ interface ReleaseRepository {
 
     fun observeTracksByRelease(
         releaseId: String,
-        mostListenedTrackCount: Long,
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>

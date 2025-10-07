@@ -64,24 +64,27 @@ class TrackDao(
         releaseId: String,
         query: String,
         username: String,
-    ): PagingSource<Int, TrackAndMedium> = QueryPagingSource(
-        countQuery = transacter.getNumberOfTracksByRelease(
-            releaseId = releaseId,
-            query = query,
-        ),
-        transacter = transacter,
-        context = coroutineDispatchers.io,
-        queryProvider = { limit, offset ->
-            transacter.getTracksByRelease(
+    ): PagingSource<Int, TrackAndMedium> {
+        val queryWithWildcards = "%$query%"
+        return QueryPagingSource(
+            countQuery = transacter.getNumberOfTracksByRelease(
                 releaseId = releaseId,
-                query = query,
-                username = username,
-                limit = limit,
-                offset = offset,
-                mapper = ::mapToTrackAndMedium,
-            )
-        },
-    )
+                query = queryWithWildcards,
+            ),
+            transacter = transacter,
+            context = coroutineDispatchers.io,
+            queryProvider = { limit, offset ->
+                transacter.getTracksByRelease(
+                    releaseId = releaseId,
+                    query = queryWithWildcards,
+                    username = username,
+                    limit = limit,
+                    offset = offset,
+                    mapper = ::mapToTrackAndMedium,
+                )
+            },
+        )
+    }
 }
 
 private fun mapToTrackAndMedium(
