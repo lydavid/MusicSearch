@@ -80,7 +80,7 @@ internal fun RecordingUi(
         additionalActions = {
             AddToCollectionActionToggle(
                 collected = state.collected,
-                entity = MusicBrainzEntityType.AREA,
+                entity = MusicBrainzEntityType.RECORDING,
                 entityId = entityId,
                 overlayHost = overlayHost,
                 coroutineScope = coroutineScope,
