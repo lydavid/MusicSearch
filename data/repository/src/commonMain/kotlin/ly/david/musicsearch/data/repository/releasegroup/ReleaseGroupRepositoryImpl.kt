@@ -1,12 +1,14 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -19,15 +21,16 @@ class ReleaseGroupRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseGroupRepository {
 
     override suspend fun lookupReleaseGroup(
         releaseGroupId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): ReleaseGroupDetailsModel {
+    ): ReleaseGroupDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(releaseGroupId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)

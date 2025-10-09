@@ -1,12 +1,14 @@
 package ly.david.musicsearch.data.repository.work
 
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -19,15 +21,16 @@ class WorkRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : WorkRepository {
 
     override suspend fun lookupWork(
         workId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): WorkDetailsModel {
+    ): WorkDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(workId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val workMusicBrainzModel = lookupApi.lookupWork(workId = workId)

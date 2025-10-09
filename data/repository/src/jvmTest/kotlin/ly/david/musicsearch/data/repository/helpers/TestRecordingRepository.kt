@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
@@ -22,6 +23,7 @@ interface TestRecordingRepository {
     val recordingDao: RecordingDao
     val artistCreditDao: ArtistCreditDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createRecordingRepository(
         musicBrainzModel: RecordingMusicBrainzNetworkModel,
@@ -62,6 +64,7 @@ interface TestRecordingRepository {
                     return ""
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

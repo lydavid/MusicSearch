@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
-import ly.david.data.test.api.FakeLookupApi
 import ly.david.data.test.budokanPlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
@@ -25,12 +24,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetwork
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
+import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -45,7 +44,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
+class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -58,37 +57,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val aliasDao: AliasDao by inject()
-
-    private fun createAreaRepositoryWithFakeNetworkData(
-        musicBrainzModel: AreaMusicBrainzNetworkModel,
-    ): AreaRepositoryImpl {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupArea(
-                    areaId: String,
-                    include: String?,
-                ): AreaMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
-            relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
-            relationDao = relationDao,
-        )
-        return AreaRepositoryImpl(
-            areaDao = areaDao,
-            relationRepository = relationRepository,
-            aliasDao = aliasDao,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupArea(
-                    areaId: String,
-                    include: String?,
-                ): AreaMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
-        )
-    }
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
@@ -356,7 +325,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         val placeId = budokanPlaceMusicBrainzModel.id
 
         // Lookup a country
-        val countryAreaRepository = createAreaRepositoryWithFakeNetworkData(
+        val countryAreaRepository = createAreaRepository(
             musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = countryId,
                 name = "Japan",
@@ -483,7 +452,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
 
         // Lookup the more specific area
-        val districtAreaRepository = createAreaRepositoryWithFakeNetworkData(
+        val districtAreaRepository = createAreaRepository(
             musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = districtId,
                 name = "Kitanomaru Kōen",

@@ -1,10 +1,12 @@
 package ly.david.musicsearch.data.repository.event
 
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -16,15 +18,16 @@ class EventRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EventRepository {
 
     override suspend fun lookupEvent(
         eventId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): EventDetailsModel {
+    ): EventDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(eventId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)

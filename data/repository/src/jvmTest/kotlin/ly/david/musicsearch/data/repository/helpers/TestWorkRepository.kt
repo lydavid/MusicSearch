@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 
@@ -19,6 +20,7 @@ interface TestWorkRepository {
     val workDao: WorkDao
     val workAttributeDao: WorkAttributeDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createWorkRepository(
         musicBrainzModel: WorkMusicBrainzNetworkModel,
@@ -49,6 +51,7 @@ interface TestWorkRepository {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

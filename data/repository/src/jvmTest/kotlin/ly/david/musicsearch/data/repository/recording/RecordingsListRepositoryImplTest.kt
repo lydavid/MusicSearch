@@ -29,6 +29,7 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -53,6 +54,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
 
     @Test

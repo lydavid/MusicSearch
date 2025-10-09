@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
@@ -19,6 +20,7 @@ interface TestReleaseGroupRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createReleaseGroupRepository(
         musicBrainzModel: ReleaseGroupMusicBrainzNetworkModel,
@@ -49,6 +51,7 @@ interface TestReleaseGroupRepository {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

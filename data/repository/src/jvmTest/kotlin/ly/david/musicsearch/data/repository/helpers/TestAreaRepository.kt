@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 
 interface TestAreaRepository {
@@ -17,6 +18,7 @@ interface TestAreaRepository {
     val relationDao: RelationDao
     val areaDao: AreaDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     /**
      * This builds [AreaRepositoryImpl] cast as [AreaRepository].
@@ -50,6 +52,7 @@ interface TestAreaRepository {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

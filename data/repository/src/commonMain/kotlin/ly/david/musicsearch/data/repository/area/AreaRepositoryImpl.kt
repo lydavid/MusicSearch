@@ -1,11 +1,13 @@
 package ly.david.musicsearch.data.repository.area
 
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -16,15 +18,16 @@ class AreaRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : AreaRepository {
 
     override suspend fun lookupArea(
         areaId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): AreaDetailsModel {
+    ): AreaDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(areaId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val areaMusicBrainzModel = lookupApi.lookupArea(areaId)

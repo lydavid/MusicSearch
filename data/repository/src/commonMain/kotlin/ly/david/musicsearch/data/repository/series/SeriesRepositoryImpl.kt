@@ -1,10 +1,12 @@
 package ly.david.musicsearch.data.repository.series
 
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -16,15 +18,16 @@ class SeriesRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : SeriesRepository {
 
     override suspend fun lookupSeries(
         seriesId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): SeriesDetailsModel {
+    ): SeriesDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(seriesId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val seriesMusicBrainzModel = lookupApi.lookupSeries(seriesId)

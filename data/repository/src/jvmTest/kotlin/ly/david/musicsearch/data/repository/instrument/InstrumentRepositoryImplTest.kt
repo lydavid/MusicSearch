@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
@@ -37,6 +38,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val instrumentDao: InstrumentDao by inject()
     private val aliasDao: AliasDao by inject()
+    private val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createRepository(
         musicBrainzModel: InstrumentMusicBrainzNetworkModel,
@@ -66,6 +68,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 

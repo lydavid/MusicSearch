@@ -1,10 +1,12 @@
 package ly.david.musicsearch.data.repository.instrument
 
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -16,15 +18,16 @@ class InstrumentRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : InstrumentRepository {
 
     override suspend fun lookupInstrument(
         instrumentId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): InstrumentDetailsModel {
+    ): InstrumentDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(instrumentId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)

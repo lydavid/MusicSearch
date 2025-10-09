@@ -1,11 +1,13 @@
 package ly.david.musicsearch.data.repository.place
 
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -18,15 +20,16 @@ class PlaceRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : PlaceRepository {
 
     override suspend fun lookupPlace(
         placeId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): PlaceDetailsModel {
+    ): PlaceDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(placeId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)

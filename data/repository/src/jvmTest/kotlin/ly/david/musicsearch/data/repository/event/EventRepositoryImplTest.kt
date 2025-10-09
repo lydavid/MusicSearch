@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.repository.helpers.TestEventRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -39,6 +40,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     override val relationDao: RelationDao by inject()
     override val eventDao: EventDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import org.junit.Assert.assertEquals
@@ -29,6 +30,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

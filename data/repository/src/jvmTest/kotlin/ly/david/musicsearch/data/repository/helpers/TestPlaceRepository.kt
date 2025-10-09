@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 
@@ -23,6 +24,7 @@ interface TestPlaceRepository {
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
     val collectionEntityDao: CollectionEntityDao
     val aliasDao: AliasDao
+    val coroutineDispatchers: CoroutineDispatchers
 
     fun createPlaceRepository(
         musicBrainzModel: PlaceMusicBrainzNetworkModel,
@@ -53,6 +55,7 @@ interface TestPlaceRepository {
                     return musicBrainzModel
                 }
             },
+            coroutineDispatchers = coroutineDispatchers,
         )
     }
 }

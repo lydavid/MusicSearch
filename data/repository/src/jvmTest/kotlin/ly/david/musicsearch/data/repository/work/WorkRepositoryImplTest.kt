@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainz
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -38,6 +39,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
     override val workDao: WorkDao by inject()
     override val workAttributeDao: WorkAttributeDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {

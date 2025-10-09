@@ -6,12 +6,14 @@ package ly.david.musicsearch.data.repository.recording
 import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
@@ -28,15 +30,16 @@ class RecordingRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : RecordingRepository {
 
     override suspend fun lookupRecording(
         recordingId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
-    ): RecordingDetailsModel {
+    ): RecordingDetailsModel = withContext(coroutineDispatchers.io) {
         val cachedData = getCachedData(recordingId)
-        return if (cachedData != null && !forceRefresh) {
+        return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
             val recordingMusicBrainzModel = lookupApi.lookupRecording(recordingId)

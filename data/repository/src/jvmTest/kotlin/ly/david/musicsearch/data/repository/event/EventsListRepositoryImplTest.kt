@@ -32,6 +32,7 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -56,6 +57,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createEventsListRepository(
         events: List<EventMusicBrainzNetworkModel>,
