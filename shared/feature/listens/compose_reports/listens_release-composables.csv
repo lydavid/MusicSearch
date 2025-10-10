@@ -1,6 +1,7 @@
 package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
 ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentRecordings,PreviewFacetsBottomSheetContentRecordings,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentReleases,PreviewFacetsBottomSheetContentReleases,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentArtists,PreviewFacetsBottomSheetContentArtists,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.listens.PreviewListenListItem,PreviewListenListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.listens.PreviewListensUi,PreviewListensUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithRecordingFacet,PreviewListensUiWithRecordingFacet,1,1,1,0,0,0,0,0,1,1,

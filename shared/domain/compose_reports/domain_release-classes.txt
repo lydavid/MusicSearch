@@ -35,6 +35,7 @@ stable class ly.david.musicsearch.shared.domain.ListFilters {
   stable val query: String
   stable val isRemote: Boolean
   stable val sorted: Boolean
+  stable val username: String
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.alias.BasicAlias {
@@ -141,6 +142,7 @@ stable class ly.david.musicsearch.shared.domain.details.ArtistDetailsModel {
   stable val wikipediaExtract: WikipediaExtract
   stable val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
+  stable val latestListens: ImmutableList<ListenWithRecording>
   stable val listenBrainzUrl: String
   <runtime stability> = 
 }
@@ -183,6 +185,7 @@ stable class ly.david.musicsearch.shared.domain.details.LabelDetailsModel {
   stable val ipis: ImmutableList<String>
   stable val isnis: ImmutableList<String>
   stable val lifeSpan: LifeSpanUiModel
+  stable val area: AreaListItemModel?
   stable val lastUpdated: Instant
   stable val artistCredits: ImmutableList<ArtistCreditUiModel>
   stable val imageMetadata: ImageMetadata
@@ -257,6 +260,7 @@ unstable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val latestListens: ImmutableList<ListenWithTrack>
   stable val listenBrainzUrl: String
   stable val mostListenedTrackCount: Long
+  stable val completeListenCount: Long
   <runtime stability> = Unstable
 }
 stable class ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel {
@@ -458,6 +462,13 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenRelease {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.listen.ListenWithRecording {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String
+  stable val listenedMs: Long
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.listen.ListenWithTrack {
   stable val mediumPosition: Int
   stable val trackNumber: String
@@ -632,6 +643,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel 
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
+  stable val listenCount: Long?
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.listitem.RelationListItemModel {
@@ -740,7 +752,6 @@ stable class ly.david.musicsearch.shared.domain.listitem.TrackListItemModel {
   stable val format: String?
   stable val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
-  stable val mostListenedTrackCount: Long
   stable val disambiguation: String?
   <runtime stability> = 
 }

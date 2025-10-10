@@ -10,8 +10,8 @@ stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphU
   stable val artistName: String
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val collaborationEntityType: MusicBrainzEntityType
-  unstable val edges: List<GraphEdge>
-  unstable val nodes: List<GraphNode>
+  stable val edges: ImmutableList<GraphEdge>
+  stable val nodes: ImmutableList<GraphNode>
   stable val isDeveloperMode: Boolean
   stable val eventSink: Function1<ArtistCollaborationGraphUiEvent, Unit>
 }

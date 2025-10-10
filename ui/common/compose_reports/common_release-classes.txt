@@ -329,6 +329,7 @@ stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
   unstable val collapsedMediumIds: Set<Long>
+  stable val mostListenedTrackCount: Long
   stable val eventSink: Function1<TracksByReleaseUiEvent, Unit>
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.Get {

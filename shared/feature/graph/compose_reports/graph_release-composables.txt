@@ -7,8 +7,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi(
-  unstable edges: List<GraphEdge>
-  unstable nodes: List<GraphNode>
+  stable edges: ImmutableList<GraphEdge>
+  stable nodes: ImmutableList<GraphNode>
   stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable showDebugInfo: Boolean = @static false
