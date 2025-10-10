@@ -25,11 +25,13 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.recording.RecordingSortMenuItem
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -111,6 +113,8 @@ internal fun WorkUi(
     )
 
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
+    val recordingsByEntityEventSink =
+        state.allEntitiesListUiState.recordingsListUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
@@ -167,6 +171,16 @@ internal fun WorkUi(
                         url = state.url,
                     )
                     CopyToClipboardMenuItem(entityId)
+                    if (selectedTab == Tab.RECORDINGS) {
+                        RecordingSortMenuItem(
+                            sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
+                            onSortOptionClick = {
+                                recordingsByEntityEventSink(
+                                    EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                                )
+                            },
+                        )
+                    }
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,

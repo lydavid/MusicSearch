@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 
 open class NoOpAppPreferences : AppPreferences {
     override val theme: Flow<AppPreferences.Theme>
@@ -29,6 +30,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = error("Not implemented")
 
     override fun setSeedColor(seedColor: Int) {
+        // No-op.
+    }
+
+    override val recordingSortOption: Flow<RecordingSortOption>
+        get() = flowOf(RecordingSortOption.None)
+
+    override fun setRecordingSortOption(sort: RecordingSortOption) {
         // No-op.
     }
 

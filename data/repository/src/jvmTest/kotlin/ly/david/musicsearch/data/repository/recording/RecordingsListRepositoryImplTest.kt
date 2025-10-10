@@ -255,13 +255,13 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureRecordingListItemModel.copy(
-                            collected = true,
-                        ),
                         skycladObserverRecordingListItemModel.copy(
                             collected = true,
                         ),
                         skycladObserverCoverRecordingListItemModel,
+                        underPressureRecordingListItemModel.copy(
+                            collected = true,
+                        ),
                     ),
                 ),
                 FilterTestCase(
@@ -344,11 +344,11 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
             assertEquals(
                 listOf(
                     skycladObserverRecordingListItemModel,
-                    skycladObserverRecordingListItemModel.copy(
-                        id = "new-id-is-considered-a-different-recording",
-                    ),
                     skycladObserverCoverRecordingListItemModel.copy(
                         disambiguation = "changes will still show up",
+                    ),
+                    skycladObserverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
                     ),
                 ),
                 this,
@@ -385,11 +385,11 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
             assertEquals(
                 listOf(
                     skycladObserverRecordingListItemModel,
-                    skycladObserverRecordingListItemModel.copy(
-                        id = "new-id-is-considered-a-different-recording",
-                    ),
                     skycladObserverCoverRecordingListItemModel.copy(
                         disambiguation = "changes will still show up",
+                    ),
+                    skycladObserverRecordingListItemModel.copy(
+                        id = "new-id-is-considered-a-different-recording",
                     ),
                 ),
                 this,

@@ -57,6 +57,7 @@ class RecordingsListRepositoryImpl(
             browseMethod = browseMethod,
             query = listFilters.query,
             username = listFilters.username,
+            sortOption = listFilters.recordingSortOption,
         )
     }
 

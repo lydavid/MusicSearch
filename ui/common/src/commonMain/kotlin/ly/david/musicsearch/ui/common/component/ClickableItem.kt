@@ -19,6 +19,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 fun ClickableItem(
     title: String,
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     subtitle: String? = null,
     startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
@@ -35,7 +36,7 @@ fun ClickableItem(
             Icon(
                 imageVector = startIcon,
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterStart),
+                modifier = iconModifier.align(Alignment.CenterStart),
             )
         }
 
@@ -66,7 +67,7 @@ fun ClickableItem(
             Icon(
                 imageVector = endIcon,
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterEnd),
+                modifier = iconModifier.align(Alignment.CenterEnd),
             )
         }
     }

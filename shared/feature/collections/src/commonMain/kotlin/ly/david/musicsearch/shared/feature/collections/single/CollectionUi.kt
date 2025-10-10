@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.recording.RecordingSortMenuItem
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -66,6 +67,7 @@ internal fun CollectionUi(
     val entity = collection?.entity
     val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
+    val recordingsByEntityEventSink = state.allEntitiesListUiState.recordingsListUiState.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -219,6 +221,16 @@ internal fun CollectionUi(
                             showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
                             onToggle = {
                                 releasesEventSink(EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it))
+                            },
+                        )
+                    }
+                    if (entity == MusicBrainzEntityType.RECORDING) {
+                        RecordingSortMenuItem(
+                            sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
+                            onSortOptionClick = {
+                                recordingsByEntityEventSink(
+                                    EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                                )
                             },
                         )
                     }

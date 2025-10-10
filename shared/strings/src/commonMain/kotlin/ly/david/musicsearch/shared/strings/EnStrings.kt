@@ -282,21 +282,19 @@ val EnStrings = AppStrings(
             .fmt(p0, p1)
     },
 
+    none = "None",
     alphabetically = "Alphabetically",
-
     alphabeticallyReverse = "Reverse alphabetically",
-
     recentlyVisited = "Recently visited",
-
     leastRecentlyVisited = "Least recently visited",
-
     mostVisited = "Most visited",
-
     leastVisited = "Least visited",
-
     recentlyAdded = "Recently added",
-
     leastRecentlyAdded = "Least recently added",
+    earliestReleaseDate = "Earliest release date",
+    latestReleaseDate = "Latest release date",
+    mostListened = "Most listened",
+    leastListened = "Least listened",
 
     loginToMusicBrainz = "Login to MusicBrainz",
     artificialLanguage = "[Artificial (Other)]",

@@ -5,6 +5,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 
 interface AppPreferences {
 
@@ -22,6 +23,9 @@ interface AppPreferences {
 
     val observeSeedColor: Flow<Int>
     fun setSeedColor(seedColor: Int)
+
+    val recordingSortOption: Flow<RecordingSortOption>
+    fun setRecordingSortOption(sort: RecordingSortOption)
 
     val sortReleaseListItems: Flow<Boolean>
     fun setSortReleaseListItems(show: Boolean)

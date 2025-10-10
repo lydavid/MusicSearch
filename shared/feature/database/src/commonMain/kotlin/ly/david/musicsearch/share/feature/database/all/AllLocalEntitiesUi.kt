@@ -29,6 +29,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.recording.RecordingSortMenuItem
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -50,6 +51,7 @@ internal fun AllLocalEntitiesUi(
 ) {
     val entity = state.entity
     val eventSink = state.eventSink
+    val recordingsByEntityEventSink = state.allEntitiesListUiState.recordingsListUiState.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
@@ -122,6 +124,16 @@ internal fun AllLocalEntitiesUi(
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                     )
+                    if (entity == MusicBrainzEntityType.RECORDING) {
+                        RecordingSortMenuItem(
+                            sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
+                            onSortOptionClick = {
+                                recordingsByEntityEventSink(
+                                    EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                                )
+                            },
+                        )
+                    }
                     if (entity == MusicBrainzEntityType.RELEASE_GROUP) {
                         SortToggleMenuItem(
                             sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,

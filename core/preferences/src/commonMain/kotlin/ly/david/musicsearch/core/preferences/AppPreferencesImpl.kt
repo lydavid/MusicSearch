@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
@@ -87,6 +88,28 @@ internal class AppPreferencesImpl(
         }
     }
 
+    // region Recording
+    private val recordingSortOptionPreference = stringPreferencesKey("recordingSortOption")
+
+    override val recordingSortOption: Flow<RecordingSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                RecordingSortOption.valueOf(
+                    it[recordingSortOptionPreference] ?: RecordingSortOption.None.name,
+                )
+            }
+            .distinctUntilChanged()
+
+    override fun setRecordingSortOption(sort: RecordingSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[recordingSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
+
+    // region Releases
     private val sortReleasesPreference = booleanPreferencesKey("sortReleaseListItems")
     override val sortReleaseListItems: Flow<Boolean>
         get() = preferencesDataStore.data
@@ -119,7 +142,9 @@ internal class AppPreferencesImpl(
             }
         }
     }
+    // endregion
 
+    // region Release Groups
     private val sortReleaseGroupsPreference = booleanPreferencesKey("sortReleaseGroupListItems")
     override val sortReleaseGroupListItems: Flow<Boolean>
         get() = preferencesDataStore.data
@@ -135,6 +160,7 @@ internal class AppPreferencesImpl(
             }
         }
     }
+    // endregion
 
     override val showLocalCollections: Flow<Boolean>
         get() = preferencesDataStore.data

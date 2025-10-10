@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -164,11 +165,13 @@ class RecordingDao(
         browseMethod: BrowseMethod,
         query: String,
         username: String,
+        sortOption: RecordingSortOption,
     ): PagingSource<Int, RecordingListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllRecordings(
                 query = query,
                 username = username,
+                sortOption = sortOption,
             )
         }
 
@@ -178,12 +181,14 @@ class RecordingDao(
                     collectionId = browseMethod.entityId,
                     query = query,
                     username = username,
+                    sortOption = sortOption,
                 )
             } else {
                 getRecordingsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
                     username = username,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -221,6 +226,7 @@ class RecordingDao(
     private fun getAllRecordings(
         query: String,
         username: String,
+        sortOption: RecordingSortOption,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllRecordings(
             query = query,
@@ -231,6 +237,7 @@ class RecordingDao(
             transacter.getAllRecordings(
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -242,6 +249,7 @@ class RecordingDao(
         entityId: String,
         query: String,
         username: String,
+        sortOption: RecordingSortOption,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = getCountOfRecordingsByEntityQuery(entityId, query),
         transacter = transacter,
@@ -251,6 +259,7 @@ class RecordingDao(
                 entityId = entityId,
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -270,6 +279,7 @@ class RecordingDao(
         collectionId: String,
         query: String,
         username: String,
+        sortOption: RecordingSortOption,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByCollection(
             collectionId = collectionId,
@@ -282,6 +292,7 @@ class RecordingDao(
                 collectionId = collectionId,
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
