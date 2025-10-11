@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -62,16 +61,16 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 @Composable
 internal fun ArtistUi(
     state: DetailsUiState<ArtistDetailsModel>,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
+    val browseMethod = state.browseMethod
+    val entityId = browseMethod.entityId
+    val entityType = browseMethod.entity
     val strings = LocalStrings.current
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val entityType = MusicBrainzEntityType.ARTIST
-    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val pagerState: PagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
@@ -206,7 +205,7 @@ internal fun ArtistUi(
                     )
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            browseMethod = browseMethod,
+                            browseMethod = state.browseMethod,
                             tabs = state.tabs,
                         ),
                         overlayHost = overlayHost,
@@ -297,7 +296,6 @@ internal fun ArtistUi(
             state = state,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
-            browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
                 showAddToCollectionSheet(

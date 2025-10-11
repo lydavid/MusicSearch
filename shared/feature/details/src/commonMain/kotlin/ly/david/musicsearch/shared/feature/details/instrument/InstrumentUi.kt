@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -52,23 +50,22 @@ import ly.david.musicsearch.ui.common.topappbar.getTitle
 @Composable
 internal fun InstrumentUi(
     state: DetailsUiState<InstrumentDetailsModel>,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
+    val browseMethod = state.browseMethod
+    val entityId = browseMethod.entityId
+    val entityType = browseMethod.entity
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
-    val entityType = MusicBrainzEntityType.INSTRUMENT
-    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
-    val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
 
+    val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     val areasLazyPagingItems =
@@ -216,7 +213,6 @@ internal fun InstrumentUi(
             state = state,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
-            browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             detailsScreen = { detailsModel ->
                 InstrumentDetailsTabUi(

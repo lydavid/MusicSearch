@@ -10,7 +10,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
@@ -27,7 +26,6 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     pagerState: PagerState,
     state: DetailsUiState<T>,
-    browseMethod: BrowseMethod.ByEntity,
     entitiesLazyPagingItems: EntitiesLazyPagingItems,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
@@ -123,7 +121,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     )
 
                     else -> {
-                        error("$tab tab should not be accessible for ${browseMethod.entity}.")
+                        error("$tab tab should not be accessible for ${state.browseMethod.entity}.")
                     }
                 }
                 val tabEntity = tab.toMusicBrainzEntity()

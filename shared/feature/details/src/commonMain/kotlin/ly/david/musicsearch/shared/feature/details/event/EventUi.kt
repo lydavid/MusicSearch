@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -54,17 +52,16 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 @Composable
 internal fun EventUi(
     state: DetailsUiState<EventDetailsModel>,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
+    val browseMethod = state.browseMethod
+    val entityId = browseMethod.entityId
+    val entityType = browseMethod.entity
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
-    val entityType = MusicBrainzEntityType.EVENT
-    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
 
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(
@@ -219,7 +216,6 @@ internal fun EventUi(
             state = state,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
-            browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
                 showAddToCollectionSheet(

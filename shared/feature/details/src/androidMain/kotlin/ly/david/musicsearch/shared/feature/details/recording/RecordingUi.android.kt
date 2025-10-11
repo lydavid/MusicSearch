@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
@@ -101,6 +102,10 @@ private val detailsModel = RecordingDetailsModel(
 )
 
 private val detailsUiState = DetailsUiState(
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
+        entity = MusicBrainzEntityType.RECORDING,
+    ),
     tabs = recordingTabs,
     selectedTab = Tab.DETAILS,
     detailsModel = detailsModel,
@@ -124,7 +129,6 @@ internal fun PreviewRecordingUiDetails() {
     PreviewWithTransitionAndOverlays {
         RecordingUi(
             state = detailsUiState,
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }
@@ -139,7 +143,6 @@ internal fun PreviewRecordingUiDetailsVideo() {
                     video = true,
                 ),
             ),
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }
@@ -160,7 +163,6 @@ internal fun PreviewRecordingUiDetailsWithListens() {
                     listenBrainzUrl = "https://listenbrainz.org/track/132a508b-624a-4f1d-b61f-f6616121bab5",
                 ),
             ),
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }
@@ -177,7 +179,6 @@ internal fun PreviewRecordingUiDetailsWithZeroListens() {
                     listenBrainzUrl = "https://listenbrainz.org/track/132a508b-624a-4f1d-b61f-f6616121bab5",
                 ),
             ),
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }
@@ -190,7 +191,6 @@ internal fun PreviewRecordingUiReleases() {
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
             ),
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }
@@ -203,7 +203,6 @@ internal fun PreviewRecordingUiRelationships() {
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
             ),
-            entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
     }
 }

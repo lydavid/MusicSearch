@@ -255,7 +255,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<AreaDetailsModel>> { state, modifier ->
                                 AreaUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -265,7 +264,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<ArtistDetailsModel>> { state, modifier ->
                                 ArtistUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -275,7 +273,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<EventDetailsModel>> { state, modifier ->
                                 EventUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -294,7 +291,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<InstrumentDetailsModel>> { state, modifier ->
                                 InstrumentUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -304,7 +300,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<LabelDetailsModel>> { state, modifier ->
                                 LabelUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -314,7 +309,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<PlaceDetailsModel>> { state, modifier ->
                                 PlaceUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -324,7 +318,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<RecordingDetailsModel>> { state, modifier ->
                                 RecordingUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -334,7 +327,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<ReleaseDetailsModel>> { state, modifier ->
                                 ReleaseUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -344,7 +336,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<ReleaseGroupDetailsModel>> { state, modifier ->
                                 ReleaseGroupUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -354,7 +345,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<SeriesDetailsModel>> { state, modifier ->
                                 SeriesUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }
@@ -364,7 +354,6 @@ val detailsFeatureModule = module {
                             ui<DetailsUiState<WorkDetailsModel>> { state, modifier ->
                                 WorkUi(
                                     state = state,
-                                    entityId = screen.id,
                                     modifier = modifier,
                                 )
                             }

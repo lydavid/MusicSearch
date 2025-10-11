@@ -83,6 +83,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     @Suppress("CyclomaticComplexMethod")
     @Composable
     final override fun present(): DetailsUiState<DetailsModel> {
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = screen.id,
+            entity = screen.entity,
+        )
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
@@ -176,10 +180,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             key2 = selectedTab,
             key3 = detailsModel,
         ) {
-            val browseMethod = BrowseMethod.ByEntity(
-                entityId = screen.id,
-                entity = screen.entity,
-            )
             entitiesListEventSink(
                 AllEntitiesListUiEvent.Get(
                     tab = selectedTab,
@@ -274,6 +274,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         }
 
         return DetailsUiState(
+            browseMethod = browseMethod,
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
@@ -308,6 +309,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 }
 
 internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
+    val browseMethod: BrowseMethod.ByEntity,
     val subtitle: String = "",
     val tabs: ImmutableList<Tab>,
     val selectedTab: Tab,

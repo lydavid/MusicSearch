@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -458,6 +459,10 @@ private val country = AreaDetailsModel(
 )
 
 private val detailsUiState = DetailsUiState(
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = country.id,
+        entity = MusicBrainzEntityType.AREA,
+    ),
     tabs = areaTabs,
     selectedTab = Tab.DETAILS,
     detailsModel = country.copy(
@@ -515,7 +520,6 @@ internal fun PreviewAreaDetails() {
                     totalAliases = 3,
                 ),
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -532,7 +536,6 @@ internal fun PreviewAreaDetailsCollapsed() {
                     totalAliases = 3,
                 ),
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -550,7 +553,6 @@ internal fun PreviewAreaDetailsError() {
                     ),
                 ),
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -563,7 +565,6 @@ internal fun PreviewAreaRelationships() {
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -576,7 +577,6 @@ internal fun PreviewAreaArtists() {
             state = detailsUiState.copy(
                 selectedTab = Tab.ARTISTS,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -589,7 +589,6 @@ internal fun PreviewAreaEvents() {
             state = detailsUiState.copy(
                 selectedTab = Tab.EVENTS,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -602,7 +601,6 @@ internal fun PreviewAreaLabels() {
             state = detailsUiState.copy(
                 selectedTab = Tab.LABELS,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -615,7 +613,6 @@ internal fun PreviewAreaReleases() {
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }
@@ -628,7 +625,6 @@ internal fun PreviewAreaPlaces() {
             state = detailsUiState.copy(
                 selectedTab = Tab.PLACES,
             ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )
     }
 }

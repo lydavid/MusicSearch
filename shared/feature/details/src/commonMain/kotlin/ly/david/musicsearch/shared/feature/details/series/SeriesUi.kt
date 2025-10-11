@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -52,22 +50,22 @@ import ly.david.musicsearch.ui.common.topappbar.getTitle
 @Composable
 internal fun SeriesUi(
     state: DetailsUiState<SeriesDetailsModel>,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
+    val browseMethod = state.browseMethod
+    val entityId = browseMethod.entityId
+    val entityType = browseMethod.entity
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
-    val entity = MusicBrainzEntityType.SERIES
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
-    val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
+
+    val eventSink = state.eventSink
 
     val areasLazyPagingItems =
         state.allEntitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
@@ -138,13 +136,13 @@ internal fun SeriesUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entity,
+                        entity = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -216,7 +214,6 @@ internal fun SeriesUi(
             state = state,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
-            browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             detailsScreen = { detailsModel ->
                 SeriesDetailsTabUi(

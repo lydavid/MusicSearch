@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.slack.circuit.overlay.ContentWithOverlays
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -106,6 +107,10 @@ private val detailsModel = ArtistDetailsModel(
 )
 
 private val detailsUiState = DetailsUiState(
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+        entity = MusicBrainzEntityType.ARTIST,
+    ),
     tabs = artistTabs,
     selectedTab = Tab.DETAILS,
     detailsModel = detailsModel,
@@ -122,7 +127,6 @@ internal fun PreviewArtistDetailsUi() {
         ContentWithOverlays {
             ArtistUi(
                 state = detailsUiState,
-                entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
             )
         }
     }
@@ -138,7 +142,6 @@ internal fun PreviewArtistDetailsUiCollapsed() {
                     isExternalLinksCollapsed = true,
                 ),
             ),
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
@@ -157,7 +160,6 @@ internal fun PreviewArtistDetailsUiWithFilter() {
                 ),
                 topAppBarFilterState = topAppBarFilterState,
             ),
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
@@ -187,7 +189,6 @@ internal fun PreviewArtistDetailsUiWithListens() {
                     listenBrainzUrl = "https://listenbrainz.org/artist/b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 ),
             ),
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
@@ -200,7 +201,6 @@ internal fun PreviewArtistDetailsUiLoading() {
             state = detailsUiState.copy(
                 detailsModel = null,
             ),
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }
@@ -219,7 +219,6 @@ internal fun PreviewArtistDetailsUiError() {
                     ),
                 ),
             ),
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
         )
     }
 }

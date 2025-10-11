@@ -18,9 +18,7 @@ import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -52,18 +50,16 @@ import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 @Composable
 internal fun WorkUi(
     state: DetailsUiState<WorkDetailsModel>,
-    entityId: String,
     modifier: Modifier = Modifier,
 ) {
+    val browseMethod = state.browseMethod
+    val entityId = browseMethod.entityId
+    val entityType = browseMethod.entity
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
-    val entity = MusicBrainzEntityType.WORK
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
-    val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
@@ -114,6 +110,7 @@ internal fun WorkUi(
         tracksLazyPagingItems = tracksLazyPagingItems,
     )
 
+    val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val recordingsByEntityEventSink =
         state.allEntitiesListUiState.recordingsListUiState.eventSink
@@ -140,13 +137,13 @@ internal fun WorkUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entity,
+                        entity = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -228,7 +225,6 @@ internal fun WorkUi(
             state = state,
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
-            browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
                 showAddToCollectionSheet(
