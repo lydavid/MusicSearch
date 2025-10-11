@@ -1,11 +1,14 @@
 package ly.david.musicsearch.ui.common.recording
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -39,7 +42,7 @@ internal fun RecordingSortBottomSheetContent(
 ) {
     val strings = LocalStrings.current
 
-    Column {
+    Column(Modifier.verticalScroll(rememberScrollState())) {
         RecordingSortOption.entries.forEach {
             ClickableItem(
                 title = it.getLabel(strings),
