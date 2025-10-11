@@ -58,9 +58,9 @@ jobs:
 
       - name: Commit
         run: |
-          git pull --rebase --autostash
+          git pull --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add assets/musicsearch_db_schema.svg data/database/src/commonMain/sqldelight/databases/*.db
-          git commit -m "chore: update schema diagram [skip ci]"
+          git commit -m "chore: update schema diagram [skip ci]" || echo "No changes to commit"
           git push

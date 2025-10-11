@@ -35,9 +35,9 @@ jobs:
       - name: Commit
         if: always()
         run: |
-          git pull --rebase --autostash
+          git pull --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add .
-          git commit -m "chore: format Kotlin files [skip ci]"
+          git commit -m "chore: format Kotlin files [skip ci]" || echo "No changes to commit"
           git push

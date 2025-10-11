@@ -88,11 +88,11 @@ jobs:
       - name: Push new screenshots if available
         if: always() && steps.screenshotsrecord.outcome == 'success'
         run: |
-          git pull --rebase --autostash
+          git pull --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add '**\/*.png'
-          git commit -m "chore: rerecord snapshot tests [skip ci]"
+          git commit -m "chore: rerecord snapshot tests [skip ci]" || echo "No changes to commit"
           git push
 
   ios-checks:
