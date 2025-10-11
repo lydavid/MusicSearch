@@ -20,7 +20,7 @@ import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 @Composable
 fun OverflowMenuScope.RecordingSortMenuItem(
     sortOption: RecordingSortOption,
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
     onSortOptionClick: (RecordingSortOption) -> Unit = {},
 ) {
     val strings = LocalStrings.current
