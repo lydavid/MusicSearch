@@ -16,6 +16,5 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "First release date: 1981-10"
 - assertVisible: "https://open.spotify.com/track/2fuCquhmrzHpu5xcA1ci9x"
 - tapOn: "Releases"
-- tapOn: "Stats"
 
 - stopRecording

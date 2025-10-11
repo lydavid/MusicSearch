@@ -20,6 +20,7 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "https://en.wikipedia.org/wiki/Under_Pressure"
 - tapOn: "Cancel"
 - tapOn: "Releases"
+- tapOn: "More actions"
 - tapOn: "Stats"
 - assertVisible: "Cached 13 / 13"
 

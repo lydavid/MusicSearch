@@ -235,7 +235,6 @@ class AllEntitiesListPresenter(
                 }
 
                 Tab.DETAILS,
-                Tab.STATS,
                 null,
                 -> {
                     // no-op

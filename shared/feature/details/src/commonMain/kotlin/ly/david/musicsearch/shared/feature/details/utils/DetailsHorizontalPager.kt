@@ -10,7 +10,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.slack.circuit.foundation.CircuitContent
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -20,7 +19,6 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
-import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 
@@ -60,19 +58,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 ) { detailsModel ->
                     detailsScreen(detailsModel)
                 }
-            }
-
-            Tab.STATS -> {
-                CircuitContent(
-                    screen = StatsScreen(
-                        browseMethod = BrowseMethod.ByEntity(
-                            entityId = browseMethod.entityId,
-                            entity = browseMethod.entity,
-                        ),
-                        tabs = state.tabs,
-                    ),
-                    modifier = Modifier.fillMaxSize(),
-                )
             }
 
             Tab.TRACKS -> {

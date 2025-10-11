@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.area
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
@@ -13,10 +12,11 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Clock
 
 internal val areaTabs = persistentListOf(
     Tab.DETAILS,
@@ -26,7 +26,6 @@ internal val areaTabs = persistentListOf(
     Tab.LABELS,
     Tab.RELEASES,
     Tab.PLACES,
-    Tab.STATS,
 )
 
 internal class AreaPresenter(

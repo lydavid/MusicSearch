@@ -20,7 +20,6 @@ enum class Tab {
     RELEASES,
     RELEASE_GROUPS,
     SERIES,
-    STATS,
     TRACKS,
     WORKS,
 }
@@ -40,7 +39,6 @@ fun Tab.getTitle(strings: AppStrings): String {
         Tab.RELEASES -> strings.releases
         Tab.RELEASE_GROUPS -> strings.releaseGroups
         Tab.SERIES -> strings.series
-        Tab.STATS -> strings.stats
         Tab.TRACKS -> strings.tracks
         Tab.WORKS -> strings.works
     }
@@ -62,7 +60,6 @@ fun Tab.toMusicBrainzEntity(): MusicBrainzEntityType? {
         Tab.WORKS -> MusicBrainzEntityType.WORK
         Tab.DETAILS,
         Tab.RELATIONSHIPS,
-        Tab.STATS,
         Tab.TRACKS,
         -> null
     }

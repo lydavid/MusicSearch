@@ -122,7 +122,7 @@ private val detailsUiState = DetailsUiState(
 @Composable
 internal fun PreviewRecordingUiDetails() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState,
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
         )
@@ -133,7 +133,7 @@ internal fun PreviewRecordingUiDetails() {
 @Composable
 internal fun PreviewRecordingUiDetailsVideo() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
                     video = true,
@@ -148,7 +148,7 @@ internal fun PreviewRecordingUiDetailsVideo() {
 @Composable
 internal fun PreviewRecordingUiDetailsWithListens() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
                     listenCount = 1234,
@@ -169,7 +169,7 @@ internal fun PreviewRecordingUiDetailsWithListens() {
 @Composable
 internal fun PreviewRecordingUiDetailsWithZeroListens() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
                     listenCount = 0,
@@ -186,7 +186,7 @@ internal fun PreviewRecordingUiDetailsWithZeroListens() {
 @Composable
 internal fun PreviewRecordingUiReleases() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
             ),
@@ -199,7 +199,7 @@ internal fun PreviewRecordingUiReleases() {
 @Composable
 internal fun PreviewRecordingUiRelationships() {
     PreviewWithTransitionAndOverlays {
-        RecordingUiInternal(
+        RecordingUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
             ),

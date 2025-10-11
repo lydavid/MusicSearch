@@ -39,7 +39,6 @@ fun EntitiesLazyPagingItems.getLazyPagingItemsForTab(tab: Tab?): LazyPagingItems
         Tab.RELATIONSHIPS -> relationsLazyPagingItems
         Tab.TRACKS -> tracksLazyPagingItems
         Tab.DETAILS,
-        Tab.STATS,
         null,
         -> null
     }

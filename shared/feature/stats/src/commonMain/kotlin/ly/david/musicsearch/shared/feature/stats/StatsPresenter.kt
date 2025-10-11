@@ -40,7 +40,7 @@ internal class StatsPresenter(
         val relationStats by observeRelationStatsUseCase(browseMethod).collectAsState(RelationStats())
 
         val tabToStats = screen.tabs
-            .filterNot { setOf(Tab.DETAILS, Tab.TRACKS, Tab.STATS).contains(it) }
+            .filterNot { setOf(Tab.DETAILS, Tab.TRACKS).contains(it) }
             .associateWith { tab ->
                 val browseEntity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
                 observeEntityStats(

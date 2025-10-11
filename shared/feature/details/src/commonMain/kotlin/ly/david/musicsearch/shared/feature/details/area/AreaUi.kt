@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -25,7 +24,6 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
@@ -33,21 +31,25 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
 
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 internal fun AreaUi(
     state: DetailsUiState<AreaDetailsModel>,
@@ -58,86 +60,13 @@ internal fun AreaUi(
     val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-
-    val loginEventSink = state.musicBrainzLoginUiState.eventSink
-
-    state.snackbarMessage?.let { message ->
-        LaunchedEffect(message) {
-            snackbarHostState.showSnackbar(message = message)
-        }
-    }
-
-    AreaUiInternal(
-        state = state,
-        entityId = entityId,
-        modifier = modifier,
-        snackbarHostState = snackbarHostState,
-        strings = strings,
-        additionalActions = {
-            AddToCollectionActionToggle(
-                collected = state.collected,
-                entity = MusicBrainzEntityType.AREA,
-                entityId = entityId,
-                overlayHost = overlayHost,
-                coroutineScope = coroutineScope,
-                snackbarHostState = snackbarHostState,
-                onLoginClick = {
-                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                },
-                nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
-            )
-        },
-        additionalOverflowDropdownMenuItems = {
-            AddAllToCollectionMenuItem(
-                tab = state.selectedTab,
-                entityIds = state.selectionState.selectedIds,
-                overlayHost = overlayHost,
-                coroutineScope = coroutineScope,
-                snackbarHostState = snackbarHostState,
-                onLoginClick = {
-                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                },
-            )
-        },
-        onEditCollectionClick = {
-            showAddToCollectionSheet(
-                coroutineScope = coroutineScope,
-                overlayHost = overlayHost,
-                entity = state.selectedTab.toMusicBrainzEntity() ?: return@AreaUiInternal,
-                entityIds = setOf(it),
-                snackbarHostState = snackbarHostState,
-                onLoginClick = {
-                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                },
-            )
-        },
-    )
-}
-
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
-@Composable
-internal fun AreaUiInternal(
-    state: DetailsUiState<AreaDetailsModel>,
-    entityId: String,
-    modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scope: CoroutineScope = rememberCoroutineScope(),
-    strings: AppStrings = LocalStrings.current,
-    additionalActions: @Composable () -> Unit = {},
-    additionalOverflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit) = {},
-    onEditCollectionClick: (String) -> Unit = {},
-) {
-    val entity = MusicBrainzEntityType.AREA
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
+    val entityType = MusicBrainzEntityType.AREA
+    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
     )
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
-    val eventSink = state.eventSink
 
     val areasLazyPagingItems =
         state.allEntitiesListUiState.areasListUiState.pagingDataFlow.collectAsLazyPagingItems()
@@ -184,11 +113,19 @@ internal fun AreaUiInternal(
         tracksLazyPagingItems = tracksLazyPagingItems,
     )
 
+    val eventSink = state.eventSink
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val releasesByEntityEventSink =
         state.allEntitiesListUiState.releasesListUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
+    }
+
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(message = message)
+        }
     }
 
     Scaffold(
@@ -208,13 +145,25 @@ internal fun AreaUiInternal(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = state.detailsModel.getAnnotatedName(),
                 scrollBehavior = scrollBehavior,
-                additionalActions = additionalActions,
+                additionalActions = {
+                    AddToCollectionActionToggle(
+                        collected = state.collected,
+                        entity = MusicBrainzEntityType.AREA,
+                        entityId = entityId,
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
+                        },
+                        nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
+                    )
+                },
                 overflowDropdownMenuItems = {
                     RefreshMenuItem(
-                        show = state.selectedTab != Tab.STATS,
                         onClick = {
                             when (state.selectedTab) {
                                 Tab.DETAILS -> eventSink(DetailsUiEvent.ForceRefreshDetails)
@@ -225,6 +174,14 @@ internal fun AreaUiInternal(
                     )
                     OpenInBrowserMenuItem(
                         url = state.url,
+                    )
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            browseMethod = browseMethod,
+                            tabs = state.tabs,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (state.selectedTab == Tab.RELEASES) {
@@ -245,8 +202,16 @@ internal fun AreaUiInternal(
                             },
                         )
                     }
-
-                    additionalOverflowDropdownMenuItems()
+                    AddAllToCollectionMenuItem(
+                        tab = state.selectedTab,
+                        entityIds = state.selectionState.selectedIds,
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
+                        },
+                    )
                 },
                 topAppBarFilterState = state.topAppBarFilterState,
                 selectionState = state.selectionState,
@@ -263,7 +228,7 @@ internal fun AreaUiInternal(
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle(strings) },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
+                        onSelectTabIndex = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
             )
@@ -277,12 +242,23 @@ internal fun AreaUiInternal(
             scrollBehavior = scrollBehavior,
             browseMethod = browseMethod,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
-            onEditCollectionClick = onEditCollectionClick,
             requestForMissingCoverArtUrl = { id, _ ->
                 releasesByEntityEventSink(
                     EntitiesListUiEvent.RequestForMissingCoverArtUrl(
                         entityId = id,
                     ),
+                )
+            },
+            onEditCollectionClick = {
+                showAddToCollectionSheet(
+                    coroutineScope = coroutineScope,
+                    overlayHost = overlayHost,
+                    entity = state.selectedTab.toMusicBrainzEntity() ?: return@DetailsHorizontalPager,
+                    entityIds = setOf(it),
+                    snackbarHostState = snackbarHostState,
+                    onLoginClick = {
+                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
+                    },
                 )
             },
             detailsScreen = { detailsModel ->

@@ -180,7 +180,6 @@ internal fun ArtistUi(
                     val selectedTab = state.selectedTab
 
                     RefreshMenuItem(
-                        show = selectedTab != Tab.STATS,
                         tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
@@ -207,10 +206,7 @@ internal fun ArtistUi(
                     )
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            browseMethod = BrowseMethod.ByEntity(
-                                entityId = entityId,
-                                entity = entityType,
-                            ),
+                            browseMethod = browseMethod,
                             tabs = state.tabs,
                         ),
                         overlayHost = overlayHost,

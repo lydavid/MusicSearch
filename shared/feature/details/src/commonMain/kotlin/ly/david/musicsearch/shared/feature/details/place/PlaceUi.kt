@@ -29,12 +29,14 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -56,8 +58,8 @@ internal fun PlaceUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    val entity = MusicBrainzEntityType.PLACE
-    val browseMethod = BrowseMethod.ByEntity(entityId, entity)
+    val entityType = MusicBrainzEntityType.PLACE
+    val browseMethod = BrowseMethod.ByEntity(entityId, entityType)
     val eventSink = state.eventSink
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
@@ -133,13 +135,13 @@ internal fun PlaceUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entity,
+                entity = entityType,
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entity,
+                        entity = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -153,7 +155,6 @@ internal fun PlaceUi(
                 overflowDropdownMenuItems = {
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
-                        show = selectedTab != Tab.STATS,
                         tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
@@ -165,6 +166,14 @@ internal fun PlaceUi(
                     )
                     OpenInBrowserMenuItem(
                         url = state.url,
+                    )
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            browseMethod = browseMethod,
+                            tabs = state.tabs,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddAllToCollectionMenuItem(

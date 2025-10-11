@@ -176,11 +176,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             key2 = selectedTab,
             key3 = detailsModel,
         ) {
-            topAppBarFilterState.show(
-                selectedTab !in listOf(
-                    Tab.STATS,
-                ),
-            )
             val browseMethod = BrowseMethod.ByEntity(
                 entityId = screen.id,
                 entity = screen.entity,

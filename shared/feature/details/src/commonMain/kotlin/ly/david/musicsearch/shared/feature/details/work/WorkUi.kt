@@ -32,12 +32,14 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.recording.RecordingSortMenuItem
+import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -158,7 +160,6 @@ internal fun WorkUi(
                 overflowDropdownMenuItems = {
                     val selectedTab = state.selectedTab
                     RefreshMenuItem(
-                        show = selectedTab != Tab.STATS,
                         tab = selectedTab,
                         onClick = {
                             when (selectedTab) {
@@ -169,6 +170,14 @@ internal fun WorkUi(
                     )
                     OpenInBrowserMenuItem(
                         url = state.url,
+                    )
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            browseMethod = browseMethod,
+                            tabs = state.tabs,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
                     if (selectedTab == Tab.RECORDINGS) {

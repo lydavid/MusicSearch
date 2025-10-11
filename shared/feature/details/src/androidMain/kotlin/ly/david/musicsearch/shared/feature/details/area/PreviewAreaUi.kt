@@ -508,7 +508,7 @@ private val detailsUiState = DetailsUiState(
 @Composable
 internal fun PreviewAreaDetails() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     totalUrls = 2,
@@ -524,7 +524,7 @@ internal fun PreviewAreaDetails() {
 @Composable
 internal fun PreviewAreaDetailsCollapsed() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     isExternalLinksCollapsed = true,
@@ -541,7 +541,7 @@ internal fun PreviewAreaDetailsCollapsed() {
 @Composable
 internal fun PreviewAreaDetailsError() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     handledException = HandledException(
@@ -559,7 +559,7 @@ internal fun PreviewAreaDetailsError() {
 @Composable
 internal fun PreviewAreaRelationships() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
             ),
@@ -572,7 +572,7 @@ internal fun PreviewAreaRelationships() {
 @Composable
 internal fun PreviewAreaArtists() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.ARTISTS,
             ),
@@ -585,7 +585,7 @@ internal fun PreviewAreaArtists() {
 @Composable
 internal fun PreviewAreaEvents() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.EVENTS,
             ),
@@ -598,7 +598,7 @@ internal fun PreviewAreaEvents() {
 @Composable
 internal fun PreviewAreaLabels() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.LABELS,
             ),
@@ -611,7 +611,7 @@ internal fun PreviewAreaLabels() {
 @Composable
 internal fun PreviewAreaReleases() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
             ),
@@ -624,23 +624,9 @@ internal fun PreviewAreaReleases() {
 @Composable
 internal fun PreviewAreaPlaces() {
     PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
+        AreaUi(
             state = detailsUiState.copy(
                 selectedTab = Tab.PLACES,
-            ),
-            entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
-        )
-    }
-}
-
-// not previewable yet
-@PreviewLightDark
-@Composable
-internal fun PreviewAreaStats() {
-    PreviewWithTransitionAndOverlays {
-        AreaUiInternal(
-            state = detailsUiState.copy(
-                selectedTab = Tab.STATS,
             ),
             entityId = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
         )

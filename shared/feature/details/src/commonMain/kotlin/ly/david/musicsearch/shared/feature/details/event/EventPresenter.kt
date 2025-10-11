@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.event
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
@@ -13,15 +12,15 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Clock
 
 internal val eventTabs = persistentListOf(
     Tab.DETAILS,
     Tab.RELATIONSHIPS,
-    Tab.STATS,
 )
 
 internal class EventPresenter(

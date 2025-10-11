@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.place
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Clock
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
@@ -13,10 +12,11 @@ import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
+import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Clock
 
 internal val placeTabs = persistentListOf(
     Tab.DETAILS,
@@ -24,7 +24,6 @@ internal val placeTabs = persistentListOf(
     // TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place
     Tab.RELATIONSHIPS,
     Tab.EVENTS,
-    Tab.STATS,
 )
 
 internal class PlacePresenter(
