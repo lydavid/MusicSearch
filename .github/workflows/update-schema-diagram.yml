@@ -59,8 +59,10 @@ jobs:
       - run: git pull --rebase --autostash
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
-        with:
-          commit_message: 'chore: update schema diagram [skip ci]'
-          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          file_pattern: 'assets/musicsearch_db_schema.svg data/database/src/commonMain/sqldelight/databases/*.db'
+        run: |
+          git pull --rebase --autostash
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add assets/musicsearch_db_schema.svg data/database/src/commonMain/sqldelight/databases/*.db
+          git commit -m "chore: update schema diagram [skip ci]"
+          git push
