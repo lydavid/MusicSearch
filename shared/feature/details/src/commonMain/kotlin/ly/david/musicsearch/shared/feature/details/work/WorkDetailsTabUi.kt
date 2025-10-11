@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.work
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
@@ -31,7 +32,7 @@ internal fun WorkDetailsTabUi(
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
-            type?.ifNotNullOrEmpty {
+            type.ifNotEmpty {
                 TextWithHeading(
                     heading = strings.type,
                     text = it,

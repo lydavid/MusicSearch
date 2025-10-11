@@ -2,7 +2,7 @@ package ly.david.musicsearch.shared.feature.details.series
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -28,7 +28,7 @@ internal fun SeriesDetailsTabUi(
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
-            type?.ifNotNullOrEmpty {
+            type.ifNotEmpty {
                 TextWithHeading(
                     heading = strings.type,
                     text = it,
