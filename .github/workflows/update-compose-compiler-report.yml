@@ -55,8 +55,6 @@ jobs:
       - name: Move the compose reports and HTML file to each module's root
         run: find . -type d -path '*/build/compose_metrics' -exec bash -c 'module_root=$(dirname "$(dirname {})"); mkdir -p "$module_root/compose_reports"; mv {}/* "$module_root/compose_reports/"' \;
 
-      - run: git pull --rebase --autostash
-
       - name: Commit
         run: |
           git pull --rebase --autostash

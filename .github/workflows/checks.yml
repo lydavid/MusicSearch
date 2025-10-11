@@ -85,9 +85,6 @@ jobs:
         run: |
           ./gradlew recordPaparazziDebug
 
-      - run: git pull --rebase --autostash
-        if: always() && steps.screenshotsrecord.outcome == 'success'
-
       - name: Generate GitHub app token so that commit can trigger new workflow run
         uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
         id: generate-token
