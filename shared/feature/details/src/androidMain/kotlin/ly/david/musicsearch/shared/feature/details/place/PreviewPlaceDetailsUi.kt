@@ -6,12 +6,12 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewPlaceDetailsUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         PlaceDetailsTabUi(
             place = PlaceDetailsModel(
                 id = "p1",

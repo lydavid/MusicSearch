@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistRelationListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RelationListItem(
             relation = RelationListItemModel(
                 id = "2_0",
@@ -27,7 +27,7 @@ internal fun PreviewArtistRelationListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingRelationListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RelationListItem(
             relation = RelationListItemModel(
                 id = "2_1",
@@ -44,7 +44,7 @@ internal fun PreviewRecordingRelationListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingRelationListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RelationListItem(
             relation = RelationListItemModel(
                 id = "2_1",

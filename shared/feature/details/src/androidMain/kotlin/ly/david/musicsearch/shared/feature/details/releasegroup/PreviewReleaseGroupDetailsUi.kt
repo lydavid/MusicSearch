@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 private val releaseGroup = ReleaseGroupDetailsModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
@@ -54,7 +54,7 @@ private val releaseGroup = ReleaseGroupDetailsModel(
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupDetailsUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseGroupDetailsTabUi(
             releaseGroup = releaseGroup,
             detailsTabUiState = DetailsTabUiState(
@@ -69,7 +69,7 @@ internal fun PreviewReleaseGroupDetailsUi() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupDetailsUiCollapsed() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseGroupDetailsTabUi(
             releaseGroup = releaseGroup,
             detailsTabUiState = DetailsTabUiState(

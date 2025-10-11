@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewManyDevices
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 val images = MutableStateFlow(
     PagingData.from(
@@ -36,7 +36,7 @@ val images = MutableStateFlow(
 @Composable
 internal fun PreviewImagesGridUi() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ImagesUi(
             state = ImagesUiState(
                 title = ImagesTitle.All,
@@ -51,7 +51,7 @@ internal fun PreviewImagesGridUi() {
 @Composable
 internal fun PreviewImagesPagerUiCompact() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ImagesUi(
             state = ImagesUiState(
                 title = ImagesTitle.Selected(
@@ -72,7 +72,7 @@ internal fun PreviewImagesPagerUiCompact() {
 @Composable
 internal fun PreviewImagesPagerUiNonCompact() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ImagesUi(
             state = ImagesUiState(
                 title = ImagesTitle.Selected(

@@ -10,14 +10,14 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
 @PreviewLightDark
 @Composable
 internal fun PreviewFacetsBottomSheetContentRecordings() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val facets = MutableStateFlow(
                 PagingData.from(
@@ -64,7 +64,7 @@ internal fun PreviewFacetsBottomSheetContentRecordings() {
 @PreviewLightDark
 @Composable
 internal fun PreviewFacetsBottomSheetContentReleases() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val facets = MutableStateFlow(
                 PagingData.from(
@@ -107,7 +107,7 @@ internal fun PreviewFacetsBottomSheetContentReleases() {
 @PreviewLightDark
 @Composable
 internal fun PreviewFacetsBottomSheetContentArtists() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val facets = MutableStateFlow(
                 PagingData.from(

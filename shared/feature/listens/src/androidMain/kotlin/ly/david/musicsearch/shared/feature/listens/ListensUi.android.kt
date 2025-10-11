@@ -12,13 +12,13 @@ import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val listens = MutableStateFlow(
                 PagingData.from(
@@ -60,7 +60,7 @@ internal fun PreviewListensUi() {
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiWithRecordingFacet() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val listens = MutableStateFlow(
                 PagingData.from(
@@ -100,7 +100,7 @@ internal fun PreviewListensUiWithRecordingFacet() {
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiNoUsername() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             val listens = MutableStateFlow(
                 PagingData.from(
@@ -119,7 +119,7 @@ internal fun PreviewListensUiNoUsername() {
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
@@ -144,7 +144,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
@@ -170,7 +170,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(
@@ -190,7 +190,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
 @PreviewLightDark
 @Composable
 internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringByUnlinked() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             ListenAdditionalActionsBottomSheetContent(
                 listen = ListenListItemModel(

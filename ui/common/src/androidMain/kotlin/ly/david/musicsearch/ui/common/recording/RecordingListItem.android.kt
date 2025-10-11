@@ -3,12 +3,12 @@ package ly.david.musicsearch.ui.common.recording
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingListItem(
             recording = RecordingListItemModel(
                 id = "1",
@@ -21,7 +21,7 @@ internal fun PreviewRecordingListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingListItemAllInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingListItem(
             recording = RecordingListItemModel(
                 id = "2",
@@ -40,7 +40,7 @@ internal fun PreviewRecordingListItemAllInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingListItem(
             recording = RecordingListItemModel(
                 id = "2",

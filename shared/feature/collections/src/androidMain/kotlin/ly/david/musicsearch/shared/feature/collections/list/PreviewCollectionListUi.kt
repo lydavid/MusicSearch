@@ -7,13 +7,13 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 
 @PreviewLightDark
 @Composable
 internal fun PreviewCollectionListUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val items = MutableStateFlow(
             PagingData.from(
                 listOf(
@@ -47,7 +47,7 @@ internal fun PreviewCollectionListUi() {
 @PreviewLightDark
 @Composable
 internal fun PreviewCollectionListUiSelection() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val items = MutableStateFlow(
             PagingData.from(
                 listOf(
@@ -83,7 +83,7 @@ internal fun PreviewCollectionListUiSelection() {
 @PreviewLightDark
 @Composable
 internal fun PreviewCollectionListUiSelectedAll() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val items = MutableStateFlow(
             PagingData.from(
                 listOf(

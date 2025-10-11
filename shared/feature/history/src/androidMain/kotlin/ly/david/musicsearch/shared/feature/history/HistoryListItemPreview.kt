@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
 
 @PreviewLightDark
@@ -15,7 +15,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
     imageUrl: String = "www.example.com/image",
 ) {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         HistoryListItem(
             LookupHistoryListItemModel(
                 title = "欠けた心象、世のよすが",
@@ -35,7 +35,7 @@ internal fun PreviewLookupHistoryRelease(
     imageUrl: String = "www.example.com/image",
 ) {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         HistoryListItem(
             LookupHistoryListItemModel(
                 title = "欠けた心象、世のよすが",
@@ -54,7 +54,7 @@ internal fun PreviewLookupHistoryArtist(
     imageUrl: String = "www.example.com/image",
 ) {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         HistoryListItem(
             LookupHistoryListItemModel(
                 title = "月詠み",

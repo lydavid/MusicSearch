@@ -14,7 +14,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
 
 private val release = ReleaseDetailsModel(
@@ -79,7 +79,7 @@ private val release = ReleaseDetailsModel(
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseDetailsTabUi(
             release = release,
             detailsTabUiState = DetailsTabUiState(
@@ -94,7 +94,7 @@ internal fun PreviewReleaseDetailsUi() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUiCollapsed() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseDetailsTabUi(
             release = release,
             detailsTabUiState = DetailsTabUiState(
@@ -111,7 +111,7 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUiWithListens() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseDetailsTabUi(
             release = release.copy(
                 completeListenCount = 2,

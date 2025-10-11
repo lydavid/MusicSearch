@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.slack.circuit.overlay.ContentWithOverlays
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -15,7 +16,7 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.artist.artistTabs
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import kotlin.time.Instant
@@ -117,19 +118,21 @@ private val detailsUiState = DetailsUiState(
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUi() {
-    PreviewWithSharedElementTransition {
-        ArtistUiInternal(
-            state = detailsUiState,
-            entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-        )
+    PreviewWithTransitionAndOverlays {
+        ContentWithOverlays {
+            ArtistUi(
+                state = detailsUiState,
+                entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+            )
+        }
     }
 }
 
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiCollapsed() {
-    PreviewWithSharedElementTransition {
-        ArtistUiInternal(
+    PreviewWithTransitionAndOverlays {
+        ArtistUi(
             state = detailsUiState.copy(
                 detailsTabUiState = detailsUiState.detailsTabUiState.copy(
                     isExternalLinksCollapsed = true,
@@ -143,11 +146,11 @@ internal fun PreviewArtistDetailsUiCollapsed() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiWithFilter() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val topAppBarFilterState = TopAppBarFilterState()
         topAppBarFilterState.toggleFilterMode(true)
         topAppBarFilterState.updateFilterText("https")
-        ArtistUiInternal(
+        ArtistUi(
             state = detailsUiState.copy(
                 detailsTabUiState = detailsUiState.detailsTabUiState.copy(
                     totalUrls = 3,
@@ -162,8 +165,8 @@ internal fun PreviewArtistDetailsUiWithFilter() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiWithListens() {
-    PreviewWithSharedElementTransition {
-        ArtistUiInternal(
+    PreviewWithTransitionAndOverlays {
+        ArtistUi(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
                     listenCount = 1234,
@@ -192,8 +195,8 @@ internal fun PreviewArtistDetailsUiWithListens() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiLoading() {
-    PreviewWithSharedElementTransition {
-        ArtistUiInternal(
+    PreviewWithTransitionAndOverlays {
+        ArtistUi(
             state = detailsUiState.copy(
                 detailsModel = null,
             ),
@@ -205,8 +208,8 @@ internal fun PreviewArtistDetailsUiLoading() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiError() {
-    PreviewWithSharedElementTransition {
-        ArtistUiInternal(
+    PreviewWithTransitionAndOverlays {
+        ArtistUi(
             state = detailsUiState.copy(
                 detailsModel = null,
                 detailsTabUiState = detailsUiState.detailsTabUiState.copy(
@@ -224,7 +227,7 @@ internal fun PreviewArtistDetailsUiError() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistDetailsTabUi(
             artist = ArtistDetailsModel(
                 id = "89ad4ac3-39f7-470e-963a-56509c546377",

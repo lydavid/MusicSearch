@@ -11,5 +11,4 @@ val artistTabs = persistentListOf(
     Tab.WORKS,
     Tab.EVENTS,
     Tab.RELATIONSHIPS,
-    Tab.STATS,
 )

@@ -12,12 +12,12 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewSearchUiSearchResults() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val searchResults = MutableStateFlow(
             PagingData.from(
                 listOf(
@@ -129,7 +129,7 @@ internal fun PreviewSearchUiSearchResults() {
 @PreviewLightDark
 @Composable
 internal fun PreviewSearchUiSearchHistory() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         val searchResults = MutableStateFlow(
             PagingData.empty<ListItemModel>(),
         )

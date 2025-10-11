@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewWorkListItemModel() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
                 id = "4202da8f-2f57-4186-a5c8-80ed64988a16",
@@ -25,7 +25,7 @@ internal fun PreviewWorkListItemModel() {
 @PreviewLightDark
 @Composable
 internal fun PreviewWorkListItemModelAllInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
                 id = "343dbbe6-d9ce-3853-8d8d-230734c0424f",
@@ -42,7 +42,7 @@ internal fun PreviewWorkListItemModelAllInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewWorkListItemModelVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
                 id = "c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3",

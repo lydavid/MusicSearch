@@ -7,12 +7,12 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewListenListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         Surface {
             ListenListItem(
                 listen = ListenListItemModel(

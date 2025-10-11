@@ -3,12 +3,12 @@ package ly.david.musicsearch.ui.common.series
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewSeriesListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         SeriesListItem(
             series = SeriesListItemModel(
                 id = "1",
@@ -21,7 +21,7 @@ internal fun PreviewSeriesListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewSeriesListItemAllInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         SeriesListItem(
             series = SeriesListItemModel(
                 id = "1",
@@ -36,7 +36,7 @@ internal fun PreviewSeriesListItemAllInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewSeriesListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         SeriesListItem(
             series = SeriesListItemModel(
                 id = "1",

@@ -6,12 +6,12 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewEventListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "e1",
@@ -26,7 +26,7 @@ internal fun PreviewEventListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewEventListItemLong() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "05174e82-7716-444e-86a0-d0d1e1474662",
@@ -46,7 +46,7 @@ internal fun PreviewEventListItemLong() {
 @PreviewLightDark
 @Composable
 internal fun PreviewEventListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "05174e82-7716-444e-86a0-d0d1e1474662",
@@ -67,7 +67,7 @@ internal fun PreviewEventListItemVisited() {
 @PreviewLightDark
 @Composable
 internal fun PreviewEventListItemMultiDay() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "0806a112-098e-49b5-a51c-34edf60c25d8",
@@ -88,7 +88,7 @@ internal fun PreviewEventListItemMultiDay() {
 @PreviewLightDark
 @Composable
 internal fun PreviewEventListItemCancelled() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
@@ -107,7 +107,7 @@ internal fun PreviewEventListItemCancelled() {
 @Composable
 internal fun PreviewEventListItemWithCoverArt() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventListItem(
             event = EventListItemModel(
                 id = "76a88474-912b-4a6e-b9e2-a98fd75ae51f",

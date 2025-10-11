@@ -5,12 +5,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "1",
@@ -24,7 +24,7 @@ internal fun PreviewAreaListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaListItemDisambiguation() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "2",
@@ -39,7 +39,7 @@ internal fun PreviewAreaListItemDisambiguation() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaListItemCountry() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
@@ -54,7 +54,7 @@ internal fun PreviewAreaListItemCountry() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaListItemWorldwide() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "ba484a95-2fa3-4cf6-ab25-ed6da47fe677",
@@ -68,7 +68,7 @@ internal fun PreviewAreaListItemWorldwide() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseEvent() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
@@ -87,7 +87,7 @@ internal fun PreviewReleaseEvent() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseEventNoDate() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "ba484a95-2fa3-4cf6-ab25-ed6da47fe677",
@@ -102,7 +102,7 @@ internal fun PreviewReleaseEventNoDate() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
@@ -118,7 +118,7 @@ internal fun PreviewAreaListItemVisited() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseEventVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaListItem(
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",

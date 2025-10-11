@@ -5,12 +5,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistListItemSimple() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "1",
@@ -24,7 +24,7 @@ internal fun PreviewArtistListItemSimple() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistListItemCountryCode() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "1",
@@ -39,7 +39,7 @@ internal fun PreviewArtistListItemCountryCode() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistListItemAllInfoUnvisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
@@ -60,7 +60,7 @@ internal fun PreviewArtistListItemAllInfoUnvisited() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistListItemAllInfoVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
@@ -82,7 +82,7 @@ internal fun PreviewArtistListItemAllInfoVisited() {
 @PreviewLightDark
 @Composable
 internal fun PreviewArtistListItemSelected() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "1",
@@ -98,7 +98,7 @@ internal fun PreviewArtistListItemSelected() {
 @Composable
 internal fun PreviewArtistListItemWithCoverArt() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "1",

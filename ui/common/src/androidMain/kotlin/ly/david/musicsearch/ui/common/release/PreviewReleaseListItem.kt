@@ -6,12 +6,12 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "1",
@@ -25,7 +25,7 @@ internal fun PreviewReleaseListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemDisambiguation() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "2",
@@ -40,7 +40,7 @@ internal fun PreviewReleaseListItemDisambiguation() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemDisambiguationCountry() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "3",
@@ -56,7 +56,7 @@ internal fun PreviewReleaseListItemDisambiguationCountry() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemCountry() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "4",
@@ -72,7 +72,7 @@ internal fun PreviewReleaseListItemCountry() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemDateCountryFormatsTracks() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "5",
@@ -90,7 +90,7 @@ internal fun PreviewReleaseListItemDateCountryFormatsTracks() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemCountryDate() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "6",
@@ -106,7 +106,7 @@ internal fun PreviewReleaseListItemCountryDate() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemDateArtistCredits() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "8",
@@ -122,7 +122,7 @@ internal fun PreviewReleaseListItemDateArtistCredits() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemMultipleCountries() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "9",
@@ -139,7 +139,7 @@ internal fun PreviewReleaseListItemMultipleCountries() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemShowLessInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "5",
@@ -158,7 +158,7 @@ internal fun PreviewReleaseListItemShowLessInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemCatalog() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
@@ -185,7 +185,7 @@ internal fun PreviewReleaseListItemCatalog() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
@@ -214,7 +214,7 @@ internal fun PreviewReleaseListItemVisited() {
 @Composable
 internal fun PreviewReleaseListItemWithCoverArt() {
     InitializeFakeImageLoader()
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = ReleaseListItemModel(
                 id = "1",

@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.EntitiesListUiState
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import kotlin.time.Instant
@@ -507,7 +507,7 @@ private val detailsUiState = DetailsUiState(
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetails() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
@@ -523,7 +523,7 @@ internal fun PreviewAreaDetails() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetailsCollapsed() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
@@ -540,7 +540,7 @@ internal fun PreviewAreaDetailsCollapsed() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaDetailsError() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
@@ -558,7 +558,7 @@ internal fun PreviewAreaDetailsError() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaRelationships() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,
@@ -571,7 +571,7 @@ internal fun PreviewAreaRelationships() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaArtists() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.ARTISTS,
@@ -584,7 +584,7 @@ internal fun PreviewAreaArtists() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaEvents() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.EVENTS,
@@ -597,7 +597,7 @@ internal fun PreviewAreaEvents() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaLabels() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.LABELS,
@@ -610,7 +610,7 @@ internal fun PreviewAreaLabels() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaReleases() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
@@ -623,7 +623,7 @@ internal fun PreviewAreaReleases() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaPlaces() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.PLACES,
@@ -637,7 +637,7 @@ internal fun PreviewAreaPlaces() {
 @PreviewLightDark
 @Composable
 internal fun PreviewAreaStats() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         AreaUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.STATS,

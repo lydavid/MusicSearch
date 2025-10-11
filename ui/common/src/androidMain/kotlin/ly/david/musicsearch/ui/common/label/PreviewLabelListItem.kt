@@ -3,12 +3,12 @@ package ly.david.musicsearch.ui.common.label
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewLabelListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         LabelListItem(
             label = LabelListItemModel(
                 id = "1",
@@ -21,7 +21,7 @@ internal fun PreviewLabelListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewLabelListItemAllInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         LabelListItem(
             label = LabelListItemModel(
                 id = "5",
@@ -38,7 +38,7 @@ internal fun PreviewLabelListItemAllInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewLabelListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         LabelListItem(
             label = LabelListItemModel(
                 id = "5",

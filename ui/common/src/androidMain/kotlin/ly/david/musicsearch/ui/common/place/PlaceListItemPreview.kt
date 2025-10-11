@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
 internal fun PreviewPlaceListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         PlaceListItem(
             place = PlaceListItemModel(
                 id = "2",
@@ -23,7 +23,7 @@ internal fun PreviewPlaceListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewPlaceListItemAllInfo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         PlaceListItem(
             place = PlaceListItemModel(
                 id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
@@ -44,7 +44,7 @@ internal fun PreviewPlaceListItemAllInfo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewPlaceListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         PlaceListItem(
             place = PlaceListItemModel(
                 id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",

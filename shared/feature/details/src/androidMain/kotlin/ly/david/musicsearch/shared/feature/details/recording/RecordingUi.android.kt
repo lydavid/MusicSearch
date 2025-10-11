@@ -16,7 +16,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.list.EntitiesListUiState
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import kotlin.time.Instant
@@ -121,7 +121,7 @@ private val detailsUiState = DetailsUiState(
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiDetails() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState,
             entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
@@ -132,7 +132,7 @@ internal fun PreviewRecordingUiDetails() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiDetailsVideo() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
@@ -147,7 +147,7 @@ internal fun PreviewRecordingUiDetailsVideo() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiDetailsWithListens() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
@@ -168,7 +168,7 @@ internal fun PreviewRecordingUiDetailsWithListens() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiDetailsWithZeroListens() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState.copy(
                 detailsModel = detailsModel.copy(
@@ -185,7 +185,7 @@ internal fun PreviewRecordingUiDetailsWithZeroListens() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiReleases() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELEASES,
@@ -198,7 +198,7 @@ internal fun PreviewRecordingUiReleases() {
 @PreviewLightDark
 @Composable
 internal fun PreviewRecordingUiRelationships() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         RecordingUiInternal(
             state = detailsUiState.copy(
                 selectedTab = Tab.RELATIONSHIPS,

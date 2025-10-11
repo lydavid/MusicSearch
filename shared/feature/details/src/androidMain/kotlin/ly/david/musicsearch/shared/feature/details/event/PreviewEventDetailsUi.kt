@@ -5,13 +5,13 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 // region Previews
 @PreviewLightDark
 @Composable
 internal fun PreviewEventDetailsUi() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         EventDetailsTabUi(
             event = EventDetailsModel(
                 id = "e1",

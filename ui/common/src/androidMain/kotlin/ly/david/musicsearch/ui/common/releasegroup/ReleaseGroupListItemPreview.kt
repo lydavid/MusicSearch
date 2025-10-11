@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.releasegroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.ui.common.preview.PreviewWithSharedElementTransition
+import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 private val testReleaseGroup = ReleaseGroupListItemModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
@@ -17,7 +17,7 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupListItem() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseGroupListItem(
             releaseGroup = testReleaseGroup,
             showType = false,
@@ -28,7 +28,7 @@ internal fun PreviewReleaseGroupListItem() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupListItemWithType() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseGroupListItem(
             releaseGroup = testReleaseGroup,
             showType = true,
@@ -39,7 +39,7 @@ internal fun PreviewReleaseGroupListItemWithType() {
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupListItemVisited() {
-    PreviewWithSharedElementTransition {
+    PreviewWithTransitionAndOverlays {
         ReleaseGroupListItem(
             releaseGroup = ReleaseGroupListItemModel(
                 id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
