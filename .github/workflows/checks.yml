@@ -85,13 +85,6 @@ jobs:
         run: |
           ./gradlew recordPaparazziDebug
 
-      - name: Generate GitHub app token so that commit can trigger new workflow run
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
-        id: generate-token
-        with:
-          app_id: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_ID }}
-          private_key: ${{ secrets.MUSICSEARCH_GHA_HELPER_APP_PRIVATE_KEY }}
-
       - name: Push new screenshots if available
         if: always() && steps.screenshotsrecord.outcome == 'success'
         run: |
