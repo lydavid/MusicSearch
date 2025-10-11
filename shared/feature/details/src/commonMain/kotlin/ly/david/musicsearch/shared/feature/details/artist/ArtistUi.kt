@@ -192,56 +192,6 @@ internal fun ArtistUi(
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
-                    StatsMenuItem(
-                        statsScreen = StatsScreen(
-                            browseMethod = BrowseMethod.ByEntity(
-                                entityId = entityId,
-                                entity = entityType,
-                            ),
-                            tabs = state.tabs,
-                        ),
-                        overlayHost = overlayHost,
-                        coroutineScope = coroutineScope,
-                    )
-                    CopyToClipboardMenuItem(entityId)
-                    if (selectedTab == Tab.RECORDINGS) {
-                        RecordingSortMenuItem(
-                            sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
-                            onSortOptionClick = {
-                                recordingsByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateSortRecordingListItem(it),
-                                )
-                            },
-                        )
-                    }
-                    if (selectedTab == Tab.RELEASE_GROUPS) {
-                        SortToggleMenuItem(
-                            sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,
-                            onToggle = {
-                                releaseGroupsByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
-                                )
-                            },
-                        )
-                    }
-                    if (selectedTab == Tab.RELEASES) {
-                        SortToggleMenuItem(
-                            sorted = state.allEntitiesListUiState.releasesListUiState.sort,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateSortReleaseListItem(it),
-                                )
-                            },
-                        )
-                        MoreInfoToggleMenuItem(
-                            showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                )
-                            },
-                        )
-                    }
                     DropdownMenuItem(
                         text = { Text(strings.seeCollaborators) },
                         leadingIcon = {
@@ -255,6 +205,64 @@ internal fun ArtistUi(
                             closeMenu()
                         },
                     )
+                    StatsMenuItem(
+                        statsScreen = StatsScreen(
+                            browseMethod = BrowseMethod.ByEntity(
+                                entityId = entityId,
+                                entity = entityType,
+                            ),
+                            tabs = state.tabs,
+                        ),
+                        overlayHost = overlayHost,
+                        coroutineScope = coroutineScope,
+                    )
+                    CopyToClipboardMenuItem(entityId)
+                    when (selectedTab) {
+                        Tab.RECORDINGS -> {
+                            RecordingSortMenuItem(
+                                sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
+                                onSortOptionClick = {
+                                    recordingsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                                    )
+                                },
+                            )
+                        }
+
+                        Tab.RELEASE_GROUPS -> {
+                            SortToggleMenuItem(
+                                sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,
+                                onToggle = {
+                                    releaseGroupsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
+                                    )
+                                },
+                            )
+                        }
+
+                        Tab.RELEASES -> {
+                            SortToggleMenuItem(
+                                sorted = state.allEntitiesListUiState.releasesListUiState.sort,
+                                onToggle = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                                    )
+                                },
+                            )
+                            MoreInfoToggleMenuItem(
+                                showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
+                                onToggle = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                    )
+                                },
+                            )
+                        }
+
+                        else -> {
+                            // Nothing
+                        }
+                    }
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,
