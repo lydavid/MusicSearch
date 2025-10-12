@@ -6,16 +6,16 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 /**
- * An appropriate icon for a given [entity].
+ * An appropriate icon for a given [entityType].
  */
 @Composable
 fun EntityIcon(
-    entity: MusicBrainzEntityType,
+    entityType: MusicBrainzEntityType,
     modifier: Modifier = Modifier,
 ) {
     Icon(
         modifier = modifier,
-        imageVector = entity.getIcon() ?: return,
+        imageVector = entityType.getIcon() ?: return,
         contentDescription = null,
     )
 }

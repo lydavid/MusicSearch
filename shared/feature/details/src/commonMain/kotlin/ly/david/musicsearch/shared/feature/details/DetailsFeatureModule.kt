@@ -50,7 +50,7 @@ val detailsFeatureModule = module {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
                 is DetailsScreen -> {
-                    when (screen.entity) {
+                    when (screen.entityType) {
                         MusicBrainzEntityType.AREA -> {
                             AreaPresenter(
                                 screen = screen,
@@ -250,7 +250,7 @@ val detailsFeatureModule = module {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is DetailsScreen -> {
-                    when (screen.entity) {
+                    when (screen.entityType) {
                         MusicBrainzEntityType.AREA -> {
                             ui<DetailsUiState<AreaDetailsModel>> { state, modifier ->
                                 AreaUi(

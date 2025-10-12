@@ -142,7 +142,7 @@ internal fun SeriesUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entityType,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,

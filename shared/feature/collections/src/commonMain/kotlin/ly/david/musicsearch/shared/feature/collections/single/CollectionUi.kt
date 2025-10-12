@@ -374,7 +374,7 @@ internal fun CollectionUi(
                 onItemClick = { entity, id ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
-                            entity = entity,
+                            entityType = entity,
                             id = id,
                         ),
                     )
@@ -392,7 +392,7 @@ internal fun CollectionUi(
                     showAddToCollectionSheet(
                         coroutineScope = coroutineScope,
                         overlayHost = overlayHost,
-                        entity = entity,
+                        entityType = entity,
                         entityIds = setOf(it),
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {

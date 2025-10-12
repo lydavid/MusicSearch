@@ -82,7 +82,7 @@ internal class ArtistCollaborationGraphPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                entity = event.entity,
+                                entityType = event.entityType,
                                 id = event.id,
                             ),
                         ),
@@ -118,7 +118,7 @@ internal sealed interface ArtistCollaborationGraphUiEvent : CircuitUiEvent {
     data object NavigateUp : ArtistCollaborationGraphUiEvent
     data class SelectEntity(val entity: MusicBrainzEntityType) : ArtistCollaborationGraphUiEvent
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : ArtistCollaborationGraphUiEvent
 }

@@ -48,7 +48,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -155,7 +155,7 @@ internal fun RecordingUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = MusicBrainzEntityType.RECORDING,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -223,12 +223,12 @@ internal fun RecordingUi(
                     state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.ARTIST) },
+                            leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntityType.ARTIST,
+                                        entityType = MusicBrainzEntityType.ARTIST,
                                         id = artistCredit.artistId,
                                     ),
                                 )
@@ -268,7 +268,7 @@ internal fun RecordingUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entity = state.selectedTab.toMusicBrainzEntity() ?: return@DetailsHorizontalPager,
+                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {

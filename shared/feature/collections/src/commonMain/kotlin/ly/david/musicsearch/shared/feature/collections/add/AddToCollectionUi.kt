@@ -28,7 +28,7 @@ internal fun AddToCollectionUi(
         ) {
             Surface {
                 CreateNewCollectionDialogContent(
-                    defaultEntity = state.defaultEntity,
+                    defaultEntity = state.defaultEntityType,
                     onDismiss = { showDialog = false },
                     onSubmit = { name, entity ->
                         eventSink(

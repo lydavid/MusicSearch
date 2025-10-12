@@ -19,7 +19,6 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -44,7 +43,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -150,7 +149,7 @@ internal fun AreaUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = MusicBrainzEntityType.AREA,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -251,7 +250,7 @@ internal fun AreaUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entity = state.selectedTab.toMusicBrainzEntity() ?: return@DetailsHorizontalPager,
+                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {

@@ -44,7 +44,7 @@ fun Tab.getTitle(strings: AppStrings): String {
     }
 }
 
-fun Tab.toMusicBrainzEntity(): MusicBrainzEntityType? {
+fun Tab.toMusicBrainzEntityType(): MusicBrainzEntityType? {
     return when (this) {
         Tab.AREAS -> MusicBrainzEntityType.AREA
         Tab.ARTISTS -> MusicBrainzEntityType.ARTIST

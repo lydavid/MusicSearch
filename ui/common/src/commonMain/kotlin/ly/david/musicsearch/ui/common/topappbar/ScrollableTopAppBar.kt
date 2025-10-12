@@ -172,7 +172,7 @@ private fun TitleAndSubtitle(
         ) {
             if (entity != null) {
                 EntityIcon(
-                    entity = entity,
+                    entityType = entity,
                     modifier = Modifier.padding(end = 8.dp),
                 )
             }

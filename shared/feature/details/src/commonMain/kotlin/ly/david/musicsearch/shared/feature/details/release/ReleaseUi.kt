@@ -46,7 +46,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -157,7 +157,7 @@ internal fun ReleaseUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entityType,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -206,12 +206,12 @@ internal fun ReleaseUi(
                     state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.ARTIST) },
+                            leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntityType.ARTIST,
+                                        entityType = MusicBrainzEntityType.ARTIST,
                                         id = artistCredit.artistId,
                                     ),
                                 )
@@ -221,12 +221,12 @@ internal fun ReleaseUi(
                     state.detailsModel?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
                             text = { Text(text = releaseGroup.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.RELEASE_GROUP) },
+                            leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntityType.RELEASE_GROUP,
+                                        entityType = MusicBrainzEntityType.RELEASE_GROUP,
                                         id = releaseGroup.id,
                                     ),
                                 )
@@ -255,7 +255,7 @@ internal fun ReleaseUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entity = state.selectedTab.toMusicBrainzEntity() ?: return@DetailsHorizontalPager,
+                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
@@ -295,7 +295,7 @@ internal fun ReleaseUi(
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
-                                entity = entity,
+                                entityType = entity,
                                 id = id,
                             ),
                         )

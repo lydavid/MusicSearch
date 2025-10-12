@@ -48,7 +48,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -85,7 +85,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     final override fun present(): DetailsUiState<DetailsModel> {
         val browseMethod = BrowseMethod.ByEntity(
             entityId = screen.id,
-            entityType = screen.entity,
+            entityType = screen.entityType,
         )
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isLoading by rememberSaveable { mutableStateOf(true) }
@@ -109,7 +109,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
-            totalCount = entitiesListUiState.getTotalLocalCount(selectedTab.toMusicBrainzEntity()),
+            totalCount = entitiesListUiState.getTotalLocalCount(selectedTab.toMusicBrainzEntityType()),
         )
 
         val loginUiState = musicBrainzLoginPresenter.present()
@@ -137,7 +137,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             oldId = screen.id,
             mbid = detailsModel?.id,
             title = detailsModel.getAnnotatedName().text,
-            entity = screen.entity,
+            entity = screen.entityType,
             searchHint = getSearchHint(detailsModel),
         )
 
@@ -147,12 +147,12 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 MusicBrainzEntityType.EVENT,
                 MusicBrainzEntityType.RELEASE,
                 MusicBrainzEntityType.RELEASE_GROUP,
-            ).contains(screen.entity)
+            ).contains(screen.entityType)
             if (!showImage) return@LaunchedEffect
 
             val imageMetadataWithCount = imageMetadataRepository.getAndSaveImageMetadata(
                 detailsModel = detailsModel ?: return@LaunchedEffect,
-                entity = screen.entity,
+                entity = screen.entityType,
                 forceRefresh = forceRefreshDetails,
             )
             detailsModel = detailsModel?.withImageMetadata(
@@ -222,7 +222,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                entity = event.entity,
+                                entityType = event.entityType,
                                 id = event.id,
                             ),
                         ),
@@ -242,7 +242,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                         NavEvent.GoTo(
                             CoverArtsScreen(
                                 id = screen.id,
-                                entity = screen.entity,
+                                entity = screen.entityType,
                             ),
                         ),
                     )
@@ -278,7 +278,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
-            url = getMusicBrainzUrl(screen.entity, screen.id),
+            url = getMusicBrainzUrl(screen.entityType, screen.id),
             detailsModel = detailsModel
                 ?.withUrls(
                     urls = detailsModel?.urls.filterUrlRelations(query = query),
@@ -355,7 +355,7 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     ) : DetailsUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : DetailsUiEvent
 

@@ -54,7 +54,7 @@ internal class SpotifyHistoryPresenter(
                         NavEvent.GoTo(
                             SearchScreen(
                                 query = event.query,
-                                entity = event.entity,
+                                entityType = event.entityType,
                             ),
                         ),
                     )
@@ -104,7 +104,7 @@ internal sealed interface SpotifyUiEvent : CircuitUiEvent {
     data object NavigateUp : SpotifyUiEvent
     data class GoToSearch(
         val query: String,
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
     ) : SpotifyUiEvent
 
     data class MarkForDeletion(val history: SpotifyHistoryListItemModel) : SpotifyUiEvent

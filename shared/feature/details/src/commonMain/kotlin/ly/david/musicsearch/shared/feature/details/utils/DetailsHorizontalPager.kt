@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +64,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
-                                entity = MusicBrainzEntityType.RECORDING,
+                                entityType = MusicBrainzEntityType.RECORDING,
                                 id = id,
                             ),
                         )
@@ -124,14 +124,14 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                         error("$tab tab should not be accessible for ${state.browseMethod.entityType}.")
                     }
                 }
-                val tabEntity = tab.toMusicBrainzEntity()
+                val tabEntity = tab.toMusicBrainzEntityType()
                 EntitiesPagingListUi(
                     uiState = uiState,
                     now = state.detailsTabUiState.now,
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
-                                entity = entity,
+                                entityType = entity,
                                 id = id,
                             ),
                         )

@@ -16,7 +16,7 @@ internal fun PreviewSearchHistoryListItem() {
                 searchHistory = SearchHistoryListItemModel(
                     id = "ARTIST_aha",
                     query = "aha",
-                    entity = MusicBrainzEntityType.ARTIST,
+                    entityType = MusicBrainzEntityType.ARTIST,
                 ),
             )
         }

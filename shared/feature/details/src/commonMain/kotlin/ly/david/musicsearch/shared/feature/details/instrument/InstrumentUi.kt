@@ -141,7 +141,7 @@ internal fun InstrumentUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entityType,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,

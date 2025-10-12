@@ -86,7 +86,7 @@ internal class CollectionPresenter(
 
             collectionRepository.addToCollection(
                 collectionId = nonNullCollection.id,
-                entity = nonNullCollection.entity,
+                entityType = nonNullCollection.entity,
                 entityIds = oneShotNewCollectableId?.run { setOf(this) } ?: return@LaunchedEffect,
             )
             oneShotNewCollectableId = null
@@ -128,7 +128,7 @@ internal class CollectionPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                entity = event.entity,
+                                entityType = event.entityType,
                                 id = event.id,
                             ),
                         ),
@@ -196,7 +196,7 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data object UnMarkItemsAsDeleted : CollectionUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : CollectionUiEvent
 

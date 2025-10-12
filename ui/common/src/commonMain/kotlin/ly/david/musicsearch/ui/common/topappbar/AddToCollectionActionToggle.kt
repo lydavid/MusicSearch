@@ -13,7 +13,7 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIcon
 @Composable
 fun AddToCollectionActionToggle(
     collected: Boolean,
-    entity: MusicBrainzEntityType,
+    entityType: MusicBrainzEntityType,
     entityId: String,
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,
@@ -29,7 +29,7 @@ fun AddToCollectionActionToggle(
             showAddToCollectionSheet(
                 coroutineScope = coroutineScope,
                 overlayHost = overlayHost,
-                entity = entity,
+                entityType = entityType,
                 entityIds = setOf(entityId),
                 snackbarHostState = snackbarHostState,
                 onLoginClick = onLoginClick,

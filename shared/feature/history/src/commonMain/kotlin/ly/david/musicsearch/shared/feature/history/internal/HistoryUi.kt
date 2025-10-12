@@ -155,7 +155,7 @@ internal fun HistoryUi(
             onItemClick = { entity, id ->
                 eventSink(
                     HistoryUiEvent.ClickItem(
-                        entity = entity,
+                        entityType = entity,
                         id = id,
                     ),
                 )

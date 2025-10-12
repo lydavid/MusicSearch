@@ -109,7 +109,7 @@ internal fun SearchUiContent(
                 modifier = Modifier
                     .weight(1f),
                 options = searchableEntities,
-                selectedOption = state.entity,
+                selectedOption = state.entityType,
                 onSelectOption = { entity ->
                     eventSink(SearchUiEvent.UpdateEntity(entity))
                     scope.launch {
@@ -123,8 +123,8 @@ internal fun SearchUiContent(
             SearchHistoryUi(
                 lazyPagingItems = state.searchHistory,
                 lazyListState = state.searchHistoryListState,
-                onItemClick = { entity, query ->
-                    eventSink(SearchUiEvent.UpdateEntity(entity))
+                onItemClick = { entityType, query ->
+                    eventSink(SearchUiEvent.UpdateEntity(entityType))
                     eventSink(SearchUiEvent.UpdateQuery(query))
                 },
                 onDeleteItem = {
@@ -143,7 +143,7 @@ internal fun SearchUiContent(
                     eventSink(SearchUiEvent.RecordSearch)
                     eventSink(
                         SearchUiEvent.ClickItem(
-                            entity = entity,
+                            entityType = entity,
                             id = id,
                         ),
                     )

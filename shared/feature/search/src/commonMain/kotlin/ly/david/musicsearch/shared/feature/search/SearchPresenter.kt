@@ -40,7 +40,7 @@ internal class SearchPresenter(
     @Composable
     override fun present(): SearchUiState {
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
-        var entity by rememberSaveable { mutableStateOf(screen.entity ?: MusicBrainzEntityType.ARTIST) }
+        var entity by rememberSaveable { mutableStateOf(screen.entityType ?: MusicBrainzEntityType.ARTIST) }
 
         val searchResults by rememberRetained(query, entity) {
             mutableStateOf(
@@ -68,7 +68,7 @@ internal class SearchPresenter(
         fun eventSink(event: SearchUiEvent) {
             when (event) {
                 is SearchUiEvent.UpdateEntity -> {
-                    entity = event.entity
+                    entity = event.entityType
                 }
 
                 is SearchUiEvent.UpdateQuery -> {
@@ -90,7 +90,7 @@ internal class SearchPresenter(
 
                 is SearchUiEvent.DeleteSearchHistory -> {
                     deleteSearchHistory(
-                        entity = event.item.entity,
+                        entity = event.item.entityType,
                         query = event.item.query,
                     )
                 }
@@ -99,7 +99,7 @@ internal class SearchPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                entity = event.entity,
+                                entityType = event.entityType,
                                 id = event.id,
                             ),
                         ),
@@ -110,7 +110,7 @@ internal class SearchPresenter(
 
         return SearchUiState(
             query = query,
-            entity = entity,
+            entityType = entity,
             searchResults = searchResults.collectAsLazyPagingItems(),
             searchResultsListState = searchResultsListState,
             searchHistory = searchHistory.collectAsLazyPagingItems(),
@@ -123,7 +123,7 @@ internal class SearchPresenter(
 @Stable
 internal data class SearchUiState(
     val query: String,
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
     val searchResults: LazyPagingItems<ListItemModel>,
     val searchResultsListState: LazyListState = LazyListState(),
     val searchHistory: LazyPagingItems<ListItemModel>,
@@ -132,13 +132,13 @@ internal data class SearchUiState(
 ) : CircuitUiState
 
 internal sealed interface SearchUiEvent : CircuitUiEvent {
-    data class UpdateEntity(val entity: MusicBrainzEntityType) : SearchUiEvent
+    data class UpdateEntity(val entityType: MusicBrainzEntityType) : SearchUiEvent
     data class UpdateQuery(val query: String) : SearchUiEvent
     data object RecordSearch : SearchUiEvent
     data class DeleteSearchHistory(val item: SearchHistoryListItemModel) : SearchUiEvent
     data object DeleteAllEntitySearchHistory : SearchUiEvent
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : SearchUiEvent
 }

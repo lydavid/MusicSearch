@@ -40,7 +40,7 @@ internal fun NowPlayingHistoryUi(
             eventSink(
                 NowPlayingHistoryUiEvent.GoToSearch(
                     query = query,
-                    entity = entity,
+                    entityType = entity,
                 ),
             )
         },

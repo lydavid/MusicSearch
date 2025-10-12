@@ -57,7 +57,7 @@ internal class NowPlayingHistoryPresenter(
                         NavEvent.GoTo(
                             SearchScreen(
                                 query = event.query,
-                                entity = event.entity,
+                                entityType = event.entityType,
                             ),
                         ),
                     )
@@ -87,6 +87,6 @@ internal sealed interface NowPlayingHistoryUiEvent : CircuitUiEvent {
     data class DeleteHistory(val id: String) : NowPlayingHistoryUiEvent
     data class GoToSearch(
         val query: String,
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
     ) : NowPlayingHistoryUiEvent
 }

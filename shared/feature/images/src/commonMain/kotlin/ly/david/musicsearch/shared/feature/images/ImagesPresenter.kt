@@ -156,7 +156,7 @@ internal class ImagesPresenter(
                 is ImagesUiEvent.ClickItem -> {
                     navigator.goTo(
                         DetailsScreen(
-                            entity = event.entity,
+                            entityType = event.entityType,
                             id = event.id,
                         ),
                     )
@@ -223,7 +223,7 @@ internal sealed interface ImagesUiEvent : CircuitUiEvent {
     data object AutoSelectSingleImage : ImagesUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : ImagesUiEvent
 

@@ -593,7 +593,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
             repository.addToCollection(
                 collectionId = "1",
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
                 entityIds = setOf(entityId),
             )
             Assert.assertEquals(true, awaitItem())

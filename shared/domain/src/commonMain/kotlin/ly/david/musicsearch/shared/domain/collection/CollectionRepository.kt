@@ -40,7 +40,7 @@ interface CollectionRepository {
 
     suspend fun addToCollection(
         collectionId: String,
-        entity: MusicBrainzEntityType,
+        entityType: MusicBrainzEntityType,
         entityIds: Set<String>,
     ): ActionableResult
 

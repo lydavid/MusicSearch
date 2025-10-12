@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun SearchHistoryListItem(
     searchHistory: SearchHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
+    onItemClick: (entityType: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
 ) {
     SwipeToDeleteListItem(
@@ -34,13 +34,13 @@ internal fun SearchHistoryListItem(
                 },
                 modifier = modifier.clickable {
                     onItemClick(
-                        searchHistory.entity,
+                        searchHistory.entityType,
                         searchHistory.query,
                     )
                 },
                 leadingContent = {
                     EntityIcon(
-                        entity = searchHistory.entity,
+                        entityType = searchHistory.entityType,
                         modifier = Modifier.size(TINY_ICON_SIZE.dp),
                     )
                 },

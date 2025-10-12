@@ -129,7 +129,7 @@ private fun getInitialScreens(
             initialScreens.add(
                 SearchScreen(
                     query = uri.getQueryParameter(QUERY),
-                    entity = uri.getQueryParameter(TYPE)?.toMusicBrainzEntityType(),
+                    entityType = uri.getQueryParameter(TYPE)?.toMusicBrainzEntityType(),
                 ),
             )
         }
@@ -153,7 +153,7 @@ private fun getInitialScreens(
                 val id = pathSegments.last()
                 initialScreens.add(
                     DetailsScreen(
-                        entity = entity,
+                        entityType = entity,
                         id = id,
                     ),
                 )

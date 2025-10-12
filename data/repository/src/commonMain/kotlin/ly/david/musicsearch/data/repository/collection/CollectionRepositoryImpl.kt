@@ -167,7 +167,7 @@ class CollectionRepositoryImpl(
 
     override suspend fun addToCollection(
         collectionId: String,
-        entity: MusicBrainzEntityType,
+        entityType: MusicBrainzEntityType,
         entityIds: Set<String>,
     ): ActionableResult {
         val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
@@ -178,7 +178,7 @@ class CollectionRepositoryImpl(
                 // TODO: support adding more than 16KB worth of items at a time
                 collectionApi.addToCollection(
                     collectionId = collectionId,
-                    resourceUriPlural = entity.resourceUriPlural,
+                    resourceUriPlural = entityType.resourceUriPlural,
                     mbids = entityIds,
                 )
             } catch (ex: HandledException) {

@@ -81,7 +81,7 @@ internal fun CollectionListItem(
                 )
             } else {
                 EntityIcon(
-                    entity = collection.entity,
+                    entityType = collection.entity,
                     modifier = finalModifier,
                 )
             }

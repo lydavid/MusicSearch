@@ -119,7 +119,7 @@ internal fun DatabaseUi(
                         subtitle = (state.entitiesCount[entity] ?: 0).toString(),
                         startIcon = entity.getIcon(),
                         endIcon = CustomIcons.ChevronRight,
-                        onClick = { onDestinationClick(AllEntitiesScreen(entity = entity)) },
+                        onClick = { onDestinationClick(AllEntitiesScreen(entityType = entity)) },
                     )
                 }
             }

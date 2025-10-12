@@ -46,7 +46,7 @@ internal class AllLocalEntitiesPresenter(
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
-            totalCount = entitiesListUiState.getTotalLocalCount(screen.entity),
+            totalCount = entitiesListUiState.getTotalLocalCount(screen.entityType),
         )
 
         val loginUiState = musicBrainzLoginPresenter.present()
@@ -57,7 +57,7 @@ internal class AllLocalEntitiesPresenter(
             val browseMethod = BrowseMethod.All
             entitiesListEventSink(
                 AllEntitiesListUiEvent.Get(
-                    tab = screen.entity.toTab(),
+                    tab = screen.entityType.toTab(),
                     browseMethod = browseMethod,
                     query = query,
                     isRemote = false,
@@ -75,7 +75,7 @@ internal class AllLocalEntitiesPresenter(
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             DetailsScreen(
-                                entity = event.entity,
+                                entityType = event.entityType,
                                 id = event.id,
                             ),
                         ),
@@ -86,7 +86,7 @@ internal class AllLocalEntitiesPresenter(
 
         return AllLocalEntitiesUiState(
             subtitle = subtitle,
-            entity = screen.entity,
+            entityType = screen.entityType,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             allEntitiesListUiState = entitiesListUiState,
@@ -99,7 +99,7 @@ internal class AllLocalEntitiesPresenter(
 @Stable
 internal data class AllLocalEntitiesUiState(
     val subtitle: String,
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val allEntitiesListUiState: AllEntitiesListUiState,
@@ -111,7 +111,7 @@ internal sealed interface AllLocalEntitiesUiEvent : CircuitUiEvent {
     data object NavigateUp : AllLocalEntitiesUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : AllLocalEntitiesUiEvent
 }

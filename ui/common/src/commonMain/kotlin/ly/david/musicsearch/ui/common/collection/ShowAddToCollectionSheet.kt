@@ -14,7 +14,7 @@ import ly.david.musicsearch.ui.common.screen.showInBottomSheet
 fun showAddToCollectionSheet(
     coroutineScope: CoroutineScope,
     overlayHost: OverlayHost,
-    entity: MusicBrainzEntityType,
+    entityType: MusicBrainzEntityType,
     entityIds: Set<String>,
     snackbarHostState: SnackbarHostState,
     onLoginClick: () -> Unit,
@@ -22,7 +22,7 @@ fun showAddToCollectionSheet(
     coroutineScope.launch {
         val result = overlayHost.showInBottomSheet(
             AddToCollectionScreen(
-                entity = entity,
+                entityType = entityType,
                 collectableIds = entityIds,
             ),
         )

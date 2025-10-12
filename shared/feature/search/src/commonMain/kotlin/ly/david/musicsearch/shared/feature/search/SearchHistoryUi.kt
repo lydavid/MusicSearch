@@ -12,15 +12,15 @@ import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun SearchHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
+    onItemClick: (entityType: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
     onDeleteAllHistory: () -> Unit = {},
 ) {

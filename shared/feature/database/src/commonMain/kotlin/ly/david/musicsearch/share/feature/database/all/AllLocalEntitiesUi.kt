@@ -49,7 +49,7 @@ internal fun AllLocalEntitiesUi(
     modifier: Modifier = Modifier,
     now: Instant = Clock.System.now(),
 ) {
-    val entity = state.entity
+    val entity = state.entityType
     val eventSink = state.eventSink
     val recordingsByEntityEventSink = state.allEntitiesListUiState.recordingsListUiState.eventSink
     val releasesEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
@@ -282,7 +282,7 @@ internal fun AllLocalEntitiesUi(
             onItemClick = { entity, id ->
                 eventSink(
                     AllLocalEntitiesUiEvent.ClickItem(
-                        entity = entity,
+                        entityType = entity,
                         id = id,
                     ),
                 )
@@ -300,7 +300,7 @@ internal fun AllLocalEntitiesUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entity = entity,
+                    entityType = entity,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {

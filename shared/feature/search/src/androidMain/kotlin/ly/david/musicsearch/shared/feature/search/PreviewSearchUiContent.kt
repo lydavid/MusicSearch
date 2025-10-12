@@ -117,7 +117,7 @@ internal fun PreviewSearchUiSearchResults() {
         SearchUiContent(
             state = SearchUiState(
                 query = "aimer",
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
                 searchResults = searchResults.collectAsLazyPagingItems(),
                 searchHistory = searchHistory.collectAsLazyPagingItems(),
                 eventSink = {},
@@ -140,7 +140,7 @@ internal fun PreviewSearchUiSearchHistory() {
                     SearchHistoryListItemModel(
                         id = "a",
                         query = "aimer",
-                        entity = MusicBrainzEntityType.ARTIST,
+                        entityType = MusicBrainzEntityType.ARTIST,
                     ),
                 ),
             ),
@@ -148,7 +148,7 @@ internal fun PreviewSearchUiSearchHistory() {
         SearchUiContent(
             state = SearchUiState(
                 query = "",
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
                 searchResults = searchResults.collectAsLazyPagingItems(),
                 searchHistory = searchHistory.collectAsLazyPagingItems(),
                 eventSink = {},

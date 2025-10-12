@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumTy
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 internal class StatsPresenter(
     private val screen: StatsScreen,
@@ -42,9 +42,9 @@ internal class StatsPresenter(
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS).contains(it) }
             .associateWith { tab ->
-                val browseEntity = tab.toMusicBrainzEntity() ?: return@associateWith EntityStats()
+                val browseEntity = tab.toMusicBrainzEntityType() ?: return@associateWith EntityStats()
                 observeEntityStats(
-                    browseEntity = browseEntity,
+                    browseEntityType = browseEntity,
                     browseMethod = browseMethod,
                     countOfEachAlbumTypeFlow = {
                         if (browseEntity == MusicBrainzEntityType.RELEASE_GROUP) {
@@ -70,7 +70,7 @@ internal class StatsPresenter(
     }
 
     private fun observeEntityStats(
-        browseEntity: MusicBrainzEntityType,
+        browseEntityType: MusicBrainzEntityType,
         browseMethod: BrowseMethod,
         countOfEachAlbumTypeFlow: () -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {
@@ -81,20 +81,20 @@ internal class StatsPresenter(
             is BrowseMethod.ByEntity -> {
                 browseRemoteMetadataRepository.observe(
                     entityId = browseMethod.entityId,
-                    entity = browseEntity,
+                    entity = browseEntityType,
                 )
             }
         }
         val localCountFlow = observeLocalCount(
-            browseEntity = browseEntity,
+            browseEntity = browseEntityType,
             browseMethod = browseMethod,
         )
         val visitedCountFlow = observeVisitedCount(
-            browseEntity = browseEntity,
+            browseEntity = browseEntityType,
             browseMethod = browseMethod,
         )
         val collectedCountFlow = observeCollectedCount(
-            browseEntity = browseEntity,
+            browseEntity = browseEntityType,
             browseMethod = browseMethod,
         )
         return combine(

@@ -22,7 +22,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
     onLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val entity = tab?.toMusicBrainzEntity() ?: return
+    val entity = tab?.toMusicBrainzEntityType() ?: return
     if (entityIds.isEmpty()) return
 
     DropdownMenuItem(
@@ -41,7 +41,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
             showAddToCollectionSheet(
                 coroutineScope = coroutineScope,
                 overlayHost = overlayHost,
-                entity = entity,
+                entityType = entity,
                 entityIds = entityIds,
                 snackbarHostState = snackbarHostState,
                 onLoginClick = onLoginClick,

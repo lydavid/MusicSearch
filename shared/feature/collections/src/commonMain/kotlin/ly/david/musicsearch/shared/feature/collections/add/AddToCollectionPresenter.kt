@@ -38,7 +38,7 @@ internal class AddToCollectionPresenter(
         val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
             mutableStateOf(
                 getAllCollections(
-                    entity = screen.entity,
+                    entity = screen.entityType,
                     showLocal = true,
                     showRemote = true,
                     entityIdToCheckExists = if (screen.collectableIds.size == 1) {
@@ -67,7 +67,7 @@ internal class AddToCollectionPresenter(
                     scope.launch {
                         val result: ActionableResult = collectionRepository.addToCollection(
                             collectionId = event.collectionId,
-                            entity = screen.entity,
+                            entityType = screen.entityType,
                             entityIds = screen.collectableIds,
                         )
                         navigator.pop(
@@ -82,7 +82,7 @@ internal class AddToCollectionPresenter(
         }
 
         return AddToCollectionUiState(
-            defaultEntity = screen.entity,
+            defaultEntityType = screen.entityType,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             eventSink = ::eventSink,
         )
@@ -91,7 +91,7 @@ internal class AddToCollectionPresenter(
 
 @Stable
 internal data class AddToCollectionUiState(
-    val defaultEntity: MusicBrainzEntityType,
+    val defaultEntityType: MusicBrainzEntityType,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val eventSink: (AddToCollectionUiEvent) -> Unit,
 ) : CircuitUiState

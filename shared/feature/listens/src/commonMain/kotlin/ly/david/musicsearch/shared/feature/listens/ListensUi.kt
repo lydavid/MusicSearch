@@ -255,7 +255,7 @@ internal fun ListensUi(
                         onGoToReleaseClick = { releaseId ->
                             eventSink(
                                 ListensUiEvent.ClickItem(
-                                    entity = MusicBrainzEntityType.RELEASE,
+                                    entityType = MusicBrainzEntityType.RELEASE,
                                     id = releaseId,
                                 ),
                             )
@@ -299,7 +299,7 @@ internal fun ListensUi(
                         onClick = { id ->
                             eventSink(
                                 ListensUiEvent.ClickItem(
-                                    entity = MusicBrainzEntityType.RECORDING,
+                                    entityType = MusicBrainzEntityType.RECORDING,
                                     id = id,
                                 ),
                             )

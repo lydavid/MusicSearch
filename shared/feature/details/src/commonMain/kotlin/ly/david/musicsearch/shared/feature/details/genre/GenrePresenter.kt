@@ -58,7 +58,7 @@ internal class GenrePresenter(
             oldId = screen.id,
             mbid = genre?.id,
             title = title,
-            entity = screen.entity,
+            entity = screen.entityType,
             searchHint = "",
         )
 
@@ -78,7 +78,7 @@ internal class GenrePresenter(
             title = title,
             handledException = handledException,
             genre = genre,
-            url = getMusicBrainzUrl(screen.entity, screen.id),
+            url = getMusicBrainzUrl(screen.entityType, screen.id),
             eventSink = ::genreSink,
         )
     }

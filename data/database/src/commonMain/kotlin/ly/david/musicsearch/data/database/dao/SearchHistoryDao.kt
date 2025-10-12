@@ -41,7 +41,7 @@ class SearchHistoryDao(
                     SearchHistoryListItemModel(
                         id = "${query}_$entity",
                         query = query,
-                        entity = entity,
+                        entityType = entity,
                     )
                 },
             )

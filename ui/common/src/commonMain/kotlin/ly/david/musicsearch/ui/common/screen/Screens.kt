@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 @Parcelize
 data class SearchScreen(
     val query: String? = null,
-    val entity: MusicBrainzEntityType? = null,
+    val entityType: MusicBrainzEntityType? = null,
 ) : Screen
 
 @Parcelize
@@ -26,7 +26,7 @@ data object DatabaseScreen : Screen
 
 @Parcelize
 data class AllEntitiesScreen(
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
 ) : Screen
 
 @Parcelize
@@ -47,7 +47,7 @@ data class CollectionScreen(
 
 @Parcelize
 data class AddToCollectionScreen(
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
     val collectableIds: Set<String>,
 ) : Screen
 
@@ -59,7 +59,7 @@ data class SnackbarPopResult(
 
 @Parcelize
 data class DetailsScreen(
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
     val id: String,
 ) : Screen
 

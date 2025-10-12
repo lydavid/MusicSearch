@@ -89,13 +89,13 @@ internal class HistoryPresenter(
                 is HistoryUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            if (event.entity == MusicBrainzEntityType.COLLECTION) {
+                            if (event.entityType == MusicBrainzEntityType.COLLECTION) {
                                 CollectionScreen(
                                     collectionId = event.id,
                                 )
                             } else {
                                 DetailsScreen(
-                                    entity = event.entity,
+                                    entityType = event.entityType,
                                     id = event.id,
                                 )
                             },
@@ -134,7 +134,7 @@ internal sealed interface HistoryUiEvent : CircuitUiEvent {
     data object UnMarkAllHistoryForDeletion : HistoryUiEvent
     data object DeleteAllHistory : HistoryUiEvent
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : HistoryUiEvent
 }

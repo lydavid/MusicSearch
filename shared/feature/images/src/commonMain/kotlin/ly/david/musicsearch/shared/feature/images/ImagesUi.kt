@@ -166,12 +166,12 @@ internal fun ImagesUi(
 
                     DropdownMenuItem(
                         text = { Text(name) },
-                        leadingIcon = { EntityIcon(entity = entity) },
+                        leadingIcon = { EntityIcon(entityType = entity) },
                         onClick = {
                             closeMenu()
                             eventSink(
                                 ImagesUiEvent.ClickItem(
-                                    entity = entity,
+                                    entityType = entity,
                                     id = id,
                                 ),
                             )

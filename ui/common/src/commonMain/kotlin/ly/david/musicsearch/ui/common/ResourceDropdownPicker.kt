@@ -86,7 +86,7 @@ fun ResourceDropdownPicker(
                             Row(verticalAlignment = CenterVertically) {
                                 EntityIcon(
                                     modifier = Modifier.padding(end = 8.dp),
-                                    entity = option,
+                                    entityType = option,
                                 )
                                 Text(option.getName(strings))
                             }

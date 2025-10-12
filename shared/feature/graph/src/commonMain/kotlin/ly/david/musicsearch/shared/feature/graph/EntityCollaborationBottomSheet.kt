@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.common.theme.LocalStrings
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EntityCollaborationBottomSheet(
-    selectedEntity: MusicBrainzEntityType,
+    selectedEntityType: MusicBrainzEntityType,
     onClick: (MusicBrainzEntityType) -> Unit = {},
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
     onDismiss: () -> Unit = {},
@@ -27,7 +27,7 @@ internal fun EntityCollaborationBottomSheet(
         sheetState = bottomSheetState,
     ) {
         EntityCollaborationBottomSheetContent(
-            selectedEntity = selectedEntity,
+            selectedEntityType = selectedEntityType,
             onClick = onClick,
         )
     }
@@ -35,7 +35,7 @@ internal fun EntityCollaborationBottomSheet(
 
 @Composable
 internal fun EntityCollaborationBottomSheetContent(
-    selectedEntity: MusicBrainzEntityType,
+    selectedEntityType: MusicBrainzEntityType,
     onClick: (MusicBrainzEntityType) -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -44,7 +44,7 @@ internal fun EntityCollaborationBottomSheetContent(
         collaboratableEntities.forEach {
             ClickableItem(
                 title = it.getName(strings),
-                endIcon = if (selectedEntity == it) CustomIcons.Check else null,
+                endIcon = if (selectedEntityType == it) CustomIcons.Check else null,
                 onClick = {
                     onClick(it)
                 },

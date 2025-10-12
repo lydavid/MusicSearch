@@ -56,7 +56,7 @@ internal fun SpotifyHistoryUi(
             eventSink(
                 SpotifyUiEvent.GoToSearch(
                     query = query,
-                    entity = entity,
+                    entityType = entity,
                 ),
             )
         },

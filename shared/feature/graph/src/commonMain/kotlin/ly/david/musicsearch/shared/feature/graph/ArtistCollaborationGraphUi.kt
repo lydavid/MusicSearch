@@ -66,7 +66,7 @@ internal fun ArtistCollaborationGraphUi(
 
     if (showBottomSheet) {
         EntityCollaborationBottomSheet(
-            selectedEntity = state.collaborationEntityType,
+            selectedEntityType = state.collaborationEntityType,
             onClick = {
                 eventSink(ArtistCollaborationGraphUiEvent.SelectEntity(it))
             },
@@ -131,7 +131,7 @@ internal fun ArtistCollaborationGraphUi(
                     clickedNode?.let { node ->
                         eventSink(
                             ArtistCollaborationGraphUiEvent.ClickItem(
-                                entity = node.entity,
+                                entityType = node.entityType,
                                 id = node.id,
                             ),
                         )

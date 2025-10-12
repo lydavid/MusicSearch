@@ -46,7 +46,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
@@ -154,7 +154,7 @@ internal fun ReleaseGroupUi(
                 additionalActions = {
                     AddToCollectionActionToggle(
                         collected = state.collected,
-                        entity = entityType,
+                        entityType = entityType,
                         entityId = entityId,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -222,14 +222,14 @@ internal fun ReleaseGroupUi(
                     state.detailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { EntityIcon(entity = MusicBrainzEntityType.ARTIST) },
+                            leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
                                 eventSink(
                                     DetailsUiEvent.ClickItem(
-                                        entity = MusicBrainzEntityType.ARTIST,
+                                        entityType = MusicBrainzEntityType.ARTIST,
                                         id = artistCredit.artistId,
                                     ),
                                 )
@@ -269,7 +269,7 @@ internal fun ReleaseGroupUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entity = state.selectedTab.toMusicBrainzEntity() ?: return@DetailsHorizontalPager,
+                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {

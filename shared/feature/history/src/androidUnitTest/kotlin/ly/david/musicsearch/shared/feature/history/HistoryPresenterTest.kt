@@ -110,14 +110,14 @@ class HistoryPresenterTest {
 
             state.eventSink(
                 HistoryUiEvent.ClickItem(
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
+                    entityType = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 ),
             )
             assertEquals(
                 navigator.awaitNextScreen(),
                 DetailsScreen(
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
+                    entityType = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 ),
             )
@@ -153,7 +153,7 @@ class HistoryPresenterTest {
 
             state.eventSink(
                 HistoryUiEvent.ClickItem(
-                    entity = MusicBrainzEntityType.COLLECTION,
+                    entityType = MusicBrainzEntityType.COLLECTION,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
                 ),
             )

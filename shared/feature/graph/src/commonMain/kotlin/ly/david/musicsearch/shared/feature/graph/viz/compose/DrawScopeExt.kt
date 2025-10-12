@@ -47,7 +47,7 @@ fun DrawScope.renderNode(
             y.dp.toPx(),
         )
         drawCircle(
-            color = entity.getNodeColor(extendedColors),
+            color = entityType.getNodeColor(extendedColors),
             radius = r,
             center = c,
         )

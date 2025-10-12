@@ -37,7 +37,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 internal val tabs = persistentListOf(
     Tab.RECORDINGS,
@@ -103,7 +103,7 @@ internal fun FacetsBottomSheetContent(
                                     },
                                 )
                                 .clickable {
-                                    tabs[page].toMusicBrainzEntity()?.let { type ->
+                                    tabs[page].toMusicBrainzEntityType()?.let { type ->
                                         onFacetClick(
                                             MusicBrainzEntity(
                                                 id = facet.id,

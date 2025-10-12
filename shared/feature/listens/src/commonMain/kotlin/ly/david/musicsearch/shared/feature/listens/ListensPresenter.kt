@@ -33,7 +33,7 @@ import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntity
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 import ly.david.musicsearch.ui.common.topappbar.toTab
 
 internal class ListensPresenter(
@@ -106,7 +106,7 @@ internal class ListensPresenter(
                 is ListensUiEvent.ClickItem -> {
                     navigator.goTo(
                         DetailsScreen(
-                            entity = event.entity,
+                            entityType = event.entityType,
                             id = event.id,
                         ),
                     )
@@ -160,7 +160,7 @@ internal class ListensPresenter(
                 selectedTab = selectedTab,
                 filterState = facetFilterState,
                 facetsPagingDataFlow = listensListRepository.observeFacets(
-                    entityType = selectedTab.toMusicBrainzEntity() ?: MusicBrainzEntityType.RECORDING,
+                    entityType = selectedTab.toMusicBrainzEntityType() ?: MusicBrainzEntityType.RECORDING,
                     username = browseUsername,
                     query = facetQuery,
                 ),
@@ -210,7 +210,7 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
     data object SetUsername : ListensUiEvent
 
     data class ClickItem(
-        val entity: MusicBrainzEntityType,
+        val entityType: MusicBrainzEntityType,
         val id: String,
     ) : ListensUiEvent
 

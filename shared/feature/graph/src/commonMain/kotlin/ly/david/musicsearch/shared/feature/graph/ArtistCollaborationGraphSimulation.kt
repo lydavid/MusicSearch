@@ -18,13 +18,13 @@ import ly.david.musicsearch.shared.feature.graph.viz.force.forceSimulation
 data class GraphNode(
     val id: String,
     val name: String,
-    val entity: MusicBrainzEntityType,
+    val entityType: MusicBrainzEntityType,
     val radius: Double,
     val x: Double = 0.0,
     val y: Double = 0.0,
 ) {
     override fun toString(): String {
-        return "GraphNode(id=\"${id}\",name=\"${name}\",entity=MusicBrainzEntity.$entity," +
+        return "GraphNode(id=\"${id}\",name=\"${name}\",entityType=MusicBrainzEntityType.$entityType," +
             "radius=$radius,x=$x,y=$y)"
     }
 }
@@ -91,7 +91,7 @@ class ArtistCollaborationGraphSimulation {
                 linkGet = {
                     // All artists must link to a recording/release/release group,
                     // so we don't have to repeat the links from the other direction.
-                    if (this.domain.entity == MusicBrainzEntityType.ARTIST) {
+                    if (this.domain.entityType == MusicBrainzEntityType.ARTIST) {
                         artistEntityLinks
                             .filter { it.artistId == this.domain.id }
                             .mapNotNull { artistEntity ->
@@ -132,7 +132,7 @@ class ArtistCollaborationGraphSimulation {
                 GraphNode(
                     id = id,
                     name = name,
-                    entity = MusicBrainzEntityType.ARTIST,
+                    entityType = MusicBrainzEntityType.ARTIST,
                     radius = calculateRadius(artistFrequency[id] ?: 1),
                 )
             }
@@ -144,7 +144,7 @@ class ArtistCollaborationGraphSimulation {
                 GraphNode(
                     id = id,
                     name = name,
-                    entity = collaborations.firstOrNull()?.entity ?: MusicBrainzEntityType.RECORDING,
+                    entityType = collaborations.firstOrNull()?.entity ?: MusicBrainzEntityType.RECORDING,
                     radius = calculateRadius(collaborationEntityFrequency[id] ?: 1),
                 )
             }
