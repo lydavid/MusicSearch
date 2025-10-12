@@ -126,7 +126,7 @@ class WorkDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+            if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                 getWorksByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -143,7 +143,7 @@ class WorkDao(
     fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

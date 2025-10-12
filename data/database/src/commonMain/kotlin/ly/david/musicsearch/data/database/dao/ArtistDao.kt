@@ -210,7 +210,7 @@ class ArtistDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+            if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                 getArtistsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -227,7 +227,7 @@ class ArtistDao(
     fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

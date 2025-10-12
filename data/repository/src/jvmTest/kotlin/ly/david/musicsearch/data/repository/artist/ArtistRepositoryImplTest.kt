@@ -195,7 +195,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         val flow: Flow<PagingData<ArtistListItemModel>> = artistsListRepositoryImpl.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = "area-id",
-                entity = MusicBrainzEntityType.AREA,
+                entityType = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         )

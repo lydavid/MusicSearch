@@ -54,7 +54,7 @@ internal fun LabelUi(
 ) {
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
-    val entityType = browseMethod.entity
+    val entityType = browseMethod.entityType
     val overlayHost = LocalOverlayHost.current
     val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()

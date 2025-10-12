@@ -38,7 +38,7 @@ abstract class BrowseEntities<
         val remoteMediator = if (browseMethod is BrowseMethod.ByEntity) {
             getRemoteMediator(
                 entityId = browseMethod.entityId,
-                entity = browseMethod.entity,
+                entity = browseMethod.entityType,
                 now = now,
             )
         } else {

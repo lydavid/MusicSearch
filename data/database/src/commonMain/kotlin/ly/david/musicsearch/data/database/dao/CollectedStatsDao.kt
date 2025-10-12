@@ -22,7 +22,7 @@ class CollectedStatsDao(
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     transacter.getCountOfCollectedEntitiesByCollection(
                         collectionId = browseMethod.entityId,
                     )

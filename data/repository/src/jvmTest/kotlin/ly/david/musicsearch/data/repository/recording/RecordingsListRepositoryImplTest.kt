@@ -85,7 +85,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
                 recordingsListRepository.observeRecordings(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntityType.COLLECTION,
+                        entityType = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -149,7 +149,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = entity,
+            entityType = entity,
         )
 
         testFilter(
@@ -194,7 +194,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = entity,
+            entityType = entity,
         )
 
         testFilter(
@@ -298,7 +298,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = itouKanakoArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -321,7 +321,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = skycladObserverWorkMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.WORK,
+                entityType = MusicBrainzEntityType.WORK,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -358,7 +358,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = skycladObserverWorkMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.WORK,
+                entityType = MusicBrainzEntityType.WORK,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -507,7 +507,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = itouKanakoArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -527,7 +527,7 @@ class RecordingsListRepositoryImplTest : KoinTest, TestRecordingRepository, Test
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntityType.COLLECTION,
+                entityType = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

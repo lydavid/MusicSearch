@@ -184,7 +184,7 @@ class LabelDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+            if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                 getLabelsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -201,7 +201,7 @@ class LabelDao(
     fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

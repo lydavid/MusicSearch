@@ -179,7 +179,7 @@ class ReleaseGroupDaoImpl(
     ): Flow<List<ReleaseGroupTypeCount>> {
         return when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     transacter.getCountOfEachAlbumTypesByCollection(
                         collectionId = browseMethod.entityId,
                         mapper = { primaryType, secondaryTypes, count ->
@@ -233,7 +233,7 @@ class ReleaseGroupDaoImpl(
         }
 
         is BrowseMethod.ByEntity -> {
-            if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+            if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                 getReleaseGroupsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
@@ -252,7 +252,7 @@ class ReleaseGroupDaoImpl(
     override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

@@ -217,7 +217,7 @@ class AllEntitiesListPresenter(
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
                             byEntityId = browseByEntity.entityId,
-                            byEntity = browseByEntity.entity,
+                            byEntity = browseByEntity.entityType,
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))

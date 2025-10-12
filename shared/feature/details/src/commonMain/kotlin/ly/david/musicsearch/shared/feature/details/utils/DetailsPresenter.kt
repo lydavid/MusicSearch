@@ -85,7 +85,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     final override fun present(): DetailsUiState<DetailsModel> {
         val browseMethod = BrowseMethod.ByEntity(
             entityId = screen.id,
-            entity = screen.entity,
+            entityType = screen.entity,
         )
         var subtitle by rememberSaveable { mutableStateOf("") }
         var isLoading by rememberSaveable { mutableStateOf(true) }

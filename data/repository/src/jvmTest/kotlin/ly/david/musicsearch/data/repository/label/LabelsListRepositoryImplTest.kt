@@ -97,7 +97,7 @@ class LabelsListRepositoryImplTest : KoinTest {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = entity,
+            entityType = entity,
         )
 
         testFilter(
@@ -153,7 +153,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = entity,
+            entityType = entity,
         )
         labelsListRepository.observeLabels(
             browseMethod = browseMethod,
@@ -193,7 +193,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = entity,
+            entityType = entity,
         )
         testFilter(
             pagingFlowProducer = { query ->

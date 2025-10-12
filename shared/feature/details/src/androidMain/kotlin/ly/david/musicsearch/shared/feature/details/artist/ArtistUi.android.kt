@@ -109,7 +109,7 @@ private val detailsModel = ArtistDetailsModel(
 private val detailsUiState = DetailsUiState(
     browseMethod = BrowseMethod.ByEntity(
         entityId = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-        entity = MusicBrainzEntityType.ARTIST,
+        entityType = MusicBrainzEntityType.ARTIST,
     ),
     tabs = artistTabs,
     selectedTab = Tab.DETAILS,

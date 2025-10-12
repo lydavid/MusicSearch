@@ -130,7 +130,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntityType.COLLECTION,
+                        entityType = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -214,7 +214,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntityType.COLLECTION,
+                        entityType = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -303,7 +303,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = entityId,
-                        entity = entity,
+                        entityType = entity,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -387,7 +387,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = entityId,
-                        entity = entity,
+                        entityType = entity,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -513,7 +513,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
             now = testDateTimeInThePast,
@@ -544,7 +544,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = tchaikovskyArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
             now = testDateTimeInThePast,
@@ -567,7 +567,7 @@ class ReleaseGroupsListRepositoryImplTest :
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntityType.COLLECTION,
+                entityType = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
             now = testDateTimeInThePast,
@@ -743,7 +743,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = entityId,
-                        entity = entity,
+                        entityType = entity,
                     ),
                     listFilters = ListFilters(
                         query = query,

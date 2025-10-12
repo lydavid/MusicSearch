@@ -121,7 +121,7 @@ class AreasListRepositoryImplTest : KoinTest {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntityType.COLLECTION,
+            entityType = MusicBrainzEntityType.COLLECTION,
         )
 
         sut.observeAreas(

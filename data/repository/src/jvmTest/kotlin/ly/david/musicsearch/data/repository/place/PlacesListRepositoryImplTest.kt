@@ -111,7 +111,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntityType.COLLECTION,
+            entityType = MusicBrainzEntityType.COLLECTION,
         )
 
         placesListRepository.observePlaces(
@@ -164,7 +164,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = entity,
+            entityType = entity,
         )
         sut.observePlaces(
             browseMethod = browseMethod,
@@ -203,7 +203,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 placesListRepository.observePlaces(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = marunouchiAreaMusicBrainzModel.id,
-                        entity = MusicBrainzEntityType.AREA,
+                        entityType = MusicBrainzEntityType.AREA,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -245,7 +245,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 placesListRepository.observePlaces(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = chiyodaAreaMusicBrainzModel.id,
-                        entity = MusicBrainzEntityType.AREA,
+                        entityType = MusicBrainzEntityType.AREA,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -346,7 +346,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placesListRepository.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = marunouchiAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.AREA,
+                entityType = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -367,7 +367,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         placesListRepository.observePlaces(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = chiyodaAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.AREA,
+                entityType = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

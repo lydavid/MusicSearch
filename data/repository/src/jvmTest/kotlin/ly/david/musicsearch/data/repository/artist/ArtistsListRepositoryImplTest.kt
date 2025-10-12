@@ -203,7 +203,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         val browseMethod = BrowseMethod.ByEntity(
             entityId = collectionId,
-            entity = MusicBrainzEntityType.COLLECTION,
+            entityType = MusicBrainzEntityType.COLLECTION,
         )
 
         sut.observeArtists(
@@ -259,7 +259,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntityType.AREA,
+            entityType = MusicBrainzEntityType.AREA,
         )
         sut.observeArtists(
             browseMethod = browseMethod,
@@ -310,7 +310,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntityType.AREA,
+            entityType = MusicBrainzEntityType.AREA,
         )
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
@@ -366,7 +366,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         val browseMethod = BrowseMethod.ByEntity(
             entityId = entityId,
-            entity = MusicBrainzEntityType.RELEASE,
+            entityType = MusicBrainzEntityType.RELEASE,
         )
         testFilter(
             pagingFlowProducer = { query ->
@@ -461,7 +461,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistsListRepository.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = japanAreaMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.AREA,
+                entityType = MusicBrainzEntityType.AREA,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -482,7 +482,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         artistsListRepository.observeArtists(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.RELEASE,
+                entityType = MusicBrainzEntityType.RELEASE,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

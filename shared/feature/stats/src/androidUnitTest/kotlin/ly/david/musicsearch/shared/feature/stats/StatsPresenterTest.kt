@@ -38,7 +38,7 @@ class StatsPresenterTest {
             screen = StatsScreen(
                 browseMethod = BrowseMethod.ByEntity(
                     entityId = "1",
-                    entity = MusicBrainzEntityType.ARTIST,
+                    entityType = MusicBrainzEntityType.ARTIST,
                 ),
                 tabs = artistTabs,
             ),

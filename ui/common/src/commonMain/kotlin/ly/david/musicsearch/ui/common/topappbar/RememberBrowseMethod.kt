@@ -9,7 +9,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 val BrowseMethodSaver: Saver<MutableState<BrowseMethod?>, Any> = run {
     val id = "id"
-    val entity = "entity"
+    val entityType = "entity"
     val entityId = "entityId"
     mapSaver(
         save = {
@@ -17,7 +17,7 @@ val BrowseMethodSaver: Saver<MutableState<BrowseMethod?>, Any> = run {
                 is BrowseMethod.All -> mapOf(id to BrowseMethod.All.toString())
                 is BrowseMethod.ByEntity -> mapOf(
                     id to BrowseMethod.ByEntity::class.toString(),
-                    entity to browseMethod.entity,
+                    entityType to browseMethod.entityType,
                     entityId to browseMethod.entityId,
                 )
                 null -> mapOf(id to "null")
@@ -29,7 +29,7 @@ val BrowseMethodSaver: Saver<MutableState<BrowseMethod?>, Any> = run {
                     BrowseMethod.All.toString() -> BrowseMethod.All
                     BrowseMethod.ByEntity::class.toString() -> BrowseMethod.ByEntity(
                         entityId = it[entityId] as String,
-                        entity = it[entity] as MusicBrainzEntityType,
+                        entityType = it[entityType] as MusicBrainzEntityType,
                     )
 
                     else -> null

@@ -216,7 +216,7 @@ class ReleaseDao(
         }
 
         is BrowseMethod.ByEntity -> {
-            when (browseMethod.entity) {
+            when (browseMethod.entityType) {
                 MusicBrainzEntityType.LABEL -> {
                     getReleasesByLabel(
                         labelId = browseMethod.entityId,
@@ -397,7 +397,7 @@ class ReleaseDao(
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                if (browseMethod.entity == MusicBrainzEntityType.COLLECTION) {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     collectionEntityDao.getCountOfEntitiesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                     )

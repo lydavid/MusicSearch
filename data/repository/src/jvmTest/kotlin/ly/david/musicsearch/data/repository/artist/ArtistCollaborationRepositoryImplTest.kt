@@ -150,7 +150,7 @@ class ArtistCollaborationRepositoryImplTest :
         ).observeRecordings(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = aimerArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot()

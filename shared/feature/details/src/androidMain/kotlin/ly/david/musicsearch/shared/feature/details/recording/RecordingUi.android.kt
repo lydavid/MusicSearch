@@ -104,7 +104,7 @@ private val detailsModel = RecordingDetailsModel(
 private val detailsUiState = DetailsUiState(
     browseMethod = BrowseMethod.ByEntity(
         entityId = "132a508b-624a-4f1d-b61f-f6616121bab5",
-        entity = MusicBrainzEntityType.RECORDING,
+        entityType = MusicBrainzEntityType.RECORDING,
     ),
     tabs = recordingTabs,
     selectedTab = Tab.DETAILS,

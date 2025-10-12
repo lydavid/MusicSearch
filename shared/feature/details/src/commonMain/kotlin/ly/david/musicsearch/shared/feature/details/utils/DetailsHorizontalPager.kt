@@ -121,7 +121,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     )
 
                     else -> {
-                        error("$tab tab should not be accessible for ${state.browseMethod.entity}.")
+                        error("$tab tab should not be accessible for ${state.browseMethod.entityType}.")
                     }
                 }
                 val tabEntity = tab.toMusicBrainzEntity()

@@ -461,7 +461,7 @@ private val country = AreaDetailsModel(
 private val detailsUiState = DetailsUiState(
     browseMethod = BrowseMethod.ByEntity(
         entityId = country.id,
-        entity = MusicBrainzEntityType.AREA,
+        entityType = MusicBrainzEntityType.AREA,
     ),
     tabs = areaTabs,
     selectedTab = Tab.DETAILS,

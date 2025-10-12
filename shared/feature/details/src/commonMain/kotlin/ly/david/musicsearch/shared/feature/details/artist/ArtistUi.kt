@@ -65,7 +65,7 @@ internal fun ArtistUi(
 ) {
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
-    val entityType = browseMethod.entity
+    val entityType = browseMethod.entityType
     val strings = LocalStrings.current
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()

@@ -119,7 +119,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 worksListRepository.observeWorks(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = collectionId,
-                        entity = MusicBrainzEntityType.COLLECTION,
+                        entityType = MusicBrainzEntityType.COLLECTION,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -205,7 +205,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 worksListRepository.observeWorks(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = entityId,
-                        entity = entity,
+                        entityType = entity,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -272,7 +272,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
                 worksListRepository.observeWorks(
                     browseMethod = BrowseMethod.ByEntity(
                         entityId = entityId,
-                        entity = entity,
+                        entityType = entity,
                     ),
                     listFilters = ListFilters(
                         query = query,
@@ -399,7 +399,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = davidBowieArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot {
@@ -422,7 +422,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = queenArtistMusicBrainzModel.id,
-                entity = MusicBrainzEntityType.ARTIST,
+                entityType = MusicBrainzEntityType.ARTIST,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {
@@ -440,7 +440,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository {
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntityType.COLLECTION,
+                entityType = MusicBrainzEntityType.COLLECTION,
             ),
             listFilters = ListFilters(),
         ).asSnapshot().run {

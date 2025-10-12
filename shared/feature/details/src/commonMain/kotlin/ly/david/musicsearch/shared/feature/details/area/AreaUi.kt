@@ -56,7 +56,7 @@ internal fun AreaUi(
 ) {
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
-    val entityType = browseMethod.entity
+    val entityType = browseMethod.entityType
     val strings = LocalStrings.current
     val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }

@@ -106,7 +106,7 @@ internal class CollectionPresenter(
             val tab = collection?.entity?.toTab() ?: return@LaunchedEffect
             val browseMethod = BrowseMethod.ByEntity(
                 entityId = collectionId,
-                entity = MusicBrainzEntityType.COLLECTION,
+                entityType = MusicBrainzEntityType.COLLECTION,
             )
             entitiesListEventSink(
                 AllEntitiesListUiEvent.Get(

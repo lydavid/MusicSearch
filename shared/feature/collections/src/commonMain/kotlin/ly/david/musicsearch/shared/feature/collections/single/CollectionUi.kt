@@ -186,7 +186,7 @@ internal fun CollectionUi(
                         statsScreen = StatsScreen(
                             browseMethod = BrowseMethod.ByEntity(
                                 entityId = collection?.id.orEmpty(),
-                                entity = MusicBrainzEntityType.COLLECTION,
+                                entityType = MusicBrainzEntityType.COLLECTION,
                             ),
                             tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
                             isRemote = collection?.isRemote == true,
