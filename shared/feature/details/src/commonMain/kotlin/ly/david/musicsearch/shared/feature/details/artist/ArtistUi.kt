@@ -136,7 +136,10 @@ internal fun ArtistUi(
 
     state.snackbarMessage?.let { message ->
         LaunchedEffect(message) {
-            snackbarHostState.showSnackbar(message = message)
+            snackbarHostState.showSnackbar(
+                message = message,
+                withDismissAction = true,
+            )
         }
     }
 

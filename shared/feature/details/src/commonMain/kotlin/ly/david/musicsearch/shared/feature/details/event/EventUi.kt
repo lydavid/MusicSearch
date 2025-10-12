@@ -120,6 +120,15 @@ internal fun EventUi(
         eventSink(DetailsUiEvent.UpdateTab(state.tabs[pagerState.currentPage]))
     }
 
+    state.snackbarMessage?.let { message ->
+        LaunchedEffect(message) {
+            snackbarHostState.showSnackbar(
+                message = message,
+                withDismissAction = true,
+            )
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
