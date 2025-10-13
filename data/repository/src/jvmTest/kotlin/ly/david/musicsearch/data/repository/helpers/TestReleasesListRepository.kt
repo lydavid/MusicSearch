@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -19,6 +21,7 @@ interface TestReleasesListRepository {
 
     fun createReleasesListRepository(
         releases: List<ReleaseMusicBrainzNetworkModel>,
+        fakeBrowseUsername: String = "",
     ): ReleasesListRepository {
         return ReleasesListRepositoryImpl(
             browseRemoteMetadataDao = browseRemoteMetadataDao,
@@ -37,6 +40,10 @@ interface TestReleasesListRepository {
                     offset = 0,
                     musicBrainzModels = releases,
                 )
+            },
+            listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
+                override val browseUsername: Flow<String>
+                    get() = flowOf(fakeBrowseUsername)
             },
         )
     }

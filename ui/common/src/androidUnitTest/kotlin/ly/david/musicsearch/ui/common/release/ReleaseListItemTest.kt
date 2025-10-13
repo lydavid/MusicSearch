@@ -83,6 +83,20 @@ class ReleaseListItemTest : ScreenshotTest() {
     }
 
     @Test
+    fun withListens() {
+        snapshot {
+            PreviewReleaseListItemWithListens()
+        }
+    }
+
+    @Test
+    fun withUnknownNumberOfListens() {
+        snapshot {
+            PreviewReleaseListItemWithUnknownNumberOfListens()
+        }
+    }
+
+    @Test
     fun withCoverArt() {
         snapshot {
             PreviewReleaseListItemWithCoverArt()

@@ -206,11 +206,13 @@ class ReleaseDao(
     fun getReleases(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleases(
                 query = query,
+                username = username,
                 sorted = sorted,
             )
         }
@@ -221,6 +223,7 @@ class ReleaseDao(
                     getReleasesByLabel(
                         labelId = browseMethod.entityId,
                         query = query,
+                        username = username,
                         sorted = sorted,
                     )
                 }
@@ -229,6 +232,7 @@ class ReleaseDao(
                     getReleasesByCollection(
                         collectionId = browseMethod.entityId,
                         query = query,
+                        username = username,
                         sorted = sorted,
                     )
                 }
@@ -237,6 +241,7 @@ class ReleaseDao(
                     getReleasesByEntity(
                         entityId = browseMethod.entityId,
                         query = query,
+                        username = username,
                         sorted = sorted,
                     )
                 }
@@ -280,6 +285,7 @@ class ReleaseDao(
     private fun getReleasesByLabel(
         labelId: String,
         query: String,
+        username: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByLabel(
@@ -292,6 +298,7 @@ class ReleaseDao(
             transacter.getReleasesByLabel(
                 labelId = labelId,
                 query = "%$query%",
+                username = username,
                 sorted = sorted,
                 limit = limit,
                 offset = offset,
@@ -347,6 +354,7 @@ class ReleaseDao(
     private fun getReleasesByEntity(
         entityId: String,
         query: String,
+        username: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleasesByEntityQuery(
@@ -359,6 +367,7 @@ class ReleaseDao(
             transacter.getReleasesByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                username = username,
                 sorted = sorted,
                 limit = limit,
                 offset = offset,
@@ -372,6 +381,7 @@ class ReleaseDao(
     private fun getReleasesByCollection(
         collectionId: String,
         query: String,
+        username: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByCollection(
@@ -384,6 +394,7 @@ class ReleaseDao(
             transacter.getReleasesByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                username = username,
                 sorted = sorted,
                 limit = limit,
                 offset = offset,
@@ -425,6 +436,7 @@ class ReleaseDao(
 
     private fun getAllReleases(
         query: String,
+        username: String,
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllReleases(
@@ -436,6 +448,7 @@ class ReleaseDao(
             transacter.getAllReleases(
                 query = "%$query%",
                 sorted = sorted,
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,

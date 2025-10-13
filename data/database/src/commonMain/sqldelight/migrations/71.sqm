@@ -1,0 +1,2 @@
+CREATE INDEX idx_medium_release_id ON medium (release_id);
+CREATE INDEX idx_track_medium_id ON track (medium_id);

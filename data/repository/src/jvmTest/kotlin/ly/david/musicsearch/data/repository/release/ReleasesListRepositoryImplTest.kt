@@ -9,6 +9,10 @@ import ly.david.data.test.KoinTestRule
 import ly.david.data.test.davidBowieArtistMusicBrainzModel
 import ly.david.data.test.japanAreaMusicBrainzModel
 import ly.david.data.test.mercuryRecordsLabelMusicBrainzModel
+import ly.david.data.test.persona3ReloadOriginalSoundtrackReleaseListItemModel
+import ly.david.data.test.persona3ReloadOriginalSoundtrackReleaseMusicBrainzModel
+import ly.david.data.test.persona3ReloadSoundtrackAigisReleaseListItemModel
+import ly.david.data.test.persona3ReloadSoundtrackAigisReleaseMusicBrainzModel
 import ly.david.data.test.redReleaseListItemModel
 import ly.david.data.test.redReleaseMusicBrainzModel
 import ly.david.data.test.releaseWith3CatalogNumbersWithSameLabel
@@ -43,16 +47,26 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestLabelRepository
+import ly.david.musicsearch.data.repository.helpers.TestListensListRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleasesListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testListens
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -60,6 +74,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
@@ -83,7 +98,8 @@ class ReleasesListRepositoryImplTest :
     TestRecordingRepository,
     TestReleaseRepository,
     TestReleasesListRepository,
-    TestReleaseGroupRepository {
+    TestReleaseGroupRepository,
+    TestListensListRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -107,6 +123,7 @@ class ReleasesListRepositoryImplTest :
     override val areaDao: AreaDao by inject()
     override val aliasDao: AliasDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
+    override val listenDao: ListenDao by inject()
 
     @Test
     fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() =
@@ -1745,6 +1762,303 @@ class ReleasesListRepositoryImplTest :
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `releases with listen count`() = runTest {
+        // Add listens
+        createListensListRepository(testListens).observeListens(
+            username = TEST_USERNAME,
+            query = "",
+            entityFacet = null,
+            stopPrepending = false,
+            stopAppending = false,
+            onReachedLatest = {},
+            onReachedOldest = {},
+        ).asSnapshot()
+
+        // Load releases
+        val entityId = "37e85ee8-366a-4f17-a011-de94b6632408"
+        val entityType = MusicBrainzEntityType.ARTIST
+        createArtistRepository(
+            ArtistMusicBrainzNetworkModel(
+                id = entityId,
+                name = "アトラスサウンドチーム",
+                disambiguation = "",
+                aliases = listOf(
+                    AliasMusicBrainzNetworkModel(
+                        name = "ATLUS Sound Team",
+                        isPrimary = true,
+                        locale = "en",
+                    ),
+                ),
+            ),
+        ).lookupArtist(
+            artistId = entityId,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        )
+        val releases = listOf(
+            persona3ReloadSoundtrackAigisReleaseMusicBrainzModel,
+            persona3ReloadOriginalSoundtrackReleaseMusicBrainzModel,
+        )
+        val releasesListRepository = createReleasesListRepository(
+            releases = releases,
+            fakeBrowseUsername = TEST_USERNAME,
+        )
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = entityId,
+                entityType = entityType,
+            ),
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    persona3ReloadSoundtrackAigisReleaseListItemModel.copy(
+                        name = "Persona 3 Reload Original Soundtrack", // stubbed values from listens
+                        disambiguation = "", // won't be overwritten
+                        date = "", // until we visit this release
+                        imageId = ImageId(2),
+                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        listenCount = 0,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
+                        listenCount = 0,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+
+        // Visit a release
+        createReleaseRepository(
+            persona3ReloadSoundtrackAigisReleaseMusicBrainzModel.copy(
+                releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
+                    id = "ff493297-2f1e-4dc0-9307-cfb8d15602e1",
+                    name = "ペルソナ3 リロード オリジナル・サウンドトラック",
+                    firstReleaseDate = "2024-02-02",
+                ),
+                media = listOf(
+                    MediumMusicBrainzModel(
+                        trackCount = 32,
+                        position = 1,
+                        format = "CD",
+                        tracks = listOf(
+                            TrackMusicBrainzModel(
+                                position = 1,
+                                number = "1",
+                                id = "22c930ce-9381-434a-b2e4-5d1afb28b4d8",
+                                name = "Full Moon Full Life",
+                                length = 293592,
+                                artistCredits = listOf(
+                                    ArtistCreditMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
+                                            id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        ),
+                                        name = "アトラスサウンドチーム",
+                                        joinPhrase = "",
+                                    ),
+                                ),
+                                recording = RecordingMusicBrainzNetworkModel(
+                                    id = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+                                    name = "Full Moon Full Life",
+                                    artistCredits = listOf(
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            ),
+                                            name = "高橋あず美",
+                                            joinPhrase = " & ",
+                                        ),
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            ),
+                                            name = "Lotus Juice",
+                                            joinPhrase = "",
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            TrackMusicBrainzModel(
+                                position = 16,
+                                number = "16",
+                                id = "54c8d7b0-8b04-4b60-b5bf-a77060035e29",
+                                name = "Color Your Night",
+                                length = 227339,
+                                artistCredits = listOf(
+                                    ArtistCreditMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
+                                            id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        ),
+                                        name = "アトラスサウンドチーム",
+                                        joinPhrase = "",
+                                    ),
+                                ),
+                                recording = RecordingMusicBrainzNetworkModel(
+                                    id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                                    name = "Color Your Night",
+                                    artistCredits = listOf(
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            ),
+                                            name = "Lotus Juice",
+                                            joinPhrase = " & ",
+                                        ),
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            ),
+                                            name = "高橋あず美",
+                                            joinPhrase = "",
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            TrackMusicBrainzModel(
+                                position = 30,
+                                number = "30",
+                                id = "f867b77a-c017-4865-9942-66a46051c06f",
+                                name = "It's Going Down Now",
+                                length = 186166,
+                                artistCredits = listOf(
+                                    ArtistCreditMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
+                                            id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        ),
+                                        name = "アトラスサウンドチーム",
+                                        joinPhrase = "",
+                                    ),
+                                ),
+                                recording = RecordingMusicBrainzNetworkModel(
+                                    id = "ca8578d9-7db9-477e-82f2-74cbbf91ef27",
+                                    name = "It's Going Down Now",
+                                    artistCredits = listOf(
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                            ),
+                                            name = "Lotus Juice",
+                                            joinPhrase = " & ",
+                                        ),
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            ),
+                                            name = "高橋あず美",
+                                            joinPhrase = "",
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    MediumMusicBrainzModel(
+                        trackCount = 28,
+                        position = 2,
+                        format = "CD",
+                        tracks = listOf(
+                            TrackMusicBrainzModel(
+                                position = 1,
+                                number = "1",
+                                id = "67cece38-d01d-4031-9f9e-442944080e3f",
+                                name = "Changing Seasons -Reload-",
+                                length = 194680,
+                                artistCredits = listOf(
+                                    ArtistCreditMusicBrainzModel(
+                                        artist = ArtistMusicBrainzNetworkModel(
+                                            id = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                        ),
+                                        name = "アトラスサウンドチーム",
+                                        joinPhrase = "",
+                                    ),
+                                ),
+                                recording = RecordingMusicBrainzNetworkModel(
+                                    id = "82a814df-e795-4e6e-8626-8eb49c2949f4",
+                                    name = "Changing Seasons -Reload-",
+                                    artistCredits = listOf(
+                                        ArtistCreditMusicBrainzModel(
+                                            artist = ArtistMusicBrainzNetworkModel(
+                                                id = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                            ),
+                                            name = "高橋あず美",
+                                            joinPhrase = "",
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ).lookupRelease(
+            releaseId = persona3ReloadSoundtrackAigisReleaseMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).let { releaseDetailsModel ->
+            assertEquals(
+                ReleaseDetailsModel(
+                    id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                    name = "Persona 3 Reload Soundtrack",
+                    date = "2024-02-02",
+                    disambiguation = "Aigis edition",
+                    artistCredits = persistentListOf(
+                        ArtistCreditUiModel(
+                            artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                            name = "アトラスサウンドチーム",
+                            joinPhrase = "",
+                        ),
+                    ),
+                    releaseGroup = ReleaseGroupForRelease(
+                        id = "ff493297-2f1e-4dc0-9307-cfb8d15602e1",
+                        name = "ペルソナ3 リロード オリジナル・サウンドトラック",
+                        firstReleaseDate = "2024-02-02",
+                    ),
+                    releaseLength = 901777,
+                    hasNullLength = false,
+                    formattedTracks = "3 + 1",
+                    formattedFormats = "2×CD",
+                    listenBrainzUrl = "/album/ff493297-2f1e-4dc0-9307-cfb8d15602e1",
+                    lastUpdated = testDateTimeInThePast,
+                ),
+                releaseDetailsModel,
+            )
+        }
+
+        // browse releases again, and now there is a listen count for the one we visited
+        // and its data has been corrected
+        releasesListRepository.observeReleases(
+            browseMethod = BrowseMethod.ByEntity(
+                entityId = entityId,
+                entityType = entityType,
+            ),
+            listFilters = ListFilters(),
+            now = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    persona3ReloadSoundtrackAigisReleaseListItemModel.copy(
+                        imageId = ImageId(2),
+                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        listenCount = 2,
+                        visited = true,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
+                        listenCount = 0,
+                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )

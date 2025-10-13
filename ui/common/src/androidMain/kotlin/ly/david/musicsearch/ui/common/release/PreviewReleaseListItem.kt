@@ -155,28 +155,30 @@ internal fun PreviewReleaseListItemShowLessInfo() {
     }
 }
 
+private val release = ReleaseListItemModel(
+    id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
+    name = "ウタの歌 ONE PIECE FILM RED",
+    disambiguation = "初回限定盤",
+    date = "2022-08-10",
+    countryCode = "JP",
+    catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
+    formattedFormats = "CD + DVD",
+    formattedTracks = "10 + 3",
+    aliases = persistentListOf(
+        BasicAlias(
+            name = "Uta no Uta ONE PIECE FILM RED",
+            locale = "en",
+            isPrimary = true,
+        ),
+    ),
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseListItemCatalog() {
     PreviewWithTransitionAndOverlays {
         ReleaseListItem(
-            release = ReleaseListItemModel(
-                id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
-                name = "ウタの歌 ONE PIECE FILM RED",
-                disambiguation = "初回限定盤",
-                date = "2022-08-10",
-                countryCode = "JP",
-                catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                formattedFormats = "2×CD + Blu-ray",
-                formattedTracks = "15 + 8 + 24",
-                aliases = persistentListOf(
-                    BasicAlias(
-                        name = "Uta no Uta ONE PIECE FILM RED",
-                        locale = "en",
-                        isPrimary = true,
-                    ),
-                ),
-            ),
+            release = release,
             showMoreInfo = true,
         )
     }
@@ -187,23 +189,39 @@ internal fun PreviewReleaseListItemCatalog() {
 internal fun PreviewReleaseListItemVisited() {
     PreviewWithTransitionAndOverlays {
         ReleaseListItem(
-            release = ReleaseListItemModel(
-                id = "38650e8c-3c6b-431e-b10b-2cfb6db847d5",
-                name = "ウタの歌 ONE PIECE FILM RED",
-                disambiguation = "初回限定盤",
-                date = "2022-08-10",
-                countryCode = "JP",
-                catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                formattedFormats = "2×CD + Blu-ray",
-                formattedTracks = "15 + 8 + 24",
+            release = release.copy(
                 visited = true,
-                aliases = persistentListOf(
-                    BasicAlias(
-                        name = "Uta no Uta ONE PIECE FILM RED",
-                        locale = "en",
-                        isPrimary = true,
-                    ),
+            ),
+            showMoreInfo = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseListItemWithListens() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseListItem(
+            release = release.copy(
+                visited = true,
+                listenState = ReleaseListItemModel.ListenState.Known(
+                    listenCount = 23,
+                    completeListenCount = 1,
                 ),
+            ),
+            showMoreInfo = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseListItemWithUnknownNumberOfListens() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseListItem(
+            release = release.copy(
+                visited = false,
+                listenState = ReleaseListItemModel.ListenState.Unknown,
             ),
             showMoreInfo = true,
         )

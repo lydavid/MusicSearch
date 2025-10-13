@@ -29,6 +29,7 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
         combine(this, metadataFlow) { listItems, browseRemoteMetadata ->
             val mappedItems = listItems.map { it as ListItemModel }
 
+            // TODO: handle last updated here for releases/release groups
             val handledInQuery = setOf(
                 MusicBrainzEntityType.RELEASE,
                 MusicBrainzEntityType.RELEASE_GROUP,
