@@ -79,6 +79,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -1826,11 +1827,11 @@ class ReleasesListRepositoryImplTest :
                         date = "", // until we visit this release
                         imageId = ImageId(2),
                         imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                        listenCount = 0,
+                        listenState = ReleaseListItemModel.ListenState.Unknown,
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
-                        listenCount = 0,
+                        listenState = ReleaseListItemModel.ListenState.Unknown,
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
@@ -2050,12 +2051,15 @@ class ReleasesListRepositoryImplTest :
                     persona3ReloadSoundtrackAigisReleaseListItemModel.copy(
                         imageId = ImageId(2),
                         imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                        listenCount = 2,
+                        listenState = ReleaseListItemModel.ListenState.Known(
+                            listenCount = 2,
+                            completeListenCount = 0,
+                        ),
                         visited = true,
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
-                        listenCount = 0,
+                        listenState = ReleaseListItemModel.ListenState.Unknown,
                         lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
