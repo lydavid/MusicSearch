@@ -27,6 +27,8 @@ internal fun mapToReleaseListItemModel(
     collected: Boolean,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long?,
+    completeListenCount: Long,
     lastUpdated: Long?,
 ) = ReleaseListItemModel(
     id = id,
@@ -51,6 +53,10 @@ internal fun mapToReleaseListItemModel(
     visited = visited,
     collected = collected,
     aliases = combineToAliases(aliasNames, aliasLocales),
+    listenState = toListenState(
+        listenCount = listenCount,
+        completeListenCount = completeListenCount,
+    ),
     lastUpdated = lastUpdated,
 )
 
@@ -79,6 +85,8 @@ internal fun mapToReleaseListItemModel(
     collected: Boolean,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long?,
+    completeListenCount: Long,
     lastUpdated: Long?,
     catalogNumber: String,
 ) = ReleaseListItemModel(
@@ -104,6 +112,24 @@ internal fun mapToReleaseListItemModel(
     visited = visited,
     collected = collected,
     aliases = combineToAliases(aliasNames, aliasLocales),
+    listenState = toListenState(
+        listenCount = listenCount,
+        completeListenCount = completeListenCount,
+    ),
     lastUpdated = lastUpdated,
     catalogNumbers = catalogNumber,
 )
+
+private const val UNKNOWN_LISTENS_FLAG = -1L
+
+private fun toListenState(
+    listenCount: Long?,
+    completeListenCount: Long,
+) = when (listenCount) {
+    null -> ReleaseListItemModel.ListenState.Hide
+    UNKNOWN_LISTENS_FLAG -> ReleaseListItemModel.ListenState.Unknown
+    else -> ReleaseListItemModel.ListenState.Known(
+        listenCount = listenCount,
+        completeListenCount = completeListenCount,
+    )
+}

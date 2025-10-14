@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,10 +23,15 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Headphones
+import ly.david.musicsearch.ui.common.icons.StarFilled
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
+import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -130,6 +137,41 @@ fun ReleaseListItem(
                             style = TextStyles.getCardBodySubTextStyle(),
                             fontWeight = release.fontWeight,
                         )
+                    }
+
+                    when (val state = release.listenState) {
+                        ReleaseListItemModel.ListenState.Hide -> {
+                            // Do nothing
+                        }
+
+                        is ReleaseListItemModel.ListenState.Known,
+                        ReleaseListItemModel.ListenState.Unknown,
+                        -> {
+                            Row(
+                                modifier = Modifier.padding(top = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                val hasListens = state is ReleaseListItemModel.ListenState.Known
+                                TextWithIcon(
+                                    imageVector = CustomIcons.Headphones,
+                                    iconSize = TINY_ICON_SIZE,
+                                    text = if (hasListens) state.listenCount.toString() else "?",
+                                    textStyle = TextStyles.getCardBodySubTextStyle(),
+                                )
+                                if (hasListens && state.completeListenCount > 0) {
+                                    val completeListenCount = state.completeListenCount.toString()
+                                    TextWithIcon(
+                                        modifier = Modifier.padding(start = 4.dp),
+                                        imageVector = CustomIcons.StarFilled,
+                                        iconSize = TINY_ICON_SIZE,
+                                        iconTint = MaterialTheme.colorScheme.primary,
+                                        text = completeListenCount,
+                                        textStyle = TextStyles.getCardBodySubTextStyle(),
+                                        contentDescription = "$completeListenCount complete listens",
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -410,3 +410,34 @@ val bandoriCoverCollection8ReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkMo
     id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
     name = "バンドリ！ ガールズバンドパーティ！ カバーコレクション Vol.8",
 )
+
+val persona3ReloadSoundtrackAigisReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
+    id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+    name = "Persona 3 Reload Soundtrack",
+    disambiguation = "Aigis edition",
+    date = "2024-02-02",
+    artistCredits = listOf(
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
+                id = "37e85ee8-366a-4f17-a011-de94b6632408",
+            ),
+            name = "アトラスサウンドチーム",
+            joinPhrase = "",
+        ),
+    ),
+)
+
+val persona3ReloadOriginalSoundtrackReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
+    id = "3ced406d-9e25-494b-95d7-54aa29e29597",
+    name = "Persona 3 Reload Original Soundtrack",
+    date = "2024-04-24",
+    artistCredits = listOf(
+        ArtistCreditMusicBrainzModel(
+            artist = ArtistMusicBrainzNetworkModel(
+                id = "37e85ee8-366a-4f17-a011-de94b6632408",
+            ),
+            name = "アトラスサウンドチーム",
+            joinPhrase = "",
+        ),
+    ),
+)

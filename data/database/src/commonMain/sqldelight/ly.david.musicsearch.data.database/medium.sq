@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS medium (
   `format_id` TEXT
 );
 
+CREATE INDEX idx_medium_release_id ON medium (release_id);
+
 insert:
 INSERT OR IGNORE INTO medium (
   `id`,

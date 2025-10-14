@@ -244,7 +244,7 @@ SELECT
   ) AS collected,
   GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
-  CAST(NULL AS INTEGER)
+  CAST(NULL AS INTEGER) AS listen_count
 FROM search_result sr
 INNER JOIN recording ON sr.entity_id = recording.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
@@ -261,6 +261,8 @@ LIMIT :limit OFFSET :offset;
 getReleaseSearchResults:
 SELECT
   release_base.*,
+  CAST(NULL AS INTEGER) AS listen_count,
+  0 AS complete_listen_count,
   CAST(NULL AS INTEGER) AS last_updated
 FROM search_result sr
 INNER JOIN release_base ON sr.entity_id = release_base.id
