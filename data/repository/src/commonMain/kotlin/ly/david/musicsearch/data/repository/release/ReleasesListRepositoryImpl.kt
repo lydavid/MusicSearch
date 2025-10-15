@@ -2,12 +2,9 @@ package ly.david.musicsearch.data.repository.release
 
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
-import app.cash.paging.TerminalSeparatorType
-import app.cash.paging.insertSeparators
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -22,8 +19,6 @@ import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
-import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
@@ -48,7 +43,7 @@ class ReleasesListRepositoryImpl(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
         now: Instant,
-    ): Flow<PagingData<ListItemModel>> {
+    ): Flow<PagingData<ReleaseListItemModel>> {
         return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
             observeEntities(
                 browseMethod = browseMethod,
@@ -56,26 +51,7 @@ class ReleasesListRepositoryImpl(
                     username = username,
                 ),
                 now = now,
-            ).map { pagingData ->
-                pagingData
-                    .insertSeparators(
-                        terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
-                    ) { r1: ReleaseListItemModel?, r2: ReleaseListItemModel? ->
-                        when {
-                            r1 != null && r2 == null -> {
-                                r1.lastUpdated
-                                    ?.let { Instant.fromEpochMilliseconds(it) }
-                                    ?.let { lastUpdated ->
-                                        LastUpdatedFooter(lastUpdated = lastUpdated)
-                                    }
-                            }
-
-                            else -> {
-                                null
-                            }
-                        }
-                    }
-            }
+            )
         }
     }
 

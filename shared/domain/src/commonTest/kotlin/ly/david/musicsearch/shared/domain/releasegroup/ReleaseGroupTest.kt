@@ -12,8 +12,6 @@ internal class ReleaseGroupTest {
         val releaseGroupTypes = ReleaseGroupListItemModel(
             id = "",
             name = "",
-            primaryType = "",
-            secondaryTypes = persistentListOf(),
         )
         assertEquals(
             NO_TYPE,
@@ -27,7 +25,6 @@ internal class ReleaseGroupTest {
             id = "",
             name = "",
             primaryType = "Album",
-            secondaryTypes = persistentListOf(),
         )
         assertEquals(
             "Album",

@@ -8,9 +8,9 @@ import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 private val testReleaseGroup = ReleaseGroupListItemModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     name = "欠けた心象、世のよすが",
-    primaryType = "EP",
-    firstReleaseDate = "2021-09-08",
     disambiguation = "That one",
+    firstReleaseDate = "2021-09-08",
+    primaryType = "EP",
     formattedArtistCredits = "Some artist feat. some other artist",
 )
 
@@ -44,9 +44,9 @@ internal fun PreviewReleaseGroupListItemVisited() {
             releaseGroup = ReleaseGroupListItemModel(
                 id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                 name = "欠けた心象、世のよすが",
-                primaryType = "EP",
-                firstReleaseDate = "2021-09-08",
                 disambiguation = "That one",
+                firstReleaseDate = "2021-09-08",
+                primaryType = "EP",
                 formattedArtistCredits = "Some artist feat. some other artist",
                 visited = true,
             ),

@@ -164,11 +164,9 @@ SELECT
   release_group_base.visited,
   release_group_base.collected,
   release_group_base.alias_names,
-  release_group_base.alias_locales,
-  CAST (browse_remote_metadata.last_updated AS INTEGER)
+  release_group_base.alias_locales
 FROM release_group_base
 INNER JOIN release_groups_by_entity ON release_group_base.id = release_groups_by_entity.release_group_id
-LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = release_groups_by_entity.entity_id AND browse_remote_metadata.browse_entity = 'release-group'
 WHERE release_groups_by_entity.entity_id = :entityId
 AND (
   release_group_base.name LIKE :query OR
@@ -226,12 +224,10 @@ SELECT
   release_group_base.visited,
   release_group_base.collected,
   release_group_base.alias_names,
-  release_group_base.alias_locales,
-  CAST (browse_remote_metadata.last_updated AS INTEGER)
+  release_group_base.alias_locales
 FROM release_group_base
 INNER JOIN collection_entity ce ON release_group_base.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = c.id AND browse_remote_metadata.browse_entity = 'release-group'
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -286,8 +282,7 @@ SELECT
   release_group_base.visited,
   release_group_base.collected,
   release_group_base.alias_names,
-  release_group_base.alias_locales,
-  CAST(NULL AS INTEGER) AS last_updated
+  release_group_base.alias_locales
 FROM release_group_base
 WHERE (
   release_group_base.name LIKE :query OR

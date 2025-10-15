@@ -387,14 +387,14 @@ class ListensListRepositoryImplTest :
                 ReleaseListItemModel(
                     id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                     name = "Persona 3 Reload Original Soundtrack",
-                    imageId = ImageId(2L),
                     imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                    imageId = ImageId(2L),
                 ),
                 ReleaseListItemModel(
                     id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
-                    imageId = ImageId(1L),
                     imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                    imageId = ImageId(1L),
                 ),
             ),
             releases,

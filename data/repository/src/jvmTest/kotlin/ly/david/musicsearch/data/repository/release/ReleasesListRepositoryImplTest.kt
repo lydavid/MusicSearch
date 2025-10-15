@@ -1,9 +1,7 @@
 package ly.david.musicsearch.data.repository.release
 
-import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.davidBowieArtistMusicBrainzModel
@@ -77,8 +75,6 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
@@ -177,9 +173,7 @@ class ReleasesListRepositoryImplTest :
                             textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                             imageId = ImageId(1L),
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                     this,
                 )
@@ -216,9 +210,7 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     redReleaseListItemModel.copy(
                         catalogNumbers = "3717453",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -245,7 +237,7 @@ class ReleasesListRepositoryImplTest :
             },
         )
 
-        val flow: Flow<PagingData<ListItemModel>> = releasesListRepository.observeReleases(
+        val flow = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.ByEntity(
                 entityId = labelId,
                 entityType = MusicBrainzEntityType.LABEL,
@@ -273,7 +265,7 @@ class ReleasesListRepositoryImplTest :
             scrollTo(199)
         }.let { releases ->
             assertEquals(
-                301,
+                300,
                 releases.size,
             )
         }
@@ -282,7 +274,7 @@ class ReleasesListRepositoryImplTest :
             scrollTo(300)
         }.let { releases ->
             assertEquals(
-                301,
+                300,
                 releases.size,
             )
         }
@@ -436,13 +428,10 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         redReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
                         utaNoUtaReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -451,13 +440,10 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         redReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
                         utaNoUtaReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -466,9 +452,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         utaNoUtaReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -477,9 +461,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         redReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -488,9 +470,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         utaNoUtaReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
                 FilterTestCase(
@@ -499,9 +479,7 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         redReleaseListItemModel.copy(
                             collected = true,
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -549,66 +527,44 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        utaNoUtaReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(),
+                        utaNoUtaReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "hits",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by disambiguation",
                     query = "回",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        utaNoUtaReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "2022",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        utaNoUtaReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by country code",
                     query = "AF",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "ado",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        utaNoUtaReleaseListItemModel.copy(),
                     ),
                 ),
             ),
@@ -658,15 +614,11 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(),
                         utaNoUtaReleaseListItemModel.copy(
                             imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -691,15 +643,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    weirdAlGreatestHitsReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
+                    weirdAlGreatestHitsReleaseListItemModel.copy(),
                     utaNoUtaReleaseListItemModel.copy(
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -727,9 +675,7 @@ class ReleasesListRepositoryImplTest :
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -776,15 +722,11 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
+                        weirdAlGreatestHitsReleaseListItemModel.copy(),
                         utaNoUtaReleaseListItemModel.copy(
                             imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                         ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                     ),
                 ),
             ),
@@ -815,9 +757,7 @@ class ReleasesListRepositoryImplTest :
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -839,9 +779,7 @@ class ReleasesListRepositoryImplTest :
                     utaNoUtaReleaseListItemModel.copy(
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -863,9 +801,7 @@ class ReleasesListRepositoryImplTest :
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -910,68 +846,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureRemasteredReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
             ),
@@ -1016,68 +925,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureRemasteredReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
             ),
@@ -1122,68 +1004,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureRemasteredReleaseListItemModel.copy(),
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureRemasteredReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        underPressureJapanReleaseListItemModel.copy(
-                            lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                        ),
-                        LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                        underPressureReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureJapanReleaseListItemModel.copy(),
                     ),
                 ),
             ),
@@ -1221,17 +1076,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
+                    underPressureReleaseListItemModel.copy(),
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1248,16 +1097,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    weirdAlGreatestHitsReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    utaNoUtaReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    weirdAlGreatestHitsReleaseListItemModel.copy(),
+                    utaNoUtaReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1432,17 +1274,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
+                    underPressureReleaseListItemModel.copy(),
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1459,16 +1295,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    underPressureRemasteredReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureReleaseListItemModel.copy(),
+                    underPressureRemasteredReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1616,17 +1445,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
+                    underPressureReleaseListItemModel.copy(),
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1643,16 +1466,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    underPressureRemasteredReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    underPressureJapanReleaseListItemModel.copy(
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
-                    ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                    underPressureReleaseListItemModel.copy(),
+                    underPressureRemasteredReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel.copy(),
                 ),
                 this,
             )
@@ -1828,13 +1644,10 @@ class ReleasesListRepositoryImplTest :
                         imageId = ImageId(2),
                         imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                         listenState = ReleaseListItemModel.ListenState.Unknown,
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
                         listenState = ReleaseListItemModel.ListenState.Unknown,
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )
@@ -2056,13 +1869,10 @@ class ReleasesListRepositoryImplTest :
                             completeListenCount = 0,
                         ),
                         visited = true,
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
                     persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
                         listenState = ReleaseListItemModel.ListenState.Unknown,
-                        lastUpdated = testDateTimeInThePast.toEpochMilliseconds(),
                     ),
-                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
                 ),
                 this,
             )

@@ -13,21 +13,15 @@ val utaNoUtaReleaseListItemModel = ReleaseListItemModel(
     status = ReleaseStatus.OFFICIAL,
     countryCode = "JP",
     packaging = "Jewel Case",
-    packagingId = "",
     asin = "B0B392M9SC",
     quality = "normal",
     textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
-    formattedFormats = null,
-    formattedTracks = null,
     formattedArtistCredits = "Ado",
-    visited = false,
 )
 
 val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     id = "9eef0b6f-9aa2-4573-8f3e-53d1a4826e3f",
     name = "“Weird Al” Yankovic’s Greatest Hits",
-    disambiguation = "",
-    date = "",
     barcode = "614223200828",
     status = ReleaseStatus.OFFICIAL,
     countryCode = "AF",
@@ -35,13 +29,8 @@ val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     packagingId = "119eba76-b343-3e02-a292-f0f00644bb9b",
     asin = "B00138CYEI",
     quality = "normal",
-    catalogNumbers = null,
     textRepresentation = TextRepresentationUiModel(script = "Latn", language = "eng"),
-    imageUrl = null,
-    formattedFormats = null,
-    formattedTracks = null,
     formattedArtistCredits = "“Weird Al” Yankovic",
-    visited = false,
 )
 
 val redReleaseListItemModel = ReleaseListItemModel(
@@ -66,47 +55,44 @@ val underPressureRemasteredReleaseListItemModel = ReleaseListItemModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
     date = "1988-11",
-    formattedArtistCredits = "Queen & David Bowie",
-    countryCode = "GB",
-    quality = "normal",
+    barcode = "5099920305833",
     status = ReleaseStatus.OFFICIAL,
+    countryCode = "GB",
+    asin = "B000LX0GZA",
+    quality = "normal",
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",
     ),
-    barcode = "5099920305833",
-    asin = "B000LX0GZA",
-    disambiguation = "",
+    formattedArtistCredits = "Queen & David Bowie",
 )
 
 val underPressureReleaseListItemModel = ReleaseListItemModel(
     id = "61735bf8-219e-3164-a94c-b74b1482fd01",
     name = "Under Pressure",
     date = "1981-10",
-    formattedArtistCredits = "Queen & David Bowie",
+    status = ReleaseStatus.OFFICIAL,
     countryCode = "US",
     quality = "normal",
-    status = ReleaseStatus.OFFICIAL,
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",
     ),
-    disambiguation = "",
+    formattedArtistCredits = "Queen & David Bowie",
 )
 
 val underPressureJapanReleaseListItemModel = ReleaseListItemModel(
     id = "3e8fe20d-8d8b-454d-9350-2078007d4788",
     name = "Under Pressure",
     date = "1991",
-    formattedArtistCredits = "Queen & David Bowie",
+    status = ReleaseStatus.OFFICIAL,
     countryCode = "JP",
     quality = "normal",
-    status = ReleaseStatus.OFFICIAL,
     textRepresentation = TextRepresentationUiModel(
         script = "Latn",
         language = "eng",
     ),
-    disambiguation = "",
+    formattedArtistCredits = "Queen & David Bowie",
 )
 
 val persona3ReloadSoundtrackAigisReleaseListItemModel = ReleaseListItemModel(

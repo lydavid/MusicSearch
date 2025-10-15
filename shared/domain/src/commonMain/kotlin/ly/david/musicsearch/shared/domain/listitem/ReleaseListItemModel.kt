@@ -37,7 +37,6 @@ data class ReleaseListItemModel(
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenState: ListenState = ListenState.Hide,
-    val lastUpdated: Long? = null,
 ) : EntityListItemModel, Release, NameWithDisambiguationAndAliases {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)

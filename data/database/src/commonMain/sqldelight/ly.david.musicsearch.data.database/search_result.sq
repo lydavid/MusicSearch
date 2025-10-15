@@ -262,8 +262,7 @@ getReleaseSearchResults:
 SELECT
   release_base.*,
   CAST(NULL AS INTEGER) AS listen_count,
-  0 AS complete_listen_count,
-  CAST(NULL AS INTEGER) AS last_updated
+  0 AS complete_listen_count
 FROM search_result sr
 INNER JOIN release_base ON sr.entity_id = release_base.id
 ORDER BY sr.id
@@ -286,8 +285,7 @@ SELECT
   release_group_base.visited,
   release_group_base.collected,
   release_group_base.alias_names,
-  release_group_base.alias_locales,
-  CAST(NULL AS INTEGER) AS last_updated
+  release_group_base.alias_locales
 FROM search_result sr
 INNER JOIN release_group_base ON sr.entity_id = release_group_base.id
 ORDER BY sr.id

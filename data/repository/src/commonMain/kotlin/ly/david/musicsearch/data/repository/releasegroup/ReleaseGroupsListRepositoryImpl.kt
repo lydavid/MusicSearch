@@ -16,7 +16,6 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
@@ -60,14 +59,6 @@ class ReleaseGroupsListRepositoryImpl(
                                 id = "${rg1?.id}_${rg2.id}",
                                 text = rg2.getDisplayTypes(),
                             )
-                        }
-
-                        rg1 != null && rg2 == null -> {
-                            rg1.lastUpdated
-                                ?.let { Instant.fromEpochMilliseconds(it) }
-                                ?.let { lastUpdated ->
-                                    LastUpdatedFooter(lastUpdated = lastUpdated)
-                                }
                         }
 
                         else -> {

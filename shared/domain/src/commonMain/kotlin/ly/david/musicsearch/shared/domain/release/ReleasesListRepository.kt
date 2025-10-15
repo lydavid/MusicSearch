@@ -4,7 +4,7 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import kotlin.time.Instant
 
 interface ReleasesListRepository {
@@ -12,5 +12,5 @@ interface ReleasesListRepository {
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
         now: Instant,
-    ): Flow<PagingData<ListItemModel>>
+    ): Flow<PagingData<ReleaseListItemModel>>
 }

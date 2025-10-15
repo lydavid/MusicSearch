@@ -61,7 +61,6 @@ internal fun PreviewReleaseListItemCountry() {
             release = ReleaseListItemModel(
                 id = "4",
                 name = "Release title",
-                disambiguation = "",
                 countryCode = "CA",
             ),
             showMoreInfo = true,
@@ -128,8 +127,8 @@ internal fun PreviewReleaseListItemMultipleCountries() {
                 id = "9",
                 name = "Release title",
                 countryCode = "DZ",
-                releaseCountryCount = 3,
                 formattedArtistCredits = "Some artist feat. another",
+                releaseCountryCount = 3,
             ),
             showMoreInfo = true,
         )
@@ -146,9 +145,9 @@ internal fun PreviewReleaseListItemShowLessInfo() {
                 name = "Release title",
                 date = "2021-09-08",
                 countryCode = "JP",
+                catalogNumbers = "TYBX-10260",
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
-                catalogNumbers = "TYBX-10260",
             ),
             showMoreInfo = false,
         )
