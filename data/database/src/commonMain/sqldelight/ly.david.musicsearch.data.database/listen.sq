@@ -225,7 +225,7 @@ SELECT
   recording.disambiguation,
   artist_credit.name AS artistCreditNames,
   GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
   COUNT(*)
 FROM listen
 LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
