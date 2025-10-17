@@ -190,26 +190,50 @@ DELETE FROM releases_by_entity WHERE entity_id = :entityId;
 
 getNumberOfReleasesByLabel:
 SELECT IFNULL(
-  COUNT(DISTINCT release_base.id),
+  COUNT(DISTINCT `release`.id),
   0
 ) AS count
-FROM release_base
-INNER JOIN releases_by_entity ON releases_by_entity.release_id = release_base.id
-INNER JOIN release_label ON release_label.release_id = release_base.id
-WHERE releases_by_entity.entity_id = :labelId
+FROM `release`
+INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
+INNER JOIN release_label ON release_label.release_id = `release`.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
+WHERE releases_by_entity.entity_id = :entityId
 AND (
-  release_base.name LIKE :query OR
-  release_base.disambiguation LIKE :query OR
-  release_base.date LIKE :query OR
-  release_base.country_code LIKE :query OR
-  release_base.artist_credit_names LIKE :query OR
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  `release`.date LIKE :query OR
+  `release`.country_code LIKE :query OR
   release_label.catalog_number LIKE :query OR
-  release_base.alias_names LIKE :query
+  ac.name LIKE :query OR
+  release_alias.name LIKE :query
 );
 
 getReleasesByLabel:
 SELECT
-  release_base.*,
+  `release`.*,
+  ac.name AS artist_credit_names,
+  images.thumbnail_url,
+  images.id AS image_id,
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r2.id = `release`.id
+    ),
+    0
+  ) AS release_country_count,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = `release`.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
+  ) AS collected,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
@@ -221,13 +245,30 @@ SELECT
     FROM (
       SELECT DISTINCT rl2.catalog_number
       FROM release_label rl2
-      WHERE rl2.release_id = release_base.id
+      WHERE rl2.release_id = `release`.id
       ORDER BY rl2.catalog_number
     ) AS distinct_catalogs
   ) AS catalog_numbers
-FROM release_base
-INNER JOIN releases_by_entity ON releases_by_entity.release_id = release_base.id
-INNER JOIN release_label ON release_base.id = release_label.release_id
+FROM `release`
+INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
+INNER JOIN release_label ON `release`.id = release_label.release_id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+LEFT JOIN (
+  SELECT
+    mbid,
+    MIN(thumbnail_url) AS thumbnail_url,
+    MIN(id) AS id
+  FROM mbid_image
+  WHERE mbid_image.mbid IN (
+    SELECT releases_by_entity.release_id
+    FROM releases_by_entity
+    INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
+    WHERE releases_by_entity.entity_id = :entityId
+  )
+  GROUP BY mbid
+) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
     track.id AS track_id,
@@ -235,23 +276,41 @@ LEFT JOIN (
     COUNT(listen.recording_musicbrainz_id) AS listen_count
   FROM track
   INNER JOIN medium ON track.medium_id = medium.id
+  INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
+  INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
   LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+  WHERE releases_by_entity.entity_id = :entityId
   GROUP BY track_id
-) AS track_listen_counts ON track_listen_counts.release_id = release_base.id
-WHERE releases_by_entity.entity_id = :labelId
+) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
+LEFT JOIN (
+  SELECT
+    release_alias.release_id,
+    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE release_alias.is_primary AND release_alias.release_id IN (
+    SELECT DISTINCT `release`.id
+    FROM `release`
+    INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
+    INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
+    WHERE releases_by_entity.entity_id = :entityId
+  )
+  GROUP BY release_alias.release_id
+) AS aliases ON aliases.release_id = `release`.id
+WHERE releases_by_entity.entity_id = :entityId
 AND (
-  release_base.name LIKE :query OR
-  release_base.disambiguation LIKE :query OR
-  release_base.date LIKE :query OR
-  release_base.country_code LIKE :query OR
-  release_base.artist_credit_names LIKE :query OR
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  `release`.date LIKE :query OR
+  `release`.country_code LIKE :query OR
   release_label.catalog_number LIKE :query OR
-  release_base.alias_names LIKE :query
+  artist_credit_names LIKE :query OR
+  aliases.alias_names LIKE :query
 )
-GROUP BY release_base.id
+GROUP BY `release`.id
 ORDER BY
-  CASE WHEN :sorted THEN release_base.date ELSE releases_by_entity.rowid END,
-  CASE WHEN :sorted THEN release_base.name END
+  CASE WHEN :sorted THEN `release`.date ELSE releases_by_entity.rowid END,
+  CASE WHEN :sorted THEN `release`.name END
 LIMIT :limit OFFSET :offset;
 
 deleteReleasesByLabelLinks:
@@ -262,35 +321,73 @@ WHERE label_id = :labelId;
 
 getNumberOfReleasesByCollection:
 SELECT IFNULL(
-  COUNT(DISTINCT release_base.id),
+  COUNT(DISTINCT `release`.id),
   0
 ) AS count
-FROM release_base
-INNER JOIN collection_entity ce ON release_base.id = ce.entity_id
+FROM `release`
+INNER JOIN collection_entity ce ON `release`.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  release_base.name LIKE :query OR
-  release_base.disambiguation LIKE :query OR
-  release_base.date LIKE :query OR
-  release_base.country_code LIKE :query OR
-  release_base.artist_credit_names LIKE :query OR
-  release_base.alias_names LIKE :query
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  `release`.date LIKE :query OR
+  `release`.country_code LIKE :query OR
+  ac.name LIKE :query OR
+  release_alias.name LIKE :query
 );
 
 getReleasesByCollection:
 SELECT
-  release_base.*,
+  `release`.*,
+  ac.name AS artist_credit_names,
+  images.thumbnail_url,
+  images.id AS image_id,
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r2.id = `release`.id
+    ),
+    0
+  ) AS release_country_count,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = `release`.id
+  ) AS visited,
+  1 == 1 AS collected,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
     COALESCE(SUM(track_listen_counts.listen_count), -1)
   END AS listen_count,
   COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count
-FROM release_base
-INNER JOIN collection_entity ce ON release_base.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+FROM `release`
+INNER JOIN collection_entity ON `release`.id = collection_entity.entity_id
+INNER JOIN collection ON collection.id = collection_entity.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+LEFT JOIN (
+  SELECT
+    mbid,
+    MIN(thumbnail_url) AS thumbnail_url,
+    MIN(id) AS id
+  FROM mbid_image
+  WHERE mbid_image.mbid IN (
+    SELECT entity_id
+    FROM collection_entity
+    WHERE id = :collectionId
+  )
+  GROUP BY mbid
+) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
     track.id AS track_id,
@@ -298,23 +395,39 @@ LEFT JOIN (
     COUNT(listen.recording_musicbrainz_id) AS listen_count
   FROM track
   INNER JOIN medium ON track.medium_id = medium.id
+  INNER JOIN collection_entity ON medium.release_id = collection_entity.entity_id
   LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+  WHERE collection_entity.id = :collectionId
   GROUP BY track_id
-) AS track_listen_counts ON track_listen_counts.release_id = release_base.id
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
+LEFT JOIN (
+  SELECT
+    release_alias.release_id,
+    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE release_alias.is_primary AND release_alias.release_id IN (
+    SELECT DISTINCT `release`.id
+    FROM `release`
+    INNER JOIN collection_entity ON `release`.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+  )
+  GROUP BY release_alias.release_id
+) AS aliases ON aliases.release_id = `release`.id
+WHERE collection.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
-  release_base.name LIKE :query OR
-  release_base.disambiguation LIKE :query OR
-  release_base.date LIKE :query OR
-  release_base.country_code LIKE :query OR
-  release_base.artist_credit_names LIKE :query OR
-  release_base.alias_names LIKE :query
+  `release`.name LIKE :query OR
+  `release`.disambiguation LIKE :query OR
+  `release`.date LIKE :query OR
+  `release`.country_code LIKE :query OR
+  artist_credit_names LIKE :query OR
+  aliases.alias_names LIKE :query
 )
-GROUP BY release_base.id
+GROUP BY `release`.id
 ORDER BY
-  CASE WHEN :sorted THEN release_base.date ELSE ce.rowid END,
-  CASE WHEN :sorted THEN release_base.name END
+  CASE WHEN :sorted THEN `release`.date ELSE collection_entity.rowid END,
+  CASE WHEN :sorted THEN `release`.name END
 LIMIT :limit OFFSET :offset;
 
 -- releases by entity
@@ -394,9 +507,9 @@ LEFT JOIN (
     COUNT(listen.recording_musicbrainz_id) AS listen_count
   FROM track
   INNER JOIN medium ON track.medium_id = medium.id
-  INNER JOIN releases_by_entity rbe ON medium.release_id = rbe.release_id
+  INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
   LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-  WHERE rbe.entity_id = :entityId
+  WHERE releases_by_entity.entity_id = :entityId
   GROUP BY track_id
 ) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
 LEFT JOIN (
@@ -445,6 +558,8 @@ WHERE (
   release_base.alias_names LIKE :query
 );
 
+-- It makes sense to use the view if we need to get all releases
+-- Left-joining a bunch of tables without filtering them would be more expensive
 getAllReleases:
 SELECT
   release_base.*,

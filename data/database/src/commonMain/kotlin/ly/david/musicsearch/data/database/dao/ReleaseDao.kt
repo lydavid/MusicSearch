@@ -276,7 +276,7 @@ class ReleaseDao(
 
     fun getCountOfReleasesByLabel(labelId: String): Int =
         transacter.getNumberOfReleasesByLabel(
-            labelId = labelId,
+            entityId = labelId,
             query = "%%",
         )
             .executeAsOne()
@@ -289,14 +289,14 @@ class ReleaseDao(
         sorted: Boolean,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByLabel(
-            labelId = labelId,
+            entityId = labelId,
             query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getReleasesByLabel(
-                labelId = labelId,
+                entityId = labelId,
                 query = "%$query%",
                 username = username,
                 sorted = sorted,
