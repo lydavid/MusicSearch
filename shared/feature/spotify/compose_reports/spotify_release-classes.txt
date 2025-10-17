@@ -25,7 +25,7 @@ stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.
 }
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.GoToSearch {
   stable val query: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.MarkForDeletion {

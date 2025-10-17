@@ -9,7 +9,7 @@ stable class ly.david.musicsearch.shared.feature.search.SearchPresenter {
 }
 stable class ly.david.musicsearch.shared.feature.search.SearchUiState {
   stable val query: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   runtime val searchResults: LazyPagingItems<ListItemModel>
   stable val searchResultsListState: LazyListState
   runtime val searchHistory: LazyPagingItems<ListItemModel>
@@ -17,7 +17,7 @@ stable class ly.david.musicsearch.shared.feature.search.SearchUiState {
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.UpdateEntity {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.UpdateQuery {
@@ -35,7 +35,7 @@ stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.DeleteAllE
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

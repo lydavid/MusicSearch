@@ -45,7 +45,7 @@ stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.AutoSelect
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

@@ -37,7 +37,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SetUsern
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

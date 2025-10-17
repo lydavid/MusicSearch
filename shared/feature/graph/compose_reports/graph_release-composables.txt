@@ -15,12 +15,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onClick: Function1<@[ParameterName(name = 'transformedTapPosition')] Offset, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet(
-  stable selectedEntity: MusicBrainzEntityType
+  stable selectedEntityType: MusicBrainzEntityType
   stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
   stable bottomSheetState: SheetState? = @dynamic <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheetContent(
-  stable selectedEntity: MusicBrainzEntityType
+  stable selectedEntityType: MusicBrainzEntityType
   stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
 )

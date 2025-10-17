@@ -15,6 +15,19 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onFacetClick: Function1<@[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
+  listen: ListenListItemModel
+  stable filteringByThisRecording: Boolean
+  stable allowedToEdit: Boolean
+  stable onGoToReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
+  stable onFilterByRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable onSubmitMapping: Function2<@[ParameterName(name = 'recordingMessyBrainzId')] String, @[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable onRefreshMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.LinkWithMusicBrainzItem(
+  stable onSubmitMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
   listen: ListenListItemModel
   stable modifier: Modifier? = @static <expression>
@@ -35,17 +48,4 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable onTextChange: Function1<String, Unit>? = @static <expression>
   stable onSetUsername: Function0<Unit>? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
-  listen: ListenListItemModel
-  stable filteringByThisRecording: Boolean
-  stable allowedToEdit: Boolean
-  stable onGoToReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
-  stable onFilterByRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
-  stable onSubmitMapping: Function2<@[ParameterName(name = 'recordingMessyBrainzId')] String, @[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
-  stable onRefreshMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
-  stable onDismiss: Function0<Unit>? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.LinkWithMusicBrainzItem(
-  stable onSubmitMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>
 )

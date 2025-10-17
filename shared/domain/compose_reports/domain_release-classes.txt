@@ -18,7 +18,7 @@ runtime class ly.david.musicsearch.shared.domain.BrowseMethod.All {
 }
 runtime class ly.david.musicsearch.shared.domain.BrowseMethod.ByEntity {
   stable val entityId: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   runtime var CREATOR: Creator<ByEntity>
   <runtime stability> = Uncertain(Creator)
 }
@@ -36,6 +36,7 @@ stable class ly.david.musicsearch.shared.domain.ListFilters {
   stable val isRemote: Boolean
   stable val sorted: Boolean
   stable val username: String
+  stable val recordingSortOption: RecordingSortOption
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.alias.BasicAlias {
@@ -676,8 +677,18 @@ stable class ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemMod
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
-  stable val lastUpdated: Long?
   <runtime stability> = 
+}
+stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel.ListenState.Hide {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel.ListenState.Unknown {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel.ListenState.Known {
+  stable val listenCount: Long
+  stable val completeListenCount: Long
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel {
   stable val id: String
@@ -702,7 +713,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel {
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
-  stable val lastUpdated: Long?
+  runtime val listenState: ListenState
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.listitem.SearchHeader {
@@ -713,7 +724,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.SearchHeader {
 stable class ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel {
   stable val id: String
   stable val query: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel {

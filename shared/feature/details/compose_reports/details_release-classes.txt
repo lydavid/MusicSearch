@@ -84,6 +84,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter 
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
+  runtime val browseMethod: ByEntity
   stable val subtitle: String
   stable val tabs: ImmutableList<Tab>
   stable val selectedTab: Tab
@@ -132,7 +133,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.To
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

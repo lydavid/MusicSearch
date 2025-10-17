@@ -24,7 +24,7 @@ stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPre
 }
 stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiState {
   stable val subtitle: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
   stable val allEntitiesListUiState: AllEntitiesListUiState
@@ -35,7 +35,7 @@ stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiE
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

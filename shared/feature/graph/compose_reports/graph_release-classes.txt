@@ -23,14 +23,14 @@ stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphU
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.graph.GraphNode {
   stable val id: String
   stable val name: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val radius: Double
   stable val x: Double
   stable val y: Double

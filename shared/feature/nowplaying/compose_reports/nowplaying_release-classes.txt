@@ -25,6 +25,6 @@ stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiE
 }
 stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.GoToSearch {
   stable val query: String
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   <runtime stability> = Stable
 }

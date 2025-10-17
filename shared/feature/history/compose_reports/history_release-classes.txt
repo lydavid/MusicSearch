@@ -43,7 +43,7 @@ stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }

@@ -92,6 +92,10 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.RequestForM
   stable val entityId: String
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortRecordingListItem {
+  stable val sortOption: RecordingSortOption
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortReleaseListItem {
   stable val sort: Boolean
   <runtime stability> = Stable
@@ -110,6 +114,7 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
   stable val lazyListState: LazyListState
   stable val showMoreInfo: Boolean
   stable val sort: Boolean
+  stable val recordingSortOption: RecordingSortOption
   stable val eventSink: Function1<EntitiesListUiEvent, Unit>
 }
 stable class ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey {
@@ -192,7 +197,7 @@ stable class ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresen
 }
 stable class ly.david.musicsearch.ui.common.screen.SearchScreen {
   stable val query: String?
-  stable val entity: MusicBrainzEntityType?
+  stable val entityType: MusicBrainzEntityType?
   runtime var CREATOR: Creator<SearchScreen>
   <runtime stability> = Stable
 }
@@ -207,7 +212,7 @@ stable class ly.david.musicsearch.ui.common.screen.DatabaseScreen {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.AllEntitiesScreen {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   runtime var CREATOR: Creator<AllEntitiesScreen>
   <runtime stability> = Stable
 }
@@ -229,7 +234,7 @@ stable class ly.david.musicsearch.ui.common.screen.CollectionScreen {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.AddToCollectionScreen {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   unstable val collectableIds: Set<String>
   runtime var CREATOR: Creator<AddToCollectionScreen>
   <runtime stability> = Stable
@@ -241,7 +246,7 @@ stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResult {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.DetailsScreen {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   runtime var CREATOR: Creator<DetailsScreen>
   <runtime stability> = Stable

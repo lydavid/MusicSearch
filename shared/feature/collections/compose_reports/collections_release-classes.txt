@@ -7,7 +7,7 @@ stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollection
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState {
-  stable val defaultEntity: MusicBrainzEntityType
+  stable val defaultEntityType: MusicBrainzEntityType
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
 }
@@ -104,7 +104,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUi
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.ClickItem {
-  stable val entity: MusicBrainzEntityType
+  stable val entityType: MusicBrainzEntityType
   stable val id: String
   <runtime stability> = Stable
 }
