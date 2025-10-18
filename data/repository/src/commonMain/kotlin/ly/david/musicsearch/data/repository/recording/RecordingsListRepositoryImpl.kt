@@ -15,9 +15,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNet
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
 class RecordingsListRepositoryImpl(
@@ -57,7 +59,7 @@ class RecordingsListRepositoryImpl(
             browseMethod = browseMethod,
             query = listFilters.query,
             username = listFilters.username,
-            sortOption = listFilters.recordingSortOption,
+            sortOption = (listFilters.sortOption as? SortOption.Recording)?.option ?: RecordingSortOption.None,
         )
     }
 

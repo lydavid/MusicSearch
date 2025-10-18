@@ -1,11 +1,11 @@
 package ly.david.musicsearch.shared.domain
 
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.SortOption
 
 data class ListFilters(
     val query: String = "",
     val isRemote: Boolean = true,
     val sorted: Boolean = false,
     val username: String = "",
-    val recordingSortOption: RecordingSortOption = RecordingSortOption.None,
+    val sortOption: SortOption = SortOption.None,
 )

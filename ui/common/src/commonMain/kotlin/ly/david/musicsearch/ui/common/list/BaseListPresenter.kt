@@ -67,12 +67,13 @@ abstract class BaseListPresenter(
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
+                        // TODO: change toggle sort to selecting field to sort on
                         sorted = when (sortOption) {
                             is SortOption.Release -> sortOption.sorted
                             is SortOption.ReleaseGroup -> sortOption.sorted
                             else -> false
                         },
-                        recordingSortOption = (sortOption as? SortOption.Recording)?.option ?: RecordingSortOption.None,
+                        sortOption = sortOption,
                     ),
                 ),
             )
