@@ -185,12 +185,6 @@ internal fun SettingsUi(
             )
 
             SettingSwitch(
-                header = "Sort releases by date",
-                checked = state.sortReleaseListItems,
-                onCheckedChange = { eventSink(SettingsUiEvent.UpdateSortReleaseListItems(it)) },
-            )
-
-            SettingSwitch(
                 header = "Show more info in release list items",
                 checked = state.showMoreInfoInReleaseListItem,
                 onCheckedChange = { eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it)) },

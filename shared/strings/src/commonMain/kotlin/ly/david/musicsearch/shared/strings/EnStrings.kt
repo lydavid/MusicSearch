@@ -295,6 +295,10 @@ val EnStrings = AppStrings(
     latestReleaseDate = "Latest release date",
     mostListened = "Most listened",
     leastListened = "Least listened",
+    mostCompleteListened = "Most listened (complete)",
+    leastCompleteListened = "Least listened (complete)",
+    earliestCached = "Earliest cached",
+    latestCached = "Latest cached",
 
     loginToMusicBrainz = "Login to MusicBrainz",
     artificialLanguage = "[Artificial (Other)]",

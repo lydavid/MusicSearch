@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 
 interface AppPreferences {
 
@@ -27,8 +28,8 @@ interface AppPreferences {
     val recordingSortOption: Flow<RecordingSortOption>
     fun setRecordingSortOption(sort: RecordingSortOption)
 
-    val sortReleaseListItems: Flow<Boolean>
-    fun setSortReleaseListItems(show: Boolean)
+    val releaseSortOption: Flow<ReleaseSortOption>
+    fun setReleaseSortOption(sort: ReleaseSortOption)
 
     val showMoreInfoInReleaseListItem: Flow<Boolean>
     fun setShowMoreInfoInReleaseListItem(show: Boolean)

@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import lydavidmusicsearchdatadatabase.Releases_by_entity
@@ -207,13 +208,13 @@ class ReleaseDao(
         browseMethod: BrowseMethod,
         query: String,
         username: String,
-        sorted: Boolean,
+        sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleases(
                 query = query,
                 username = username,
-                sorted = sorted,
+                sortOption = sortOption,
             )
         }
 
@@ -224,7 +225,7 @@ class ReleaseDao(
                         labelId = browseMethod.entityId,
                         query = query,
                         username = username,
-                        sorted = sorted,
+                        sortOption = sortOption,
                     )
                 }
 
@@ -233,7 +234,7 @@ class ReleaseDao(
                         collectionId = browseMethod.entityId,
                         query = query,
                         username = username,
-                        sorted = sorted,
+                        sortOption = sortOption,
                     )
                 }
 
@@ -242,7 +243,7 @@ class ReleaseDao(
                         entityId = browseMethod.entityId,
                         query = query,
                         username = username,
-                        sorted = sorted,
+                        sortOption = sortOption,
                     )
                 }
             }
@@ -286,7 +287,7 @@ class ReleaseDao(
         labelId: String,
         query: String,
         username: String,
-        sorted: Boolean,
+        sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByLabel(
             entityId = labelId,
@@ -299,7 +300,7 @@ class ReleaseDao(
                 entityId = labelId,
                 query = "%$query%",
                 username = username,
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -355,7 +356,7 @@ class ReleaseDao(
         entityId: String,
         query: String,
         username: String,
-        sorted: Boolean,
+        sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleasesByEntityQuery(
             entityId = entityId,
@@ -368,7 +369,7 @@ class ReleaseDao(
                 entityId = entityId,
                 query = "%$query%",
                 username = username,
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -382,7 +383,7 @@ class ReleaseDao(
         collectionId: String,
         query: String,
         username: String,
-        sorted: Boolean,
+        sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByCollection(
             collectionId = collectionId,
@@ -395,7 +396,7 @@ class ReleaseDao(
                 collectionId = collectionId,
                 query = "%$query%",
                 username = username,
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,
@@ -437,7 +438,7 @@ class ReleaseDao(
     private fun getAllReleases(
         query: String,
         username: String,
-        sorted: Boolean,
+        sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllReleases(
             query = query,
@@ -447,7 +448,7 @@ class ReleaseDao(
         queryProvider = { limit, offset ->
             transacter.getAllReleases(
                 query = "%$query%",
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 username = username,
                 limit = limit,
                 offset = offset,

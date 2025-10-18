@@ -22,6 +22,8 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.getNamePlural
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
@@ -31,8 +33,8 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
-import ly.david.musicsearch.ui.common.recording.RecordingSortMenuItem
 import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
@@ -132,8 +134,9 @@ internal fun AllLocalEntitiesUi(
                         }
 
                         is SortOption.Recording -> {
-                            RecordingSortMenuItem(
-                                sortOption = sortOption.option,
+                            SortMenuItem(
+                                sortOptions = RecordingSortOption.entries,
+                                selectedSortOption = sortOption.option,
                                 onSortOptionClick = {
                                     recordingsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortRecordingListItem(it),
@@ -143,9 +146,10 @@ internal fun AllLocalEntitiesUi(
                         }
 
                         is SortOption.Release -> {
-                            SortToggleMenuItem(
-                                sorted = sortOption.sorted,
-                                onToggle = {
+                            SortMenuItem(
+                                sortOptions = ReleaseSortOption.entries,
+                                selectedSortOption = sortOption.option,
+                                onSortOptionClick = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseListItem(it),
                                     )

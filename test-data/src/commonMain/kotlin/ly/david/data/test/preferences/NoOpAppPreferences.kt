@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 
 open class NoOpAppPreferences : AppPreferences {
     override val theme: Flow<AppPreferences.Theme>
@@ -40,10 +41,10 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
-    override val sortReleaseListItems: Flow<Boolean>
-        get() = flowOf(true)
+    override val releaseSortOption: Flow<ReleaseSortOption>
+        get() = flowOf(ReleaseSortOption.InsertedAscending)
 
-    override fun setSortReleaseListItems(show: Boolean) {
+    override fun setReleaseSortOption(sort: ReleaseSortOption) {
         // No-op.
     }
 

@@ -18,9 +18,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import kotlin.time.Instant
 
@@ -63,7 +65,7 @@ class ReleasesListRepositoryImpl(
             browseMethod = browseMethod,
             query = listFilters.query,
             username = listFilters.username,
-            sorted = listFilters.sorted,
+            sortOption = (listFilters.sortOption as? SortOption.Release)?.option ?: ReleaseSortOption.InsertedAscending,
         )
     }
 

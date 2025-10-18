@@ -1,6 +1,7 @@
 package ly.david.musicsearch.shared.domain.list
 
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 
 sealed interface SortOption {
     data object None : SortOption
@@ -10,7 +11,7 @@ sealed interface SortOption {
     ) : SortOption
 
     data class Release(
-        val sorted: Boolean = false,
+        val option: ReleaseSortOption = ReleaseSortOption.InsertedAscending,
         val showMoreInfo: Boolean = true,
     ) : SortOption
 

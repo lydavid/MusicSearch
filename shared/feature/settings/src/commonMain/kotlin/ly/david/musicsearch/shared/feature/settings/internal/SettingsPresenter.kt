@@ -49,7 +49,6 @@ internal class SettingsPresenter(
         val listenBrainzUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
         val listenBrainzUserToken by listenBrainzAuthStore.observeUserToken().collectAsRetainedState("")
 
-        val sortReleaseListItems by appPreferences.sortReleaseListItems.collectAsRetainedState(false)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
@@ -62,10 +61,6 @@ internal class SettingsPresenter(
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
-                is SettingsUiEvent.UpdateSortReleaseListItems -> {
-                    appPreferences.setSortReleaseListItems(event.sort)
-                }
-
                 is SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.show)
                 }
@@ -131,7 +126,6 @@ internal class SettingsPresenter(
             listenBrainzUsername = listenBrainzUsername,
             listenBrainzUserToken = listenBrainzUserToken,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            sortReleaseListItems = sortReleaseListItems,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
             showCrashReporterSettings = showCrashReporterSettings,
             isCrashReportingEnabled = isCrashReportingEnabled,
@@ -153,7 +147,6 @@ internal data class SettingsUiState(
     val listenBrainzLoginState: ListenBrainzLoginState? = null,
     val listenBrainzUsername: String = "",
     val listenBrainzUserToken: String = "",
-    val sortReleaseListItems: Boolean = false,
     val showMoreInfoInReleaseListItem: Boolean = true,
     val sortReleaseGroupListItems: Boolean = false,
     val showCrashReporterSettings: Boolean = false,
@@ -174,7 +167,6 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data object ListenBrainzLogout : SettingsUiEvent
 
     data object DismissSnackbar : SettingsUiEvent
-    data class UpdateSortReleaseListItems(val sort: Boolean) : SettingsUiEvent
     data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
     data class UpdateSortReleaseGroupListItems(val sort: Boolean) : SettingsUiEvent
     data class EnableCrashReporting(val enable: Boolean) : SettingsUiEvent

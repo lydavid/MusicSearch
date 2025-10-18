@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
@@ -110,18 +111,20 @@ internal class AppPreferencesImpl(
     // endregion
 
     // region Releases
-    private val sortReleasesPreference = booleanPreferencesKey("sortReleaseListItems")
-    override val sortReleaseListItems: Flow<Boolean>
+    private val releaseSortOptionPreference = stringPreferencesKey("releaseSortOption")
+    override val releaseSortOption: Flow<ReleaseSortOption>
         get() = preferencesDataStore.data
             .map {
-                it[sortReleasesPreference] ?: false
+                ReleaseSortOption.valueOf(
+                    it[releaseSortOptionPreference] ?: ReleaseSortOption.InsertedAscending.name,
+                )
             }
             .distinctUntilChanged()
 
-    override fun setSortReleaseListItems(show: Boolean) {
+    override fun setReleaseSortOption(sort: ReleaseSortOption) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[sortReleasesPreference] = show
+                it[releaseSortOptionPreference] = sort.name
             }
         }
     }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.ui.common.recording
+package ly.david.musicsearch.ui.common.sort
 
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.SortableOption
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Sort
 import ly.david.musicsearch.ui.common.theme.LocalStrings
@@ -18,17 +18,19 @@ import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OverflowMenuScope.RecordingSortMenuItem(
-    sortOption: RecordingSortOption,
+fun <T> OverflowMenuScope.SortMenuItem(
+    sortOptions: List<T>,
+    selectedSortOption: T,
     modifier: Modifier = Modifier,
-    onSortOptionClick: (RecordingSortOption) -> Unit = {},
-) {
+    onSortOptionClick: (T) -> Unit = {},
+) where T : Enum<T>, T : SortableOption {
     val strings = LocalStrings.current
 
     var showBottomSheet by remember { mutableStateOf(false) }
     if (showBottomSheet) {
-        RecordingSortBottomSheet(
-            sortOption = sortOption,
+        SortOptionsBottomSheet(
+            sortOptions = sortOptions,
+            selectedSortOption = selectedSortOption,
             onSortOptionClick = {
                 onSortOptionClick(it)
                 closeMenu()

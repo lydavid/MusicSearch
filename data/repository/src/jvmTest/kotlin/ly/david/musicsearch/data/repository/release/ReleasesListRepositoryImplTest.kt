@@ -72,11 +72,13 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
@@ -527,44 +529,44 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(),
-                        utaNoUtaReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        weirdAlGreatestHitsReleaseListItemModel,
+                        utaNoUtaReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "hits",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(),
+                        weirdAlGreatestHitsReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by disambiguation",
                     query = "回",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(),
+                        utaNoUtaReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "2022",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(),
+                        utaNoUtaReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by country code",
                     query = "AF",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(),
+                        weirdAlGreatestHitsReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "ado",
                     expectedResult = listOf(
-                        utaNoUtaReleaseListItemModel.copy(),
+                        utaNoUtaReleaseListItemModel,
                     ),
                 ),
             ),
@@ -614,7 +616,7 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(),
+                        weirdAlGreatestHitsReleaseListItemModel,
                         utaNoUtaReleaseListItemModel.copy(
                             imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
@@ -643,7 +645,7 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    weirdAlGreatestHitsReleaseListItemModel.copy(),
+                    weirdAlGreatestHitsReleaseListItemModel,
                     utaNoUtaReleaseListItemModel.copy(
                         imageId = ImageId(1L),
                         imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
@@ -722,7 +724,7 @@ class ReleasesListRepositoryImplTest :
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        weirdAlGreatestHitsReleaseListItemModel.copy(),
+                        weirdAlGreatestHitsReleaseListItemModel,
                         utaNoUtaReleaseListItemModel.copy(
                             imageId = ImageId(1L),
                             imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
@@ -846,41 +848,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
             ),
@@ -925,41 +927,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
             ),
@@ -1004,41 +1006,41 @@ class ReleasesListRepositoryImplTest :
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "under",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "1981",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by date",
                     query = "GB",
                     expectedResult = listOf(
-                        underPressureRemasteredReleaseListItemModel.copy(),
+                        underPressureRemasteredReleaseListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by artist credit name",
                     query = "Queen",
                     expectedResult = listOf(
-                        underPressureReleaseListItemModel.copy(),
-                        underPressureRemasteredReleaseListItemModel.copy(),
-                        underPressureJapanReleaseListItemModel.copy(),
+                        underPressureReleaseListItemModel,
+                        underPressureRemasteredReleaseListItemModel,
+                        underPressureJapanReleaseListItemModel,
                     ),
                 ),
             ),
@@ -1076,11 +1078,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(),
+                    underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1097,9 +1099,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    weirdAlGreatestHitsReleaseListItemModel.copy(),
-                    utaNoUtaReleaseListItemModel.copy(),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    weirdAlGreatestHitsReleaseListItemModel,
+                    utaNoUtaReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1107,7 +1109,9 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(
-                sorted = true,
+                sortOption = SortOption.Release(
+                    option = ReleaseSortOption.DateAscending,
+                ),
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -1128,17 +1132,19 @@ class ReleasesListRepositoryImplTest :
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
             listFilters = ListFilters(
-                sorted = false,
+                sortOption = SortOption.Release(
+                    option = ReleaseSortOption.InsertedAscending,
+                ),
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    utaNoUtaReleaseListItemModel,
-                    underPressureJapanReleaseListItemModel,
                     underPressureReleaseListItemModel,
-                    weirdAlGreatestHitsReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
+                    weirdAlGreatestHitsReleaseListItemModel,
+                    utaNoUtaReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -1225,17 +1231,17 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    weirdAlGreatestHitsReleaseListItemModel,
                     utaNoUtaReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
                     underPressureJapanReleaseListItemModel.copy(
                         releaseCountryCount = 1,
                         disambiguation = "changes will show up when visiting",
                         visited = true,
-                    ),
-                    underPressureReleaseListItemModel,
-                    weirdAlGreatestHitsReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel,
-                    underPressureRemasteredReleaseListItemModel.copy(
-                        id = "new-id-is-considered-a-different-release-group",
                     ),
                 ),
                 this,
@@ -1274,11 +1280,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(),
+                    underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1295,9 +1301,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(),
-                    underPressureRemasteredReleaseListItemModel.copy(),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1309,9 +1315,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureJapanReleaseListItemModel,
                     underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -1398,15 +1404,15 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureJapanReleaseListItemModel.copy(
-                        disambiguation = "changes will show up when visiting",
-                        releaseCountryCount = 1,
-                        visited = true,
-                    ),
                     underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
+                    ),
+                    underPressureJapanReleaseListItemModel.copy(
+                        disambiguation = "changes will show up when visiting",
+                        releaseCountryCount = 1,
+                        visited = true,
                     ),
                 ),
                 this,
@@ -1445,11 +1451,11 @@ class ReleasesListRepositoryImplTest :
         }.run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(),
+                    underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1466,9 +1472,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureReleaseListItemModel.copy(),
-                    underPressureRemasteredReleaseListItemModel.copy(),
-                    underPressureJapanReleaseListItemModel.copy(),
+                    underPressureReleaseListItemModel,
+                    underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
                 ),
                 this,
             )
@@ -1480,9 +1486,9 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureJapanReleaseListItemModel,
                     underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
+                    underPressureJapanReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
                     ),
@@ -1569,15 +1575,15 @@ class ReleasesListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureJapanReleaseListItemModel.copy(
-                        disambiguation = "changes will show up if we have not visited it yet",
-                        releaseCountryCount = 1,
-                        visited = true,
-                    ),
                     underPressureReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel,
                     underPressureRemasteredReleaseListItemModel.copy(
                         id = "new-id-is-considered-a-different-release-group",
+                    ),
+                    underPressureJapanReleaseListItemModel.copy(
+                        disambiguation = "changes will show up if we have not visited it yet",
+                        releaseCountryCount = 1,
+                        visited = true,
                     ),
                 ),
                 this,
