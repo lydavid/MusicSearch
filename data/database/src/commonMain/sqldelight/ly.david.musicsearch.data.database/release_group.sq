@@ -157,8 +157,8 @@ SELECT
   release_group.primary_type,
   release_group.secondary_types,
   ac.name AS artist_credits,
-  mi.thumbnail_url,
-  mi.id AS image_id,
+  images.thumbnail_url,
+  images.id AS image_id,
   EXISTS (
     SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = release_group.id
   ) AS visited,
@@ -171,6 +171,7 @@ FROM release_group
 INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image images ON images.mbid = release_group.id
 LEFT JOIN (
   SELECT
     release_group_alias.release_group_id,
@@ -185,7 +186,6 @@ LEFT JOIN (
   )
   GROUP BY release_group_alias.release_group_id
 ) AS aliases ON aliases.release_group_id = release_group.id
-LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
 WHERE release_groups_by_entity.entity_id = :entityId
 AND (
   release_group.name LIKE :query OR
@@ -207,62 +207,82 @@ LIMIT :limit OFFSET :offset;
 
 getCountOfReleaseGroupsByCollection:
 SELECT IFNULL(
-  (
-    SELECT COUNT(DISTINCT release_group.id)
-    FROM release_group
-    INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
-    AND (
-      release_group.name LIKE :query OR
-      release_group.disambiguation LIKE :query OR
-      release_group.first_release_date LIKE :query OR
-      release_group.primary_type LIKE :query OR
-      release_group.secondary_types LIKE :query OR
-      ac.name LIKE :query OR
-      release_group_alias.name LIKE :query
-    )
-  ),
+  COUNT(DISTINCT release_group.id),
   0
-) AS count;
-
-getReleaseGroupsByCollection:
-SELECT
-  release_group_base.id,
-  release_group_base.name,
-  release_group_base.disambiguation,
-  release_group_base.first_release_date,
-  release_group_base.primary_type,
-  release_group_base.secondary_types,
-  release_group_base.artist_credits,
-  release_group_base.thumbnail_url,
-  release_group_base.image_id,
-  release_group_base.visited,
-  release_group_base.collected,
-  release_group_base.alias_names,
-  release_group_base.alias_locales
-FROM release_group_base
-INNER JOIN collection_entity ce ON release_group_base.id = ce.entity_id
+) AS count
+FROM release_group
+INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
-  release_group_base.name LIKE :query OR
-  release_group_base.disambiguation LIKE :query OR
-  release_group_base.first_release_date LIKE :query OR
-  release_group_base.primary_type LIKE :query OR
-  release_group_base.secondary_types LIKE :query OR
-  release_group_base.artist_credits LIKE :query OR
-  release_group_base.alias_names LIKE :query
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query OR
+  release_group.first_release_date LIKE :query OR
+  release_group.primary_type LIKE :query OR
+  release_group.secondary_types LIKE :query OR
+  ac.name LIKE :query OR
+  release_group_alias.name LIKE :query
+);
+
+getReleaseGroupsByCollection:
+SELECT
+  release_group.id,
+  release_group.name,
+  release_group.disambiguation,
+  release_group.first_release_date,
+  release_group.primary_type,
+  release_group.secondary_types,
+  ac.name AS artist_credits,
+  images.thumbnail_url,
+  images.id AS image_id,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = release_group.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected,
+  aliases.alias_names,
+  aliases.alias_locales
+FROM release_group
+INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
+INNER JOIN collection ON collection.id = collection_entity.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image images ON images.mbid = release_group.id
+LEFT JOIN (
+  SELECT
+    release_group_alias.release_group_id,
+    GROUP_CONCAT(release_group_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_group_alias
+  WHERE release_group_alias.is_primary AND release_group_alias.release_group_id IN (
+    SELECT DISTINCT release_group.id
+    FROM release_group
+    INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+  )
+  GROUP BY release_group_alias.release_group_id
+) AS aliases ON aliases.release_group_id = release_group.id
+WHERE collection.id = :collectionId
+AND collection_entity.deleted = 0
+AND (
+  release_group.name LIKE :query OR
+  release_group.disambiguation LIKE :query OR
+  release_group.first_release_date LIKE :query OR
+  release_group.primary_type LIKE :query OR
+  release_group.secondary_types LIKE :query OR
+  artist_credits LIKE :query OR
+  aliases.alias_names LIKE :query
 )
+GROUP BY release_group.id
 ORDER BY
-  CASE WHEN :sorted THEN release_group_base.primary_type ELSE ce.rowid END,
-  CASE WHEN :sorted THEN release_group_base.secondary_types END,
-  CASE WHEN :sorted THEN release_group_base.first_release_date END
+  CASE WHEN :sorted THEN release_group.primary_type ELSE collection_entity.rowid END,
+  CASE WHEN :sorted THEN release_group.secondary_types END,
+  CASE WHEN :sorted THEN release_group.first_release_date END
 LIMIT :limit OFFSET :offset;
 
 -- all release groups
