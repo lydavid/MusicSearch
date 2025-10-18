@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -47,16 +48,17 @@ abstract class BaseListPresenter(
         val recordingSortOption by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.None)
         val sortReleaseGroups by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
         val sortReleases by appPreferences.sortReleaseListItems.collectAsRetainedState(false)
-        val sort = when (getEntityType()) {
-            MusicBrainzEntityType.RELEASE -> sortReleases
-            MusicBrainzEntityType.RELEASE_GROUP -> sortReleaseGroups
-            else -> false
+        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+        val sortOption: SortOption = when (getEntityType()) {
+            MusicBrainzEntityType.RECORDING -> SortOption.Recording(recordingSortOption)
+            MusicBrainzEntityType.RELEASE -> SortOption.Release(sortReleases, showMoreInfoInReleaseListItem)
+            MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(sortReleaseGroups)
+            else -> SortOption.None
         }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(
             query,
             browseMethod,
-            sort,
-            recordingSortOption,
+            sortOption,
         ) {
             mutableStateOf(
                 getEntities(
@@ -65,8 +67,12 @@ abstract class BaseListPresenter(
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
-                        sorted = sort,
-                        recordingSortOption = recordingSortOption,
+                        sorted = when (sortOption) {
+                            is SortOption.Release -> sortOption.sorted
+                            is SortOption.ReleaseGroup -> sortOption.sorted
+                            else -> false
+                        },
+                        recordingSortOption = (sortOption as? SortOption.Recording)?.option ?: RecordingSortOption.None,
                     ),
                 ),
             )
@@ -77,16 +83,14 @@ abstract class BaseListPresenter(
         ).collectAsRetainedState(0)
         val lazyListState = rememberLazyListState()
         val scope = rememberCoroutineScope()
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+
         var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
         return EntitiesListUiState(
             pagingDataFlow = pagingDataFlow,
             count = count,
             lazyListState = lazyListState,
-            recordingSortOption = recordingSortOption,
-            showMoreInfo = showMoreInfoInReleaseListItem,
-            sort = sort,
+            sortOption = sortOption,
             eventSink = { event ->
                 when (event) {
                     is EntitiesListUiEvent.Get -> {
@@ -169,8 +173,6 @@ data class EntitiesListUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val count: Int = 0,
     val lazyListState: LazyListState = LazyListState(),
-    val showMoreInfo: Boolean = true,
-    val sort: Boolean = true,
-    val recordingSortOption: RecordingSortOption = RecordingSortOption.None,
+    val sortOption: SortOption = SortOption.None,
     val eventSink: (EntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState

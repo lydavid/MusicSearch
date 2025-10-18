@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -102,7 +103,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     Tab.RELEASES -> EntitiesPagingListUiState(
                         lazyPagingItems = entitiesLazyPagingItems.releasesLazyPagingItems,
                         lazyListState = state.allEntitiesListUiState.releasesListUiState.lazyListState,
-                        showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
+                        showMoreInfo = (
+                            state.allEntitiesListUiState.releasesListUiState.sortOption as? SortOption.Release
+                            )?.showMoreInfo == true,
                     )
 
                     Tab.RELEASE_GROUPS -> EntitiesPagingListUiState(

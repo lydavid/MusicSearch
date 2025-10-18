@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.list
 
 import androidx.compose.runtime.Stable
 import com.slack.circuit.runtime.CircuitUiState
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
@@ -43,5 +44,26 @@ fun AllEntitiesListUiState.getTotalLocalCount(entity: MusicBrainzEntityType?): I
         MusicBrainzEntityType.URL,
         null,
         -> 0
+    }
+}
+
+fun AllEntitiesListUiState.getSortOption(entity: MusicBrainzEntityType?): SortOption {
+    return when (entity) {
+        MusicBrainzEntityType.AREA -> areasListUiState.sortOption
+        MusicBrainzEntityType.ARTIST -> artistsListUiState.sortOption
+        MusicBrainzEntityType.EVENT -> eventsListUiState.sortOption
+        MusicBrainzEntityType.GENRE -> genresListUiState.sortOption
+        MusicBrainzEntityType.INSTRUMENT -> instrumentsListUiState.sortOption
+        MusicBrainzEntityType.LABEL -> labelsListUiState.sortOption
+        MusicBrainzEntityType.PLACE -> placesListUiState.sortOption
+        MusicBrainzEntityType.RECORDING -> recordingsListUiState.sortOption
+        MusicBrainzEntityType.RELEASE -> releasesListUiState.sortOption
+        MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListUiState.sortOption
+        MusicBrainzEntityType.SERIES -> seriesListUiState.sortOption
+        MusicBrainzEntityType.WORK -> worksListUiState.sortOption
+        MusicBrainzEntityType.COLLECTION,
+        MusicBrainzEntityType.URL,
+        null,
+        -> SortOption.None
     }
 }

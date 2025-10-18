@@ -21,6 +21,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -29,6 +30,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.getSortOption
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -193,23 +195,40 @@ internal fun RecordingUi(
                         coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (state.selectedTab == Tab.RELEASES) {
-                        SortToggleMenuItem(
-                            sorted = state.allEntitiesListUiState.releasesListUiState.sort,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateSortReleaseListItem(it),
-                                )
-                            },
-                        )
-                        MoreInfoToggleMenuItem(
-                            showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
-                            onToggle = {
-                                releasesByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                )
-                            },
-                        )
+                    when (
+                        val sortOption =
+                            state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
+                    ) {
+                        SortOption.None -> {
+                            // nothing
+                        }
+
+                        is SortOption.Recording -> {
+                            // nothing
+                        }
+
+                        is SortOption.Release -> {
+                            SortToggleMenuItem(
+                                sorted = sortOption.sorted,
+                                onToggle = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                                    )
+                                },
+                            )
+                            MoreInfoToggleMenuItem(
+                                showMoreInfo = sortOption.showMoreInfo,
+                                onToggle = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                                    )
+                                },
+                            )
+                        }
+
+                        is SortOption.ReleaseGroup -> {
+                            // nothing
+                        }
                     }
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,

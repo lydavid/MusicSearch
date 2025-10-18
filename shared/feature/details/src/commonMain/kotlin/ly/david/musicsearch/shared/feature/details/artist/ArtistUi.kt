@@ -23,6 +23,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -32,6 +33,7 @@ import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Group
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.getSortOption
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -215,10 +217,17 @@ internal fun ArtistUi(
                         coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    when (selectedTab) {
-                        Tab.RECORDINGS -> {
+                    when (
+                        val sortOption =
+                            state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
+                    ) {
+                        SortOption.None -> {
+                            // nothing
+                        }
+
+                        is SortOption.Recording -> {
                             RecordingSortMenuItem(
-                                sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
+                                sortOption = sortOption.option,
                                 onSortOptionClick = {
                                     recordingsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortRecordingListItem(it),
@@ -227,20 +236,9 @@ internal fun ArtistUi(
                             )
                         }
 
-                        Tab.RELEASE_GROUPS -> {
+                        is SortOption.Release -> {
                             SortToggleMenuItem(
-                                sorted = state.allEntitiesListUiState.releaseGroupsListUiState.sort,
-                                onToggle = {
-                                    releaseGroupsByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        Tab.RELEASES -> {
-                            SortToggleMenuItem(
-                                sorted = state.allEntitiesListUiState.releasesListUiState.sort,
+                                sorted = sortOption.sorted,
                                 onToggle = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseListItem(it),
@@ -248,7 +246,7 @@ internal fun ArtistUi(
                                 },
                             )
                             MoreInfoToggleMenuItem(
-                                showMoreInfo = state.allEntitiesListUiState.releasesListUiState.showMoreInfo,
+                                showMoreInfo = sortOption.showMoreInfo,
                                 onToggle = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -257,8 +255,15 @@ internal fun ArtistUi(
                             )
                         }
 
-                        else -> {
-                            // Nothing
+                        is SortOption.ReleaseGroup -> {
+                            SortToggleMenuItem(
+                                sorted = sortOption.sorted,
+                                onToggle = {
+                                    releaseGroupsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
+                                    )
+                                },
+                            )
                         }
                     }
                     AddAllToCollectionMenuItem(

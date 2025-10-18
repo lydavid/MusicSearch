@@ -19,11 +19,13 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.list.getSortOption
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -186,15 +188,32 @@ internal fun WorkUi(
                         coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    if (selectedTab == Tab.RECORDINGS) {
-                        RecordingSortMenuItem(
-                            sortOption = state.allEntitiesListUiState.recordingsListUiState.recordingSortOption,
-                            onSortOptionClick = {
-                                recordingsByEntityEventSink(
-                                    EntitiesListUiEvent.UpdateSortRecordingListItem(it),
-                                )
-                            },
-                        )
+                    when (
+                        val sortOption =
+                            state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
+                    ) {
+                        SortOption.None -> {
+                            // nothing
+                        }
+
+                        is SortOption.Recording -> {
+                            RecordingSortMenuItem(
+                                sortOption = sortOption.option,
+                                onSortOptionClick = {
+                                    recordingsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                                    )
+                                },
+                            )
+                        }
+
+                        is SortOption.Release -> {
+                            // nothing
+                        }
+
+                        is SortOption.ReleaseGroup -> {
+                            // nothing
+                        }
                     }
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
