@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -502,6 +503,9 @@ private val detailsUiState = DetailsUiState(
         ),
         releasesListUiState = EntitiesListUiState(
             pagingDataFlow = canadianReleases,
+            sortOption = SortOption.Release(
+                showMoreInfo = true,
+            ),
         ),
         relationsUiState = RelationsUiState(
             pagingDataFlow = canadianRelations,
