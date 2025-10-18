@@ -14,8 +14,7 @@ CREATE TABLE "release" (
   language TEXT NOT NULL
 );
 
--- left join artist credits because we can insert stub releases from browsing listens
--- we still want these to be searchable in all releases
+-- TODO: drop
 CREATE VIEW release_base AS
 SELECT
   `release`.*,
@@ -254,7 +253,6 @@ INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
 INNER JOIN release_label ON `release`.id = release_label.release_id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 LEFT JOIN (
   SELECT
     mbid,
@@ -388,7 +386,6 @@ INNER JOIN collection_entity ON `release`.id = collection_entity.entity_id
 INNER JOIN collection ON collection.id = collection_entity.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 LEFT JOIN (
   SELECT
     mbid,
@@ -514,7 +511,7 @@ FROM `release`
 INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
+-- necessary to not multiply listens by the number of images
 LEFT JOIN (
   SELECT
     mbid,
@@ -603,8 +600,8 @@ AND (
   release_alias.name LIKE :query
 );
 
--- It makes sense to use the view if we need to get all releases
--- Left-joining a bunch of tables without filtering them would be more expensive
+-- left join artist credits because we can insert stub releases from browsing listens
+-- we still want these to be searchable in all releases
 getAllReleases:
 SELECT
   `release`.*,
@@ -638,7 +635,6 @@ SELECT
 FROM `release`
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = `release`.id
 LEFT JOIN (
   SELECT
     mbid,
