@@ -85,7 +85,7 @@ internal fun mapToReleaseListItemModel(
     aliasLocales: String?,
     listenCount: Long?,
     completeListenCount: Long,
-    catalogNumber: String,
+    catalogNumber: String?,
 ) = ReleaseListItemModel(
     id = id,
     name = name,

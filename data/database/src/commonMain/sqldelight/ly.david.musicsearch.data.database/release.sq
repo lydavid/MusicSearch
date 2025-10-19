@@ -161,7 +161,19 @@ SELECT IFNULL(
 ) AS count
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
-INNER JOIN release_label ON release_label.release_id = `release`.id
+LEFT JOIN (
+  SELECT
+    release_id,
+    GROUP_CONCAT(catalog_number, ', ') AS catalog_numbers
+  FROM (
+    SELECT release_id, catalog_number
+    FROM release_label
+    WHERE release_label.label_id = :entityId
+    GROUP BY release_id, catalog_number
+    ORDER BY catalog_number
+  ) AS distinct_catalogs
+  GROUP BY release_id
+) AS catalog_info ON catalog_info.release_id = `release`.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
@@ -171,7 +183,7 @@ AND (
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR
   `release`.country_code LIKE :query OR
-  release_label.catalog_number LIKE :query OR
+  catalog_info.catalog_numbers LIKE :query OR
   ac.name LIKE :query OR
   release_alias.name LIKE :query
 );
@@ -206,18 +218,22 @@ SELECT
     COALESCE(SUM(track_listen_counts.listen_count), -1)
   END AS total_listen_count,
   COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count,
-  (
-    SELECT GROUP_CONCAT(catalog_number, ', ')
-    FROM (
-      SELECT DISTINCT rl2.catalog_number
-      FROM release_label rl2
-      WHERE rl2.release_id = `release`.id
-      ORDER BY rl2.catalog_number
-    ) AS distinct_catalogs
-  ) AS catalog_numbers
+  catalog_info.catalog_numbers
 FROM `release`
 INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
-INNER JOIN release_label ON `release`.id = release_label.release_id
+LEFT JOIN (
+  SELECT
+    release_id,
+    GROUP_CONCAT(catalog_number, ', ') AS catalog_numbers
+  FROM (
+    SELECT release_id, catalog_number
+    FROM release_label
+    WHERE release_label.label_id = :entityId
+    GROUP BY release_id, catalog_number
+    ORDER BY catalog_number
+  ) AS distinct_catalogs
+  GROUP BY release_id
+) AS catalog_info ON catalog_info.release_id = `release`.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
@@ -229,7 +245,6 @@ LEFT JOIN (
   WHERE mbid_image.mbid IN (
     SELECT releases_by_entity.release_id
     FROM releases_by_entity
-    INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
     WHERE releases_by_entity.entity_id = :entityId
   )
   GROUP BY mbid
@@ -242,7 +257,6 @@ LEFT JOIN (
   FROM track
   INNER JOIN medium ON track.medium_id = medium.id
   INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
-  INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
   LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
   WHERE releases_by_entity.entity_id = :entityId
   GROUP BY track_id
@@ -257,7 +271,6 @@ LEFT JOIN (
     SELECT DISTINCT `release`.id
     FROM `release`
     INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
-    INNER JOIN release_label ON release_label.release_id = releases_by_entity.release_id
     WHERE releases_by_entity.entity_id = :entityId
   )
   GROUP BY release_alias.release_id
@@ -268,7 +281,7 @@ AND (
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR
   `release`.country_code LIKE :query OR
-  release_label.catalog_number LIKE :query OR
+  catalog_info.catalog_numbers LIKE :query OR
   artist_credit_names LIKE :query OR
   aliases.alias_names LIKE :query
 )
