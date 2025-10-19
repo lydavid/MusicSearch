@@ -260,11 +260,49 @@ LIMIT :limit OFFSET :offset;
 
 getReleaseSearchResults:
 SELECT
-  release_base.*,
+  `release`.*,
+  ac.name AS artist_credit_names,
+  images.thumbnail_url,
+  images.id AS image_id,
+  COALESCE(
+    (
+      SELECT COUNT(cc.area_id)
+      FROM `release` r2
+      LEFT JOIN release_country rc ON rc.release_id = r2.id
+      LEFT JOIN country_code cc ON cc.area_id = rc.country_id
+      WHERE r2.id = `release`.id
+    ),
+    0
+  ) AS release_country_count,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = `release`.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = `release`.id
+  ) AS collected,
+  aliases.alias_names,
+  aliases.alias_locales,
   CAST(NULL AS INTEGER) AS listen_count,
   0 AS complete_listen_count
 FROM search_result sr
-INNER JOIN release_base ON sr.entity_id = release_base.id
+INNER JOIN `release` ON sr.entity_id = `release`.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image images ON images.mbid = `release`.id
+LEFT JOIN (
+  SELECT
+    release_alias.release_id,
+    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE release_alias.is_primary AND release_alias.release_id IN (
+    SELECT DISTINCT `release`.id
+    FROM `release`
+    INNER JOIN search_result ON `release`.id = search_result.entity_id
+  )
+  GROUP BY release_alias.release_id
+) AS aliases ON aliases.release_id = `release`.id
+GROUP BY `release`.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 
