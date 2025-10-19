@@ -155,10 +155,7 @@ DELETE FROM releases_by_entity WHERE entity_id = :entityId;
 -- releases by label
 
 getNumberOfReleasesByLabel:
-SELECT IFNULL(
-  COUNT(DISTINCT `release`.id),
-  0
-) AS count
+SELECT COUNT(`release`.id) AS count
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
 LEFT JOIN (
@@ -215,9 +212,9 @@ SELECT
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
-    COALESCE(SUM(track_listen_counts.listen_count), -1)
+    COALESCE(track_listen_counts.total_listen_count, -1)
   END AS total_listen_count,
-  COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count,
+  COALESCE(track_listen_counts.complete_listen_count, 0) AS complete_listen_count,
   catalog_info.catalog_numbers
 FROM `release`
 INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
@@ -251,15 +248,22 @@ LEFT JOIN (
 ) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
-    track.id AS track_id,
-    medium.release_id AS release_id,
-    COUNT(listen.recording_musicbrainz_id) AS listen_count
-  FROM track
-  INNER JOIN medium ON track.medium_id = medium.id
-  INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
-  LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-  WHERE releases_by_entity.entity_id = :entityId
-  GROUP BY track_id
+    track_counts.release_id,
+    SUM(track_counts.listen_count) AS total_listen_count,
+    MIN(track_counts.listen_count) AS complete_listen_count
+  FROM (
+    SELECT
+      track.id AS track_id,
+      medium.release_id AS release_id,
+      COUNT(listen.recording_musicbrainz_id) AS listen_count
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
+    LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+    WHERE releases_by_entity.entity_id = :entityId
+    GROUP BY track.id
+  ) AS track_counts
+  GROUP BY track_counts.release_id
 ) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
 LEFT JOIN (
   SELECT
@@ -285,7 +289,6 @@ AND (
   artist_credit_names LIKE :query OR
   aliases.alias_names LIKE :query
 )
-GROUP BY `release`.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN releases_by_entity.rowid
@@ -312,10 +315,7 @@ WHERE label_id = :labelId;
 -- releases by collection
 
 getNumberOfReleasesByCollection:
-SELECT IFNULL(
-  COUNT(DISTINCT `release`.id),
-  0
-) AS count
+SELECT COUNT(`release`.id) AS count
 FROM `release`
 INNER JOIN collection_entity ce ON `release`.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -358,9 +358,9 @@ SELECT
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
-    COALESCE(SUM(track_listen_counts.listen_count), -1)
+    COALESCE(track_listen_counts.total_listen_count, -1)
   END AS total_listen_count,
-  COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count
+  COALESCE(track_listen_counts.complete_listen_count, 0) AS complete_listen_count
 FROM `release`
 INNER JOIN collection_entity ON `release`.id = collection_entity.entity_id
 INNER JOIN collection ON collection.id = collection_entity.id
@@ -381,15 +381,22 @@ LEFT JOIN (
 ) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
-    track.id AS track_id,
-    medium.release_id AS release_id,
-    COUNT(listen.recording_musicbrainz_id) AS listen_count
-  FROM track
-  INNER JOIN medium ON track.medium_id = medium.id
-  INNER JOIN collection_entity ON medium.release_id = collection_entity.entity_id
-  LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-  WHERE collection_entity.id = :collectionId
-  GROUP BY track_id
+    track_counts.release_id,
+    SUM(track_counts.listen_count) AS total_listen_count,
+    MIN(track_counts.listen_count) AS complete_listen_count
+  FROM (
+    SELECT
+      track.id AS track_id,
+      medium.release_id AS release_id,
+      COUNT(listen.recording_musicbrainz_id) AS listen_count
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    INNER JOIN collection_entity ON medium.release_id = collection_entity.entity_id
+    LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+    WHERE collection_entity.id = :collectionId
+    GROUP BY track.id
+  ) AS track_counts
+  GROUP BY track_counts.release_id
 ) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
 LEFT JOIN (
   SELECT
@@ -415,7 +422,6 @@ AND (
   artist_credit_names LIKE :query OR
   aliases.alias_names LIKE :query
 )
-GROUP BY `release`.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN collection_entity.rowid
@@ -438,10 +444,7 @@ LIMIT :limit OFFSET :offset;
 -- releases by entity
 
 getNumberOfReleasesByEntity:
-SELECT IFNULL(
-  COUNT(DISTINCT `release`.id),
-  0
-) AS count
+SELECT COUNT(`release`.id) AS count
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
@@ -484,9 +487,9 @@ SELECT
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
-    COALESCE(SUM(track_listen_counts.listen_count), -1)
+    COALESCE(track_listen_counts.total_listen_count, -1)
   END AS total_listen_count, -- should not be named the same as listen_count to prevent name resolution conflicts
-  COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count
+  COALESCE(track_listen_counts.complete_listen_count, 0) AS complete_listen_count
 FROM `release`
 INNER JOIN releases_by_entity ON `release`.id = releases_by_entity.release_id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
@@ -507,15 +510,22 @@ LEFT JOIN (
 ) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
-    track.id AS track_id,
-    medium.release_id AS release_id,
-    COUNT(listen.recording_musicbrainz_id) AS listen_count
-  FROM track
-  INNER JOIN medium ON track.medium_id = medium.id
-  INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
-  LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-  WHERE releases_by_entity.entity_id = :entityId
-  GROUP BY track_id
+    track_counts.release_id,
+    SUM(track_counts.listen_count) AS total_listen_count,
+    MIN(track_counts.listen_count) AS complete_listen_count
+  FROM (
+    SELECT
+      track.id AS track_id,
+      medium.release_id AS release_id,
+      COUNT(listen.recording_musicbrainz_id) AS listen_count
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    INNER JOIN releases_by_entity ON medium.release_id = releases_by_entity.release_id
+    LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+    WHERE releases_by_entity.entity_id = :entityId
+    GROUP BY track.id
+  ) AS track_counts
+  GROUP BY track_counts.release_id
 ) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
 LEFT JOIN (
   SELECT
@@ -563,21 +573,26 @@ LIMIT :limit OFFSET :offset;
 -- all releases
 
 getCountOfAllReleases:
-SELECT IFNULL(
-  COUNT(DISTINCT `release`.id),
-  0
-) AS count
+SELECT COUNT(`release`.id) AS count
 FROM `release`
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
+LEFT JOIN (
+  SELECT
+    release_alias.release_id,
+    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE release_alias.is_primary
+  GROUP BY release_alias.release_id
+) AS aliases ON aliases.release_id = `release`.id
 WHERE (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR
   `release`.country_code LIKE :query OR
   ac.name LIKE :query OR
-  release_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 );
 
 -- left join artist credits because we can insert stub releases from browsing listens
@@ -609,9 +624,9 @@ SELECT
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
-    COALESCE(SUM(track_listen_counts.listen_count), -1)
+    COALESCE(track_listen_counts.total_listen_count, -1)
   END AS total_listen_count,
-  COALESCE(MIN(track_listen_counts.listen_count), 0) AS complete_listen_count
+  COALESCE(track_listen_counts.complete_listen_count, 0) AS complete_listen_count
 FROM `release`
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
@@ -625,13 +640,20 @@ LEFT JOIN (
 ) AS images ON images.mbid = `release`.id
 LEFT JOIN (
   SELECT
-    track.id AS track_id,
-    medium.release_id AS release_id,
-    COUNT(listen.recording_musicbrainz_id) AS listen_count
-  FROM track
-  INNER JOIN medium ON track.medium_id = medium.id
-  LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
-  GROUP BY track_id
+    track_counts.release_id,
+    SUM(track_counts.listen_count) AS total_listen_count,
+    MIN(track_counts.listen_count) AS complete_listen_count
+  FROM (
+    SELECT
+      track.id AS track_id,
+      medium.release_id AS release_id,
+      COUNT(listen.recording_musicbrainz_id) AS listen_count
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    LEFT JOIN listen ON listen.recording_musicbrainz_id = track.recording_id AND listen.username = :username
+    GROUP BY track.id
+  ) AS track_counts
+  GROUP BY track_counts.release_id
 ) AS track_listen_counts ON track_listen_counts.release_id = `release`.id
 LEFT JOIN (
   SELECT
@@ -650,7 +672,6 @@ WHERE (
   artist_credit_names LIKE :query OR
   aliases.alias_names LIKE :query
 )
-GROUP BY `release`.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN `release`.rowid
