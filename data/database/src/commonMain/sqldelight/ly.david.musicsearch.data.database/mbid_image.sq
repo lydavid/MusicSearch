@@ -80,6 +80,7 @@ AND (
   comment LIKE :query
 )
 GROUP BY mbid, thumbnail_url
+ORDER BY mbid_image.id
 LIMIT :limit
 OFFSET :offset;
 
