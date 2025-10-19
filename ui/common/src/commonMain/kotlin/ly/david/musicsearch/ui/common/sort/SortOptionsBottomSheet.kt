@@ -70,7 +70,8 @@ private fun SortableOption.getLabel(strings: AppStrings): String {
 
 private fun RecordingSortOption.getLabel(strings: AppStrings): String {
     return when (this) {
-        RecordingSortOption.None -> strings.none
+        RecordingSortOption.InsertedAscending -> strings.earliestCached
+        RecordingSortOption.InsertedDescending -> strings.latestCached
 
         RecordingSortOption.NameAscending -> strings.alphabetically
         RecordingSortOption.NameDescending -> strings.alphabeticallyReverse

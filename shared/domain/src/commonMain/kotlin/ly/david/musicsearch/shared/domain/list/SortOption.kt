@@ -7,7 +7,7 @@ sealed interface SortOption {
     data object None : SortOption
 
     data class Recording(
-        val option: RecordingSortOption = RecordingSortOption.None,
+        val option: RecordingSortOption = RecordingSortOption.InsertedAscending,
     ) : SortOption
 
     data class Release(

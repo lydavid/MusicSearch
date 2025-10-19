@@ -46,9 +46,10 @@ abstract class BaseListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
-        val recordingSortOption by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.None)
-        val releaseSortOption by
-            appPreferences.releaseSortOption.collectAsRetainedState(ReleaseSortOption.InsertedAscending)
+        val recordingSortOption
+            by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.InsertedAscending)
+        val releaseSortOption
+            by appPreferences.releaseSortOption.collectAsRetainedState(ReleaseSortOption.InsertedAscending)
         val sortReleaseGroups by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         val sortOption: SortOption = when (getEntityType()) {

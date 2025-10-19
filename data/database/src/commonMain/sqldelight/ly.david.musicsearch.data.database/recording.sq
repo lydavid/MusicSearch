@@ -151,14 +151,15 @@ GROUP BY recording.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN re.rowid
-    WHEN 1 THEN recording.name
-    WHEN 3 THEN recording.first_release_date
-    WHEN 5 THEN listen_count
-  END ASC,
-  CASE :sortBy
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN re.rowid
+    WHEN 3 THEN recording.name
+    WHEN 5 THEN recording.first_release_date
+    WHEN 7 THEN listen_count
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC
@@ -224,14 +225,15 @@ GROUP BY recording.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN ce.rowid
-    WHEN 1 THEN recording.name
-    WHEN 3 THEN recording.first_release_date
-    WHEN 5 THEN listen_count
-  END ASC,
-  CASE :sortBy
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN ce.rowid
+    WHEN 3 THEN recording.name
+    WHEN 5 THEN recording.first_release_date
+    WHEN 7 THEN listen_count
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC
@@ -291,14 +293,15 @@ GROUP BY recording.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN recording.rowid
-    WHEN 1 THEN recording.name
-    WHEN 3 THEN recording.first_release_date
-    WHEN 5 THEN listen_count
-  END ASC,
-  CASE :sortBy
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN recording.rowid
+    WHEN 3 THEN recording.name
+    WHEN 5 THEN recording.first_release_date
+    WHEN 7 THEN listen_count
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC

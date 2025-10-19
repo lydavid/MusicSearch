@@ -14,7 +14,7 @@ internal fun PreviewSortOptionsBottomSheetContentNone() {
         Surface {
             SortOptionsBottomSheetContent(
                 sortOptions = RecordingSortOption.entries,
-                selectedSortOption = RecordingSortOption.None,
+                selectedSortOption = RecordingSortOption.InsertedAscending,
                 onSortOptionClick = {},
             )
         }

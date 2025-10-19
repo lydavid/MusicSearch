@@ -35,7 +35,7 @@ open class NoOpAppPreferences : AppPreferences {
     }
 
     override val recordingSortOption: Flow<RecordingSortOption>
-        get() = flowOf(RecordingSortOption.None)
+        get() = flowOf(RecordingSortOption.InsertedAscending)
 
     override fun setRecordingSortOption(sort: RecordingSortOption) {
         // No-op.

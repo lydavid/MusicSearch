@@ -59,7 +59,8 @@ class RecordingsListRepositoryImpl(
             browseMethod = browseMethod,
             query = listFilters.query,
             username = listFilters.username,
-            sortOption = (listFilters.sortOption as? SortOption.Recording)?.option ?: RecordingSortOption.None,
+            sortOption = (listFilters.sortOption as? SortOption.Recording)?.option
+                ?: RecordingSortOption.InsertedAscending,
         )
     }
 

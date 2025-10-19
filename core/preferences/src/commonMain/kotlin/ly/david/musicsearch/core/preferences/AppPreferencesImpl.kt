@@ -95,9 +95,7 @@ internal class AppPreferencesImpl(
     override val recordingSortOption: Flow<RecordingSortOption>
         get() = preferencesDataStore.data
             .map {
-                RecordingSortOption.valueOf(
-                    it[recordingSortOptionPreference] ?: RecordingSortOption.None.name,
-                )
+                it[recordingSortOptionPreference].toEnumOrDefault(RecordingSortOption.InsertedAscending)
             }
             .distinctUntilChanged()
 
