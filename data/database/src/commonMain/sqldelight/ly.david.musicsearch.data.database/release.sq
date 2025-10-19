@@ -571,7 +571,7 @@ FROM `release`
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
-AND (
+WHERE (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR
