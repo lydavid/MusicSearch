@@ -179,7 +179,7 @@ LEFT JOIN (
     GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
   FROM release_group_alias
   WHERE release_group_alias.is_primary AND release_group_alias.release_group_id IN (
-    SELECT DISTINCT release_group.id
+    SELECT release_group.id
     FROM release_group
     INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
     WHERE release_groups_by_entity.entity_id = :entityId
@@ -260,7 +260,7 @@ LEFT JOIN (
     GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
   FROM release_group_alias
   WHERE release_group_alias.is_primary AND release_group_alias.release_group_id IN (
-    SELECT DISTINCT release_group.id
+    SELECT release_group.id
     FROM release_group
     INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
     WHERE collection_entity.id = :collectionId
