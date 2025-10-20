@@ -1197,7 +1197,7 @@
                     "name": "Jordon de Hoog"
                 }
             ],
-            "artifactVersion": "3.0.1",
+            "artifactVersion": "4.0.1",
             "description": "Material You dynamic color for Compose Multiplatform",
             "scm": {
                 "connection": "scm:git:https://github.com/jordond/materialkolor.git",
@@ -1335,7 +1335,7 @@
                     "name": "Drew Hamilton"
                 }
             ],
-            "artifactVersion": "0.19.2",
+            "artifactVersion": "0.20.1",
             "description": "A Kotlin compiler plugin for generating equals, hashCode, and toString for plain old Kotlin objects.",
             "scm": {
                 "connection": "scm:git:github.com/drewhamilton/Poko.git",
