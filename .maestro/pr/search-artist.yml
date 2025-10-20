@@ -42,6 +42,7 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
 - tapOn: "Sort"
+- tapOn: "Type alphabetically"
 # When there is more data, the loading takes long enough such that
 # the current item's position is no longer retained.
 # But with less data, like in this test, the item's position is retained.
@@ -96,7 +97,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "ぐされ (Gusare)"
 - assertVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
-- tapOn: "Un-sort"
+- tapOn: "Sort"
+- tapOn: "Earliest cached"
 - assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 
 - tapOn: "Releases"

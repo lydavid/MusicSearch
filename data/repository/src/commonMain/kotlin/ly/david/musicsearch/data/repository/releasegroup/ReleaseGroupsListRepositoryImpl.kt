@@ -16,10 +16,12 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import kotlin.time.Instant
@@ -51,8 +53,12 @@ class ReleaseGroupsListRepositoryImpl(
                 .insertSeparators(
                     terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
                 ) { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
+                    val showTypeDividers = setOf(
+                        ReleaseGroupSortOption.PrimaryTypeAscending,
+                        ReleaseGroupSortOption.PrimaryTypeDescending,
+                    ).contains((listFilters.sortOption as? SortOption.ReleaseGroup)?.option)
                     when {
-                        listFilters.sorted && rg2 != null &&
+                        showTypeDividers && rg2 != null &&
                             (rg1?.primaryType != rg2.primaryType || rg1.secondaryTypes != rg2.secondaryTypes)
                         -> {
                             ListSeparator(
@@ -76,7 +82,8 @@ class ReleaseGroupsListRepositoryImpl(
         return releaseGroupDao.getReleaseGroups(
             browseMethod = browseMethod,
             query = listFilters.query,
-            sorted = listFilters.sorted,
+            sortOption = (listFilters.sortOption as? SortOption.ReleaseGroup)?.option
+                ?: ReleaseGroupSortOption.InsertedAscending,
         )
     }
 

@@ -187,6 +187,7 @@ AND (
 
 getReleasesByLabel:
 SELECT
+  -- TODO: Don't select all fields
   `release`.*,
   ac.name AS artist_credit_names,
   images.thumbnail_url,

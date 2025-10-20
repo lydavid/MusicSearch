@@ -30,6 +30,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 abstract class BaseListPresenter(
@@ -50,12 +51,16 @@ abstract class BaseListPresenter(
             by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.InsertedAscending)
         val releaseSortOption
             by appPreferences.releaseSortOption.collectAsRetainedState(ReleaseSortOption.InsertedAscending)
-        val sortReleaseGroups by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
+        val releaseGroupSortOption
+            by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         val sortOption: SortOption = when (getEntityType()) {
             MusicBrainzEntityType.RECORDING -> SortOption.Recording(recordingSortOption)
-            MusicBrainzEntityType.RELEASE -> SortOption.Release(releaseSortOption, showMoreInfoInReleaseListItem)
-            MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(sortReleaseGroups)
+            MusicBrainzEntityType.RELEASE -> SortOption.Release(
+                option = releaseSortOption,
+                showMoreInfo = showMoreInfoInReleaseListItem,
+            )
+            MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(releaseGroupSortOption)
             else -> SortOption.None
         }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(
@@ -70,11 +75,6 @@ abstract class BaseListPresenter(
                     listFilters = ListFilters(
                         query = query,
                         isRemote = isRemote,
-                        // TODO: change toggle sort to selecting field to sort on
-                        sorted = when (sortOption) {
-                            is SortOption.ReleaseGroup -> sortOption.sorted
-                            else -> false
-                        },
                         sortOption = sortOption,
                     ),
                 ),
@@ -132,7 +132,7 @@ abstract class BaseListPresenter(
                     }
 
                     is EntitiesListUiEvent.UpdateSortReleaseGroupListItem -> {
-                        appPreferences.setSortReleaseGroupListItems(event.sort)
+                        appPreferences.setReleaseGroupSortOption(event.sortOption)
                     }
                 }
             },
@@ -167,7 +167,7 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
     ) : EntitiesListUiEvent
 
     data class UpdateSortReleaseGroupListItem(
-        val sort: Boolean,
+        val sortOption: ReleaseGroupSortOption,
     ) : EntitiesListUiEvent
 }
 

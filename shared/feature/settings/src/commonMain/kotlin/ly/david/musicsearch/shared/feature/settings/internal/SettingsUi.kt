@@ -190,12 +190,6 @@ internal fun SettingsUi(
                 onCheckedChange = { eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it)) },
             )
 
-            SettingSwitch(
-                header = "Sort release groups by type",
-                checked = state.sortReleaseGroupListItems,
-                onCheckedChange = { eventSink(SettingsUiEvent.UpdateSortReleaseGroupListItems(it)) },
-            )
-
             if (state.showCrashReporterSettings) {
                 SettingSwitch(
                     header = "Enable crash reporting",

@@ -299,6 +299,8 @@ val EnStrings = AppStrings(
     leastCompleteListened = "Least listened (complete)",
     earliestCached = "Earliest cached",
     latestCached = "Latest cached",
+    typeAlphabetically = "Type alphabetically",
+    typeReverseAlphabetically = "Type reverse alphabetically",
 
     loginToMusicBrainz = "Login to MusicBrainz",
     artificialLanguage = "[Artificial (Other)]",

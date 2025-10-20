@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 open class NoOpAppPreferences : AppPreferences {
     override val theme: Flow<AppPreferences.Theme>
@@ -55,10 +56,10 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
-    override val sortReleaseGroupListItems: Flow<Boolean>
-        get() = flowOf(true)
+    override val releaseGroupSortOption: Flow<ReleaseGroupSortOption>
+        get() = flowOf(ReleaseGroupSortOption.InsertedAscending)
 
-    override fun setSortReleaseGroupListItems(show: Boolean) {
+    override fun setReleaseGroupSortOption(sortOption: ReleaseGroupSortOption) {
         // No-op.
     }
 

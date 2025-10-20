@@ -30,10 +30,12 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.FiltersTestCase
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseGroupRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
@@ -41,8 +43,11 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -415,28 +420,44 @@ class ReleaseGroupsListRepositoryImplTest :
         val releaseGroupsListRepository = createReleaseGroupsListRepository(
             releaseGroups = listOf(),
         )
-        testFilter(
-            pagingFlowProducer = { query ->
+        testFilters(
+            pagingFlowProducer = { listFilters ->
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(
-                        query = query,
-                    ),
+                    listFilters = listFilters,
                     now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
-                FilterTestCase(
+                FiltersTestCase(
                     description = "No filter",
-                    query = "",
+                    listFilters = ListFilters(),
                     expectedResult = listOf(
+                        nutcrackerReleaseGroupListItemModel,
+                        tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FiltersTestCase(
+                    description = "Sort by types",
+                    listFilters = ListFilters(
+                        sortOption = SortOption.ReleaseGroup(
+                            option = ReleaseGroupSortOption.PrimaryTypeAscending,
+                        ),
+                    ),
+                    expectedResult = listOf(
+                        ListSeparator(id = "null_d0c3b18b-060b-41a8-9629-b880b2a95c13", text = "Album"),
+                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                            collected = true,
+                        ),
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
                             collected = true,
                         ),
                         nutcrackerReleaseGroupListItemModel,
-                        alsoSprachZarathustraReleaseGroupListItemModel.copy(
-                            collected = true,
-                        ),
                     ),
                 ),
             ),
@@ -537,12 +558,12 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
-                        disambiguation = "changes will show up",
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
                         collected = true,
                     ),
                     nutcrackerReleaseGroupListItemModel,
-                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                    tchaikovskyOverturesReleaseGroupListItemModel.copy(
+                        disambiguation = "changes will show up",
                         collected = true,
                     ),
                     nutcrackerReleaseGroupListItemModel.copy(
@@ -635,17 +656,17 @@ class ReleaseGroupsListRepositoryImplTest :
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                        collected = true,
+                    ),
+                    nutcrackerReleaseGroupListItemModel,
+                    nutcrackerReleaseGroupListItemModel.copy(
+                        id = "new-id-is-considered-a-different-release-group",
+                    ),
                     tchaikovskyOverturesReleaseGroupListItemModel.copy(
                         disambiguation = "new changes",
                         visited = true,
                         collected = true,
-                    ),
-                    nutcrackerReleaseGroupListItemModel,
-                    alsoSprachZarathustraReleaseGroupListItemModel.copy(
-                        collected = true,
-                    ),
-                    nutcrackerReleaseGroupListItemModel.copy(
-                        id = "new-id-is-considered-a-different-release-group",
                     ),
                 ),
                 this,

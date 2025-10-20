@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 import kotlin.time.Clock
@@ -48,7 +49,7 @@ interface ReleaseGroupDao : EntityDao {
     fun getReleaseGroups(
         browseMethod: BrowseMethod,
         query: String,
-        sorted: Boolean,
+        sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
     fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int>
@@ -223,12 +224,12 @@ class ReleaseGroupDaoImpl(
     override fun getReleaseGroups(
         browseMethod: BrowseMethod,
         query: String,
-        sorted: Boolean,
+        sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleaseGroups(
                 query = query,
-                sorted = sorted,
+                sortOption = sortOption,
             )
         }
 
@@ -237,13 +238,13 @@ class ReleaseGroupDaoImpl(
                 getReleaseGroupsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
-                    sorted = sorted,
+                    sortOption = sortOption,
                 )
             } else {
                 getReleaseGroupsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
-                    sorted = sorted,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -280,7 +281,7 @@ class ReleaseGroupDaoImpl(
 
     private fun getAllReleaseGroups(
         query: String,
-        sorted: Boolean,
+        sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllReleaseGroups(
             query = query,
@@ -290,7 +291,7 @@ class ReleaseGroupDaoImpl(
         queryProvider = { limit, offset ->
             transacter.getAllReleaseGroups(
                 query = "%$query%",
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,
@@ -301,7 +302,7 @@ class ReleaseGroupDaoImpl(
     private fun getReleaseGroupsByEntity(
         entityId: String,
         query: String,
-        sorted: Boolean,
+        sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleaseGroupsByEntityQuery(
             entityId = entityId,
@@ -313,7 +314,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByEntity(
                 entityId = entityId,
                 query = "%$query%",
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,
@@ -324,7 +325,7 @@ class ReleaseGroupDaoImpl(
     private fun getReleaseGroupsByCollection(
         collectionId: String,
         query: String,
-        sorted: Boolean,
+        sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = transacter.getCountOfReleaseGroupsByCollection(
             collectionId = collectionId,
@@ -336,7 +337,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
-                sorted = sorted,
+                sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,

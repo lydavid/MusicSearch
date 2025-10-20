@@ -50,7 +50,6 @@ internal class SettingsPresenter(
         val listenBrainzUserToken by listenBrainzAuthStore.observeUserToken().collectAsRetainedState("")
 
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
-        val sortReleaseGroupListItems by appPreferences.sortReleaseGroupListItems.collectAsRetainedState(false)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
         val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsRetainedState(false)
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsRetainedState(false)
@@ -63,10 +62,6 @@ internal class SettingsPresenter(
             when (event) {
                 is SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.show)
-                }
-
-                is SettingsUiEvent.UpdateSortReleaseGroupListItems -> {
-                    appPreferences.setSortReleaseGroupListItems(event.sort)
                 }
 
                 is SettingsUiEvent.EnableCrashReporting -> {
@@ -126,7 +121,6 @@ internal class SettingsPresenter(
             listenBrainzUsername = listenBrainzUsername,
             listenBrainzUserToken = listenBrainzUserToken,
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            sortReleaseGroupListItems = sortReleaseGroupListItems,
             showCrashReporterSettings = showCrashReporterSettings,
             isCrashReportingEnabled = isCrashReportingEnabled,
             musicBrainzLoginUiState = loginUiState,
@@ -148,7 +142,6 @@ internal data class SettingsUiState(
     val listenBrainzUsername: String = "",
     val listenBrainzUserToken: String = "",
     val showMoreInfoInReleaseListItem: Boolean = true,
-    val sortReleaseGroupListItems: Boolean = false,
     val showCrashReporterSettings: Boolean = false,
     val isCrashReportingEnabled: Boolean = false,
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
@@ -168,7 +161,6 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
 
     data object DismissSnackbar : SettingsUiEvent
     data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
-    data class UpdateSortReleaseGroupListItems(val sort: Boolean) : SettingsUiEvent
     data class EnableCrashReporting(val enable: Boolean) : SettingsUiEvent
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
     data object ExportDatabase : SettingsUiEvent

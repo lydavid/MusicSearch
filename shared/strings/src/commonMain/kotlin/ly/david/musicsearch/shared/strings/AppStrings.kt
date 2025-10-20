@@ -154,6 +154,8 @@ data class AppStrings(
     val leastCompleteListened: String,
     val earliestCached: String,
     val latestCached: String,
+    val typeAlphabetically: String,
+    val typeReverseAlphabetically: String,
     val loginToMusicBrainz: String,
     val artificialLanguage: String,
     val mostEntities: String,

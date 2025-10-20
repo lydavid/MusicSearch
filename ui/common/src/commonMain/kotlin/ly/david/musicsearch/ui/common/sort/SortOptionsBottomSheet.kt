@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.list.SortableOption
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
@@ -64,6 +65,7 @@ private fun SortableOption.getLabel(strings: AppStrings): String {
     return when (this) {
         is RecordingSortOption -> getLabel(strings)
         is ReleaseSortOption -> getLabel(strings)
+        is ReleaseGroupSortOption -> getLabel(strings)
         else -> error("Unsupported SortOption type: ${this::class.simpleName}")
     }
 }
@@ -100,5 +102,21 @@ private fun ReleaseSortOption.getLabel(strings: AppStrings): String {
 
         ReleaseSortOption.CompleteListensAscending -> strings.leastCompleteListened
         ReleaseSortOption.CompleteListensDescending -> strings.mostCompleteListened
+    }
+}
+
+private fun ReleaseGroupSortOption.getLabel(strings: AppStrings): String {
+    return when (this) {
+        ReleaseGroupSortOption.InsertedAscending -> strings.earliestCached
+        ReleaseGroupSortOption.InsertedDescending -> strings.latestCached
+
+        ReleaseGroupSortOption.NameAscending -> strings.alphabetically
+        ReleaseGroupSortOption.NameDescending -> strings.alphabeticallyReverse
+
+        ReleaseGroupSortOption.DateAscending -> strings.earliestReleaseDate
+        ReleaseGroupSortOption.DateDescending -> strings.latestReleaseDate
+
+        ReleaseGroupSortOption.PrimaryTypeAscending -> strings.typeAlphabetically
+        ReleaseGroupSortOption.PrimaryTypeDescending -> strings.typeReverseAlphabetically
     }
 }

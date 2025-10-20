@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -51,7 +52,6 @@ import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
-import ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
@@ -260,9 +260,10 @@ internal fun ArtistUi(
                         }
 
                         is SortOption.ReleaseGroup -> {
-                            SortToggleMenuItem(
-                                sorted = sortOption.sorted,
-                                onToggle = {
+                            SortMenuItem(
+                                sortOptions = ReleaseGroupSortOption.entries,
+                                selectedSortOption = sortOption.option,
+                                onSortOptionClick = {
                                     releaseGroupsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
                                     )

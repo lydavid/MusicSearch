@@ -58,6 +58,9 @@ fun ReleaseGroupListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
+                // TODO: show type if not shown as separators
+                //  where should flag be set?
+                //  or should we manipulate query set based on sortBy? don't null the types, cause we need it for separators
                 if (showType) {
                     releaseGroup.getDisplayTypes().ifNotNullOrEmpty {
                         Text(
