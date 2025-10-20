@@ -1,53 +1,48 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    "helpers:pinGitHubActionDigests",
-    ":semanticCommitTypeAll(chore)"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    'helpers:pinGitHubActionDigests',
+    ':semanticCommitTypeAll(chore)',
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchUpdateTypes": [
-        "major",
-        "minor",
-        "patch",
-        "pin",
-        "digest"
+      matchUpdateTypes: [
+        'major',
+        'minor',
+        'patch',
+        'pin',
+        'digest',
       ],
-      "automerge": true,
-      "automergeType": "pr",
-      "platformAutomerge": true
+      automerge: true,
+      automergeType: 'pr',
+      platformAutomerge: true,
     },
     {
-      "groupName": "Kotlin and Compose Compiler",
-      "groupSlug": "kotlin",
-      "matchPackagePrefixes": [
-        "androidx.compose.compiler",
-        "org.jetbrains.kotlin:kotlin"
-      ]
-    },
-    // F-Droid buildserver issue: https://gitlab.com/fdroid/admin/-/issues/593
-    {
-      "packageRules": [
-        {
-          "matchPackageNames": [
-            "com.android.application",
-            "com.android.library",
-            "com.android.test",
-            "com.android.tools.build:gradle",
-          ],
-          "allowedVersions": "<8.11.0"
-        }
-      ]
-    },
-    {
-      "description": "Exclude alpha/beta/pre-release versions",
-      "matchPackageNames": [
-        "com.mikepenz.aboutlibraries.plugin",
-        "com.mikepenz:aboutlibraries-core",
-        "com.mikepenz:aboutlibraries-compose-m3"
+      groupName: 'Kotlin and Compose Compiler',
+      groupSlug: 'kotlin',
+      matchPackageNames: [
+        'androidx.compose.compiler{/,}**',
+        'org.jetbrains.kotlin:kotlin{/,}**',
       ],
-      "allowedVersions": "!/-(alpha|beta|a\\d+|b\\d+|pre|rc|snapshot)/i"
-    }
-  ]
+    },
+    {
+      matchPackageNames: [
+        'com.android.application',
+        'com.android.library',
+        'com.android.test',
+        'com.android.tools.build:gradle',
+      ],
+      allowedVersions: '<8.11.0',
+    },
+    {
+      description: 'Exclude alpha/beta/pre-release versions',
+      matchPackageNames: [
+        'com.mikepenz.aboutlibraries.plugin',
+        'com.mikepenz:aboutlibraries-core',
+        'com.mikepenz:aboutlibraries-compose-m3',
+      ],
+      allowedVersions: '!/-(alpha|beta|a\\d+|b\\d+|pre|rc|snapshot)/i',
+    },
+  ],
 }
