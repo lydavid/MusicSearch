@@ -34,7 +34,7 @@
             "com.android.application",
             "com.android.library",
             "com.android.test",
-            "com.android.tools.build:*",
+            "com.android.tools.build:gradle",
           ],
           "allowedVersions": "<8.11.0"
         }
