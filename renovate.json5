@@ -26,12 +26,13 @@
         'org.jetbrains.kotlin:kotlin{/,}**',
       ],
     },
+    // F-Droid buildserver issue: https://gitlab.com/fdroid/admin/-/issues/593
     {
       matchPackageNames: [
         'com.android.application',
         'com.android.library',
         'com.android.test',
-        'com.android.tools.build:gradle',
+        'com.android.tools.build:{/,}**',
       ],
       allowedVersions: '<8.11.0',
     },
