@@ -1197,7 +1197,7 @@
                     "name": "Jordon de Hoog"
                 }
             ],
-            "artifactVersion": "4.0.1",
+            "artifactVersion": "4.0.2",
             "description": "Material You dynamic color for Compose Multiplatform",
             "scm": {
                 "connection": "scm:git:https://github.com/jordond/materialkolor.git",
