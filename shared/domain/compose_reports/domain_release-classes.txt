@@ -31,13 +31,12 @@ stable class ly.david.musicsearch.shared.domain.LifeSpanUiModel {
   stable val ended: Boolean
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.ListFilters {
+runtime class ly.david.musicsearch.shared.domain.ListFilters {
   stable val query: String
   stable val isRemote: Boolean
-  stable val sorted: Boolean
   stable val username: String
-  stable val recordingSortOption: RecordingSortOption
-  <runtime stability> = Stable
+  runtime val sortOption: SortOption
+  <runtime stability> = Uncertain(SortOption)
 }
 stable class ly.david.musicsearch.shared.domain.alias.BasicAlias {
   stable val name: String
@@ -408,6 +407,23 @@ unstable class ly.david.musicsearch.shared.domain.list.GetEntitiesImpl {
   runtime val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
+}
+stable class ly.david.musicsearch.shared.domain.list.SortOption.None {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.SortOption.Recording {
+  stable val option: RecordingSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.SortOption.Release {
+  stable val option: ReleaseSortOption
+  stable val showMoreInfo: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.SortOption.ReleaseGroup {
+  stable val option: ReleaseGroupSortOption
+  stable val sorted: Boolean
+  <runtime stability> = Stable
 }
 unstable class ly.david.musicsearch.shared.domain.listen.Listen.EntityMapping {
   stable val recordingMusicbrainzId: String?

@@ -18,7 +18,7 @@ ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileC
 ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingWithDialogChoices,PreviewSettingWithDialogChoices,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.settings.internal.images.PreviewImagesSettingsUi,PreviewImagesSettingsUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.settings.internal.DevSettingsSection,DevSettingsSection,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,13,
+ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,11,
 ly.david.musicsearch.shared.feature.settings.internal.SettingsUi,SettingsUi,1,1,1,0,0,0,1,0,8,5,
 ly.david.musicsearch.shared.feature.settings.internal.SettingsUi,SettingsUi,1,1,1,0,0,0,1,0,2,5,
 ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,3,
