@@ -960,7 +960,7 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.1.0",
+            "artifactVersion": "2.2.1",
             "description": "Driver to support SQLDelight generated code on Android",
             "scm": {
                 "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
