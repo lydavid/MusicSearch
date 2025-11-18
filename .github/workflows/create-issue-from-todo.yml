@@ -10,7 +10,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: "Create issue from TODO comments"
         uses: alstr/todo-to-issue-action@c45b007d85c8edf3365b139a9d4c65793e7c674f # v5
