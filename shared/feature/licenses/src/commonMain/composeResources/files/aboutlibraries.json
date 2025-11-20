@@ -417,14 +417,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.1.7",
+            "artifactVersion": "1.2.0",
             "description": "Android DataStore - contains the underlying store used by each serialization method along with components that require an Android dependency",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "DataStore",
-            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.7",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.2.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -442,14 +442,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.1.7",
+            "artifactVersion": "1.2.0",
             "description": "Repackaged proto-lite dependency for use by datastore preferences",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Preferences External Protobuf",
-            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.1.7",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.2.0",
             "licenses": [
                 "BSD-3-Clause"
             ],
