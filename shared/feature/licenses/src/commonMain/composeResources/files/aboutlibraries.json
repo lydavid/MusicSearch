@@ -1404,7 +1404,7 @@
                     "name": "Jetbrains Team"
                 }
             ],
-            "artifactVersion": "3.3.2",
+            "artifactVersion": "3.3.3",
             "description": "Ktor is a framework for quickly creating web applications in Kotlin with minimal effort.",
             "scm": {
                 "url": "https://github.com/ktorio/ktor.git"
