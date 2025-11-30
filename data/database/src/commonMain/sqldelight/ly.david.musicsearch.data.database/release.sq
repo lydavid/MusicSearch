@@ -554,7 +554,6 @@ AND (
   artist_credit_names LIKE :query OR
   aliases.alias_names LIKE :query
 )
-GROUP BY `release`.id
 ORDER BY
   CASE :sortBy
     WHEN 0 THEN releases_by_entity.rowid
