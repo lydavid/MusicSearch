@@ -8,12 +8,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.launch
+import ly.david.musicsearch.ui.common.clipboard.paste
 import ly.david.musicsearch.ui.common.icons.Clear
+import ly.david.musicsearch.ui.common.icons.Clipboard
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 
 @Composable
@@ -27,7 +33,8 @@ fun SingleLineTextField(
     val focusRequester = remember { FocusRequester() }
     TextField(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .focusRequester(focusRequester),
         shape = RectangleShape,
         value = text,
         label = textLabel?.let {
@@ -52,15 +59,30 @@ fun SingleLineTextField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         trailingIcon = {
-            if (text.isEmpty()) return@TextField
-            IconButton(onClick = {
-                onTextChange("")
-                focusRequester.requestFocus()
-            }) {
-                Icon(
-                    CustomIcons.Clear,
-                    contentDescription = "Clear",
-                )
+            if (text.isEmpty()) {
+                val clipboard = LocalClipboard.current
+                val coroutineScope = rememberCoroutineScope()
+                IconButton(onClick = {
+                    coroutineScope.launch {
+                        onTextChange(clipboard.paste())
+                        focusRequester.requestFocus()
+                    }
+                }) {
+                    Icon(
+                        CustomIcons.Clipboard,
+                        contentDescription = "Paste from clipboard",
+                    )
+                }
+            } else {
+                IconButton(onClick = {
+                    onTextChange("")
+                    focusRequester.requestFocus()
+                }) {
+                    Icon(
+                        CustomIcons.Clear,
+                        contentDescription = "Clear",
+                    )
+                }
             }
         },
         onValueChange = { newText ->
