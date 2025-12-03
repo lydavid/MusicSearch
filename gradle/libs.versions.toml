@@ -73,7 +73,7 @@ compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.9.3"
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.9.5"
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
-detekt-compose = "io.nlopez.compose.rules:detekt:0.4.28"
+detekt-compose = "io.nlopez.compose.rules:detekt:0.5.0"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
