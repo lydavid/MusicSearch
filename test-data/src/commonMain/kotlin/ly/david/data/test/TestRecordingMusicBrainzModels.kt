@@ -1,5 +1,6 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 
@@ -48,6 +49,18 @@ val skycladObserverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
         "JPK630905801",
         "JPR501002358",
     ),
+    aliases = listOf(
+        AliasMusicBrainzNetworkModel(
+            name = "Skyclad Observer",
+            locale = "en",
+            isPrimary = true,
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "スカイクラッドの観測者",
+            locale = "ja",
+            isPrimary = true,
+        ),
+    )
 )
 
 val skycladObserverCoverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(

@@ -129,14 +129,27 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
   ) AS collected,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
 FROM recordings_by_entity re
 INNER JOIN recording ON recording.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary AND recording_alias.recording_id IN (
+    SELECT recording.id
+    FROM recording
+    INNER JOIN recordings_by_entity ON recording.id = recordings_by_entity.recording_id
+    WHERE recordings_by_entity.entity_id = :entityId
+  )
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = recording.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id AND listen.username = :username
 WHERE re.entity_id = :entityId
@@ -145,7 +158,7 @@ AND (
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  recording_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY recording.id
 ORDER BY
@@ -201,15 +214,28 @@ SELECT
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   ce.id IS NOT NULL AS collected,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
 FROM recording
 INNER JOIN collection_entity ce ON recording.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary AND recording_alias.recording_id IN (
+    SELECT recording.id
+    FROM recording
+    INNER JOIN collection_entity ON recording.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+  )
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = recording.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id AND listen.username = :username
 WHERE c.id = :collectionId
@@ -219,7 +245,7 @@ AND (
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  recording_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY recording.id
 ORDER BY
@@ -273,13 +299,21 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = recording.id
   ) AS collected,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = recording.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id AND listen.username = :username
 WHERE (
@@ -287,7 +321,7 @@ WHERE (
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
   ac.name LIKE :query OR
-  recording_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY recording.id
 ORDER BY

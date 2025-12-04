@@ -1,5 +1,7 @@
 package ly.david.data.test
 
+import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 
 val underPressureRecordingListItemModel = RecordingListItemModel(
@@ -16,6 +18,18 @@ val skycladObserverRecordingListItemModel = RecordingListItemModel(
     firstReleaseDate = "2009-10-28",
     length = 275186,
     formattedArtistCredits = "いとうかなこ",
+    aliases = persistentListOf(
+        BasicAlias(
+            name = "Skyclad Observer",
+            locale = "en",
+            isPrimary = true,
+        ),
+        BasicAlias(
+            name = "スカイクラッドの観測者",
+            locale = "ja",
+            isPrimary = true,
+        ),
+    ),
 )
 
 val skycladObserverCoverRecordingListItemModel = RecordingListItemModel(

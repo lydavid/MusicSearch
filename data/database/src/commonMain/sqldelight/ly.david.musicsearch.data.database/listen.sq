@@ -224,20 +224,27 @@ SELECT
   recording.name AS recordingName,
   recording.disambiguation,
   artist_credit.name AS artistCreditNames,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  aliases.alias_names,
+  aliases.alias_locales,
   COUNT(*)
 FROM listen
 LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
-LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
-  AND recording_alias.is_primary
+LEFT JOIN (
+  SELECT
+    recording_id,
+    GROUP_CONCAT(name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE is_primary
+  GROUP BY recording_id
+) aliases ON aliases.recording_id = recording.id
 WHERE listen.username = :username
 AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
-  recording_alias.name LIKE :query OR
+  aliases.alias_names LIKE :query OR
   track_name LIKE :query OR
   recording.disambiguation LIKE :query OR
   artist_credit.name LIKE :query OR
