@@ -60,7 +60,7 @@ val skycladObserverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
             locale = "ja",
             isPrimary = true,
         ),
-    )
+    ),
 )
 
 val skycladObserverCoverRecordingMusicBrainzModel = RecordingMusicBrainzNetworkModel(
