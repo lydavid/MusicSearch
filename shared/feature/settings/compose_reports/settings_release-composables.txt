@@ -34,7 +34,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.81.0"
+  stable versionName: String? = @static "1.82.0"
   stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
 )
@@ -43,7 +43,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.81.0"
+  stable versionName: String? = @static "1.82.0"
   stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
   stable eventSink: Function1<SettingsUiEvent, Unit>? = @static <expression>

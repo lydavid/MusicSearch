@@ -94,6 +94,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByDateDescending()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByCompleteListensAscending()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByCompleteListensDescending()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewSingleLineTextFieldEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewSingleLineTextFieldWithText()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewTextWithHeading()
 fun ly.david.musicsearch.ui.common.theme.materialYouColorScheme(
   stable darkTheme: Boolean = @dynamic <expression>
@@ -502,6 +504,13 @@ restartable skippable fun ly.david.musicsearch.ui.common.sort.SortOptionsBottomS
   selectedSortOption: T
   stable onSortOptionClick: Function1<T, Unit>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
+  stable text: String
+  stable textLabel: String?
+  stable textHint: String?
+  stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextInput(
   stable instructions: AnnotatedString
   stable textLabel: String?
@@ -511,13 +520,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable onTextChange: Function1<String, Unit>? = @static <expression>
   stable onButtonClick: Function0<Unit>? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
-  stable text: String
-  stable textLabel: String?
-  stable textHint: String?
-  stable onTextChange: Function1<String, Unit>
-  stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextWithHeading(
   stable heading: String
