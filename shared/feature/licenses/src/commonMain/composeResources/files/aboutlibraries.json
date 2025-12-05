@@ -983,7 +983,7 @@
                     "name": "Adriel Cafe"
                 }
             ],
-            "artifactVersion": "1.7.0",
+            "artifactVersion": "1.8.0",
             "description": "The missing I18N/L10N library for Jetpack Compose!",
             "scm": {
                 "connection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git",
