@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish:
-    timeout-minutes: 60
+    timeout-minutes: 120
     runs-on: macos-26
     steps:
       - name: Checkout
