@@ -200,7 +200,7 @@ fun EntitiesPagingListUi(
             is ReleaseGroupListItemModel -> {
                 ReleaseGroupListItem(
                     releaseGroup = listItemModel,
-                    showType = false,
+                    showType = uiState.showMoreInfo,
                     requestForMissingCoverArtUrl = {
                         requestForMissingCoverArtUrl(listItemModel.id)
                     },

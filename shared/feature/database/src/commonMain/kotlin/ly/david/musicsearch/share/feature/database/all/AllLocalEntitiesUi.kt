@@ -20,6 +20,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
@@ -271,6 +272,7 @@ internal fun AllLocalEntitiesUi(
                 EntitiesPagingListUiState(
                     lazyListState = state.allEntitiesListUiState.releaseGroupsListUiState.lazyListState,
                     lazyPagingItems = releaseGroupsLazyPagingItems,
+                    showMoreInfo = state.allEntitiesListUiState.releaseGroupsListUiState.sortOption.showTypes(),
                 )
             }
 

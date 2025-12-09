@@ -18,6 +18,13 @@ sealed interface SortOption {
 
     data class ReleaseGroup(
         val option: ReleaseGroupSortOption = ReleaseGroupSortOption.InsertedAscending,
-        val sorted: Boolean = false,
     ) : SortOption
+}
+
+fun SortOption.showTypes(): Boolean {
+    val sortOption = (this as? SortOption.ReleaseGroup)?.option ?: return false
+    return !setOf(
+        ReleaseGroupSortOption.PrimaryTypeAscending,
+        ReleaseGroupSortOption.PrimaryTypeDescending,
+    ).contains(sortOption)
 }
