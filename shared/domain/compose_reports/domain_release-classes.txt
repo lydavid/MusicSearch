@@ -422,7 +422,6 @@ stable class ly.david.musicsearch.shared.domain.list.SortOption.Release {
 }
 stable class ly.david.musicsearch.shared.domain.list.SortOption.ReleaseGroup {
   stable val option: ReleaseGroupSortOption
-  stable val sorted: Boolean
   <runtime stability> = Stable
 }
 unstable class ly.david.musicsearch.shared.domain.listen.Listen.EntityMapping {
