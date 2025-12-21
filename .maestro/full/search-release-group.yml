@@ -8,20 +8,20 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn:
     text: "Search"
     index: 0
-- inputText: "rgid:\"bdaeec2d-94f1-46b5-91f3-340ec6939c66\""
-- tapOn: "Under Pressure"
+- inputText: "rgid:\"58d7e065-9069-4c0b-be8b-6dc55667880d\""
+- tapOn: "エルマ (Elma)"
 
-- assertVisible: "Release Group by Queen & David Bowie"
+- assertVisible: "エルマ (Elma)"
 - assertVisible: "Release Group information"
-- assertVisible: "Type: Single"
+- assertVisible: "Type: Album"
 - tapOn: "Filter"
 - inputText: "wiki"
 - "hideKeyboard"
-- assertVisible: "https://en.wikipedia.org/wiki/Under_Pressure"
+- assertVisible: "https://en.wikipedia.org/wiki/Elma_(album)"
 - tapOn: "Cancel"
 - tapOn: "Releases"
 - tapOn: "More actions"
 - tapOn: "Stats"
-- assertVisible: "Cached 13 / 13"
+- assertVisible: "Cached 5 / 5"
 
 - stopRecording
