@@ -1,0 +1,1 @@
+ALTER TABLE listen ADD COLUMN deleted_at_ms INTEGER;

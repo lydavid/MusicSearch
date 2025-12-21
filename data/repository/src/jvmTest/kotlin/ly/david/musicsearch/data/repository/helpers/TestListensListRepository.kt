@@ -53,6 +53,13 @@ interface TestListensListRepository {
                 override suspend fun getRecordingMetadata(recordingMusicBrainzId: String): RecordingMetadata? {
                     return null
                 }
+
+                override suspend fun deleteListen(
+                    listenedAtMs: Long,
+                    recordingMessyBrainzId: String,
+                ) {
+                    // no-op
+                }
             },
             coroutineScope = TestScope(coroutineDispatchers.io),
         )

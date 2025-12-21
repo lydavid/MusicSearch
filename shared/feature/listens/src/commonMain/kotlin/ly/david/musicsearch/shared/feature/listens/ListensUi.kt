@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.listens
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -34,7 +37,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.CancellationException
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -192,11 +197,38 @@ internal fun ListensUi(
         }
     }
 
-    state.actionableResult?.let {
-        LaunchedEffect(it) {
+    state.generalActionableResult?.let { result ->
+        LaunchedEffect(result) {
             snackbarHostState.showSnackbar(
-                message = it.message,
+                message = result.message,
+                actionLabel = result.action?.name,
+                duration = SnackbarDuration.Short,
+                withDismissAction = false,
             )
+        }
+    }
+
+    state.markForDeletionActionableResult?.let { result ->
+        LaunchedEffect(result) {
+            try {
+                val snackbarResult = snackbarHostState.showSnackbar(
+                    message = result.message,
+                    actionLabel = result.action?.name,
+                    duration = SnackbarDuration.Short,
+                    withDismissAction = true,
+                )
+                when (snackbarResult) {
+                    SnackbarResult.ActionPerformed -> {
+                        eventSink(ListensUiEvent.UnmarkForDeletion)
+                    }
+
+                    SnackbarResult.Dismissed -> {
+                        eventSink(ListensUiEvent.DeleteMarkedForDeletion)
+                    }
+                }
+            } catch (_: CancellationException) {
+                eventSink(ListensUiEvent.DeleteMarkedForDeletion)
+            }
         }
     }
 
@@ -226,93 +258,124 @@ internal fun ListensUi(
             }
         },
     ) { innerPadding ->
-        if (noUsernameSet) {
-            UsernameInput(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp)
-                    .fillMaxSize(),
-                listenBrainzUrl = state.listenBrainzUrl,
-                text = state.textFieldText,
-                strings = strings,
-                onTextChange = {
-                    eventSink(ListensUiEvent.EditText(it))
-                },
-                onSetUsername = {
-                    eventSink(ListensUiEvent.SetUsername)
-                },
-            )
-        } else {
-            var showBottomSheetForListen: ListenListItemModel? by remember { mutableStateOf(null) }
-            showBottomSheetForListen?.let { listen ->
-                ModalBottomSheet(
-                    onDismissRequest = { showBottomSheetForListen = null },
-                ) {
-                    ListenAdditionalActionsBottomSheetContent(
-                        listen = listen,
-                        filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
-                        allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
-                        onGoToReleaseClick = { releaseId ->
-                            eventSink(
-                                ListensUiEvent.ClickItem(
-                                    entityType = MusicBrainzEntityType.RELEASE,
-                                    id = releaseId,
-                                ),
-                            )
-                        },
-                        onFilterByRecordingClick = { id ->
-                            eventSink(
-                                ListensUiEvent.ToggleFacet(
-                                    MusicBrainzEntity(
-                                        id = id,
-                                        type = MusicBrainzEntityType.RECORDING,
-                                    ),
-                                ),
-                            )
-                        },
-                        onSubmitMapping = { recordingMessyBrainzId, recordingId ->
-                            eventSink(
-                                ListensUiEvent.SubmitMapping(
-                                    recordingMessyBrainzId = recordingMessyBrainzId,
-                                    recordingMusicBrainzId = recordingId,
-                                ),
-                            )
-                        },
-                        onRefreshMapping = {
-                            eventSink(ListensUiEvent.RefreshMapping(it))
-                        },
-                        onDismiss = { showBottomSheetForListen = null },
-                    )
-                }
-            }
+        ListensContent(
+            noUsernameSet = noUsernameSet,
+            innerPadding = innerPadding,
+            state = state,
+            strings = strings,
+            eventSink = eventSink,
+            selectedEntityFacet = selectedEntityFacet,
+            lazyPagingItems = lazyPagingItems,
+        )
+    }
+}
 
-            ScreenWithPagingLoadingAndError(
-                lazyPagingItems = lazyPagingItems,
-                modifier = Modifier
-                    .padding(innerPadding),
-                lazyListState = state.lazyListState,
-                keyed = true,
-            ) { listItemModel: Identifiable? ->
-                when (listItemModel) {
-                    is ListenListItemModel -> ListenListItem(
-                        listen = listItemModel,
-                        onClick = { id ->
-                            eventSink(
-                                ListensUiEvent.ClickItem(
-                                    entityType = MusicBrainzEntityType.RECORDING,
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ListensContent(
+    noUsernameSet: Boolean,
+    innerPadding: PaddingValues,
+    state: ListensUiState,
+    strings: AppStrings,
+    eventSink: (ListensUiEvent) -> Unit,
+    selectedEntityFacet: MusicBrainzEntity?,
+    lazyPagingItems: LazyPagingItems<Identifiable>,
+) {
+    if (noUsernameSet) {
+        UsernameInput(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .fillMaxSize(),
+            listenBrainzUrl = state.listenBrainzUrl,
+            text = state.textFieldText,
+            strings = strings,
+            onTextChange = {
+                eventSink(ListensUiEvent.EditText(it))
+            },
+            onSetUsername = {
+                eventSink(ListensUiEvent.SetUsername)
+            },
+        )
+    } else {
+        var showBottomSheetForListen: ListenListItemModel? by remember { mutableStateOf(null) }
+        showBottomSheetForListen?.let { listen ->
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheetForListen = null },
+            ) {
+                ListenAdditionalActionsBottomSheetContent(
+                    listen = listen,
+                    filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
+                    allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
+                    onGoToReleaseClick = { releaseId ->
+                        eventSink(
+                            ListensUiEvent.ClickItem(
+                                entityType = MusicBrainzEntityType.RELEASE,
+                                id = releaseId,
+                            ),
+                        )
+                    },
+                    onFilterByRecordingClick = { id ->
+                        eventSink(
+                            ListensUiEvent.ToggleFacet(
+                                MusicBrainzEntity(
                                     id = id,
+                                    type = MusicBrainzEntityType.RECORDING,
                                 ),
-                            )
-                        },
-                        onClickMoreActions = {
-                            showBottomSheetForListen = listItemModel
-                        },
-                    )
+                            ),
+                        )
+                    },
+                    onSubmitMapping = { recordingMessyBrainzId, recordingId ->
+                        eventSink(
+                            ListensUiEvent.SubmitMapping(
+                                recordingMessyBrainzId = recordingMessyBrainzId,
+                                recordingMusicBrainzId = recordingId,
+                            ),
+                        )
+                    },
+                    onRefreshMapping = {
+                        eventSink(ListensUiEvent.RefreshMapping(it))
+                    },
+                    onDelete = { listenedAtMs, username, recordingMessyBrainzId ->
+                        eventSink(
+                            ListensUiEvent.MarkForDeletion(
+                                listenedAtMs = listenedAtMs,
+                                username = username,
+                                recordingMessyBrainzId = recordingMessyBrainzId,
+                            ),
+                        )
+                    },
+                    onDismiss = { showBottomSheetForListen = null },
+                )
+            }
+        }
 
-                    is ListSeparator -> ListSeparatorHeader(
-                        text = listItemModel.text,
-                    )
-                }
+        ScreenWithPagingLoadingAndError(
+            lazyPagingItems = lazyPagingItems,
+            modifier = Modifier
+                .padding(innerPadding),
+            lazyListState = state.lazyListState,
+            keyed = true,
+        ) { listItemModel: Identifiable? ->
+            when (listItemModel) {
+                is ListenListItemModel -> ListenListItem(
+                    listen = listItemModel,
+                    onClick = { id ->
+                        eventSink(
+                            ListensUiEvent.ClickItem(
+                                entityType = MusicBrainzEntityType.RECORDING,
+                                id = id,
+                            ),
+                        )
+                    },
+                    onClickMoreActions = {
+                        showBottomSheetForListen = listItemModel
+                    },
+                )
+
+                is ListSeparator -> ListSeparatorHeader(
+                    text = listItemModel.text,
+                )
             }
         }
     }

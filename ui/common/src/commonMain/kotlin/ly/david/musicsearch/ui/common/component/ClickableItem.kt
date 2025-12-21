@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,6 +26,7 @@ fun ClickableItem(
     startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
     fontWeight: FontWeight = FontWeight.Normal,
+    foregroundColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit = {},
 ) {
     Box(
@@ -37,6 +40,7 @@ fun ClickableItem(
                 imageVector = startIcon,
                 contentDescription = null,
                 modifier = iconModifier.align(Alignment.CenterStart),
+                tint = foregroundColor,
             )
         }
 
@@ -52,6 +56,7 @@ fun ClickableItem(
                 text = title,
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = fontWeight,
+                color = foregroundColor,
             )
 
             subtitle?.let {
@@ -59,6 +64,7 @@ fun ClickableItem(
                     text = subtitle,
                     style = TextStyles.getCardBodySubTextStyle(),
                     fontWeight = fontWeight,
+                    color = foregroundColor,
                 )
             }
         }
@@ -68,6 +74,7 @@ fun ClickableItem(
                 imageVector = endIcon,
                 contentDescription = null,
                 modifier = iconModifier.align(Alignment.CenterEnd),
+                tint = foregroundColor,
             )
         }
     }

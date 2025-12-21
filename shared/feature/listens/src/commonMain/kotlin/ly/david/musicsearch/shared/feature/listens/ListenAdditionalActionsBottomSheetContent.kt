@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +28,7 @@ import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.DeleteOutline
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
@@ -45,6 +47,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     onFilterByRecordingClick: (recordingId: String) -> Unit = {},
     onSubmitMapping: (recordingMessyBrainzId: String, recordingId: String) -> Unit = { _, _ -> },
     onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
+    onDelete: (listenedAtMs: Long, username: String, recordingMessyBrainzId: String) -> Unit = { _, _, _ -> },
     onDismiss: () -> Unit = {},
 ) {
     val release = listen.release
@@ -148,6 +151,22 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 startIcon = CustomIcons.Refresh,
                 onClick = {
                     onRefreshMapping(listen.recordingMessybrainzId)
+                    onDismiss()
+                },
+            )
+
+            HorizontalDivider()
+
+            ClickableItem(
+                title = "Delete",
+                startIcon = CustomIcons.DeleteOutline,
+                foregroundColor = MaterialTheme.colorScheme.error,
+                onClick = {
+                    onDelete(
+                        listen.listenedAtMs,
+                        listen.username,
+                        listen.recordingMessybrainzId,
+                    )
                     onDismiss()
                 },
             )

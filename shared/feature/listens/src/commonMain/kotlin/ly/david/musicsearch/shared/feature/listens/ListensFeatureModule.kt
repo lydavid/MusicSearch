@@ -17,6 +17,7 @@ val listensFeatureModule = module {
                     listenBrainzAuthStore = get(),
                     listensListRepository = get(),
                     listenBrainzRepository = get(),
+                    externalScope = get(),
                 )
 
                 else -> null

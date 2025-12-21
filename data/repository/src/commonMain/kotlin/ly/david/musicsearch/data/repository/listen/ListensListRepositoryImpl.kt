@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.getDateFormatted
 import ly.david.musicsearch.shared.domain.common.toUUID
+import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.ErrorType
@@ -222,6 +223,55 @@ class ListensListRepositoryImpl(
                     )
                 }
             }
+        }
+    }
+
+    override fun markListenForDeletion(
+        listenedAtMs: Long,
+        username: String,
+        recordingMessyBrainzId: String,
+        currentTimeMs: Long,
+    ): ActionableResult {
+        listenDao.markListenForDeletion(
+            listenedAtMs = listenedAtMs,
+            username = username,
+            recordingMessyBrainzId = recordingMessyBrainzId,
+            currentTimeMs = currentTimeMs,
+        )
+        return ActionableResult(
+            message = "Deleting...",
+            action = Action.Undo,
+        )
+    }
+
+    override fun unmarkListenForDeletion() {
+        listenDao.unmarkListenForDeletion()
+    }
+
+    override suspend fun deleteMarkedForDeletion(): ActionableResult {
+        return try {
+            val listensTimestampAndMsidMarkedForDeletion = listenDao.getListenTimestampAndMsidMarkedForDeletion()
+            listensTimestampAndMsidMarkedForDeletion.forEach { listensTimestampAndMsid ->
+                listenBrainzApi.deleteListen(
+                    listenedAtMs = listensTimestampAndMsid.first,
+                    recordingMessyBrainzId = listensTimestampAndMsid.second,
+                )
+            }
+            listenDao.deleteListens()
+
+            ActionableResult(
+                message = "Deleted ${listensTimestampAndMsidMarkedForDeletion.size}.",
+                action = null,
+            )
+        } catch (ex: HandledException) {
+            ActionableResult(
+                message = when {
+                    ex.errorResolution == ErrorResolution.Login ->
+                        "You do not have permission to delete this listen."
+
+                    else -> ex.message ?: "Failed to delete listen."
+                },
+            )
         }
     }
 }

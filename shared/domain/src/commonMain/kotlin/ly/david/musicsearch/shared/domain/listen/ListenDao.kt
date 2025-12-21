@@ -36,4 +36,29 @@ interface ListenDao {
         artistName: String?,
         entityMapping: Listen.EntityMapping,
     )
+
+    /**
+     * ([listenedAtMs], [username], [recordingMessyBrainzId]) are the minimal pieces of data needed to
+     * uniquely identify a listen.
+     *
+     * [currentTimeMs] marks when a listen was deleted.
+     */
+    fun markListenForDeletion(
+        listenedAtMs: Long,
+        username: String,
+        recordingMessyBrainzId: String,
+        currentTimeMs: Long,
+    )
+
+    /**
+     * Unmark all in case user marked multiple listens for deletion.
+     */
+    fun unmarkListenForDeletion()
+
+    /**
+     * Minimum pieces of data needed for deletion in ListenBrainz.
+     */
+    fun getListenTimestampAndMsidMarkedForDeletion(): List<Pair<Long, String>>
+
+    fun deleteListens()
 }
