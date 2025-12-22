@@ -45,7 +45,7 @@ Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and avai
 - Have a Pixel phone? Enable notification listener to record Now Playing history
 - Scrobbling to ListenBrainz? Enter your username to explore your listens
 - Customize the app's appearance with: Light/Dark theme, Material theme based on your wallpaper, or pick a custom color
-- An artist's discography is incomplete? Aliases missing? Other data missing? Contribute it to MusicBrainz: https://musicbrainz.org/
+- Is an artist's discography incomplete? Aliases missing? Other data missing? Contribute it to MusicBrainz: https://musicbrainz.org
 
 See [all features here](./docs/all_features.md).
 
