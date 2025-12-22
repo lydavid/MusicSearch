@@ -12,7 +12,7 @@ appId: io.github.lydavid.musicsearch.debug
 # Aliases are not included when searching release groups, unless it was inserted through
 # other sources such as visiting the release group, or browsing a list of release groups.
 # https://tickets.metabrainz.org/browse/SEARCH-746
-- tapOn: "エルマ"
+- tapOn: "エルマ.*"
 
 - assertVisible: "エルマ (Elma)"
 - assertVisible: "Release Group information"
