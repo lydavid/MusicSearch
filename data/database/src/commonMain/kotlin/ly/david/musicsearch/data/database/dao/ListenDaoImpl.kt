@@ -59,6 +59,7 @@ class ListenDaoImpl(
                         spotify_album_id = listen.spotifyAlbumId,
                         spotify_artist_ids = listen.spotifyArtistIds,
                         spotify_id = listen.spotifyId,
+                        deleted_at_ms = null,
                     ),
                 )
                 insertLinkedEntities(entityMapping = listen.entityMapping)
@@ -285,6 +286,37 @@ class ListenDaoImpl(
             .getOldestTimestampByUser(username = username)
             .executeAsOneOrNull()
             ?.timestamp
+    }
+
+    override fun markListenForDeletion(
+        listenedAtMs: Long,
+        username: String,
+        recordingMessyBrainzId: String,
+        currentTimeMs: Long,
+    ) {
+        listenTransacter.markListenForDeletion(
+            listened_at_ms = listenedAtMs,
+            username = username,
+            recording_messybrainz_id = recordingMessyBrainzId,
+            current_time_ms = currentTimeMs,
+        )
+    }
+
+    override fun unmarkListenForDeletion() {
+        listenTransacter.unmarkListenForDeletion()
+    }
+
+    override fun getListenTimestampAndMsidMarkedForDeletion(): List<Pair<Long, String>> {
+        return listenTransacter.getListenTimestampAndMsidMarkedForDeletion(
+            mapper = { listenedAtMs, recordingMessybrainzId ->
+                listenedAtMs to recordingMessybrainzId
+            },
+        )
+            .executeAsList()
+    }
+
+    override fun deleteListens() {
+        listenTransacter.deleteListens()
     }
 }
 

@@ -16,6 +16,7 @@ import io.ktor.http.appendPathSegments
 import io.ktor.http.auth.HttpAuthHeader
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -45,6 +46,14 @@ interface ListenBrainzApi {
     suspend fun getRecordingMetadata(
         recordingMusicBrainzId: String,
     ): RecordingMetadata?
+
+    /**
+     * You can only delete your own listens. The authorization header determines the user we delete from.
+     */
+    suspend fun deleteListen(
+        listenedAtMs: Long,
+        recordingMessyBrainzId: String,
+    )
 
     companion object {
         fun create(
@@ -160,5 +169,31 @@ class ListenBrainzApiImpl(
                 parameter("inc", "artist release")
             }
         }.body<Map<String, RecordingMetadata>>()[recordingMusicBrainzId]
+    }
+
+    @Serializable
+    private data class DeleteListenBody(
+        @SerialName("listened_at")
+        val listenedAtS: Long,
+        @SerialName("recording_msid")
+        val recordingMessyBrainzId: String,
+    )
+
+    override suspend fun deleteListen(
+        listenedAtMs: Long,
+        recordingMessyBrainzId: String,
+    ) {
+        httpClient.post {
+            url {
+                appendPathSegments("delete-listen")
+                header("Content-Type", "application/json")
+                setBody(
+                    DeleteListenBody(
+                        listenedAtS = listenedAtMs / MS_IN_SECOND,
+                        recordingMessyBrainzId = recordingMessyBrainzId,
+                    ),
+                )
+            }
+        }
     }
 }

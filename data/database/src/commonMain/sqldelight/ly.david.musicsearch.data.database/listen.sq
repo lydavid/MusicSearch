@@ -36,6 +36,8 @@ CREATE TABLE listen (
   spotify_artist_ids TEXT AS List<String>,
   spotify_id TEXT,
 
+  deleted_at_ms INTEGER,
+
   PRIMARY KEY (listened_at_ms, username, recording_messybrainz_id)
 );
 
@@ -100,6 +102,7 @@ FROM (
   LEFT JOIN release_alias ON release_alias.release_id = `release`.id
     AND release_alias.is_primary
   WHERE listen.username = :username
+  AND listen.deleted_at_ms IS NULL
   AND CASE
     WHEN :recordingId IS NULL THEN 1
     ELSE recording_musicbrainz_id = :recordingId
@@ -166,6 +169,7 @@ LEFT JOIN release_alias ON release_alias.release_id = `release`.id
   AND release_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
 WHERE listen.username = :username
+AND listen.deleted_at_ms IS NULL
 AND CASE
   WHEN :recordingId IS NULL THEN 1
   ELSE recording_musicbrainz_id = :recordingId
@@ -459,3 +463,26 @@ WHERE (
 GROUP BY artist_info.artist_id
 ORDER BY COUNT(*) DESC
 LIMIT :limit OFFSET :offset;
+
+markListenForDeletion:
+UPDATE listen
+SET deleted_at_ms = :current_time_ms
+WHERE listened_at_ms = :listened_at_ms
+AND username = :username
+AND recording_messybrainz_id = :recording_messybrainz_id;
+
+unmarkListenForDeletion:
+UPDATE listen
+SET deleted_at_ms = NULL
+WHERE deleted_at_ms IS NOT NULL;
+
+getListenTimestampAndMsidMarkedForDeletion:
+SELECT
+  listened_at_ms,
+  recording_messybrainz_id
+FROM listen
+WHERE deleted_at_ms IS NOT NULL;
+
+deleteListens:
+DELETE FROM listen
+WHERE deleted_at_ms IS NOT NULL;

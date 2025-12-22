@@ -17,6 +17,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 import ly.david.musicsearch.ui.common.topappbar.toTab
+import kotlin.time.Clock
 
 internal class ListensPresenter(
     private val screen: ListensScreen,
@@ -42,6 +44,7 @@ internal class ListensPresenter(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
     private val listenBrainzRepository: ListenBrainzRepository,
+    private val externalScope: CoroutineScope,
 ) : Presenter<ListensUiState> {
     @Suppress("CyclomaticComplexMethod")
     @Composable
@@ -50,6 +53,7 @@ internal class ListensPresenter(
         val browseUsername by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
         var textFieldText by rememberSaveable { mutableStateOf("") }
         var actionableResult by remember { mutableStateOf<ActionableResult?>(null) }
+        var markForDeletionActionableResult by remember { mutableStateOf<ActionableResult?>(null) }
 
         val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
@@ -145,6 +149,25 @@ internal class ListensPresenter(
                         )
                     }
                 }
+
+                is ListensUiEvent.MarkForDeletion -> {
+                    markForDeletionActionableResult = listensListRepository.markListenForDeletion(
+                        listenedAtMs = event.listenedAtMs,
+                        username = event.username,
+                        recordingMessyBrainzId = event.recordingMessyBrainzId,
+                        currentTimeMs = Clock.System.now().toEpochMilliseconds(),
+                    )
+                }
+
+                is ListensUiEvent.UnmarkForDeletion -> {
+                    listensListRepository.unmarkListenForDeletion()
+                }
+
+                is ListensUiEvent.DeleteMarkedForDeletion -> {
+                    externalScope.launch {
+                        actionableResult = listensListRepository.deleteMarkedForDeletion()
+                    }
+                }
             }
         }
 
@@ -152,7 +175,8 @@ internal class ListensPresenter(
             listenBrainzUrl = listenBrainzRepository.getBaseUrl(),
             username = browseUsername,
             textFieldText = textFieldText,
-            actionableResult = actionableResult,
+            generalActionableResult = actionableResult,
+            markForDeletionActionableResult = markForDeletionActionableResult,
             totalCountOfListens = totalCountOfListens,
             topAppBarFilterState = topAppBarFilterState,
             facetsUiState = FacetsUiState(
@@ -178,7 +202,8 @@ internal data class ListensUiState(
     val listenBrainzUrl: String = "",
     val username: String = "",
     val textFieldText: String = "",
-    val actionableResult: ActionableResult? = null,
+    val generalActionableResult: ActionableResult? = null,
+    val markForDeletionActionableResult: ActionableResult? = null,
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val facetsUiState: FacetsUiState = FacetsUiState(),
@@ -234,4 +259,14 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
     data class RefreshMapping(
         val recordingMessyBrainzId: String,
     ) : ListensUiEvent
+
+    data class MarkForDeletion(
+        val listenedAtMs: Long,
+        val username: String,
+        val recordingMessyBrainzId: String,
+    ) : ListensUiEvent
+
+    data object UnmarkForDeletion : ListensUiEvent
+
+    data object DeleteMarkedForDeletion : ListensUiEvent
 }

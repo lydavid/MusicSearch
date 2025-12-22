@@ -4,9 +4,9 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.list.FacetListItem
 
 interface ListensListRepository {
     fun observeListens(
@@ -35,4 +35,15 @@ interface ListensListRepository {
     suspend fun refreshMapping(
         recordingMessyBrainzId: String,
     ): ActionableResult
+
+    fun markListenForDeletion(
+        listenedAtMs: Long,
+        username: String,
+        recordingMessyBrainzId: String,
+        currentTimeMs: Long,
+    ): ActionableResult
+
+    fun unmarkListenForDeletion()
+
+    suspend fun deleteMarkedForDeletion(): ActionableResult
 }
