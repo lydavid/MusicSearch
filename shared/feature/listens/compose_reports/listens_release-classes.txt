@@ -4,13 +4,15 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensPresenter {
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
   unstable val listensListRepository: ListensListRepository
   unstable val listenBrainzRepository: ListenBrainzRepository
+  unstable val externalScope: CoroutineScope
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   stable val listenBrainzUrl: String
   stable val username: String
   stable val textFieldText: String
-  runtime val actionableResult: ActionableResult?
+  runtime val generalActionableResult: ActionableResult?
+  runtime val markForDeletionActionableResult: ActionableResult?
   stable val totalCountOfListens: Long?
   stable val topAppBarFilterState: TopAppBarFilterState
   unstable val facetsUiState: FacetsUiState
@@ -60,5 +62,17 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SubmitMa
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.RefreshMapping {
   stable val recordingMessyBrainzId: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.MarkForDeletion {
+  stable val listenedAtMs: Long
+  stable val username: String
+  stable val recordingMessyBrainzId: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UnmarkForDeletion {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.DeleteMarkedForDeletion {
   <runtime stability> = Stable
 }

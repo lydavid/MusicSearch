@@ -124,7 +124,7 @@ ly.david.musicsearch.ui.common.ResourceDropdownPicker,ResourceDropdownPicker,1,1
 ly.david.musicsearch.ui.common.area.AreaListItem,AreaListItem,1,1,1,0,0,0,0,0,3,6,
 ly.david.musicsearch.ui.common.artist.ArtistListItem,ArtistListItem,1,1,1,0,0,0,0,0,1,6,
 ly.david.musicsearch.ui.common.button.RetryButton,RetryButton,1,1,1,0,0,0,0,0,1,3,
-ly.david.musicsearch.ui.common.component.ClickableItem,ClickableItem,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.ui.common.component.ClickableItem,ClickableItem,1,1,1,0,0,0,1,0,2,2,
 ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet,MultipleChoiceBottomSheet,1,1,1,0,0,0,1,0,2,3,
 ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheetContent,MultipleChoiceBottomSheetContent,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton,DialogWithCloseButton,1,1,1,0,0,0,0,0,1,2,

@@ -23,6 +23,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onFilterByRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
   stable onSubmitMapping: Function2<@[ParameterName(name = 'recordingMessyBrainzId')] String, @[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
   stable onRefreshMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
+  stable onDelete: Function3<@[ParameterName(name = 'listenedAtMs')] Long, @[ParameterName(name = 'username')] String, @[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.LinkWithMusicBrainzItem(
@@ -40,6 +41,15 @@ open fun ly.david.musicsearch.shared.feature.listens.ListensPresenter.present(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensUi(
   stable state: ListensUiState
   stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensContent(
+  stable noUsernameSet: Boolean
+  stable innerPadding: PaddingValues
+  stable state: ListensUiState
+  unstable strings: AppStrings
+  stable eventSink: Function1<ListensUiEvent, Unit>
+  selectedEntityFacet: MusicBrainzEntity?
+  lazyPagingItems: LazyPagingItems<Identifiable>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.UsernameInput(
   stable listenBrainzUrl: String

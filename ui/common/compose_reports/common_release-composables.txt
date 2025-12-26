@@ -178,6 +178,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable startIcon: ImageVector? = @static null
   stable endIcon: ImageVector? = @static null
   stable fontWeight: FontWeight? = @static <expression>
+  stable foregroundColor: Color = @dynamic <expression>
   stable onClick: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet(
