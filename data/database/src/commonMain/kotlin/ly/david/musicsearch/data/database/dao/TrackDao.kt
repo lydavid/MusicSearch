@@ -13,6 +13,8 @@ import lydavidmusicsearchdatadatabase.Track
 class TrackDao(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
+    private val recordingDao: RecordingDao,
+    private val aliasDao: AliasDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.trackQueries
@@ -28,6 +30,14 @@ class TrackDao(
                     track = track,
                 )
             }
+
+            val recordings = tracks?.map { it.recording }.orEmpty()
+            recordingDao.upsertAll(
+                recordings = recordings,
+            )
+            aliasDao.insertAll(
+                musicBrainzNetworkModels = recordings,
+            )
         }
     }
 

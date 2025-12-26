@@ -79,7 +79,7 @@ val databaseDaoModule = module {
     single { ReleaseReleaseGroupDao(get()) }
     single { SearchHistoryDao(get(), get()) }
     singleOf(::SeriesDao)
-    single { TrackDao(get(), get(), get()) }
+    singleOf(::TrackDao)
     single { WorkAttributeDao(get()) }
     singleOf(::WorkDao)
     single { SpotifyHistoryDao(get(), get()) }
