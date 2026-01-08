@@ -13,8 +13,8 @@
 		631D2DC22BBF8AE700C6F58F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 631D2DC12BBF8AE700C6F58F /* Preview Assets.xcassets */; };
 		631D2DCC2BBF8AE700C6F58F /* musicsearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DCB2BBF8AE700C6F58F /* musicsearchTests.swift */; };
 		631D2DD62BBF8AE700C6F58F /* musicsearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */; };
-		631D2DD82BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */; };
 		6331ECBC2E8A2B99007B979C /* NSExceptionKtCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6331ECBB2E8A2B99007B979C /* NSExceptionKtCrashlytics */; };
+		6333E44D2EF8DF6D008EA295 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6333E44C2EF8DF6D008EA295 /* SnapshotHelper.swift */; };
 		63BCAF5E2E233BDA00015E39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63BCAF5D2E233BDA00015E39 /* GoogleService-Info.plist */; };
 		63BCAF642E233F9000015E39 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63BCAF632E233F9000015E39 /* FirebaseAnalytics */; };
 		63BCAF662E233F9000015E39 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 63BCAF652E233F9000015E39 /* FirebaseCrashlytics */; };
@@ -48,7 +48,7 @@
 		631D2DCB2BBF8AE700C6F58F /* musicsearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchTests.swift; sourceTree = "<group>"; };
 		631D2DD12BBF8AE700C6F58F /* musicsearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = musicsearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITests.swift; sourceTree = "<group>"; };
-		631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicsearchUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6333E44C2EF8DF6D008EA295 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		634CC75C2CDA45D400F71BD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		63BCAF5D2E233BDA00015E39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63CD86342DC0FB94003F4B6D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -137,7 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				631D2DD52BBF8AE700C6F58F /* musicsearchUITests.swift */,
-				631D2DD72BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift */,
+				6333E44C2EF8DF6D008EA295 /* SnapshotHelper.swift */,
 			);
 			path = musicsearchUITests;
 			sourceTree = "<group>";
@@ -215,7 +215,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					631D2DB62BBF8AE600C6F58F = {
@@ -349,8 +349,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				631D2DD82BBF8AE700C6F58F /* musicsearchUITestsLaunchTests.swift in Sources */,
 				631D2DD62BBF8AE700C6F58F /* musicsearchUITests.swift in Sources */,
+				6333E44D2EF8DF6D008EA295 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
