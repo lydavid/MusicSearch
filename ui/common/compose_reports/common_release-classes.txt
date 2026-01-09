@@ -294,6 +294,14 @@ stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
 stable class ly.david.musicsearch.ui.common.series.SeriesListPresenter {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals {
+  stable val actionLabel: String?
+  stable val duration: SnackbarDuration
+  stable val message: String
+  stable val withDismissAction: Boolean
+  unstable val feedback: Feedback
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.theme.ExtendedColors {
   stable val artist: Color
   stable val area: Color

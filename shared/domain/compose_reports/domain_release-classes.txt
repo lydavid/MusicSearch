@@ -307,6 +307,29 @@ stable class ly.david.musicsearch.shared.domain.details.WorkDetailsModel {
   stable val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
 }
+stable class ly.david.musicsearch.shared.domain.error.Feedback.Loading {
+  stable val message: String
+  stable val time: Instant
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.error.Feedback.Success {
+  stable val message: String
+  stable val time: Instant
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.error.Feedback.Error {
+  stable val message: String
+  stable val errorResolution: ErrorResolution
+  stable val action: Action?
+  stable val time: Instant
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.error.Feedback.Actionable {
+  stable val message: String
+  stable val action: Action
+  stable val time: Instant
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.error.ActionableResult {
   stable val message: String
   stable val errorResolution: ErrorResolution
