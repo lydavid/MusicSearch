@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
-import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
@@ -59,8 +59,8 @@ internal class CollectionPresenter(
 
         var collection: CollectionListItemModel? by rememberRetained { mutableStateOf(null) }
         var title: String by rememberSaveable { mutableStateOf("") }
-        var firstActionableResult: ActionableResult? by remember { mutableStateOf(null) }
-        var secondActionableResult: ActionableResult? by remember { mutableStateOf(null) }
+        var softDeleteFeedback: Feedback? by remember { mutableStateOf(null) }
+        var hardDeleteFeedback: Feedback? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -136,11 +136,15 @@ internal class CollectionPresenter(
                 }
 
                 is CollectionUiEvent.MarkSelectedItemsAsDeleted -> {
-                    firstActionableResult = collectionRepository.markDeletedFromCollection(
-                        collection = collection ?: return,
-                        collectableIds = selectionState.selectedIds,
-                    )
-                    selectionState.clearSelection()
+                    externalScope.launch {
+                        collectionRepository.markDeletedFromCollection(
+                            collection = collection ?: return@launch,
+                            collectableIds = selectionState.selectedIds,
+                        ).collect {
+                            softDeleteFeedback = it
+                            selectionState.clearSelection()
+                        }
+                    }
                 }
 
                 is CollectionUiEvent.UnMarkItemsAsDeleted -> {
@@ -151,9 +155,11 @@ internal class CollectionPresenter(
 
                 is CollectionUiEvent.DeleteItemsMarkedAsDeleted -> {
                     externalScope.launch {
-                        secondActionableResult = collectionRepository.deleteFromCollection(
+                        collectionRepository.deleteFromCollection(
                             collection = collection ?: return@launch,
-                        )
+                        ).collect {
+                            hardDeleteFeedback = it
+                        }
                     }
                 }
             }
@@ -163,8 +169,8 @@ internal class CollectionPresenter(
             title = title,
             collection = collection,
             url = getMusicBrainzUrl(MusicBrainzEntityType.COLLECTION, screen.collectionId),
-            firstActionableResult = firstActionableResult,
-            secondActionableResult = secondActionableResult,
+            softDeleteFeedback = softDeleteFeedback,
+            hardDeleteFeedback = hardDeleteFeedback,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             musicBrainzLoginUiState = loginUiState,
@@ -178,8 +184,8 @@ internal class CollectionPresenter(
 internal data class CollectionUiState(
     val title: String,
     val collection: CollectionListItemModel?,
-    val firstActionableResult: ActionableResult?,
-    val secondActionableResult: ActionableResult?,
+    val softDeleteFeedback: Feedback?,
+    val hardDeleteFeedback: Feedback?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
     val selectionState: SelectionState,

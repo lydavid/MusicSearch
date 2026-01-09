@@ -4,6 +4,7 @@ import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -15,6 +16,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -123,14 +125,16 @@ class CollectionRepositoryImpl(
     override fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): ActionableResult {
+    ): Flow<Feedback> = flow {
         collectionEntityDao.markDeletedFromCollection(
             collectionId = collection.id,
             collectableIds = collectableIds,
         )
-        return ActionableResult(
-            message = "Deleting ${collectableIds.size} from ${collection.name}.",
-            action = Action.Undo,
+        emit(
+            Feedback.Actionable(
+                message = "Deleting ${collectableIds.size} from ${collection.name}.",
+                action = Action.Undo,
+            ),
         )
     }
 
@@ -138,7 +142,9 @@ class CollectionRepositoryImpl(
         collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
     }
 
-    override suspend fun deleteFromCollection(collection: CollectionListItemModel): ActionableResult? {
+    override suspend fun deleteFromCollection(collection: CollectionListItemModel): Flow<Feedback> = flow {
+        emit(Feedback.Loading("..."))
+
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
         if (collection.isRemote) {
             try {
@@ -151,17 +157,22 @@ class CollectionRepositoryImpl(
                 )
             } catch (ex: HandledException) {
                 val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
-                return ActionableResult(
-                    message = userFacingError,
-                    action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
-                    errorResolution = ex.errorResolution,
+                emit(
+                    Feedback.Error(
+                        message = userFacingError,
+                        action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
+                        errorResolution = ex.errorResolution,
+                    ),
                 )
+                return@flow
             }
         }
+
         collectionEntityDao.deleteFromCollection(collectionId = collection.id)
-        return ActionableResult(
-            message = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
-            action = null,
+        emit(
+            Feedback.Success(
+                message = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
+            ),
         )
     }
 

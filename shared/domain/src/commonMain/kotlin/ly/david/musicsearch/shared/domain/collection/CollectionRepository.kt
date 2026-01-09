@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.domain.collection
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
@@ -28,7 +29,7 @@ interface CollectionRepository {
     fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): ActionableResult
+    ): Flow<Feedback>
 
     fun unMarkDeletedFromCollection(
         collectionId: String,
@@ -36,7 +37,7 @@ interface CollectionRepository {
 
     suspend fun deleteFromCollection(
         collection: CollectionListItemModel,
-    ): ActionableResult?
+    ): Flow<Feedback>
 
     suspend fun addToCollection(
         collectionId: String,
