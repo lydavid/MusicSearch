@@ -79,7 +79,7 @@ class SeriesRepositoryImpl(
         aliasDao.insertAll(listOf(series))
 
         val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = series.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

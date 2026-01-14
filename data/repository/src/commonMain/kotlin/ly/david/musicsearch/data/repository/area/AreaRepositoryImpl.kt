@@ -80,7 +80,7 @@ class AreaRepositoryImpl(
         aliasDao.insertAll(listOf(area))
 
         val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = area.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

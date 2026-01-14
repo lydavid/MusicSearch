@@ -79,7 +79,7 @@ class InstrumentRepositoryImpl(
         aliasDao.insertAll(listOf(instrument))
 
         val relationWithOrderList = instrument.relations.toRelationWithOrderList(instrument.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = instrument.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

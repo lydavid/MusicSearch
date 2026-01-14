@@ -79,7 +79,7 @@ class EventRepositoryImpl(
         aliasDao.insertAll(listOf(event))
 
         val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = event.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

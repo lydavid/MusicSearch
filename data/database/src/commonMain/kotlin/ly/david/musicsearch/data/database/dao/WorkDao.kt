@@ -59,9 +59,13 @@ class WorkDao(
         }
     }
 
-    fun getWorkForDetails(workId: String): WorkDetailsModel? {
+    fun getWorkForDetails(
+        workId: String,
+        listenBrainzUsername: String,
+    ): WorkDetailsModel? {
         return transacter.getWorkForDetails(
             workId = workId,
+            username = listenBrainzUsername,
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull()
     }
@@ -74,6 +78,7 @@ class WorkDao(
         languages: List<String>,
         iswcs: List<String>,
         lastUpdated: Instant?,
+        listenCount: Long,
     ) = WorkDetailsModel(
         id = id,
         name = name,
@@ -82,6 +87,7 @@ class WorkDao(
         languages = languages.toPersistentList(),
         iswcs = iswcs.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
+        listenCount = listenCount,
     )
 
     fun delete(id: String) {

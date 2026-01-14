@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.api.FakeLookupApi
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
@@ -24,6 +26,7 @@ interface TestWorkRepository {
 
     fun createWorkRepository(
         musicBrainzModel: WorkMusicBrainzNetworkModel,
+        fakeBrowseUsername: String = "",
     ): WorkRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
@@ -52,6 +55,10 @@ interface TestWorkRepository {
                 }
             },
             coroutineDispatchers = coroutineDispatchers,
+            listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
+                override val browseUsername: Flow<String>
+                    get() = flowOf(fakeBrowseUsername)
+            },
         )
     }
 }

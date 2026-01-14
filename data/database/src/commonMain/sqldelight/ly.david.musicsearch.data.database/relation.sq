@@ -7,7 +7,11 @@ CREATE TABLE relation (
   entity_id TEXT NOT NULL,
   linked_entity_id TEXT NOT NULL,
   linked_entity TEXT AS MusicBrainzEntityType NOT NULL,
+
+  -- must be distinct and increasing for the same linked_entity type
+  -- consider migrating to count from 0 or 1 for each type to prevent confusing it for the order we display relationships in
   `order` INTEGER AS Int NOT NULL,
+
   type TEXT NOT NULL,
   type_id TEXT, -- nullable in case we want to map existing types to their id (unlikely, but you never know)
   name TEXT NOT NULL,

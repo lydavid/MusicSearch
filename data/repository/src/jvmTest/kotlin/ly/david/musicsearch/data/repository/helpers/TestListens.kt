@@ -18,6 +18,10 @@ const val track3ListenedAtS = 1755100632L
 const val track3ListenedAtMs = track3ListenedAtS * 1000
 const val track4ListenedAtS = 1755100631L
 const val track4ListenedAtMs = track4ListenedAtS * 1000
+const val track5ListenedAtS = 1755100630L
+const val track5ListenedAtMs = track5ListenedAtS * 1000
+const val track6ListenedAtS = 1755100629L
+const val track6ListenedAtMs = track6ListenedAtS * 1000
 
 val testListens = ListensResponse(
     payload = Payload(
@@ -175,6 +179,90 @@ val testListens = ListensResponse(
                 track_metadata = TrackMetadata(
                     artist_name = "Tsukuyomi",
                     track_name = "Absolute zero",
+                ),
+            ),
+            ListenBrainzListen(
+                insertedAtS = 1755101240L,
+                listenedAtS = track5ListenedAtS,
+                recording_msid = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
+                user_name = TEST_USERNAME,
+                track_metadata = TrackMetadata(
+                    artist_name = "いとうかなこ",
+                    track_name = "スカイクラッドの観測者",
+                    release_name = "ChaosAttractor",
+                    additional_info = AdditionalInfo(
+                        duration_ms = 275640,
+                        submission_client = "listenbrainz",
+                        music_service = "spotify.com",
+                        origin_url = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
+                        spotify_album_artist_ids = listOf(
+                            "https://open.spotify.com/artist/2d12dVIZQZk9CKhEsezaoN",
+                        ),
+                        spotify_album_id = "https://open.spotify.com/album/0yHtsepi9vEUIxuHq5ohz7",
+                        spotify_artist_ids = listOf(
+                            "https://open.spotify.com/artist/2d12dVIZQZk9CKhEsezaoN",
+                        ),
+                        spotify_id = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
+                    ),
+                    mbid_mapping = MbidMapping(
+                        recording_mbid = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                        recording_name = "スカイクラッドの観測者",
+                        artists = listOf(
+                            ListenBrainzArtist(
+                                artist_credit_name = "いとうかなこ",
+                                artist_mbid = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                                join_phrase = "",
+                            ),
+                        ),
+                        caa_id = 12397242767,
+                        caa_release_mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                        release_mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                    ),
+                ),
+            ),
+            ListenBrainzListen(
+                insertedAtS = 1755101240L,
+                listenedAtS = track6ListenedAtS,
+                recording_msid = "77f971a8-6748-4314-9513-dffbc0969724",
+                user_name = TEST_USERNAME,
+                track_metadata = TrackMetadata(
+                    artist_name = "Roselia, いとうかなこ",
+                    track_name = "スカイクラッドの観測者",
+                    release_name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                    additional_info = AdditionalInfo(
+                        duration_ms = 273866,
+                        submission_client = "listenbrainz",
+                        music_service = "spotify.com",
+                        origin_url = "https://open.spotify.com/track/2sgtG25jRdtNyV2ALfnBUP",
+                        spotify_album_artist_ids = listOf(
+                            "https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of",
+                        ),
+                        spotify_album_id = "https://open.spotify.com/album/0XItoAX0PgQGz9676FKNSh",
+                        spotify_artist_ids = listOf(
+                            "https://open.spotify.com/artist/1bljHdc9g7V7ZLkYuf4yfy",
+                            "https://open.spotify.com/artist/2d12dVIZQZk9CKhEsezaoN",
+                        ),
+                        spotify_id = "https://open.spotify.com/track/2sgtG25jRdtNyV2ALfnBUP",
+                    ),
+                    mbid_mapping = MbidMapping(
+                        recording_mbid = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
+                        recording_name = "スカイクラッドの観測者",
+                        artists = listOf(
+                            ListenBrainzArtist(
+                                artist_credit_name = "Roselia",
+                                artist_mbid = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                                join_phrase = "×",
+                            ),
+                            ListenBrainzArtist(
+                                artist_credit_name = "いとうかなこ",
+                                artist_mbid = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                                join_phrase = "",
+                            ),
+                        ),
+                        caa_id = 36678276363,
+                        caa_release_mbid = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                        release_mbid = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                    ),
                 ),
             ),
         ),

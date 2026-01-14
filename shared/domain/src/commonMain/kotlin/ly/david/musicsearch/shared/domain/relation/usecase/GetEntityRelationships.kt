@@ -6,10 +6,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
-import kotlin.time.Clock
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import kotlin.time.Clock
 
 interface GetEntityRelationships {
     operator fun invoke(
@@ -33,9 +34,11 @@ class GetEntityRelationshipsImpl(
         return when {
             entityId.isEmpty() || entity == null -> emptyFlow()
             else -> relationRepository.observeEntityRelationships(
-                entity = entity,
-                entityId = entityId,
-                relatedEntities = relatedEntities,
+                entity = MusicBrainzEntity(
+                    id = entityId,
+                    type = entity,
+                ),
+                relatedEntityTypes = relatedEntities,
                 query = query,
                 lastUpdated = Clock.System.now(),
             )

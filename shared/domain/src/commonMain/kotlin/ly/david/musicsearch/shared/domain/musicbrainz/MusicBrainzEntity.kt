@@ -6,6 +6,6 @@ import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 
 @Parcelize
 data class MusicBrainzEntity(
-    val id: String,
     val type: MusicBrainzEntityType,
+    val id: String,
 ) : CommonParcelable

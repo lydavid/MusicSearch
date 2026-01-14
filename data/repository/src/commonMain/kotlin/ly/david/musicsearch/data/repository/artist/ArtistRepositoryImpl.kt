@@ -99,7 +99,7 @@ class ArtistRepositoryImpl(
         }
 
         val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = artist.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

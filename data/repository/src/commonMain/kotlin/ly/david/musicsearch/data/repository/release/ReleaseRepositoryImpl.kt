@@ -178,7 +178,7 @@ class ReleaseRepositoryImpl(
         )
 
         val relationWithOrderList = release.relations.toRelationWithOrderList(release.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = release.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

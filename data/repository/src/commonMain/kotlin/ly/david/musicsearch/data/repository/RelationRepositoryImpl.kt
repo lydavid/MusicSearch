@@ -14,15 +14,16 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
@@ -35,7 +36,7 @@ class RelationRepositoryImpl(
     private val relationDao: RelationDao,
 ) : RelationRepository {
 
-    override fun insertAllUrlRelations(
+    override fun insertRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
         lastUpdated: Instant,
@@ -55,36 +56,35 @@ class RelationRepositoryImpl(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(
-        entity: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType>,
+        entity: MusicBrainzEntity,
+        relatedEntityTypes: Set<MusicBrainzEntityType>,
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
-                hasEntityBeenStored = { hasRelationsBeenSavedFor(entityId) },
+                hasEntityBeenStored = { hasRelationsBeenSavedFor(entity.id) },
                 lookupEntity = { forceRefresh ->
                     lookupRelationsAndStore(
-                        entity = entity,
-                        entityId = entityId,
-                        relatedEntities = relatedEntities,
+                        entity = entity.type,
+                        entityId = entity.id,
+                        relatedEntities = relatedEntityTypes,
                         forceRefresh = forceRefresh,
                         lastUpdated = lastUpdated,
                     )
                 },
                 deleteLocalEntity = {
                     deleteEntityRelationships(
-                        entityId = entityId,
-                        relatedEntities = relatedEntities,
+                        entityId = entity.id,
+                        relatedEntities = relatedEntityTypes,
                     )
                 },
             ),
             pagingSourceFactory = {
                 relationDao.getEntityRelationships(
-                    entityId = entityId,
-                    relatedEntities = relatedEntities,
+                    entityId = entity.id,
+                    relatedEntities = relatedEntityTypes,
                     query = "%$query%",
                 )
             },

@@ -28,6 +28,8 @@ import ly.david.musicsearch.data.repository.helpers.track1ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track2ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track3ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track4ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track5ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track6ListenedAtMs
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -157,6 +159,42 @@ class ListensListRepositoryImplTest :
                             name = "Absolute zero",
                             formattedArtistCredits = "Tsukuyomi",
                             listenedAtMs = track4ListenedAtMs,
+                        ),
+                        ListenListItemModel(
+                            listenedAtMs = track5ListenedAtMs,
+                            username = "user",
+                            recordingMessybrainzId = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
+                            name = "スカイクラッドの観測者",
+                            disambiguation = "",
+                            formattedArtistCredits = "いとうかなこ",
+                            recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                            durationMs = 275640,
+                            imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                            imageId = ImageId(value = 4),
+                            visited = false,
+                            release = ListenRelease(
+                                name = "ChaosAttractor",
+                                id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                                visited = false,
+                            ),
+                        ),
+                        ListenListItemModel(
+                            listenedAtMs = track6ListenedAtMs,
+                            username = "user",
+                            recordingMessybrainzId = "77f971a8-6748-4314-9513-dffbc0969724",
+                            name = "スカイクラッドの観測者",
+                            disambiguation = "",
+                            formattedArtistCredits = "Roselia×いとうかなこ",
+                            recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
+                            durationMs = 273866,
+                            imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                            imageId = ImageId(value = 5),
+                            visited = false,
+                            release = ListenRelease(
+                                name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                                id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                                visited = false,
+                            ),
                         ),
                     ),
                 ),
@@ -351,6 +389,24 @@ class ListensListRepositoryImplTest :
         Assert.assertEquals(
             listOf(
                 ImageMetadata(
+                    imageId = ImageId(value = 5),
+                    thumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                    largeUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-1200",
+                    mbid = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                    name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                    disambiguation = "",
+                    entity = MusicBrainzEntityType.RELEASE,
+                ),
+                ImageMetadata(
+                    imageId = ImageId(value = 4),
+                    thumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                    largeUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-1200",
+                    mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                    name = "ChaosAttractor",
+                    disambiguation = "",
+                    entity = MusicBrainzEntityType.RELEASE,
+                ),
+                ImageMetadata(
                     imageId = ImageId(2L),
                     thumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                     largeUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
@@ -395,6 +451,18 @@ class ListensListRepositoryImplTest :
                     name = "Persona 3 Reload Original Soundtrack",
                     imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
                     imageId = ImageId(2L),
+                ),
+                ReleaseListItemModel(
+                    id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                    name = "ChaosAttractor",
+                    imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                    imageId = ImageId(4L),
+                ),
+                ReleaseListItemModel(
+                    id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                    name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                    imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                    imageId = ImageId(5L),
                 ),
             ),
             releases,

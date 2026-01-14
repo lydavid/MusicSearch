@@ -39,7 +39,9 @@ import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -178,8 +180,11 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntityType.SERIES,
-            entityId = "eca82a1b-1efa-4d6b-9278-e278523267f8",
+            entity = MusicBrainzEntity(
+                type = MusicBrainzEntityType.SERIES,
+                id = "eca82a1b-1efa-4d6b-9278-e278523267f8",
+            ),
+            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -299,8 +304,11 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntityType.WORK,
-            entityId = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
+            entity = MusicBrainzEntity(
+                type = MusicBrainzEntityType.WORK,
+                id = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
+            ),
+            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -402,8 +410,8 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntityType.WORK,
-            entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
+            entity = MusicBrainzEntity(id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c", type = MusicBrainzEntityType.WORK),
+            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -441,8 +449,8 @@ class RelationRepositoryImplTest :
 
         // when filtering, the linked entities that were filtered out will not be grouped
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntityType.WORK,
-            entityId = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c",
+            entity = MusicBrainzEntity(id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c", type = MusicBrainzEntityType.WORK),
+            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "pre",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -514,7 +522,7 @@ class RelationRepositoryImplTest :
                         thumbnailsUrls = ThumbnailsUrls(
                             resolution250Url = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250.jpg",
                         ),
-                        types = listOf("Front")
+                        types = listOf("Front"),
                     ),
                     CoverArtUrls(
                         imageUrl = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470416613.jpg",
@@ -522,7 +530,7 @@ class RelationRepositoryImplTest :
                         thumbnailsUrls = ThumbnailsUrls(
                             resolution250Url = "https://coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470416613-250.jpg",
                         ),
-                        types = listOf("Back")
+                        types = listOf("Back"),
                     ),
                 )
             },
@@ -560,8 +568,11 @@ class RelationRepositoryImplTest :
         )
 
         relationRepository.observeEntityRelationships(
-            entity = MusicBrainzEntityType.ARTIST,
-            entityId = zutomayoArtistMusicBrainzNetworkModel.id,
+            entity = MusicBrainzEntity(
+                id = zutomayoArtistMusicBrainzNetworkModel.id,
+                type = MusicBrainzEntityType.ARTIST,
+            ),
+            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.work
 
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -10,6 +11,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkM
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
@@ -20,6 +22,7 @@ class WorkRepositoryImpl(
     private val workAttributeDao: WorkAttributeDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : WorkRepository {
@@ -48,9 +51,14 @@ class WorkRepositoryImpl(
         }
     }
 
-    private fun getCachedData(workId: String): WorkDetailsModel? {
+    private suspend fun getCachedData(workId: String): WorkDetailsModel? {
         if (!relationRepository.visited(workId)) return null
-        val work = workDao.getWorkForDetails(workId) ?: return null
+
+        val username = listenBrainzAuthStore.browseUsername.first()
+        val work = workDao.getWorkForDetails(
+            workId = workId,
+            listenBrainzUsername = username,
+        ) ?: return null
 
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
         val urlRelations = relationRepository.getRelationshipsByType(workId)
@@ -63,12 +71,14 @@ class WorkRepositoryImpl(
             attributes = workAttributes.toPersistentList(),
             urls = urlRelations,
             aliases = aliases,
+            listenCount = work.listenCount.takeIf { username.isNotEmpty() },
         )
     }
 
     private fun delete(id: String) {
         workDao.delete(id)
-        relationRepository.deleteRelationshipsByType(id)
+        relationRepository.deleteRelationshipsByType(entityId = id, entity = MusicBrainzEntityType.URL)
+        relationRepository.deleteRelationshipsByType(entityId = id, entity = MusicBrainzEntityType.RECORDING)
     }
 
     private fun cache(
@@ -88,7 +98,7 @@ class WorkRepositoryImpl(
         aliasDao.insertAll(listOf(work))
 
         val relationWithOrderList = work.relations.toRelationWithOrderList(work.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = work.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

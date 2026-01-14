@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.relatableEntities
 import kotlin.time.Clock
@@ -13,7 +14,10 @@ import kotlin.time.Instant
 interface RelationRepository {
     fun visited(entityId: String): Boolean
 
-    fun insertAllUrlRelations(
+    /**
+     * See [observeEntityRelationships] for inserting the rest of the relations not inserted by this.
+     */
+    fun insertRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
         lastUpdated: Instant = Clock.System.now(),
@@ -29,10 +33,15 @@ interface RelationRepository {
         entity: MusicBrainzEntityType = MusicBrainzEntityType.URL,
     )
 
+    /**
+     * Returns latest [relatedEntityTypes] relationships of [entity],
+     * preferring local cache if it exists, otherwise fetching from remote, and caching the result.
+     *
+     * By default, we exclude [MusicBrainzEntityType.URL] which are fetched and shown separately.
+     */
     fun observeEntityRelationships(
-        entity: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType> = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
+        entity: MusicBrainzEntity,
+        relatedEntityTypes: Set<MusicBrainzEntityType> = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>

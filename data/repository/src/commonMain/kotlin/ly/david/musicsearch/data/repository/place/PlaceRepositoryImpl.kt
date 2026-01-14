@@ -92,7 +92,7 @@ class PlaceRepositoryImpl(
         }
 
         val relationWithOrderList = place.relations.toRelationWithOrderList(place.id)
-        relationRepository.insertAllUrlRelations(
+        relationRepository.insertRelations(
             entityId = place.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,

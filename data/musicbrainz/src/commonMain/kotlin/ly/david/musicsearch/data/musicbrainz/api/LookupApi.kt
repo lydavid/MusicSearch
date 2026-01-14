@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
+private const val RECORDING_REL = "recording-rels"
 const val URL_REL = "url-rels"
 
 /**
@@ -98,7 +99,7 @@ interface LookupApi {
 
     suspend fun lookupWork(
         workId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = "$URL_REL+$ALIASES+$RECORDING_REL",
     ): WorkMusicBrainzNetworkModel
 }
 

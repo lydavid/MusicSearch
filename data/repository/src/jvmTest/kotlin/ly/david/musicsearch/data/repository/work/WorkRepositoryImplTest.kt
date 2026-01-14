@@ -1,34 +1,49 @@
 package ly.david.musicsearch.data.repository.work
 
+import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.skycladObserverWorkListItemModel
+import ly.david.data.test.skycladObserverWorkMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
+import ly.david.musicsearch.data.repository.helpers.TestListensListRepository
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.data.repository.helpers.testListens
+import ly.david.musicsearch.data.repository.helpers.track5ListenedAtMs
+import ly.david.musicsearch.data.repository.helpers.track6ListenedAtMs
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.listen.ListenDao
+import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
+class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -39,7 +54,176 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository {
     override val workDao: WorkDao by inject()
     override val workAttributeDao: WorkAttributeDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val listenDao: ListenDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
+
+    @Test
+    fun `with listens to multiple recordings of this work`() = runTest {
+        val repository = createWorkRepository(
+            musicBrainzModel = skycladObserverWorkMusicBrainzModel.copy(
+                relations = listOf(
+                    RelationMusicBrainzModel(
+                        type = "performance",
+                        typeId = "",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.RECORDING,
+                        recording = RecordingMusicBrainzNetworkModel(
+                            id = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                            name = "スカイクラッドの観測者",
+                            length = 275186,
+                        ),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "performance",
+                        typeId = "",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.RECORDING,
+                        recording = RecordingMusicBrainzNetworkModel(
+                            id = "108a3d66-d1ef-424d-a7cb-2f53a702ce45",
+                            name = "スカイクラッドの観測者",
+                            length = 275186,
+                        ),
+                        attributes = listOf("cover"),
+                    ),
+                    RelationMusicBrainzModel(
+                        type = "performance",
+                        typeId = "",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.RECORDING,
+                        recording = RecordingMusicBrainzNetworkModel(
+                            id = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
+                            name = "スカイクラッドの観測者",
+                            length = 275186,
+                        ),
+                        attributes = listOf("cover"),
+                    ),
+                ),
+            ),
+            fakeBrowseUsername = TEST_USERNAME,
+        )
+
+        val attributes = persistentListOf(
+            WorkAttributeUiModel(
+                value = "C-1264052606",
+                type = "CASH ID",
+                typeId = "9e0765a1-1505-3ca9-9147-8dcbb0aa9cec",
+            ),
+            WorkAttributeUiModel(
+                value = "10530267",
+                type = "COMPASS ID",
+                typeId = "5ea37343-be89-4cd0-8a37-f471738df641",
+            ),
+            WorkAttributeUiModel(
+                value = "18230080-001",
+                type = "GEMA ID",
+                typeId = "01eeee67-f514-3801-bdce-279e04872f91",
+            ),
+            WorkAttributeUiModel(
+                value = "162-6010-4",
+                type = "JASRAC ID",
+                typeId = "31048fcc-3dbb-3979-8f85-805afb933e0c",
+            ),
+        )
+
+        repository.lookupWork(
+            workId = skycladObserverWorkMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                WorkDetailsModel(
+                    id = skycladObserverWorkMusicBrainzModel.id,
+                    name = skycladObserverWorkListItemModel.name,
+                    type = skycladObserverWorkListItemModel.type,
+                    languages = skycladObserverWorkListItemModel.languages,
+                    iswcs = skycladObserverWorkListItemModel.iswcs,
+                    attributes = attributes,
+                    lastUpdated = testDateTimeInThePast,
+                    listenCount = 0,
+                ),
+                this,
+            )
+        }
+
+        val listensListRepository = createListensListRepository(
+            response = testListens,
+        )
+        listensListRepository.observeListens(
+            username = TEST_USERNAME,
+            query = "観測",
+            entityFacet = null,
+            stopPrepending = false,
+            stopAppending = false,
+            onReachedLatest = {},
+            onReachedOldest = {},
+        ).asSnapshot().run {
+            Assert.assertEquals(
+                listOf(
+                    ListSeparator(
+                        id = track5ListenedAtMs.toString(),
+                        text = "Wednesday, August 13, 2025",
+                    ),
+                    ListenListItemModel(
+                        listenedAtMs = track5ListenedAtMs,
+                        username = "user",
+                        recordingMessybrainzId = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
+                        name = "スカイクラッドの観測者",
+                        disambiguation = "",
+                        formattedArtistCredits = "いとうかなこ",
+                        recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                        durationMs = 275640,
+                        imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                        imageId = ImageId(value = 4),
+                        visited = false,
+                        release = ListenRelease(
+                            name = "ChaosAttractor",
+                            id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                            visited = false,
+                        ),
+                    ),
+                    ListenListItemModel(
+                        listenedAtMs = track6ListenedAtMs,
+                        username = "user",
+                        recordingMessybrainzId = "77f971a8-6748-4314-9513-dffbc0969724",
+                        name = "スカイクラッドの観測者",
+                        disambiguation = "",
+                        formattedArtistCredits = "Roselia×いとうかなこ",
+                        recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
+                        durationMs = 273866,
+                        imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                        imageId = ImageId(value = 5),
+                        visited = false,
+                        release = ListenRelease(
+                            name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                            id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                            visited = false,
+                        ),
+                    ),
+                ),
+                this,
+            )
+        }
+
+        repository.lookupWork(
+            workId = skycladObserverWorkMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                WorkDetailsModel(
+                    id = skycladObserverWorkMusicBrainzModel.id,
+                    name = skycladObserverWorkListItemModel.name,
+                    type = skycladObserverWorkListItemModel.type,
+                    languages = skycladObserverWorkListItemModel.languages,
+                    iswcs = skycladObserverWorkListItemModel.iswcs,
+                    attributes = attributes,
+                    lastUpdated = testDateTimeInThePast,
+                    listenCount = 2,
+                ),
+                this,
+            )
+        }
+    }
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
