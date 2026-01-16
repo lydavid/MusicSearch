@@ -564,6 +564,11 @@ class RecordingsListRepositoryImplTest :
     fun `aliases does not multiply listen count`() = runTest {
         val entityId = itouKanakoArtistMusicBrainzModel.id
         val entity = MusicBrainzEntityType.ARTIST
+        val browseMethod = BrowseMethod.ByEntity(
+            entityId = entityId,
+            entityType = entity,
+        )
+
         val recordings = listOf(
             skycladObserverRecordingMusicBrainzModel,
             skycladObserverCoverRecordingMusicBrainzModel,
@@ -571,10 +576,6 @@ class RecordingsListRepositoryImplTest :
         val recordingsListRepository = createRecordingsListRepository(
             recordings = recordings,
             fakeBrowseUsername = TEST_USERNAME,
-        )
-        val browseMethod = BrowseMethod.ByEntity(
-            entityId = entityId,
-            entityType = entity,
         )
 
         val listensListRepository = createListensListRepository(
@@ -656,7 +657,7 @@ class RecordingsListRepositoryImplTest :
         recordingsListRepository.observeRecordings(
             browseMethod = browseMethod,
             listFilters = ListFilters(
-                query = "observe"
+                query = "observe",
             ),
         ).asSnapshot().run {
             assertEquals(

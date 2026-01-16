@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import ly.david.musicsearch.data.database.UNKNOWN_LISTENS_FLAG
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
@@ -115,8 +116,6 @@ internal fun mapToReleaseListItemModel(
         completeListenCount = completeListenCount,
     ),
 )
-
-private const val UNKNOWN_LISTENS_FLAG = -1L
 
 private fun toListenState(
     listenCount: Long?,

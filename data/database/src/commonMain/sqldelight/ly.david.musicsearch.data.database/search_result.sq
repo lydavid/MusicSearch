@@ -368,7 +368,8 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
   ) AS collected,
   GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales,
+  CAST(NULL AS INTEGER) AS listen_count
 FROM search_result sr
 INNER JOIN work ON sr.entity_id = work.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id

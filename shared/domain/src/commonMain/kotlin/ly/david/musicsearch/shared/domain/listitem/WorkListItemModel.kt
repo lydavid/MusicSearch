@@ -18,8 +18,17 @@ data class WorkListItemModel(
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val listenState: ListenState = ListenState.Hide,
 ) : EntityListItemModel, Work, NameWithDisambiguationAndAliases {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
+    }
+
+    sealed interface ListenState {
+        data object Hide : ListenState
+        data object Unknown : ListenState
+        data class Known(
+            val listenCount: Long = 0,
+        ) : ListenState
     }
 }

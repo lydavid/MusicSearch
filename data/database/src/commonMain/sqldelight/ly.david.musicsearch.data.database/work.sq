@@ -103,12 +103,35 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
   ) AS collected,
-  GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE
+    WHEN :username = '' THEN
+      CAST(NULL AS INTEGER)
+    WHEN details_metadata.entity_id IS NULL THEN
+      -1
+    ELSE
+      COUNT(listen.recording_musicbrainz_id)
+  END AS listen_count
 FROM works_by_entity we
 INNER JOIN work ON work.id = we.work_id
-LEFT JOIN work_alias ON work.id = work_alias.work_id AND work_alias.is_primary
+LEFT JOIN (
+  SELECT
+    work_alias.work_id,
+    GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  FROM work_alias
+  WHERE work_alias.is_primary AND work_alias.work_id IN (
+    SELECT work.id
+    FROM work
+    INNER JOIN works_by_entity ON work.id = works_by_entity.work_id
+    WHERE works_by_entity.entity_id = :entityId
+  )
+  GROUP BY work_alias.work_id
+) AS aliases ON aliases.work_id = work.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
+LEFT JOIN relation ON work.id = relation.entity_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = relation.linked_entity_id AND listen.username = :username
 WHERE we.entity_id = :entityId
 AND (
   work.name LIKE :query OR
@@ -116,7 +139,7 @@ AND (
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  work_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;
@@ -155,13 +178,36 @@ SELECT
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
   ce.id IS NOT NULL AS collected,
-  GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE
+    WHEN :username = '' THEN
+      CAST(NULL AS INTEGER)
+    WHEN details_metadata.entity_id IS NULL THEN
+      -1
+    ELSE
+      COUNT(listen.recording_musicbrainz_id)
+  END AS listen_count
 FROM work
 INNER JOIN collection_entity ce ON work.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN work_alias ON work.id = work_alias.work_id AND work_alias.is_primary
+LEFT JOIN (
+  SELECT
+    work_alias.work_id,
+    GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  FROM work_alias
+  WHERE work_alias.is_primary AND work_alias.work_id IN (
+    SELECT work.id
+    FROM work
+    INNER JOIN collection_entity ON work.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+  )
+  GROUP BY work_alias.work_id
+) AS aliases ON aliases.work_id = work.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
+LEFT JOIN relation ON work.id = relation.entity_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = relation.linked_entity_id AND listen.username = :username
 WHERE c.id = :collectionId
 AND ce.deleted = 0
 AND (
@@ -170,7 +216,7 @@ AND (
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  work_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;
@@ -207,18 +253,36 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = work.id
   ) AS collected,
-  GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE
+    WHEN :username = '' THEN
+      CAST(NULL AS INTEGER)
+    WHEN details_metadata.entity_id IS NULL THEN
+      -1
+    ELSE
+      COUNT(listen.recording_musicbrainz_id)
+  END AS listen_count
 FROM work
-LEFT JOIN work_alias ON work.id = work_alias.work_id AND work_alias.is_primary
+LEFT JOIN (
+  SELECT
+    work_alias.work_id,
+    GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  FROM work_alias
+  WHERE work_alias.is_primary
+  GROUP BY work_alias.work_id
+) AS aliases ON aliases.work_id = work.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
+LEFT JOIN relation ON work.id = relation.entity_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = relation.linked_entity_id AND listen.username = :username
 WHERE (
   work.name LIKE :query OR
   work.disambiguation LIKE :query OR
   work.type LIKE :query OR
   work.languages LIKE :query OR
   work.iswcs LIKE :query OR
-  work_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY work.id
 LIMIT :limit OFFSET :offset;

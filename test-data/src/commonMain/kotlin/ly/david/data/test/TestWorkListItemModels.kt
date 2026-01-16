@@ -1,6 +1,7 @@
 package ly.david.data.test
 
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 
 val skycladObserverWorkListItemModel = WorkListItemModel(
@@ -69,5 +70,43 @@ val dontStopMeNowWorkListItemModel = WorkListItemModel(
     ),
     attributes = persistentListOf(
         // many omitted for now
+    ),
+)
+
+val cruelAngelThesisWorkListItemModel = WorkListItemModel(
+    id = "343dbbe6-d9ce-3853-8d8d-230734c0424f",
+    name = "残酷な天使のテーゼ",
+    disambiguation = "Neon Genesis Evangelion",
+    type = "Song",
+    languages = persistentListOf("jpn"),
+    iswcs = persistentListOf(
+        "T-101.261.638-3",
+    ),
+    aliases = persistentListOf(
+        BasicAlias(
+            name = "The Cruel Angel’s Thesis",
+            isPrimary = true,
+            locale = "en",
+        ),
+        BasicAlias(
+            name = "Zankoku na tenshi no these",
+            isPrimary = true,
+            locale = "es",
+        ),
+        BasicAlias(
+            name = "残酷な天使のテーゼ",
+            isPrimary = true,
+            locale = "ja",
+        ),
+        BasicAlias(
+            name = "残酷天使的行动纲领",
+            isPrimary = true,
+            locale = "zh",
+        ),
+        BasicAlias(
+            name = "잔혹한 천사의 테제",
+            isPrimary = true,
+            locale = "ko",
+        ),
     ),
 )

@@ -8,21 +8,28 @@ class WorkListItemTest : ScreenshotTest() {
     @Test
     fun simple() {
         snapshot {
-            PreviewWorkListItemModel()
+            PreviewWorkListItem()
         }
     }
 
     @Test
     fun allInfo() {
         snapshot {
-            PreviewWorkListItemModelAllInfo()
+            PreviewWorkListItemAllInfo()
         }
     }
 
     @Test
     fun visited() {
         snapshot {
-            PreviewWorkListItemModelVisited()
+            PreviewWorkListItemVisited()
+        }
+    }
+
+    @Test
+    fun unknownListens() {
+        snapshot {
+            PreviewWorkListItemUnknownListens()
         }
     }
 }

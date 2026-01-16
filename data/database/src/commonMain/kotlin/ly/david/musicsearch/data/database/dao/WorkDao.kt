@@ -126,9 +126,13 @@ class WorkDao(
     fun getWorks(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
     ): PagingSource<Int, WorkListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
-            getAllWorks(query = query)
+            getAllWorks(
+                query = query,
+                username = username,
+            )
         }
 
         is BrowseMethod.ByEntity -> {
@@ -136,11 +140,13 @@ class WorkDao(
                 getWorksByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    username = username,
                 )
             } else {
                 getWorksByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    username = username,
                 )
             }
         }
@@ -177,6 +183,7 @@ class WorkDao(
 
     private fun getAllWorks(
         query: String,
+        username: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllWorks(
             query = query,
@@ -186,6 +193,7 @@ class WorkDao(
         queryProvider = { limit, offset ->
             transacter.getAllWorks(
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,
@@ -196,6 +204,7 @@ class WorkDao(
     private fun getWorksByEntity(
         entityId: String,
         query: String,
+        username: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = getCountOfWorksByEntityQuery(entityId, query),
         transacter = transacter,
@@ -204,6 +213,7 @@ class WorkDao(
             transacter.getWorksByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,
@@ -222,6 +232,7 @@ class WorkDao(
     private fun getWorksByCollection(
         collectionId: String,
         query: String,
+        username: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfWorksByCollection(
             collectionId = collectionId,
@@ -233,6 +244,7 @@ class WorkDao(
             transacter.getWorksByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                username = username,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,

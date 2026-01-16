@@ -1,5 +1,6 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
@@ -121,5 +122,44 @@ val dontStopMeNowWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
     ),
     attributes = listOf(
         // many omitted for now
+    ),
+)
+
+val cruelAngelThesisWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
+    id = "343dbbe6-d9ce-3853-8d8d-230734c0424f",
+    name = "残酷な天使のテーゼ",
+    disambiguation = "Neon Genesis Evangelion",
+    type = "Song",
+    typeId = "f061270a-2fd6-32f1-a641-f0f8676d14e6",
+    languages = listOf("jpn"),
+    iswcs = listOf(
+        "T-101.261.638-3",
+    ),
+    aliases = listOf(
+        AliasMusicBrainzNetworkModel(
+            name = "The Cruel Angel’s Thesis",
+            isPrimary = true,
+            locale = "en",
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "Zankoku na tenshi no these",
+            isPrimary = true,
+            locale = "es",
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "残酷な天使のテーゼ",
+            isPrimary = true,
+            locale = "ja",
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "残酷天使的行动纲领",
+            isPrimary = true,
+            locale = "zh",
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "잔혹한 천사의 테제",
+            isPrimary = true,
+            locale = "ko",
+        ),
     ),
 )

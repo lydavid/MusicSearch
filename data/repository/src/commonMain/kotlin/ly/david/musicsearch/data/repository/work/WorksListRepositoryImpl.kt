@@ -2,7 +2,9 @@ package ly.david.musicsearch.data.repository.work
 
 import app.cash.paging.PagingData
 import app.cash.paging.PagingSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -13,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkM
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
@@ -22,6 +25,7 @@ class WorksListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
     private val browseApi: BrowseApi,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     aliasDao: AliasDao,
 ) : WorksListRepository,
     BrowseEntities<WorkListItemModel, WorkMusicBrainzNetworkModel, BrowseWorksResponse>(
@@ -30,14 +34,19 @@ class WorksListRepositoryImpl(
         aliasDao = aliasDao,
     ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeWorks(
         browseMethod: BrowseMethod,
         listFilters: ListFilters,
     ): Flow<PagingData<WorkListItemModel>> {
-        return observeEntities(
-            browseMethod = browseMethod,
-            listFilters = listFilters,
-        )
+        return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
+            observeEntities(
+                browseMethod = browseMethod,
+                listFilters = listFilters.copy(
+                    username = username,
+                ),
+            )
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -47,6 +56,7 @@ class WorksListRepositoryImpl(
         return workDao.getWorks(
             browseMethod = browseMethod,
             query = listFilters.query,
+            username = listFilters.username,
         )
     }
 

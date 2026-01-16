@@ -8,7 +8,7 @@ import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
 @Composable
-internal fun PreviewWorkListItemModel() {
+internal fun PreviewWorkListItem() {
     PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
@@ -24,7 +24,7 @@ internal fun PreviewWorkListItemModel() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewWorkListItemModelAllInfo() {
+internal fun PreviewWorkListItemAllInfo() {
     PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
@@ -34,6 +34,7 @@ internal fun PreviewWorkListItemModelAllInfo() {
                 type = "Song",
                 iswcs = persistentListOf("T-101.261.638-3"),
                 languages = persistentListOf("jpn"),
+                listenState = WorkListItemModel.ListenState.Known(listenCount = 3),
             ),
         )
     }
@@ -41,7 +42,7 @@ internal fun PreviewWorkListItemModelAllInfo() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewWorkListItemModelVisited() {
+internal fun PreviewWorkListItemVisited() {
     PreviewWithTransitionAndOverlays {
         WorkListItem(
             work = WorkListItemModel(
@@ -51,6 +52,25 @@ internal fun PreviewWorkListItemModelVisited() {
                 type = "Song",
                 languages = persistentListOf("qaa"),
                 visited = true,
+                listenState = WorkListItemModel.ListenState.Hide,
+            ),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewWorkListItemUnknownListens() {
+    PreviewWithTransitionAndOverlays {
+        WorkListItem(
+            work = WorkListItemModel(
+                id = "c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3",
+                name = "イニシエノウタ",
+                disambiguation = "NieR",
+                type = "Song",
+                languages = persistentListOf("qaa"),
+                visited = true,
+                listenState = WorkListItemModel.ListenState.Unknown,
             ),
         )
     }
