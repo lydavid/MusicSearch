@@ -305,6 +305,7 @@ stable class ly.david.musicsearch.shared.domain.details.WorkDetailsModel {
   stable val wikipediaExtract: WikipediaExtract
   stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
+  stable val listenCount: Long?
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.error.Feedback.Loading {
@@ -804,6 +805,16 @@ stable class ly.david.musicsearch.shared.domain.listitem.TrackListItemModel {
   stable val disambiguation: String?
   <runtime stability> = 
 }
+stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel.ListenState.Hide {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel.ListenState.Unknown {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel.ListenState.Known {
+  stable val listenCount: Long
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel {
   stable val id: String
   stable val name: String
@@ -815,11 +826,12 @@ stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel {
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
+  runtime val listenState: ListenState
   <runtime stability> = 
 }
 runtime class ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity {
-  stable val id: String
   stable val type: MusicBrainzEntityType
+  stable val id: String
   runtime var CREATOR: Creator<MusicBrainzEntity>
   <runtime stability> = Uncertain(Creator)
 }
