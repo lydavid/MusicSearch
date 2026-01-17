@@ -90,7 +90,9 @@ jobs:
       - name: Save release notes
         if: steps.get-next-version.outputs.new-release-published == 'true'
         run: |
-          release_notes=${{ steps.get-next-version.outputs.new-release-notes }}
+          release_notes=$(echo "${{ steps.get-next-version.outputs.new-release-notes }}" | \
+            tail -n +3 | \
+            sed 's/ ([[][^]]*]([^)]*))//g')
           echo "$release_notes" > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
 
       # After this step, the workspace contains credentials file.
