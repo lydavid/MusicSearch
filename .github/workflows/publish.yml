@@ -91,7 +91,7 @@ jobs:
         if: steps.get-next-version.outputs.new-release-published == 'true'
         run: |
           release_notes=${{ steps.get-next-version.outputs.new-release-notes }}
-          echo $release_notes > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
+          echo "$release_notes" > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
