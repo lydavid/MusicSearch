@@ -29,7 +29,6 @@ import ly.david.musicsearch.shared.feature.listens.listensFeatureModule
 import ly.david.musicsearch.shared.feature.search.searchFeatureModule
 import ly.david.musicsearch.shared.feature.settings.settingsFeatureModule
 import ly.david.musicsearch.shared.feature.stats.statsFeatureModule
-import ly.david.musicsearch.shared.strings.di.stringsModule
 import ly.david.musicsearch.ui.common.commonUiModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -72,7 +71,6 @@ val sharedModule: Module = module {
         musicBrainzDataModule,
         databaseModule,
         databaseDaoModule,
-        stringsModule,
         coverArtModule,
         spotifyApiModule,
         wikimediaModule,

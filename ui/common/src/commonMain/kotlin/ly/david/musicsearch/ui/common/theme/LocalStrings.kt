@@ -1,9 +1,21 @@
 package ly.david.musicsearch.ui.common.theme
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
+import cafe.adriel.lyricist.ProvideStrings
+import cafe.adriel.lyricist.rememberStrings
 import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.shared.strings.EnStrings
+import ly.david.musicsearch.shared.strings.Strings
 
 @Suppress("CompositionLocalAllowlist")
 val LocalStrings: ProvidableCompositionLocal<AppStrings> = staticCompositionLocalOf { EnStrings }
+
+@Composable
+fun ProvideStrings(content: @Composable () -> Unit) {
+    val lyricist = rememberStrings(Strings)
+    ProvideStrings(lyricist, LocalStrings) {
+        content()
+    }
+}

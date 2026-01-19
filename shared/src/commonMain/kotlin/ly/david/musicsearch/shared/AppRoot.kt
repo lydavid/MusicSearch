@@ -37,50 +37,52 @@ fun AppRoot(
     CircuitCompositionLocals(circuit) {
         SharedElementTransitionLayout {
             ContentWithOverlays {
-                val windowSizeClass = calculateWindowSizeClass()
-                val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+                ly.david.musicsearch.ui.common.theme.ProvideStrings {
+                    val windowSizeClass = calculateWindowSizeClass()
+                    val isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
-                Scaffold(
-                    modifier = modifier,
-                    contentWindowInsets = WindowInsets(0),
-                    bottomBar = {
-                        if (isCompact) {
-                            AppBottomNavigationBar(
-                                currentTopLevelScreen = backStack.last().screen,
-                                navigateToTopLevelScreen = { screen ->
-                                    navigator.resetRoot(screen)
-                                },
+                    Scaffold(
+                        modifier = modifier,
+                        contentWindowInsets = WindowInsets(0),
+                        bottomBar = {
+                            if (isCompact) {
+                                AppBottomNavigationBar(
+                                    currentTopLevelScreen = backStack.last().screen,
+                                    navigateToTopLevelScreen = { screen ->
+                                        navigator.resetRoot(screen)
+                                    },
+                                )
+                            }
+                        },
+                    ) { innerPadding ->
+
+                        Row(
+                            modifier = Modifier
+                                .padding(innerPadding),
+                        ) {
+                            if (!isCompact) {
+                                AppNavigationRail(
+                                    currentTopLevelScreen = backStack.last().screen,
+                                    navigateToTopLevelScreen = { screen ->
+                                        navigator.resetRoot(screen)
+                                    },
+                                )
+                            }
+
+                            val contentModifier: Modifier = if (isCompact) {
+                                Modifier
+                            } else {
+                                Modifier.navigationBarsPadding()
+                            }
+                            NavigableCircuitContent(
+                                navigator = navigator,
+                                backStack = backStack,
+                                modifier = contentModifier,
+                                decoratorFactory = GestureNavigationDecorationFactory(
+                                    onBackInvoked = navigator::pop,
+                                ),
                             )
                         }
-                    },
-                ) { innerPadding ->
-
-                    Row(
-                        modifier = Modifier
-                            .padding(innerPadding),
-                    ) {
-                        if (!isCompact) {
-                            AppNavigationRail(
-                                currentTopLevelScreen = backStack.last().screen,
-                                navigateToTopLevelScreen = { screen ->
-                                    navigator.resetRoot(screen)
-                                },
-                            )
-                        }
-
-                        val contentModifier: Modifier = if (isCompact) {
-                            Modifier
-                        } else {
-                            Modifier.navigationBarsPadding()
-                        }
-                        NavigableCircuitContent(
-                            navigator = navigator,
-                            backStack = backStack,
-                            modifier = contentModifier,
-                            decoratorFactory = GestureNavigationDecorationFactory(
-                                onBackInvoked = navigator::pop,
-                            ),
-                        )
                     }
                 }
             }
