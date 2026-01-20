@@ -36,13 +36,17 @@ interface SpotifyApi {
                             )
                         }
                         refreshTokens {
+                            val clientId = spotifyOAuthInfo.clientId
+                                .ifEmpty { spotifyAuthStore.getUserSpotifyClientId() }
+                            val clientSecret = spotifyOAuthInfo.clientSecret
+                                .ifEmpty { spotifyAuthStore.getUserSpotifyClientSecret() }
                             val response = spotifyOAuthApi.getAccessToken(
-                                clientId = spotifyOAuthInfo.clientId,
-                                clientSecret = spotifyOAuthInfo.clientSecret,
+                                clientId = clientId,
+                                clientSecret = clientSecret,
                             )
 
                             val accessToken = response.accessToken
-                            spotifyAuthStore.saveAccessToken(
+                            spotifyAuthStore.setAccessToken(
                                 accessToken = accessToken,
                             )
 
