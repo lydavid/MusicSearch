@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.core.app.NotificationManagerCompat
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzLoginState
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @Composable
@@ -33,6 +34,7 @@ private fun Context.isNotificationListenerEnabled(): Boolean {
     return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
 }
 
+// region Previews
 @PreviewLightDark
 @Composable
 internal fun PreviewSettingsScreenAndroid() {
@@ -114,6 +116,9 @@ internal fun PreviewSettingsScreenLoggedIn() {
                     appDatabaseVersion = "1",
                     musicBrainzUsername = "david",
                     musicBrainzAccessToken = "token",
+                    listenBrainzUsername = "david-lb",
+                    listenBrainzUserToken = "token-lb",
+                    listenBrainzLoginState = ListenBrainzLoginState.LoggedIn,
                 ),
                 showAndroidSettings = false,
                 versionName = "1.2.3",
@@ -122,3 +127,64 @@ internal fun PreviewSettingsScreenLoggedIn() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenLoggedOut() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    appDatabaseVersion = "1",
+                    musicBrainzUsername = "david",
+                    musicBrainzAccessToken = "token",
+                    listenBrainzLoginState = ListenBrainzLoginState.LoggedOut,
+                ),
+                showAndroidSettings = false,
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenInvalidToken() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    appDatabaseVersion = "1",
+                    musicBrainzUsername = "david",
+                    musicBrainzAccessToken = "token",
+                    listenBrainzLoginState = ListenBrainzLoginState.InvalidToken,
+                ),
+                showAndroidSettings = false,
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSettingsScreenOtherError() {
+    PreviewTheme {
+        Surface {
+            SettingsUi(
+                state = SettingsUiState(
+                    appDatabaseVersion = "1",
+                    musicBrainzUsername = "david",
+                    musicBrainzAccessToken = "token",
+                    listenBrainzLoginState = ListenBrainzLoginState.OtherError("error"),
+                ),
+                showAndroidSettings = false,
+                versionName = "1.2.3",
+                versionCode = 123,
+            )
+        }
+    }
+}
+// endregion

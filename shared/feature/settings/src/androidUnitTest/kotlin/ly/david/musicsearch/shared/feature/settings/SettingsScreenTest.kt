@@ -2,9 +2,12 @@ package ly.david.musicsearch.shared.feature.settings
 
 import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenAndroid
 import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenAndroidWithCrashReporting
+import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenInvalidToken
 import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenLoggedIn
+import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenLoggedOut
 import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenNonAndroid
 import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenNotificationListenerEnable
+import ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenOtherError
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 
@@ -42,6 +45,27 @@ class SettingsScreenTest : ScreenshotTest(isFullScreen = true) {
     fun loggedIn() {
         snapshot {
             PreviewSettingsScreenLoggedIn()
+        }
+    }
+
+    @Test
+    fun loggedOut() {
+        snapshot {
+            PreviewSettingsScreenLoggedOut()
+        }
+    }
+
+    @Test
+    fun invalidToken() {
+        snapshot {
+            PreviewSettingsScreenInvalidToken()
+        }
+    }
+
+    @Test
+    fun otherError() {
+        snapshot {
+            PreviewSettingsScreenOtherError()
         }
     }
 }
