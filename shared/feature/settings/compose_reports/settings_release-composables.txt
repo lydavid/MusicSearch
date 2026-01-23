@@ -7,6 +7,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenAndroidWithCrashReporting()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenNonAndroid()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenLoggedIn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenLoggedOut()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenInvalidToken()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.PreviewSettingsScreenOtherError()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUi(
   stable state: AppearanceSettingsUiState
   stable modifier: Modifier? = @static <expression>
@@ -34,7 +37,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.86.0"
+  stable versionName: String? = @static "1.87.0"
   stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
 )
@@ -43,7 +46,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.86.0"
+  stable versionName: String? = @static "1.87.0"
   stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
   stable eventSink: Function1<SettingsUiEvent, Unit>? = @static <expression>

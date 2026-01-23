@@ -547,6 +547,9 @@ fun ly.david.musicsearch.ui.common.theme.getSubTextColor()
 fun ly.david.musicsearch.ui.common.theme.getSeedColor(
   unstable <this>: AppPreferences
 ): Color
+restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.theme.ProvideStrings(
+  stable content: Function2<Composer, Int, Unit>
+)
 fun ly.david.musicsearch.ui.common.theme.TextStyles.getHeaderTextStyle(
   unused stable <this>: TextStyles
 ): TextStyle
