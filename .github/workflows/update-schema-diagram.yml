@@ -49,7 +49,7 @@ jobs:
             adb shell "run-as io.github.lydavid.musicsearch.debug cat /data/data/io.github.lydavid.musicsearch.debug/databases/musicsearch.db" > musicsearch.db
 
       - name: Generate schema SVG from sqlite file
-        uses: schemacrawler/SchemaCrawler-Action@83933e406d4e696843973cf7572bde09deca617b # v17.5.0
+        uses: schemacrawler/SchemaCrawler-Action@d023b805aeaf8135a1395f3ee9f1dbe685aaa0c0 # v17.5.0
         with:
           entrypoint: /schemacrawler.sh
           args: --server=sqlite --database=musicsearch.db --info-level=maximum --command=schema --output-file assets/musicsearch_db_schema.svg --log-level=CONFIG
