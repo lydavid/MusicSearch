@@ -110,7 +110,7 @@ lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "ly
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
-nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.5"
+nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.6"
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingMultiplatform" }
 paging-compose = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingMultiplatform" }
