@@ -66,6 +66,9 @@ There are external links to various streaming platforms which will open the albu
 
 [See here](./docs/README.md) for notes on setting up the project, and some development processes.
 
+Translations/localizations will soon be supported through [Weblate](https://hosted.weblate.org/)
+after this [task](https://github.com/lydavid/MusicSearch/issues/1998).
+
 ## Privacy Policy
 
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md) for Android and Desktop.
