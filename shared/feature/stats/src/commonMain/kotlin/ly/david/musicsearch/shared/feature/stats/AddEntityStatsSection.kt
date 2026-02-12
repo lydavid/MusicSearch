@@ -16,39 +16,44 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.getTitle
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cached
+import musicsearch.ui.common.generated.resources.collected
+import musicsearch.ui.common.generated.resources.visited
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Instant
 
 internal fun LazyListScope.addEntityStatsSection(
     entityStats: EntityStats,
-    header: String,
+    tab: Tab,
     now: Instant = Clock.System.now(),
 ) {
     item {
-        val strings = LocalStrings.current
         Column {
-            ListSeparatorHeader(header)
+            ListSeparatorHeader(tab.getTitle())
 
             CompletionProgressBar(
                 totalCount = entityStats.totalRemote,
                 currentCount = entityStats.totalLocal,
-                formatProgressText = strings.cached,
+                formatProgressText = stringResource(Res.string.cached),
                 modifier = Modifier.padding(top = 4.dp),
             )
 
             CompletionProgressBar(
                 totalCount = entityStats.totalRemote,
                 currentCount = entityStats.totalVisited,
-                formatProgressText = strings.visited,
+                formatProgressText = stringResource(Res.string.visited),
                 modifier = Modifier.padding(top = 4.dp),
             )
 
             CompletionProgressBar(
                 totalCount = entityStats.totalRemote,
                 currentCount = entityStats.totalCollected,
-                formatProgressText = strings.collected,
+                formatProgressText = stringResource(Res.string.collected),
                 modifier = Modifier.padding(top = 4.dp),
             )
         }

@@ -8,7 +8,10 @@ import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.firstReleaseDate
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ReleaseGroupDetailsTabUi(
@@ -20,8 +23,6 @@ internal fun ReleaseGroupDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = releaseGroup,
         detailsTabUiState = detailsTabUiState,
@@ -32,13 +33,13 @@ internal fun ReleaseGroupDetailsTabUi(
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
             TextWithHeading(
-                heading = strings.type,
+                heading = stringResource(Res.string.type),
                 text = getDisplayTypes(),
                 filterText = filterText,
             )
             firstReleaseDate.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.firstReleaseDate,
+                    heading = stringResource(Res.string.firstReleaseDate),
                     text = it,
                     filterText = filterText,
                 )

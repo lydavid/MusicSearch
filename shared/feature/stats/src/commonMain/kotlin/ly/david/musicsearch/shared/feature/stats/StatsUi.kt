@@ -4,11 +4,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import kotlin.time.Clock
 import kotlin.time.Instant
-import ly.david.musicsearch.ui.common.theme.LocalStrings
-import ly.david.musicsearch.ui.common.topappbar.Tab
-import ly.david.musicsearch.ui.common.topappbar.getTitle
 
 @Composable
 internal fun StatsUi(
@@ -32,8 +30,6 @@ internal fun StatsUi(
     modifier: Modifier = Modifier,
     now: Instant = Clock.System.now(),
 ) {
-    val strings = LocalStrings.current
-
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
             when (tab) {
@@ -48,7 +44,7 @@ internal fun StatsUi(
                     stats.tabToStats[tab]?.let { entityStats ->
                         addEntityStatsSection(
                             entityStats = entityStats,
-                            header = tab.getTitle(strings),
+                            tab = tab,
                             now = now,
                         )
                     }

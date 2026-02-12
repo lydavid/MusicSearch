@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.images
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +25,6 @@ internal fun ImagesSettingsUi(
     state: ImagesSettingsUiState,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
 
     Scaffold(
@@ -32,7 +33,7 @@ internal fun ImagesSettingsUi(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = true,
-                title = strings.images,
+                title = stringResource(Res.string.images),
                 onBack = {
                     eventSink(ImagesSettingsUiEvent.NavigateUp)
                 },

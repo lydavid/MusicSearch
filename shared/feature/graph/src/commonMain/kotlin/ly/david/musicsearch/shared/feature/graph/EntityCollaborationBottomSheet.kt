@@ -12,7 +12,7 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,12 +38,10 @@ internal fun EntityCollaborationBottomSheetContent(
     selectedEntityType: MusicBrainzEntityType,
     onClick: (MusicBrainzEntityType) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Column {
         collaboratableEntities.forEach {
             ClickableItem(
-                title = it.getName(strings),
+                title = stringResource(it.getName()),
                 endIcon = if (selectedEntityType == it) CustomIcons.Check else null,
                 onClick = {
                     onClick(it)

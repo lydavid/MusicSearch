@@ -15,8 +15,10 @@ import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.formatForDisplay
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PinDrop
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.openGoogleMaps
+import org.jetbrains.compose.resources.stringResource
 
 private const val ZOOM_LEVEL = 16
 
@@ -26,7 +28,6 @@ fun CoordinateListItem(
     modifier: Modifier = Modifier,
     label: String? = null,
 ) {
-    val strings = LocalStrings.current
     val uriHandler = LocalUriHandler.current
     val text = coordinates.formatForDisplay() ?: return
 
@@ -38,7 +39,7 @@ fun CoordinateListItem(
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
                     imageVector = CustomIcons.PinDrop,
-                    contentDescription = strings.openGoogleMaps,
+                    contentDescription = stringResource(Res.string.openGoogleMaps),
                 )
                 Text(
                     text = text,

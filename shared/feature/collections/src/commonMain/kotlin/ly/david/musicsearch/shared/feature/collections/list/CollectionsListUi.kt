@@ -34,10 +34,13 @@ import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectio
 import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.collections
+import musicsearch.ui.common.generated.resources.createCollection
+import org.jetbrains.compose.resources.stringResource
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
@@ -110,7 +113,6 @@ internal fun CollectionListUi(
     onSortClick: () -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -156,14 +158,14 @@ internal fun CollectionListUi(
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = false,
-                title = strings.collections,
+                title = stringResource(Res.string.collections),
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
                 additionalActions = {
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(
                             imageVector = CustomIcons.Add,
-                            contentDescription = strings.createCollection,
+                            contentDescription = stringResource(Res.string.createCollection),
                         )
                     }
                 },

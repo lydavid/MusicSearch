@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.list.SortableOption
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Sort
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.sortAction
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,8 +26,6 @@ fun <T> OverflowMenuScope.SortMenuItem(
     modifier: Modifier = Modifier,
     onSortOptionClick: (T) -> Unit = {},
 ) where T : Enum<T>, T : SortableOption {
-    val strings = LocalStrings.current
-
     var showBottomSheet by remember { mutableStateOf(false) }
     if (showBottomSheet) {
         SortOptionsBottomSheet(
@@ -43,7 +43,7 @@ fun <T> OverflowMenuScope.SortMenuItem(
 
     DropdownMenuItem(
         text = {
-            Text(strings.sort)
+            Text(stringResource(Res.string.sortAction))
         },
         leadingIcon = {
             Icon(

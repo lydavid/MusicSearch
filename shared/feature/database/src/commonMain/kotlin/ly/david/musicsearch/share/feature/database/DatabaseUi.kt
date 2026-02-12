@@ -27,8 +27,12 @@ import ly.david.musicsearch.ui.common.icons.Image
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.database
+import musicsearch.ui.common.generated.resources.history
+import musicsearch.ui.common.generated.resources.images
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +41,6 @@ internal fun DatabaseUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -46,7 +49,7 @@ internal fun DatabaseUi(
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = false,
-                title = strings.database,
+                title = stringResource(Res.string.database),
                 topAppBarFilterState = state.topAppBarFilterState,
             )
         },
@@ -77,14 +80,13 @@ internal fun DatabaseUi(
     onDestinationClick: (Screen) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val filterText = state.topAppBarFilterState.filterText
     val scrollState = rememberScrollState()
     Column(
         modifier = modifier
             .verticalScroll(state = scrollState),
     ) {
-        strings.history.run {
+        stringResource(Res.string.history).run {
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
@@ -95,7 +97,7 @@ internal fun DatabaseUi(
             }
         }
 
-        strings.images.run {
+        stringResource(Res.string.images).run {
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
@@ -112,7 +114,7 @@ internal fun DatabaseUi(
         MusicBrainzEntityType.entries
             .filterNot { it == MusicBrainzEntityType.COLLECTION || it == MusicBrainzEntityType.URL }
             .forEach { entity ->
-                val title = entity.getNamePlural(strings)
+                val title = stringResource(entity.getNamePlural())
                 if (title.contains(filterText, ignoreCase = true)) {
                     ClickableItem(
                         title = title,

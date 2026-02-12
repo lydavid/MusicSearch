@@ -30,8 +30,14 @@ import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.firstReleaseDate
+import musicsearch.ui.common.generated.resources.isrc
+import musicsearch.ui.common.generated.resources.length
+import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.video
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
 @Composable
@@ -44,8 +50,6 @@ internal fun RecordingDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = recording,
         detailsTabUiState = detailsTabUiState,
@@ -61,26 +65,26 @@ internal fun RecordingDetailsTabUi(
                         vertical = 4.dp,
                     ),
                     imageVector = CustomIcons.MusicVideo,
-                    text = strings.video,
+                    text = stringResource(Res.string.video),
                 )
             }
             length?.ifNotNull {
                 TextWithHeading(
-                    heading = strings.length,
+                    heading = stringResource(Res.string.length),
                     text = it.toDisplayTime(),
                     filterText = filterText,
                 )
             }
             firstReleaseDate.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.firstReleaseDate,
+                    heading = stringResource(Res.string.firstReleaseDate),
                     text = it,
                     filterText = filterText,
                 )
             }
             isrcs.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.isrc,
+                    heading = stringResource(Res.string.isrc),
                     text = it.joinToString(", "),
                     filterText = filterText,
                 )
@@ -103,7 +107,7 @@ private fun LazyListScope.listenSection(
 ) {
     if (recording.listenCount != null) {
         item {
-            ListSeparatorHeader(LocalStrings.current.listens)
+            ListSeparatorHeader(stringResource(Res.string.listens))
         }
         item {
             ListItem(

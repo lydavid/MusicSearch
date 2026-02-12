@@ -27,10 +27,12 @@ import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackListItem
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.video
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Also see [TrackListItem].
@@ -79,7 +81,7 @@ fun RecordingListItem(
                             modifier = Modifier
                                 .padding(start = 4.dp)
                                 .size(TINY_ICON_SIZE.dp),
-                            contentDescription = LocalStrings.current.video,
+                            contentDescription = stringResource(Res.string.video),
                         )
                     }
                 }

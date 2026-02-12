@@ -37,12 +37,12 @@ import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -60,7 +60,6 @@ internal fun AllLocalEntitiesUi(
     val releasesByEntityEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsByEntityEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
-    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -117,7 +116,7 @@ internal fun AllLocalEntitiesUi(
                 onBack = {
                     eventSink(AllLocalEntitiesUiEvent.NavigateUp)
                 },
-                title = entity.getNamePlural(strings),
+                title = stringResource(entity.getNamePlural()),
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
                     StatsMenuItem(

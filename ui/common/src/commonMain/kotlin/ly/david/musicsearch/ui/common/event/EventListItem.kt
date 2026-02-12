@@ -22,8 +22,10 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cancelled
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EventListItem(
@@ -34,8 +36,6 @@ fun EventListItem(
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     ListItem(
         headlineContent = {
             Column {
@@ -83,7 +83,7 @@ fun EventListItem(
                                 modifier = Modifier.padding(top = 4.dp),
                                 text = buildString {
                                     append(" ").takeIf { lifeSpanText.isNotEmpty() || time.isNotEmpty() }
-                                    append("(${strings.cancelled})")
+                                    append("(${stringResource(Res.string.cancelled)})")
                                 },
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 fontWeight = event.fontWeight,

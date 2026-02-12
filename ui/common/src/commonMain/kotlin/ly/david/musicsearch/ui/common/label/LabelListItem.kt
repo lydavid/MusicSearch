@@ -20,9 +20,11 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.lc
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LabelListItem(
@@ -35,8 +37,6 @@ fun LabelListItem(
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     val leadingContent: @Composable (() -> Unit)? =
         if (showIcon) {
             {
@@ -74,10 +74,10 @@ fun LabelListItem(
                     )
                 }
 
-                label.labelCode?.ifNotNull {
+                label.labelCode?.ifNotNull { labelCode ->
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = strings.lc(it),
+                        text = stringResource(Res.string.lc, labelCode),
                         style = TextStyles.getCardBodySubTextStyle(),
                         fontWeight = label.fontWeight,
                     )

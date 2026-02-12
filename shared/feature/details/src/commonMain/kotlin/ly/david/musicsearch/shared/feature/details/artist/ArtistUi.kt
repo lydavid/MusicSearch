@@ -45,7 +45,6 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -58,6 +57,9 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.seeCollaborators
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -70,7 +72,6 @@ internal fun ArtistUi(
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
     val entityType = browseMethod.entityType
-    val strings = LocalStrings.current
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
@@ -198,7 +199,7 @@ internal fun ArtistUi(
                         url = state.url,
                     )
                     DropdownMenuItem(
-                        text = { Text(strings.seeCollaborators) },
+                        text = { Text(stringResource(Res.string.seeCollaborators)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = CustomIcons.Group,
@@ -295,7 +296,7 @@ internal fun ArtistUi(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle() },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     )

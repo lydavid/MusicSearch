@@ -12,7 +12,9 @@ import ly.david.musicsearch.ui.common.icons.BarChart
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.screen.showInDialog
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.stats
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OverflowMenuScope.StatsMenuItem(
@@ -21,12 +23,10 @@ fun OverflowMenuScope.StatsMenuItem(
     coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
-
     DropdownMenuItem(
         text = {
             Text(
-                text = strings.stats,
+                text = stringResource(Res.string.stats),
             )
         },
         leadingIcon = {

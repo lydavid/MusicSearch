@@ -60,7 +60,11 @@ import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FindInPage
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cancel
+import musicsearch.ui.common.generated.resources.clearFilter
+import musicsearch.ui.common.generated.resources.filterAction
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -138,8 +142,6 @@ internal fun TopAppBarWithFilterInternal(
     additionalBar: @Composable (() -> Unit) = {},
     onSelectAllToggle: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     val enterTransition = when (topAppBarFilterState.transitionType) {
         TopAppBarFilterState.TransitionType.Vertical -> expandVertically()
         TopAppBarFilterState.TransitionType.Horizontal -> slideIn(
@@ -206,11 +208,11 @@ internal fun TopAppBarWithFilterInternal(
                             ) {
                                 Icon(
                                     imageVector = CustomIcons.ArrowBack,
-                                    contentDescription = strings.cancel,
+                                    contentDescription = stringResource(Res.string.cancel),
                                 )
                             }
                         },
-                        placeholder = { Text(strings.filter) },
+                        placeholder = { Text(stringResource(Res.string.filterAction)) },
                         trailingIcon = {
                             if (topAppBarFilterState.filterText.isEmpty()) return@TextField
                             IconButton(onClick = {
@@ -220,7 +222,7 @@ internal fun TopAppBarWithFilterInternal(
                             }) {
                                 Icon(
                                     CustomIcons.Clear,
-                                    contentDescription = strings.clearFilter,
+                                    contentDescription = stringResource(Res.string.clearFilter),
                                 )
                             }
                         },
@@ -270,7 +272,7 @@ internal fun TopAppBarWithFilterInternal(
                     }) {
                         Icon(
                             imageVector = CustomIcons.FindInPage,
-                            contentDescription = strings.filter,
+                            contentDescription = stringResource(Res.string.filterAction),
                         )
                     }
                 }

@@ -27,8 +27,11 @@ import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.icons.Wikidata
 import ly.david.musicsearch.ui.common.icons.Wikipedia
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.readMore
+import musicsearch.ui.common.generated.resources.wikipedia
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun UrlListItem(
@@ -38,7 +41,6 @@ fun UrlListItem(
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val strings = LocalStrings.current
     val uriHandler = LocalUriHandler.current
 
     ListItem(
@@ -55,8 +57,8 @@ fun UrlListItem(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     val imageVectorAndTint = when (relation.type) {
-                        strings.readMore,
-                        strings.wikipedia,
+                        stringResource(Res.string.readMore),
+                        stringResource(Res.string.wikipedia),
                         -> {
                             CustomIcons.Wikipedia to LocalContentColor.current
                         }

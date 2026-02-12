@@ -22,9 +22,11 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.primary
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -35,7 +37,6 @@ fun AliasListItem(
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val strings = LocalStrings.current
 
     ListItem(
         headlineContent = {
@@ -46,25 +47,25 @@ fun AliasListItem(
                 )
 
                 val locale = alias.locale
-                val displayLanguage = locale.getDisplayLanguage(strings)
+                val displayLanguage = locale.getDisplayLanguage()
                     .transformThisIfNotNullOrEmpty { "$it ($locale)" }
                 val typeAndLifeSpan = listOfNotNull(
-                    alias.type?.getDisplayString(strings),
+                    alias.type?.getDisplayString(),
                     alias.getLifeSpanForDisplay().takeIf { it.isNotEmpty() },
                     displayLanguage.takeIf { it.isNotEmpty() },
-                    strings.primary.takeIf { alias.isPrimary },
+                    stringResource(Res.string.primary).takeIf { alias.isPrimary },
                 ).joinToString("・")
                 typeAndLifeSpan.ifNotEmpty { typeAndLifeSpan ->
                     Text(
                         text = buildAnnotatedString {
                             append(typeAndLifeSpan)
-                            if (alias.isPrimary && strings.primary.isNotEmpty()) {
-                                val primaryStart = typeAndLifeSpan.lastIndexOf(strings.primary)
+                            if (alias.isPrimary && stringResource(Res.string.primary).isNotEmpty()) {
+                                val primaryStart = typeAndLifeSpan.lastIndexOf(stringResource(Res.string.primary))
                                 if (primaryStart >= 0) {
                                     addStyle(
                                         SpanStyle(fontWeight = FontWeight.SemiBold),
                                         start = primaryStart,
-                                        end = primaryStart + strings.primary.length,
+                                        end = primaryStart + stringResource(Res.string.primary).length,
                                     )
                                 }
                             }

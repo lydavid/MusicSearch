@@ -18,8 +18,11 @@ import app.cash.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.addToCollection
+import musicsearch.ui.common.generated.resources.createCollection
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CollectionBottomSheetContent(
@@ -29,11 +32,9 @@ internal fun CollectionBottomSheetContent(
     onAddToCollection: (collectionId: String) -> Unit = {},
 ) {
     Column(modifier = modifier) {
-        val strings = LocalStrings.current
-
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = strings.addToCollection,
+                text = stringResource(Res.string.addToCollection),
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
                 style = TextStyles.getCardBodyTextStyle(),
@@ -44,7 +45,7 @@ internal fun CollectionBottomSheetContent(
             IconButton(onClick = onCreateCollectionClick) {
                 Icon(
                     imageVector = CustomIcons.Add,
-                    contentDescription = strings.createCollection,
+                    contentDescription = stringResource(Res.string.createCollection),
                 )
             }
         }

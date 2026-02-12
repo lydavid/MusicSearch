@@ -18,8 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cancel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MultipleChoiceDialog(
@@ -30,8 +32,6 @@ fun MultipleChoiceDialog(
     onSelectChoiceIndex: (Int) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Dialog(
         onDismissRequest = {
             onDismiss()
@@ -85,7 +85,7 @@ fun MultipleChoiceDialog(
                         .align(Alignment.End),
                     onClick = onDismiss,
                 ) {
-                    Text(strings.cancel)
+                    Text(stringResource(Res.string.cancel))
                 }
             }
         }

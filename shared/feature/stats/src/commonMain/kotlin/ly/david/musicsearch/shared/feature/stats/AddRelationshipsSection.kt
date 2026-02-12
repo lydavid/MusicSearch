@@ -21,8 +21,10 @@ import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.relationships
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -34,7 +36,7 @@ internal fun LazyListScope.addRelationshipsSection(
     val totalRelations = relationTypeCounts.sumOf { it.count }
     val lastUpdated = relationStats.lastUpdated
     item {
-        ListSeparatorHeader(LocalStrings.current.relationships)
+        ListSeparatorHeader(stringResource(Res.string.relationships))
 
         Text(
             modifier = Modifier
@@ -78,9 +80,10 @@ private fun RelationTypeCountBar(
             .padding(horizontal = 16.dp)
             .padding(top = 4.dp),
     ) {
+        val musicBrainzType = stringResource(linkedEntity.getName())
         TextWithIcon(
             imageVector = linkedEntity.getIcon() ?: return,
-            text = "${linkedEntity.getName(LocalStrings.current)}: ${relationTypeCount.count}",
+            text = "$musicBrainzType: ${relationTypeCount.count}",
             textStyle = TextStyles.getCardBodySubTextStyle(),
         )
 

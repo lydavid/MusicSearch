@@ -33,8 +33,15 @@ import ly.david.musicsearch.shared.domain.network.collectableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cancel
+import musicsearch.ui.common.generated.resources.clearSearch
+import musicsearch.ui.common.generated.resources.collectionNamePlaceholder
+import musicsearch.ui.common.generated.resources.createCollection
+import musicsearch.ui.common.generated.resources.name
+import musicsearch.ui.common.generated.resources.ok
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CreateNewCollectionDialogContent(
@@ -43,7 +50,6 @@ fun CreateNewCollectionDialogContent(
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
 ) {
-    val strings = LocalStrings.current
     var name by rememberSaveable { mutableStateOf("") }
     var selectedEntity by rememberSaveable { mutableStateOf(defaultEntity) }
     val focusManager = LocalFocusManager.current
@@ -58,7 +64,7 @@ fun CreateNewCollectionDialogContent(
     ) {
         Text(
             modifier = Modifier,
-            text = strings.createCollection,
+            text = stringResource(Res.string.createCollection),
             style = TextStyles.getHeaderTextStyle(),
         )
 
@@ -69,8 +75,8 @@ fun CreateNewCollectionDialogContent(
                 .focusRequester(focusRequester),
             shape = RectangleShape,
             value = name,
-            label = { Text(strings.name) },
-            placeholder = { Text(strings.collectionNamePlaceholder) },
+            label = { Text(stringResource(Res.string.name)) },
+            placeholder = { Text(stringResource(Res.string.collectionNamePlaceholder)) },
             maxLines = 1,
             singleLine = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -88,7 +94,7 @@ fun CreateNewCollectionDialogContent(
                 }) {
                     Icon(
                         CustomIcons.Clear,
-                        contentDescription = strings.clearSearch,
+                        contentDescription = stringResource(Res.string.clearSearch),
                     )
                 }
             },
@@ -117,7 +123,7 @@ fun CreateNewCollectionDialogContent(
         ) {
             TextButton(onClick = onDismiss) {
                 Text(
-                    text = strings.cancel,
+                    text = stringResource(Res.string.cancel),
                 )
             }
             TextButton(
@@ -131,7 +137,7 @@ fun CreateNewCollectionDialogContent(
                 enabled = name.isNotEmpty(),
             ) {
                 Text(
-                    text = strings.ok,
+                    text = stringResource(Res.string.ok),
                 )
             }
         }

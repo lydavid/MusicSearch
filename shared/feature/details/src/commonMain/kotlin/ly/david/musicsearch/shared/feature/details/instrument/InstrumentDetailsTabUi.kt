@@ -13,8 +13,11 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.description
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun InstrumentDetailsTabUi(
@@ -25,8 +28,6 @@ internal fun InstrumentDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = instrument,
         detailsTabUiState = detailsTabUiState,
@@ -36,14 +37,14 @@ internal fun InstrumentDetailsTabUi(
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.type,
+                    heading = stringResource(Res.string.type),
                     text = it,
                     filterText = filterText,
                 )
             }
 
             description.ifNotEmpty {
-                ListSeparatorHeader(strings.description)
+                ListSeparatorHeader(stringResource(Res.string.description))
                 SelectionContainer {
                     Text(
                         modifier = Modifier
