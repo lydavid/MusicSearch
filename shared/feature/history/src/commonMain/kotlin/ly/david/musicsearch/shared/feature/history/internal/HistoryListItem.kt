@@ -15,8 +15,8 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun HistoryListItem(
@@ -25,8 +25,6 @@ internal fun HistoryListItem(
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     SwipeToDeleteListItem(
         content = {
             ListItem(
@@ -43,7 +41,7 @@ internal fun HistoryListItem(
                     )
                 },
                 supportingContent = {
-                    val resource = lookupHistory.entity.getName(strings)
+                    val resource = stringResource(lookupHistory.entity.getName())
                     Text(
                         text = resource,
                         style = TextStyles.getCardBodySubTextStyle(),

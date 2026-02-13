@@ -4,8 +4,8 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,8 +25,11 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.readMore
+import musicsearch.ui.common.generated.resources.wikipedia
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun WikipediaSection(
@@ -37,7 +40,6 @@ fun WikipediaSection(
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
-    val strings = LocalStrings.current
 
     val showExtract = extract.extract.isNotBlank() &&
         extract.extract.contains(filterText, ignoreCase = true)
@@ -47,7 +49,7 @@ fun WikipediaSection(
         Column(
             modifier = modifier,
         ) {
-            ListSeparatorHeader(text = strings.wikipedia)
+            ListSeparatorHeader(text = stringResource(Res.string.wikipedia))
 
             var expanded by remember { mutableStateOf(false) }
 
@@ -79,7 +81,7 @@ fun WikipediaSection(
                 UrlListItem(
                     relation = RelationListItemModel(
                         id = "wikipedia_section",
-                        type = strings.readMore,
+                        type = stringResource(Res.string.readMore),
                         linkedEntity = MusicBrainzEntityType.URL,
                         name = extract.wikipediaUrl,
                         linkedEntityId = "wikipedia_section",
