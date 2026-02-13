@@ -39,7 +39,7 @@ zoomable = "2.9.0"
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlibraries" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.10.1"
+androidx-activity-compose = "androidx.activity:activity-compose:1.12.4"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
 androidx-core = "androidx.core:core-ktx:1.17.0"
