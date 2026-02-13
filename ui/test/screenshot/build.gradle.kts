@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.coil.test)
     implementation(libs.bundles.kotlinx.coroutines)
 
-    implementation(libs.compose.components.resources)
     implementation(libs.compose.runtime)
 
     implementation(libs.paparazzi)
