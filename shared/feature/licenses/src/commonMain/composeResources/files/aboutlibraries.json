@@ -974,29 +974,6 @@
             ]
         },
         {
-            "uniqueId": "cafe.adriel.lyricist:lyricist",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Adriel Cafe"
-                }
-            ],
-            "artifactVersion": "1.8.0",
-            "description": "The missing I18N/L10N library for Jetpack Compose!",
-            "scm": {
-                "connection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git",
-                "url": "https://github.com/adrielcafe/lyricist",
-                "developerConnection": "scm:git:ssh://git@github.com/adrielcafe/lyricist.git"
-            },
-            "name": "Lyricist",
-            "website": "https://github.com/adrielcafe/lyricist",
-            "licenses": [
-                "MIT"
-            ]
-        },
-        {
             "uniqueId": "co.touchlab:stately-concurrency",
             "funding": [
                 
