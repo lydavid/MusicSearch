@@ -29,7 +29,6 @@ kotlin {
                 implementation(libs.coil)
                 implementation(libs.coil.compose)
                 implementation(libs.koin.core)
-                implementation(libs.lyricist.library)
                 implementation(libs.materialKolor)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
