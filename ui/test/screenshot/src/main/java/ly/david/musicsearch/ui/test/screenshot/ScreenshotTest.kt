@@ -1,6 +1,8 @@
 package ly.david.musicsearch.ui.test.screenshot
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalInspectionMode
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import coil3.SingletonImageLoader
@@ -50,7 +52,9 @@ abstract class ScreenshotTest(
 
     protected fun snapshot(content: @Composable () -> Unit) {
         paparazzi.snapshot {
-            content()
+            CompositionLocalProvider(LocalInspectionMode provides true) {
+                content()
+            }
         }
     }
 

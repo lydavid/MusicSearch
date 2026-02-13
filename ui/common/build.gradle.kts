@@ -18,10 +18,10 @@ kotlin {
                 api(projects.shared.strings)
                 implementation(projects.core.logging.api)
 
-                implementation(compose.foundation)
-                implementation(compose.materialIconsExtended)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material.icons.extended)
                 implementation(libs.compose.material3)
-                implementation(compose.ui)
+                implementation(libs.compose.ui)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
