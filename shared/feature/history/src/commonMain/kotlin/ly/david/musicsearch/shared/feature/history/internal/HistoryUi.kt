@@ -37,8 +37,15 @@ import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.clearHistory
+import musicsearch.ui.common.generated.resources.deleteLookupHistoryConfirmation
+import musicsearch.ui.common.generated.resources.no
+import musicsearch.ui.common.generated.resources.recentHistory
+import musicsearch.ui.common.generated.resources.sortAction
+import musicsearch.ui.common.generated.resources.yes
+import org.jetbrains.compose.resources.stringResource
 import kotlin.coroutines.cancellation.CancellationException
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +56,6 @@ internal fun HistoryUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -60,9 +66,9 @@ internal fun HistoryUi(
 
     if (showDeleteConfirmationDialog) {
         SimpleAlertDialog(
-            title = strings.deleteLookupHistoryConfirmation,
-            confirmText = strings.yes,
-            dismissText = strings.no,
+            title = stringResource(Res.string.deleteLookupHistoryConfirmation),
+            confirmText = stringResource(Res.string.yes),
+            dismissText = stringResource(Res.string.no),
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = {
                 coroutineScope.launch {
@@ -95,7 +101,7 @@ internal fun HistoryUi(
 
     if (showBottomSheet) {
         MultipleChoiceBottomSheet(
-            options = HistorySortOption.entries.map { it.getLabel(strings) },
+            options = HistorySortOption.entries.map { it.getLabel() },
             selectedOptionIndex = state.sortOption.ordinal,
             onSortOptionIndexClick = {
                 eventSink(HistoryUiEvent.UpdateSortOption(it))
@@ -114,19 +120,19 @@ internal fun HistoryUi(
                 onBack = {
                     eventSink(HistoryUiEvent.NavigateUp)
                 },
-                title = strings.recentHistory,
+                title = stringResource(Res.string.recentHistory),
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text(strings.clearHistory) },
+                        text = { Text(stringResource(Res.string.clearHistory)) },
                         onClick = {
                             showDeleteConfirmationDialog = true
                             closeMenu()
                         },
                     )
                     DropdownMenuItem(
-                        text = { Text(strings.sort) },
+                        text = { Text(stringResource(Res.string.sortAction)) },
                         onClick = {
                             showBottomSheet = true
                             closeMenu()
