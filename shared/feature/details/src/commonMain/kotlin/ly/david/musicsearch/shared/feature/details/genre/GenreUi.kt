@@ -14,9 +14,11 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenContent
-import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.openInBrowser
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +30,6 @@ internal fun GenreUi(
 
     val entity = MusicBrainzEntityType.GENRE
 
-    val strings = LocalStrings.current
     val uriHandler = LocalUriHandler.current
 
     Scaffold(
@@ -61,7 +62,7 @@ internal fun GenreUi(
                         uriHandler.openUri(state.url)
                     },
                 ) {
-                    Text(strings.openInBrowser)
+                    Text(stringResource(Res.string.openInBrowser))
                 }
             }
         }

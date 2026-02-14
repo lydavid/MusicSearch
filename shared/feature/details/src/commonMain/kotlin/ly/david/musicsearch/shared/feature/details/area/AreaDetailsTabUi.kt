@@ -10,7 +10,14 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.date
+import musicsearch.ui.common.generated.resources.endDate
+import musicsearch.ui.common.generated.resources.iso31661
+import musicsearch.ui.common.generated.resources.regionalIndicatorSymbol
+import musicsearch.ui.common.generated.resources.startDate
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun AreaDetailsTabUi(
@@ -21,31 +28,29 @@ internal fun AreaDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     val entityInfoSection: @Composable AreaDetailsModel.() -> Unit = {
         type.ifNotEmpty {
             TextWithHeading(
-                heading = strings.type,
+                heading = stringResource(Res.string.type),
                 text = it,
                 filterText = filterText,
             )
         }
         LifeSpanText(
             lifeSpan = lifeSpan,
-            heading = strings.date,
-            beginHeading = strings.startDate,
-            endHeading = strings.endDate,
+            heading = stringResource(Res.string.date),
+            beginHeading = stringResource(Res.string.startDate),
+            endHeading = stringResource(Res.string.endDate),
             filterText = filterText,
         )
         countryCode.ifNotNullOrEmpty {
             TextWithHeading(
-                heading = strings.iso31661,
+                heading = stringResource(Res.string.iso31661),
                 text = it,
                 filterText = filterText,
             )
             TextWithHeading(
-                heading = strings.regionalIndicatorSymbol,
+                heading = stringResource(Res.string.regionalIndicatorSymbol),
                 text = it.toFlagEmoji(),
                 filterText = filterText,
             )

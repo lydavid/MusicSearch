@@ -33,7 +33,6 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -59,7 +58,6 @@ internal fun LabelUi(
     val entityId = browseMethod.entityId
     val entityType = browseMethod.entityType
     val overlayHost = LocalOverlayHost.current
-    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -249,7 +247,7 @@ internal fun LabelUi(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = state.tabs.map { it.getTitle(strings) },
+                        tabsTitle = state.tabs.map { it.getTitle() },
                         selectedTabIndex = state.tabs.indexOf(state.selectedTab),
                         onSelectTabIndex = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     )

@@ -16,8 +16,10 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Login
 import ly.david.musicsearch.ui.common.icons.Logout
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.loginToMusicBrainz
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun MusicBrainzProfileCard(
@@ -26,8 +28,6 @@ internal fun MusicBrainzProfileCard(
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Card(
         onClick = {
             if (showLogin) {
@@ -52,7 +52,7 @@ internal fun MusicBrainzProfileCard(
             Column {
                 if (showLogin) {
                     Text(
-                        text = strings.loginToMusicBrainz,
+                        text = stringResource(Res.string.loginToMusicBrainz),
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     Text(

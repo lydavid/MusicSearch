@@ -34,9 +34,14 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_LONG
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.appearance
+import musicsearch.ui.common.generated.resources.dark
+import musicsearch.ui.common.generated.resources.light
+import musicsearch.ui.common.generated.resources.system
+import musicsearch.ui.common.generated.resources.theme
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal expect fun AppearanceSettingsUi(
@@ -51,7 +56,6 @@ internal fun AppearanceSettingsUi(
     modifier: Modifier = Modifier,
     isAndroid12Plus: Boolean = false,
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
 
     Scaffold(
@@ -60,7 +64,7 @@ internal fun AppearanceSettingsUi(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = true,
-                title = strings.appearance,
+                title = stringResource(Res.string.appearance),
                 onBack = {
                     eventSink(AppearanceSettingsUiEvent.NavigateUp)
                 },
@@ -71,8 +75,8 @@ internal fun AppearanceSettingsUi(
             modifier = Modifier.padding(innerPadding),
         ) {
             SettingWithDialogChoices(
-                title = strings.theme,
-                choices = AppPreferences.Theme.entries.map { it.getText(strings) }.toImmutableList(),
+                title = stringResource(Res.string.theme),
+                choices = AppPreferences.Theme.entries.map { it.getText() }.toImmutableList(),
                 selectedChoiceIndex = state.theme.ordinal,
                 onSelectChoiceIndex = {
                     eventSink(AppearanceSettingsUiEvent.UpdateTheme(AppPreferences.Theme.entries[it]))
@@ -151,9 +155,12 @@ private fun ColumnScope.CustomColorPickerSection(
     }
 }
 
-private fun AppPreferences.Theme.getText(strings: AppStrings): String =
-    when (this) {
-        AppPreferences.Theme.LIGHT -> strings.light
-        AppPreferences.Theme.DARK -> strings.dark
-        AppPreferences.Theme.SYSTEM -> strings.system
-    }
+@Composable
+private fun AppPreferences.Theme.getText(): String =
+    stringResource(
+        when (this) {
+            AppPreferences.Theme.LIGHT -> Res.string.light
+            AppPreferences.Theme.DARK -> Res.string.dark
+            AppPreferences.Theme.SYSTEM -> Res.string.system
+        },
+    )
