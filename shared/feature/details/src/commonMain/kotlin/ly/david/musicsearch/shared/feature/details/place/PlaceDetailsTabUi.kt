@@ -12,7 +12,13 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.address
+import musicsearch.ui.common.generated.resources.closed
+import musicsearch.ui.common.generated.resources.coordinates
+import musicsearch.ui.common.generated.resources.opened
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PlaceDetailsTabUi(
@@ -24,8 +30,6 @@ internal fun PlaceDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = place,
         detailsTabUiState = detailsTabUiState,
@@ -36,7 +40,7 @@ internal fun PlaceDetailsTabUi(
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.type,
+                    heading = stringResource(Res.string.type),
                     text = it,
                     filterText = filterText,
                 )
@@ -44,14 +48,14 @@ internal fun PlaceDetailsTabUi(
             lifeSpan.run {
                 begin.ifNotEmpty {
                     TextWithHeading(
-                        heading = strings.opened,
+                        heading = stringResource(Res.string.opened),
                         text = it,
                         filterText = filterText,
                     )
                 }
                 end.ifNotEmpty {
                     TextWithHeading(
-                        heading = strings.closed,
+                        heading = stringResource(Res.string.closed),
                         text = it,
                         filterText = filterText,
                     )
@@ -59,7 +63,7 @@ internal fun PlaceDetailsTabUi(
             }
             address.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.address,
+                    heading = stringResource(Res.string.address),
                     text = it,
                     filterText = filterText,
                 )
@@ -74,9 +78,9 @@ internal fun PlaceDetailsTabUi(
             }
 
             coordinates.let {
-                ListSeparatorHeader(strings.coordinates)
+                ListSeparatorHeader(stringResource(Res.string.coordinates))
                 val label = place.name +
-                    if (place.lifeSpan.ended == true) " (${strings.closed})" else ""
+                    if (place.lifeSpan.ended) " (${stringResource(Res.string.closed)})" else ""
                 CoordinateListItem(
                     coordinates = it,
                     label = label,

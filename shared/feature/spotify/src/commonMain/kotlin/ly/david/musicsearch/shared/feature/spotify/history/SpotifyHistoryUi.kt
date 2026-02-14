@@ -33,9 +33,11 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.spotifyHistory
+import org.jetbrains.compose.resources.stringResource
 import kotlin.coroutines.cancellation.CancellationException
 
 @Composable
@@ -87,7 +89,6 @@ internal fun SpotifyHistoryUi(
     onUndoMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
     onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -99,7 +100,7 @@ internal fun SpotifyHistoryUi(
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = onBack,
-                title = strings.spotifyHistory,
+                title = stringResource(Res.string.spotifyHistory),
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = topAppBarFilterState,
             )

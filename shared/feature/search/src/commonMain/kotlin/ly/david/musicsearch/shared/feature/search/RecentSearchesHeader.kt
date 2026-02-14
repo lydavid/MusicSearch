@@ -13,21 +13,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.clearSearchHistory
+import musicsearch.ui.common.generated.resources.recentSearches
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun RecentSearchesHeader(
     onDeleteAllHistory: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = strings.recentSearches,
+            text = stringResource(Res.string.recentSearches),
             style = TextStyles.getHeaderTextStyle(),
             fontWeight = FontWeight.SemiBold,
         )
@@ -37,7 +38,7 @@ internal fun RecentSearchesHeader(
         IconButton(onClick = onDeleteAllHistory) {
             Icon(
                 imageVector = CustomIcons.DeleteOutline,
-                contentDescription = strings.clearSearchHistory,
+                contentDescription = stringResource(Res.string.clearSearchHistory),
             )
         }
     }

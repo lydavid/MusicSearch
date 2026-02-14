@@ -44,8 +44,27 @@ import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.about
+import musicsearch.ui.common.generated.resources.appVersion
+import musicsearch.ui.common.generated.resources.appearance
+import musicsearch.ui.common.generated.resources.databaseVersion
+import musicsearch.ui.common.generated.resources.enableNotificationListener
+import musicsearch.ui.common.generated.resources.enableNotificationListenerSubtitle
+import musicsearch.ui.common.generated.resources.experimentalSearch
+import musicsearch.ui.common.generated.resources.images
+import musicsearch.ui.common.generated.resources.invalidToken
+import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.nowPlayingHistory
+import musicsearch.ui.common.generated.resources.nowPlayingHistorySubtitle
+import musicsearch.ui.common.generated.resources.openSourceLicenses
+import musicsearch.ui.common.generated.resources.settings
+import musicsearch.ui.common.generated.resources.spotify
+import musicsearch.ui.common.generated.resources.spotifySubtitle
+import musicsearch.ui.common.generated.resources.youAreLoggedIn
+import musicsearch.ui.common.generated.resources.youAreLoggedOut
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal expect fun SettingsUi(
@@ -64,7 +83,6 @@ internal fun SettingsUi(
     versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val snackbarHostState = remember { SnackbarHostState() }
@@ -76,13 +94,13 @@ internal fun SettingsUi(
         }
     }
     state.listenBrainzLoginState?.let { state ->
+        val message = when (state) {
+            ListenBrainzLoginState.InvalidToken -> stringResource(Res.string.invalidToken)
+            ListenBrainzLoginState.LoggedIn -> stringResource(Res.string.youAreLoggedIn)
+            ListenBrainzLoginState.LoggedOut -> stringResource(Res.string.youAreLoggedOut)
+            is ListenBrainzLoginState.OtherError -> state.message
+        }
         LaunchedEffect(state) {
-            val message = when (state) {
-                ListenBrainzLoginState.InvalidToken -> strings.invalidToken
-                ListenBrainzLoginState.LoggedIn -> strings.youAreLoggedIn
-                ListenBrainzLoginState.LoggedOut -> strings.youAreLoggedOut
-                is ListenBrainzLoginState.OtherError -> state.message
-            }
             snackbarHostState.showSnackbar(message = message)
             eventSink(SettingsUiEvent.DismissSnackbar)
         }
@@ -100,7 +118,7 @@ internal fun SettingsUi(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = false,
-                title = strings.settings,
+                title = stringResource(Res.string.settings),
             )
         },
         snackbarHost = {
@@ -141,7 +159,6 @@ internal fun SettingsUi(
     eventSink: (SettingsUiEvent) -> Unit = {},
     loginEventSink: (MusicBrainzLoginUiEvent) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
@@ -169,7 +186,7 @@ internal fun SettingsUi(
             )
 
             ClickableItem(
-                title = strings.appearance,
+                title = stringResource(Res.string.appearance),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(AppearanceSettingsScreen))
@@ -177,7 +194,7 @@ internal fun SettingsUi(
             )
 
             ClickableItem(
-                title = strings.images,
+                title = stringResource(Res.string.images),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(ImagesSettingsScreen))
@@ -199,10 +216,10 @@ internal fun SettingsUi(
                 )
             }
 
-            ListSeparatorHeader(text = strings.experimentalSearch)
+            ListSeparatorHeader(text = stringResource(Res.string.experimentalSearch))
 
             ClickableItem(
-                title = strings.listens,
+                title = stringResource(Res.string.listens),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(ListensScreen()))
@@ -212,8 +229,8 @@ internal fun SettingsUi(
             if (showAndroidSettings) {
                 if (isNotificationListenerEnabled) {
                     ClickableItem(
-                        title = strings.nowPlayingHistory,
-                        subtitle = strings.nowPlayingHistorySubtitle,
+                        title = stringResource(Res.string.nowPlayingHistory),
+                        subtitle = stringResource(Res.string.nowPlayingHistorySubtitle),
                         endIcon = CustomIcons.ChevronRight,
                         onClick = {
                             eventSink(SettingsUiEvent.GoToScreen(NowPlayingHistoryScreen))
@@ -221,15 +238,15 @@ internal fun SettingsUi(
                     )
                 } else {
                     ClickableItem(
-                        title = strings.enableNotificationListener,
-                        subtitle = strings.enableNotificationListenerSubtitle,
+                        title = stringResource(Res.string.enableNotificationListener),
+                        subtitle = stringResource(Res.string.enableNotificationListenerSubtitle),
                         onClick = onGoToNotificationListenerSettings,
                     )
                 }
 
                 ClickableItem(
-                    title = strings.spotify,
-                    subtitle = strings.spotifySubtitle,
+                    title = stringResource(Res.string.spotify),
+                    subtitle = stringResource(Res.string.spotifySubtitle),
                     endIcon = CustomIcons.ChevronRight,
                     onClick = {
                         eventSink(SettingsUiEvent.GoToScreen(SpotifyHistoryScreen))
@@ -246,18 +263,18 @@ internal fun SettingsUi(
                 )
             }
 
-            ListSeparatorHeader(text = strings.about)
+            ListSeparatorHeader(text = stringResource(Res.string.about))
 
             ClickableItem(
-                title = strings.openSourceLicenses,
+                title = stringResource(Res.string.openSourceLicenses),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(LicensesScreen))
                 },
             )
 
-            val appVersionText = "${strings.appVersion}: $versionName ($versionCode)"
-            val databaseVersionText = "${strings.databaseVersion}: ${state.appDatabaseVersion}"
+            val appVersionText = "${stringResource(Res.string.appVersion)}: $versionName ($versionCode)"
+            val databaseVersionText = "${stringResource(Res.string.databaseVersion)}: ${state.appDatabaseVersion}"
             ClickableItem(
                 title = appVersionText,
                 subtitle = databaseVersionText,

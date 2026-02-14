@@ -31,7 +31,6 @@ import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
@@ -55,7 +54,6 @@ internal fun FacetsBottomSheetContent(
 ) {
     // These are not collected until this UI is shown.
     val facets = state.facetsPagingDataFlow.collectAsLazyPagingItems()
-    val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val selectedTabIndex = tabs.indexOf(state.selectedTab)
     val pagerState = rememberPagerState(
@@ -76,7 +74,7 @@ internal fun FacetsBottomSheetContent(
             topAppBarFilterState = state.filterState,
             additionalBar = {
                 TabsBar(
-                    tabsTitle = tabs.map { it.getTitle(strings) },
+                    tabsTitle = tabs.map { it.getTitle() },
                     selectedTabIndex = selectedTabIndex,
                     onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 )
