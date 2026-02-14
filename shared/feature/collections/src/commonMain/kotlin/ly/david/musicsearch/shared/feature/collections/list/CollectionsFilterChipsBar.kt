@@ -19,7 +19,6 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.KeyboardArrowDown
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 
 @Composable
 internal fun CollectionsFilterChipsBar(
@@ -31,8 +30,6 @@ internal fun CollectionsFilterChipsBar(
     onShowRemoteToggle: (Boolean) -> Unit = {},
     onSortClick: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Row(
         modifier = modifier
             .horizontalScroll(rememberScrollState())
@@ -76,7 +73,7 @@ internal fun CollectionsFilterChipsBar(
         FilterChip(
             selected = false,
             onClick = onSortClick,
-            label = { Text(text = "Sort: ${sortOption.getLabel(strings)}") },
+            label = { Text(text = "Sort: ${sortOption.getLabel()}") },
             trailingIcon = {
                 Icon(
                     imageVector = CustomIcons.KeyboardArrowDown,

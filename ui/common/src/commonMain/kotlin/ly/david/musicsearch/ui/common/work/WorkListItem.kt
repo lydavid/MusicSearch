@@ -21,7 +21,6 @@ import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.text.fontWeight
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -34,8 +33,6 @@ fun WorkListItem(
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     ListItem(
         headlineContent = {
             Text(
@@ -64,7 +61,7 @@ fun WorkListItem(
                     languages.ifNotEmpty {
                         Text(
                             text = it.mapNotNull { language ->
-                                language.getDisplayLanguage(strings)
+                                language.getDisplayLanguage()
                             }.joinToString(", "),
                             style = TextStyles.getCardBodySubTextStyle(),
                             fontWeight = work.fontWeight,

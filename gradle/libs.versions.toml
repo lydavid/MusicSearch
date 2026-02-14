@@ -20,7 +20,6 @@ kotlinpoet = "2.2.0"
 kotlinx-coroutines = "1.10.2"
 ksp = "2.3.5"
 leakcanaryAndroid = "2.14"
-lyricist = "1.8.0"
 materialKolor = "4.0.5"
 mockk = "1.14.9"
 multiplatformPaths = "0.2.2"
@@ -68,7 +67,7 @@ coil-test = { module = "io.coil-kt.coil3:coil-test", version.ref = "coil" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
-compose-runtime = "androidx.compose.runtime:runtime:1.10.2"
+compose-runtime = "androidx.compose.runtime:runtime:1.10.3"
 compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.9.3"
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.10.2"
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
@@ -105,8 +104,6 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
-lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "lyricist" }
-lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }

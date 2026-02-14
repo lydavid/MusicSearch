@@ -18,9 +18,11 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.nowPlayingHistory
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NowPlayingHistoryUi(
@@ -62,7 +64,6 @@ internal fun NowPlayingHistoryUi(
     searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
     onDelete: (String) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -72,7 +73,7 @@ internal fun NowPlayingHistoryUi(
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = onBack,
-                title = strings.nowPlayingHistory,
+                title = stringResource(Res.string.nowPlayingHistory),
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = topAppBarFilterState,
             )
