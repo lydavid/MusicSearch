@@ -14,7 +14,11 @@ import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.deleteSearchHistoryConfirmation
+import musicsearch.ui.common.generated.resources.no
+import musicsearch.ui.common.generated.resources.yes
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SearchHistoryUi(
@@ -24,14 +28,13 @@ internal fun SearchHistoryUi(
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
     onDeleteAllHistory: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
 
     if (showDeleteConfirmationDialog) {
         SimpleAlertDialog(
-            title = strings.deleteSearchHistoryConfirmation,
-            confirmText = strings.yes,
-            dismissText = strings.no,
+            title = stringResource(Res.string.deleteSearchHistoryConfirmation),
+            confirmText = stringResource(Res.string.yes),
+            dismissText = stringResource(Res.string.no),
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = { onDeleteAllHistory() },
         )

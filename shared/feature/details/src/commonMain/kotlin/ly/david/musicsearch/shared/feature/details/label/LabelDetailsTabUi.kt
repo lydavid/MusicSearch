@@ -11,7 +11,15 @@ import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.defunct
+import musicsearch.ui.common.generated.resources.founded
+import musicsearch.ui.common.generated.resources.ipi
+import musicsearch.ui.common.generated.resources.isni
+import musicsearch.ui.common.generated.resources.labelCode
+import musicsearch.ui.common.generated.resources.lc
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun LabelDetailsTabUi(
@@ -23,8 +31,6 @@ internal fun LabelDetailsTabUi(
     onCollapseExpandAliases: () -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = label,
         detailsTabUiState = detailsTabUiState,
@@ -35,22 +41,22 @@ internal fun LabelDetailsTabUi(
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.type,
+                    heading = stringResource(Res.string.type),
                     text = it,
                     filterText = filterText,
                 )
             }
             labelCode?.ifNotNull {
                 TextWithHeading(
-                    heading = strings.labelCode,
-                    text = strings.lc(it),
+                    heading = stringResource(Res.string.labelCode),
+                    text = stringResource(Res.string.lc, it),
                     filterText = filterText,
                 )
             }
 
             ipis.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.ipi,
+                    heading = stringResource(Res.string.ipi),
                     text = it.joinToString(", "),
                     filterText = filterText,
                 )
@@ -58,7 +64,7 @@ internal fun LabelDetailsTabUi(
 
             isnis.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.isni,
+                    heading = stringResource(Res.string.isni),
                     text = it.joinToString(", "),
                     filterText = filterText,
                 )
@@ -67,14 +73,14 @@ internal fun LabelDetailsTabUi(
             lifeSpan.run {
                 begin.ifNotEmpty {
                     TextWithHeading(
-                        heading = strings.founded,
+                        heading = stringResource(Res.string.founded),
                         text = it,
                         filterText = filterText,
                     )
                 }
                 end.ifNotEmpty {
                     TextWithHeading(
-                        heading = strings.defunct,
+                        heading = stringResource(Res.string.defunct),
                         text = it,
                         filterText = filterText,
                     )
