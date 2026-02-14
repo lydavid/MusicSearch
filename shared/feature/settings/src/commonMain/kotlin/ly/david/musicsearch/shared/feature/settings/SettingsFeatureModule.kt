@@ -43,6 +43,8 @@ val settingsFeatureModule = module {
                 is ImagesSettingsScreen -> ImagesSettingsPresenter(
                     navigator = navigator,
                     appPreferences = get(),
+                    setUserSpotifyAuth = get(),
+                    isUserSpotifyAuthSet = get(),
                 )
 
                 else -> null
