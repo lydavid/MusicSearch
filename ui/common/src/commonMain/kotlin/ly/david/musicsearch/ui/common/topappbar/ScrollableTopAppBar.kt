@@ -40,7 +40,10 @@ import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.back
+import musicsearch.ui.common.generated.resources.moreActions
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we
@@ -107,8 +110,6 @@ fun ScrollableTopAppBar(
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     additionalBar: @Composable (ColumnScope.() -> Unit) = {},
 ) {
-    val strings = LocalStrings.current
-
     Column(modifier = modifier) {
         TopAppBar(
             title = {
@@ -128,7 +129,7 @@ fun ScrollableTopAppBar(
                     IconButton(onClick = { onBack() }) {
                         Icon(
                             imageVector = CustomIcons.ArrowBack,
-                            contentDescription = strings.back,
+                            contentDescription = stringResource(Res.string.back),
                         )
                     }
                 }
@@ -249,7 +250,6 @@ private fun SubtitleWithOverflow(
 private fun OverflowMenu(
     overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null,
 ) {
-    val strings = LocalStrings.current
     var showMenu by rememberSaveable { mutableStateOf(false) }
 
     val scope = remember {
@@ -265,7 +265,7 @@ private fun OverflowMenu(
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(
                     imageVector = CustomIcons.MoreVert,
-                    contentDescription = strings.moreActions,
+                    contentDescription = stringResource(Res.string.moreActions),
                 )
             }
             DropdownMenu(

@@ -6,7 +6,10 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DensityLarge
 import ly.david.musicsearch.ui.common.icons.DensitySmall
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.showLessInfo
+import musicsearch.ui.common.generated.resources.showMoreInfo
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OverflowMenuScope.MoreInfoToggleMenuItem(
@@ -14,11 +17,9 @@ fun OverflowMenuScope.MoreInfoToggleMenuItem(
     onToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
-
     ToggleMenuItem(
-        toggleOnText = strings.showMoreInfo,
-        toggleOffText = strings.showLessInfo,
+        toggleOnText = stringResource(Res.string.showMoreInfo),
+        toggleOffText = stringResource(Res.string.showLessInfo),
         toggled = showMoreInfo,
         onToggle = onToggle,
         modifier = modifier,
