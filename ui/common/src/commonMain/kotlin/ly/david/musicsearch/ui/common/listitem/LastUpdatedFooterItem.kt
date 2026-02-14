@@ -14,9 +14,25 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.DateTimePeriod
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.daysAgo
+import musicsearch.ui.common.generated.resources.hourAgo
+import musicsearch.ui.common.generated.resources.hoursAgo
+import musicsearch.ui.common.generated.resources.justNow
+import musicsearch.ui.common.generated.resources.lastUpdatedFromMusicBrainz
+import musicsearch.ui.common.generated.resources.minuteAgo
+import musicsearch.ui.common.generated.resources.minutesAgo
+import musicsearch.ui.common.generated.resources.monthAgo
+import musicsearch.ui.common.generated.resources.monthsAgo
+import musicsearch.ui.common.generated.resources.secondsAgo
+import musicsearch.ui.common.generated.resources.weekAgo
+import musicsearch.ui.common.generated.resources.weeksAgo
+import musicsearch.ui.common.generated.resources.yearAgo
+import musicsearch.ui.common.generated.resources.yearsAgo
+import musicsearch.ui.common.generated.resources.yesterday
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
 @Composable
@@ -51,12 +67,12 @@ fun LastUpdatedText(
     now: Instant,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     SelectionContainer(modifier = modifier) {
         val formattedDateTimePeriod = formatPeriod(lastUpdated.getDateTimePeriod(now = now))
         val formattedDateTime = lastUpdated.getDateTimeFormatted()
         Text(
-            text = strings.lastUpdatedFromMusicBrainz(
+            text = stringResource(
+                Res.string.lastUpdatedFromMusicBrainz,
                 formattedDateTimePeriod,
                 formattedDateTime,
             ),
@@ -67,33 +83,32 @@ fun LastUpdatedText(
 
 @Composable
 fun formatPeriod(period: DateTimePeriod): String {
-    val strings = LocalStrings.current
     return when {
-        period.years > 1 -> "${period.years} ${strings.yearsAgo}"
-        period.years == 1 -> "1 ${strings.yearAgo}"
+        period.years > 1 -> "${period.years} ${stringResource(Res.string.yearsAgo)}"
+        period.years == 1 -> "1 ${stringResource(Res.string.yearAgo)}"
 
-        period.months > 1 -> "${period.months} ${strings.monthsAgo}"
-        period.months == 1 -> "1 ${strings.monthAgo}"
+        period.months > 1 -> "${period.months} ${stringResource(Res.string.monthsAgo)}"
+        period.months == 1 -> "1 ${stringResource(Res.string.monthAgo)}"
 
-        period.months > 1 -> "${period.months} ${strings.monthsAgo}"
-        period.months == 1 -> "1 ${strings.monthAgo}"
+        period.months > 1 -> "${period.months} ${stringResource(Res.string.monthsAgo)}"
+        period.months == 1 -> "1 ${stringResource(Res.string.monthAgo)}"
 
-        period.days >= THREE_WEEKS_IN_DAYS -> "3 ${strings.weeksAgo}"
-        period.days >= TWO_WEEKS_IN_DAYS -> "2 ${strings.weeksAgo}"
-        period.days >= ONE_WEEK_IN_DAYS -> "1 ${strings.weekAgo}"
+        period.days >= THREE_WEEKS_IN_DAYS -> "3 ${stringResource(Res.string.weeksAgo)}"
+        period.days >= TWO_WEEKS_IN_DAYS -> "2 ${stringResource(Res.string.weeksAgo)}"
+        period.days >= ONE_WEEK_IN_DAYS -> "1 ${stringResource(Res.string.weekAgo)}"
 
-        period.days > 1 -> "${period.days} ${strings.daysAgo}"
-        period.days == 1 -> strings.yesterday
+        period.days > 1 -> "${period.days} ${stringResource(Res.string.daysAgo)}"
+        period.days == 1 -> stringResource(Res.string.yesterday)
 
-        period.hours > 1 -> "${period.hours} ${strings.hoursAgo}"
-        period.hours == 1 -> "1 ${strings.hourAgo}"
+        period.hours > 1 -> "${period.hours} ${stringResource(Res.string.hoursAgo)}"
+        period.hours == 1 -> "1 ${stringResource(Res.string.hourAgo)}"
 
-        period.minutes > 1 -> "${period.minutes} ${strings.minutesAgo}"
-        period.minutes == 1 -> "1 ${strings.minuteAgo}"
+        period.minutes > 1 -> "${period.minutes} ${stringResource(Res.string.minutesAgo)}"
+        period.minutes == 1 -> "1 ${stringResource(Res.string.minuteAgo)}"
 
-        period.seconds > 0 -> strings.secondsAgo
+        period.seconds > 0 -> stringResource(Res.string.secondsAgo)
 
-        else -> strings.justNow
+        else -> stringResource(Res.string.justNow)
     }
 }
 

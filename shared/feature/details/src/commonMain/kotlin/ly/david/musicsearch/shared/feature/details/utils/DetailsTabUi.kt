@@ -17,27 +17,43 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.additionalDetails
+import musicsearch.ui.common.generated.resources.area
+import musicsearch.ui.common.generated.resources.artist
+import musicsearch.ui.common.generated.resources.event
+import musicsearch.ui.common.generated.resources.informationHeader
+import musicsearch.ui.common.generated.resources.instrument
+import musicsearch.ui.common.generated.resources.label
+import musicsearch.ui.common.generated.resources.place
+import musicsearch.ui.common.generated.resources.recording
+import musicsearch.ui.common.generated.resources.release
+import musicsearch.ui.common.generated.resources.releaseGroup
+import musicsearch.ui.common.generated.resources.series
+import musicsearch.ui.common.generated.resources.work
+import org.jetbrains.compose.resources.stringResource
 
-fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(strings: AppStrings): String {
-    return when (this) {
-        is AreaDetailsModel -> strings.area
-        is ArtistDetailsModel -> strings.artist
-        is EventDetailsModel -> strings.event
-        is InstrumentDetailsModel -> strings.instrument
-        is LabelDetailsModel -> strings.label
-        is PlaceDetailsModel -> strings.place
-        is RecordingDetailsModel -> strings.recording
-        is ReleaseDetailsModel -> strings.release
-        is ReleaseGroupDetailsModel -> strings.releaseGroup
-        is SeriesDetailsModel -> strings.series
-        is WorkDetailsModel -> strings.work
-    }
+@Composable
+private fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(): String {
+    return stringResource(
+        when (this) {
+            is AreaDetailsModel -> Res.string.area
+            is ArtistDetailsModel -> Res.string.artist
+            is EventDetailsModel -> Res.string.event
+            is InstrumentDetailsModel -> Res.string.instrument
+            is LabelDetailsModel -> Res.string.label
+            is PlaceDetailsModel -> Res.string.place
+            is RecordingDetailsModel -> Res.string.recording
+            is ReleaseDetailsModel -> Res.string.release
+            is ReleaseGroupDetailsModel -> Res.string.releaseGroup
+            is SeriesDetailsModel -> Res.string.series
+            is WorkDetailsModel -> Res.string.work
+        },
+    )
 }
 
 @Composable
@@ -53,8 +69,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     LazyColumn(
         modifier = modifier,
         state = detailsTabUiState.lazyListState,
@@ -70,7 +84,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 }
 
                 ListSeparatorHeader(
-                    text = strings.informationHeader(getCapitalizedName(strings)),
+                    text = stringResource(Res.string.informationHeader, getCapitalizedName()),
                     numberOfImages = detailsTabUiState.numberOfImages,
                 )
 
@@ -79,7 +93,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
 
             additionalDetailsSection?.run {
                 item {
-                    ListSeparatorHeader(strings.additionalDetails)
+                    ListSeparatorHeader(stringResource(Res.string.additionalDetails))
                     invoke(detailsModel)
                 }
             }

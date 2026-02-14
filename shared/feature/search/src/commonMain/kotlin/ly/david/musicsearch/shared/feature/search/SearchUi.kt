@@ -27,8 +27,12 @@ import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.clearSearch
+import musicsearch.ui.common.generated.resources.search
+import musicsearch.ui.common.generated.resources.searchMusicbrainz
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +40,6 @@ internal fun SearchUi(
     state: SearchUiState,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -46,7 +49,7 @@ internal fun SearchUi(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = false,
-                title = strings.searchMusicbrainz,
+                title = stringResource(Res.string.searchMusicbrainz),
             )
         },
     ) { innerPadding ->
@@ -64,8 +67,6 @@ internal fun SearchUiContent(
     modifier: Modifier = Modifier,
     eventSink: (SearchUiEvent) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
@@ -79,8 +80,8 @@ internal fun SearchUiContent(
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
                 value = state.query,
-                label = { Text(strings.search) },
-                placeholder = { Text(strings.search) },
+                label = { Text(stringResource(Res.string.search)) },
+                placeholder = { Text(stringResource(Res.string.search)) },
                 maxLines = 1,
                 singleLine = true,
                 trailingIcon = {
@@ -91,7 +92,7 @@ internal fun SearchUiContent(
                     }) {
                         Icon(
                             CustomIcons.Clear,
-                            contentDescription = strings.clearSearch,
+                            contentDescription = stringResource(Res.string.clearSearch),
                         )
                     }
                 },

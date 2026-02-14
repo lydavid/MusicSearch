@@ -1,7 +1,25 @@
 package ly.david.musicsearch.ui.common.topappbar
 
+import androidx.compose.runtime.Composable
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.strings.AppStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.areas
+import musicsearch.ui.common.generated.resources.artists
+import musicsearch.ui.common.generated.resources.details
+import musicsearch.ui.common.generated.resources.events
+import musicsearch.ui.common.generated.resources.genres
+import musicsearch.ui.common.generated.resources.instruments
+import musicsearch.ui.common.generated.resources.labels
+import musicsearch.ui.common.generated.resources.places
+import musicsearch.ui.common.generated.resources.recordings
+import musicsearch.ui.common.generated.resources.relationships
+import musicsearch.ui.common.generated.resources.releaseGroups
+import musicsearch.ui.common.generated.resources.releases
+import musicsearch.ui.common.generated.resources.series
+import musicsearch.ui.common.generated.resources.tracks
+import musicsearch.ui.common.generated.resources.works
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * All possible tabs in MusicBrainz resource pages.
@@ -24,23 +42,28 @@ enum class Tab {
     WORKS,
 }
 
-fun Tab.getTitle(strings: AppStrings): String {
+@Composable
+fun Tab.getTitle(): String {
+    return stringResource(getTitleResource())
+}
+
+private fun Tab.getTitleResource(): StringResource {
     return when (this) {
-        Tab.DETAILS -> strings.details
-        Tab.AREAS -> strings.areas
-        Tab.ARTISTS -> strings.artists
-        Tab.EVENTS -> strings.events
-        Tab.GENRES -> strings.genres
-        Tab.INSTRUMENTS -> strings.instruments
-        Tab.LABELS -> strings.labels
-        Tab.PLACES -> strings.places
-        Tab.RECORDINGS -> strings.recordings
-        Tab.RELATIONSHIPS -> strings.relationships
-        Tab.RELEASES -> strings.releases
-        Tab.RELEASE_GROUPS -> strings.releaseGroups
-        Tab.SERIES -> strings.series
-        Tab.TRACKS -> strings.tracks
-        Tab.WORKS -> strings.works
+        Tab.DETAILS -> Res.string.details
+        Tab.AREAS -> Res.string.areas
+        Tab.ARTISTS -> Res.string.artists
+        Tab.EVENTS -> Res.string.events
+        Tab.GENRES -> Res.string.genres
+        Tab.INSTRUMENTS -> Res.string.instruments
+        Tab.LABELS -> Res.string.labels
+        Tab.PLACES -> Res.string.places
+        Tab.RECORDINGS -> Res.string.recordings
+        Tab.RELATIONSHIPS -> Res.string.relationships
+        Tab.RELEASES -> Res.string.releases
+        Tab.RELEASE_GROUPS -> Res.string.releaseGroups
+        Tab.SERIES -> Res.string.series
+        Tab.TRACKS -> Res.string.tracks
+        Tab.WORKS -> Res.string.works
     }
 }
 
