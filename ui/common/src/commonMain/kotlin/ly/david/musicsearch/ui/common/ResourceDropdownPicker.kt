@@ -26,7 +26,9 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.resource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +38,6 @@ fun ResourceDropdownPicker(
     modifier: Modifier = Modifier,
     onSelectOption: (MusicBrainzEntityType) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -50,9 +51,9 @@ fun ResourceDropdownPicker(
                 .menuAnchor(type = PrimaryNotEditable, enabled = true),
             readOnly = true,
             shape = RectangleShape,
-            value = selectedOption.getName(strings),
+            value = stringResource(selectedOption.getName()),
             onValueChange = { },
-            label = { Text(strings.resource) },
+            label = { Text(stringResource(Res.string.resource)) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded,
@@ -88,7 +89,7 @@ fun ResourceDropdownPicker(
                                     modifier = Modifier.padding(end = 8.dp),
                                     entityType = option,
                                 )
-                                Text(option.getName(strings))
+                                Text(stringResource(option.getName()))
                             }
                         },
                         onClick = {

@@ -61,9 +61,12 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.images
+import musicsearch.ui.common.generated.resources.sortAction
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(
     ExperimentalMaterial3WindowSizeClassApi::class,
@@ -97,7 +100,6 @@ internal fun ImagesUi(
     isCompact: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
     val imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata> = state
         .imageMetadataPagingDataFlow
@@ -107,7 +109,7 @@ internal fun ImagesUi(
 
     if (showBottomSheet) {
         MultipleChoiceBottomSheet(
-            options = ImagesSortOption.entries.map { it.getLabel(strings) },
+            options = ImagesSortOption.entries.map { it.getLabel() },
             selectedOptionIndex = state.sortOption.ordinal,
             onSortOptionIndexClick = {
                 eventSink(ImagesUiEvent.UpdateSortOption(it))
@@ -118,7 +120,7 @@ internal fun ImagesUi(
     }
 
     val title = when (val title = state.title) {
-        is ImagesTitle.All -> strings.images
+        is ImagesTitle.All -> stringResource(Res.string.images)
         is ImagesTitle.Selected -> {
             val pages = "${title.page}/${title.totalPages}"
             "[$pages]".appendOptionalText(title.typeAndComment)
@@ -151,7 +153,7 @@ internal fun ImagesUi(
                     }
                     if (state.showSort) {
                         DropdownMenuItem(
-                            text = { Text(strings.sort) },
+                            text = { Text(stringResource(Res.string.sortAction)) },
                             onClick = {
                                 showBottomSheet = true
                                 closeMenu()

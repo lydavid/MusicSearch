@@ -18,8 +18,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PhotoLibrary
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.numberOfImages
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ListSeparatorHeader(
@@ -59,7 +61,6 @@ fun ListSeparatorHeader(
     numberOfImages: Int?,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val endContent: @Composable (() -> Unit)? = if (numberOfImages == null) {
         null
     } else {
@@ -80,7 +81,7 @@ fun ListSeparatorHeader(
                     Icon(
                         modifier = Modifier.size(24.dp),
                         imageVector = CustomIcons.PhotoLibrary,
-                        contentDescription = strings.numberOfImages,
+                        contentDescription = stringResource(Res.string.numberOfImages),
                     )
                     Text(
                         text = numberOfImages.toString(),

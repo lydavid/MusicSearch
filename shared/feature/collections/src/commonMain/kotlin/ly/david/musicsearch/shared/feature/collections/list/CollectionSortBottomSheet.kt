@@ -7,11 +7,15 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
-import ly.david.musicsearch.shared.strings.AppStrings
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.alphabetically
+import musicsearch.ui.common.generated.resources.alphabeticallyReverse
+import musicsearch.ui.common.generated.resources.leastEntities
+import musicsearch.ui.common.generated.resources.mostEntities
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,12 +41,10 @@ internal fun CollectionSortBottomSheetContent(
     sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,
     onSortOptionClick: (CollectionSortOption) -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Column {
         CollectionSortOption.entries.forEach {
             ClickableItem(
-                title = it.getLabel(strings),
+                title = it.getLabel(),
                 endIcon = if (sortOption == it) CustomIcons.Check else null,
                 onClick = {
                     onSortOptionClick(it)
@@ -52,11 +54,14 @@ internal fun CollectionSortBottomSheetContent(
     }
 }
 
-internal fun CollectionSortOption.getLabel(strings: AppStrings): String {
-    return when (this) {
-        CollectionSortOption.ALPHABETICALLY -> strings.alphabetically
-        CollectionSortOption.ALPHABETICALLY_REVERSE -> strings.alphabeticallyReverse
-        CollectionSortOption.MOST_ENTITY_COUNT -> strings.mostEntities
-        CollectionSortOption.LEAST_ENTITY_COUNT -> strings.leastEntities
-    }
+@Composable
+internal fun CollectionSortOption.getLabel(): String {
+    return stringResource(
+        when (this) {
+            CollectionSortOption.ALPHABETICALLY -> Res.string.alphabetically
+            CollectionSortOption.ALPHABETICALLY_REVERSE -> Res.string.alphabeticallyReverse
+            CollectionSortOption.MOST_ENTITY_COUNT -> Res.string.mostEntities
+            CollectionSortOption.LEAST_ENTITY_COUNT -> Res.string.leastEntities
+        },
+    )
 }

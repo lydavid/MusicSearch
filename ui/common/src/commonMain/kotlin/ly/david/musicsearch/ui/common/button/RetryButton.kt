@@ -10,15 +10,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Refresh
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.retry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RetryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -27,7 +27,7 @@ fun RetryButton(
         Text(
             modifier = Modifier.padding(start = 8.dp),
             style = MaterialTheme.typography.headlineMedium,
-            text = strings.retry,
+            text = stringResource(Res.string.retry),
         )
     }
 }

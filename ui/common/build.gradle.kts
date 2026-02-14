@@ -15,9 +15,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(projects.shared.domain)
-                api(projects.shared.strings)
                 implementation(projects.core.logging.api)
 
+                implementation(compose.components.resources)
                 implementation(compose.foundation)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.compose.material3)
@@ -29,7 +29,6 @@ kotlin {
                 implementation(libs.coil)
                 implementation(libs.coil.compose)
                 implementation(libs.koin.core)
-                implementation(libs.lyricist.library)
                 implementation(libs.materialKolor)
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
@@ -79,6 +78,11 @@ kotlin {
             }
         }
     }
+}
+
+compose.resources {
+    publicResClass = true
+    generateResClass = always
 }
 
 dependencies {

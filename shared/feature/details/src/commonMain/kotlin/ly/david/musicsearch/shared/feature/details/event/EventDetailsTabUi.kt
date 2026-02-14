@@ -15,8 +15,15 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.cancelled
+import musicsearch.ui.common.generated.resources.date
+import musicsearch.ui.common.generated.resources.endDate
+import musicsearch.ui.common.generated.resources.startDate
+import musicsearch.ui.common.generated.resources.time
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun EventDetailsTabUi(
@@ -28,26 +35,24 @@ internal fun EventDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     val entityInfoSection: @Composable EventDetailsModel.() -> Unit = {
         type.ifNotEmpty {
             TextWithHeading(
-                heading = strings.type,
+                heading = stringResource(Res.string.type),
                 text = it,
                 filterText = filterText,
             )
         }
         LifeSpanText(
             lifeSpan = lifeSpan,
-            heading = strings.date,
-            beginHeading = strings.startDate,
-            endHeading = strings.endDate,
+            heading = stringResource(Res.string.date),
+            beginHeading = stringResource(Res.string.startDate),
+            endHeading = stringResource(Res.string.endDate),
             filterText = filterText,
         )
         time.ifNotEmpty {
             TextWithHeading(
-                heading = strings.time,
+                heading = stringResource(Res.string.time),
                 text = it,
                 filterText = filterText,
             )
@@ -58,7 +63,7 @@ internal fun EventDetailsTabUi(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 4.dp),
-                    text = "(${strings.cancelled})",
+                    text = "(${stringResource(Res.string.cancelled)})",
                     style = TextStyles.getCardBodyTextStyle(),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.error,

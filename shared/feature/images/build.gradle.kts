@@ -16,6 +16,7 @@ kotlin {
                 implementation(projects.shared.domain)
                 implementation(projects.ui.common)
 
+                implementation(compose.components.resources)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
