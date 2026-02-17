@@ -40,7 +40,7 @@ subprojects {
             freeCompilerArgs.addAll(
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.time.ExperimentalTime",
-                "-Xcontext-parameters"
+                "-Xcontext-parameters",
             )
 
             if (project.findProperty("musicsearch.enableComposeCompilerReports") == "true") {
@@ -195,7 +195,7 @@ allprojects {
                 currentProject.configurations.forEach outer@{ config ->
                     config.dependencies
                         .withType(ProjectDependency::class.java)
-                        .map { it.dependencyProject }
+                        .map { project.project(it.path) }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
                         .filter { dependency -> dependency.path != ":android:baselineprofile" }
@@ -297,7 +297,7 @@ allprojects {
                 currentProject.configurations.forEach outer@{ config ->
                     config.dependencies
                         .withType(ProjectDependency::class.java)
-                        .map { it.dependencyProject }
+                        .map { project.project(it.path) }
                         .filter { currentProject != rootProject }
                         .filter { currentProject != it }
                         .filter { dependency -> dependency.path != ":android:baselineprofile" }

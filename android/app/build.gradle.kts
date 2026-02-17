@@ -88,6 +88,9 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

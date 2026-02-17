@@ -20,20 +20,19 @@ plugins {
     id("com.gradle.enterprise") version "3.19.2"
 }
 
-gradleEnterprise {
+develocity {
     buildCache {
         local {
             isEnabled = true
-            removeUnusedEntriesAfterDays = 30
         }
         remote<HttpBuildCache> {
             isEnabled = false
         }
     }
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlwaysIf(!System.getenv("CI").isNullOrEmpty())
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
+        publishing.onlyIf { !System.getenv("CI").isNullOrEmpty() }
     }
 }
 
