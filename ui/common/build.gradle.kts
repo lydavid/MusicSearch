@@ -17,11 +17,11 @@ kotlin {
                 api(projects.shared.domain)
                 implementation(projects.core.logging.api)
 
-                implementation(compose.components.resources)
-                implementation(compose.foundation)
-                implementation(compose.materialIconsExtended)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material.icons.extended)
+                implementation(libs.components.resources)
                 implementation(libs.compose.material3)
-                implementation(compose.ui)
+                implementation(libs.compose.ui)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)

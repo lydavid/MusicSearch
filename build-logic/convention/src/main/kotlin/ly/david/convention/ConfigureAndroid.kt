@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
-private const val COMPILE_SDK_VERSION = 35
+private const val COMPILE_SDK_VERSION = 36
 private const val MIN_SDK_VERSION = 24
 private const val TARGET_SDK_VERSION = COMPILE_SDK_VERSION
 
