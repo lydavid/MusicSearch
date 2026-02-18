@@ -66,8 +66,11 @@ There are external links to various streaming platforms which will open the albu
 
 [See here](./docs/README.md) for notes on setting up the project, and some development processes.
 
-Translations/localizations will soon be supported through [Weblate](https://hosted.weblate.org/)
-after this [task](https://github.com/lydavid/MusicSearch/issues/1998).
+You can help translate this project through Weblate by clicking this [link](https://hosted.weblate.org/engage/musicsearch/) or the image below:
+
+<a href="https://hosted.weblate.org/engage/musicsearch/">
+<img src="https://hosted.weblate.org/widget/musicsearch/translations/287x66-grey.png" alt="Translation status" />
+</a>
 
 ## Privacy Policy
 
