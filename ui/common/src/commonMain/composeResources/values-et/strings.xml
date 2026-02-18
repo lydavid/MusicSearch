@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+    <string name="theme">Kujundus</string>
+    <string name="light">Hele kujundus</string>
+    <string name="dark">Tume kujundus</string>
+    <string name="system">Süsteemi kujundus</string>
+    <string name="database">Andmebaas</string>
+    <string name="history">Ajalugu</string>
+    <string name="images">Pildid</string>
+    <string name="collections">Kogumikud</string>
+    <string name="settings">Seadistused</string>
+    <string name="resource">Ressurss</string>
+    <string name="clearSearch">Tühjenda otsinguväli</string>
+    <string name="noResultsFound">Tulemusi ei leidu.</string>
+    <string name="username">Kasutajanimi</string>
+    <string name="enterUsername">Sisesta kasutajanimi</string>
+    <string name="changeUsername">Muuda kasutajanime</string>
+    <string name="artistName">Esitaja nimi</string>
+    <string name="eventName">Sündmuse nimi</string>
+    <string name="instrumentName">Instrumendi nimi</string>
+</resources>
