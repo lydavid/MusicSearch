@@ -28,7 +28,9 @@ import ly.david.musicsearch.ui.common.button.RetryButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.noResultsFound
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Handles loading and errors for paging screens.
@@ -55,9 +57,8 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     keyed: Boolean = false,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
-    val strings = LocalStrings.current
     val noResultsText = customNoResultsText.ifEmpty {
-        strings.noResultsFound
+        stringResource(Res.string.noResultsFound)
     }
     val isRefreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
     val refreshState = rememberPullToRefreshState()

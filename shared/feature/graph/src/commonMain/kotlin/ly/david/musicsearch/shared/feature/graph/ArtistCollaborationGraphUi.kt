@@ -40,11 +40,13 @@ import ly.david.musicsearch.shared.feature.graph.viz.compose.renderNode
 import ly.david.musicsearch.shared.feature.graph.viz.compose.renderText
 import ly.david.musicsearch.ui.common.theme.ExtendedColors
 import ly.david.musicsearch.ui.common.theme.LocalExtendedColors
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.collaborationsWith
+import org.jetbrains.compose.resources.stringResource
 
 private const val MIN_SCALE = 0.1f
 private const val MAX_SCALE = 3f
@@ -57,7 +59,6 @@ internal fun ArtistCollaborationGraphUi(
 ) {
     val eventSink = state.eventSink
     val focusManager = LocalFocusManager.current
-    val strings = LocalStrings.current
     val density = LocalDensity.current
 
     var showDebugInfo by remember { mutableStateOf(false) }
@@ -104,7 +105,7 @@ internal fun ArtistCollaborationGraphUi(
                 onBack = {
                     eventSink(ArtistCollaborationGraphUiEvent.NavigateUp)
                 },
-                title = strings.collaborationsWith(state.artistName),
+                title = stringResource(Res.string.collaborationsWith, state.artistName),
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
             )

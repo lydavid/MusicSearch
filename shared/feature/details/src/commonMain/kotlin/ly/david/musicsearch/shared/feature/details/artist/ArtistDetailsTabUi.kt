@@ -31,7 +31,20 @@ import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.born
+import musicsearch.ui.common.generated.resources.created
+import musicsearch.ui.common.generated.resources.date
+import musicsearch.ui.common.generated.resources.died
+import musicsearch.ui.common.generated.resources.dissolved
+import musicsearch.ui.common.generated.resources.founded
+import musicsearch.ui.common.generated.resources.gender
+import musicsearch.ui.common.generated.resources.ipi
+import musicsearch.ui.common.generated.resources.isni
+import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.sortName
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
 @Composable
@@ -85,48 +98,46 @@ internal fun ArtistDetailsTabUi(
 private fun ArtistDetailsModel.ArtistInformationSection(
     filterText: String = "",
 ) {
-    val strings = LocalStrings.current
-
     sortName.ifNotEmpty {
         TextWithHeading(
-            heading = strings.sortName,
+            heading = stringResource(Res.string.sortName),
             text = it,
             filterText = filterText,
         )
     }
     type.ifNotEmpty {
         TextWithHeading(
-            heading = strings.type,
+            heading = stringResource(Res.string.type),
             text = it,
             filterText = filterText,
         )
     }
     gender.ifNotEmpty {
         TextWithHeading(
-            heading = strings.gender,
+            heading = stringResource(Res.string.gender),
             text = it,
             filterText = filterText,
         )
     }
     LifeSpanText(
         lifeSpan = lifeSpan,
-        heading = strings.date,
+        heading = stringResource(Res.string.date),
         beginHeading = when (type) {
-            "Person" -> strings.born
-            "Character" -> strings.created
-            else -> strings.founded
+            "Person" -> stringResource(Res.string.born)
+            "Character" -> stringResource(Res.string.created)
+            else -> stringResource(Res.string.founded)
         },
         endHeading = when (type) {
-            "Person" -> strings.died
+            "Person" -> stringResource(Res.string.died)
             // Characters do not "die": https://musicbrainz.org/doc/Artist
-            else -> strings.dissolved
+            else -> stringResource(Res.string.dissolved)
         },
         filterText = filterText,
     )
 
     ipis.ifNotEmpty {
         TextWithHeading(
-            heading = strings.ipi,
+            heading = stringResource(Res.string.ipi),
             text = it.joinToString(", "),
             filterText = filterText,
         )
@@ -134,7 +145,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
 
     isnis.ifNotEmpty {
         TextWithHeading(
-            heading = strings.isni,
+            heading = stringResource(Res.string.isni),
             text = it.joinToString(", "),
             filterText = filterText,
         )
@@ -148,7 +159,7 @@ private fun LazyListScope.listenSection(
 ) {
     if (artist.listenCount != null) {
         item {
-            ListSeparatorHeader(LocalStrings.current.listens)
+            ListSeparatorHeader(stringResource(Res.string.listens))
         }
         item {
             ListItem(

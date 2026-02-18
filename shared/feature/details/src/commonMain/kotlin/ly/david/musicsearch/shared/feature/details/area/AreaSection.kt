@@ -6,7 +6,9 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.area
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun AreaSection(
@@ -14,10 +16,8 @@ internal fun AreaSection(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
-    val strings = LocalStrings.current
-
     areaListItemModel?.run {
-        ListSeparatorHeader(text = strings.area)
+        ListSeparatorHeader(text = stringResource(Res.string.area))
 
         if (name.contains(filterText, ignoreCase = true)) {
             AreaListItem(

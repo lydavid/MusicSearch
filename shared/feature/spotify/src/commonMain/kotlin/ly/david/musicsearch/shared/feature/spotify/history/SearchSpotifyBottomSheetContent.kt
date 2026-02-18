@@ -12,18 +12,19 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Search
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.searchX
+import musicsearch.ui.common.generated.resources.searchXByX
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SearchSpotifyBottomSheetContent(
     spotifyHistory: SpotifyHistoryListItemModel?,
     searchMusicBrainz: (query: String, id: MusicBrainzEntityType) -> Unit = { _, _ -> },
 ) {
-    val strings = LocalStrings.current
-
     spotifyHistory?.artistName.ifNotNullOrEmpty { artistName ->
         ClickableItem(
-            title = strings.searchX(artistName),
+            title = stringResource(Res.string.searchX, artistName),
             startIcon = MusicBrainzEntityType.ARTIST.getIcon(),
             endIcon = CustomIcons.Search,
             onClick = {
@@ -36,7 +37,8 @@ internal fun SearchSpotifyBottomSheetContent(
 
         spotifyHistory?.albumName.ifNotNullOrEmpty { albumName ->
             ClickableItem(
-                title = strings.searchXByX(
+                title = stringResource(
+                    Res.string.searchXByX,
                     albumName,
                     artistName,
                 ),
@@ -53,7 +55,8 @@ internal fun SearchSpotifyBottomSheetContent(
 
         spotifyHistory?.trackName.ifNotNullOrEmpty { trackName ->
             ClickableItem(
-                title = strings.searchXByX(
+                title = stringResource(
+                    Res.string.searchXByX,
                     trackName,
                     artistName,
                 ),

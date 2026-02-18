@@ -10,10 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.rememberLibraries
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
-import musicsearch.shared.feature.licenses.generated.resources.Res
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.openSourceLicenses
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,7 +22,6 @@ internal fun LicensesUi(
     state: LicensesUiState,
     modifier: Modifier = Modifier,
 ) {
-    val strings = LocalStrings.current
     val eventSink = state.eventSink
 
     Scaffold(
@@ -30,7 +30,7 @@ internal fun LicensesUi(
         topBar = {
             ScrollableTopAppBar(
                 onBack = { eventSink(LicensesUiEvent.NavigateUp) },
-                title = strings.openSourceLicenses,
+                title = stringResource(Res.string.openSourceLicenses),
             )
         },
     ) { innerPadding ->

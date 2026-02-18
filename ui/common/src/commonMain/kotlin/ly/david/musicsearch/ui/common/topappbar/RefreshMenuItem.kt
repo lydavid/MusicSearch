@@ -7,7 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Refresh
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.refresh
+import musicsearch.ui.common.generated.resources.refreshXTab
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OverflowMenuScope.RefreshMenuItem(
@@ -16,14 +19,12 @@ fun OverflowMenuScope.RefreshMenuItem(
     show: Boolean = true,
     tab: Tab? = null,
 ) {
-    val strings = LocalStrings.current
-
-    val tabTitle = tab?.getTitle(strings)
+    val tabTitle = tab?.getTitle()
     val title = if (tabTitle == null) {
-        strings.refresh
+        stringResource(Res.string.refresh)
     } else {
-        // This is fine until we support multiple languages
-        strings.refreshXTab(tabTitle.lowercase())
+        // TODO: We need to have strings for title case and sentence case
+        stringResource(Res.string.refreshXTab, tabTitle.lowercase())
     }
 
     if (show) {

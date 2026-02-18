@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.work
 
-import ly.david.musicsearch.shared.strings.AppStrings
+import androidx.compose.runtime.Composable
 
-expect fun String.getDisplayLanguage(appStrings: AppStrings): String?
+@Composable
+expect fun String.getDisplayLanguage(): String?

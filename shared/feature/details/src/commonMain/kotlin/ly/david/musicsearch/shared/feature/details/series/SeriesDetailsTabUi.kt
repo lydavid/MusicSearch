@@ -7,7 +7,9 @@ import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
-import ly.david.musicsearch.ui.common.theme.LocalStrings
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.type
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SeriesDetailsTabUi(
@@ -18,8 +20,6 @@ internal fun SeriesDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = series,
         detailsTabUiState = detailsTabUiState,
@@ -30,7 +30,7 @@ internal fun SeriesDetailsTabUi(
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.type,
+                    heading = stringResource(Res.string.type),
                     text = it,
                     filterText = filterText,
                 )

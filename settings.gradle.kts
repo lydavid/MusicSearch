@@ -71,7 +71,6 @@ include(
     ":shared:feature:search",
     ":shared:feature:settings",
     ":shared:feature:stats",
-    ":shared:strings",
     ":test-data",
     ":ui:common",
     ":ui:test:screenshot",

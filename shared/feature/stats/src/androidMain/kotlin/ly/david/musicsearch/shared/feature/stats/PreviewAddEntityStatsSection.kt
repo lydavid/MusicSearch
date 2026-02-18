@@ -5,9 +5,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -23,7 +24,7 @@ internal fun PreviewAddEntityStatsSection() {
                         totalCollected = 9,
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
-                    header = "Releases",
+                    tab = Tab.RELEASES,
                     now = Instant.parse("2025-04-26T16:42:20Z"),
                 )
             }
@@ -59,7 +60,7 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
                         ),
                         lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),
                     ),
-                    header = "Release Groups",
+                    tab = Tab.RELEASE_GROUPS,
                     now = Instant.parse("2025-04-26T16:42:20Z"),
                 )
             }

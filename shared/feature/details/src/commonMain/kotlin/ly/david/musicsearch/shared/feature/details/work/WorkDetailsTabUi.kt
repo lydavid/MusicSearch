@@ -15,8 +15,15 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.attributesHeader
+import musicsearch.ui.common.generated.resources.iswc
+import musicsearch.ui.common.generated.resources.language
+import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.type
+import musicsearch.ui.common.generated.resources.work
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun WorkDetailsTabUi(
@@ -27,8 +34,6 @@ internal fun WorkDetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
-    val strings = LocalStrings.current
-
     DetailsTabUi(
         detailsModel = work,
         detailsTabUiState = detailsTabUiState,
@@ -39,23 +44,23 @@ internal fun WorkDetailsTabUi(
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
-                    heading = strings.type,
+                    heading = stringResource(Res.string.type),
                     text = it,
                     filterText = filterText,
                 )
             }
             languages.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.language,
+                    heading = stringResource(Res.string.language),
                     text = it.mapNotNull { language ->
-                        language.getDisplayLanguage(strings)
+                        language.getDisplayLanguage()
                     }.joinToString(", "),
                     filterText = filterText,
                 )
             }
             iswcs.ifNotNullOrEmpty {
                 TextWithHeading(
-                    heading = strings.iswc,
+                    heading = stringResource(Res.string.iswc),
                     text = it.joinToString(", "),
                     filterText = filterText,
                 )
@@ -64,7 +69,12 @@ internal fun WorkDetailsTabUi(
         bringYourOwnLabelsSection = {
             if (work.attributes.isNotEmpty()) {
                 item {
-                    ListSeparatorHeader(strings.attributesHeader(strings.work))
+                    ListSeparatorHeader(
+                        stringResource(
+                            Res.string.attributesHeader,
+                            stringResource(Res.string.work),
+                        ),
+                    )
                 }
                 items(work.attributes) { attribute ->
                     TextWithHeading(
@@ -87,7 +97,7 @@ private fun LazyListScope.listenSection(
 ) {
     if (work.listenCount != null) {
         item {
-            ListSeparatorHeader(LocalStrings.current.listens)
+            ListSeparatorHeader(stringResource(Res.string.listens))
         }
         item {
             ListItem(

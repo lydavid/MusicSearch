@@ -26,8 +26,10 @@ import androidx.compose.ui.window.Dialog
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.ok
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal actual fun SettingsUi(
@@ -59,7 +61,6 @@ private fun AuthorizationDialog(
     onDismiss: () -> Unit,
     onSubmit: (String) -> Unit,
 ) {
-    val strings = LocalStrings.current
     val focusRequester = remember { FocusRequester() }
     var authorizationCode by rememberSaveable { mutableStateOf("") }
 
@@ -117,7 +118,7 @@ private fun AuthorizationDialog(
                     },
                 ) {
                     Text(
-                        text = strings.ok,
+                        text = stringResource(Res.string.ok),
                     )
                 }
             }

@@ -45,7 +45,6 @@ import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.strings.AppStrings
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
@@ -54,11 +53,18 @@ import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.text.TextInput
-import ly.david.musicsearch.ui.common.theme.LocalStrings
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.changeUsername
+import musicsearch.ui.common.generated.resources.enterUsername
+import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.setAction
+import musicsearch.ui.common.generated.resources.username
+import musicsearch.ui.common.generated.resources.xListens
+import org.jetbrains.compose.resources.stringResource
 
 private const val ROTATE_DOWN = 90f
 
@@ -69,7 +75,6 @@ internal fun ListensUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -80,7 +85,6 @@ internal fun ListensUi(
             UsernameInput(
                 listenBrainzUrl = state.listenBrainzUrl,
                 text = state.textFieldText,
-                strings = strings,
                 onTextChange = {
                     eventSink(ListensUiEvent.EditText(it))
                 },
@@ -116,9 +120,9 @@ internal fun ListensUi(
 
     val noUsernameSet = state.noUsernameSet
     val title = if (state.noUsernameSet) {
-        strings.listens
+        stringResource(Res.string.listens)
     } else {
-        strings.xListens(state.username)
+        stringResource(Res.string.xListens, state.username)
     }
     val lazyPagingItems = state.listensPagingDataFlow.collectAsLazyPagingItems()
     val overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = if (noUsernameSet) {
@@ -135,7 +139,7 @@ internal fun ListensUi(
             )
             DropdownMenuItem(
                 text = {
-                    Text(strings.changeUsername)
+                    Text(stringResource(Res.string.changeUsername))
                 },
                 onClick = {
                     showDialog = true
@@ -262,7 +266,6 @@ internal fun ListensUi(
             noUsernameSet = noUsernameSet,
             innerPadding = innerPadding,
             state = state,
-            strings = strings,
             eventSink = eventSink,
             selectedEntityFacet = selectedEntityFacet,
             lazyPagingItems = lazyPagingItems,
@@ -276,7 +279,6 @@ private fun ListensContent(
     noUsernameSet: Boolean,
     innerPadding: PaddingValues,
     state: ListensUiState,
-    strings: AppStrings,
     eventSink: (ListensUiEvent) -> Unit,
     selectedEntityFacet: MusicBrainzEntity?,
     lazyPagingItems: LazyPagingItems<Identifiable>,
@@ -289,7 +291,6 @@ private fun ListensContent(
                 .fillMaxSize(),
             listenBrainzUrl = state.listenBrainzUrl,
             text = state.textFieldText,
-            strings = strings,
             onTextChange = {
                 eventSink(ListensUiEvent.EditText(it))
             },
@@ -385,7 +386,6 @@ private fun ListensContent(
 private fun UsernameInput(
     listenBrainzUrl: String,
     text: String,
-    strings: AppStrings,
     modifier: Modifier = Modifier,
     onTextChange: (String) -> Unit = {},
     onSetUsername: () -> Unit = {},
@@ -414,10 +414,10 @@ private fun UsernameInput(
             }
             append(" username to load your listens into the app.")
         },
-        textLabel = strings.username,
-        textHint = strings.enterUsername,
+        textLabel = stringResource(Res.string.username),
+        textHint = stringResource(Res.string.enterUsername),
         text = text,
-        buttonText = strings.set,
+        buttonText = stringResource(Res.string.setAction),
         onTextChange = onTextChange,
         onButtonClick = onSetUsername,
     )

@@ -20,6 +20,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.ui)
+                implementation(compose.components.resources)
 
                 implementation(libs.circuit.foundation)
                 implementation(libs.circuit.overlay)
