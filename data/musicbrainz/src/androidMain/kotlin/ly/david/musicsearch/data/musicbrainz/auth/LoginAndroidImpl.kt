@@ -1,15 +1,15 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
+import kotlinx.coroutines.suspendCancellableCoroutine
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import ly.david.musicsearch.shared.domain.auth.Login
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientSecretBasic
 import net.openid.appauth.TokenRequest
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class LoginAndroidImpl(
     private val authService: AuthorizationService,
@@ -34,7 +34,7 @@ class LoginAndroidImpl(
     }
 
     private suspend fun exchangeToken(jsonRequestString: String): AuthState? {
-        return suspendCoroutine { continuation ->
+        return suspendCancellableCoroutine { continuation ->
             authService.performTokenRequest(
                 TokenRequest.jsonDeserialize(jsonRequestString),
                 ClientSecretBasic(musicBrainzOAuthInfo.clientSecret),
