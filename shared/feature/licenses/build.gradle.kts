@@ -18,7 +18,6 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
-                implementation(compose.components.resources)
 
                 implementation(libs.aboutlibraries.compose.m3)
                 implementation(libs.aboutlibraries.core)
