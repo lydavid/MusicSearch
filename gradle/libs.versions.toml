@@ -4,10 +4,10 @@ androidGradlePlugin = "8.13.2"
 baselineprofile = "1.4.1"
 benchmarkMacroJunit4 = "1.4.1"
 chucker = "4.2.0"
-circuit = "0.30.0"
+circuit = "0.33.0"
 coil = "3.3.0"
 colorpicker = "1.1.3"
-compose-multiplatform = "1.9.3"
+compose-multiplatform = "1.10.1"
 datastore = "1.2.0"
 detekt = "1.23.8"
 junit = "4.13.2"
@@ -15,11 +15,12 @@ junitJupiterEngine = "5.11.4"
 koin = "4.1.1"
 koinCompose = "4.1.1"
 konsist = "0.17.3"
-kotlin = "2.2.21"
+kotlin = "2.3.10"
 kotlinpoet = "2.2.0"
 kotlinx-coroutines = "1.10.2"
 ksp = "2.3.6"
 leakcanaryAndroid = "2.14"
+materialIconsExtended = "1.7.3"
 materialKolor = "4.0.5"
 mockk = "1.14.9"
 multiplatformPaths = "0.2.2"
@@ -65,10 +66,11 @@ coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.r
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 coil-test = { module = "io.coil-kt.coil3:coil-test", version.ref = "coil" }
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
+compose-components-resources = "org.jetbrains.compose.components:components-resources:1.10.1"
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-runtime = "androidx.compose.runtime:runtime:1.10.3"
-compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.9.3"
+compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.10.1"
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.10.3"
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
@@ -78,6 +80,7 @@ detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plug
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = "com.google.firebase:firebase-bom:33.16.0"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -104,10 +107,11 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
+compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
-nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.5"
+nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.7"
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingMultiplatform" }
 paging-compose = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingMultiplatform" }
@@ -127,6 +131,8 @@ stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "state
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.19"
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
+compose-animation = { module = "androidx.compose.animation:animation", version = "1.10.3" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
 

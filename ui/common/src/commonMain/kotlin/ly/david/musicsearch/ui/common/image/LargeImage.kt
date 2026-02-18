@@ -56,7 +56,7 @@ fun LargeImage(
                         type = ListItemSharedTransitionKey.ElementType.Image,
                     ),
                 ),
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                resizeMode = SharedTransitionScope.ResizeMode.scaleToBounds(),
                 animatedVisibilityScope = requireAnimatedScope(
                     SharedElementTransitionScope.AnimatedScope.Navigation,
                 ),
