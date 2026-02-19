@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="theme">Thema</string>
+    <string name="theme">Design</string>
     <string name="light">Hell</string>
     <string name="dark">Dunkel</string>
     <string name="system">System</string>
     <string name="area">Gebiet</string>
     <string name="artist">Künstler</string>
     <string name="event">Veranstaltungen</string>
+    <string name="genre">Genre</string>
+    <string name="instrument">Instrument</string>
+    <string name="label">Label</string>
+    <string name="place">Ort</string>
+    <string name="recording">Aufnahme</string>
+    <string name="release">Veröffentlichung</string>
+    <string name="releaseGroup">Veröffentlichungsgruppe</string>
+    <string name="series">Serie</string>
+    <string name="work">Werk</string>
+    <string name="works">Werke</string>
+    <string name="url">URL</string>
+    <string name="urls">URLs</string>
+    <string name="collection">Sammlung</string>
 </resources>
