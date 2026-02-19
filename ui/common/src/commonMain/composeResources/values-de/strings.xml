@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme">Thema</string>
+    <string name="light">Hell</string>
+    <string name="dark">Dunkel</string>
+    <string name="system">System</string>
+    <string name="area">Gebiet</string>
+    <string name="artist">Künstler</string>
+    <string name="event">Veranstaltungen</string>
+</resources>
