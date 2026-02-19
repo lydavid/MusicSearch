@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* don't crash when selecting title to copy then navigating back, closes [#1](https://github.com/lydavid/MusicSearch/issues/1)
+
+
+### Features
+
+* support translations through Weblate
