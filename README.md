@@ -28,7 +28,7 @@ Multiplatform distributions are heavily WIP. Only the Android app is considered 
         src="https://www.openapk.net/images/openapk-badge.png" />
 </a>
 
-Or you can you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
+Or you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
 
 Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html).
 
