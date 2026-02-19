@@ -65,12 +65,16 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" 
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 coil-test = { module = "io.coil-kt.coil3:coil-test", version.ref = "coil" }
+compose-animation = "androidx.compose.animation:animation:1.10.3"
 compose-colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 compose-components-resources = "org.jetbrains.compose.components:components-resources:1.10.1"
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
+compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-runtime = "androidx.compose.runtime:runtime:1.10.3"
-compose-ui-backhandler = "org.jetbrains.compose.ui:ui-backhandler:1.10.1"
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
+compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.10.3"
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
@@ -80,7 +84,6 @@ detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plug
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = "com.google.firebase:firebase-bom:33.16.0"
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -107,7 +110,6 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
@@ -131,8 +133,6 @@ stately-isolate = { module = "co.touchlab:stately-isolate", version.ref = "state
 test-parameter-injector = "com.google.testparameterinjector:test-parameter-injector:1.19"
 timber = "com.jakewharton.timber:timber:5.0.1"
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
-compose-animation = { module = "androidx.compose.animation:animation", version = "1.10.3" }
 windowSizeClass = "dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0"
 zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
 
