@@ -348,14 +348,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.16.0",
+            "artifactVersion": "1.17.0",
             "description": "Provides backward-compatible implementations of Android platform APIs and features.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Core",
-            "website": "https://developer.android.com/jetpack/androidx/releases/core#1.16.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/core#1.17.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1335,7 +1335,7 @@
                     "name": "Mike Penz"
                 }
             ],
-            "artifactVersion": "13.0.0-a02",
+            "artifactVersion": "13.2.1",
             "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
             "scm": {
                 "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
