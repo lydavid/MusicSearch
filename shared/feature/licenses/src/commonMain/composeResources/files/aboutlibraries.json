@@ -226,14 +226,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.4.0",
+            "artifactVersion": "1.5.0-alpha08",
             "description": "Compose Material You Design Components library",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Material3 Components",
-            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.4.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material3#1.5.0-alpha08",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -251,14 +251,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.9.3",
+            "artifactVersion": "1.9.4",
             "description": "Material ripple used to build interactive components",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Compose Material Ripple",
-            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.9.3",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material#1.9.4",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -596,7 +596,7 @@
             }
         },
         {
-            "uniqueId": "androidx.graphics:graphics-path",
+            "uniqueId": "androidx.graphics:graphics-shapes",
             "funding": [
                 
             ],
@@ -605,14 +605,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.0.1",
-            "description": "Query segment data for android.graphics.Path objects",
+            "artifactVersion": "1.1.0",
+            "description": "create and render rounded polygonal shapes",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
-            "name": "Android Graphics Path",
-            "website": "https://developer.android.com/jetpack/androidx/releases/graphics#1.0.1",
+            "name": "Graphics Shapes",
+            "website": "https://developer.android.com/jetpack/androidx/releases/graphics#1.1.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1312,7 +1312,7 @@
                     "name": "Jordon de Hoog"
                 }
             ],
-            "artifactVersion": "4.0.5",
+            "artifactVersion": "4.1.1",
             "description": "Material You dynamic color for Compose Multiplatform",
             "scm": {
                 "connection": "scm:git:https://github.com/jordond/materialkolor.git",
@@ -1450,7 +1450,7 @@
                     "name": "Drew Hamilton"
                 }
             ],
-            "artifactVersion": "0.20.2",
+            "artifactVersion": "0.21.1",
             "description": "A Kotlin compiler plugin for generating equals, hashCode, and toString for plain old Kotlin objects.",
             "scm": {
                 "connection": "scm:git:github.com/drewhamilton/Poko.git",
@@ -1779,7 +1779,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.9.0",
+            "artifactVersion": "1.10.0-alpha05",
             "description": "Compose Material You Design Components library",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
@@ -1803,7 +1803,7 @@
                     "name": "Compose Multiplatform Team"
                 }
             ],
-            "artifactVersion": "1.9.1",
+            "artifactVersion": "1.9.3",
             "description": "Material ripple used to build interactive components",
             "scm": {
                 "connection": "scm:git:https://github.com/JetBrains/compose-jb.git",
