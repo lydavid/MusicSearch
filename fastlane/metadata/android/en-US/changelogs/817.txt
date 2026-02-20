@@ -1,7 +1,7 @@
 
 ### Bug Fixes
 
-* don't crash when selecting title to copy then navigating back, closes [#1](https://github.com/lydavid/MusicSearch/issues/1)
+* don't crash when selecting title to copy then navigating back, closes [#1673](https://github.com/lydavid/MusicSearch/issues/1673)
 
 
 ### Features
