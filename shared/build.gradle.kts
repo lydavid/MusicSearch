@@ -38,13 +38,10 @@ kotlin {
                 implementation(projects.shared.feature.stats)
                 implementation(projects.ui.common)
 
-                // TODO: instead of having to add this to every module, expose a wrapper from ui.common
-                //  but we still need this for access to the StringResource class
-                implementation(compose.components.resources)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.ui)
 
                 implementation(libs.koin.core)
                 implementation(libs.circuit.foundation)

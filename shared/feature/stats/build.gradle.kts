@@ -16,10 +16,10 @@ kotlin {
                 implementation(projects.ui.common)
                 implementation(projects.shared.domain)
 
-                implementation(compose.components.resources)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.foundation)
+                implementation(libs.compose.material3)
+                implementation(libs.compose.ui)
 
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.circuit.foundation)

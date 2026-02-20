@@ -28,7 +28,7 @@ kotlin {
                 api(libs.kotlinx.datetime)
                 api(libs.kotlinx.collections.immutable)
 
-                implementation(compose.runtime)
+                implementation(libs.compose.runtime)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.paging.common)
