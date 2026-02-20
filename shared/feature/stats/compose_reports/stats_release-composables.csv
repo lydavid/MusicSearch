@@ -15,4 +15,4 @@ ly.david.musicsearch.shared.feature.stats.RelationTypeCountBar,RelationTypeCount
 ly.david.musicsearch.shared.feature.stats.CompletionProgressBar,CompletionProgressBar,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.stats.StatsPresenter.present,present,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.stats.StatsUi,StatsUi,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.shared.feature.stats.StatsUi,StatsUi,1,1,1,0,0,0,1,0,2,2,
+ly.david.musicsearch.shared.feature.stats.StatsUi,StatsUi,1,1,1,0,0,0,1,0,2,1,

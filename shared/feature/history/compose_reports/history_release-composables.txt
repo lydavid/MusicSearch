@@ -16,6 +16,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 open fun ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter.present(
   stable <this>: HistoryPresenter
 ): HistoryUiState
+fun ly.david.musicsearch.shared.feature.history.internal.getLabel(
+  stable <this>: HistorySortOption
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.internal.HistoryUi(
   stable state: HistoryUiState
   stable modifier: Modifier? = @static <expression>

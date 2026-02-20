@@ -1,3 +1,21 @@
+stable class musicsearch.shared.feature.listens.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.listens.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.listens.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.listens.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.listens.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.listens.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.listens.ListensPresenter {
   stable val screen: ListensScreen
   stable val navigator: Navigator

@@ -4,6 +4,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 open fun ly.david.musicsearch.shared.feature.images.ImagesPresenter.present(
   stable <this>: ImagesPresenter
 ): ImagesUiState
+fun ly.david.musicsearch.shared.feature.images.getLabel(
+  stable <this>: ImagesSortOption
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.ImagesUi(
   stable state: ImagesUiState
   stable modifier: Modifier? = @static <expression>

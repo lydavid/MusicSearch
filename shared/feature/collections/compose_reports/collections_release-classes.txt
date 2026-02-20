@@ -1,3 +1,21 @@
+stable class musicsearch.shared.feature.collections.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter {
   stable val screen: AddToCollectionScreen
   stable val navigator: Navigator

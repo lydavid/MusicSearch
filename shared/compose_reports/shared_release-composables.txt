@@ -1,4 +1,7 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.PreviewAppBottomNavigationBar()
+fun ly.david.musicsearch.shared.getText(
+  stable <this>: AppNavigationItem
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppBottomNavigationBar(
   stable currentTopLevelScreen: Screen
   stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>

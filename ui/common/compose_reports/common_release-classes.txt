@@ -3,6 +3,24 @@ stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresente
   unstable val login: Login
   <runtime stability> = Stable
 }
+stable class musicsearch.ui.common.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.area.AreasListPresenter {
   <runtime stability> = Stable
 }
@@ -18,11 +36,11 @@ stable class ly.david.musicsearch.ui.common.genre.GenresListPresenter {
 stable class ly.david.musicsearch.ui.common.icons.CustomIcons {
   <runtime stability> = Stable
 }
-unstable class ly.david.musicsearch.ui.common.image.ForwardingDrawInfo {
-  unstable val painter: Painter
+runtime class ly.david.musicsearch.ui.common.image.ForwardingDrawInfo {
+  runtime val painter: Painter
   stable val alpha: Float
   stable val colorFilter: ColorFilter?
-  <runtime stability> = Unstable
+  <runtime stability> = Runtime(Painter)
 }
 stable class ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter {
   <runtime stability> = Stable

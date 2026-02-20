@@ -1,3 +1,21 @@
+stable class musicsearch.shared.feature.stats.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.stats.Stats {
   runtime val relationStats: RelationStats
   runtime val tabToStats: ImmutableMap<Tab, EntityStats>

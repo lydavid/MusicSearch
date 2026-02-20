@@ -9,6 +9,24 @@ unstable class ly.david.musicsearch.shared.feature.spotify.SpotifyBroadcastRecei
   unstable val spotifyHistoryRepository$delegate: Lazy<SpotifyHistoryRepository>
   <runtime stability> = Unstable
 }
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryPresenter {
   stable val navigator: Navigator
   unstable val spotifyHistoryRepository: SpotifyHistoryRepository

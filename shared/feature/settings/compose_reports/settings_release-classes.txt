@@ -1,3 +1,21 @@
+stable class musicsearch.shared.feature.settings.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class MusicSearch.shared.feature.settings.BuildConfig {
   stable val VERSION_CODE: String
   stable val VERSION_NAME: String

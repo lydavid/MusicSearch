@@ -46,7 +46,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable noUsernameSet: Boolean
   stable innerPadding: PaddingValues
   stable state: ListensUiState
-  unstable strings: AppStrings
   stable eventSink: Function1<ListensUiEvent, Unit>
   selectedEntityFacet: MusicBrainzEntity?
   lazyPagingItems: LazyPagingItems<Identifiable>
@@ -54,7 +53,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.UsernameInput(
   stable listenBrainzUrl: String
   stable text: String
-  unstable strings: AppStrings
   stable modifier: Modifier? = @static <expression>
   stable onTextChange: Function1<String, Unit>? = @static <expression>
   stable onSetUsername: Function0<Unit>? = @static <expression>

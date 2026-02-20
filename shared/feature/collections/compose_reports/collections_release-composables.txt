@@ -49,6 +49,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable sortOption: CollectionSortOption? = @static <expression>
   stable onSortOptionClick: Function1<CollectionSortOption, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.shared.feature.collections.list.getLabel(
+  stable <this>: CollectionSortOption
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionsFilterChipsBar(
   stable sortOption: CollectionSortOption
   stable modifier: Modifier? = @static <expression>

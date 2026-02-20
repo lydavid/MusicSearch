@@ -1,6 +1,6 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimaryLightDark()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEndedLightDark()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSectionLightDark()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimary()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEnded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetails()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsError()
@@ -41,9 +41,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   alias: BasicAlias
   stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimary()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEnded()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSection()
+fun ly.david.musicsearch.shared.feature.details.alias.getDisplayString(
+  stable <this>: AliasType
+): String
 restartable skippable fun ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi(
   area: AreaDetailsModel
   detailsTabUiState: DetailsTabUiState
@@ -231,6 +231,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 scheme("[presenter]") fun ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter.present(
   stable <this>: DetailsPresenter<DetailsModel>
 ): DetailsUiState<DetailsModel>
+fun ly.david.musicsearch.shared.feature.details.utils.getCapitalizedName(
+  <this>: T
+): String
 restartable skippable fun ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi(
   detailsModel: T
   detailsTabUiState: DetailsTabUiState

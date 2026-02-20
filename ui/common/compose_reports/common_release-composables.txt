@@ -138,6 +138,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemAllInfo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemUnknownListens()
+fun ly.david.musicsearch.ui.common.work.getDisplayLanguage(
+  stable <this>: String
+): String?
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.EntityIcon(
   stable entityType: MusicBrainzEntityType
   stable modifier: Modifier? = @static <expression>
@@ -547,9 +550,6 @@ fun ly.david.musicsearch.ui.common.theme.getSubTextColor()
 fun ly.david.musicsearch.ui.common.theme.getSeedColor(
   unstable <this>: AppPreferences
 ): Color
-restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.theme.ProvideStrings(
-  stable content: Function2<Composer, Int, Unit>
-)
 fun ly.david.musicsearch.ui.common.theme.TextStyles.getHeaderTextStyle(
   unused stable <this>: TextStyles
 ): TextStyle
@@ -665,12 +665,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 fun ly.david.musicsearch.ui.common.topappbar.rememberSelectionState(
   stable totalCount: Int = @static 0
 ): SelectionState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.SortToggleMenuItem(
-  <this>: OverflowMenuScope
-  stable sorted: Boolean
-  stable onToggle: Function1<Boolean, Unit>
-  stable modifier: Modifier? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.StatsMenuItem(
   <this>: OverflowMenuScope
   stable statsScreen: StatsScreen
@@ -678,6 +672,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   unstable coroutineScope: CoroutineScope
   stable modifier: Modifier? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.topappbar.getTitle(
+  stable <this>: Tab
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.TabsBar(
   stable modifier: Modifier? = @static <expression>
   unstable tabsTitle: List<String>? = @static <expression>
@@ -744,6 +741,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
 )
+fun ly.david.musicsearch.ui.common.work.getDisplayScript(
+  stable <this>: String
+): String?
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.WorkListItem(
   work: WorkListItemModel
   stable modifier: Modifier? = @static <expression>

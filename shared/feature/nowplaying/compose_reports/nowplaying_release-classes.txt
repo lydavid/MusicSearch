@@ -4,6 +4,24 @@ unstable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingNotifica
   unstable val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepository>
   <runtime stability> = Unstable
 }
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPresenter {
   stable val navigator: Navigator
   runtime val getNowPlayingHistory: GetNowPlayingHistory
