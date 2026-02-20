@@ -41,9 +41,11 @@ kotlin {
             dependsOn(jvmCommon)
             dependencies {
                 implementation(projects.test.image)
-                implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.coil.network.okhttp)
+
+                implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
         val jvmMain by getting {

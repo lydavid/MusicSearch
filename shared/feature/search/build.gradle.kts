@@ -30,6 +30,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
         val androidUnitTest by getting {

@@ -32,10 +32,11 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(projects.test.image)
+
                 implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
-
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.testData)

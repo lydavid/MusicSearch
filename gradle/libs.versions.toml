@@ -73,6 +73,7 @@ compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.re
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
 compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.10.3"
+compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"

@@ -50,11 +50,13 @@ kotlin {
                 implementation(libs.windowSizeClass)
             }
         }
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(projects.shared.feature.nowplaying)
                 implementation(projects.shared.feature.spotify)
+
                 implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
         val iosMain by getting {

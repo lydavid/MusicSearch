@@ -41,9 +41,10 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(libs.appauth)
-
                 implementation(libs.androidx.activity.compose)
+
                 implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
         val androidUnitTest by getting {

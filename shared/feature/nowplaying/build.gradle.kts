@@ -27,12 +27,12 @@ kotlin {
                 implementation(libs.paging.compose)
             }
         }
-        val androidMain by getting {
+        androidMain {
             dependencies {
                 implementation(libs.compose.ui.tooling.preview)
+                implementation(libs.compose.ui.tooling)
             }
         }
-        val jvmMain by getting
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.screenshot)
