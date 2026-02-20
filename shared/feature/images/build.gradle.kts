@@ -32,7 +32,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(projects.test.image)
-                implementation(compose.preview)
+                implementation(libs.compose.ui.tooling.preview)
             }
         }
 

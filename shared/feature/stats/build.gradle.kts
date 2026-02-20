@@ -26,6 +26,11 @@ kotlin {
                 implementation(libs.koin.core)
             }
         }
+        androidMain {
+            dependencies {
+                implementation(libs.compose.ui.tooling.preview)
+            }
+        }
         val androidUnitTest by getting {
             dependencies {
                 implementation(projects.ui.test.screenshot)
@@ -39,9 +44,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    implementation(compose.preview)
-    debugImplementation(compose.uiTooling)
 }

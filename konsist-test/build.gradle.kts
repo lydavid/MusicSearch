@@ -19,7 +19,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(compose.preview)
+    implementation(libs.compose.ui.tooling.preview)
     // https://github.com/LemonAppDev/konsist/blob/main/samples/starter-projects/konsist-starter-kmp-gradle-kotlin-junit5/konsistTest/build.gradle.kts
     testImplementation(libs.konsist)
     testImplementation(libs.junit.jupiter.engine)

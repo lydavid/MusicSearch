@@ -54,7 +54,7 @@ kotlin {
             dependencies {
                 implementation(projects.shared.feature.nowplaying)
                 implementation(projects.shared.feature.spotify)
-                implementation(compose.preview)
+                implementation(libs.compose.ui.tooling.preview)
             }
         }
         val iosMain by getting {

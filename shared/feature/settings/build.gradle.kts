@@ -43,6 +43,7 @@ kotlin {
                 implementation(libs.appauth)
 
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.compose.ui.tooling.preview)
             }
         }
         val androidUnitTest by getting {
@@ -53,9 +54,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    implementation(compose.preview)
-    debugImplementation(compose.uiTooling)
 }

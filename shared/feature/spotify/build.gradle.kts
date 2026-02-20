@@ -29,7 +29,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(compose.preview)
+                implementation(libs.compose.ui.tooling.preview)
             }
         }
         val jvmMain by getting

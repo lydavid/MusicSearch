@@ -41,6 +41,7 @@ kotlin {
             dependsOn(jvmCommon)
             dependencies {
                 implementation(projects.test.image)
+                implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.coil.network.okhttp)
             }
@@ -82,9 +83,4 @@ kotlin {
 compose.resources {
     publicResClass = true
     generateResClass = always
-}
-
-dependencies {
-    implementation(compose.preview)
-    debugImplementation(compose.uiTooling)
 }
