@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* fix licenses/libraries screen crash
