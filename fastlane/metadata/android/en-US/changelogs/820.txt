@@ -1,0 +1,4 @@
+
+### Features
+
+* show latest times you've listened to a work with a button to go to all listens with the work faceted; show all works with linked listens in Listen screen's facet bottom sheet
