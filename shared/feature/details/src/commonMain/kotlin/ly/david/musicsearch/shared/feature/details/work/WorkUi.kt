@@ -20,6 +20,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -32,6 +33,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -271,6 +273,18 @@ internal fun WorkUi(
                     work = detailsModel,
                     filterText = state.topAppBarFilterState.filterText,
                     detailsTabUiState = state.detailsTabUiState,
+                    onSeeAllListensClick = {
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    entityFacet = MusicBrainzEntity(
+                                        id = entityId,
+                                        type = entityType,
+                                    ),
+                                ),
+                            ),
+                        )
+                    },
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },

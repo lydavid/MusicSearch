@@ -11,4 +11,11 @@ class WorkUiScreenshotTest : ScreenshotTest() {
             PreviewWorkDetailsUi()
         }
     }
+
+    @Test
+    fun detailsWithListens() {
+        snapshot {
+            PreviewWorkDetailsUiWithListens()
+        }
+    }
 }

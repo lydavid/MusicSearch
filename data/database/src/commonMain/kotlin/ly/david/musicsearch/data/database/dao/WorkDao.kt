@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
@@ -63,11 +64,21 @@ class WorkDao(
         workId: String,
         listenBrainzUsername: String,
     ): WorkDetailsModel? {
-        return transacter.getWorkForDetails(
-            workId = workId,
-            username = listenBrainzUsername,
-            mapper = ::toDetailsModel,
-        ).executeAsOneOrNull()
+        return transacter.transactionWithResult {
+            val work = transacter.getWorkForDetails(
+                workId = workId,
+                username = listenBrainzUsername,
+                mapper = ::toDetailsModel,
+            ).executeAsOneOrNull()
+
+            work?.copy(
+                latestListensTimestampsMs = transacter.getLatestListensByWork(
+                    workId = workId,
+                    username = listenBrainzUsername,
+                    limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
+                ).executeAsList().mapNotNull { it.listened_at_ms }.toPersistentList(),
+            )
+        }
     }
 
     private fun toDetailsModel(

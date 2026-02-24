@@ -116,6 +116,15 @@ FROM (
     ELSE COALESCE(artist_credit_name.artist_id, '') = :artistId
   END
   AND (
+    :workId IS NULL OR
+    EXISTS (
+      SELECT 1
+      FROM relation
+      WHERE relation.linked_entity_id = listen.recording_musicbrainz_id
+        AND relation.entity_id = :workId
+    )
+  )
+  AND (
     recording.name LIKE :query OR
     recording.disambiguation LIKE :query OR
     recording_alias.name LIKE :query OR
@@ -182,6 +191,15 @@ AND CASE
   WHEN :artistId IS NULL THEN 1
   ELSE COALESCE(artist_credit_name.artist_id, '') = :artistId
 END
+AND (
+  :workId IS NULL OR
+  EXISTS (
+    SELECT 1
+    FROM relation
+    WHERE relation.linked_entity_id = listen.recording_musicbrainz_id
+      AND relation.entity_id = :workId
+  )
+)
 AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
@@ -462,6 +480,66 @@ WHERE (
 )
 GROUP BY artist_info.artist_id
 ORDER BY COUNT(*) DESC
+LIMIT :limit OFFSET :offset;
+
+getCountOfWorkFacets:
+SELECT COUNT(*)
+FROM (
+  SELECT work.id
+  FROM listen
+  JOIN relation
+    ON relation.linked_entity_id = listen.recording_musicbrainz_id
+  JOIN work
+    ON work.id = relation.entity_id
+  LEFT JOIN (
+    SELECT
+      work_alias.work_id,
+      GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names
+    FROM work_alias
+    WHERE work_alias.is_primary
+    GROUP BY work_alias.work_id
+  ) AS aliases
+    ON aliases.work_id = work.id
+  WHERE listen.username = :username
+    AND (
+      work.name LIKE :query OR
+      work.disambiguation LIKE :query OR
+      aliases.alias_names LIKE :query
+    )
+  GROUP BY work.id
+);
+
+getWorkFacets:
+SELECT
+  work.id,
+  work.name,
+  work.disambiguation,
+  aliases.alias_names,
+  aliases.alias_locales,
+  COUNT(*) AS listen_count
+FROM listen
+JOIN relation
+  ON relation.linked_entity_id = listen.recording_musicbrainz_id
+JOIN work
+  ON work.id = relation.entity_id
+LEFT JOIN (
+  SELECT
+    work_alias.work_id,
+    GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+  FROM work_alias
+  WHERE work_alias.is_primary
+  GROUP BY work_alias.work_id
+) AS aliases
+  ON aliases.work_id = work.id
+WHERE listen.username = :username
+  AND (
+    work.name LIKE :query OR
+    work.disambiguation LIKE :query OR
+    aliases.alias_names LIKE :query
+  )
+GROUP BY work.id
+ORDER BY listen_count DESC
 LIMIT :limit OFFSET :offset;
 
 markListenForDeletion:

@@ -56,6 +56,7 @@ import musicsearch.ui.common.generated.resources.listens
 import musicsearch.ui.common.generated.resources.packaging
 import musicsearch.ui.common.generated.resources.releaseEvents
 import musicsearch.ui.common.generated.resources.script
+import musicsearch.ui.common.generated.resources.seeAllListens
 import musicsearch.ui.common.generated.resources.status
 import musicsearch.ui.common.generated.resources.tracks
 import musicsearch.ui.common.generated.resources.type
@@ -311,7 +312,7 @@ private fun LazyListScope.listenSection(
         }
         item {
             ClickableItem(
-                title = "See all listens",
+                title = stringResource(Res.string.seeAllListens),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = onSeeAllListensClick,
             )

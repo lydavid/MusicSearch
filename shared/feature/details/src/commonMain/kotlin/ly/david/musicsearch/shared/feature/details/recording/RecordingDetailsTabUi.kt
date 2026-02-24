@@ -3,14 +3,10 @@ package ly.david.musicsearch.shared.feature.details.recording
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
-import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -18,6 +14,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.feature.details.LastListenedListItem
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -26,16 +23,15 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.firstReleaseDate
 import musicsearch.ui.common.generated.resources.isrc
 import musicsearch.ui.common.generated.resources.length
 import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.seeAllListens
 import musicsearch.ui.common.generated.resources.video
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
@@ -127,7 +123,7 @@ private fun LazyListScope.listenSection(
         }
         item {
             ClickableItem(
-                title = "See all listens",
+                title = stringResource(Res.string.seeAllListens),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = onSeeAllListensClick,
             )
@@ -144,20 +140,4 @@ private fun LazyListScope.listenSection(
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LastListenedListItem(
-    lastListenedMs: Long,
-    now: Instant,
-) {
-    val instant = Instant.fromEpochMilliseconds(lastListenedMs)
-    val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
-    val formattedDateTime = instant.getDateTimeFormatted()
-    Text(
-        text = "$formattedDateTimePeriod ($formattedDateTime)",
-        modifier = Modifier.padding(horizontal = 16.dp),
-        style = TextStyles.getCardBodyTextStyle(),
-    )
 }

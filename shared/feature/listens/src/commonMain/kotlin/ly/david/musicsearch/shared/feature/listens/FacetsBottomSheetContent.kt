@@ -42,6 +42,7 @@ internal val tabs = persistentListOf(
     Tab.RECORDINGS,
     Tab.RELEASES,
     Tab.ARTISTS,
+    Tab.WORKS,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -42,6 +42,7 @@ import musicsearch.ui.common.generated.resources.gender
 import musicsearch.ui.common.generated.resources.ipi
 import musicsearch.ui.common.generated.resources.isni
 import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.seeAllListens
 import musicsearch.ui.common.generated.resources.sortName
 import musicsearch.ui.common.generated.resources.type
 import org.jetbrains.compose.resources.stringResource
@@ -179,7 +180,7 @@ private fun LazyListScope.listenSection(
         }
         item {
             ClickableItem(
-                title = "See all listens",
+                title = stringResource(Res.string.seeAllListens),
                 endIcon = CustomIcons.ChevronRight,
                 onClick = onSeeAllListensClick,
             )

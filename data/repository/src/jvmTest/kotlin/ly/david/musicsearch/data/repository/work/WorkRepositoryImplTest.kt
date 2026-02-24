@@ -219,6 +219,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                     attributes = attributes,
                     lastUpdated = testDateTimeInThePast,
                     listenCount = 2,
+                    latestListensTimestampsMs = persistentListOf(1755100630000, 1755100629000),
                 ),
                 this,
             )

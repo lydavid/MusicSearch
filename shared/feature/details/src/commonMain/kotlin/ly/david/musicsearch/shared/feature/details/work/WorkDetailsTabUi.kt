@@ -8,8 +8,11 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.feature.details.LastListenedListItem
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -21,9 +24,11 @@ import musicsearch.ui.common.generated.resources.attributesHeader
 import musicsearch.ui.common.generated.resources.iswc
 import musicsearch.ui.common.generated.resources.language
 import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.seeAllListens
 import musicsearch.ui.common.generated.resources.type
 import musicsearch.ui.common.generated.resources.work
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Instant
 
 @Composable
 internal fun WorkDetailsTabUi(
@@ -31,6 +36,7 @@ internal fun WorkDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
+    onSeeAllListensClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
@@ -87,6 +93,8 @@ internal fun WorkDetailsTabUi(
 
             listenSection(
                 work = work,
+                now = detailsTabUiState.now,
+                onSeeAllListensClick = onSeeAllListensClick,
             )
         },
     )
@@ -94,6 +102,8 @@ internal fun WorkDetailsTabUi(
 
 private fun LazyListScope.listenSection(
     work: WorkDetailsModel,
+    now: Instant,
+    onSeeAllListensClick: () -> Unit = {},
 ) {
     if (work.listenCount != null) {
         item {
@@ -107,6 +117,19 @@ private fun LazyListScope.listenSection(
                         text = work.listenCount.toString(),
                     )
                 },
+            )
+        }
+        items(work.latestListensTimestampsMs) {
+            LastListenedListItem(
+                lastListenedMs = it,
+                now = now,
+            )
+        }
+        item {
+            ClickableItem(
+                title = stringResource(Res.string.seeAllListens),
+                endIcon = CustomIcons.ChevronRight,
+                onClick = onSeeAllListensClick,
             )
         }
     }

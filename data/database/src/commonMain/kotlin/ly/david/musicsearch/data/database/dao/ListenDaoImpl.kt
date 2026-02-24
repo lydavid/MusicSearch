@@ -177,6 +177,7 @@ class ListenDaoImpl(
         val recordingId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RECORDING }?.id
         val releaseId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RELEASE }?.id
         val artistId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.ARTIST }?.id
+        val workId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.WORK }?.id
         return QueryPagingSource(
             countQuery = listenTransacter.getCountOfListensByUser(
                 username = username,
@@ -184,6 +185,7 @@ class ListenDaoImpl(
                 recordingId = recordingId,
                 releaseId = releaseId,
                 artistId = artistId,
+                workId = workId,
             ),
             transacter = listenTransacter,
             context = coroutineDispatchers.io,
@@ -194,6 +196,7 @@ class ListenDaoImpl(
                     recordingId = recordingId,
                     releaseId = releaseId,
                     artistId = artistId,
+                    workId = workId,
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToListenListItemModel,
@@ -265,6 +268,26 @@ class ListenDaoImpl(
                             limit = limit,
                             offset = offset,
                             mapper = ::mapToArtistFacet,
+                        )
+                    },
+                )
+            }
+
+            MusicBrainzEntityType.WORK -> {
+                QueryPagingSource(
+                    countQuery = listenTransacter.getCountOfWorkFacets(
+                        username = username,
+                        query = queryWithWildcards,
+                    ),
+                    transacter = listenTransacter,
+                    context = coroutineDispatchers.io,
+                    queryProvider = { limit, offset ->
+                        listenTransacter.getWorkFacets(
+                            username = username,
+                            query = queryWithWildcards,
+                            limit = limit,
+                            offset = offset,
+                            mapper = ::mapToWorkFacet,
                         )
                     },
                 )
@@ -409,6 +432,24 @@ private fun mapToReleaseFacet(
 )
 
 private fun mapToArtistFacet(
+    id: String?,
+    name: String?,
+    disambiguation: String?,
+    aliasNames: String?,
+    aliasLocales: String?,
+    count: Long,
+) = FacetListItem(
+    id = id.orEmpty(),
+    name = name.orEmpty(),
+    disambiguation = disambiguation.orEmpty(),
+    aliases = combineToAliases(
+        aliasNames = aliasNames,
+        aliasLocales = aliasLocales,
+    ),
+    count = count.toInt(),
+)
+
+private fun mapToWorkFacet(
     id: String?,
     name: String?,
     disambiguation: String?,
