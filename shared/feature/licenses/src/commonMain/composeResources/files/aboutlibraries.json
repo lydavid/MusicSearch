@@ -555,14 +555,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.4.1",
+            "artifactVersion": "1.4.2",
             "description": "Android Support ExifInterface",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "ExifInterface",
-            "website": "https://developer.android.com/jetpack/androidx/releases/exifinterface#1.4.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/exifinterface#1.4.2",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1473,7 +1473,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.3.0",
+            "artifactVersion": "3.4.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
