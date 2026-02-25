@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
@@ -52,7 +53,7 @@ internal class ListensPresenter(
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
         val browseUsername by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
         var textFieldText by rememberSaveable { mutableStateOf("") }
-        var actionableResult by remember { mutableStateOf<ActionableResult?>(null) }
+        var feedback by remember { mutableStateOf<Feedback?>(null) }
         var markForDeletionActionableResult by remember { mutableStateOf<ActionableResult?>(null) }
 
         val lazyListState = rememberLazyListState()
@@ -135,7 +136,7 @@ internal class ListensPresenter(
 
                 is ListensUiEvent.SubmitMapping -> {
                     coroutineScope.launch {
-                        actionableResult = listensListRepository.submitManualMapping(
+                        feedback = listensListRepository.submitManualMapping(
                             recordingMessyBrainzId = event.recordingMessyBrainzId,
                             rawRecordingMusicBrainzId = event.recordingMusicBrainzId,
                         )
@@ -144,7 +145,7 @@ internal class ListensPresenter(
 
                 is ListensUiEvent.RefreshMapping -> {
                     coroutineScope.launch {
-                        actionableResult = listensListRepository.refreshMapping(
+                        feedback = listensListRepository.refreshMapping(
                             recordingMessyBrainzId = event.recordingMessyBrainzId,
                         )
                     }
@@ -165,7 +166,7 @@ internal class ListensPresenter(
 
                 is ListensUiEvent.DeleteMarkedForDeletion -> {
                     externalScope.launch {
-                        actionableResult = listensListRepository.deleteMarkedForDeletion()
+                        feedback = listensListRepository.deleteMarkedForDeletion()
                     }
                 }
             }
@@ -175,7 +176,7 @@ internal class ListensPresenter(
             listenBrainzUrl = listenBrainzRepository.getBaseUrl(),
             username = browseUsername,
             textFieldText = textFieldText,
-            generalActionableResult = actionableResult,
+            feedback = feedback,
             markForDeletionActionableResult = markForDeletionActionableResult,
             totalCountOfListens = totalCountOfListens,
             topAppBarFilterState = topAppBarFilterState,
@@ -202,7 +203,7 @@ internal data class ListensUiState(
     val listenBrainzUrl: String = "",
     val username: String = "",
     val textFieldText: String = "",
-    val generalActionableResult: ActionableResult? = null,
+    val feedback: Feedback? = null,
     val markForDeletionActionableResult: ActionableResult? = null,
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

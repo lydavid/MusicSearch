@@ -13,14 +13,10 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,6 +37,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.CancellationException
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
@@ -52,6 +49,8 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
@@ -201,13 +200,16 @@ internal fun ListensUi(
         }
     }
 
-    state.generalActionableResult?.let { result ->
-        LaunchedEffect(result) {
+    state.feedback?.let { feedback ->
+        LaunchedEffect(feedback) {
             snackbarHostState.showSnackbar(
-                message = result.message,
-                actionLabel = result.action?.name,
-                duration = SnackbarDuration.Short,
-                withDismissAction = false,
+                visuals = FeedbackSnackbarVisuals(
+                    message = feedback.message,
+                    actionLabel = (feedback as? Feedback.Actionable)?.action?.name,
+                    duration = SnackbarDuration.Short,
+                    withDismissAction = false,
+                    feedback = feedback,
+                ),
             )
         }
     }
@@ -253,13 +255,7 @@ internal fun ListensUi(
             )
         },
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
+            FeedbackSnackbarHost(snackbarHostState)
         },
     ) { innerPadding ->
         ListensContent(

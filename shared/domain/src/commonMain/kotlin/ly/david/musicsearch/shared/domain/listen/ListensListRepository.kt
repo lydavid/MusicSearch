@@ -4,6 +4,7 @@ import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -30,11 +31,11 @@ interface ListensListRepository {
     suspend fun submitManualMapping(
         recordingMessyBrainzId: String,
         rawRecordingMusicBrainzId: String,
-    ): ActionableResult
+    ): Feedback
 
     suspend fun refreshMapping(
         recordingMessyBrainzId: String,
-    ): ActionableResult
+    ): Feedback
 
     fun markListenForDeletion(
         listenedAtMs: Long,
@@ -45,5 +46,5 @@ interface ListensListRepository {
 
     fun unmarkListenForDeletion()
 
-    suspend fun deleteMarkedForDeletion(): ActionableResult
+    suspend fun deleteMarkedForDeletion(): Feedback
 }

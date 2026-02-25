@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.ErrorType
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
@@ -148,7 +149,7 @@ class ListensListRepositoryImpl(
     override suspend fun submitManualMapping(
         recordingMessyBrainzId: String,
         rawRecordingMusicBrainzId: String,
-    ): ActionableResult {
+    ): Feedback {
         return try {
             val recordingId = rawRecordingMusicBrainzId.toUUID()
             listenBrainzApi.submitManualMapping(
@@ -158,68 +159,84 @@ class ListensListRepositoryImpl(
 
             refreshMapping(recordingMessyBrainzId = recordingMessyBrainzId)
         } catch (ex: IllegalArgumentException) {
-            ActionableResult(
+            Feedback.Error(
                 message = "Invalid MusicBrainz ID: ${ex.message}",
+                errorResolution = ErrorResolution.None,
             )
         } catch (ex: HandledException) {
-            ActionableResult(
+            Feedback.Error(
                 message = when {
                     ex.errorResolution == ErrorResolution.Login ->
                         "You need to be logged in to submit manual mappings"
 
                     else -> ex.message ?: "Failed to submit manual mapping"
                 },
+                errorResolution = ErrorResolution.None,
             )
         }
     }
 
     override suspend fun refreshMapping(
         recordingMessyBrainzId: String,
-    ): ActionableResult {
+    ): Feedback {
         return try {
             val manualMappingResponse = listenBrainzApi.getManualMapping(recordingMessyBrainzId)
             val recordingId = manualMappingResponse.mapping.recordingMbid
             val recordingMetadata = listenBrainzApi.getRecordingMetadata(recordingMusicBrainzId = recordingId)
+
+            // ListenBrainz's submit endpoint accepts any UUID, but its recording metadata endpoint will
+            // return an empty object if there was no recording with that UUID.
+            // This let us warn the user that they passed a UUID that does not match any recordings.
+            if (recordingMetadata?.recording?.name == null) {
+                return Feedback.Error(
+                    message = "No recording with MusicBrainz ID $recordingId found",
+                    errorResolution = ErrorResolution.None,
+                )
+            }
+
             listenDao.updateMetadata(
                 recordingMessyBrainzId = recordingMessyBrainzId,
-                artistName = recordingMetadata?.artistCredit?.name,
+                artistName = recordingMetadata.artistCredit.name,
                 entityMapping = Listen.EntityMapping(
                     recordingMusicbrainzId = recordingId,
-                    recordingName = recordingMetadata?.recording?.name,
-                    durationMs = recordingMetadata?.recording?.length,
-                    caaId = recordingMetadata?.release?.caaId,
-                    caaReleaseMbid = recordingMetadata?.release?.caaReleaseMbid,
-                    releaseMbid = recordingMetadata?.release?.mbid,
-                    releaseName = recordingMetadata?.release?.name,
-                    artistCredits = recordingMetadata?.artistCredit?.artists?.map { artist ->
+                    recordingName = recordingMetadata.recording.name,
+                    durationMs = recordingMetadata.recording.length,
+                    caaId = recordingMetadata.release?.caaId,
+                    caaReleaseMbid = recordingMetadata.release?.caaReleaseMbid,
+                    releaseMbid = recordingMetadata.release?.mbid,
+                    releaseName = recordingMetadata.release?.name,
+                    artistCredits = recordingMetadata.artistCredit.artists.map { artist ->
                         ArtistCreditUiModel(
                             artistId = artist.artistMbid,
                             name = artist.name,
                             joinPhrase = artist.joinPhrase,
                         )
-                    }.orEmpty(),
+                    },
                 ),
             )
-            ActionableResult(
+            Feedback.Success(
                 message = "Updated",
             )
         } catch (ex: HandledException) {
             when {
                 ex.errorResolution == ErrorResolution.Login -> {
-                    ActionableResult(
+                    Feedback.Error(
                         message = "You need to be logged in to update this listen's mapping",
+                        errorResolution = ErrorResolution.None,
                     )
                 }
 
                 ex.errorType == ErrorType.NotFound -> {
-                    ActionableResult(
+                    Feedback.Error(
                         message = "No manual mapping found for this listen",
+                        errorResolution = ErrorResolution.None,
                     )
                 }
 
                 else -> {
-                    ActionableResult(
+                    Feedback.Error(
                         message = ex.message ?: "Unknown error",
+                        errorResolution = ErrorResolution.None,
                     )
                 }
             }
@@ -248,7 +265,7 @@ class ListensListRepositoryImpl(
         listenDao.unmarkListenForDeletion()
     }
 
-    override suspend fun deleteMarkedForDeletion(): ActionableResult {
+    override suspend fun deleteMarkedForDeletion(): Feedback {
         return try {
             val listensTimestampAndMsidMarkedForDeletion = listenDao.getListenTimestampAndMsidMarkedForDeletion()
             listensTimestampAndMsidMarkedForDeletion.forEach { listensTimestampAndMsid ->
@@ -259,18 +276,18 @@ class ListensListRepositoryImpl(
             }
             listenDao.deleteListens()
 
-            ActionableResult(
+            Feedback.Success(
                 message = "Deleted ${listensTimestampAndMsidMarkedForDeletion.size}.",
-                action = null,
             )
         } catch (ex: HandledException) {
-            ActionableResult(
+            Feedback.Error(
                 message = when {
                     ex.errorResolution == ErrorResolution.Login ->
                         "You do not have permission to delete this listen."
 
                     else -> ex.message ?: "Failed to delete listen."
                 },
+                errorResolution = ErrorResolution.None,
             )
         }
     }
