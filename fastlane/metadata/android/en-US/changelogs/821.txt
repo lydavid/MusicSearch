@@ -1,0 +1,4 @@
+
+### Features
+
+* show error snackbar when you try to link a listen to a non-recording UUID
