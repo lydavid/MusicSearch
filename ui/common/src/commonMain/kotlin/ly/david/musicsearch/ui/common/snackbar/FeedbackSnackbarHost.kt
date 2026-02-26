@@ -20,13 +20,10 @@ fun FeedbackSnackbarHost(snackbarHostState: SnackbarHostState) {
             content = {
                 Snackbar(
                     snackbarData = snackbarData,
-                    containerColor = when ((snackbarData.visuals as? FeedbackSnackbarVisuals)?.feedback) {
-                        is Feedback.Error -> MaterialTheme.colorScheme.error
-                        is Feedback.Success -> MaterialTheme.colorScheme.primary
-                        is Feedback.Loading,
-                        is Feedback.Actionable,
-                        null,
-                        -> SnackbarDefaults.color
+                    containerColor = when ((snackbarData.visuals as? FeedbackSnackbarVisuals<*>)?.feedback) {
+                        is Feedback.Error<*> -> MaterialTheme.colorScheme.error
+                        is Feedback.Success<*> -> MaterialTheme.colorScheme.primary
+                        else -> SnackbarDefaults.color
                     },
                 )
             },

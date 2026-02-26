@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
+import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -53,7 +54,7 @@ internal class ListensPresenter(
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
         val browseUsername by listenBrainzAuthStore.browseUsername.collectAsRetainedState("")
         var textFieldText by rememberSaveable { mutableStateOf("") }
-        var feedback by remember { mutableStateOf<Feedback?>(null) }
+        var feedback by remember { mutableStateOf<Feedback<ListensListFeedback>?>(null) }
         var markForDeletionActionableResult by remember { mutableStateOf<ActionableResult?>(null) }
 
         val lazyListState = rememberLazyListState()
@@ -203,7 +204,7 @@ internal data class ListensUiState(
     val listenBrainzUrl: String = "",
     val username: String = "",
     val textFieldText: String = "",
-    val feedback: Feedback? = null,
+    val feedback: Feedback<ListensListFeedback>? = null,
     val markForDeletionActionableResult: ActionableResult? = null,
     val totalCountOfListens: Long? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),

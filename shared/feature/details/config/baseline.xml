@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>CyclomaticComplexMethod:ArtistPresenter.kt$ArtistPresenter$@Composable override fun present(): ArtistUiState</ID>
-    <ID>CyclomaticComplexMethod:ReleaseGroupPresenter.kt$ReleaseGroupPresenter$@Composable override fun present(): ReleaseGroupUiState</ID>
-    <ID>CyclomaticComplexMethod:ReleasePresenter.kt$ReleasePresenter$@Composable override fun present(): ReleaseUiState</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

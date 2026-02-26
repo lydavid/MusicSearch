@@ -130,7 +130,7 @@ internal fun CollectionUi(
             try {
                 val snackbarResult = snackbarHostState.showSnackbar(
                     visuals = FeedbackSnackbarVisuals(
-                        message = feedback.message,
+                        message = feedback.data,
                         actionLabel = (feedback as? Feedback.Actionable)?.action?.name,
                         duration = SnackbarDuration.Short,
                         withDismissAction = false,
@@ -156,7 +156,7 @@ internal fun CollectionUi(
         LaunchedEffect(feedback) {
             val snackbarResult = snackbarHostState.showSnackbar(
                 visuals = FeedbackSnackbarVisuals(
-                    message = feedback.message,
+                    message = feedback.data,
                     actionLabel = (feedback as? Feedback.Error)?.action?.name,
                     duration = when (feedback) {
                         is Feedback.Loading -> SnackbarDuration.Indefinite

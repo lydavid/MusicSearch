@@ -125,14 +125,14 @@ class CollectionRepositoryImpl(
     override fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): Flow<Feedback> = flow {
+    ): Flow<Feedback<String>> = flow {
         collectionEntityDao.markDeletedFromCollection(
             collectionId = collection.id,
             collectableIds = collectableIds,
         )
         emit(
             Feedback.Actionable(
-                message = "Deleting ${collectableIds.size} from ${collection.name}.",
+                data = "Deleting ${collectableIds.size} from ${collection.name}.",
                 action = Action.Undo,
             ),
         )
@@ -142,7 +142,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
     }
 
-    override suspend fun deleteFromCollection(collection: CollectionListItemModel): Flow<Feedback> = flow {
+    override suspend fun deleteFromCollection(collection: CollectionListItemModel): Flow<Feedback<String>> = flow {
         emit(Feedback.Loading("..."))
 
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
@@ -159,7 +159,7 @@ class CollectionRepositoryImpl(
                 val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
                 emit(
                     Feedback.Error(
-                        message = userFacingError,
+                        data = userFacingError,
                         action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
                         errorResolution = ex.errorResolution,
                     ),
@@ -171,7 +171,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.deleteFromCollection(collectionId = collection.id)
         emit(
             Feedback.Success(
-                message = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
+                data = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
             ),
         )
     }

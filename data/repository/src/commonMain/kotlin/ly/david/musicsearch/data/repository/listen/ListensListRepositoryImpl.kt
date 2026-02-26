@@ -26,6 +26,7 @@ import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
@@ -149,7 +150,7 @@ class ListensListRepositoryImpl(
     override suspend fun submitManualMapping(
         recordingMessyBrainzId: String,
         rawRecordingMusicBrainzId: String,
-    ): Feedback {
+    ): Feedback<ListensListFeedback> {
         return try {
             val recordingId = rawRecordingMusicBrainzId.toUUID()
             listenBrainzApi.submitManualMapping(
@@ -160,16 +161,17 @@ class ListensListRepositoryImpl(
             refreshMapping(recordingMessyBrainzId = recordingMessyBrainzId)
         } catch (ex: IllegalArgumentException) {
             Feedback.Error(
-                message = "Invalid MusicBrainz ID: ${ex.message}",
+                data = ListensListFeedback.InvalidID(ex.message),
                 errorResolution = ErrorResolution.None,
             )
         } catch (ex: HandledException) {
             Feedback.Error(
-                message = when {
+                data = when {
                     ex.errorResolution == ErrorResolution.Login ->
-                        "You need to be logged in to submit manual mappings"
+                        ListensListFeedback.NeedToLogin
 
-                    else -> ex.message ?: "Failed to submit manual mapping"
+                    else -> ex.message?.let { ListensListFeedback.NetworkException(it) }
+                        ?: ListensListFeedback.FailToSubmitMapping
                 },
                 errorResolution = ErrorResolution.None,
             )
@@ -178,7 +180,7 @@ class ListensListRepositoryImpl(
 
     override suspend fun refreshMapping(
         recordingMessyBrainzId: String,
-    ): Feedback {
+    ): Feedback<ListensListFeedback> {
         return try {
             val manualMappingResponse = listenBrainzApi.getManualMapping(recordingMessyBrainzId)
             val recordingId = manualMappingResponse.mapping.recordingMbid
@@ -189,7 +191,9 @@ class ListensListRepositoryImpl(
             // This let us warn the user that they passed a UUID that does not match any recordings.
             if (recordingMetadata?.recording?.name == null) {
                 return Feedback.Error(
-                    message = "No recording with MusicBrainz ID $recordingId found",
+                    data = ListensListFeedback.NoRecording(
+                        id = recordingId,
+                    ),
                     errorResolution = ErrorResolution.None,
                 )
             }
@@ -215,27 +219,28 @@ class ListensListRepositoryImpl(
                 ),
             )
             Feedback.Success(
-                message = "Updated",
+                data = ListensListFeedback.Updated,
             )
         } catch (ex: HandledException) {
             when {
                 ex.errorResolution == ErrorResolution.Login -> {
                     Feedback.Error(
-                        message = "You need to be logged in to update this listen's mapping",
+                        data = ListensListFeedback.NeedToLogin,
                         errorResolution = ErrorResolution.None,
                     )
                 }
 
                 ex.errorType == ErrorType.NotFound -> {
                     Feedback.Error(
-                        message = "No manual mapping found for this listen",
+                        data = ListensListFeedback.NoManualMapping,
                         errorResolution = ErrorResolution.None,
                     )
                 }
 
                 else -> {
                     Feedback.Error(
-                        message = ex.message ?: "Unknown error",
+                        data = ex.message?.let { ListensListFeedback.NetworkException(it) }
+                            ?: ListensListFeedback.FailToRefreshMapping,
                         errorResolution = ErrorResolution.None,
                     )
                 }
@@ -265,7 +270,7 @@ class ListensListRepositoryImpl(
         listenDao.unmarkListenForDeletion()
     }
 
-    override suspend fun deleteMarkedForDeletion(): Feedback {
+    override suspend fun deleteMarkedForDeletion(): Feedback<ListensListFeedback> {
         return try {
             val listensTimestampAndMsidMarkedForDeletion = listenDao.getListenTimestampAndMsidMarkedForDeletion()
             listensTimestampAndMsidMarkedForDeletion.forEach { listensTimestampAndMsid ->
@@ -277,15 +282,18 @@ class ListensListRepositoryImpl(
             listenDao.deleteListens()
 
             Feedback.Success(
-                message = "Deleted ${listensTimestampAndMsidMarkedForDeletion.size}.",
+                data = ListensListFeedback.DeletedNumberOfListens(
+                    size = listensTimestampAndMsidMarkedForDeletion.size,
+                ),
             )
         } catch (ex: HandledException) {
             Feedback.Error(
-                message = when {
+                data = when {
                     ex.errorResolution == ErrorResolution.Login ->
-                        "You do not have permission to delete this listen."
+                        ListensListFeedback.NeedToLogin
 
-                    else -> ex.message ?: "Failed to delete listen."
+                    else -> ex.message?.let { ListensListFeedback.NetworkException(it) }
+                        ?: ListensListFeedback.FailToDeleteListen
                 },
                 errorResolution = ErrorResolution.None,
             )

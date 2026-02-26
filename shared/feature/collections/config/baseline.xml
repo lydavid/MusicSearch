@@ -1,7 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>CyclomaticComplexMethod:CollectionPresenter.kt$CollectionPresenter$@Composable override fun present(): CollectionUiState</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

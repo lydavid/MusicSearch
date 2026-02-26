@@ -29,7 +29,7 @@ interface CollectionRepository {
     fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): Flow<Feedback>
+    ): Flow<Feedback<String>>
 
     fun unMarkDeletedFromCollection(
         collectionId: String,
@@ -37,7 +37,7 @@ interface CollectionRepository {
 
     suspend fun deleteFromCollection(
         collection: CollectionListItemModel,
-    ): Flow<Feedback>
+    ): Flow<Feedback<String>>
 
     suspend fun addToCollection(
         collectionId: String,

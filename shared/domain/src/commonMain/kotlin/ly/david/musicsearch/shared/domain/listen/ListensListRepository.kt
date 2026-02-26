@@ -31,11 +31,11 @@ interface ListensListRepository {
     suspend fun submitManualMapping(
         recordingMessyBrainzId: String,
         rawRecordingMusicBrainzId: String,
-    ): Feedback
+    ): Feedback<ListensListFeedback>
 
     suspend fun refreshMapping(
         recordingMessyBrainzId: String,
-    ): Feedback
+    ): Feedback<ListensListFeedback>
 
     fun markListenForDeletion(
         listenedAtMs: Long,
@@ -46,5 +46,18 @@ interface ListensListRepository {
 
     fun unmarkListenForDeletion()
 
-    suspend fun deleteMarkedForDeletion(): Feedback
+    suspend fun deleteMarkedForDeletion(): Feedback<ListensListFeedback>
+}
+
+sealed interface ListensListFeedback {
+    data object Updated : ListensListFeedback
+    data class InvalidID(val message: String?) : ListensListFeedback
+    data object NeedToLogin : ListensListFeedback
+    data class NetworkException(val message: String) : ListensListFeedback
+    data object FailToSubmitMapping : ListensListFeedback
+    data class NoRecording(val id: String) : ListensListFeedback
+    data object NoManualMapping : ListensListFeedback
+    data object FailToRefreshMapping : ListensListFeedback
+    data object FailToDeleteListen : ListensListFeedback
+    data class DeletedNumberOfListens(val size: Int) : ListensListFeedback
 }

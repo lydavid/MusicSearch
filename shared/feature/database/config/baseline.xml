@@ -1,8 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>CyclomaticComplexMethod:AllEntitiesPresenter.kt$AllEntitiesPresenter$@Composable override fun present(): AllEntitiesUiState</ID>
-    <ID>CyclomaticComplexMethod:AllEntitiesUi.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun AllEntitiesUi( state: AllEntitiesUiState, modifier: Modifier = Modifier, )</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

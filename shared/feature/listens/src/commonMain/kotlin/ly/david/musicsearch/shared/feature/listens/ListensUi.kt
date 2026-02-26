@@ -39,6 +39,7 @@ import kotlinx.coroutines.CancellationException
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -58,9 +59,18 @@ import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.changeUsername
+import musicsearch.ui.common.generated.resources.deletedListens
 import musicsearch.ui.common.generated.resources.enterUsername
+import musicsearch.ui.common.generated.resources.failedToDeleteListen
+import musicsearch.ui.common.generated.resources.failedToRefreshMapping
+import musicsearch.ui.common.generated.resources.failedToSubmitMapping
+import musicsearch.ui.common.generated.resources.invalidMusicBrainzId
 import musicsearch.ui.common.generated.resources.listens
+import musicsearch.ui.common.generated.resources.needToLoginToDo
+import musicsearch.ui.common.generated.resources.noManualMapping
+import musicsearch.ui.common.generated.resources.noRecordingWithIdFound
 import musicsearch.ui.common.generated.resources.setAction
+import musicsearch.ui.common.generated.resources.updated
 import musicsearch.ui.common.generated.resources.username
 import musicsearch.ui.common.generated.resources.xListens
 import org.jetbrains.compose.resources.stringResource
@@ -201,10 +211,11 @@ internal fun ListensUi(
     }
 
     state.feedback?.let { feedback ->
+        val message = getMessage(feedback)
         LaunchedEffect(feedback) {
             snackbarHostState.showSnackbar(
                 visuals = FeedbackSnackbarVisuals(
-                    message = feedback.message,
+                    message = message,
                     actionLabel = (feedback as? Feedback.Actionable)?.action?.name,
                     duration = SnackbarDuration.Short,
                     withDismissAction = false,
@@ -266,6 +277,22 @@ internal fun ListensUi(
             selectedEntityFacet = selectedEntityFacet,
             lazyPagingItems = lazyPagingItems,
         )
+    }
+}
+
+@Composable
+private fun getMessage(feedback: Feedback<ListensListFeedback>): String {
+    return when (val data = feedback.data) {
+        ListensListFeedback.Updated -> stringResource(Res.string.updated)
+        is ListensListFeedback.InvalidID -> stringResource(Res.string.invalidMusicBrainzId, data.message.orEmpty())
+        ListensListFeedback.NeedToLogin -> stringResource(Res.string.needToLoginToDo)
+        is ListensListFeedback.NetworkException -> data.message
+        ListensListFeedback.FailToSubmitMapping -> stringResource(Res.string.failedToSubmitMapping)
+        is ListensListFeedback.NoRecording -> stringResource(Res.string.noRecordingWithIdFound)
+        ListensListFeedback.NoManualMapping -> stringResource(Res.string.noManualMapping)
+        ListensListFeedback.FailToRefreshMapping -> stringResource(Res.string.failedToRefreshMapping)
+        ListensListFeedback.FailToDeleteListen -> stringResource(Res.string.failedToDeleteListen)
+        is ListensListFeedback.DeletedNumberOfListens -> stringResource(Res.string.deletedListens, data.size)
     }
 }
 

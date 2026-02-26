@@ -20,6 +20,20 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun updated() {
+        snapshot {
+            PreviewListensUiUpdated()
+        }
+    }
+
+    @Test
+    fun needToLogin() {
+        snapshot {
+            PreviewListensUiNeedToLogin()
+        }
+    }
+
+    @Test
     fun noUsername() {
         snapshot {
             PreviewListensUiNoUsername()
