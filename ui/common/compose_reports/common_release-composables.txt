@@ -490,6 +490,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost(
+  stable snackbarHostState: SnackbarHostState
+)
 restartable skippable fun ly.david.musicsearch.ui.common.sort.SortMenuItem(
   <this>: OverflowMenuScope
   unstable sortOptions: List<T>

@@ -290,30 +290,31 @@ stable class ly.david.musicsearch.shared.domain.details.WorkDetailsModel {
   stable val urls: ImmutableList<RelationListItemModel>
   stable val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
+  stable val latestListensTimestampsMs: ImmutableList<Long>
   <runtime stability> = 
 }
-stable class ly.david.musicsearch.shared.domain.error.Feedback.Loading {
-  stable val message: String
+runtime class ly.david.musicsearch.shared.domain.error.Feedback.Loading {
+  runtime val data: T
   stable val time: Instant
-  <runtime stability> = Stable
+  <runtime stability> = Parameter(T)
 }
-stable class ly.david.musicsearch.shared.domain.error.Feedback.Success {
-  stable val message: String
+runtime class ly.david.musicsearch.shared.domain.error.Feedback.Success {
+  runtime val data: T
   stable val time: Instant
-  <runtime stability> = Stable
+  <runtime stability> = Parameter(T)
 }
-stable class ly.david.musicsearch.shared.domain.error.Feedback.Error {
-  stable val message: String
+runtime class ly.david.musicsearch.shared.domain.error.Feedback.Error {
+  runtime val data: T
   stable val errorResolution: ErrorResolution
   stable val action: Action?
   stable val time: Instant
-  <runtime stability> = Stable
+  <runtime stability> = Parameter(T)
 }
-stable class ly.david.musicsearch.shared.domain.error.Feedback.Actionable {
-  stable val message: String
+runtime class ly.david.musicsearch.shared.domain.error.Feedback.Actionable {
+  runtime val data: T
   stable val action: Action
   stable val time: Instant
-  <runtime stability> = Stable
+  <runtime stability> = Parameter(T)
 }
 stable class ly.david.musicsearch.shared.domain.error.ActionableResult {
   stable val message: String
@@ -498,6 +499,40 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenWithTrack {
   stable val trackNumber: String
   stable val trackName: String
   stable val listenedMs: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.Updated {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.InvalidID {
+  stable val message: String?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.NeedToLogin {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.NetworkException {
+  stable val message: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.FailToSubmitMapping {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.NoRecording {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.NoManualMapping {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.FailToRefreshMapping {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.FailToDeleteListen {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.DeletedNumberOfListens {
+  stable val size: Int
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.listen.ListenBrainzLoginState.InvalidToken {

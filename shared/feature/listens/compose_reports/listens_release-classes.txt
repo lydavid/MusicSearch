@@ -29,7 +29,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   stable val listenBrainzUrl: String
   stable val username: String
   stable val textFieldText: String
-  runtime val generalActionableResult: ActionableResult?
+  unstable val feedback: Feedback<ListensListFeedback>?
   runtime val markForDeletionActionableResult: ActionableResult?
   stable val totalCountOfListens: Long?
   stable val topAppBarFilterState: TopAppBarFilterState

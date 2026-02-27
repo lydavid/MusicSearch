@@ -37,6 +37,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.PreviewSeriesDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewUrlsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUiWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.LastListenedListItem(
+  stable lastListenedMs: Long
+  stable now: Instant
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.AliasListItem(
   alias: BasicAlias
   stable modifier: Modifier? = @static <expression>
@@ -151,10 +156,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.LastListenedListItem(
-  stable lastListenedMs: Long
-  stable now: Instant
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingUi(
   stable state: DetailsUiState<RecordingDetailsModel>
   stable modifier: Modifier? = @static <expression>
@@ -251,6 +252,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
+  stable onSeeAllListensClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
 )

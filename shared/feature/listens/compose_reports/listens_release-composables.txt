@@ -4,6 +4,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListenListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithRecordingFacet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiUpdated()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiNeedToLogin()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiNoUsername()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative()
@@ -42,6 +44,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: ListensUiState
   stable modifier: Modifier? = @static <expression>
 )
+fun ly.david.musicsearch.shared.feature.listens.getMessage(
+  unstable feedback: Feedback<ListensListFeedback>
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensContent(
   stable noUsernameSet: Boolean
   stable innerPadding: PaddingValues

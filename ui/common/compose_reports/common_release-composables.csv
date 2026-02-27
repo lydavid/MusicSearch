@@ -182,6 +182,7 @@ ly.david.musicsearch.ui.common.release.ReleaseListItem,ReleaseListItem,1,1,1,0,0
 ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem,ReleaseGroupListItem,1,1,1,0,0,0,1,0,2,8,
 ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit,RecordVisit,1,0,0,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.series.SeriesListItem,SeriesListItem,1,1,1,0,0,0,0,0,1,5,
+ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost,FeedbackSnackbarHost,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.sort.SortMenuItem,SortMenuItem,1,1,1,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.sort.SortOptionsBottomSheet,SortOptionsBottomSheet,1,1,1,0,0,0,1,0,2,3,
 ly.david.musicsearch.ui.common.sort.SortOptionsBottomSheetContent,SortOptionsBottomSheetContent,1,1,1,0,0,0,0,0,1,2,

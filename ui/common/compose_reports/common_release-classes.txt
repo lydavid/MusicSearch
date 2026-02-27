@@ -317,7 +317,7 @@ stable class ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals {
   stable val duration: SnackbarDuration
   stable val message: String
   stable val withDismissAction: Boolean
-  unstable val feedback: Feedback
+  unstable val feedback: Feedback<T>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.theme.ExtendedColors {
