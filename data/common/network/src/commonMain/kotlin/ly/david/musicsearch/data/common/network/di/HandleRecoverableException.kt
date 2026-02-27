@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.common.network.di
 
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.SendCountExceedException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.bodyAsText
 import io.ktor.client.statement.request
@@ -92,6 +93,13 @@ internal suspend fun handleRecoverableException(
                 }
             }
             throw handledException
+        }
+
+        is SendCountExceedException -> {
+            throw HandledException(
+                userMessage = "Request timed out.",
+                errorResolution = ErrorResolution.Retry,
+            )
         }
     }
     handleRecoverablePlatformException(exception)

@@ -9,6 +9,8 @@ actual fun handleRecoverablePlatformException(exception: Throwable) {
         is java.net.ConnectException,
         is java.net.UnknownHostException,
         is java.net.SocketTimeoutException,
+        is java.net.SocketException,
+        is okhttp3.internal.http2.StreamResetException,
         -> {
             throw HandledException(
                 userMessage = "Network error. Check your internet connection.",
