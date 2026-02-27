@@ -1,3 +1,5 @@
+@file:Suppress("Filename")
+
 package ly.david.musicsearch.shared
 
 import androidx.compose.ui.window.ComposeUIViewController

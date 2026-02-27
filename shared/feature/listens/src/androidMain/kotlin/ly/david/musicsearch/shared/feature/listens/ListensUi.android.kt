@@ -112,7 +112,7 @@ internal fun PreviewListensUiUpdated() {
                 state = listensUiState.copy(
                     feedback = Feedback.Success(
                         data = ListensListFeedback.Updated,
-                    )
+                    ),
                 ),
             )
         }
@@ -129,7 +129,7 @@ internal fun PreviewListensUiNeedToLogin() {
                     feedback = Feedback.Error(
                         data = ListensListFeedback.NeedToLogin,
                         errorResolution = ErrorResolution.None,
-                    )
+                    ),
                 ),
             )
         }
