@@ -10,7 +10,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.core.content.ContextCompat
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
@@ -60,8 +60,7 @@ internal class MainActivity : ComponentActivity() {
         setContent {
             val darkTheme = appPreferences.useDarkTheme()
 
-            // We call this again when our theme changes
-            DisposableEffect(darkTheme) {
+            LaunchedEffect(darkTheme) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
                         Color.TRANSPARENT,
@@ -72,7 +71,6 @@ internal class MainActivity : ComponentActivity() {
                         Color.TRANSPARENT,
                     ) { darkTheme },
                 )
-                onDispose {}
             }
 
             BaseTheme(
