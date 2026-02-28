@@ -104,9 +104,5 @@ fun MusicBrainzEntityType.getIcon(): ImageVector? {
         MusicBrainzEntityType.SERIES -> CustomIcons.List
         MusicBrainzEntityType.WORK -> CustomIcons.MusicNote
         MusicBrainzEntityType.URL -> CustomIcons.Link
-        else -> {
-            // No icons.
-            null
-        }
     }
 }
