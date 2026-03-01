@@ -1,0 +1,5 @@
+
+### Bug Fixes
+
+* don't crash on somewhat common exceptions
+* resolve memory leak
