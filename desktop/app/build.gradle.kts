@@ -3,7 +3,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     application
     alias(libs.plugins.aboutlibraries)
-    id("dev.hydraulic.conveyor") version "1.13"
+    id("dev.hydraulic.conveyor") version "2.0"
 }
 
 application {
