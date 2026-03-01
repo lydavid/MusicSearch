@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.feature.details.LastListenedListItem
+import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.component.ClickableItem

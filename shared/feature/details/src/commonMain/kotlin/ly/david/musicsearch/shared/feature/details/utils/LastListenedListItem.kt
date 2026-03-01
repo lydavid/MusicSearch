@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details
+package ly.david.musicsearch.shared.feature.details.utils
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
