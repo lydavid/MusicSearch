@@ -6,5 +6,7 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.15.0</string>
 </dict>
 </plist>
