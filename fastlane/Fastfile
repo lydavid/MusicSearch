@@ -46,7 +46,8 @@ platform :ios do
       submit_for_review: false,
       automatic_release: true,
       phased_release: true,
-      precheck_include_in_app_purchases: false
+      precheck_include_in_app_purchases: false,
+      overwrite_screenshots: true
     )
   end
 end
