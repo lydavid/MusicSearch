@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* include UUID in the no recording found error message
