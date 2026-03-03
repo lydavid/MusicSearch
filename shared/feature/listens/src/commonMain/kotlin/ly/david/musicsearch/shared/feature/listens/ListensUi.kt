@@ -288,7 +288,7 @@ private fun getMessage(feedback: Feedback<ListensListFeedback>): String {
         ListensListFeedback.NeedToLogin -> stringResource(Res.string.needToLoginToDo)
         is ListensListFeedback.NetworkException -> data.message
         ListensListFeedback.FailToSubmitMapping -> stringResource(Res.string.failedToSubmitMapping)
-        is ListensListFeedback.NoRecording -> stringResource(Res.string.noRecordingWithIdFound)
+        is ListensListFeedback.NoRecording -> stringResource(Res.string.noRecordingWithIdFound, data.id)
         ListensListFeedback.NoManualMapping -> stringResource(Res.string.noManualMapping)
         ListensListFeedback.FailToRefreshMapping -> stringResource(Res.string.failedToRefreshMapping)
         ListensListFeedback.FailToDeleteListen -> stringResource(Res.string.failedToDeleteListen)
