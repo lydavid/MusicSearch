@@ -66,11 +66,13 @@ data class TrackMetadata(
  * @param origin_url May be null if submitted through listenbrainz web.
  * @param artist_names All actual artist names.
  * @param release_artist_names All artist names on the release, may be "Various Artist".
+ * @param release_mbid The id submitted, which may be more accurate than the mapped release id.
  */
 @Suppress("ConstructorParameterNaming")
 @Serializable
 data class AdditionalInfo(
     val duration_ms: Long? = null,
+    val release_mbid: String? = null,
     val media_player: String? = null,
     val submission_client: String? = null,
 
@@ -165,7 +167,7 @@ fun GetListensResponse.asListOfListens(): List<Listen> {
                 durationMs = durationMs,
                 caaId = mbidMapping?.caa_id,
                 caaReleaseMbid = mbidMapping?.caa_release_mbid,
-                releaseMbid = mbidMapping?.release_mbid,
+                releaseMbid = additionalInfo?.release_mbid ?: mbidMapping?.release_mbid,
                 releaseName = trackMetadata.release_name,
                 artistCredits = mbidMapping?.artists?.map { artist ->
                     ArtistCreditUiModel(
