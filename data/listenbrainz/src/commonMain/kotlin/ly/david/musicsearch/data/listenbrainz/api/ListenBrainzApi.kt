@@ -32,7 +32,7 @@ interface ListenBrainzApi {
         username: String,
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
-    ): ListensResponse
+    ): GetListensResponse
 
     suspend fun submitManualMapping(
         recordingMessyBrainzId: String,
@@ -111,7 +111,7 @@ class ListenBrainzApiImpl(
         username: String,
         minTimestamp: Long?,
         maxTimestamp: Long?,
-    ): ListensResponse {
+    ): GetListensResponse {
         require(!(minTimestamp != null && maxTimestamp != null)) {
             "minTimestamp and maxTimestamp cannot both be set"
         }

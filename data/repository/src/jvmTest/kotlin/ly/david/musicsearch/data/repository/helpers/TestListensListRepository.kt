@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository.helpers
 
 import kotlinx.coroutines.test.TestScope
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
-import ly.david.musicsearch.data.listenbrainz.api.ListensResponse
+import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.ManualMappingResponse
 import ly.david.musicsearch.data.listenbrainz.api.RecordingMetadata
 import ly.david.musicsearch.data.listenbrainz.api.TokenValidationResponse
@@ -17,7 +17,7 @@ interface TestListensListRepository {
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createListensListRepository(
-        response: ListensResponse,
+        response: GetListensResponse,
     ): ListensListRepository {
         return ListensListRepositoryImpl(
             listenDao = listenDao,
@@ -30,7 +30,7 @@ interface TestListensListRepository {
                     username: String,
                     minTimestamp: Long?,
                     maxTimestamp: Long?,
-                ): ListensResponse {
+                ): GetListensResponse {
                     return response
                 }
 

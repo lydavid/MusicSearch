@@ -24,7 +24,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzListen
-import ly.david.musicsearch.data.listenbrainz.api.ListensResponse
+import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
@@ -579,7 +579,7 @@ class RecordingsListRepositoryImplTest :
         )
 
         val listensListRepository = createListensListRepository(
-            response = ListensResponse(
+            response = GetListensResponse(
                 payload = Payload(
                     latest_listen_ts = 1755101240L,
                     oldest_listen_ts = 1755101240L,

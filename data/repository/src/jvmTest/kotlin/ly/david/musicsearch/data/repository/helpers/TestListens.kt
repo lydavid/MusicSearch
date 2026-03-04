@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
+import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzListen
-import ly.david.musicsearch.data.listenbrainz.api.ListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
@@ -23,7 +23,7 @@ const val track5ListenedAtMs = track5ListenedAtS * 1000
 const val track6ListenedAtS = 1755100629L
 const val track6ListenedAtMs = track6ListenedAtS * 1000
 
-val testListens = ListensResponse(
+val testListens = GetListensResponse(
     payload = Payload(
         latest_listen_ts = track1ListenedAtS,
         oldest_listen_ts = track4ListenedAtS,

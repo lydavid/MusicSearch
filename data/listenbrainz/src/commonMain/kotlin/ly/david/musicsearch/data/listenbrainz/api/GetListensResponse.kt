@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listen.Listen
 
 @Serializable
-data class ListensResponse(
+data class GetListensResponse(
     val payload: Payload,
 )
 
@@ -136,7 +136,7 @@ data class ListenBrainzArtist(
 //    val release_name: String?,
 // )
 
-fun ListensResponse.asListOfListens(): List<Listen> {
+fun GetListensResponse.asListOfListens(): List<Listen> {
     return payload.listens.map { listen ->
         val trackMetadata = listen.track_metadata
         val mbidMapping = trackMetadata.mbid_mapping
