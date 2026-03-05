@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* prefer MusicBrainz release ID that was submitted if it exists over the automatically linked release ID because it is usually more accurate
