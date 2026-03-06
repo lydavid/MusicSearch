@@ -38,10 +38,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewUrlsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUiWithListens()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.LastListenedListItem(
-  stable lastListenedMs: Long
-  stable now: Instant
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.AliasListItem(
   alias: BasicAlias
   stable modifier: Modifier? = @static <expression>
@@ -246,6 +242,10 @@ restartable skippable fun ly.david.musicsearch.shared.feature.details.utils.Deta
   stable onImageClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem(
+  stable lastListenedMs: Long
+  stable now: Instant
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi(
   work: WorkDetailsModel
