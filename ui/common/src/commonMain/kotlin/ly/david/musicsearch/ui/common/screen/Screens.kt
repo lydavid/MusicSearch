@@ -4,6 +4,7 @@ import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.parcelize.Parcelize
@@ -97,4 +98,9 @@ data object SpotifyHistoryScreen : Screen
 @Parcelize
 data class ListensScreen(
     val entityFacet: MusicBrainzEntity? = null,
+) : Screen
+
+@Parcelize
+data class SubmitListenScreen(
+    val submitListenType: SubmitListenType,
 ) : Screen

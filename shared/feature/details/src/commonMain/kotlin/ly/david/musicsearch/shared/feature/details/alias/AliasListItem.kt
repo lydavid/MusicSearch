@@ -14,6 +14,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
@@ -50,7 +51,7 @@ fun AliasListItem(
                     alias.getLifeSpanForDisplay().takeIf { it.isNotEmpty() },
                     displayLanguage.takeIf { it.isNotEmpty() },
                     stringResource(Res.string.primary).takeIf { alias.isPrimary },
-                ).joinToString("・")
+                ).joinToString(DOT_SEPARATOR)
                 typeAndLifeSpan.ifNotEmpty { typeAndLifeSpan ->
                     Text(
                         text = buildAnnotatedString {

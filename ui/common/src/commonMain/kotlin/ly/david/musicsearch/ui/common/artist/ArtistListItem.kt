@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
@@ -69,7 +70,7 @@ fun ArtistListItem(
                 val countryAndLifeSpan = listOfNotNull(
                     artist.countryCode.takeIf { it.isNotEmpty() }?.let { "${it.toFlagEmoji()} $it" },
                     artist.lifeSpan.getLifeSpanForDisplay().takeIf { it.isNotEmpty() },
-                ).joinToString("・")
+                ).joinToString(DOT_SEPARATOR)
                 if (countryAndLifeSpan.isNotEmpty()) {
                     Text(
                         text = countryAndLifeSpan,

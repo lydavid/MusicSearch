@@ -4,7 +4,7 @@ import app.cash.paging.Pager
 import app.cash.paging.insertSeparators
 import app.cash.paging.map
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
@@ -38,8 +38,8 @@ class NowPlayingHistoryRepositoryImpl(
         before: NowPlayingHistoryListItemModel?,
         after: NowPlayingHistoryListItemModel?,
     ): ListSeparator? {
-        val beforeDate = before?.lastPlayed?.getDateFormatted()
-        val afterDate = after?.lastPlayed?.getDateFormatted()
+        val beforeDate = before?.lastPlayed?.getFullDateFormatted()
+        val afterDate = after?.lastPlayed?.getFullDateFormatted()
         return if (beforeDate != afterDate && afterDate != null) {
             ListSeparator(
                 id = afterDate,

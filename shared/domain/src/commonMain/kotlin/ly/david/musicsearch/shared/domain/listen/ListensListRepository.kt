@@ -47,6 +47,10 @@ interface ListensListRepository {
     fun unmarkListenForDeletion()
 
     suspend fun deleteMarkedForDeletion(): Feedback<ListensListFeedback>
+
+    suspend fun submitListens(
+        listenSubmissions: List<ListenSubmission>,
+    ): Feedback<ListensListFeedback>
 }
 
 sealed interface ListensListFeedback {
@@ -60,4 +64,6 @@ sealed interface ListensListFeedback {
     data object FailToRefreshMapping : ListensListFeedback
     data object FailToDeleteListen : ListensListFeedback
     data class DeletedNumberOfListens(val size: Int) : ListensListFeedback
+//    data object SubmittedListens : ListensListFeedback
+//    data object FailToSubmitListens : ListensListFeedback
 }

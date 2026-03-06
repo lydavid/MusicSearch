@@ -22,6 +22,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
@@ -46,11 +47,18 @@ import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
+
+// TODO: content
+//  recording: submit finished now, start now, or a custom time
+
+// TODO: one screen that can be in recording or release state? I'm thinking one screen because these share the same submit api
+//  or if they are different screen, they should reuse this api by passing different info
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -193,6 +201,25 @@ internal fun RecordingUi(
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                     )
+
+                    val recordingDetailsModel = state.detailsModel
+                    if (recordingDetailsModel != null) {
+                        SubmitListenMenuItem(
+                            submitListenType = SubmitListenType.Track(
+                                name = recordingDetailsModel.name,
+                                disambiguation = recordingDetailsModel.disambiguation,
+                                aliases = recordingDetailsModel.aliases,
+                                recordingId = recordingDetailsModel.id,
+                                lengthMilliseconds = recordingDetailsModel.length,
+                                // prefer to get it from details model, as the id can change after a fetch
+                                artists = recordingDetailsModel.artistCredits,
+                                releaseName = null,
+                            ),
+                            overlayHost = overlayHost,
+                            coroutineScope = coroutineScope,
+                        )
+                    }
+
                     CopyToClipboardMenuItem(entityId)
                     when (
                         val sortOption =

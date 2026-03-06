@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.Identifiable
-import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
@@ -23,7 +23,7 @@ private val listens = MutableStateFlow(
         data = listOf(
             ListSeparator(
                 id = 1755655177000.toString(),
-                text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
+                text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
             ),
             ListenListItemModel(
                 listenedAtMs = 1755655177000,
@@ -73,7 +73,7 @@ internal fun PreviewListensUiWithRecordingFacet() {
                     data = listOf(
                         ListSeparator(
                             id = 1755655177000.toString(),
-                            text = Instant.fromEpochMilliseconds(1755655177000).getDateFormatted(),
+                            text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
                         ),
                         ListenListItemModel(
                             listenedAtMs = 1755645177000,

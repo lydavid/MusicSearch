@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.common.toUUID
 import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
@@ -26,6 +26,7 @@ import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -114,8 +115,8 @@ class ListensListRepositoryImpl(
     ): ListSeparator? {
         if (after == null) return null
 
-        val beforeDate = before?.listenedAt?.getDateFormatted()
-        val afterDate = after.listenedAt.getDateFormatted()
+        val beforeDate = before?.listenedAt?.getFullDateFormatted()
+        val afterDate = after.listenedAt.getFullDateFormatted()
 
         if (beforeDate == afterDate) return null
 
@@ -172,6 +173,32 @@ class ListensListRepositoryImpl(
 
                     else -> ex.message?.let { ListensListFeedback.NetworkException(it) }
                         ?: ListensListFeedback.FailToSubmitMapping
+                },
+                errorResolution = ErrorResolution.None,
+            )
+        }
+    }
+
+    override suspend fun submitListens(
+        listenSubmissions: List<ListenSubmission>,
+    ): Feedback<ListensListFeedback> {
+        return try {
+            listenBrainzApi.submitListens(
+                listenSubmissions = listenSubmissions,
+            )
+            // TODO: change state
+            Feedback.Success(
+                data = ListensListFeedback.Updated,
+            )
+        } catch (ex: HandledException) {
+            Feedback.Error(
+                data = when {
+                    ex.errorResolution == ErrorResolution.Login ->
+                        ListensListFeedback.NeedToLogin
+
+                    // TODO: change state
+                    else -> ex.message?.let { ListensListFeedback.NetworkException(it) }
+                        ?: ListensListFeedback.Updated
                 },
                 errorResolution = ErrorResolution.None,
             )
