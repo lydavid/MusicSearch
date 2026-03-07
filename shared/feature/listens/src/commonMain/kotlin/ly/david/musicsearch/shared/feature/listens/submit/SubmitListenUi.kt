@@ -45,6 +45,7 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
+import ly.david.musicsearch.shared.domain.SECONDS_IN_DAY
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
@@ -70,6 +71,8 @@ internal fun SubmitListenUi(
     val eventSink = state.eventSink
     val timestampIsStartTime = state.timestampIsStartTime
     val isCustomTime = state.isCustomTime
+    val dateTimestampSeconds = state.dateTimestampSeconds
+    val timeTimestampSeconds = state.timeTimestampSeconds
 
     LaunchedEffect(Unit) {
         eventSink(SubmitListenUiEvent.UpdateTimestampsToNow)
@@ -94,8 +97,7 @@ internal fun SubmitListenUi(
             style = TextStyles.getHeaderTextStyle(),
         )
 
-        val type = state.submitListenType
-        when (type) {
+        when (val type = state.submitListenType) {
             is SubmitListenType.Track -> {
                 Text(
                     text = buildAnnotatedString {
@@ -120,11 +122,25 @@ internal fun SubmitListenUi(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
 
-                val dateInstant = Instant.fromEpochSeconds(state.dateTimestampSeconds + state.timeTimestampSeconds)
+//                val adjustedSeconds = state.dateTimestampSeconds + state.timeTimestampSeconds -
+//                    if (state.timestampIsStartTime) {
+//                        0
+//                    } else {
+//                        (state.listenType.lengthMilliseconds ?: 0) / MS_IN_SECOND
+//                    }
+
+
+                val timeInstant = Instant.fromEpochSeconds(timeTimestampSeconds)
+                val time = timeInstant.getTimeFormatted(inUtc = false)
+
+                // TODO: past 7pm, combining date + time will push the date to the next day
+                //  before, it will not
+                val dateInstant = Instant.fromEpochSeconds(dateTimestampSeconds)
                 val shortDate = dateInstant.getShortDateFormatted(inUtc = false)
 
-                val timeInstant = Instant.fromEpochSeconds(state.timeTimestampSeconds)
-                val time = timeInstant.getTimeFormatted(inUtc = false)
+
+                println("findme: timeTimestampSeconds=$timeTimestampSeconds")
+                println("findme: dateTimestampSeconds=$dateTimestampSeconds")
 
                 Text(
                     text = "$shortDate$DOT_SEPARATOR$time",
@@ -182,7 +198,8 @@ internal fun SubmitListenUi(
 
         if (isCustomTime) {
             DatePickerField(
-                dateTimeStampSeconds = state.dateTimestampSeconds,
+                dateTimestampSeconds = dateTimestampSeconds,
+                timeTimestampSeconds = timeTimestampSeconds,
                 onSelectDate = {
                     eventSink(SubmitListenUiEvent.UpdateDateTimestamp(it))
                 },
@@ -190,7 +207,7 @@ internal fun SubmitListenUi(
             )
 
             TimePickerField(
-                timeTimestampSeconds = state.timeTimestampSeconds,
+                timeTimestampSeconds = timeTimestampSeconds,
                 onSelectTime = {
                     eventSink(SubmitListenUiEvent.UpdateTimeTimestamp(it))
                 },
@@ -218,15 +235,19 @@ internal fun SubmitListenUi(
     }
 }
 
+/**
+ * Modified from https://developer.android.com/develop/ui/compose/components/datepickers.
+ */
 @Composable
 internal fun DatePickerField(
-    dateTimeStampSeconds: Long,
+    dateTimestampSeconds: Long,
+    timeTimestampSeconds: Long,
     modifier: Modifier = Modifier,
     onSelectDate: (dateSeconds: Long) -> Unit,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val formattedDate = Instant.fromEpochSeconds(dateTimeStampSeconds).getShortDateFormatted(inUtc = true)
+    val formattedDate = Instant.fromEpochSeconds(dateTimestampSeconds).getShortDateFormatted(inUtc = false)
     OutlinedTextField(
         value = formattedDate,
         onValueChange = { },
@@ -237,11 +258,8 @@ internal fun DatePickerField(
         readOnly = false,
         modifier = modifier
             .fillMaxWidth()
-            .pointerInput(dateTimeStampSeconds) {
+            .pointerInput(dateTimestampSeconds) {
                 awaitEachGesture {
-                    // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
-                    // in the Initial pass to observe events before the text field consumes them
-                    // in the Main pass.
                     awaitFirstDown(pass = PointerEventPass.Initial)
                     val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
                     if (upEvent != null) {
@@ -253,7 +271,7 @@ internal fun DatePickerField(
 
     if (showDialog) {
         DatePickerDialog(
-            dateTimeStampSeconds = dateTimeStampSeconds,
+            dateTimeStampSeconds = dateTimestampSeconds,
             onSelectDate = onSelectDate,
             onDismiss = { showDialog = false },
         )
@@ -268,7 +286,11 @@ private fun DatePickerDialog(
     onDismiss: () -> Unit,
 ) {
     // This is in UTC.
-    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = dateTimeStampSeconds * MS_IN_SECOND)
+    val dateTimeUTC = Instant.fromEpochSeconds(dateTimeStampSeconds)
+        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .toInstant(TimeZone.UTC)
+        .toEpochMilliseconds()
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = dateTimeUTC)//dateTimeStampSeconds * MS_IN_SECOND)
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
@@ -313,17 +335,6 @@ internal fun TimePickerField(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-
-//
-//    LaunchedEffect(state.timeTimestampSeconds) {
-//        timePickerState.hour = (state.timeTimestampSeconds / 60 / 60).toInt()
-//        timePickerState.minute = (state.timeTimestampSeconds / 60 % 60).toInt()
-//    }
-
-//    TimeInput(
-//        state = timePickerState,
-//    )
-
     val formattedTime = Instant.fromEpochSeconds(timeTimestampSeconds).getTimeFormatted(inUtc = false)
     OutlinedTextField(
         value = formattedTime,
@@ -337,9 +348,6 @@ internal fun TimePickerField(
             .fillMaxWidth()
             .pointerInput(timeTimestampSeconds) {
                 awaitEachGesture {
-                    // Modifier.clickable doesn't work for text fields, so we use Modifier.pointerInput
-                    // in the Initial pass to observe events before the text field consumes them
-                    // in the Main pass.
                     awaitFirstDown(pass = PointerEventPass.Initial)
                     val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
                     if (upEvent != null) {
@@ -359,8 +367,6 @@ internal fun TimePickerField(
     }
 }
 
-// TODO: user should pick time in local time, but the output should be in utc
-//  all user-facing displays will display in local time
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun TimePickerDialog(
@@ -369,13 +375,16 @@ private fun TimePickerDialog(
     onDismiss: () -> Unit,
     onSelectTime: (timeSeconds: Long) -> Unit,
 ) {
-    val timeSecondsUTC = Instant.fromEpochSeconds(timeTimestampSeconds)
+    val epochSecondsUTC = Instant.fromEpochSeconds(timeTimestampSeconds)
         .toLocalDateTime(TimeZone.currentSystemDefault())
         .toInstant(TimeZone.UTC)
         .toEpochMilliseconds() / MS_IN_SECOND
+    val nonNegativeEpochSecondsUTC = (epochSecondsUTC + SECONDS_IN_DAY) % SECONDS_IN_DAY
+    val initialHour = (nonNegativeEpochSecondsUTC / 60 / 60).toInt()
+    val initialMinute = (nonNegativeEpochSecondsUTC / 60 % 60).toInt()
     val timePickerState = rememberTimePickerState(
-        initialHour = (timeSecondsUTC / 60 / 60).toInt(),
-        initialMinute = (timeSecondsUTC / 60 % 60).toInt(),
+        initialHour = initialHour,
+        initialMinute = initialMinute,
     )
 
     Dialog(
@@ -409,7 +418,7 @@ private fun TimePickerDialog(
                                 .toInstant(TimeZone.currentSystemDefault())
                                 .toEpochMilliseconds() / MS_IN_SECOND
                             onSelectTime(
-                                timeSecondsLocal
+                                timeSecondsLocal % SECONDS_IN_DAY
                             )
                             onDismiss()
                         },
