@@ -119,6 +119,7 @@ internal class SubmitListenPresenter(
             dateTimeEpochSeconds = dateTimeEpochSeconds,
             timestampIsStartTime = timestampIsStartTime,
             useCustomTime = useCustomTime,
+            // This style is required for presenter tests, or we get KotlinReflectionInternalError
             eventSink = { event -> eventSink(event) },
         )
     }

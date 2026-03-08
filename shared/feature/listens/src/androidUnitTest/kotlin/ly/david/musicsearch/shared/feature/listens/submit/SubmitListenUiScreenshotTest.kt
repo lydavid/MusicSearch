@@ -11,4 +11,32 @@ class SubmitListenUiScreenshotTest : ScreenshotTest() {
             PreviewSubmitListenUiStartedCustomLocal()
         }
     }
+
+    @Test
+    fun startedCustomUTC() {
+        snapshot {
+            PreviewSubmitListenUiStartedCustomUTC()
+        }
+    }
+
+    @Test
+    fun startedNowLocal() {
+        snapshot {
+            PreviewSubmitListenUiStartedNowLocal()
+        }
+    }
+
+    @Test
+    fun startedNowUTC() {
+        snapshot {
+            PreviewSubmitListenUiStartedNowUTC()
+        }
+    }
+
+    @Test
+    fun finished() {
+        snapshot {
+            PreviewSubmitListenUiFinished()
+        }
+    }
 }

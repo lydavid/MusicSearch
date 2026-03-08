@@ -32,6 +32,8 @@ import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.SECONDS_IN_DAY
+import ly.david.musicsearch.shared.domain.SECONDS_IN_HOUR
+import ly.david.musicsearch.shared.domain.SECONDS_IN_MINUTE
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -97,8 +99,8 @@ private fun TimePickerDialog(
         .toInstant(TimeZone.UTC)
         .toEpochSeconds()
     val nonNegativeEpochSecondsUTC = (epochSecondsUTC + SECONDS_IN_DAY) % SECONDS_IN_DAY
-    val initialHour = (nonNegativeEpochSecondsUTC / 60 / 60).toInt()
-    val initialMinute = (nonNegativeEpochSecondsUTC / 60 % 60).toInt()
+    val initialHour = (nonNegativeEpochSecondsUTC / SECONDS_IN_HOUR).toInt()
+    val initialMinute = (nonNegativeEpochSecondsUTC / SECONDS_IN_MINUTE % SECONDS_IN_MINUTE).toInt()
     val timePickerState = rememberTimePickerState(
         initialHour = initialHour,
         initialMinute = initialMinute,

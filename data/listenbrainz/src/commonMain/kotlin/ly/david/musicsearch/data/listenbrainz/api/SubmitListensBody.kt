@@ -63,6 +63,6 @@ internal fun ListenSubmission.toListenBrainzListenSubmission() = SubmitListensBo
             recordingMbid = recordingMbid,
             durationMs = durationMs,
             // TODO: submit submission client/version if user opts into this option
-        )
-    )
+        ),
+    ),
 )

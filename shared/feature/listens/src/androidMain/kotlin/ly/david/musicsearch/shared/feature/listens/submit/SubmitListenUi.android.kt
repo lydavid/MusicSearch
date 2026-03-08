@@ -47,7 +47,6 @@ internal fun PreviewSubmitListenUiStartedCustomLocal() {
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
                     dateTimeEpochSeconds = 86400,
-//                    timeEpochSeconds = 0,//18000,
                     useCustomTime = true,
                     eventSink = {},
                 ),
@@ -65,8 +64,8 @@ internal fun PreviewSubmitListenUiStartedCustomUTC() {
             SubmitListenUi(
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
+                    // a new day in UTC, but not in Toronto time
                     dateTimeEpochSeconds = 86400,
-//                    timeEpochSeconds = 0,//18000,
                     useCustomTime = true,
                     eventSink = {},
                 ),
@@ -78,17 +77,34 @@ internal fun PreviewSubmitListenUiStartedCustomUTC() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewSubmitListenUiStarted() {
+internal fun PreviewSubmitListenUiStartedNowLocal() {
     PreviewTheme {
         Surface {
             SubmitListenUi(
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
-                    dateTimeEpochSeconds = 1772841600,
-//                    timeEpochSeconds = 5484,
+                    // a new day in Paris, but not in UTC
+                    dateTimeEpochSeconds = 86400 - 3600,
                     eventSink = {},
                 ),
-                timeZone = TimeZone.of("America/Toronto"),
+                timeZone = TimeZone.of("Europe/Paris"),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSubmitListenUiStartedNowUTC() {
+    PreviewTheme {
+        Surface {
+            SubmitListenUi(
+                state = SubmitListenUiState(
+                    submitListenType = submitListenType,
+                    dateTimeEpochSeconds = 86400 - 3600,
+                    eventSink = {},
+                ),
+                timeZone = TimeZone.UTC,
             )
         }
     }
@@ -103,7 +119,6 @@ internal fun PreviewSubmitListenUiFinished() {
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
                     dateTimeEpochSeconds = 1772841600,
-//                    timeEpochSeconds = 5484,
                     timestampIsStartTime = false,
                     eventSink = {},
                 ),
