@@ -4,6 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 
+/**
+ * https://listenbrainz.readthedocs.io/en/latest/users/json.html#submission-json
+ */
 @Serializable
 data class SubmitListensBody(
     @SerialName("listen_type")

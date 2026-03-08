@@ -1,0 +1,14 @@
+package ly.david.musicsearch.shared.feature.listens.submit
+
+import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
+import org.junit.Test
+
+class SubmitListenUiScreenshotTest : ScreenshotTest() {
+
+    @Test
+    fun startedCustomLocal() {
+        snapshot {
+            PreviewSubmitListenUiStartedCustomLocal()
+        }
+    }
+}

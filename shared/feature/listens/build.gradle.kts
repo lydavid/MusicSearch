@@ -43,6 +43,7 @@ kotlin {
                 implementation(libs.circuit.test)
                 implementation(libs.robolectric)
                 implementation(libs.androidx.paging.testing)
+                implementation(libs.mockk)
             }
         }
     }

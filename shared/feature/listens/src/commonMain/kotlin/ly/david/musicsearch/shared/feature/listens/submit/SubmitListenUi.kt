@@ -13,17 +13,14 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
 import kotlinx.datetime.TimeZone
 import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
-import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
@@ -45,23 +42,8 @@ internal fun SubmitListenUi(
 ) {
     val eventSink = state.eventSink
     val timestampIsStartTime = state.timestampIsStartTime
-    val isCustomTime = state.isCustomTime
-//    val dateEpochSeconds = state.dateEpochSeconds
-//    val timeEpochSeconds = state.timeEpochSeconds
+    val useCustomTime = state.useCustomTime
     val dateTimeEpochSeconds = state.dateTimeEpochSeconds
-
-    LaunchedEffect(Unit) {
-        eventSink(SubmitListenUiEvent.UpdateTimestampsToNow)
-    }
-
-    LaunchedEffect(isCustomTime) {
-        if (!isCustomTime) {
-            while (true) {
-                eventSink(SubmitListenUiEvent.UpdateTimestampsToNow)
-                delay(MS_IN_SECOND.toLong())
-            }
-        }
-    }
 
     Column(
         modifier = modifier
@@ -102,11 +84,11 @@ internal fun SubmitListenUi(
 
                 val time = instant.getTimeFormatted(timeZone = timeZone)
 
-                // TODO: past 7pm, combining date + time will push the date to the next day
+                // TODO: test: past 7pm, combining date + time will push the date to the next day
                 //  before, it will not
-                //  splitting date and time will also mess up during daylight saving
                 val shortDate = instant.getShortDateFormatted(timeZone = timeZone)
 
+                // TODO: offset when finished is selected
                 Text(
                     text = "$shortDate$DOT_SEPARATOR$time",
                     modifier = Modifier.padding(top = 4.dp),
@@ -123,7 +105,7 @@ internal fun SubmitListenUi(
                     index = 0,
                     count = 2,
                 ),
-                onClick = { eventSink(SubmitListenUiEvent.UpdateTimestampIsStartTime(true)) },
+                onClick = { eventSink(SubmitListenUiEvent.UpdateDateTimeIsStartTime(true)) },
                 selected = timestampIsStartTime,
                 label = { Text("Started") },
             )
@@ -132,7 +114,7 @@ internal fun SubmitListenUi(
                     index = 1,
                     count = 2,
                 ),
-                onClick = { eventSink(SubmitListenUiEvent.UpdateTimestampIsStartTime(false)) },
+                onClick = { eventSink(SubmitListenUiEvent.UpdateDateTimeIsStartTime(false)) },
                 selected = !timestampIsStartTime,
                 label = { Text("Finished") },
             )
@@ -146,8 +128,8 @@ internal fun SubmitListenUi(
                     index = 0,
                     count = 2,
                 ),
-                onClick = { eventSink(SubmitListenUiEvent.UpdateIsCustomTime(false)) },
-                selected = !isCustomTime,
+                onClick = { eventSink(SubmitListenUiEvent.UpdateUseCustomTime(false)) },
+                selected = !useCustomTime,
                 label = { Text("Now") },
             )
             SegmentedButton(
@@ -155,15 +137,15 @@ internal fun SubmitListenUi(
                     index = 1,
                     count = 2,
                 ),
-                onClick = { eventSink(SubmitListenUiEvent.UpdateIsCustomTime(true)) },
-                selected = isCustomTime,
+                onClick = { eventSink(SubmitListenUiEvent.UpdateUseCustomTime(true)) },
+                selected = useCustomTime,
                 label = { Text("Custom") },
             )
         }
 
-        if (isCustomTime) {
+        if (useCustomTime) {
             DatePickerField(
-                dateAndTimeEpochSeconds = dateTimeEpochSeconds,
+                dateTimeEpochSeconds = dateTimeEpochSeconds,
                 timeZone = timeZone,
                 modifier = Modifier.padding(top = 8.dp),
                 onSelectDate = {

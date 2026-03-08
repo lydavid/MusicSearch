@@ -38,14 +38,14 @@ import kotlin.time.Instant
  */
 @Composable
 internal fun DatePickerField(
-    dateAndTimeEpochSeconds: Long,
+    dateTimeEpochSeconds: Long,
     timeZone: TimeZone,
     modifier: Modifier = Modifier,
     onSelectDate: (dateSeconds: Long) -> Unit,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val formattedDate = Instant.fromEpochSeconds(dateAndTimeEpochSeconds).getShortDateFormatted(timeZone = timeZone)
+    val formattedDate = Instant.fromEpochSeconds(dateTimeEpochSeconds).getShortDateFormatted(timeZone = timeZone)
     OutlinedTextField(
         value = formattedDate,
         onValueChange = { },
@@ -56,7 +56,7 @@ internal fun DatePickerField(
         readOnly = false,
         modifier = modifier
             .fillMaxWidth()
-            .pointerInput(dateAndTimeEpochSeconds) {
+            .pointerInput(dateTimeEpochSeconds) {
                 awaitEachGesture {
                     awaitFirstDown(pass = PointerEventPass.Initial)
                     val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
@@ -69,7 +69,7 @@ internal fun DatePickerField(
 
     if (showDialog) {
         DatePickerDialog(
-            dateAndTimeEpochSeconds = dateAndTimeEpochSeconds,
+            dateTimeEpochSeconds = dateTimeEpochSeconds,
             timeZone = timeZone,
             onSelectDate = onSelectDate,
             onDismiss = { showDialog = false },
@@ -80,20 +80,17 @@ internal fun DatePickerField(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DatePickerDialog(
-    dateAndTimeEpochSeconds: Long,
+    dateTimeEpochSeconds: Long,
     timeZone: TimeZone,
     onSelectDate: (dateSeconds: Long) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    // TODO: why do we need to convert dateTimestampSeconds to UTC when it is already in UTC?
-    println("findme: dateTimeStampSeconds=$dateAndTimeEpochSeconds")
-    val currentSelectedDateMillisUTC = Instant.fromEpochSeconds(dateAndTimeEpochSeconds)
+    // Shift timezone because of this bug: https://issuetracker.google.com/issues/281859606
+    val currentSelectedDateMillisUTC = Instant.fromEpochSeconds(dateTimeEpochSeconds)
         .toLocalDateTime(timeZone)
         .toInstant(TimeZone.UTC)
         .toEpochMilliseconds()
-    println("findme: currentSelectedDateMillisUTC=$currentSelectedDateMillisUTC")
-    val datePickerState =
-        rememberDatePickerState(initialSelectedDateMillis = currentSelectedDateMillisUTC)
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentSelectedDateMillisUTC)
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
@@ -106,10 +103,8 @@ private fun DatePickerDialog(
                     .toLocalDateTime(TimeZone.UTC)
                     .toInstant(timeZone)
                     .toEpochSeconds()
-                println("findme: selectedDateSecondsWithOffet=$selectedDateSecondsWithOffset")
 
                 // We are returning this selected time as if it were UTC.
-                // We only did the timezone shift because of this bug: https://issuetracker.google.com/issues/281859606
                 onSelectDate(
                     selectedDateSecondsWithOffset,
                 )
