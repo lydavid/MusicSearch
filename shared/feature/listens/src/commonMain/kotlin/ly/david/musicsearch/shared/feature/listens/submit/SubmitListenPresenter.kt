@@ -13,15 +13,20 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
-import ly.david.musicsearch.shared.domain.SECONDS_IN_DAY
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal class SubmitListenPresenter(
     private val screen: SubmitListenScreen,
@@ -32,20 +37,41 @@ internal class SubmitListenPresenter(
     override fun present(): SubmitListenUiState {
         val coroutineScope = rememberCoroutineScope()
 
-        var dateTimestampSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
-        var timeTimestampSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
+//        var dateEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
+//        var timeEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
+        var dateTimeEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
         var timestampIsStartTime by rememberSaveable { mutableStateOf(true) }
         var isCustomTime by rememberSaveable { mutableStateOf(false) }
 
         fun eventSink(event: SubmitListenUiEvent) {
             when (event) {
-                is SubmitListenUiEvent.UpdateDateTimestamp -> {
-                    dateTimestampSeconds = event.timestampSeconds
+                is SubmitListenUiEvent.UpdateDate -> {
+//                    val existingTime = dateTimeEpochSeconds % SECONDS_IN_DAY
+//                    dateTimeEpochSeconds = event.epochSeconds + existingTime
+
+                    val timeZone = TimeZone.currentSystemDefault()
+                    val existing = Instant.fromEpochSeconds(dateTimeEpochSeconds).toLocalDateTime(timeZone)
+                    val newDate = Instant.fromEpochSeconds(event.epochSeconds).toLocalDateTime(timeZone).date
+                    dateTimeEpochSeconds = LocalDateTime(newDate, existing.time)
+                        .toInstant(timeZone)
+                        .toEpochSeconds()
                 }
 
-                is SubmitListenUiEvent.UpdateTimeTimestamp -> {
-                    timeTimestampSeconds = event.timestampSeconds
+                is SubmitListenUiEvent.UpdateTime -> {
+//                    val existingDate = (dateTimeEpochSeconds / SECONDS_IN_DAY) * SECONDS_IN_DAY
+//                    dateTimeEpochSeconds = existingDate + event.epochSeconds
+
+                    val timeZone = TimeZone.currentSystemDefault()
+                    val existing = Instant.fromEpochSeconds(dateTimeEpochSeconds).toLocalDateTime(timeZone)
+                    val newTime = Instant.fromEpochSeconds(event.epochSeconds).toLocalDateTime(timeZone).time
+                    dateTimeEpochSeconds = LocalDateTime(existing.date, newTime)
+                        .toInstant(timeZone)
+                        .toEpochSeconds()
                 }
+
+//                is SubmitListenUiEvent.UpdateDateTimeEpochSeconds -> {
+//
+//                }
 
                 is SubmitListenUiEvent.UpdateTimestampIsStartTime -> {
                     timestampIsStartTime = event.isStartTime
@@ -56,17 +82,14 @@ internal class SubmitListenPresenter(
                 }
 
                 is SubmitListenUiEvent.UpdateTimestampsToNow -> {
-                    val now = Clock.System.now().toEpochMilliseconds() / MS_IN_SECOND
-                    val lastMidnight = now - (now % SECONDS_IN_DAY)
-                    dateTimestampSeconds = lastMidnight
-                    timeTimestampSeconds = now - lastMidnight
+                    dateTimeEpochSeconds = Clock.System.now().toEpochSeconds()
                 }
 
                 is SubmitListenUiEvent.Submit -> {
                     coroutineScope.launch {
                         when (val listenType = screen.submitListenType) {
                             is SubmitListenType.Track -> {
-                                val listenStartTime = dateTimestampSeconds + timeTimestampSeconds -
+                                val listenStartTime = dateTimeEpochSeconds -
                                     if (timestampIsStartTime) {
                                         0
                                     } else {
@@ -98,8 +121,9 @@ internal class SubmitListenPresenter(
 
         return SubmitListenUiState(
             submitListenType = screen.submitListenType,
-            dateTimestampSeconds = dateTimestampSeconds,
-            timeTimestampSeconds = timeTimestampSeconds,
+            dateTimeEpochSeconds = dateTimeEpochSeconds,
+//            dateEpochSeconds = dateEpochSeconds,
+//            timeEpochSeconds = timeEpochSeconds,
             timestampIsStartTime = timestampIsStartTime,
             isCustomTime = isCustomTime,
             eventSink = ::eventSink,
@@ -110,16 +134,18 @@ internal class SubmitListenPresenter(
 @Stable
 internal data class SubmitListenUiState(
     val submitListenType: SubmitListenType,
-    val dateTimestampSeconds: Long = 0,
-    val timeTimestampSeconds: Long = 0,
+    val dateTimeEpochSeconds: Long = 0,
+//    val dateEpochSeconds: Long = 0,
+//    val timeEpochSeconds: Long = 0,
     val timestampIsStartTime: Boolean = true,
     val isCustomTime: Boolean = false,
     val eventSink: (SubmitListenUiEvent) -> Unit,
 ) : CircuitUiState
 
 internal sealed interface SubmitListenUiEvent : CircuitUiEvent {
-    data class UpdateDateTimestamp(val timestampSeconds: Long) : SubmitListenUiEvent
-    data class UpdateTimeTimestamp(val timestampSeconds: Long) : SubmitListenUiEvent
+//    data class UpdateDateTimeEpochSeconds(val epochSeconds: Long) : SubmitListenUiEvent
+    data class UpdateDate(val epochSeconds: Long) : SubmitListenUiEvent
+    data class UpdateTime(val epochSeconds: Long) : SubmitListenUiEvent
     data class UpdateTimestampIsStartTime(val isStartTime: Boolean) : SubmitListenUiEvent
     data class UpdateIsCustomTime(val isCustomTime: Boolean) : SubmitListenUiEvent
     data object UpdateTimestampsToNow : SubmitListenUiEvent

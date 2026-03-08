@@ -1,49 +1,44 @@
 package ly.david.musicsearch.shared.domain.common
 
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toNSDate
+import kotlinx.datetime.toNSTimeZone
 import platform.Foundation.NSDateFormatter
-import platform.Foundation.NSTimeZone
-import platform.Foundation.localTimeZone
-import platform.Foundation.timeZoneForSecondsFromGMT
 import kotlin.time.Instant
 
-private fun getDateFormatter(inUtc: Boolean): NSDateFormatter {
+private fun getDateFormatter(timeZone: TimeZone): NSDateFormatter {
     val dateFormatter = NSDateFormatter()
-    dateFormatter.timeZone = if (inUtc) {
-        NSTimeZone.timeZoneForSecondsFromGMT(0)
-    } else {
-        NSTimeZone.localTimeZone
-    }
+    dateFormatter.timeZone = timeZone.toNSTimeZone()
     return dateFormatter
 }
 
-actual fun Instant.getFullDateFormatted(inUtc: Boolean): String {
-    val dateFormatter = getDateFormatter(inUtc)
+actual fun Instant.getFullDateFormatted(timeZone: TimeZone): String {
+    val dateFormatter = getDateFormatter(timeZone)
     dateFormatter.dateFormat = FULL_DATE_FORMAT
     return dateFormatter.stringFromDate(
         date = toNSDate(),
     )
 }
 
-actual fun Instant.getShortDateFormatted(inUtc: Boolean): String {
-    val dateFormatter = getDateFormatter(inUtc)
+actual fun Instant.getShortDateFormatted(timeZone: TimeZone): String {
+    val dateFormatter = getDateFormatter(timeZone)
     dateFormatter.dateFormat = SHORT_DATE_FORMAT
     return dateFormatter.stringFromDate(
         date = toNSDate(),
     )
 }
 
-actual fun Instant.getTimeFormatted(inUtc: Boolean): String {
-    val dateFormatter = getDateFormatter(inUtc)
+actual fun Instant.getTimeFormatted(timeZone: TimeZone): String {
+    val dateFormatter = getDateFormatter(timeZone)
     dateFormatter.dateFormat = TIME_FORMAT
     return dateFormatter.stringFromDate(
         date = toNSDate(),
     )
 }
 
-actual fun Instant.getDateTimeFormatted(): String {
-    val dateFormatter = NSDateFormatter()
-    dateFormatter.dateFormat = DATE_TIME_FORMAT
+actual fun Instant.getDateTimeFormatted(timeZone: TimeZone): String {
+    val dateFormatter = getDateFormatter(timeZone)
+    dateFormatter.dateFormat = DATE_TIME_WITH_SECONDS_FORMAT
     return dateFormatter.stringFromDate(
         date = toNSDate(),
     )

@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.listens
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import kotlinx.datetime.TimeZone
 import ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPresenter
 import ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUi
 import ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiState
@@ -51,6 +52,7 @@ val listensFeatureModule = module {
                         SubmitListenUi(
                             state = state,
                             modifier = modifier,
+                            timeZone = TimeZone.currentSystemDefault(),
                         )
                     }
                 }

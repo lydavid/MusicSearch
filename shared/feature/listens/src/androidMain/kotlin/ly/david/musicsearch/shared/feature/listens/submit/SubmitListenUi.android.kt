@@ -4,6 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.TimeZone
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
@@ -25,16 +26,55 @@ private val submitListenType = SubmitListenType.Track(
         ArtistCreditUiModel(
             artistId = "a1",
             name = "Artist",
-            joinPhrase = " feat. "
+            joinPhrase = " feat. ",
         ),
         ArtistCreditUiModel(
             artistId = "a2",
             name = "Another Artist",
             joinPhrase = "",
-        )
+        ),
     ),
     releaseName = null,
 )
+
+// Preview crashes when clicking due to https://issuetracker.google.com/issues/437003350
+@PreviewLightDark
+@Composable
+internal fun PreviewSubmitListenUiStartedCustomLocal() {
+    PreviewTheme {
+        Surface {
+            SubmitListenUi(
+                state = SubmitListenUiState(
+                    submitListenType = submitListenType,
+                    dateTimeEpochSeconds = 86400,
+//                    timeEpochSeconds = 0,//18000,
+                    isCustomTime = true,
+                    eventSink = {},
+                ),
+                timeZone = TimeZone.of("America/Toronto"),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSubmitListenUiStartedCustomUTC() {
+    PreviewTheme {
+        Surface {
+            SubmitListenUi(
+                state = SubmitListenUiState(
+                    submitListenType = submitListenType,
+                    dateTimeEpochSeconds = 86400,
+//                    timeEpochSeconds = 0,//18000,
+                    isCustomTime = true,
+                    eventSink = {},
+                ),
+                timeZone = TimeZone.UTC,
+            )
+        }
+    }
+}
 
 @PreviewLightDark
 @Composable
@@ -44,10 +84,11 @@ internal fun PreviewSubmitListenUiStarted() {
             SubmitListenUi(
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
-                    dateTimestampSeconds = 1772755200,
-                    timeTimestampSeconds = 85712,
+                    dateTimeEpochSeconds = 1772841600,
+//                    timeEpochSeconds = 5484,
                     eventSink = {},
                 ),
+                timeZone = TimeZone.of("America/Toronto"),
             )
         }
     }
@@ -61,30 +102,12 @@ internal fun PreviewSubmitListenUiFinished() {
             SubmitListenUi(
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
-                    dateTimestampSeconds = 0,
-                    timeTimestampSeconds = 0,
+                    dateTimeEpochSeconds = 1772841600,
+//                    timeEpochSeconds = 5484,
                     timestampIsStartTime = false,
                     eventSink = {},
                 ),
-            )
-        }
-    }
-}
-
-// Preview crashes when clicking due to https://issuetracker.google.com/issues/437003350
-@PreviewLightDark
-@Composable
-internal fun PreviewSubmitListenUiStartedCustom() {
-    PreviewTheme {
-        Surface {
-            SubmitListenUi(
-                state = SubmitListenUiState(
-                    submitListenType = submitListenType,
-                    dateTimestampSeconds = 0,
-                    timeTimestampSeconds = 0,
-                    isCustomTime = true,
-                    eventSink = {},
-                ),
+                timeZone = TimeZone.UTC,
             )
         }
     }
