@@ -54,12 +54,6 @@ import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
-// TODO: content
-//  recording: submit finished now, start now, or a custom time
-
-// TODO: one screen that can be in recording or release state? I'm thinking one screen because these share the same submit api
-//  or if they are different screen, they should reuse this api by passing different info
-
 @OptIn(
     ExperimentalMaterial3Api::class,
 )

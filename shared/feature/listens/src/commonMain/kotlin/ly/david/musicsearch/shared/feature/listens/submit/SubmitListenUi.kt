@@ -51,6 +51,7 @@ internal fun SubmitListenUi(
     val timestampIsStartTime = state.timestampIsStartTime
     val useCustomTime = state.useCustomTime
     val dateTimeEpochSeconds = state.dateTimeEpochSeconds
+    val listenedAtDateTimeEpochSeconds = state.listenedAtDateTimeEpochSeconds
 
     Column(
         modifier = modifier
@@ -88,15 +89,12 @@ internal fun SubmitListenUi(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
 
-                val instant = Instant.fromEpochSeconds(dateTimeEpochSeconds)
-
-                val time = instant.getTimeFormatted(timeZone = timeZone)
-
-                // TODO: test: past 7pm, combining date + time will push the date to the next day
+                // TODO: test: past 8pm (7pm before daylight change), combining date + time will push the date to the next day
                 //  before, it will not
+                val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
+                val time = instant.getTimeFormatted(timeZone = timeZone)
                 val shortDate = instant.getShortDateFormatted(timeZone = timeZone)
 
-                // TODO: offset when finished is selected
                 Text(
                     text = "$shortDate$DOT_SEPARATOR$time",
                     modifier = Modifier.padding(top = 4.dp),

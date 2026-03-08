@@ -44,6 +44,15 @@ internal class SubmitListenPresenter(
         var dateTimeEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
         var timestampIsStartTime by rememberSaveable { mutableStateOf(true) }
         var useCustomTime by rememberSaveable { mutableStateOf(false) }
+        val listenedAtDateTimeEpochSeconds by rememberSaveable(dateTimeEpochSeconds, timestampIsStartTime) {
+            mutableLongStateOf(
+                dateTimeEpochSeconds - if (timestampIsStartTime) {
+                    0
+                } else {
+                    ((screen.submitListenType as? SubmitListenType.Track)?.lengthMilliseconds ?: 0) / MS_IN_SECOND
+                },
+            )
+        }
 
         if (!useCustomTime) {
             LaunchedEffect(useCustomTime) {
@@ -84,17 +93,11 @@ internal class SubmitListenPresenter(
                     coroutineScope.launch {
                         when (val listenType = screen.submitListenType) {
                             is SubmitListenType.Track -> {
-                                val listenStartTime = dateTimeEpochSeconds -
-                                    if (timestampIsStartTime) {
-                                        0
-                                    } else {
-                                        (listenType.lengthMilliseconds ?: 0) / MS_IN_SECOND
-                                    }
                                 // TODO: observe response and show UI
                                 listensListRepository.submitListens(
                                     listenSubmissions = listOf(
                                         ListenSubmission(
-                                            listenedAtS = listenStartTime,
+                                            listenedAtS = listenedAtDateTimeEpochSeconds,
                                             trackName = listenType.name,
                                             recordingMbid = listenType.recordingId,
                                             artistName = listenType.artists.getDisplayNames(),
@@ -118,6 +121,7 @@ internal class SubmitListenPresenter(
         return SubmitListenUiState(
             submitListenType = screen.submitListenType,
             dateTimeEpochSeconds = dateTimeEpochSeconds,
+            listenedAtDateTimeEpochSeconds = listenedAtDateTimeEpochSeconds,
             timestampIsStartTime = timestampIsStartTime,
             useCustomTime = useCustomTime,
             // This style is required for presenter tests, or we get KotlinReflectionInternalError
@@ -126,10 +130,15 @@ internal class SubmitListenPresenter(
     }
 }
 
+/**
+ * Use [dateTimeEpochSeconds] for date and time selection.
+ * Use [listenedAtDateTimeEpochSeconds] for preview and submission.
+ */
 @Stable
 internal data class SubmitListenUiState(
     val submitListenType: SubmitListenType,
     val dateTimeEpochSeconds: Long = 0,
+    val listenedAtDateTimeEpochSeconds: Long = 0,
     val timestampIsStartTime: Boolean = true,
     val useCustomTime: Boolean = false,
     val eventSink: (SubmitListenUiEvent) -> Unit,

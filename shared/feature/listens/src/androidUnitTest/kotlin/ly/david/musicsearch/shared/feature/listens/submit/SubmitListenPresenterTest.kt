@@ -80,6 +80,10 @@ class SubmitListenPresenterTest {
                 state.dateTimeEpochSeconds,
             )
             assertEquals(
+                0,
+                state.listenedAtDateTimeEpochSeconds,
+            )
+            assertEquals(
                 true,
                 state.timestampIsStartTime,
             )
@@ -93,6 +97,10 @@ class SubmitListenPresenterTest {
                 fixedClockEpochSeconds,
                 state.dateTimeEpochSeconds,
             )
+            assertEquals(
+                fixedClockEpochSeconds,
+                state.listenedAtDateTimeEpochSeconds,
+            )
 
             state.eventSink(
                 SubmitListenUiEvent.UpdateDateTimeIsStartTime(isStartTime = false),
@@ -101,6 +109,10 @@ class SubmitListenPresenterTest {
             assertEquals(
                 false,
                 state.timestampIsStartTime,
+            )
+            assertEquals(
+                104125,
+                state.listenedAtDateTimeEpochSeconds,
             )
 
             state.eventSink(
@@ -120,6 +132,10 @@ class SubmitListenPresenterTest {
                 18000,
                 state.dateTimeEpochSeconds,
             )
+            assertEquals(
+                17725,
+                state.listenedAtDateTimeEpochSeconds,
+            )
 
             // only the time component is updated
             state.eventSink(
@@ -135,6 +151,10 @@ class SubmitListenPresenterTest {
                 Instant.fromEpochSeconds(epochSeconds).toLocalDateTime(timeZone = TimeZone.UTC).toString(),
                 "1970-01-01T01:00",
             )
+            assertEquals(
+                3325,
+                state.listenedAtDateTimeEpochSeconds,
+            )
 
             // only the date component is updated
             state.eventSink(
@@ -149,6 +169,10 @@ class SubmitListenPresenterTest {
             assertEquals(
                 Instant.fromEpochSeconds(epochSeconds).toLocalDateTime(timeZone = TimeZone.UTC).toString(),
                 "2026-03-08T01:00",
+            )
+            assertEquals(
+                1772931325,
+                state.listenedAtDateTimeEpochSeconds,
             )
 
             state.eventSink(
@@ -168,6 +192,27 @@ class SubmitListenPresenterTest {
             assertEquals(
                 fixedClockEpochSeconds,
                 state.dateTimeEpochSeconds,
+            )
+            assertEquals(
+                104125,
+                state.listenedAtDateTimeEpochSeconds,
+            )
+
+            state.eventSink(
+                SubmitListenUiEvent.UpdateDateTimeIsStartTime(isStartTime = true),
+            )
+            state = awaitItem()
+            assertEquals(
+                true,
+                state.timestampIsStartTime,
+            )
+            assertEquals(
+                fixedClockEpochSeconds,
+                state.dateTimeEpochSeconds,
+            )
+            assertEquals(
+                fixedClockEpochSeconds,
+                state.listenedAtDateTimeEpochSeconds,
             )
         }
     }

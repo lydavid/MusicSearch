@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.TimeZone
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
@@ -119,6 +120,10 @@ internal fun PreviewSubmitListenUiFinished() {
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
                     dateTimeEpochSeconds = 1772841600,
+                    listenedAtDateTimeEpochSeconds = 1772841600L - (
+                        submitListenType.lengthMilliseconds
+                            ?: 0
+                        ) / MS_IN_SECOND,
                     timestampIsStartTime = false,
                     eventSink = {},
                 ),
