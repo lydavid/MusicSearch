@@ -5,8 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -30,10 +31,16 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.cancel
+import musicsearch.ui.common.generated.resources.custom
+import musicsearch.ui.common.generated.resources.finished
+import musicsearch.ui.common.generated.resources.now
+import musicsearch.ui.common.generated.resources.started
+import musicsearch.ui.common.generated.resources.submit
+import musicsearch.ui.common.generated.resources.submitToListenBrainz
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SubmitListenUi(
     state: SubmitListenUiState,
@@ -48,10 +55,11 @@ internal fun SubmitListenUi(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(24.dp),
     ) {
         Text(
-            text = "Submit listen to ListenBrainz",
+            text = stringResource(Res.string.submitToListenBrainz),
             style = TextStyles.getHeaderTextStyle(),
         )
 
@@ -107,7 +115,7 @@ internal fun SubmitListenUi(
                 ),
                 onClick = { eventSink(SubmitListenUiEvent.UpdateDateTimeIsStartTime(true)) },
                 selected = timestampIsStartTime,
-                label = { Text("Started") },
+                label = { Text(stringResource(Res.string.started)) },
             )
             SegmentedButton(
                 shape = SegmentedButtonDefaults.itemShape(
@@ -116,7 +124,7 @@ internal fun SubmitListenUi(
                 ),
                 onClick = { eventSink(SubmitListenUiEvent.UpdateDateTimeIsStartTime(false)) },
                 selected = !timestampIsStartTime,
-                label = { Text("Finished") },
+                label = { Text(stringResource(Res.string.finished)) },
             )
         }
 
@@ -130,7 +138,7 @@ internal fun SubmitListenUi(
                 ),
                 onClick = { eventSink(SubmitListenUiEvent.UpdateUseCustomTime(false)) },
                 selected = !useCustomTime,
-                label = { Text("Now") },
+                label = { Text(stringResource(Res.string.now)) },
             )
             SegmentedButton(
                 shape = SegmentedButtonDefaults.itemShape(
@@ -139,7 +147,7 @@ internal fun SubmitListenUi(
                 ),
                 onClick = { eventSink(SubmitListenUiEvent.UpdateUseCustomTime(true)) },
                 selected = useCustomTime,
-                label = { Text("Custom") },
+                label = { Text(stringResource(Res.string.custom)) },
             )
         }
 
@@ -177,7 +185,7 @@ internal fun SubmitListenUi(
             TextButton(
                 onClick = { eventSink(SubmitListenUiEvent.Submit) },
             ) {
-                Text("Submit")
+                Text(stringResource(Res.string.submit))
             }
         }
     }

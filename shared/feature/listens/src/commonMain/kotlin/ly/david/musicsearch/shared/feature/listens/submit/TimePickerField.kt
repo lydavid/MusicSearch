@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,9 +39,12 @@ import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Schedule
+import ly.david.musicsearch.ui.common.modifier.onKeyboardClick
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.cancel
 import musicsearch.ui.common.generated.resources.ok
+import musicsearch.ui.common.generated.resources.selectTime
+import musicsearch.ui.common.generated.resources.time
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
@@ -58,11 +62,11 @@ internal fun TimePickerField(
     OutlinedTextField(
         value = formattedTime,
         onValueChange = { },
-        label = { Text("HH:MM") },
+        label = { Text(stringResource(Res.string.time)) },
         trailingIcon = {
-            Icon(imageVector = CustomIcons.Schedule, contentDescription = "Select time")
+            Icon(imageVector = CustomIcons.Schedule, contentDescription = stringResource(Res.string.selectTime))
         },
-        readOnly = false,
+        readOnly = true,
         modifier = modifier
             .fillMaxWidth()
             .pointerInput(dateTimeEpochSeconds) {
@@ -73,6 +77,9 @@ internal fun TimePickerField(
                         showDialog = true
                     }
                 }
+            }
+            .onKeyboardClick {
+                showDialog = true
             },
     )
 
@@ -82,20 +89,22 @@ internal fun TimePickerField(
             modifier = modifier,
             onDismiss = { showDialog = false },
             onSelectTime = onSelectTime,
+            timeZone = TimeZone.currentSystemDefault(),
         )
     }
 }
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun TimePickerDialog(
+internal fun TimePickerDialog(
     dateTimeEpochSeconds: Long,
-    modifier: Modifier,
+    timeZone: TimeZone,
+    modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
     onSelectTime: (timeSeconds: Long) -> Unit,
 ) {
     val epochSecondsUTC = Instant.fromEpochSeconds(dateTimeEpochSeconds)
-        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .toLocalDateTime(timeZone)
         .toInstant(TimeZone.UTC)
         .toEpochSeconds()
     val nonNegativeEpochSecondsUTC = (epochSecondsUTC + SECONDS_IN_DAY) % SECONDS_IN_DAY
@@ -111,6 +120,7 @@ private fun TimePickerDialog(
     ) {
         Surface(
             shape = RoundedCornerShape(28.dp),
+            color = MaterialTheme.colorScheme.surface,
             modifier = modifier,
         ) {
             Column(
@@ -134,7 +144,7 @@ private fun TimePickerDialog(
                             val outputSeconds = timePickerState.hour * 60 * 60 + timePickerState.minute * 60
                             val epochSecondsLocal = Instant.fromEpochSeconds(outputSeconds.toLong())
                                 .toLocalDateTime(TimeZone.UTC)
-                                .toInstant(TimeZone.currentSystemDefault())
+                                .toInstant(timeZone)
                                 .toEpochMilliseconds() / MS_IN_SECOND
                             val nonOverflowEpochSecondsLocal = epochSecondsLocal % SECONDS_IN_DAY
                             println("findme: nonOverflowEpochSecondsLocal=$nonOverflowEpochSecondsLocal")

@@ -27,9 +27,12 @@ import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.modifier.onKeyboardClick
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.cancel
+import musicsearch.ui.common.generated.resources.date
 import musicsearch.ui.common.generated.resources.ok
+import musicsearch.ui.common.generated.resources.selectDate
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
@@ -49,11 +52,11 @@ internal fun DatePickerField(
     OutlinedTextField(
         value = formattedDate,
         onValueChange = { },
-        label = { Text("YYYY-MM-DD") },
+        label = { Text(stringResource(Res.string.date)) },
         trailingIcon = {
-            Icon(imageVector = CustomIcons.CalendarMonth, contentDescription = "Select date")
+            Icon(imageVector = CustomIcons.CalendarMonth, contentDescription = stringResource(Res.string.selectDate))
         },
-        readOnly = false,
+        readOnly = true,
         modifier = modifier
             .fillMaxWidth()
             .pointerInput(dateTimeEpochSeconds) {
@@ -64,6 +67,9 @@ internal fun DatePickerField(
                         showDialog = true
                     }
                 }
+            }
+            .onKeyboardClick {
+                showDialog = true
             },
     )
 

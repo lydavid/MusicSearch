@@ -220,4 +220,12 @@
     <string name="invalidMusicBrainzId">Invalid MusicBrainz ID: %1$s</string>
     <string name="deletedListens">Deleted %1$d</string>
     <string name="failedToDeleteListen">Failed to delete listen</string>
+    <string name="submitToListenBrainz">Submit listen to ListenBrainz</string>
+    <string name="started">Started</string>
+    <string name="finished">Finished</string>
+    <string name="now">Now</string>
+    <string name="custom">Custom</string>
+    <string name="submit">Submit</string>
+    <string name="selectDate">Select date</string>
+    <string name="selectTime">Select time</string>
 </resources>
