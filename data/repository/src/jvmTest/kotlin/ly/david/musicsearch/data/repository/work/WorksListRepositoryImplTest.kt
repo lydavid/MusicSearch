@@ -42,7 +42,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
-import ly.david.musicsearch.data.repository.helpers.NoOpListenBrainzAuthStore
+import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
 import ly.david.musicsearch.data.repository.helpers.TestListensListRepository
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository

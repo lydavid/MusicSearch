@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.clock.FixedClock
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -60,6 +61,7 @@ class SubmitListenPresenterTest {
     private fun createSubmitListenPresenter() = SubmitListenPresenter(
         screen = screen,
         navigator = navigator,
+        listenBrainzAuthStore = NoOpListenBrainzAuthStore(),
         listensListRepository = listensListRepository,
         clock = FixedClock(now = Instant.parse("1970-01-02T05:00:00Z")),
         timeZone = TimeZone.UTC,
