@@ -228,4 +228,5 @@
     <string name="submit">Submit</string>
     <string name="selectDate">Select date</string>
     <string name="selectTime">Select time</string>
+    <string name="submitListen">Submit listen</string>
 </resources>

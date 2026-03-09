@@ -113,6 +113,8 @@ internal class SubmitListenPresenter(
                                 )
                             }
                         }
+                        // TODO: need to propagate sealed interface to call site, so that it can
+                        //  map states to strings
                         navigator.pop(result = SnackbarPopResult())
                     }
                 }

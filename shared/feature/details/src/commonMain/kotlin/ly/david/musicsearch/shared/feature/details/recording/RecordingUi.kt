@@ -211,6 +211,7 @@ internal fun RecordingUi(
                             ),
                             overlayHost = overlayHost,
                             coroutineScope = coroutineScope,
+                            snackbarHostState = snackbarHostState,
                         )
                     }
 
