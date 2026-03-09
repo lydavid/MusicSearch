@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
@@ -37,6 +38,7 @@ internal class WorkPresenter(
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
     collectionRepository: CollectionRepository,
+    listenBrainzAuthStore: ListenBrainzAuthStore,
 ) : DetailsPresenter<WorkDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -48,6 +50,7 @@ internal class WorkPresenter(
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
     collectionRepository = collectionRepository,
+    listenBrainzAuthStore = listenBrainzAuthStore,
 ) {
     override fun getTabs(): ImmutableList<Tab> {
         return workTabs

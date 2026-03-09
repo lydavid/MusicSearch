@@ -33,6 +33,7 @@ interface ListenBrainzApi {
         username: String,
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
+        count: Int = LISTENS_COUNT,
     ): GetListensResponse
 
     suspend fun submitManualMapping(
@@ -118,6 +119,7 @@ class ListenBrainzApiImpl(
         username: String,
         minTimestamp: Long?,
         maxTimestamp: Long?,
+        count: Int,
     ): GetListensResponse {
         require(!(minTimestamp != null && maxTimestamp != null)) {
             "minTimestamp and maxTimestamp cannot both be set"
@@ -126,7 +128,7 @@ class ListenBrainzApiImpl(
             url {
                 appendPathSegments("user/$username/listens")
                 // TODO: have a background task to load 1000 at a time if the user wants to load all
-                parameter("count", LISTENS_COUNT)
+                parameter("count", count)
                 parameter("min_ts", minTimestamp)
                 parameter("max_ts", maxTimestamp)
             }
@@ -208,17 +210,15 @@ class ListenBrainzApiImpl(
         listenSubmissions: List<ListenSubmission>,
     ) {
         httpClient.post {
-            httpClient.post {
-                url {
-                    appendPathSegments("submit-listens")
-                    header(CONTENT_TYPE, APPLICATION_JSON)
-                    setBody(
-                        SubmitListensBody(
-                            listenType = "import",
-                            listenSubmissions = listenSubmissions.map { it.toListenBrainzListenSubmission() },
-                        ),
-                    )
-                }
+            url {
+                appendPathSegments("submit-listens")
+                header(CONTENT_TYPE, APPLICATION_JSON)
+                setBody(
+                    SubmitListensBody(
+                        listenType = "import",
+                        listenSubmissions = listenSubmissions.map { it.toListenBrainzListenSubmission() },
+                    ),
+                )
             }
         }
     }

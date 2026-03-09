@@ -18,4 +18,11 @@ class TimePickerFieldScreenshotTest : ScreenshotTest() {
             PreviewTimePickerDialog()
         }
     }
+
+    @Test
+    fun dialogDaylightSaving() {
+        snapshot {
+            PreviewTimePickerDialogDaylightSaving()
+        }
+    }
 }

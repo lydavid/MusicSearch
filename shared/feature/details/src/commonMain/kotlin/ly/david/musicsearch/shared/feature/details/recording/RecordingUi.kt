@@ -197,7 +197,7 @@ internal fun RecordingUi(
                     )
 
                     val recordingDetailsModel = state.detailsModel
-                    if (recordingDetailsModel != null) {
+                    if (state.showListenSubmission && recordingDetailsModel != null) {
                         SubmitListenMenuItem(
                             submitListenType = SubmitListenType.Track(
                                 name = recordingDetailsModel.name,

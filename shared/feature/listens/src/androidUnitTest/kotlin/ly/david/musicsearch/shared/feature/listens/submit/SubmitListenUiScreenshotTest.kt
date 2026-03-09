@@ -39,4 +39,11 @@ class SubmitListenUiScreenshotTest : ScreenshotTest() {
             PreviewSubmitListenUiFinished()
         }
     }
+
+    @Test
+    fun startedCustomDaylightSaving() {
+        snapshot {
+            PreviewSubmitListenUiStartedCustomLocalDaylightSaving()
+        }
+    }
 }

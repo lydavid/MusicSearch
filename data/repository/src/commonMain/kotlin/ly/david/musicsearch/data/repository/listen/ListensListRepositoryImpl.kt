@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
+import ly.david.musicsearch.data.listenbrainz.api.asListOfListens
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
@@ -180,12 +181,25 @@ class ListensListRepositoryImpl(
     }
 
     override suspend fun submitListens(
+        username: String,
         listenSubmissions: List<ListenSubmission>,
     ): Feedback<ListensListFeedback> {
         return try {
             listenBrainzApi.submitListens(
                 listenSubmissions = listenSubmissions,
             )
+            val listensResponse = listenBrainzApi.getListensByUser(
+                username = username,
+                minTimestamp = listenSubmissions.minByOrNull { it.listenedAtS }?.listenedAtS?.minus(1),
+                // Count should be at least the size of the number of listens, but ideally larger, as
+                // the user may have submitted other listens in the past through other methods.
+                // In one extreme case, the user may have 100 other listens at the same time,
+                // then it's possible the recently submitted listen will not be fetched.
+                // I don't think it's worth fetching until we found our submitted listens to be worth the overhead
+                // to handle this extreme case.
+            )
+            listenDao.insert(listens = listensResponse.asListOfListens())
+
             // TODO: change state
             Feedback.Success(
                 data = ListensListFeedback.Updated,

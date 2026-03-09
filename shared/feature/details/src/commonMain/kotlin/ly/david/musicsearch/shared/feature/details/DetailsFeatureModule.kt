@@ -64,6 +64,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -80,6 +81,7 @@ val detailsFeatureModule = module {
                                 logger = get(),
                                 musicBrainzLoginPresenter = get(),
                                 getMusicBrainzUrl = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -96,6 +98,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -123,6 +126,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -139,6 +143,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -155,6 +160,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -171,6 +177,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -187,6 +194,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -203,6 +211,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -219,6 +228,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 
@@ -235,6 +245,7 @@ val detailsFeatureModule = module {
                                 getMusicBrainzUrl = get(),
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
+                                listenBrainzAuthStore = get(),
                             )
                         }
 

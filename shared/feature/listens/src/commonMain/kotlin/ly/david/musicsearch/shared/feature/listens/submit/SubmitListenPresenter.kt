@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -22,6 +23,7 @@ import kotlinx.datetime.toLocalDateTime
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
@@ -33,6 +35,7 @@ import kotlin.time.Instant
 internal class SubmitListenPresenter(
     private val screen: SubmitListenScreen,
     private val navigator: Navigator,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
     val clock: Clock,
     val timeZone: TimeZone,
@@ -40,6 +43,7 @@ internal class SubmitListenPresenter(
     @Composable
     override fun present(): SubmitListenUiState {
         val coroutineScope = rememberCoroutineScope()
+        val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
 
         var dateTimeEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
         var timestampIsStartTime by rememberSaveable { mutableStateOf(true) }
@@ -95,6 +99,7 @@ internal class SubmitListenPresenter(
                             is SubmitListenType.Track -> {
                                 // TODO: observe response and show UI
                                 listensListRepository.submitListens(
+                                    username = loggedInUsername,
                                     listenSubmissions = listOf(
                                         ListenSubmission(
                                             listenedAtS = listenedAtDateTimeEpochSeconds,

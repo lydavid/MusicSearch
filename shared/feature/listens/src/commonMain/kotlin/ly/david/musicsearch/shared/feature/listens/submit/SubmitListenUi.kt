@@ -89,8 +89,6 @@ internal fun SubmitListenUi(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
 
-                // TODO: test: past 8pm (7pm before daylight change), combining date + time will push the date to the next day
-                //  before, it will not
                 val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
                 val time = instant.getTimeFormatted(timeZone = timeZone)
                 val shortDate = instant.getShortDateFormatted(timeZone = timeZone)

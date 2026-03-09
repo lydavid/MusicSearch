@@ -49,6 +49,7 @@ interface ListensListRepository {
     suspend fun deleteMarkedForDeletion(): Feedback<ListensListFeedback>
 
     suspend fun submitListens(
+        username: String,
         listenSubmissions: List<ListenSubmission>,
     ): Feedback<ListensListFeedback>
 }

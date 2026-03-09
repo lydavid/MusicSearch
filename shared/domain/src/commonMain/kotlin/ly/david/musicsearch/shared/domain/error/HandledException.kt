@@ -11,6 +11,7 @@ enum class ErrorType {
     Unauthorized,
     Forbidden,
     NotFound,
+    MethodNotAllowed,
     InternalServerError,
     LocalNetworkProblem,
 }

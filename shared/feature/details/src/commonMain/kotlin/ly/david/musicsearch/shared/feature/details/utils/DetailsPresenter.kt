@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -63,6 +64,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val wikimediaRepository: WikimediaRepository,
     private val collectionRepository: CollectionRepository,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
 ) : Presenter<DetailsUiState<DetailsModel>>, RecordVisit {
 
     abstract fun getTabs(): ImmutableList<Tab>
@@ -104,6 +106,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         val collected by collectionRepository.observeEntityIsInACollection(
             entityId = screen.id,
         ).collectAsRetainedState(false)
+        val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
 
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -290,6 +293,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
+            showListenSubmission = loggedInUsername.isNotEmpty(),
             detailsTabUiState = DetailsTabUiState(
                 isLoading = isLoading,
                 handledException = handledException,
@@ -319,6 +323,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val snackbarMessage: String? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
+    val showListenSubmission: Boolean = false,
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),

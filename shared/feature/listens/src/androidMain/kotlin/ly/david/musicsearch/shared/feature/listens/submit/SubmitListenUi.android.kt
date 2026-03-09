@@ -136,3 +136,22 @@ internal fun PreviewSubmitListenUiFinished() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSubmitListenUiStartedCustomLocalDaylightSaving() {
+    PreviewTheme {
+        Surface {
+            SubmitListenUi(
+                state = SubmitListenUiState(
+                    submitListenType = submitListenType,
+                    dateTimeEpochSeconds = 1772953200,
+                    listenedAtDateTimeEpochSeconds = 1772953200,
+                    useCustomTime = true,
+                    eventSink = {},
+                ),
+                timeZone = TimeZone.of("America/Toronto"),
+            )
+        }
+    }
+}

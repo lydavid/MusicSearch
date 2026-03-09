@@ -29,6 +29,7 @@ val listensFeatureModule = module {
                 is SubmitListenScreen -> SubmitListenPresenter(
                     screen = screen,
                     navigator = navigator,
+                    listenBrainzAuthStore = get(),
                     listensListRepository = get(),
                     clock = Clock.System,
                     timeZone = TimeZone.currentSystemDefault(),

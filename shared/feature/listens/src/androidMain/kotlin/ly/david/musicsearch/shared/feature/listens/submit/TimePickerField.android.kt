@@ -34,3 +34,18 @@ internal fun PreviewTimePickerDialog() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewTimePickerDialogDaylightSaving() {
+    PreviewTheme {
+        Surface {
+            TimePickerDialog(
+                dateTimeEpochSeconds = 1772953200,
+                timeZone = TimeZone.of("America/Toronto"),
+                onDismiss = {},
+                onSelectTime = {},
+            )
+        }
+    }
+}
