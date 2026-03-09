@@ -48,6 +48,7 @@ internal fun PreviewSubmitListenUiStartedCustomLocal() {
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
                     dateTimeEpochSeconds = 86400,
+                    listenedAtDateTimeEpochSeconds = 86400,
                     useCustomTime = true,
                     eventSink = {},
                 ),
@@ -67,6 +68,7 @@ internal fun PreviewSubmitListenUiStartedCustomUTC() {
                     submitListenType = submitListenType,
                     // a new day in UTC, but not in Toronto time
                     dateTimeEpochSeconds = 86400,
+                    listenedAtDateTimeEpochSeconds = 86400,
                     useCustomTime = true,
                     eventSink = {},
                 ),
@@ -86,6 +88,7 @@ internal fun PreviewSubmitListenUiStartedNowLocal() {
                     submitListenType = submitListenType,
                     // a new day in Paris, but not in UTC
                     dateTimeEpochSeconds = 86400 - 3600,
+                    listenedAtDateTimeEpochSeconds = 86400 - 3600,
                     eventSink = {},
                 ),
                 timeZone = TimeZone.of("Europe/Paris"),
@@ -103,6 +106,7 @@ internal fun PreviewSubmitListenUiStartedNowUTC() {
                 state = SubmitListenUiState(
                     submitListenType = submitListenType,
                     dateTimeEpochSeconds = 86400 - 3600,
+                    listenedAtDateTimeEpochSeconds = 86400 - 3600,
                     eventSink = {},
                 ),
                 timeZone = TimeZone.UTC,

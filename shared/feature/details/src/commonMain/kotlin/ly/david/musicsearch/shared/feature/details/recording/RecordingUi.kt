@@ -203,9 +203,9 @@ internal fun RecordingUi(
                                 name = recordingDetailsModel.name,
                                 disambiguation = recordingDetailsModel.disambiguation,
                                 aliases = recordingDetailsModel.aliases,
+                                // prefer to get it from details model, as the id can change after a fetch
                                 recordingId = recordingDetailsModel.id,
                                 lengthMilliseconds = recordingDetailsModel.length,
-                                // prefer to get it from details model, as the id can change after a fetch
                                 artists = recordingDetailsModel.artistCredits,
                                 releaseName = null,
                             ),

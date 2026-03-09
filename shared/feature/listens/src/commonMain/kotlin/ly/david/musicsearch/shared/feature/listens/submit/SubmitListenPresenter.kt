@@ -137,8 +137,8 @@ internal class SubmitListenPresenter(
 @Stable
 internal data class SubmitListenUiState(
     val submitListenType: SubmitListenType,
-    val dateTimeEpochSeconds: Long = 0,
-    val listenedAtDateTimeEpochSeconds: Long = 0,
+    val dateTimeEpochSeconds: Long,
+    val listenedAtDateTimeEpochSeconds: Long,
     val timestampIsStartTime: Boolean = true,
     val useCustomTime: Boolean = false,
     val eventSink: (SubmitListenUiEvent) -> Unit,
