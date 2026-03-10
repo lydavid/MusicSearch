@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.listens.submit
 
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
@@ -11,8 +12,11 @@ import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.clock.FixedClock
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.error.Feedback
+import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -71,6 +75,9 @@ class SubmitListenPresenterTest {
     fun `smoke test`() = runTest {
         val submitListenPresenter = createSubmitListenPresenter()
         val fixedClockEpochSeconds = 104400L
+        coEvery { listensListRepository.submitListens(any(), any()) } answers {
+            Feedback.Success(ListensListFeedback.Updated)
+        }
         presenterTestOf({ submitListenPresenter.present() }) {
             var state = awaitItem()
             assertEquals(
@@ -215,6 +222,33 @@ class SubmitListenPresenterTest {
             assertEquals(
                 fixedClockEpochSeconds,
                 state.listenedAtDateTimeEpochSeconds,
+            )
+
+            state.eventSink(
+                SubmitListenUiEvent.Submit,
+            )
+            assertEquals(
+                navigator.awaitPop(),
+                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResult()),
+            )
+        }
+    }
+
+    @Test
+    fun `dismiss pops screen`() = runTest {
+        val submitListenPresenter = createSubmitListenPresenter()
+        coEvery { listensListRepository.submitListens(any(), any()) } answers {
+            Feedback.Success(ListensListFeedback.Updated)
+        }
+        presenterTestOf({ submitListenPresenter.present() }) {
+            skipItems(1)
+            val state = awaitItem()
+            state.eventSink(
+                SubmitListenUiEvent.Dismiss,
+            )
+            assertEquals(
+                navigator.awaitPop(),
+                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResult()),
             )
         }
     }

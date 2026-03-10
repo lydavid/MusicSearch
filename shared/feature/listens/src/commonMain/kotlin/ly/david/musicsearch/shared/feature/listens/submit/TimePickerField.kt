@@ -147,7 +147,6 @@ internal fun TimePickerDialog(
                                 .toInstant(timeZone)
                                 .toEpochMilliseconds() / MS_IN_SECOND
                             val nonOverflowEpochSecondsLocal = epochSecondsLocal % SECONDS_IN_DAY
-                            println("findme: nonOverflowEpochSecondsLocal=$nonOverflowEpochSecondsLocal")
                             onSelectTime(
                                 nonOverflowEpochSecondsLocal,
                             )
