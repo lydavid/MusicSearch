@@ -55,7 +55,9 @@ import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.deletedCountFromCollection
 import musicsearch.ui.common.generated.resources.deletingCountFromCollection
+import musicsearch.ui.common.generated.resources.failedToDeleteFromCollection
 import org.jetbrains.compose.resources.getString
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Clock
@@ -472,11 +474,11 @@ private suspend fun getMessage(feedback: Feedback<CollectionFeedback>): String {
         }
 
         is CollectionFeedback.Deleted -> {
-            getString(Res.string.deletingCountFromCollection, data.count, data.collectionName)
+            getString(Res.string.deletedCountFromCollection, data.count, data.collectionName)
         }
 
         is CollectionFeedback.Failed -> {
-            getString(Res.string.deletingCountFromCollection, data.collectionName, data.errorMessage)
+            getString(Res.string.failedToDeleteFromCollection, data.collectionName, data.errorMessage)
         }
     }
 }
