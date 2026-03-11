@@ -21,6 +21,8 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.ELLIPSIS
+import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.list.showTypes
@@ -52,6 +54,9 @@ import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.deletingCountFromCollection
+import org.jetbrains.compose.resources.getString
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -130,7 +135,7 @@ internal fun CollectionUi(
             try {
                 val snackbarResult = snackbarHostState.showSnackbar(
                     visuals = FeedbackSnackbarVisuals(
-                        message = feedback.data,
+                        message = getMessage(feedback),
                         actionLabel = (feedback as? Feedback.Actionable)?.action?.name,
                         duration = SnackbarDuration.Short,
                         withDismissAction = false,
@@ -156,7 +161,7 @@ internal fun CollectionUi(
         LaunchedEffect(feedback) {
             val snackbarResult = snackbarHostState.showSnackbar(
                 visuals = FeedbackSnackbarVisuals(
-                    message = feedback.data,
+                    message = getMessage(feedback),
                     actionLabel = (feedback as? Feedback.Error)?.action?.name,
                     duration = when (feedback) {
                         is Feedback.Loading -> SnackbarDuration.Indefinite
@@ -455,6 +460,23 @@ internal fun CollectionUi(
                     }
                 },
             )
+        }
+    }
+}
+
+private suspend fun getMessage(feedback: Feedback<CollectionFeedback>): String {
+    return when (val data = feedback.data) {
+        is CollectionFeedback.Loading -> ELLIPSIS
+        is CollectionFeedback.Deleting -> {
+            getString(Res.string.deletingCountFromCollection, data.count, data.collectionName)
+        }
+
+        is CollectionFeedback.Deleted -> {
+            getString(Res.string.deletingCountFromCollection, data.count, data.collectionName)
+        }
+
+        is CollectionFeedback.Failed -> {
+            getString(Res.string.deletingCountFromCollection, data.collectionName, data.errorMessage)
         }
     }
 }

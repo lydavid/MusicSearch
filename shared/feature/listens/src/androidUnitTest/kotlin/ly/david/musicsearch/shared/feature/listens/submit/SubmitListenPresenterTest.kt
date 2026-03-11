@@ -13,10 +13,10 @@ import ly.david.data.test.clock.FixedClock
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.error.Feedback
-import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -59,6 +59,7 @@ class SubmitListenPresenterTest {
     private val navigator = FakeNavigator(
         root = screen,
     )
+    private val now = Instant.parse("1970-01-02T05:00:00Z")
 
     private val listensListRepository = mockk<ListensListRepository>()
 
@@ -67,7 +68,7 @@ class SubmitListenPresenterTest {
         navigator = navigator,
         listenBrainzAuthStore = NoOpListenBrainzAuthStore(),
         listensListRepository = listensListRepository,
-        clock = FixedClock(now = Instant.parse("1970-01-02T05:00:00Z")),
+        clock = FixedClock(now = now),
         timeZone = TimeZone.UTC,
     )
 
@@ -76,7 +77,7 @@ class SubmitListenPresenterTest {
         val submitListenPresenter = createSubmitListenPresenter()
         val fixedClockEpochSeconds = 104400L
         coEvery { listensListRepository.submitListens(any(), any()) } answers {
-            Feedback.Success(ListensListFeedback.Updated)
+            Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {
             var state = awaitItem()
@@ -228,8 +229,16 @@ class SubmitListenPresenterTest {
                 SubmitListenUiEvent.Submit,
             )
             assertEquals(
+                FakeNavigator.PopEvent(
+                    poppedScreen = null,
+                    result = SnackbarPopResultV2(
+                        Feedback.Success(
+                            data = SubmitListenFeedback.SubmittedListens,
+                            time = now,
+                        ),
+                    ),
+                ),
                 navigator.awaitPop(),
-                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResult()),
             )
         }
     }
@@ -238,7 +247,7 @@ class SubmitListenPresenterTest {
     fun `dismiss pops screen`() = runTest {
         val submitListenPresenter = createSubmitListenPresenter()
         coEvery { listensListRepository.submitListens(any(), any()) } answers {
-            Feedback.Success(ListensListFeedback.Updated)
+            Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {
             skipItems(1)
@@ -247,8 +256,8 @@ class SubmitListenPresenterTest {
                 SubmitListenUiEvent.Dismiss,
             )
             assertEquals(
+                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResultV2(feedback = null)),
                 navigator.awaitPop(),
-                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResult()),
             )
         }
     }

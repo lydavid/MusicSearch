@@ -23,11 +23,14 @@ import kotlinx.datetime.toLocalDateTime
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
+import ly.david.musicsearch.shared.domain.error.Feedback
+import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -97,8 +100,7 @@ internal class SubmitListenPresenter(
                     coroutineScope.launch {
                         when (val listenType = screen.submitListenType) {
                             is SubmitListenType.Track -> {
-                                // TODO: observe response and show UI
-                                listensListRepository.submitListens(
+                                val feedback = listensListRepository.submitListens(
                                     username = loggedInUsername,
                                     listenSubmissions = listOf(
                                         ListenSubmission(
@@ -111,16 +113,18 @@ internal class SubmitListenPresenter(
                                         ),
                                     ),
                                 )
+                                navigator.pop(
+                                    result = SnackbarPopResultV2(
+                                        feedback = feedback.withTime(clock.now()),
+                                    ),
+                                )
                             }
                         }
-                        // TODO: need to propagate sealed interface to call site, so that it can
-                        //  map states to strings
-                        navigator.pop(result = SnackbarPopResult())
                     }
                 }
 
                 is SubmitListenUiEvent.Dismiss -> {
-                    navigator.pop(result = SnackbarPopResult())
+                    navigator.pop(result = SnackbarPopResultV2<Feedback.Success<SubmitListenFeedback>>(feedback = null))
                 }
             }
         }

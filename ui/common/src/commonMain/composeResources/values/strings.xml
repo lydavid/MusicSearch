@@ -212,7 +212,7 @@
     <string name="video">Video</string>
     <string name="seeAllListens">See all listens</string>
     <string name="updated">Updated</string>
-    <string name="needToLoginToDo">You need to be logged in to perform this action</string>
+    <string name="needToLoginToListenBrainzToDo">You need to be logged in to ListenBrainz to perform this action</string>
     <string name="noManualMapping">No manual mapping found for this listen</string>
     <string name="failedToRefreshMapping">Failed to refresh mapping</string>
     <string name="failedToSubmitMapping">Failed to submit manual mapping</string>
@@ -229,4 +229,9 @@
     <string name="selectDate">Select date</string>
     <string name="selectTime">Select time</string>
     <string name="submitListen">Submit listen</string>
+    <string name="submittedListen">Submitted listen</string>
+    <string name="failedToSubmitListen">Failed to submit listen</string>
+    <string name="deletingCountFromCollection">Deleting %1$d from %2$s</string>
+    <string name="deletedCountFromCollection">Deleted %1$d from %2$s</string>
+    <string name="failedToDeleteFromCollection">Failed to delete from collection %1$s. %2$s</string>
 </resources>

@@ -18,6 +18,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.Feedback
@@ -59,8 +60,8 @@ internal class CollectionPresenter(
 
         var collection: CollectionListItemModel? by rememberRetained { mutableStateOf(null) }
         var title: String by rememberSaveable { mutableStateOf("") }
-        var softDeleteFeedback: Feedback<String>? by remember { mutableStateOf(null) }
-        var hardDeleteFeedback: Feedback<String>? by remember { mutableStateOf(null) }
+        var softDeleteFeedback: Feedback<CollectionFeedback>? by remember { mutableStateOf(null) }
+        var hardDeleteFeedback: Feedback<CollectionFeedback>? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -184,8 +185,8 @@ internal class CollectionPresenter(
 internal data class CollectionUiState(
     val title: String,
     val collection: CollectionListItemModel?,
-    val softDeleteFeedback: Feedback<String>?,
-    val hardDeleteFeedback: Feedback<String>?,
+    val softDeleteFeedback: Feedback<CollectionFeedback>?,
+    val hardDeleteFeedback: Feedback<CollectionFeedback>?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
     val selectionState: SelectionState,

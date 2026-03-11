@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
@@ -53,9 +54,18 @@ data class AddToCollectionScreen(
 ) : Screen
 
 @Parcelize
+data object PopWithoutResult : PopResult
+
+// replace with v2, then rename
+@Parcelize
 data class SnackbarPopResult(
     val message: String = "",
     val actionLabel: String? = null,
+) : PopResult
+
+@Parcelize
+data class SnackbarPopResultV2<T : CommonParcelable>(
+    val feedback: T?,
 ) : PopResult
 
 @Parcelize

@@ -30,6 +30,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -183,14 +184,14 @@ class ListensListRepositoryImpl(
     override suspend fun submitListens(
         username: String,
         listenSubmissions: List<ListenSubmission>,
-    ): Feedback<ListensListFeedback> {
+    ): Feedback<SubmitListenFeedback> {
         return try {
             listenBrainzApi.submitListens(
                 listenSubmissions = listenSubmissions,
             )
             val listensResponse = listenBrainzApi.getListensByUser(
                 username = username,
-                minTimestamp = listenSubmissions.minByOrNull { it.listenedAtS }?.listenedAtS?.minus(1),
+                maxTimestamp = listenSubmissions.maxByOrNull { it.listenedAtS }?.listenedAtS?.plus(1),
                 // Count should be at least the size of the number of listens, but ideally larger, as
                 // the user may have submitted other listens in the past through other methods.
                 // In one extreme case, the user may have 100 other listens at the same time,
@@ -200,19 +201,17 @@ class ListensListRepositoryImpl(
             )
             listenDao.insert(listens = listensResponse.asListOfListens())
 
-            // TODO: change state
             Feedback.Success(
-                data = ListensListFeedback.Updated,
+                data = SubmitListenFeedback.SubmittedListens,
             )
         } catch (ex: HandledException) {
             Feedback.Error(
                 data = when {
                     ex.errorResolution == ErrorResolution.Login ->
-                        ListensListFeedback.NeedToLogin
+                        SubmitListenFeedback.NeedToLogin
 
-                    // TODO: change state
-                    else -> ex.message?.let { ListensListFeedback.NetworkException(it) }
-                        ?: ListensListFeedback.Updated
+                    else -> ex.message?.let { SubmitListenFeedback.NetworkException(it) }
+                        ?: SubmitListenFeedback.FailToSubmitListens
                 },
                 errorResolution = ErrorResolution.None,
             )
