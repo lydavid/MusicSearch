@@ -65,6 +65,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val wikimediaRepository: WikimediaRepository,
     private val collectionRepository: CollectionRepository,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val clock: Clock = Clock.System,
 ) : Presenter<DetailsUiState<DetailsModel>>, RecordVisit {
 
     abstract fun getTabs(): ImmutableList<Tab>
@@ -97,6 +98,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
+        var refreshedLocalAt by remember { mutableStateOf(clock.now()) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -117,7 +119,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
         val loginUiState = musicBrainzLoginPresenter.present()
 
-        LaunchedEffect(forceRefreshDetails) {
+        LaunchedEffect(forceRefreshDetails, refreshedLocalAt) {
             try {
                 isLoading = true
                 val newDetailsModel = lookupDetailsModel(
@@ -207,6 +209,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     //  When switching tabs, it is necessary to clear,
                     //  otherwise we may add entities to the wrong collection type
                     selectionState.clearSelection()
+                }
+
+                DetailsUiEvent.RefreshLocalDetails -> {
+                    refreshedLocalAt = clock.now()
                 }
 
                 DetailsUiEvent.ForceRefreshDetails -> {
@@ -345,6 +351,8 @@ internal data class DetailsTabUiState(
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object NavigateUp : DetailsUiEvent
+
+    data object RefreshLocalDetails : DetailsUiEvent
 
     data object ForceRefreshDetails : DetailsUiEvent
 

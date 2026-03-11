@@ -33,7 +33,8 @@ fun OverflowMenuScope.SubmitListenMenuItem(
     overlayHost: OverlayHost,
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier.Companion,
+    modifier: Modifier = Modifier,
+    onSuccess: () -> Unit = {},
 ) {
     DropdownMenuItem(
         text = {
@@ -74,6 +75,9 @@ fun OverflowMenuScope.SubmitListenMenuItem(
                             feedback = feedback,
                         ),
                     )
+                }
+                if (result.feedback is Feedback.Success) {
+                    onSuccess()
                 }
             }
             closeMenu()

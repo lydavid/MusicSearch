@@ -203,6 +203,9 @@ internal fun RecordingUi(
                             overlayHost = overlayHost,
                             coroutineScope = coroutineScope,
                             snackbarHostState = snackbarHostState,
+                            onSuccess = {
+                                eventSink(DetailsUiEvent.RefreshLocalDetails)
+                            },
                         )
                     }
 
