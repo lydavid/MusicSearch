@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 
 private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
 
@@ -32,6 +33,7 @@ interface ListenBrainzApi {
         username: String,
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
+        count: Int = LISTENS_COUNT,
     ): GetListensResponse
 
     suspend fun submitManualMapping(
@@ -53,6 +55,10 @@ interface ListenBrainzApi {
     suspend fun deleteListen(
         listenedAtMs: Long,
         recordingMessyBrainzId: String,
+    )
+
+    suspend fun submitListens(
+        listenSubmissions: List<ListenSubmission>,
     )
 
     companion object {
@@ -91,6 +97,8 @@ interface ListenBrainzApi {
 }
 
 private const val LISTENS_COUNT = 100
+private const val CONTENT_TYPE = "Content-Type"
+private const val APPLICATION_JSON = "application/json"
 
 class ListenBrainzApiImpl(
     private val httpClient: HttpClient,
@@ -111,6 +119,7 @@ class ListenBrainzApiImpl(
         username: String,
         minTimestamp: Long?,
         maxTimestamp: Long?,
+        count: Int,
     ): GetListensResponse {
         require(!(minTimestamp != null && maxTimestamp != null)) {
             "minTimestamp and maxTimestamp cannot both be set"
@@ -119,7 +128,7 @@ class ListenBrainzApiImpl(
             url {
                 appendPathSegments("user/$username/listens")
                 // TODO: have a background task to load 1000 at a time if the user wants to load all
-                parameter("count", LISTENS_COUNT)
+                parameter("count", count)
                 parameter("min_ts", minTimestamp)
                 parameter("max_ts", maxTimestamp)
             }
@@ -141,7 +150,7 @@ class ListenBrainzApiImpl(
         httpClient.post {
             url {
                 appendPathSegments("metadata/submit_manual_mapping/")
-                header("Content-Type", "application/json")
+                header(CONTENT_TYPE, APPLICATION_JSON)
                 setBody(
                     ManualMappingBody(
                         recordingMessyBrainzId = recordingMessyBrainzId,
@@ -186,11 +195,28 @@ class ListenBrainzApiImpl(
         httpClient.post {
             url {
                 appendPathSegments("delete-listen")
-                header("Content-Type", "application/json")
+                header(CONTENT_TYPE, APPLICATION_JSON)
                 setBody(
                     DeleteListenBody(
                         listenedAtS = listenedAtMs / MS_IN_SECOND,
                         recordingMessyBrainzId = recordingMessyBrainzId,
+                    ),
+                )
+            }
+        }
+    }
+
+    override suspend fun submitListens(
+        listenSubmissions: List<ListenSubmission>,
+    ) {
+        httpClient.post {
+            url {
+                appendPathSegments("submit-listens")
+                header(CONTENT_TYPE, APPLICATION_JSON)
+                setBody(
+                    SubmitListensBody(
+                        listenType = "import",
+                        listenSubmissions = listenSubmissions.map { it.toListenBrainzListenSubmission() },
                     ),
                 )
             }

@@ -62,6 +62,7 @@ fun TrackListItem(
                 fontWeight = track.fontWeight,
             )
             // TODO: support edit collection on underlying recording
+            //  move this time like recording, or like listen list item
         },
         supportingContent = {
             Column {

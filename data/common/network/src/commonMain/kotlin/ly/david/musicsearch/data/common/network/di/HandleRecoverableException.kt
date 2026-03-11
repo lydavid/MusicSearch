@@ -64,6 +64,14 @@ internal suspend fun handleRecoverableException(
                     )
                 }
 
+                HttpStatusCode.MethodNotAllowed -> {
+                    handledException = HandledException(
+                        userMessage = "Method not allowed.",
+                        errorType = ErrorType.MethodNotAllowed,
+                        errorResolution = ErrorResolution.None,
+                    )
+                }
+
                 else -> {
                     logger.e(exception)
                     val exceptionResponseText = exceptionResponse.bodyAsText()

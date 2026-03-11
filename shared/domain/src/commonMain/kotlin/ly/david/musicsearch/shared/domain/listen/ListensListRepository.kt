@@ -8,6 +8,8 @@ import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
+import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 
 interface ListensListRepository {
     fun observeListens(
@@ -47,9 +49,15 @@ interface ListensListRepository {
     fun unmarkListenForDeletion()
 
     suspend fun deleteMarkedForDeletion(): Feedback<ListensListFeedback>
+
+    suspend fun submitListens(
+        username: String,
+        listenSubmissions: List<ListenSubmission>,
+    ): Feedback<SubmitListenFeedback>
 }
 
-sealed interface ListensListFeedback {
+@Parcelize
+sealed interface ListensListFeedback : CommonParcelable {
     data object Updated : ListensListFeedback
     data class InvalidID(val message: String?) : ListensListFeedback
     data object NeedToLogin : ListensListFeedback
@@ -60,4 +68,12 @@ sealed interface ListensListFeedback {
     data object FailToRefreshMapping : ListensListFeedback
     data object FailToDeleteListen : ListensListFeedback
     data class DeletedNumberOfListens(val size: Int) : ListensListFeedback
+}
+
+@Parcelize
+sealed interface SubmitListenFeedback : CommonParcelable {
+    data object SubmittedListens : SubmitListenFeedback
+    data object FailToSubmitListens : SubmitListenFeedback
+    data object NeedToLogin : SubmitListenFeedback
+    data class NetworkException(val message: String) : SubmitListenFeedback
 }

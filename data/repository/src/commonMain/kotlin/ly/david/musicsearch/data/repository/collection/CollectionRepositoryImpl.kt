@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
+import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.error.Action
@@ -125,14 +126,17 @@ class CollectionRepositoryImpl(
     override fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): Flow<Feedback<String>> = flow {
+    ): Flow<Feedback<CollectionFeedback>> = flow {
         collectionEntityDao.markDeletedFromCollection(
             collectionId = collection.id,
             collectableIds = collectableIds,
         )
         emit(
             Feedback.Actionable(
-                data = "Deleting ${collectableIds.size} from ${collection.name}.",
+                data = CollectionFeedback.Deleting(
+                    count = collectableIds.size,
+                    collectionName = collection.name,
+                ),
                 action = Action.Undo,
             ),
         )
@@ -142,8 +146,10 @@ class CollectionRepositoryImpl(
         collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
     }
 
-    override suspend fun deleteFromCollection(collection: CollectionListItemModel): Flow<Feedback<String>> = flow {
-        emit(Feedback.Loading("..."))
+    override suspend fun deleteFromCollection(
+        collection: CollectionListItemModel,
+    ): Flow<Feedback<CollectionFeedback>> = flow {
+        emit(Feedback.Loading(CollectionFeedback.Loading))
 
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
         if (collection.isRemote) {
@@ -156,10 +162,12 @@ class CollectionRepositoryImpl(
                     mbids = idsMarkedForDeletion,
                 )
             } catch (ex: HandledException) {
-                val userFacingError = "Failed to delete from collection ${collection.name}. ${ex.userMessage}"
                 emit(
                     Feedback.Error(
-                        data = userFacingError,
+                        data = CollectionFeedback.Failed(
+                            collectionName = collection.name,
+                            errorMessage = ex.userMessage,
+                        ),
                         action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
                         errorResolution = ex.errorResolution,
                     ),
@@ -171,7 +179,10 @@ class CollectionRepositoryImpl(
         collectionEntityDao.deleteFromCollection(collectionId = collection.id)
         emit(
             Feedback.Success(
-                data = "Deleted ${idsMarkedForDeletion.size} from ${collection.name}.",
+                data = CollectionFeedback.Deleted(
+                    count = idsMarkedForDeletion.size,
+                    collectionName = collection.name,
+                ),
             ),
         )
     }

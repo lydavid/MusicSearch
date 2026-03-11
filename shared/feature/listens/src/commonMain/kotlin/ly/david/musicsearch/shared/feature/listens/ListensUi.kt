@@ -66,7 +66,7 @@ import musicsearch.ui.common.generated.resources.failedToRefreshMapping
 import musicsearch.ui.common.generated.resources.failedToSubmitMapping
 import musicsearch.ui.common.generated.resources.invalidMusicBrainzId
 import musicsearch.ui.common.generated.resources.listens
-import musicsearch.ui.common.generated.resources.needToLoginToDo
+import musicsearch.ui.common.generated.resources.needToLoginToListenBrainzToDo
 import musicsearch.ui.common.generated.resources.noManualMapping
 import musicsearch.ui.common.generated.resources.noRecordingWithIdFound
 import musicsearch.ui.common.generated.resources.setAction
@@ -285,7 +285,7 @@ private fun getMessage(feedback: Feedback<ListensListFeedback>): String {
     return when (val data = feedback.data) {
         ListensListFeedback.Updated -> stringResource(Res.string.updated)
         is ListensListFeedback.InvalidID -> stringResource(Res.string.invalidMusicBrainzId, data.message.orEmpty())
-        ListensListFeedback.NeedToLogin -> stringResource(Res.string.needToLoginToDo)
+        ListensListFeedback.NeedToLogin -> stringResource(Res.string.needToLoginToListenBrainzToDo)
         is ListensListFeedback.NetworkException -> data.message
         ListensListFeedback.FailToSubmitMapping -> stringResource(Res.string.failedToSubmitMapping)
         is ListensListFeedback.NoRecording -> stringResource(Res.string.noRecordingWithIdFound, data.id)

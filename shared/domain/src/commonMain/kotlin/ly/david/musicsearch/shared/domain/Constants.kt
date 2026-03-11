@@ -15,4 +15,12 @@ const val DEFAULT_IMAGES_GRID_PADDING_DP = 2
 
 const val MS_IN_SECOND = 1000
 
+const val SECONDS_IN_MINUTE = 60
+const val SECONDS_IN_HOUR = 60 * SECONDS_IN_MINUTE
+const val SECONDS_IN_DAY = 24 * SECONDS_IN_HOUR
+
 const val NUMBER_OF_LATEST_LISTENS_TO_SHOW: Long = 3
+
+const val DOT_SEPARATOR = "・"
+
+const val ELLIPSIS = "…"

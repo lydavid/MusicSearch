@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
@@ -68,7 +69,7 @@ fun RecordingListItem(
                     val dateAndLength = listOfNotNull(
                         recording.firstReleaseDate.takeIf { it.isNotEmpty() },
                         recording.length.toDisplayTime(),
-                    ).joinToString("・")
+                    ).joinToString(DOT_SEPARATOR)
                     Text(
                         text = dateAndLength,
                         style = TextStyles.getCardBodySubTextStyle(),

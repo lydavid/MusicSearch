@@ -5,13 +5,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -22,6 +18,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
@@ -38,6 +35,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -46,6 +44,7 @@ import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -138,13 +137,7 @@ internal fun RecordingUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
+            FeedbackSnackbarHost(snackbarHostState)
         },
         topBar = {
             val annotatedName = state.detailsModel.getAnnotatedName()
@@ -193,6 +186,26 @@ internal fun RecordingUi(
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                     )
+
+                    val recordingDetailsModel = state.detailsModel
+                    if (state.showListenSubmission && recordingDetailsModel != null) {
+                        SubmitListenMenuItem(
+                            submitListenType = SubmitListenType.Track(
+                                name = recordingDetailsModel.name,
+                                disambiguation = recordingDetailsModel.disambiguation,
+                                aliases = recordingDetailsModel.aliases,
+                                // prefer to get it from details model, as the id can change after a fetch
+                                recordingId = recordingDetailsModel.id,
+                                lengthMilliseconds = recordingDetailsModel.length,
+                                artists = recordingDetailsModel.artistCredits,
+                                releaseName = null,
+                            ),
+                            overlayHost = overlayHost,
+                            coroutineScope = coroutineScope,
+                            snackbarHostState = snackbarHostState,
+                        )
+                    }
+
                     CopyToClipboardMenuItem(entityId)
                     when (
                         val sortOption =

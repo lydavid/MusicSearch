@@ -11,7 +11,7 @@ class DateExtTest {
     fun `format date US`() {
         val instant = Instant.parse("2024-04-05T21:42:20Z")
         Locale.setDefault(Locale.US)
-        assertEquals("Friday, April 5, 2024", instant.getDateFormatted())
+        assertEquals("Friday, April 5, 2024", instant.getFullDateFormatted())
     }
 
     @Test
@@ -25,7 +25,7 @@ class DateExtTest {
     fun `format date Canada`() {
         val instant = Instant.parse("2024-04-05T21:42:20Z")
         Locale.setDefault(Locale.CANADA)
-        assertEquals("Friday, April 5, 2024", instant.getDateFormatted())
+        assertEquals("Friday, April 5, 2024", instant.getFullDateFormatted())
     }
 
     @Test

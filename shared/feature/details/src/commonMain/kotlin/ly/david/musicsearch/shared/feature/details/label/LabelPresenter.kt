@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.label.LabelRepository
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
@@ -36,6 +37,7 @@ internal class LabelPresenter(
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
     collectionRepository: CollectionRepository,
+    listenBrainzAuthStore: ListenBrainzAuthStore,
 ) : DetailsPresenter<LabelDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -47,6 +49,7 @@ internal class LabelPresenter(
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
     collectionRepository = collectionRepository,
+    listenBrainzAuthStore = listenBrainzAuthStore,
 ) {
     override fun getTabs(): ImmutableList<Tab> {
         return labelTabs

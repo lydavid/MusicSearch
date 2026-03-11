@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.common.getDateFormatted
+import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -48,8 +48,8 @@ class SpotifyHistoryRepositoryImpl(
         before: SpotifyHistoryListItemModel?,
         after: SpotifyHistoryListItemModel?,
     ): ListSeparator? {
-        val beforeDate = before?.lastListened?.getDateFormatted()
-        val afterDate = after?.lastListened?.getDateFormatted()
+        val beforeDate = before?.lastListened?.getFullDateFormatted()
+        val afterDate = after?.lastListened?.getFullDateFormatted()
         return if (beforeDate != afterDate && afterDate != null) {
             ListSeparator(
                 id = afterDate,

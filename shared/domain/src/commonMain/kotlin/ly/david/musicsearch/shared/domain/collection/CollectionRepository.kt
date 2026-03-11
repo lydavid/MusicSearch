@@ -6,6 +6,8 @@ import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
+import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 
 interface CollectionRepository {
     fun observeAllCollections(
@@ -29,7 +31,7 @@ interface CollectionRepository {
     fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: Set<String>,
-    ): Flow<Feedback<String>>
+    ): Flow<Feedback<CollectionFeedback>>
 
     fun unMarkDeletedFromCollection(
         collectionId: String,
@@ -37,7 +39,7 @@ interface CollectionRepository {
 
     suspend fun deleteFromCollection(
         collection: CollectionListItemModel,
-    ): Flow<Feedback<String>>
+    ): Flow<Feedback<CollectionFeedback>>
 
     suspend fun addToCollection(
         collectionId: String,
@@ -56,4 +58,12 @@ interface CollectionRepository {
     fun observeEntityIsInACollection(
         entityId: String,
     ): Flow<Boolean>
+}
+
+@Parcelize
+sealed interface CollectionFeedback : CommonParcelable {
+    data object Loading : CollectionFeedback
+    data class Deleting(val count: Int, val collectionName: String) : CollectionFeedback
+    data class Deleted(val count: Int, val collectionName: String) : CollectionFeedback
+    data class Failed(val collectionName: String, val errorMessage: String) : CollectionFeedback
 }

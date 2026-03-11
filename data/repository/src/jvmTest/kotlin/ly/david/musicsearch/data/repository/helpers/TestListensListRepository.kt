@@ -1,14 +1,15 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import kotlinx.coroutines.test.TestScope
-import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
+import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.data.listenbrainz.api.ManualMappingResponse
 import ly.david.musicsearch.data.listenbrainz.api.RecordingMetadata
 import ly.david.musicsearch.data.listenbrainz.api.TokenValidationResponse
 import ly.david.musicsearch.data.repository.listen.ListensListRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listen.ListenDao
+import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 
 interface TestListensListRepository {
@@ -30,6 +31,7 @@ interface TestListensListRepository {
                     username: String,
                     minTimestamp: Long?,
                     maxTimestamp: Long?,
+                    count: Int,
                 ): GetListensResponse {
                     return response
                 }
@@ -58,6 +60,10 @@ interface TestListensListRepository {
                     listenedAtMs: Long,
                     recordingMessyBrainzId: String,
                 ) {
+                    // no-op
+                }
+
+                override suspend fun submitListens(listenSubmissions: List<ListenSubmission>) {
                     // no-op
                 }
             },

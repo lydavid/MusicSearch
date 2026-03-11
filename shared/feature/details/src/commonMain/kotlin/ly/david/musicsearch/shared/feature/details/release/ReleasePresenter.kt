@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -38,6 +39,7 @@ internal class ReleasePresenter(
     getMusicBrainzUrl: GetMusicBrainzUrl,
     wikimediaRepository: WikimediaRepository,
     collectionRepository: CollectionRepository,
+    listenBrainzAuthStore: ListenBrainzAuthStore,
 ) : DetailsPresenter<ReleaseDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -49,6 +51,7 @@ internal class ReleasePresenter(
     getMusicBrainzUrl = getMusicBrainzUrl,
     wikimediaRepository = wikimediaRepository,
     collectionRepository = collectionRepository,
+    listenBrainzAuthStore = listenBrainzAuthStore,
 ) {
     override fun getTabs(): ImmutableList<Tab> {
         return releaseTabs
