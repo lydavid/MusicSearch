@@ -198,6 +198,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
+  publish-ios:
+    needs: publish # depends on it modifying and committing some files
+    permissions:
+      contents: read
+    uses: ./.github/workflows/publish-ios.yml
+
   publish-gh-pages:
     needs: publish
     permissions:
