@@ -87,7 +87,6 @@ class RecordingDao(
                 mapper = ::toDetailsModel,
             ).executeAsOneOrNull()
 
-            // TODO: get non-deleted, otherwise when navigating to details before deletion completes will still show old listen
             recording?.copy(
                 latestListensTimestampsMs = transacter.getLatestListensByRecording(
                     recordingId = recordingId,
