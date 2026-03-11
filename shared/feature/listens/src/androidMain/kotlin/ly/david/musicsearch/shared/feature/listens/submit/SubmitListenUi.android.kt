@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import kotlin.time.Clock
 
 private val submitListenType = SubmitListenType.Track(
     name = "Track",
@@ -53,6 +54,7 @@ internal fun PreviewSubmitListenUiStartedCustomLocal() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.of("America/Toronto"),
+                clock = Clock.System,
             )
         }
     }
@@ -73,6 +75,7 @@ internal fun PreviewSubmitListenUiStartedCustomUTC() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.UTC,
+                clock = Clock.System,
             )
         }
     }
@@ -92,6 +95,7 @@ internal fun PreviewSubmitListenUiStartedNowLocal() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.of("Europe/Paris"),
+                clock = Clock.System,
             )
         }
     }
@@ -110,6 +114,7 @@ internal fun PreviewSubmitListenUiStartedNowUTC() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.UTC,
+                clock = Clock.System,
             )
         }
     }
@@ -132,6 +137,7 @@ internal fun PreviewSubmitListenUiFinished() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.UTC,
+                clock = Clock.System,
             )
         }
     }
@@ -151,6 +157,7 @@ internal fun PreviewSubmitListenUiStartedCustomLocalDaylightSaving() {
                     eventSink = {},
                 ),
                 timeZone = TimeZone.of("America/Toronto"),
+                clock = Clock.System,
             )
         }
     }

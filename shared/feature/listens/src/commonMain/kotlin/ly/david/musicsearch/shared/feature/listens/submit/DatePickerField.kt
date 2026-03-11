@@ -9,6 +9,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -23,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.ui.common.icons.CalendarMonth
@@ -34,6 +36,7 @@ import musicsearch.ui.common.generated.resources.date
 import musicsearch.ui.common.generated.resources.ok
 import musicsearch.ui.common.generated.resources.selectDate
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
 import kotlin.time.Instant
 
 /**
@@ -43,6 +46,7 @@ import kotlin.time.Instant
 internal fun DatePickerField(
     dateTimeEpochSeconds: Long,
     timeZone: TimeZone,
+    clock: Clock,
     modifier: Modifier = Modifier,
     onSelectDate: (dateSeconds: Long) -> Unit,
 ) {
@@ -77,17 +81,23 @@ internal fun DatePickerField(
         DatePickerDialog(
             dateTimeEpochSeconds = dateTimeEpochSeconds,
             timeZone = timeZone,
+            clock = clock,
             onSelectDate = onSelectDate,
             onDismiss = { showDialog = false },
         )
     }
 }
 
+// https://github.com/metabrainz/listenbrainz-server/blob/master/listenbrainz/listenstore/__init__.py#L15
+private const val MINIMUM_TIMESTAMP = 1033410600L * MS_IN_SECOND
+private const val MINIMUM_YEAR = 2002
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DatePickerDialog(
     dateTimeEpochSeconds: Long,
     timeZone: TimeZone,
+    clock: Clock,
     onSelectDate: (dateSeconds: Long) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -96,7 +106,23 @@ private fun DatePickerDialog(
         .toLocalDateTime(timeZone)
         .toInstant(TimeZone.UTC)
         .toEpochMilliseconds()
-    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentSelectedDateMillisUTC)
+
+    val currentDateUTC = clock.now()
+        .toLocalDateTime(timeZone)
+        .toInstant(TimeZone.UTC)
+    val currentDateMillisUTC = currentDateUTC.toEpochMilliseconds()
+
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = currentSelectedDateMillisUTC,
+        yearRange = IntRange(MINIMUM_YEAR, currentDateUTC.toLocalDateTime(TimeZone.UTC).year),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val afterMin = utcTimeMillis > MINIMUM_TIMESTAMP
+                val beforeMax = utcTimeMillis <= currentDateMillisUTC
+                return afterMin && beforeMax
+            }
+        },
+    )
 
     DatePickerDialog(
         onDismissRequest = onDismiss,

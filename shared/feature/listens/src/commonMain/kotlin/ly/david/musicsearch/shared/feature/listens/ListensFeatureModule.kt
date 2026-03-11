@@ -55,8 +55,9 @@ val listensFeatureModule = module {
                     ui<SubmitListenUiState> { state, modifier ->
                         SubmitListenUi(
                             state = state,
-                            modifier = modifier,
                             timeZone = TimeZone.currentSystemDefault(),
+                            clock = Clock.System,
+                            modifier = modifier,
                         )
                     }
                 }

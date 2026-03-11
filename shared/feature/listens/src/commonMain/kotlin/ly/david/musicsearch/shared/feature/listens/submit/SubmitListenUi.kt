@@ -38,6 +38,7 @@ import musicsearch.ui.common.generated.resources.started
 import musicsearch.ui.common.generated.resources.submit
 import musicsearch.ui.common.generated.resources.submitToListenBrainz
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
 import kotlin.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +46,7 @@ import kotlin.time.Instant
 internal fun SubmitListenUi(
     state: SubmitListenUiState,
     timeZone: TimeZone,
+    clock: Clock,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
@@ -151,6 +153,7 @@ internal fun SubmitListenUi(
             DatePickerField(
                 dateTimeEpochSeconds = dateTimeEpochSeconds,
                 timeZone = timeZone,
+                clock = clock,
                 modifier = Modifier.padding(top = 8.dp),
                 onSelectDate = {
                     eventSink(SubmitListenUiEvent.UpdateDate(it))
