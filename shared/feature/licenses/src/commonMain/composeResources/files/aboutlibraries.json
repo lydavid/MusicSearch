@@ -10,14 +10,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.12.4",
+            "artifactVersion": "1.13.0",
             "description": "Provides the base Activity subclass and the relevant hooks to build a composable structure on top.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Activity",
-            "website": "https://developer.android.com/jetpack/androidx/releases/activity#1.12.4",
+            "website": "https://developer.android.com/jetpack/androidx/releases/activity#1.13.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -348,14 +348,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.17.0",
+            "artifactVersion": "1.18.0",
             "description": "Provides backward-compatible implementations of Android platform APIs and features.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Core",
-            "website": "https://developer.android.com/jetpack/androidx/releases/core#1.17.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/core#1.18.0",
             "licenses": [
                 "Apache-2.0"
             ],
