@@ -203,6 +203,7 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/publish-ios.yml
+    secrets: inherit
 
   publish-gh-pages:
     needs: publish
