@@ -60,7 +60,9 @@ jobs:
 
       - name: Get next release version
         id: get-next-version
-        run: npx semantic-release --dry-run
+        run: |
+          git pull
+          npx semantic-release --dry-run
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
