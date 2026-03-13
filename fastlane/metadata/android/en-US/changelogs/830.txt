@@ -1,0 +1,11 @@
+
+### Bug Fixes
+
+* limit date picker to valid dates
+* refresh listen count in recording screen after submitting listen
+* show non-soft-deleted listens and count in details screens (these are eventually actually deleted after leaving the listens screen)
+
+
+### Features
+
+* add menu option in recording screen to manually submit listen to ListenBrainz
