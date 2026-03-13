@@ -63,6 +63,24 @@ stable class ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata {
   stable val lastUpdated: Instant
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Loading {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Deleting {
+  stable val count: Int
+  stable val collectionName: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Deleted {
+  stable val count: Int
+  stable val collectionName: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Failed {
+  stable val collectionName: String
+  stable val errorMessage: String
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult.NewCollection {
   stable val id: String?
   stable val name: String
@@ -487,6 +505,17 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenRelease {
   stable val visited: Boolean
   <runtime stability> = Stable
 }
+unstable class ly.david.musicsearch.shared.domain.listen.ListenSubmission {
+  stable val listenedAtS: Long
+  stable val artistName: String
+  stable val trackName: String
+  stable val releaseName: String?
+  stable val releaseMbid: String?
+  unstable val artistMbids: List<String>?
+  stable val recordingMbid: String?
+  stable val durationMs: Long?
+  <runtime stability> = Unstable
+}
 stable class ly.david.musicsearch.shared.domain.listen.ListenWithRecording {
   stable val id: String
   stable val name: String
@@ -534,6 +563,29 @@ stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.FailT
 stable class ly.david.musicsearch.shared.domain.listen.ListensListFeedback.DeletedNumberOfListens {
   stable val size: Int
   <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback.SubmittedListens {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback.FailToSubmitListens {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback.NeedToLogin {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback.NetworkException {
+  stable val message: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenType.Track {
+  stable val name: String
+  stable val disambiguation: String?
+  stable val aliases: ImmutableList<BasicAlias>
+  stable val recordingId: String
+  stable val lengthMilliseconds: Int?
+  stable val artists: ImmutableList<ArtistCreditUiModel>
+  stable val releaseName: String?
+  <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.listen.ListenBrainzLoginState.InvalidToken {
   <runtime stability> = Stable

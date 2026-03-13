@@ -255,10 +255,19 @@ stable class ly.david.musicsearch.ui.common.screen.AddToCollectionScreen {
   runtime var CREATOR: Creator<AddToCollectionScreen>
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {
+  runtime var CREATOR: Creator<PopWithoutResult>
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResult {
   stable val message: String
   stable val actionLabel: String?
   runtime var CREATOR: Creator<SnackbarPopResult>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2 {
+  runtime val feedback: T?
+  runtime var CREATOR: Creator<SnackbarPopResultV2<*>>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.DetailsScreen {
@@ -307,6 +316,11 @@ stable class ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen {
 stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
   runtime val entityFacet: MusicBrainzEntity?
   runtime var CREATOR: Creator<ListensScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SubmitListenScreen {
+  unstable val submitListenType: SubmitListenType
+  runtime var CREATOR: Creator<SubmitListenScreen>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.series.SeriesListPresenter {

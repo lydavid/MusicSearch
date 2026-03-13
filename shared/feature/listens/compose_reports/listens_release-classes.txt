@@ -94,3 +94,42 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UnmarkFo
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.DeleteMarkedForDeletion {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPresenter {
+  stable val screen: SubmitListenScreen
+  stable val navigator: Navigator
+  unstable val listenBrainzAuthStore: ListenBrainzAuthStore
+  unstable val listensListRepository: ListensListRepository
+  unstable val clock: Clock
+  unstable val timeZone: TimeZone
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiState {
+  unstable val submitListenType: SubmitListenType
+  stable val dateTimeEpochSeconds: Long
+  stable val listenedAtDateTimeEpochSeconds: Long
+  stable val timestampIsStartTime: Boolean
+  stable val useCustomTime: Boolean
+  stable val eventSink: Function1<SubmitListenUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.UpdateDate {
+  stable val epochSeconds: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.UpdateTime {
+  stable val epochSeconds: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.UpdateDateTimeIsStartTime {
+  stable val isStartTime: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.UpdateUseCustomTime {
+  stable val useCustomTime: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.Submit {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.Dismiss {
+  <runtime stability> = Stable
+}

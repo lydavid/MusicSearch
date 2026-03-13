@@ -214,6 +214,7 @@ ly.david.musicsearch.ui.common.topappbar.SubtitleWithOverflow,SubtitleWithOverfl
 ly.david.musicsearch.ui.common.topappbar.OverflowMenu,OverflowMenu,1,1,1,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.topappbar.rememberSelectionState,rememberSelectionState,1,0,0,0,0,0,0,0,1,2,
 ly.david.musicsearch.ui.common.topappbar.StatsMenuItem,StatsMenuItem,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem,SubmitListenMenuItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.topappbar.getTitle,getTitle,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.topappbar.TabsBar,TabsBar,1,1,1,0,0,0,0,0,3,2,
 ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem,ToggleMenuItem,1,1,1,0,0,0,0,0,1,2,

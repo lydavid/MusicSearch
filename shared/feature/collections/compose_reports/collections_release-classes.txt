@@ -103,8 +103,8 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionPr
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiState {
   stable val title: String
   runtime val collection: CollectionListItemModel?
-  unstable val softDeleteFeedback: Feedback<String>?
-  unstable val hardDeleteFeedback: Feedback<String>?
+  unstable val softDeleteFeedback: Feedback<CollectionFeedback>?
+  unstable val hardDeleteFeedback: Feedback<CollectionFeedback>?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val url: String
   stable val selectionState: SelectionState

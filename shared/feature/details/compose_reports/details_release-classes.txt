@@ -99,6 +99,8 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter 
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val wikimediaRepository: WikimediaRepository
   unstable val collectionRepository: CollectionRepository
+  unstable val listenBrainzAuthStore: ListenBrainzAuthStore
+  unstable val clock: Clock
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
@@ -112,6 +114,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
   stable val snackbarMessage: String?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
+  stable val showListenSubmission: Boolean
   runtime val detailsTabUiState: DetailsTabUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
@@ -132,6 +135,9 @@ runtime class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiStat
   <runtime stability> = Runtime(HandledException)
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.RefreshLocalDetails {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ForceRefreshDetails {

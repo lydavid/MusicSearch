@@ -675,6 +675,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   unstable coroutineScope: CoroutineScope
   stable modifier: Modifier? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem(
+  <this>: OverflowMenuScope
+  unstable submitListenType: SubmitListenType
+  stable overlayHost: OverlayHost
+  unstable coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable modifier: Modifier? = @static <expression>
+  stable onSuccess: Function0<Unit>? = @static <expression>
+)
 fun ly.david.musicsearch.ui.common.topappbar.getTitle(
   stable <this>: Tab
 ): String
