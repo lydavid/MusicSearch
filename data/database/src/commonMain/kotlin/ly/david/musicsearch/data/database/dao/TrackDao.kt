@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.data.database.Database

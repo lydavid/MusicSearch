@@ -1,13 +1,13 @@
 package ly.david.musicsearch.shared.domain.history.usecase
 
-import app.cash.paging.PagingData
-import app.cash.paging.cachedIn
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
-import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
+import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 interface GetPagedHistory {
     operator fun invoke(

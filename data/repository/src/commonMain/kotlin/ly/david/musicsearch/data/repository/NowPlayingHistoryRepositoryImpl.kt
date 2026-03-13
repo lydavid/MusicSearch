@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository
 
-import app.cash.paging.Pager
-import app.cash.paging.insertSeparators
-import app.cash.paging.map
+import androidx.paging.Pager
+import androidx.paging.insertSeparators
+import androidx.paging.map
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.history.NowPlayingHistory

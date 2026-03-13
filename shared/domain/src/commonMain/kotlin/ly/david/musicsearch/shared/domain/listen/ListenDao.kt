@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.listen
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity

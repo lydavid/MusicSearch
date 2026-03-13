@@ -1,8 +1,8 @@
 package ly.david.musicsearch.shared.domain.paging
 
-import app.cash.paging.PagingData
-import app.cash.paging.TerminalSeparatorType
-import app.cash.paging.insertSeparators
+import androidx.paging.PagingData
+import androidx.paging.TerminalSeparatorType
+import androidx.paging.insertSeparators
 
 fun <T : Any> PagingData<T>.insertFooterItemForNonEmpty(
     terminalSeparatorType: TerminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,

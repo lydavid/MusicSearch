@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository
 
-import app.cash.paging.Pager
-import app.cash.paging.PagingData
-import app.cash.paging.insertSeparators
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
