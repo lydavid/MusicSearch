@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.feature.listens
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import app.cash.paging.PagingData
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.common.getFullDateFormatted

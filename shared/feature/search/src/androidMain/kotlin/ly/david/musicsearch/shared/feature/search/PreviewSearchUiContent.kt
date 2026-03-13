@@ -2,8 +2,8 @@ package ly.david.musicsearch.shared.feature.search
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import app.cash.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel

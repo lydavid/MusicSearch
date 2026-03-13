@@ -2,7 +2,7 @@ package ly.david.musicsearch.ui.common.relation
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
-import app.cash.paging.PagingData
+import androidx.paging.PagingData
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow

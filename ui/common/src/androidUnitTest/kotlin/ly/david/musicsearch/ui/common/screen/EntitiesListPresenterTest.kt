@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common.screen
 
+import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
-import app.cash.paging.PagingData
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow

@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.image
 
 import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import app.cash.paging.PagingConfig
-import app.cash.paging.PagingData
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

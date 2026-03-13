@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.recording
 
-import app.cash.paging.PagingData
-import app.cash.paging.PagingSource
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

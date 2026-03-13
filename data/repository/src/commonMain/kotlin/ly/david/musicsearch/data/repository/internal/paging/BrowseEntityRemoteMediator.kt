@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.internal.paging
 
-import app.cash.paging.ExperimentalPagingApi
-import app.cash.paging.LoadType
-import app.cash.paging.PagingState
-import app.cash.paging.RemoteMediator
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadType
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.data.musicbrainz.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT

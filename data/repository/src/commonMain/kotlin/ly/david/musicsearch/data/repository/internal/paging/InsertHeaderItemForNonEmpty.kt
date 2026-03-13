@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository.internal.paging
 
-import app.cash.paging.PagingData
-import app.cash.paging.TerminalSeparatorType
-import app.cash.paging.insertSeparators
+import androidx.paging.PagingData
+import androidx.paging.TerminalSeparatorType
+import androidx.paging.insertSeparators
 
 /**
  * Inserts a header, only if there is data after it.

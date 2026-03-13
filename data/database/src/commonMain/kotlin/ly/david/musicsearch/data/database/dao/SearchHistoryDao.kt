@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.SearchHistory

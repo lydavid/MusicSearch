@@ -16,9 +16,8 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.cash.paging.LoadStateError
-import app.cash.paging.LoadStateLoading
-import app.cash.paging.compose.LazyPagingItems
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -60,7 +59,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     val noResultsText = customNoResultsText.ifEmpty {
         stringResource(Res.string.noResultsFound)
     }
-    val isRefreshing = lazyPagingItems.loadState.refresh == LoadStateLoading
+    val isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
     val refreshState = rememberPullToRefreshState()
 
     PullToRefreshBox(
@@ -71,14 +70,14 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     ) {
         // This doesn't affect "loads" from db/source.
         when {
-            lazyPagingItems.loadState.refresh is LoadStateLoading -> {
+            lazyPagingItems.loadState.refresh is LoadState.Loading -> {
                 FullScreenLoadingIndicator()
             }
 
-            lazyPagingItems.loadState.refresh is LoadStateError -> {
+            lazyPagingItems.loadState.refresh is LoadState.Error -> {
                 FullScreenErrorWithRetry(
                     handledException = HandledException(
-                        userMessage = (lazyPagingItems.loadState.refresh as LoadStateError).error.message.orEmpty(),
+                        userMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message.orEmpty(),
                         errorResolution = ErrorResolution.Retry,
                     ),
                     onClick = { lazyPagingItems.refresh() },
@@ -132,11 +131,11 @@ private fun <T : Identifiable> LazyItemScope.AppendFooter(
     lazyPagingItems: LazyPagingItems<T>,
 ) {
     when (lazyPagingItems.loadState.append) {
-        is LoadStateLoading -> {
+        is LoadState.Loading -> {
             FooterLoadingIndicator()
         }
 
-        is LoadStateError -> {
+        is LoadState.Error -> {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.feature.images
 
+import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
-import app.cash.paging.PagingData
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.collections.immutable.persistentListOf
