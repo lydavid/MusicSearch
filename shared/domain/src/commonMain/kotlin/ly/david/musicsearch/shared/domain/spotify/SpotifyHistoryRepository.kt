@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.spotify
 
-import app.cash.paging.PagingData
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.history.SpotifyHistory

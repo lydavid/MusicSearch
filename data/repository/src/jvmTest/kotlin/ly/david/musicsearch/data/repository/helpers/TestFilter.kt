@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
+import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
-import app.cash.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.shared.domain.ListFilters

@@ -8,7 +8,7 @@ object CommonPagingConfig {
     private const val PREFETCH_DISTANCE = 100
 
     /**
-     * Common [app.cash.paging.PagingConfig] for consistency.
+     * Common [PagingConfig] for consistency.
      */
     val pagingConfig = PagingConfig(
         pageSize = PAGING_PAGE_SIZE,

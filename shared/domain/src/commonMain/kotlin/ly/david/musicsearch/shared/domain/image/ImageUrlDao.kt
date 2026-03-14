@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.image
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 
 interface ImageUrlDao {

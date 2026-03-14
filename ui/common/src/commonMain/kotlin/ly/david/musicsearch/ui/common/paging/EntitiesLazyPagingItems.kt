@@ -1,6 +1,6 @@
 package ly.david.musicsearch.ui.common.paging
 
-import app.cash.paging.compose.LazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.EntityListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.topappbar.Tab

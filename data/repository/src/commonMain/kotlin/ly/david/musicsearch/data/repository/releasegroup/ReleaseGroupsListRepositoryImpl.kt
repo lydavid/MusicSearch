@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
-import app.cash.paging.PagingData
-import app.cash.paging.PagingSource
-import app.cash.paging.TerminalSeparatorType
-import app.cash.paging.insertSeparators
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.TerminalSeparatorType
+import androidx.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
