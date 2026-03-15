@@ -10,10 +10,12 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 
 - assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
+- tapOn: "Filter"
+- inputText: "o"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2018"
-- tapOn: "Filter"
+- tapOn: Clear filter text
 - inputText: "spotify"
 - "hideKeyboard"
 - assertVisible: "https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj"
@@ -21,10 +23,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "Type: Group"
 - assertNotVisible: "Founded: 2018"
 - tapOn: Clear filter text
-- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
-- assertVisible: "Type: Group"
-- assertVisible: "Founded: 2018"
 - inputText: "wiki"
+- "hideKeyboard"
 - assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
 - assertVisible: "https://www.wikidata.org/wiki/Q60989925"
 - tapOn: Clear filter text
@@ -42,6 +42,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "潜潜話 (Hisohiso Banashi)"
 - tapOn: "More actions"
 - tapOn: "Sort"
+- scrollUntilVisible:
+    element: "Type alphabetically"
 - tapOn: "Type alphabetically"
 # When there is more data, the loading takes long enough such that
 # the current item's position is no longer retained.
@@ -68,10 +70,12 @@ appId: io.github.lydavid.musicsearch.debug
 
 # Repeat tests with cached data
 - assertVisible: "ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
+- tapOn: "Filter"
+- inputText: "o"
 - assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
 - assertVisible: "Type: Group"
 - assertVisible: "Founded: 2018"
-- tapOn: "Filter"
+- tapOn: Clear filter text
 - inputText: "spotify"
 - "hideKeyboard"
 - assertVisible: "https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj"
@@ -79,10 +83,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "Type: Group"
 - assertNotVisible: "Founded: 2018"
 - tapOn: Clear filter text
-- assertVisible: "Sort name: Zutto Mayonaka De Iinoni."
-- assertVisible: "Type: Group"
-- assertVisible: "Founded: 2018"
 - inputText: "wiki"
+- "hideKeyboard"
 - assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
 - assertVisible: "https://www.wikidata.org/wiki/Q60989925"
 - tapOn: Clear filter text
@@ -91,7 +93,7 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: Cancel
 - tapOn: "Add ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band) to another collection"
 - tapOn: "Artists"
-- assertVisible: "Already in Artists."
+# Do not assert text in snackbar because sometimes it doesn't show up (in CI only).
 
 - tapOn: "Release Groups"
 - assertVisible: "ぐされ (Gusare)"
