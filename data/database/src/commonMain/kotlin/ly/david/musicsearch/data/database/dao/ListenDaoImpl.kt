@@ -60,6 +60,7 @@ class ListenDaoImpl(
                         spotify_artist_ids = listen.spotifyArtistIds,
                         spotify_id = listen.spotifyId,
                         deleted_at_ms = null,
+                        test = null,
                     ),
                 )
                 insertLinkedEntities(entityMapping = listen.entityMapping)

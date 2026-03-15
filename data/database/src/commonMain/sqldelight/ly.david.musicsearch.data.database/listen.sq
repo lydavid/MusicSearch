@@ -38,6 +38,8 @@ CREATE TABLE listen (
 
   deleted_at_ms INTEGER,
 
+  test TEXT,
+
   PRIMARY KEY (listened_at_ms, username, recording_messybrainz_id)
 );
 
