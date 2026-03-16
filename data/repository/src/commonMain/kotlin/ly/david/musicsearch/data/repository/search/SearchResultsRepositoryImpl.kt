@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.search
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
-import app.cash.paging.RemoteMediator
+import androidx.paging.RemoteMediator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext

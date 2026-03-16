@@ -1,13 +1,12 @@
 package ly.david.musicsearch.shared.feature.history
 
+import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
-import app.cash.paging.PagingData
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Clock
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.usecase.DeleteLookupHistory
@@ -26,6 +25,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import kotlin.time.Clock
 
 /**
  * There's no need to repeat the repository tests in this layer. We should only test UI event sinking in this layer.

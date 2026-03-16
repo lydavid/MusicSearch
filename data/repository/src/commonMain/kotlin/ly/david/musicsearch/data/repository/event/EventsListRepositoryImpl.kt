@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.event
 
-import app.cash.paging.PagingData
-import app.cash.paging.PagingSource
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao

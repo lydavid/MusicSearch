@@ -1,6 +1,6 @@
 package ly.david.musicsearch.ui.common.screen
 
-import app.cash.paging.PagingData
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository

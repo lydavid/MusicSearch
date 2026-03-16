@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain.list
 
 import androidx.paging.PagingData
-import app.cash.paging.cachedIn
+import androidx.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
