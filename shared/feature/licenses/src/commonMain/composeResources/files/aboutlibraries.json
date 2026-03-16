@@ -768,14 +768,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "3.4.1",
+            "artifactVersion": "3.4.2",
             "description": "Android Paging-Common",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Paging-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.4.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.4.2",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1075,7 +1075,7 @@
                     "name": "Square, Inc."
                 }
             ],
-            "artifactVersion": "2.3.1",
+            "artifactVersion": "2.3.2",
             "description": "Driver to support SQLDelight generated code on Android",
             "scm": {
                 "connection": "scm:git:git://github.com/sqldelight/sqldelight.git",
