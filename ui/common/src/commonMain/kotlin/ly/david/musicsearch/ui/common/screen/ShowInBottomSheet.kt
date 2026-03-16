@@ -1,5 +1,7 @@
 package ly.david.musicsearch.ui.common.screen
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.Modifier
@@ -16,6 +18,7 @@ suspend fun OverlayHost.showInBottomSheet(
     BottomSheetOverlay(
         model = Unit,
         onDismiss = { SnackbarPopResult() },
+        contentWindowInsets = { WindowInsets.navigationBars },
     ) { _, overlayNavigator ->
         CircuitContent(
             screen = screen,
