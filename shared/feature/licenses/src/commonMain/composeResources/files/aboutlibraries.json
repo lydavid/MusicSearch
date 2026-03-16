@@ -768,14 +768,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "3.4.0-beta01",
+            "artifactVersion": "3.4.1",
             "description": "Android Paging-Common",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Paging-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.4.0-beta01",
+            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.4.1",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1064,29 +1064,6 @@
             "organization": {
                 "name": "The Android Open Source Project"
             }
-        },
-        {
-            "uniqueId": "app.cash.paging:paging-common",
-            "funding": [
-                
-            ],
-            "developers": [
-                {
-                    "name": "Cash App"
-                }
-            ],
-            "artifactVersion": "3.3.0-alpha02-0.5.1",
-            "description": "Packages AndroidX's Paging library for Kotlin/Multiplatform.",
-            "scm": {
-                "connection": "scm:git:https://github.com/cashapp/multiplatform-paging.git",
-                "url": "https://github.com/cashapp/multiplatform-paging/",
-                "developerConnection": "scm:git:ssh://git@github.com/cashapp/multiplatform-paging.git"
-            },
-            "name": "paging-common",
-            "website": "https://github.com/cashapp/multiplatform-paging/",
-            "licenses": [
-                "Apache-2.0"
-            ]
         },
         {
             "uniqueId": "app.cash.sqldelight:android-driver",
