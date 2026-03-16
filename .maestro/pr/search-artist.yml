@@ -24,7 +24,6 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "Founded: 2018"
 - tapOn: Clear filter text
 - inputText: "wiki"
-- "hideKeyboard"
 - assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
 - assertVisible: "https://www.wikidata.org/wiki/Q60989925"
 - tapOn: Clear filter text
@@ -84,7 +83,6 @@ appId: io.github.lydavid.musicsearch.debug
 - assertNotVisible: "Founded: 2018"
 - tapOn: Clear filter text
 - inputText: "wiki"
-- "hideKeyboard"
 - assertVisible: "https://en.wikipedia.org/wiki/Zutomayo"
 - assertVisible: "https://www.wikidata.org/wiki/Q60989925"
 - tapOn: Clear filter text
