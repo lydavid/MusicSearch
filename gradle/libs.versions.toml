@@ -111,7 +111,7 @@ leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", ve
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 multiplatform-paths = { module = "me.sujanpoudel.multiplatform.utils:multiplatform-paths", version.ref = "multiplatformPaths" }
-nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.7"
+nsexception = "com.rickclephas.kmp:nsexception-kt-core:1.0.8"
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
 paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
