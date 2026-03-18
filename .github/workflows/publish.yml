@@ -156,7 +156,7 @@ jobs:
           mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
 
       - name: Setup desktop
-        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         run: |
           ./gradlew desktop:app:exportLibraryDefinitions
           ./gradlew jar
@@ -165,7 +165,7 @@ jobs:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
 
       - name: Create desktop distributions
-        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         uses: hydraulic-software/conveyor/actions/build@fee92baf2a05a4539c3ef410eb04a82dca501797 # v21.1
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
@@ -175,15 +175,15 @@ jobs:
       - run: |
           mv output/download.html .
           mv output/icon.svg .
-        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
 
       - name: Update iOS version
-        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         run: |
           sed -i 's/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = ${{ env.VERSION_NAME }};/g' ios-app/musicsearch.xcodeproj/project.pbxproj
 
       - name: Commit version code bump
-        if: always()
+        if: ${{ !cancelled() }}
         run: |
           git pull --rebase --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -195,13 +195,14 @@ jobs:
 
       # See .releaserc for the artifacts we include in each release
       - name: Publish to GitHub
-        if: always() && steps.get-next-version.outputs.new-release-published == 'true'
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
   publish-ios:
     needs: publish # depends on it modifying and committing some files
+    if: ${{ !cancelled() }}
     permissions:
       contents: read
     uses: ./.github/workflows/publish-ios.yml
