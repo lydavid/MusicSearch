@@ -61,8 +61,9 @@ internal fun AreaUi(
     val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val selectedTab = state.selectedTab
     val pagerState = rememberPagerState(
-        initialPage = state.tabs.indexOf(state.selectedTab),
+        initialPage = state.tabs.indexOf(selectedTab),
         pageCount = state.tabs::size,
     )
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -165,7 +166,6 @@ internal fun AreaUi(
                     )
                 },
                 overflowDropdownMenuItems = {
-                    val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         onClick = {
                             when (selectedTab) {
@@ -240,7 +240,7 @@ internal fun AreaUi(
                     eventSink(
                         DetailsUiEvent.ToggleSelectAllItems(
                             collectableIds = entitiesLazyPagingItems.getLoadedIdsForTab(
-                                tab = state.selectedTab,
+                                tab = selectedTab,
                             ),
                         ),
                     )
@@ -248,7 +248,7 @@ internal fun AreaUi(
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle() },
-                        selectedTabIndex = state.tabs.indexOf(state.selectedTab),
+                        selectedTabIndex = state.tabs.indexOf(selectedTab),
                         onSelectTabIndex = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
@@ -273,7 +273,7 @@ internal fun AreaUi(
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
+                    entityType = selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {

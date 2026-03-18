@@ -5,13 +5,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -21,6 +17,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -35,6 +32,7 @@ import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -45,6 +43,7 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
+import ly.david.musicsearch.ui.common.topappbar.showSubmitListenDialog
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
 @OptIn(
@@ -58,12 +57,14 @@ internal fun ReleaseUi(
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
     val entityType = browseMethod.entityType
+    val releaseDetailsModel = state.detailsModel
     val overlayHost = LocalOverlayHost.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val selectedTab = state.selectedTab
     val pagerState = rememberPagerState(
-        initialPage = state.tabs.indexOf(state.selectedTab),
+        initialPage = state.tabs.indexOf(selectedTab),
         pageCount = state.tabs::size,
     )
 
@@ -132,16 +133,10 @@ internal fun ReleaseUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
+            FeedbackSnackbarHost(snackbarHostState)
         },
         topBar = {
-            val annotatedName = state.detailsModel.getAnnotatedName()
+            val annotatedName = releaseDetailsModel.getAnnotatedName()
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
@@ -156,7 +151,7 @@ internal fun ReleaseUi(
                     eventSink(
                         DetailsUiEvent.ToggleSelectAllItems(
                             collectableIds = entitiesLazyPagingItems.getLoadedIdsForTab(
-                                tab = state.selectedTab,
+                                tab = selectedTab,
                             ),
                         ),
                     )
@@ -176,7 +171,6 @@ internal fun ReleaseUi(
                     )
                 },
                 overflowDropdownMenuItems = {
-                    val selectedTab = state.selectedTab
                     RefreshMenuItem(
                         tab = selectedTab,
                         onClick = {
@@ -199,7 +193,7 @@ internal fun ReleaseUi(
                     )
                     CopyToClipboardMenuItem(entityId)
                     AddAllToCollectionMenuItem(
-                        tab = state.selectedTab,
+                        tab = selectedTab,
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -210,7 +204,7 @@ internal fun ReleaseUi(
                     )
                 },
                 subtitleDropdownMenuItems = {
-                    state.detailsModel?.artistCredits?.forEach { artistCredit ->
+                    releaseDetailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.ARTIST) },
@@ -225,7 +219,7 @@ internal fun ReleaseUi(
                             },
                         )
                     }
-                    state.detailsModel?.releaseGroup?.let { releaseGroup ->
+                    releaseDetailsModel?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
                             text = { Text(text = releaseGroup.name) },
                             leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.RELEASE_GROUP) },
@@ -244,7 +238,7 @@ internal fun ReleaseUi(
                 additionalBar = {
                     TabsBar(
                         tabsTitle = state.tabs.map { it.getTitle() },
-                        selectedTabIndex = state.tabs.indexOf(state.selectedTab),
+                        selectedTabIndex = state.tabs.indexOf(selectedTab),
                         onSelectTabIndex = { coroutineScope.launch { pagerState.animateScrollToPage(it) } },
                     )
                 },
@@ -259,14 +253,40 @@ internal fun ReleaseUi(
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
+                val entityType = if (selectedTab == Tab.TRACKS) {
+                    MusicBrainzEntityType.RECORDING
+                } else {
+                    selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager
+                }
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
-                    entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
+                    entityType = entityType,
                     entityIds = setOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
+                    },
+                )
+            },
+            onSubmitListenClick = { track ->
+                showSubmitListenDialog(
+                    coroutineScope = coroutineScope,
+                    overlayHost = overlayHost,
+                    submitListenType = SubmitListenType.Track(
+                        name = track.name,
+                        disambiguation = track.disambiguation,
+                        aliases = track.aliases,
+                        recordingId = track.recordingId,
+                        lengthMilliseconds = track.length,
+                        artists = track.artists,
+                        releaseName = releaseDetailsModel?.name,
+                        // prefer to get it from details model, as the id can change after a fetch
+                        releaseId = releaseDetailsModel?.id,
+                    ),
+                    snackbarHostState = snackbarHostState,
+                    onSuccess = {
+                        // Don't need to do anything because tracks are a flow, so they will be updated.
                     },
                 )
             },

@@ -25,6 +25,9 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.moreActionsForXByY
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ListenListItem(
@@ -39,13 +42,13 @@ fun ListenListItem(
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
-                            fontSize = 16.sp,
+                            fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                             fontWeight = listen.fontWeight,
                         ),
                     ) {
                         append(listen.getAnnotatedName())
                     }
-                    withStyle(style = SpanStyle(fontSize = 13.sp)) {
+                    withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                         append(" ${listen.durationMs.toDisplayTime()}")
                     }
                 },
@@ -55,7 +58,9 @@ fun ListenListItem(
         },
         modifier = modifier.clickable {
             val recordingId = listen.recordingId
-            if (recordingId.isNotEmpty()) { onClick(recordingId) }
+            if (recordingId.isNotEmpty()) {
+                onClick(recordingId)
+            }
         },
         supportingContent = {
             Column {
@@ -86,7 +91,11 @@ fun ListenListItem(
             ) {
                 Icon(
                     imageVector = CustomIcons.MoreVert,
-                    contentDescription = "More actions for ${listen.name} by ${listen.formattedArtistCredits}",
+                    contentDescription = stringResource(
+                        Res.string.moreActionsForXByY,
+                        listen.name,
+                        listen.formattedArtistCredits,
+                    ),
                 )
             }
         },

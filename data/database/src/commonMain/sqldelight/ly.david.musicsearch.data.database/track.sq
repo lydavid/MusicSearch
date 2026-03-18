@@ -33,20 +33,21 @@ SELECT IFNULL(
     FROM track
     INNER JOIN medium ON track.medium_id = medium.id
     INNER JOIN `release` r ON medium.release_id = r.id
-    INNER JOIN artist_credit_entity acr ON acr.entity_id = track.id
-    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_entity ON artist_credit_entity.entity_id = track.id
+    INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
     LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
     WHERE r.id = :releaseId
     AND (
       track.title LIKE :query OR
       track.number LIKE :query OR
-      ac.name LIKE :query OR
+      artist_credit.name LIKE :query OR
       recording_alias.name LIKE :query
     )
   ),
   0
 ) AS count;
 
+-- we join artist_credit again so that we can filter on the full artist credit name
 getTracksByRelease:
 SELECT
   track.id,
@@ -56,14 +57,19 @@ SELECT
   track.number,
   track.title,
   track.length,
-  ac.name AS artist_credits,
+  track_credits.credit_names,
+  track_credits.credit_artist_ids,
+  track_credits.credit_join_phrases,
   details_metadata.entity_id IS NOT NULL AS visited,
   medium.position,
   medium.name,
   medium.track_count,
   medium.format,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = track.recording_id
+  ) AS collected,
+  aliases.alias_names,
+  aliases.alias_locales,
   CASE WHEN :username = '' THEN
     CAST(NULL AS INTEGER)
   ELSE
@@ -72,10 +78,40 @@ SELECT
 FROM track
 INNER JOIN medium ON track.medium_id = medium.id
 INNER JOIN `release` ON medium.release_id = `release`.id
-INNER JOIN artist_credit_entity acr ON acr.entity_id = track.id
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_entity ON artist_credit_entity.entity_id = track.id
+INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+LEFT JOIN (
+  SELECT
+    ace.entity_id AS track_id,
+    GROUP_CONCAT(acn.name, CHAR(9)) AS credit_names,
+    GROUP_CONCAT(acn.artist_id, CHAR(9)) AS credit_artist_ids,
+    GROUP_CONCAT(acn.join_phrase, CHAR(9)) AS credit_join_phrases
+  FROM artist_credit_entity ace
+  INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ace.artist_credit_id
+  WHERE ace.entity_id IN (
+    SELECT track.id
+    FROM track
+    INNER JOIN medium ON track.medium_id = medium.id
+    WHERE medium.release_id = :releaseId
+  )
+  GROUP BY ace.entity_id
+) AS track_credits ON track_credits.track_id = track.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = track.recording_id
-LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary AND recording_alias.recording_id IN (
+    SELECT recording.id
+    FROM recording
+    INNER JOIN track ON track.recording_id = recording.id
+    INNER JOIN medium ON track.medium_id = medium.id
+    WHERE medium.release_id = :releaseId
+  )
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = track.recording_id
 LEFT JOIN (
   SELECT
     recording_musicbrainz_id,
@@ -88,8 +124,8 @@ WHERE `release`.id = :releaseId
 AND (
   track.title LIKE :query OR
   track.number LIKE :query OR
-  ac.name LIKE :query OR
-  recording_alias.name LIKE :query
+  artist_credit.name LIKE :query OR
+  aliases.alias_names LIKE :query
 )
 GROUP BY track.id
 ORDER BY medium.position, track.position

@@ -36,7 +36,8 @@ private val submitListenType = SubmitListenType.Track(
             joinPhrase = "",
         ),
     ),
-    releaseName = null,
+    releaseName = "Album name",
+    releaseId = "r1",
 )
 
 // Preview crashes when clicking due to https://issuetracker.google.com/issues/437003350
@@ -154,6 +155,30 @@ internal fun PreviewSubmitListenUiStartedCustomLocalDaylightSaving() {
                     dateTimeEpochSeconds = 1772953200,
                     listenedAtDateTimeEpochSeconds = 1772953200,
                     useCustomTime = true,
+                    eventSink = {},
+                ),
+                timeZone = TimeZone.of("America/Toronto"),
+                clock = Clock.System,
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewSubmitListenUiFinishedCustomLocalWithoutAlbum() {
+    PreviewTheme {
+        Surface {
+            SubmitListenUi(
+                state = SubmitListenUiState(
+                    submitListenType = submitListenType.copy(
+                        releaseName = null,
+                        releaseId = null,
+                    ),
+                    dateTimeEpochSeconds = 86400,
+                    listenedAtDateTimeEpochSeconds = 86400,
+                    useCustomTime = true,
+                    timestampIsStartTime = false,
                     eventSink = {},
                 ),
                 timeZone = TimeZone.of("America/Toronto"),

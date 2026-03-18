@@ -992,7 +992,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     length = 18733,
                     mediumId = 1,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",
-                    formattedArtistCredits = "アトラスサウンドチーム",
+                    artists = persistentListOf(
+                        ArtistCreditUiModel(
+                            artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                            name = "アトラスサウンドチーム",
+                            joinPhrase = "",
+                        ),
+                    ),
                     mediumPosition = 1,
                     mediumName = "SFC版「真・女神転生」",
                     trackCount = 1,
@@ -1065,7 +1071,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     length = 18733,
                     mediumId = 2,
                     recordingId = "994b2961-3527-43f7-830d-7c817d286577",
-                    formattedArtistCredits = "増子司",
+                    artists = persistentListOf(
+                        ArtistCreditUiModel(
+                            artistId = "ff3c73e4-234e-41ba-8000-6948a2d0fd6d",
+                            name = "増子司",
+                            joinPhrase = "",
+                        ),
+                    ),
                     mediumPosition = 1,
                     mediumName = "SFC版「真・女神転生」",
                     trackCount = 1,
@@ -1206,7 +1218,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         length = 18733,
                         mediumId = 1,
                         recordingId = "994b2961-3527-43f7-830d-7c817d286577",
-                        formattedArtistCredits = "アトラスサウンドチーム",
+                        artists = persistentListOf(
+                            ArtistCreditUiModel(
+                                artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                name = "アトラスサウンドチーム",
+                                joinPhrase = "",
+                            ),
+                        ),
                         mediumPosition = 1,
                         mediumName = "SFC版「真・女神転生」",
                         trackCount = trackCount,
@@ -1238,7 +1256,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         length = 18733,
                         mediumId = 1,
                         recordingId = "994b2961-3527-43f7-830d-7c817d286577",
-                        formattedArtistCredits = "アトラスサウンドチーム",
+                        artists = persistentListOf(
+                            ArtistCreditUiModel(
+                                artistId = "37e85ee8-366a-4f17-a011-de94b6632408",
+                                name = "アトラスサウンドチーム",
+                                joinPhrase = "",
+                            ),
+                        ),
                         mediumPosition = 1,
                         mediumName = "SFC版「真・女神転生」",
                         trackCount = trackCount,

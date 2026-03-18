@@ -13,6 +13,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.list.showTypes
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
@@ -32,6 +33,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     onEditCollectionClick: (String) -> Unit = {},
+    onSubmitListenClick: (track: TrackListItemModel) -> Unit = {},
     requestForMissingCoverArtUrl: (entityId: String, entity: MusicBrainzEntityType?) -> Unit = { _, _ -> },
     detailsScreen: @Composable ((T) -> Unit),
 ) {
@@ -71,6 +73,8 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                             ),
                         )
                     },
+                    onEditCollectionClick = onEditCollectionClick,
+                    onSubmitListenClick = onSubmitListenClick,
                 )
             }
 

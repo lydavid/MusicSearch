@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,13 +30,10 @@ fun ClickableItem(
     foregroundColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit = {},
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(16.dp),
-    ) {
-        startIcon?.let {
+    val startIconComposable: @Composable (BoxScope.() -> Unit)? = if (startIcon == null) {
+        null
+    } else {
+        {
             Icon(
                 imageVector = startIcon,
                 contentDescription = null,
@@ -43,6 +41,40 @@ fun ClickableItem(
                 tint = foregroundColor,
             )
         }
+    }
+
+    ClickableItem(
+        title = title,
+        modifier = modifier,
+        iconModifier = iconModifier,
+        subtitle = subtitle,
+        startIcon = startIconComposable,
+        endIcon = endIcon,
+        fontWeight = fontWeight,
+        foregroundColor = foregroundColor,
+        onClick = onClick,
+    )
+}
+
+@Composable
+fun ClickableItem(
+    title: String,
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    subtitle: String? = null,
+    startIcon: @Composable (BoxScope.() -> Unit)?,
+    endIcon: ImageVector? = null,
+    fontWeight: FontWeight = FontWeight.Normal,
+    foregroundColor: Color = MaterialTheme.colorScheme.onSurface,
+    onClick: () -> Unit = {},
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(16.dp),
+    ) {
+        startIcon?.invoke(this)
 
         Column(
             modifier = Modifier

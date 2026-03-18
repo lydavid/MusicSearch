@@ -107,9 +107,11 @@ internal class SubmitListenPresenter(
                                             listenedAtS = listenedAtDateTimeEpochSeconds,
                                             trackName = listenType.name,
                                             recordingMbid = listenType.recordingId,
+                                            durationMs = listenType.lengthMilliseconds?.toLong(),
                                             artistName = listenType.artists.getDisplayNames(),
                                             artistMbids = listenType.artists.map { it.artistId },
-                                            durationMs = listenType.lengthMilliseconds?.toLong(),
+                                            releaseName = listenType.releaseName,
+                                            releaseMbid = listenType.releaseId,
                                         ),
                                     ),
                                 )

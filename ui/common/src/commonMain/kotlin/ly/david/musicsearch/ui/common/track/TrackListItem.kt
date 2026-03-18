@@ -1,29 +1,47 @@
 package ly.david.musicsearch.ui.common.track
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.ui.common.icon.CollectionIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
+import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.moreActionsFor
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Also see [RecordingListItem].
@@ -34,14 +52,13 @@ fun TrackListItem(
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
+    onClickMoreActions: TrackListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
-            Text(
-                text = track.getAnnotatedName(),
-                style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = track.fontWeight,
-            )
+            Row {
+                TrackTitleWithLength(track = track)
+            }
         },
         modifier = modifier.clickable {
             onRecordingClick(
@@ -49,46 +66,57 @@ fun TrackListItem(
             )
         },
         leadingContent = {
-            Text(
-                text = track.number,
-                style = TextStyles.getCardBodySubTextStyle(),
-                fontWeight = track.fontWeight,
-            )
+            TrackNumber(track = track)
         },
         trailingContent = {
-            Text(
-                text = track.length.toDisplayTime(),
-                style = TextStyles.getCardBodySubTextStyle(),
-                fontWeight = track.fontWeight,
-            )
-            // TODO: support edit collection on underlying recording
-            //  move this time like recording, or like listen list item
+            IconButton(
+                onClick = {
+                    onClickMoreActions(track)
+                },
+            ) {
+                Icon(
+                    imageVector = CustomIcons.MoreVert,
+                    contentDescription = stringResource(Res.string.moreActionsFor, track.name),
+                )
+            }
         },
         supportingContent = {
             Column {
-                track.formattedArtistCredits.ifNotNullOrEmpty {
-                    Text(
-                        text = it,
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .fillMaxWidth(),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = track.fontWeight,
-                    )
-                }
+                Text(
+                    text = track.artists.getDisplayNames(),
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(),
+                    style = TextStyles.getCardBodySubTextStyle(),
+                    fontWeight = track.fontWeight,
+                )
 
                 val listenCount = track.listenCount
-                if (listenCount != null) {
-                    TextWithIcon(
-                        modifier = Modifier.padding(top = 4.dp),
-                        imageVector = CustomIcons.Headphones,
-                        text = listenCount.toString(),
-                        iconSize = TINY_ICON_SIZE,
-                        textStyle = TextStyles.getCardBodySubTextStyle(),
+                Row(
+                    modifier = Modifier.padding(top = 4.dp),
+                ) {
+                    if (listenCount != null) {
+                        TextWithIcon(
+                            imageVector = CustomIcons.Headphones,
+                            text = listenCount.toString(),
+                            iconSize = TINY_ICON_SIZE,
+                            textStyle = TextStyles.getCardBodySubTextStyle(),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                        )
+                    }
+
+                    CollectionIcon(
+                        collected = track.collected,
+                        modifier = Modifier
+                            .size(TINY_ICON_SIZE.dp),
                     )
+                }
+                if (listenCount != null) {
                     LinearProgressIndicator(
                         progress = { listenCount / maxOf(mostListenedTrackCount, 1).toFloat() },
                         modifier = Modifier
+                            .padding(top = 2.dp)
                             .height(4.dp)
                             .fillMaxWidth(),
                         color = MaterialTheme.colorScheme.primary,
@@ -98,4 +126,41 @@ fun TrackListItem(
             }
         },
     )
+}
+
+@Composable
+fun TrackTitleWithLength(track: TrackListItemModel) {
+    Text(
+        text = buildAnnotatedString {
+            withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodyTextStyle().fontSize)) {
+                append(track.getAnnotatedName())
+            }
+            withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
+                append(" ${track.length.toDisplayTime()}")
+            }
+        },
+        fontWeight = track.fontWeight,
+    )
+}
+
+@Composable
+fun TrackNumber(
+    track: TrackListItemModel,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .size(SMALL_IMAGE_SIZE.dp)
+            .clip(CircleShape)
+            .clickable(enabled = onClick != null) { onClick?.invoke() },
+    ) {
+        Text(
+            text = track.number,
+            style = TextStyles.getHeaderTextStyle(),
+            fontWeight = track.fontWeight,
+            textAlign = TextAlign.Center,
+        )
+    }
 }

@@ -5,8 +5,10 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
+import ly.david.musicsearch.data.database.mapper.combineToArtistCredits
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import lydavidmusicsearchdatadatabase.Track
 
@@ -105,12 +107,15 @@ private fun mapToTrackAndMedium(
     number: String,
     title: String,
     length: Int?,
-    formattedArtistCreditNames: String,
+    artistCreditNames: String?,
+    artistCreditIds: String?,
+    artistCreditJoinPhrases: String?,
     visited: Boolean?,
     mediumPosition: Int?,
     mediumName: String?,
     trackCount: Int,
     format: String?,
+    collected: Boolean?,
     aliasNames: String?,
     aliasLocales: String?,
     listenCount: Long?,
@@ -122,8 +127,13 @@ private fun mapToTrackAndMedium(
     length = length,
     mediumId = mediumId,
     recordingId = recordingId,
-    formattedArtistCredits = formattedArtistCreditNames,
+    artistCredits = combineToArtistCredits(
+        names = artistCreditNames,
+        ids = artistCreditIds,
+        joinPhrases = artistCreditJoinPhrases,
+    ),
     visited = visited == true,
+    collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),
     listenCount = listenCount,
     mediumPosition = mediumPosition ?: 0,
@@ -140,8 +150,9 @@ data class TrackAndMedium(
     val length: Int? = null,
     val mediumId: Long = 0,
     val recordingId: String = "",
-    val formattedArtistCredits: String? = null,
+    val artistCredits: ImmutableList<ArtistCreditUiModel>,
     val visited: Boolean = false,
+    val collected: Boolean = false,
     val aliases: ImmutableList<BasicAlias>,
     val listenCount: Long? = null,
 

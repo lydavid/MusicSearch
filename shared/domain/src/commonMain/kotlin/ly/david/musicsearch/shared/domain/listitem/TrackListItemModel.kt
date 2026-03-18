@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.release.Track
 
 data class TrackListItemModel(
@@ -14,15 +15,16 @@ data class TrackListItemModel(
     override val length: Int? = null,
     val mediumId: Long = 0,
     val recordingId: String = "",
-    val formattedArtistCredits: String? = null,
+    val artists: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val visited: Boolean = false,
+    override val collected: Boolean = false,
     val mediumPosition: Int,
     val mediumName: String? = null,
     val trackCount: Int = 0,
     val format: String? = null,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenCount: Long? = null,
-) : ListItemModel, Track, Visitable, NameWithDisambiguationAndAliases {
+) : EntityListItemModel, Track, NameWithDisambiguationAndAliases {
     /**
      * Unused. The actual disambiguation is part of [name].
      */

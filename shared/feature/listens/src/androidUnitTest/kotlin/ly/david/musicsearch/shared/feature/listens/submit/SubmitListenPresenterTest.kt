@@ -52,6 +52,7 @@ class SubmitListenPresenterTest {
             ),
         ),
         releaseName = null,
+        releaseId = null,
     )
     val screen = SubmitListenScreen(
         submitListenType = trackSubmitListenType,

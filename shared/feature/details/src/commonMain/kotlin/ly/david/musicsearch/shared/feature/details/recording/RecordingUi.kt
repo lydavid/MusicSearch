@@ -199,6 +199,7 @@ internal fun RecordingUi(
                                 lengthMilliseconds = recordingDetailsModel.length,
                                 artists = recordingDetailsModel.artistCredits,
                                 releaseName = null,
+                                releaseId = null,
                             ),
                             overlayHost = overlayHost,
                             coroutineScope = coroutineScope,

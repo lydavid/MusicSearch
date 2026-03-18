@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
 import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -69,7 +70,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                     modifier = Modifier.padding(start = 16.dp),
                 ) {
                     Text(
-                        text = listen.name,
+                        text = listen.getAnnotatedName(),
                         style = TextStyles.getCardBodyTextStyle(),
                         fontWeight = listen.fontWeight,
                     )

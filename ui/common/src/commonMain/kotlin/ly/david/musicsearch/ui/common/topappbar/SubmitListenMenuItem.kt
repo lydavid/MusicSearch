@@ -47,41 +47,57 @@ fun OverflowMenuScope.SubmitListenMenuItem(
             )
         },
         onClick = {
-            coroutineScope.launch {
-                val result: SnackbarPopResultV2<Feedback<SubmitListenFeedback>> = overlayHost.showInDialogForResult(
-                    screen = SubmitListenScreen(
-                        submitListenType = submitListenType,
-                    ),
-                )
-                result.feedback?.let { feedback ->
-                    val message = when (val data = feedback.data) {
-                        SubmitListenFeedback.FailToSubmitListens -> getString(Res.string.failedToSubmitListen)
-                        SubmitListenFeedback.NeedToLogin -> getString(Res.string.needToLoginToListenBrainzToDo)
-                        is SubmitListenFeedback.NetworkException -> data.message
-                        SubmitListenFeedback.SubmittedListens -> getString(Res.string.submittedListen)
-                    }
-                    snackbarHostState.showSnackbar(
-                        visuals = FeedbackSnackbarVisuals(
-                            message = message,
-                            actionLabel = (feedback as? Feedback.Error)?.action?.name,
-                            duration = when (feedback) {
-                                is Feedback.Loading -> SnackbarDuration.Indefinite
-                                is Feedback.Success,
-                                is Feedback.Error,
-                                is Feedback.Actionable,
-                                -> SnackbarDuration.Short
-                            },
-                            withDismissAction = false,
-                            feedback = feedback,
-                        ),
-                    )
-                }
-                if (result.feedback is Feedback.Success) {
-                    onSuccess()
-                }
-            }
+            showSubmitListenDialog(
+                coroutineScope = coroutineScope,
+                overlayHost = overlayHost,
+                submitListenType = submitListenType,
+                snackbarHostState = snackbarHostState,
+                onSuccess = onSuccess,
+            )
             closeMenu()
         },
         modifier = modifier,
     )
+}
+
+fun showSubmitListenDialog(
+    coroutineScope: CoroutineScope,
+    overlayHost: OverlayHost,
+    submitListenType: SubmitListenType,
+    snackbarHostState: SnackbarHostState,
+    onSuccess: () -> Unit,
+) {
+    coroutineScope.launch {
+        val result: SnackbarPopResultV2<Feedback<SubmitListenFeedback>> = overlayHost.showInDialogForResult(
+            screen = SubmitListenScreen(
+                submitListenType = submitListenType,
+            ),
+        )
+        result.feedback?.let { feedback ->
+            val message = when (val data = feedback.data) {
+                SubmitListenFeedback.FailToSubmitListens -> getString(Res.string.failedToSubmitListen)
+                SubmitListenFeedback.NeedToLogin -> getString(Res.string.needToLoginToListenBrainzToDo)
+                is SubmitListenFeedback.NetworkException -> data.message
+                SubmitListenFeedback.SubmittedListens -> getString(Res.string.submittedListen)
+            }
+            snackbarHostState.showSnackbar(
+                visuals = FeedbackSnackbarVisuals(
+                    message = message,
+                    actionLabel = (feedback as? Feedback.Error)?.action?.name,
+                    duration = when (feedback) {
+                        is Feedback.Loading -> SnackbarDuration.Indefinite
+                        is Feedback.Success,
+                        is Feedback.Error,
+                        is Feedback.Actionable,
+                        -> SnackbarDuration.Short
+                    },
+                    withDismissAction = false,
+                    feedback = feedback,
+                ),
+            )
+        }
+        if (result.feedback is Feedback.Success) {
+            onSuccess()
+        }
+    }
 }

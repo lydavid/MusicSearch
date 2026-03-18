@@ -8,6 +8,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -37,7 +38,13 @@ internal fun PreviewTracksByReleaseUi() {
                                 ),
                             ),
                             length = 130000,
-                            formattedArtistCredits = "ずっと真夜中でいいのに。",
+                            artists = persistentListOf(
+                                ArtistCreditUiModel(
+                                    artistId = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+                                    name = "ずっと真夜中でいいのに。",
+                                    joinPhrase = "",
+                                ),
+                            ),
                             mediumId = 1,
                             mediumPosition = 1,
                             visited = true,
@@ -56,7 +63,13 @@ internal fun PreviewTracksByReleaseUi() {
                                 ),
                             ),
                             length = 339000,
-                            formattedArtistCredits = "ずっと真夜中でいいのに。",
+                            artists = persistentListOf(
+                                ArtistCreditUiModel(
+                                    artistId = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+                                    name = "ずっと真夜中でいいのに。",
+                                    joinPhrase = "",
+                                ),
+                            ),
                             mediumId = 1,
                             mediumPosition = 1,
                             visited = false,
@@ -72,7 +85,13 @@ internal fun PreviewTracksByReleaseUi() {
                             number = "1",
                             name = "花一匁 (Instrumental)",
                             length = 16000,
-                            formattedArtistCredits = "ずっと真夜中でいいのに。",
+                            artists = persistentListOf(
+                                ArtistCreditUiModel(
+                                    artistId = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+                                    name = "ずっと真夜中でいいのに。",
+                                    joinPhrase = "",
+                                ),
+                            ),
                             mediumId = 2,
                             mediumPosition = 2,
                             listenCount = 0,
@@ -87,7 +106,13 @@ internal fun PreviewTracksByReleaseUi() {
                             number = "1",
                             name = "叢雲開幕",
                             length = 324000,
-                            formattedArtistCredits = "ずっと真夜中でいいのに。",
+                            artists = persistentListOf(
+                                ArtistCreditUiModel(
+                                    artistId = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+                                    name = "ずっと真夜中でいいのに。",
+                                    joinPhrase = "",
+                                ),
+                            ),
                             mediumId = 3,
                             mediumPosition = 3,
                             listenCount = 0,

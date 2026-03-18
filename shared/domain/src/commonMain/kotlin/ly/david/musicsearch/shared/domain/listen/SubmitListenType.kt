@@ -18,6 +18,7 @@ sealed interface SubmitListenType : CommonParcelable {
         val artists: ImmutableList<ArtistCreditUiModel>,
         // optional because we can submit a listen from Recording screen, where the release would be ambiguous
         val releaseName: String?,
+        val releaseId: String?,
     ) : SubmitListenType, NameWithDisambiguationAndAliases {
         override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
             return copy(aliases = aliases)

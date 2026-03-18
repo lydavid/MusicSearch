@@ -72,12 +72,12 @@ internal fun SubmitListenUi(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                fontSize = 16.sp,
+                                fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                             ),
                         ) {
                             append(type.getAnnotatedName())
                         }
-                        withStyle(style = SpanStyle(fontSize = 15.sp)) {
+                        withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                             append(" ${type.lengthMilliseconds.toDisplayTime()}")
                         }
                     },
@@ -90,6 +90,14 @@ internal fun SubmitListenUi(
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
+
+                type.releaseName?.let { releaseName ->
+                    Text(
+                        text = releaseName,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
 
                 val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
                 val time = instant.getTimeFormatted(timeZone = timeZone)
