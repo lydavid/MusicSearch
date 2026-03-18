@@ -89,10 +89,10 @@ LEFT JOIN (
   FROM artist_credit_entity ace
   INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ace.artist_credit_id
   WHERE ace.entity_id IN (
-    SELECT track.id
-    FROM track
-    INNER JOIN medium ON track.medium_id = medium.id
-    WHERE medium.release_id = :releaseId
+    SELECT t.id
+    FROM track t
+    INNER JOIN medium m ON t.medium_id = m.id
+    WHERE m.release_id = :releaseId
   )
   GROUP BY ace.entity_id
 ) AS track_credits ON track_credits.track_id = track.id
@@ -106,9 +106,9 @@ LEFT JOIN (
   WHERE recording_alias.is_primary AND recording_alias.recording_id IN (
     SELECT recording.id
     FROM recording
-    INNER JOIN track ON track.recording_id = recording.id
-    INNER JOIN medium ON track.medium_id = medium.id
-    WHERE medium.release_id = :releaseId
+    INNER JOIN track t ON t.recording_id = recording.id
+    INNER JOIN medium m ON t.medium_id = m.id
+    WHERE m.release_id = :releaseId
   )
   GROUP BY recording_alias.recording_id
 ) AS aliases ON aliases.recording_id = track.recording_id

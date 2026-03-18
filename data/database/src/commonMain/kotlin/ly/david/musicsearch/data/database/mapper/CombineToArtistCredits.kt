@@ -10,15 +10,16 @@ internal fun combineToArtistCredits(
     ids: String?,
     joinPhrases: String?,
 ): ImmutableList<ArtistCreditUiModel> {
-    return if (names != null && ids != null && joinPhrases != null) {
+    return if (names != null && ids != null) {
         val nameList = names.split(GROUP_CONCAT_DELIMITER)
         val idList = ids.split(GROUP_CONCAT_DELIMITER)
-        val joinPhraseList = joinPhrases.split(GROUP_CONCAT_DELIMITER)
+        // on some older SDKs with older SQLite versions, we may get null instead of an empty string from GROUP_CONCAT
+        val joinPhraseList = joinPhrases?.split(GROUP_CONCAT_DELIMITER)
         nameList.indices.map { i ->
             ArtistCreditUiModel(
                 name = nameList[i],
                 artistId = idList[i],
-                joinPhrase = joinPhraseList[i],
+                joinPhrase = joinPhraseList?.get(i).orEmpty(),
             )
         }
     } else {
