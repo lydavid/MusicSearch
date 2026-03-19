@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* make sure artist credits still show up on tracks on older SDKs
+
+
+### Features
+
+* add more actions button to tracks list which supports adding the track's recording to a collection or submitting a listen of the track to ListenBrainz; show whether a track is part of a collection with a small icon
