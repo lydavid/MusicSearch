@@ -3,6 +3,12 @@ run-name: "Publish production build from ${{ github.sha }}"
 
 on:
   workflow_dispatch:
+    inputs:
+      skip-desktop:
+        required: true
+        type: boolean
+        default: false
+        description: Skip desktop release
 
 jobs:
   publish-production:
@@ -13,4 +19,5 @@ jobs:
     uses: ./.github/workflows/publish.yml
     with:
       track: production
+      skip-desktop: ${{ inputs.skip-desktop }}
     secrets: inherit

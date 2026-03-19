@@ -10,6 +10,12 @@ on:
   schedule:
     - cron: '42 7 * * *'
   workflow_dispatch:
+    inputs:
+      skip-desktop:
+        required: true
+        type: boolean
+        default: false
+        description: Skip desktop release
 
 jobs:
   check:
@@ -40,4 +46,5 @@ jobs:
     uses: ./.github/workflows/publish.yml
     with:
       track: beta
+      skip-desktop: ${{ inputs.skip-desktop }}
     secrets: inherit

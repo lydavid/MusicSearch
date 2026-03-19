@@ -6,6 +6,10 @@ on:
       track:
         required: true
         type: string
+      skip-desktop:
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   checks:
@@ -156,7 +160,7 @@ jobs:
           mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
 
       - name: Setup desktop
-        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' && !inputs.skip-desktop }}
         run: |
           ./gradlew desktop:app:exportLibraryDefinitions
           ./gradlew jar
@@ -165,7 +169,7 @@ jobs:
           ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
 
       - name: Create desktop distributions
-        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' && !inputs.skip-desktop }}
         uses: hydraulic-software/conveyor/actions/build@fee92baf2a05a4539c3ef410eb04a82dca501797 # v21.1
         with:
           signing_key: ${{ secrets.SIGNING_KEY }}
@@ -175,7 +179,8 @@ jobs:
       - run: |
           mv output/download.html .
           mv output/icon.svg .
-        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
+          git add download.html icon.svg
+        if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' && !inputs.skip-desktop }}
 
       - name: Update iOS version
         if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
@@ -188,7 +193,7 @@ jobs:
           git pull --rebase --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add gradle.properties download.html icon.svg ios-app/musicsearch.xcodeproj/project.pbxproj
+          git add gradle.properties ios-app/musicsearch.xcodeproj/project.pbxproj
           git add fastlane/metadata/android/en-US/changelogs/
           git commit -m "chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]"
           git push
