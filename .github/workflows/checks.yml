@@ -46,47 +46,47 @@ jobs:
         run: ./gradlew konsist-test:test --rerun-tasks
 
       - name: Detekt code smells in commonMain
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew detektMetadataCommonMain
 
       - name: Detekt code smells in iosMain
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew detektMetadataIosMain
 
       - name: Detekt code smells in jvmMain
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew detektJvmMain
 
       - name: Detekt code smells in android
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew detektAndroidDebug detektAndroidRelease
 
       - name: Detekt code smells in android tests
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew detektAndroidDebugUnitTest
 
       # Includes non-KMP detekt, verifySqlDelightMigration
       - name: Perform checks on all modules
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew check
 
       - name: Verify screenshot tests
         id: screenshotsverify
-        if: always()
+        if: ${{ !cancelled() }}
         run: ./gradlew verifyPaparazziDebug
 
       - name: Delete all snapshot golden
-        if: always() && steps.screenshotsverify.outcome == 'failure'
+        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' }}
         run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs -I {} rm {}
 
       - name: Generate new screenshots if verification failed
         id: screenshotsrecord
-        if: always() && steps.screenshotsverify.outcome == 'failure'
+        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' }}
         run: |
           ./gradlew recordPaparazziDebug
 
       - name: Push new screenshots if available
-        if: always() && steps.screenshotsrecord.outcome == 'success'
+        if: ${{ !cancelled() && steps.screenshotsrecord.outcome == 'success' }}
         run: |
           git pull --autostash
           git config user.email "github-actions[bot]@users.noreply.github.com"
