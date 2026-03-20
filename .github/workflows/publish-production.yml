@@ -19,5 +19,5 @@ jobs:
     uses: ./.github/workflows/publish.yml
     with:
       track: production
-      skip-desktop: ${{ inputs.skip-desktop }}
+      skip-desktop: ${{ inputs.skip-desktop == 'true' }}
     secrets: inherit
