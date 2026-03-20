@@ -26,7 +26,7 @@ internal fun PreviewFullScreenErrorWithActionableButtonLogin() {
                 handledException = HandledException(
                     userMessage = "You need to login",
                     errorResolution = ErrorResolution.Login,
-                )
+                ),
             )
         }
     }
