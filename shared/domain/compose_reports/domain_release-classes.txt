@@ -625,6 +625,7 @@ stable class ly.david.musicsearch.shared.domain.listen.SubmitListenType.Track {
   stable val lengthMilliseconds: Int?
   runtime val artists: ImmutableList<ArtistCreditUiModel>
   stable val releaseName: String?
+  stable val releaseId: String?
   runtime var CREATOR: Creator<Track>
   <runtime stability> = 
 }
@@ -906,8 +907,9 @@ stable class ly.david.musicsearch.shared.domain.listitem.TrackListItemModel {
   stable val length: Int?
   stable val mediumId: Long
   stable val recordingId: String
-  stable val formattedArtistCredits: String?
+  runtime val artists: ImmutableList<ArtistCreditUiModel>
   stable val visited: Boolean
+  stable val collected: Boolean
   stable val mediumPosition: Int
   stable val mediumName: String?
   stable val trackCount: Int

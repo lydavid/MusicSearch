@@ -31,6 +31,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewTrackAdditionalActionsBottomSheetContentLong()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewTrackAdditionalActionsBottomSheetContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.PreviewTracksByReleaseUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUiCollapsed()
@@ -176,10 +178,19 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: DetailsUiState<ReleaseDetailsModel>
   stable modifier: Modifier? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TrackAdditionalActionsBottomSheetContent(
+  track: TrackListItemModel
+  stable modifier: Modifier? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable onAddToCollectionClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable onSubmitListenClick: Function1<@[ParameterName(name = 'track')] TrackListItemModel, Unit>? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   stable uiState: TracksByReleaseUiState
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+  stable onSubmitListenClick: Function1<@[ParameterName(name = 'track')] TrackListItemModel, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
@@ -189,6 +200,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   unstable collapsedMediumIds: Set<Long>? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onToggleMedium: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+  stable onSubmitListenClick: Function1<@[ParameterName(name = 'track')] TrackListItemModel, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi(
   releaseGroup: ReleaseGroupDetailsModel
@@ -222,6 +235,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+  stable onSubmitListenClick: Function1<@[ParameterName(name = 'track')] TrackListItemModel, Unit>? = @static <expression>
   stable requestForMissingCoverArtUrl: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType?, Unit>? = @static <expression>
   stable detailsScreen: Function3<T, Composer, Int, Unit>
 )

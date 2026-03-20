@@ -185,6 +185,17 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable foregroundColor: Color = @dynamic <expression>
   stable onClick: Function0<Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.component.ClickableItem(
+  stable title: String
+  stable modifier: Modifier? = @static <expression>
+  stable iconModifier: Modifier? = @static <expression>
+  stable subtitle: String? = @static null
+  stable startIcon: @[ExtensionFunctionType] Function3<BoxScope, Composer, Int, Unit>?
+  stable endIcon: ImageVector? = @static null
+  stable fontWeight: FontWeight? = @static <expression>
+  stable foregroundColor: Color = @dynamic <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet(
   unstable options: List<String>
   stable selectedOptionIndex: Int
@@ -271,6 +282,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   unstable entityListItemModel: EntityListItemModel
   stable onClick: Function1<String, Unit>
   stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.CollectionIcon(
+  stable collected: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable contentDescription: String? = @static null
 )
 restartable skippable fun ly.david.musicsearch.ui.common.image.InitializeImageLoader()
 restartable skippable fun ly.david.musicsearch.ui.common.image.LargeImage(
@@ -744,6 +760,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable mostListenedTrackCount: Long
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onClickMoreActions: @[ExtensionFunctionType] Function1<TrackListItemModel, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackTitleWithLength(
+  track: TrackListItemModel
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackNumber(
+  track: TrackListItemModel
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>? = @static null
 )
 open fun ly.david.musicsearch.ui.common.track.TracksByReleasePresenter.present(
   stable <this>: TracksByReleasePresenter
