@@ -15,15 +15,12 @@ version = project.properties["VERSION_NAME"] as String
 
 dependencies {
     implementation(projects.shared)
-
-    // TODO: eventually, the only dependent project should be shared
-    //  where shared exposes the root entry point
     implementation(projects.ui.common)
 
-    linuxAmd64(compose.desktop.linux_x64)
-    macAmd64(compose.desktop.macos_x64)
-    macAarch64(compose.desktop.macos_arm64)
-    windowsAmd64(compose.desktop.windows_x64)
+    linuxAmd64(libs.desktop.jvm.linux.x64)
+    macAmd64(libs.desktop.jvm.macos.x64)
+    macAarch64(libs.desktop.jvm.macos.arm64)
+    windowsAmd64(libs.desktop.jvm.windows.x64)
 
     implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.circuit.foundation)

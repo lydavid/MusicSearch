@@ -13,7 +13,6 @@ detekt = "1.23.8"
 junit = "4.13.2"
 junitJupiterEngine = "5.11.4"
 koin = "4.2.0"
-koinCompose = "4.2.0"
 konsist = "0.17.3"
 kotlin = "2.3.20"
 kotlinpoet = "2.2.0"
@@ -41,7 +40,6 @@ android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref 
 androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
 androidx-arch-core-testing = "androidx.arch.core:core-testing:2.2.0"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
-androidx-core = "androidx.core:core-ktx:1.18.0"
 androidx-datastore-preferences-android = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "paging" }
@@ -75,6 +73,10 @@ compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.10.5"
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+desktop-jvm-linux-x64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-linux-x64", version.ref = "compose-multiplatform" }
+desktop-jvm-macos-arm64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-macos-arm64", version.ref = "compose-multiplatform" }
+desktop-jvm-macos-x64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-macos-x64", version.ref = "compose-multiplatform" }
+desktop-jvm-windows-x64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-windows-x64", version.ref = "compose-multiplatform" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
 detekt-compose = "io.nlopez.compose.rules:detekt:0.5.6"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
@@ -85,7 +87,6 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx"
 junit = { module = "junit:junit", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngine" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCompose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
