@@ -81,7 +81,7 @@ jobs:
 
       - name: Generate new screenshots if verification failed
         id: screenshotsrecord
-        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' }}
+        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' && !startsWith(github.ref, 'refs/heads/renovate/') }}
         run: |
           ./gradlew recordPaparazziDebug
 
