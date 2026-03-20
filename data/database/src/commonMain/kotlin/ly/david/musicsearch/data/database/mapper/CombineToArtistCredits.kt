@@ -19,7 +19,7 @@ internal fun combineToArtistCredits(
             ArtistCreditUiModel(
                 name = nameList[i],
                 artistId = idList[i],
-                joinPhrase = joinPhraseList?.get(i).orEmpty(),
+                joinPhrase = joinPhraseList?.getOrNull(i).orEmpty(),
             )
         }
     } else {
