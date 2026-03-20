@@ -31,9 +31,9 @@ fun <T> DetailsWithErrorHandling(
     ) {
         when {
             handledException != null -> {
-                FullScreenErrorWithRetry(
+                FullScreenErrorWithActionableButton(
                     handledException = handledException,
-                    onClick = onRefresh,
+                    onRefresh = onRefresh,
                 )
             }
 

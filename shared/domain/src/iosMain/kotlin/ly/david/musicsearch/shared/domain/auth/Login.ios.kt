@@ -1,5 +1,5 @@
 package ly.david.musicsearch.shared.domain.auth
 
 interface Login {
-    suspend operator fun invoke()
+    suspend operator fun invoke(): Boolean
 }

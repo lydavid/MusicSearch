@@ -19,6 +19,7 @@ interface MusicBrainzUserApi {
     suspend fun getTokens(
         authCode: String,
         musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+        codeVerifier: String? = null,
     ): TokenResponse
 
     suspend fun getUserInfo(): UserInfo
@@ -36,6 +37,7 @@ interface MusicBrainzUserApiImpl : MusicBrainzUserApi {
     override suspend fun getTokens(
         authCode: String,
         musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+        codeVerifier: String?,
     ): TokenResponse {
         return httpClient.submitForm(
             url = MUSIC_BRAINZ_OAUTH_TOKEN_URL,
@@ -43,6 +45,9 @@ interface MusicBrainzUserApiImpl : MusicBrainzUserApi {
                 append("code", authCode)
                 append("grant_type", "authorization_code")
                 append("redirect_uri", "$APPLICATION_ID://oauth2/redirect")
+                codeVerifier?.let {
+                    append("code_verifier", it)
+                }
             },
             block = {
                 basicAuth(

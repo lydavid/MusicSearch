@@ -10,15 +10,21 @@ import androidx.compose.ui.platform.LocalUriHandler
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
+import ly.david.musicsearch.shared.domain.error.HandledException
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal class MusicBrainzLoginPresenterImpl(
     private val login: Login,
     private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
+    private val clock: Clock,
 ) : MusicBrainzLoginPresenter {
     @Composable
     override fun present(): MusicBrainzLoginUiState {
         val uriHandler = LocalUriHandler.current
         var showDialog by rememberSaveable { mutableStateOf(false) }
+        var successfulLoginAt: Instant? by rememberSaveable { mutableStateOf(null) }
+        var errorMessage: String? by rememberSaveable { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
 
         fun eventSink(event: MusicBrainzLoginUiEvent) {
@@ -29,7 +35,7 @@ internal class MusicBrainzLoginPresenterImpl(
                 }
 
                 MusicBrainzLoginUiEvent.DismissError -> {
-                    // no-op
+                    errorMessage = null
                 }
 
                 MusicBrainzLoginUiEvent.DismissDialog -> {
@@ -38,7 +44,14 @@ internal class MusicBrainzLoginPresenterImpl(
 
                 is MusicBrainzLoginUiEvent.SubmitAuthCode -> {
                     coroutineScope.launch {
-                        login(event.authCode)
+                        try {
+                            val loginSuccessful = login(event.authCode)
+                            if (loginSuccessful) {
+                                successfulLoginAt = clock.now()
+                            }
+                        } catch (ex: HandledException) {
+                            errorMessage = ex.userMessage
+                        }
                     }
                 }
             }
@@ -46,6 +59,8 @@ internal class MusicBrainzLoginPresenterImpl(
 
         return MusicBrainzLoginUiState(
             showDialog = showDialog,
+            successfulLoginAt = successfulLoginAt,
+            errorMessage = errorMessage,
             eventSink = ::eventSink,
         )
     }

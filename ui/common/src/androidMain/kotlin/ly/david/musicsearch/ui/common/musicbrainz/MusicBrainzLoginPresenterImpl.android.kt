@@ -10,14 +10,19 @@ import androidx.compose.runtime.setValue
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
+import ly.david.musicsearch.shared.domain.error.HandledException
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal class MusicBrainzLoginPresenterImpl(
     private val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract,
     private val login: Login,
+    private val clock: Clock,
 ) : MusicBrainzLoginPresenter {
     @Composable
     override fun present(): MusicBrainzLoginUiState {
         val scope = rememberCoroutineScope()
+        var successfulLoginAt: Instant? by rememberSaveable { mutableStateOf(null) }
         var errorMessage: String? by rememberSaveable { mutableStateOf(null) }
         val loginLauncher = rememberLauncherForActivityResult(
             contract = musicBrainzLoginActivityResultContract,
@@ -25,7 +30,14 @@ internal class MusicBrainzLoginPresenterImpl(
             when (result) {
                 is MusicBrainzLoginActivityResultContract.Result.Success -> {
                     scope.launch {
-                        login(result.requestJsonString)
+                        try {
+                            val loginSuccessful = login(result.requestJsonString)
+                            if (loginSuccessful) {
+                                successfulLoginAt = clock.now()
+                            }
+                        } catch (ex: HandledException) {
+                            errorMessage = ex.userMessage
+                        }
                     }
                 }
 
@@ -56,6 +68,7 @@ internal class MusicBrainzLoginPresenterImpl(
         }
 
         return MusicBrainzLoginUiState(
+            successfulLoginAt = successfulLoginAt,
             errorMessage = errorMessage,
             eventSink = ::eventSink,
         )

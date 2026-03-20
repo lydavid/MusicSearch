@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.musicbrainz.auth
 
 import io.ktor.http.Url
 import kotlinx.coroutines.suspendCancellableCoroutine
-import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
@@ -23,11 +22,10 @@ class LoginImpl(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzUserApi: MusicBrainzUserApi,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-    private val logger: Logger,
 ) : Login {
 
     // Inspiration from https://github.com/kalinjul/kotlin-multiplatform-oidc/blob/main/oidc-appsupport/src/iosMain/kotlin/org/publicvalue/multiplatform/oidc/appsupport/PlatformCodeAuthFlow.ios.kt
-    override suspend operator fun invoke() {
+    override suspend operator fun invoke(): Boolean {
         val requestUrl = NSURL.URLWithString(
             URLString = MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL +
                 "?response_type=code" +
@@ -81,12 +79,9 @@ class LoginImpl(
             response.refreshToken,
         )
 
-        try {
-            val username = musicBrainzUserApi.getUserInfo().username ?: return
-            musicBrainzAuthStore.setUsername(username)
-        } catch (ex: Exception) {
-            logger.e(ex)
-        }
+        val username = musicBrainzUserApi.getUserInfo().username ?: return false
+        musicBrainzAuthStore.setUsername(username)
+        return true
     }
 
     private class PresentationContext : NSObject(), ASWebAuthenticationPresentationContextProvidingProtocol {

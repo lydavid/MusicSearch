@@ -67,7 +67,6 @@ internal class CollectionPresenter(
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
 
         val loginUiState = musicBrainzLoginPresenter.present()
-
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
 

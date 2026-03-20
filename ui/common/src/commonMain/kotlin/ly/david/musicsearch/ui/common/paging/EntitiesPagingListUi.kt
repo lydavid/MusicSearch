@@ -50,229 +50,232 @@ fun EntitiesPagingListUi(
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
+    onLogin: () -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = uiState.lazyPagingItems,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
         keyed = true,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is AreaListItemModel -> {
-                AreaListItem(
-                    area = listItemModel,
-                    onAreaClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.AREA,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+        onLogin = onLogin,
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is AreaListItemModel -> {
+                    AreaListItem(
+                        area = listItemModel,
+                        onAreaClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.AREA,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is ArtistListItemModel -> {
-                ArtistListItem(
-                    artist = listItemModel,
-                    onClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.ARTIST,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is ArtistListItemModel -> {
+                    ArtistListItem(
+                        artist = listItemModel,
+                        onClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.ARTIST,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is EventListItemModel -> {
-                EventListItem(
-                    event = listItemModel,
-                    onEventClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.EVENT,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is EventListItemModel -> {
+                    EventListItem(
+                        event = listItemModel,
+                        onEventClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.EVENT,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is GenreListItemModel -> {
-                GenreListItem(
-                    genre = listItemModel,
-                    onGenreClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.GENRE,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is GenreListItemModel -> {
+                    GenreListItem(
+                        genre = listItemModel,
+                        onGenreClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.GENRE,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is InstrumentListItemModel -> {
-                InstrumentListItem(
-                    instrument = listItemModel,
-                    onInstrumentClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.INSTRUMENT,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is InstrumentListItemModel -> {
+                    InstrumentListItem(
+                        instrument = listItemModel,
+                        onInstrumentClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.INSTRUMENT,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is LabelListItemModel -> {
-                LabelListItem(
-                    label = listItemModel,
-                    onLabelClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.LABEL,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is LabelListItemModel -> {
+                    LabelListItem(
+                        label = listItemModel,
+                        onLabelClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.LABEL,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is PlaceListItemModel -> {
-                PlaceListItem(
-                    place = listItemModel,
-                    onPlaceClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.PLACE,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is PlaceListItemModel -> {
+                    PlaceListItem(
+                        place = listItemModel,
+                        onPlaceClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.PLACE,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is RecordingListItemModel -> {
-                RecordingListItem(
-                    recording = listItemModel,
-                    onRecordingClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.RECORDING,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is RecordingListItemModel -> {
+                    RecordingListItem(
+                        recording = listItemModel,
+                        onRecordingClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.RECORDING,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is ReleaseListItemModel -> {
-                ReleaseListItem(
-                    release = listItemModel,
-                    showMoreInfo = uiState.showMoreInfo,
-                    requestForMissingCoverArtUrl = {
-                        requestForMissingCoverArtUrl(listItemModel.id)
-                    },
-                    onClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.RELEASE,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is ReleaseListItemModel -> {
+                    ReleaseListItem(
+                        release = listItemModel,
+                        showMoreInfo = uiState.showMoreInfo,
+                        requestForMissingCoverArtUrl = {
+                            requestForMissingCoverArtUrl(listItemModel.id)
+                        },
+                        onClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.RELEASE,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is ReleaseGroupListItemModel -> {
-                ReleaseGroupListItem(
-                    releaseGroup = listItemModel,
-                    showType = uiState.showMoreInfo,
-                    requestForMissingCoverArtUrl = {
-                        requestForMissingCoverArtUrl(listItemModel.id)
-                    },
-                    onClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.RELEASE_GROUP,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is ReleaseGroupListItemModel -> {
+                    ReleaseGroupListItem(
+                        releaseGroup = listItemModel,
+                        showType = uiState.showMoreInfo,
+                        requestForMissingCoverArtUrl = {
+                            requestForMissingCoverArtUrl(listItemModel.id)
+                        },
+                        onClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.RELEASE_GROUP,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is SeriesListItemModel -> {
-                SeriesListItem(
-                    series = listItemModel,
-                    onSeriesClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.SERIES,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is SeriesListItemModel -> {
+                    SeriesListItem(
+                        series = listItemModel,
+                        onSeriesClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.SERIES,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is WorkListItemModel -> {
-                WorkListItem(
-                    work = listItemModel,
-                    onWorkClick = {
-                        onItemClick(
-                            MusicBrainzEntityType.WORK,
-                            id,
-                        )
-                    },
-                    isSelected = selectedIds.contains(listItemModel.id),
-                    onSelect = onSelect,
-                    onEditCollectionClick = onEditCollectionClick,
-                )
-            }
+                is WorkListItemModel -> {
+                    WorkListItem(
+                        work = listItemModel,
+                        onWorkClick = {
+                            onItemClick(
+                                MusicBrainzEntityType.WORK,
+                                id,
+                            )
+                        },
+                        isSelected = selectedIds.contains(listItemModel.id),
+                        onSelect = onSelect,
+                        onEditCollectionClick = onEditCollectionClick,
+                    )
+                }
 
-            is RelationListItemModel -> {
-                RelationListItem(
-                    relation = listItemModel,
-                    onItemClick = { entity, id ->
-                        require(entity != MusicBrainzEntityType.URL)
-                        onItemClick(
-                            entity,
-                            id,
-                        )
-                    },
-                )
-            }
+                is RelationListItemModel -> {
+                    RelationListItem(
+                        relation = listItemModel,
+                        onItemClick = { entity, id ->
+                            require(entity != MusicBrainzEntityType.URL)
+                            onItemClick(
+                                entity,
+                                id,
+                            )
+                        },
+                    )
+                }
 
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
+                is ListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.text)
+                }
 
-            is LastUpdatedFooter -> {
-                LastUpdatedFooterItem(
-                    lastUpdated = listItemModel.lastUpdated,
-                    now = now,
-                )
-            }
+                is LastUpdatedFooter -> {
+                    LastUpdatedFooterItem(
+                        lastUpdated = listItemModel.lastUpdated,
+                        now = now,
+                    )
+                }
 
-            else -> {
-                // Do nothing.
+                else -> {
+                    // Do nothing.
+                }
             }
-        }
-    }
+        },
+    )
 }

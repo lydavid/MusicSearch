@@ -36,6 +36,7 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Download
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
@@ -105,12 +106,13 @@ internal fun SettingsUi(
             eventSink(SettingsUiEvent.DismissSnackbar)
         }
     }
-    state.musicBrainzLoginUiState.errorMessage?.let { message ->
-        LaunchedEffect(message) {
+
+    MusicBrainzLoginUi(
+        state = state.musicBrainzLoginUiState,
+        onError = { message ->
             snackbarHostState.showSnackbar(message = message)
-            loginEventSink(MusicBrainzLoginUiEvent.DismissError)
-        }
-    }
+        },
+    )
 
     Scaffold(
         modifier = modifier,

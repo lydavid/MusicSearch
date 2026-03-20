@@ -19,12 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.Identifiable
-import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.ui.common.button.RetryButton
-import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithRetry
+import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithActionableButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import musicsearch.ui.common.generated.resources.Res
@@ -54,6 +53,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     lazyListState: LazyListState = rememberLazyListState(),
     customNoResultsText: String = "",
     keyed: Boolean = false,
+    onLogin: () -> Unit = {},
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     val noResultsText = customNoResultsText.ifEmpty {
@@ -75,12 +75,11 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
             }
 
             lazyPagingItems.loadState.refresh is LoadState.Error -> {
-                FullScreenErrorWithRetry(
-                    handledException = HandledException(
-                        userMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message.orEmpty(),
-                        errorResolution = ErrorResolution.Retry,
-                    ),
-                    onClick = { lazyPagingItems.refresh() },
+                FullScreenErrorWithActionableButton(
+                    handledException = (lazyPagingItems.loadState.refresh as LoadState.Error).error
+                        as? HandledException,
+                    onRefresh = { lazyPagingItems.refresh() },
+                    onLogin = onLogin,
                 )
             }
 

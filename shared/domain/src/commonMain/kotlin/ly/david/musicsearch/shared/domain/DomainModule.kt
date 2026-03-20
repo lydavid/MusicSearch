@@ -22,10 +22,10 @@ import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
-import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
-import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCaseImpl
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationshipsImpl
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCaseImpl
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByReleaseImpl
 import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
@@ -35,12 +35,15 @@ import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResult
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import kotlin.time.Clock
 
 val domainModule = module {
     includes(
         coroutinesScopesModule,
         coroutineDispatchersModule,
     )
+
+    single { Clock.System } bind Clock::class
 
     singleOf(::GetEntitiesImpl) bind GetEntities::class
     singleOf(::CreateCollection)

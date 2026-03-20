@@ -224,32 +224,36 @@ internal fun CollectionListUi(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
             keyed = true,
-        ) { collectionListItemModel: CollectionListItemModel? ->
-            when (collectionListItemModel) {
-                is CollectionListItemModel -> {
-                    CollectionListItem(
-                        collection = collectionListItemModel,
-                        query = state.topAppBarFilterState.filterText,
-                        onClick = {
-                            eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
-                        },
-                        enabled = !state.selectionState.isEditMode || !collectionListItemModel.isRemote,
-                        isSelected = state.selectionState.selectedIds.contains(collectionListItemModel.id),
-                        onSelect = {
-                            state.selectionState.toggleSelection(
-                                id = it,
-                                totalLoadedCount = state.lazyPagingItems.itemSnapshotList.items
-                                    .filterNot { item -> item.isRemote }
-                                    .map { item -> item.id }.size,
-                            )
-                        },
-                    )
-                }
+            onLogin = {
+                // not needed here because we don't load remote collections if not logged in
+            },
+            itemContent = { collectionListItemModel: CollectionListItemModel? ->
+                when (collectionListItemModel) {
+                    is CollectionListItemModel -> {
+                        CollectionListItem(
+                            collection = collectionListItemModel,
+                            query = state.topAppBarFilterState.filterText,
+                            onClick = {
+                                eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
+                            },
+                            enabled = !state.selectionState.isEditMode || !collectionListItemModel.isRemote,
+                            isSelected = state.selectionState.selectedIds.contains(collectionListItemModel.id),
+                            onSelect = {
+                                state.selectionState.toggleSelection(
+                                    id = it,
+                                    totalLoadedCount = state.lazyPagingItems.itemSnapshotList.items
+                                        .filterNot { item -> item.isRemote }
+                                        .map { item -> item.id }.size,
+                                )
+                            },
+                        )
+                    }
 
-                else -> {
-                    // Do nothing.
+                    else -> {
+                        // Do nothing.
+                    }
                 }
-            }
-        }
+            },
+        )
     }
 }

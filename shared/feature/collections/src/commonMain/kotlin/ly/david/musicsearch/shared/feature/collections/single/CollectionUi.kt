@@ -35,6 +35,7 @@ import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.getSortOption
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
@@ -79,11 +80,14 @@ internal fun CollectionUi(
 ) {
     val collection = state.collection
     val entity = collection?.entity
+    val tab = entity?.toTab()
+
     val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
     val recordingsByEntityEventSink = state.allEntitiesListUiState.recordingsListUiState.eventSink
     val releasesByEntityEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsByEntityEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val overlayHost = LocalOverlayHost.current
     val coroutineScope = rememberCoroutineScope()
@@ -130,6 +134,13 @@ internal fun CollectionUi(
         worksLazyPagingItems = worksLazyPagingItems,
         relationsLazyPagingItems = unusedLazyPagingItems,
         tracksLazyPagingItems = unusedLazyPagingItems,
+    )
+
+    MusicBrainzLoginUi(
+        state = state.musicBrainzLoginUiState,
+        onSuccessfulLogin = {
+            entitiesLazyPagingItems.getLazyPagingItemsForTab(tab)?.refresh()
+        },
     )
 
     state.softDeleteFeedback?.let { feedback ->
@@ -200,7 +211,7 @@ internal fun CollectionUi(
                 title = state.title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
-                    entity?.toTab()?.let { tab ->
+                    tab?.let { tab ->
                         RefreshMenuItem(
                             tab = tab,
                             onClick = {
@@ -214,7 +225,7 @@ internal fun CollectionUi(
                                 entityId = collection?.id.orEmpty(),
                                 entityType = MusicBrainzEntityType.COLLECTION,
                             ),
-                            tabs = listOfNotNull(entity?.toTab()).toPersistentList(),
+                            tabs = listOfNotNull(tab).toPersistentList(),
                             isRemote = collection?.isRemote == true,
                         ),
                         overlayHost = overlayHost,
@@ -276,7 +287,7 @@ internal fun CollectionUi(
                         }
                     }
                     AddAllToCollectionMenuItem(
-                        tab = entity?.toTab(),
+                        tab = tab,
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -299,7 +310,7 @@ internal fun CollectionUi(
                 onSelectAllToggle = {
                     state.selectionState.toggleSelectAll(
                         ids = entitiesLazyPagingItems.getLoadedIdsForTab(
-                            tab = entity?.toTab(),
+                            tab = tab,
                         ),
                     )
                 },
@@ -460,6 +471,9 @@ internal fun CollectionUi(
                             // no-op
                         }
                     }
+                },
+                onLogin = {
+                    loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 },
             )
         }

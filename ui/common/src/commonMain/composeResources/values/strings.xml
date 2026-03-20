@@ -236,4 +236,5 @@
     <string name="failedToDeleteFromCollection">Failed to delete from collection %1$s. %2$s</string>
     <string name="moreActionsForXByY">More actions for %1$s by %2$s</string>
     <string name="moreActionsFor">More actions for %1$s</string>
+    <string name="login">Login</string>
 </resources>
