@@ -4,10 +4,8 @@ import io.ktor.http.Url
 import kotlinx.coroutines.suspendCancellableCoroutine
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import ly.david.musicsearch.shared.domain.auth.Login
-import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import platform.AuthenticationServices.ASPresentationAnchor
@@ -18,9 +16,8 @@ import platform.darwin.NSObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class LoginImpl(
-    private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val musicBrainzUserApi: MusicBrainzUserApi,
+internal class LoginImpl(
+    private val getAndSaveToken: GetAndSaveToken,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 ) : Login {
 
@@ -69,19 +66,9 @@ class LoginImpl(
             session.start()
         }
 
-        // TODO: generalize token exchange for all platforms
-        val response = musicBrainzUserApi.getTokens(
-            authCode = authCode,
-            musicBrainzOAuthInfo = musicBrainzOAuthInfo,
+        return getAndSaveToken(
+            authorizationCode = authCode,
         )
-        musicBrainzAuthStore.saveTokens(
-            response.accessToken,
-            response.refreshToken,
-        )
-
-        val username = musicBrainzUserApi.getUserInfo().username ?: return false
-        musicBrainzAuthStore.setUsername(username)
-        return true
     }
 
     private class PresentationContext : NSObject(), ASWebAuthenticationPresentationContextProvidingProtocol {

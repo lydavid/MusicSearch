@@ -141,6 +141,9 @@ internal fun CollectionUi(
         onSuccessfulLogin = {
             entitiesLazyPagingItems.getLazyPagingItemsForTab(tab)?.refresh()
         },
+        onError = { message ->
+            snackbarHostState.showSnackbar(message = message)
+        },
     )
 
     state.softDeleteFeedback?.let { feedback ->
