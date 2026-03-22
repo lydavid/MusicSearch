@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* fix IndexOutOfBoundsException crash in tracks list
+
+
+### Features
+
+* support login from a collection's fullscreen error screen; add better error handling for MusicBrainz login for all platforms
