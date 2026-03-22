@@ -46,8 +46,8 @@ jobs:
           android: false
           dotnet: true
           haskell: true
-          large-packages: false
-          docker-images: false
+          large-packages: true
+          docker-images: true
           swap-storage: true
 
       - name: Setup gradle
@@ -177,6 +177,7 @@ jobs:
           command: make site
 
       - run: |
+          du -ah output | sort -rh
           mv output/download.html .
           mv output/icon.svg .
           git add download.html icon.svg
