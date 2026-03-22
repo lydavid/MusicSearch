@@ -49,7 +49,6 @@ internal class SettingsPresenter(
         val listenBrainzUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
         val listenBrainzUserToken by listenBrainzAuthStore.observeUserToken().collectAsRetainedState("")
 
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         val showCrashReporterSettings = appPreferences.showCrashReporterSettings
         val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsRetainedState(false)
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsRetainedState(false)
@@ -60,10 +59,6 @@ internal class SettingsPresenter(
 
         fun eventSink(event: SettingsUiEvent) {
             when (event) {
-                is SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
-                    appPreferences.setShowMoreInfoInReleaseListItem(event.show)
-                }
-
                 is SettingsUiEvent.EnableCrashReporting -> {
                     appPreferences.setEnableCrashReporting(event.enable)
                 }
@@ -120,7 +115,6 @@ internal class SettingsPresenter(
             listenBrainzLoginState = listenBrainzLoginState,
             listenBrainzUsername = listenBrainzUsername,
             listenBrainzUserToken = listenBrainzUserToken,
-            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             showCrashReporterSettings = showCrashReporterSettings,
             isCrashReportingEnabled = isCrashReportingEnabled,
             musicBrainzLoginUiState = loginUiState,
@@ -141,7 +135,6 @@ internal data class SettingsUiState(
     val listenBrainzLoginState: ListenBrainzLoginState? = null,
     val listenBrainzUsername: String = "",
     val listenBrainzUserToken: String = "",
-    val showMoreInfoInReleaseListItem: Boolean = true,
     val showCrashReporterSettings: Boolean = false,
     val isCrashReportingEnabled: Boolean = false,
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
@@ -160,7 +153,6 @@ internal sealed interface SettingsUiEvent : CircuitUiEvent {
     data object ListenBrainzLogout : SettingsUiEvent
 
     data object DismissSnackbar : SettingsUiEvent
-    data class UpdateShowMoreInfoInReleaseListItem(val show: Boolean) : SettingsUiEvent
     data class EnableCrashReporting(val enable: Boolean) : SettingsUiEvent
     data class GoToScreen(val screen: Screen) : SettingsUiEvent
     data object ExportDatabase : SettingsUiEvent

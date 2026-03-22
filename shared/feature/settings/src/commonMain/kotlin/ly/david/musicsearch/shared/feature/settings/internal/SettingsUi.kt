@@ -203,12 +203,6 @@ internal fun SettingsUi(
                 },
             )
 
-            SettingSwitch(
-                header = "Show more info in release list items",
-                checked = state.showMoreInfoInReleaseListItem,
-                onCheckedChange = { eventSink(SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem(it)) },
-            )
-
             if (state.showCrashReporterSettings) {
                 SettingSwitch(
                     header = "Enable crash reporting",
