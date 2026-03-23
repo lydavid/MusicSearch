@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* relocate Show more info in release list items setting to the release list screens
