@@ -46,5 +46,5 @@ jobs:
     uses: ./.github/workflows/publish.yml
     with:
       track: beta
-      skip-desktop: ${{ inputs.skip-desktop != 'false' }}
+      skip-desktop: ${{ inputs.skip-desktop != 'false' && inputs.skip-desktop != false }}
     secrets: inherit
