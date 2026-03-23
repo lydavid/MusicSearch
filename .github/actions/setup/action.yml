@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     # https://github.com/gradle/actions
-    - uses: gradle/actions/wrapper-validation@f29f5a9d7b09a7c6b29859002d29d24e1674c884 # v5.0.1
+    - uses: gradle/actions/wrapper-validation@0f4528296b4bc09e8ae0fc7be30185a4ab435545 # v6.0.0
 
     - name: Configure JDK
       uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5
@@ -12,7 +12,7 @@ runs:
         distribution: "temurin"
         java-version: 21
 
-    - uses: gradle/actions/setup-gradle@f29f5a9d7b09a7c6b29859002d29d24e1674c884 # v5.0.1
+    - uses: gradle/actions/setup-gradle@0f4528296b4bc09e8ae0fc7be30185a4ab435545 # v6.0.0
 
     - run: chmod +x gradlew
       shell: bash
