@@ -7,10 +7,10 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Collection
@@ -174,7 +174,7 @@ class CollectionDao(
     }
 
     fun markDeletedCollections(
-        collectionIds: Set<String>,
+        collectionIds: List<String>,
     ) {
         transacter.transaction {
             collectionIds.forEach { collectionId ->

@@ -71,7 +71,7 @@ internal class CollectionPresenter(
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
-            totalCount = entitiesListUiState.getTotalLocalCount(collection?.entity),
+            totalCount = entitiesListUiState.getTotalLocalCount(tab = collection?.entity?.toTab()),
         )
 
         var oneShotNewCollectableId: String? by rememberRetained {
@@ -87,7 +87,7 @@ internal class CollectionPresenter(
             collectionRepository.addToCollection(
                 collectionId = nonNullCollection.id,
                 entityType = nonNullCollection.entity,
-                entityIds = oneShotNewCollectableId?.run { setOf(this) } ?: return@LaunchedEffect,
+                entityIds = oneShotNewCollectableId?.run { listOf(this) } ?: return@LaunchedEffect,
             )
             oneShotNewCollectableId = null
         }

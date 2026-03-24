@@ -5,6 +5,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
 @Stable
@@ -26,22 +27,23 @@ data class AllEntitiesListUiState(
     val eventSink: (AllEntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState
 
-fun AllEntitiesListUiState.getTotalLocalCount(entity: MusicBrainzEntityType?): Int {
-    return when (entity) {
-        MusicBrainzEntityType.AREA -> areasListUiState.count
-        MusicBrainzEntityType.ARTIST -> artistsListUiState.count
-        MusicBrainzEntityType.EVENT -> eventsListUiState.count
-        MusicBrainzEntityType.GENRE -> genresListUiState.count
-        MusicBrainzEntityType.INSTRUMENT -> instrumentsListUiState.count
-        MusicBrainzEntityType.LABEL -> labelsListUiState.count
-        MusicBrainzEntityType.PLACE -> placesListUiState.count
-        MusicBrainzEntityType.RECORDING -> recordingsListUiState.count
-        MusicBrainzEntityType.RELEASE -> releasesListUiState.count
-        MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListUiState.count
-        MusicBrainzEntityType.SERIES -> seriesListUiState.count
-        MusicBrainzEntityType.WORK -> worksListUiState.count
-        MusicBrainzEntityType.COLLECTION,
-        MusicBrainzEntityType.URL,
+fun AllEntitiesListUiState.getTotalLocalCount(tab: Tab?): Int {
+    return when (tab) {
+        Tab.AREAS -> areasListUiState.count
+        Tab.ARTISTS -> artistsListUiState.count
+        Tab.EVENTS -> eventsListUiState.count
+        Tab.GENRES -> genresListUiState.count
+        Tab.INSTRUMENTS -> instrumentsListUiState.count
+        Tab.LABELS -> labelsListUiState.count
+        Tab.PLACES -> placesListUiState.count
+        Tab.RECORDINGS -> recordingsListUiState.count
+        Tab.RELEASES -> releasesListUiState.count
+        Tab.RELEASE_GROUPS -> releaseGroupsListUiState.count
+        Tab.SERIES -> seriesListUiState.count
+        Tab.WORKS -> worksListUiState.count
+        Tab.TRACKS -> tracksByReleaseUiState.count
+        Tab.DETAILS,
+        Tab.RELATIONSHIPS,
         null,
         -> 0
     }

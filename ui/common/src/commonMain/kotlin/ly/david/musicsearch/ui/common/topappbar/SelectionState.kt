@@ -9,8 +9,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun rememberSelectionState(
@@ -31,6 +33,15 @@ enum class SelectAllState {
     All,
 }
 
+/**
+ * @param id Should be the unique [ly.david.musicsearch.shared.domain.listitem.EntityListItemModel.id].
+ * @param recordingId For [ly.david.musicsearch.shared.domain.listitem.TrackListItemModel].
+ */
+data class SelectableId(
+    val id: String,
+    val recordingId: String? = null,
+)
+
 @Stable
 class SelectionState {
     /**
@@ -44,17 +55,23 @@ class SelectionState {
      */
     private var loadedCount by mutableIntStateOf(0)
 
-    var selectedIds by mutableStateOf(persistentSetOf<String>())
+    var selectedItems: PersistentList<SelectableId> by mutableStateOf(persistentListOf())
         private set
 
+    val selectedIds: ImmutableList<String>
+        get() = selectedItems.map { it.id }.toPersistentList()
+
+    val selectedRecordingIds: ImmutableList<String>
+        get() = selectedItems.mapNotNull { it.recordingId }.toPersistentList()
+
     val isEditMode: Boolean
-        get() = selectedIds.isNotEmpty()
+        get() = selectedItems.isNotEmpty()
 
     val selectedCount: Int
-        get() = selectedIds.size
+        get() = selectedItems.size
 
     val title: String
-        get() = if (selectedIds.isNotEmpty()) {
+        get() = if (selectedItems.isNotEmpty()) {
             "Selected $selectedCount / $totalCount"
         } else {
             ""
@@ -63,8 +80,8 @@ class SelectionState {
     val selectAllState: SelectAllState
         get() {
             return when {
-                selectedIds.isEmpty() -> SelectAllState.None
-                selectedIds.size == totalCount -> SelectAllState.All
+                selectedItems.isEmpty() -> SelectAllState.None
+                selectedItems.size == totalCount -> SelectAllState.All
                 else -> SelectAllState.Some
             }
         }
@@ -76,7 +93,7 @@ class SelectionState {
      */
     val checkboxText: String
         get() {
-            return if (selectedIds.size == loadedCount) {
+            return if (selectedItems.size == loadedCount) {
                 "Deselect all"
             } else {
                 "Select all"
@@ -84,30 +101,31 @@ class SelectionState {
         }
 
     fun toggleSelection(
-        id: String,
+        item: SelectableId,
         totalLoadedCount: Int,
     ) {
-        selectedIds = if (selectedIds.contains(id)) {
-            selectedIds.minus(id)
+        selectedItems = if (selectedItems.any { it.id == item.id }) {
+            selectedItems.removeAll { it.id == item.id }
         } else {
-            selectedIds.plus(id)
-        }.toPersistentSet()
-        this.loadedCount = totalLoadedCount
+            selectedItems.add(item)
+        }
+        loadedCount = totalLoadedCount
     }
 
-    fun toggleSelectAll(ids: List<String>) {
+    fun toggleSelectAll(items: List<SelectableId>) {
         // less-than-or-equals handles the restoration case where the passed on ids is a subset of the selected ids
         // because paging did not prepend load everything that came before the current point
-        selectedIds = if (ids.size <= selectedIds.size) {
-            persistentSetOf()
+        selectedItems = if (items.size <= selectedItems.size) {
+            persistentListOf()
         } else {
-            selectedIds.plus(ids).toPersistentSet()
+            val existingIds = selectedItems.map { it.id }.toHashSet()
+            selectedItems.addAll(items.filter { it.id !in existingIds })
         }
-        loadedCount = ids.size
+        loadedCount = items.size
     }
 
     fun clearSelection() {
-        selectedIds = persistentSetOf()
+        selectedItems = persistentListOf()
     }
 
     companion object {
@@ -116,14 +134,23 @@ class SelectionState {
                 listOf(
                     it.totalCount,
                     it.loadedCount,
-                    it.selectedIds.toSet(),
+                    it.selectedItems.map { item ->
+                        listOf(item.id, item.recordingId ?: "")
+                    },
                 )
             },
             restore = {
                 SelectionState().apply {
                     totalCount = it[0] as Int
                     loadedCount = it[1] as Int
-                    selectedIds = (it[2] as Set<String>).toPersistentSet()
+                    selectedItems = (it[2] as List<List<String>>)
+                        .map { pair ->
+                            SelectableId(
+                                id = pair[0],
+                                recordingId = pair[1].ifEmpty { null },
+                            )
+                        }
+                        .toPersistentList()
                 }
             },
         )

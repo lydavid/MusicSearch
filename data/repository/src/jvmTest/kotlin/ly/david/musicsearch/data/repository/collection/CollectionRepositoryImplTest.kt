@@ -439,7 +439,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
     private suspend fun testDeletingACollection(repository: CollectionRepository) {
         repository.markDeletedCollections(
-            collectionIds = setOf(newCollection.id),
+            collectionIds = listOf(newCollection.id),
         )
         repository.observeAllCollections(
             username = "",
@@ -473,7 +473,7 @@ class CollectionRepositoryImplTest : KoinTest {
         }
 
         repository.markDeletedCollections(
-            collectionIds = setOf(NEW_COLLECTION_ID),
+            collectionIds = listOf(NEW_COLLECTION_ID),
         )
         repository.deleteCollectionsMarkedForDeletion()
         repository.observeAllCollections(
@@ -594,7 +594,7 @@ class CollectionRepositoryImplTest : KoinTest {
             repository.addToCollection(
                 collectionId = "1",
                 entityType = MusicBrainzEntityType.ARTIST,
-                entityIds = setOf(entityId),
+                entityIds = listOf(entityId),
             )
             Assert.assertEquals(true, awaitItem())
         }

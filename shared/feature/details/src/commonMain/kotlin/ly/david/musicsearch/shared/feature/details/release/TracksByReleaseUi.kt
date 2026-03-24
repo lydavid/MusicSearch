@@ -12,11 +12,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
@@ -26,6 +29,8 @@ internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
+    selectedIds: ImmutableList<SelectableId> = persistentListOf(),
+    onSelect: (SelectableId) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
     onSubmitListenClick: (track: TrackListItemModel) -> Unit = {},
 ) {
@@ -36,11 +41,13 @@ internal fun TracksByReleaseUi(
         mostListenedTrackCount = uiState.mostListenedTrackCount,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
-        collapsedMediumIds = uiState.collapsedMediumIds,
         onRecordingClick = onRecordingClick,
+        collapsedMediumIds = uiState.collapsedMediumIds,
         onToggleMedium = { id ->
             eventSink(TracksByReleaseUiEvent.ToggleMedium(id))
         },
+        selectedIds = selectedIds,
+        onSelect = onSelect,
         onEditCollectionClick = onEditCollectionClick,
         onSubmitListenClick = onSubmitListenClick,
     )
@@ -60,8 +67,10 @@ internal fun TracksByReleaseUi(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     collapsedMediumIds: Set<Long> = setOf(),
-    onRecordingClick: (id: String) -> Unit = {},
     onToggleMedium: (id: String) -> Unit = {},
+    onRecordingClick: (id: String) -> Unit = {},
+    selectedIds: ImmutableList<SelectableId> = persistentListOf(),
+    onSelect: (SelectableId) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
     onSubmitListenClick: (track: TrackListItemModel) -> Unit = {},
 ) {
@@ -91,6 +100,8 @@ internal fun TracksByReleaseUi(
                         track = listItemModel,
                         mostListenedTrackCount = mostListenedTrackCount,
                         onRecordingClick = onRecordingClick,
+                        isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
+                        onSelect = onSelect,
                         onClickMoreActions = { showBottomSheetForTrack = listItemModel },
                     )
                 }

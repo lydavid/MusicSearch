@@ -10,24 +10,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
 
 class TracksByReleasePresenter(
     private val getTracksByRelease: GetTracksByRelease,
+    private val observeTrackCount: ObserveTrackCount,
 ) : Presenter<TracksByReleaseUiState> {
     @Composable
     override fun present(): TracksByReleaseUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var releaseId: String by rememberSaveable { mutableStateOf("") }
         var mostListenedTrackCount: Long by rememberSaveable { mutableLongStateOf(0) }
-        val tracksListItems: Flow<PagingData<ListItemModel>> by rememberRetained(releaseId, query) {
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(releaseId, query) {
             mutableStateOf(
                 getTracksByRelease(
                     releaseId = releaseId,
@@ -35,15 +38,20 @@ class TracksByReleasePresenter(
                 ),
             )
         }
+        val count by observeTrackCount(
+            releaseId = releaseId,
+        ).collectAsRetainedState(0)
         val lazyListState: LazyListState = rememberLazyListState()
         var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
 
         return TracksByReleaseUiState(
-            pagingDataFlow = tracksListItems,
+            pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
             collapsedMediumIds = collapsedMediumIds,
+            count = count,
             mostListenedTrackCount = mostListenedTrackCount,
             eventSink = { event ->
+                // TODO: eventSink = { event -> eventSink(event) },
                 handleEvent(
                     event = event,
                     onGet = { id, count ->
@@ -92,6 +100,7 @@ data class TracksByReleaseUiState(
     val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
     val lazyListState: LazyListState = LazyListState(),
     val collapsedMediumIds: Set<Long> = setOf(),
+    val count: Int = 0,
     val mostListenedTrackCount: Long = 0L,
     val eventSink: (TracksByReleaseUiEvent) -> Unit = {},
 ) : CircuitUiState

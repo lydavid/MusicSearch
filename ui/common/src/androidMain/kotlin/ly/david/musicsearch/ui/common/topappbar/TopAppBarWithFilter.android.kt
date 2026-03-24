@@ -187,7 +187,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedOne() {
     PreviewTheme {
         val selectionState = rememberSelectionState(totalCount = 300)
         selectionState.toggleSelection(
-            id = "1",
+            item = SelectableId(id = "1"),
             totalLoadedCount = 200,
         )
         TopAppBarWithFilterInternal(
@@ -204,7 +204,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedAll() {
     PreviewTheme {
         val selectionState = rememberSelectionState(totalCount = 200)
         selectionState.toggleSelectAll(
-            ids = (1..200).map { it.toString() },
+            items = (1..200).map { SelectableId(id = it.toString()) },
         )
         TopAppBarWithFilterInternal(
             annotatedString = AnnotatedString(text = "Title"),
@@ -220,7 +220,7 @@ internal fun PreviewTopAppBarWithFilterWithSelectedAllExceptOne() {
     PreviewTheme {
         val selectionState = rememberSelectionState(totalCount = 200)
         selectionState.toggleSelectAll(
-            ids = (1..199).map { it.toString() },
+            items = (1..199).map { SelectableId(id = it.toString()) },
         )
         TopAppBarWithFilterInternal(
             annotatedString = AnnotatedString(text = "Title"),

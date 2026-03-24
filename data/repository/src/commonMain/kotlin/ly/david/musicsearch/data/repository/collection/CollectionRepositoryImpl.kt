@@ -125,7 +125,7 @@ class CollectionRepositoryImpl(
 
     override fun markDeletedFromCollection(
         collection: CollectionListItemModel,
-        collectableIds: Set<String>,
+        collectableIds: List<String>,
     ): Flow<Feedback<CollectionFeedback>> = flow {
         collectionEntityDao.markDeletedFromCollection(
             collectionId = collection.id,
@@ -190,7 +190,7 @@ class CollectionRepositoryImpl(
     override suspend fun addToCollection(
         collectionId: String,
         entityType: MusicBrainzEntityType,
-        entityIds: Set<String>,
+        entityIds: List<String>,
     ): ActionableResult {
         val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
 
@@ -232,7 +232,7 @@ class CollectionRepositoryImpl(
     }
 
     override fun markDeletedCollections(
-        collectionIds: Set<String>,
+        collectionIds: List<String>,
     ): ActionableResult {
         collectionDao.markDeletedCollections(
             collectionIds = collectionIds,

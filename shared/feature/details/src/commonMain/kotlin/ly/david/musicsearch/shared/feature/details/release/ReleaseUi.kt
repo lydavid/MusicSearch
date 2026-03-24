@@ -44,7 +44,7 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.showSubmitListenDialog
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityTypeWhereTracksAreRecordings
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -194,7 +194,11 @@ internal fun ReleaseUi(
                     CopyToClipboardMenuItem(entityId)
                     AddAllToCollectionMenuItem(
                         tab = selectedTab,
-                        entityIds = state.selectionState.selectedIds,
+                        entityIds = if (selectedTab == Tab.TRACKS) {
+                            state.selectionState.selectedRecordingIds
+                        } else {
+                            state.selectionState.selectedIds
+                        },
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                         snackbarHostState = snackbarHostState,
@@ -253,16 +257,13 @@ internal fun ReleaseUi(
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             onEditCollectionClick = {
-                val entityType = if (selectedTab == Tab.TRACKS) {
-                    MusicBrainzEntityType.RECORDING
-                } else {
-                    selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager
-                }
+                val entityType =
+                    selectedTab.toMusicBrainzEntityTypeWhereTracksAreRecordings() ?: return@DetailsHorizontalPager
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = entityType,
-                    entityIds = setOf(it),
+                    entityIds = listOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)

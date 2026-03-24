@@ -21,6 +21,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
@@ -71,6 +72,13 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                                 entityType = MusicBrainzEntityType.RECORDING,
                                 id = id,
                             ),
+                        )
+                    },
+                    selectedIds = state.selectionState.selectedItems,
+                    onSelect = {
+                        state.selectionState.toggleSelection(
+                            item = it,
+                            totalLoadedCount = entitiesLazyPagingItems.getLoadedIdsForTab(Tab.TRACKS).size,
                         )
                     },
                     onEditCollectionClick = onEditCollectionClick,
@@ -149,7 +157,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     onSelect = {
                         eventSink(
                             DetailsUiEvent.ToggleSelectItem(
-                                collectableId = it,
+                                collectableId = SelectableId(id = it),
                                 loadedCount = entitiesLazyPagingItems.getLoadedIdsForTab(
                                     tab = tab,
                                 ).size,

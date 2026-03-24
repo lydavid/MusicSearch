@@ -30,7 +30,7 @@ fun AddToCollectionActionToggle(
                 coroutineScope = coroutineScope,
                 overlayHost = overlayHost,
                 entityType = entityType,
-                entityIds = setOf(entityId),
+                entityIds = listOf(entityId),
                 snackbarHostState = snackbarHostState,
                 onLoginClick = onLoginClick,
             )

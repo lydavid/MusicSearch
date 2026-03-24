@@ -88,6 +88,14 @@ fun Tab.toMusicBrainzEntityType(): MusicBrainzEntityType? {
     }
 }
 
+fun Tab.toMusicBrainzEntityTypeWhereTracksAreRecordings(): MusicBrainzEntityType? {
+    return if (this == Tab.TRACKS) {
+        MusicBrainzEntityType.RECORDING
+    } else {
+        this.toMusicBrainzEntityType()
+    }
+}
+
 fun MusicBrainzEntityType.toTab(): Tab? {
     return when (this) {
         MusicBrainzEntityType.AREA -> Tab.AREAS

@@ -15,7 +15,7 @@ fun showAddToCollectionSheet(
     coroutineScope: CoroutineScope,
     overlayHost: OverlayHost,
     entityType: MusicBrainzEntityType,
-    entityIds: Set<String>,
+    entityIds: List<String>,
     snackbarHostState: SnackbarHostState,
     onLoginClick: () -> Unit,
 ) {

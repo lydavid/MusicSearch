@@ -3,6 +3,8 @@ package ly.david.musicsearch.ui.common.paging
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.listitem.EntityListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 data class EntitiesLazyPagingItems(
@@ -44,9 +46,17 @@ fun EntitiesLazyPagingItems.getLazyPagingItemsForTab(tab: Tab?): LazyPagingItems
     }
 }
 
-fun EntitiesLazyPagingItems.getLoadedIdsForTab(tab: Tab?): List<String> {
+fun EntitiesLazyPagingItems.getLoadedIdsForTab(tab: Tab?): List<SelectableId> {
     return getLazyPagingItemsForTab(tab)?.itemSnapshotList?.items
         ?.filterIsInstance<EntityListItemModel>()
-        ?.map { item -> item.id }
+        ?.map { item ->
+            when (item) {
+                is TrackListItemModel -> SelectableId(
+                    id = item.id,
+                    recordingId = item.recordingId,
+                )
+                else -> SelectableId(id = item.id)
+            }
+        }
         .orEmpty()
 }

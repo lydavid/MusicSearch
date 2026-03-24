@@ -274,7 +274,7 @@ internal fun AreaUi(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
-                    entityIds = setOf(it),
+                    entityIds = listOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)

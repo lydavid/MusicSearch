@@ -50,7 +50,7 @@ data class CollectionScreen(
 @Parcelize
 data class AddToCollectionScreen(
     val entityType: MusicBrainzEntityType,
-    val collectableIds: Set<String>,
+    val collectableIds: List<String>,
 ) : Screen
 
 @Parcelize

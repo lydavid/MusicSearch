@@ -52,6 +52,7 @@ import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
@@ -312,7 +313,7 @@ internal fun CollectionUi(
                 selectionState = state.selectionState,
                 onSelectAllToggle = {
                     state.selectionState.toggleSelectAll(
-                        ids = entitiesLazyPagingItems.getLoadedIdsForTab(
+                        items = entitiesLazyPagingItems.getLoadedIdsForTab(
                             tab = tab,
                         ),
                     )
@@ -442,7 +443,7 @@ internal fun CollectionUi(
                 selectedIds = state.selectionState.selectedIds,
                 onSelect = {
                     state.selectionState.toggleSelection(
-                        id = it,
+                        item = SelectableId(id = it),
                         totalLoadedCount = entitiesLazyPagingItems.getLoadedIdsForTab(
                             tab = entity.toTab(),
                         ).size,
@@ -453,7 +454,7 @@ internal fun CollectionUi(
                         coroutineScope = coroutineScope,
                         overlayHost = overlayHost,
                         entityType = entity,
-                        entityIds = setOf(it),
+                        entityIds = listOf(it),
                         snackbarHostState = snackbarHostState,
                         onLoginClick = {
                             loginEventSink(MusicBrainzLoginUiEvent.StartLogin)

@@ -4,8 +4,8 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import lydavidmusicsearchdatadatabase.Collection_entity
 
 class CollectionEntityDao(
@@ -47,7 +47,7 @@ class CollectionEntityDao(
 
     fun markDeletedFromCollection(
         collectionId: String,
-        collectableIds: Set<String>,
+        collectableIds: List<String>,
     ) {
         transacter.transaction {
             collectableIds.forEach { collectableId ->

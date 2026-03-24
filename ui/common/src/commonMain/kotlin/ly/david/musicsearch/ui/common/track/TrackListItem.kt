@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.track
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,9 +30,11 @@ import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.icon.CollectionIcon
+import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MoreVert
+import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -39,6 +42,7 @@ import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.moreActionsFor
 import org.jetbrains.compose.resources.stringResource
@@ -51,7 +55,9 @@ fun TrackListItem(
     track: TrackListItemModel,
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
-    onRecordingClick: (id: String) -> Unit = {},
+    onRecordingClick: (recordingId: String) -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: (SelectableId) -> Unit = {},
     onClickMoreActions: TrackListItemModel.() -> Unit = {},
 ) {
     ListItem(
@@ -60,13 +66,24 @@ fun TrackListItem(
                 TrackTitleWithLength(track = track)
             }
         },
-        modifier = modifier.clickable {
-            onRecordingClick(
-                track.recordingId,
-            )
-        },
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    onRecordingClick(track.recordingId)
+                },
+                onLongClick = {
+                    onSelect(SelectableId(id = track.id, recordingId = track.recordingId))
+                },
+            ),
+        colors = listItemColors(isSelected = isSelected),
         leadingContent = {
-            TrackNumber(track = track)
+            TrackNumber(
+                track = track,
+                isSelected = isSelected,
+                onClick = {
+                    onSelect(SelectableId(id = track.id, recordingId = track.recordingId))
+                },
+            )
         },
         trailingContent = {
             IconButton(
@@ -147,6 +164,7 @@ fun TrackTitleWithLength(track: TrackListItemModel) {
 fun TrackNumber(
     track: TrackListItemModel,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
     Box(
@@ -156,11 +174,20 @@ fun TrackNumber(
             .clip(CircleShape)
             .clickable(enabled = onClick != null) { onClick?.invoke() },
     ) {
-        Text(
-            text = track.number,
-            style = TextStyles.getHeaderTextStyle(),
-            fontWeight = track.fontWeight,
-            textAlign = TextAlign.Center,
-        )
+        if (isSelected) {
+            Icon(
+                modifier = Modifier.size(SMALL_IMAGE_SIZE.dp),
+                imageVector = CustomIcons.CheckCircle,
+                tint = MaterialTheme.colorScheme.primary,
+                contentDescription = "selected",
+            )
+        } else {
+            Text(
+                text = track.number,
+                style = TextStyles.getHeaderTextStyle(),
+                fontWeight = track.fontWeight,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }

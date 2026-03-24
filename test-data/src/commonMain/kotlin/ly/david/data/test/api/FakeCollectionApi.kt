@@ -7,7 +7,7 @@ open class FakeCollectionApi : CollectionApi {
     override suspend fun addToCollection(
         collectionId: String,
         resourceUriPlural: String,
-        mbids: Set<String>,
+        mbids: List<String>,
         client: String,
     ) {
         // No-op.

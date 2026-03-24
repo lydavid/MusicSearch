@@ -2,8 +2,8 @@ package ly.david.musicsearch.ui.common.paging
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -45,8 +45,8 @@ fun EntitiesPagingListUi(
     uiState: EntitiesPagingListUiState,
     now: Instant,
     modifier: Modifier = Modifier,
-    selectedIds: ImmutableSet<String> = persistentSetOf(),
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    selectedIds: ImmutableList<String> = persistentListOf(),
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },

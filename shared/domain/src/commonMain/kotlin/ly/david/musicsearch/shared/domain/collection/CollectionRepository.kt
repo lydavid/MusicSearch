@@ -30,7 +30,7 @@ interface CollectionRepository {
 
     fun markDeletedFromCollection(
         collection: CollectionListItemModel,
-        collectableIds: Set<String>,
+        collectableIds: List<String>,
     ): Flow<Feedback<CollectionFeedback>>
 
     fun unMarkDeletedFromCollection(
@@ -44,11 +44,11 @@ interface CollectionRepository {
     suspend fun addToCollection(
         collectionId: String,
         entityType: MusicBrainzEntityType,
-        entityIds: Set<String>,
+        entityIds: List<String>,
     ): ActionableResult
 
     fun markDeletedCollections(
-        collectionIds: Set<String>,
+        collectionIds: List<String>,
     ): ActionableResult
 
     fun unMarkDeletedCollections()

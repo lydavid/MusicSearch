@@ -267,7 +267,7 @@ internal fun LabelUi(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,
-                    entityIds = setOf(it),
+                    entityIds = listOf(it),
                     snackbarHostState = snackbarHostState,
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)

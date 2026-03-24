@@ -11,6 +11,7 @@ import ly.david.data.test.itouKanakoArtistListItemModel
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -139,6 +140,11 @@ class EntitiesListPresenterTest {
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
                     return flowOf(PagingData.from(areasListItems))
+                }
+            },
+            observeTrackCount = object : ObserveTrackCount {
+                override fun invoke(releaseId: String): Flow<Int> {
+                    return flowOf(areasListItems.size)
                 }
             },
         ),

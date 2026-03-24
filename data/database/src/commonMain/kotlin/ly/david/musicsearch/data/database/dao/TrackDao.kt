@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.data.database.mapper.combineToArtistCredits
@@ -66,11 +70,14 @@ class TrackDao(
         }
     }
 
-    fun getNumberOfTracksByRelease(releaseId: String): Int =
+    fun observeCountOfTracksByRelease(releaseId: String): Flow<Int> =
         transacter.getNumberOfTracksByRelease(
             releaseId = releaseId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
 
     fun getTracksByRelease(
         releaseId: String,

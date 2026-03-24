@@ -44,12 +44,12 @@ import ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.SelectionState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
-import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -114,7 +114,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
-            totalCount = entitiesListUiState.getTotalLocalCount(selectedTab.toMusicBrainzEntityType()),
+            totalCount = entitiesListUiState.getTotalLocalCount(tab = selectedTab),
         )
 
         val loginUiState = musicBrainzLoginPresenter.present()
@@ -359,12 +359,12 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data class UpdateTab(val tab: Tab) : DetailsUiEvent
 
     data class ToggleSelectItem(
-        val collectableId: String,
+        val collectableId: SelectableId,
         val loadedCount: Int,
     ) : DetailsUiEvent
 
     data class ToggleSelectAllItems(
-        val collectableIds: List<String>,
+        val collectableIds: List<SelectableId>,
     ) : DetailsUiEvent
 
     data class ClickItem(

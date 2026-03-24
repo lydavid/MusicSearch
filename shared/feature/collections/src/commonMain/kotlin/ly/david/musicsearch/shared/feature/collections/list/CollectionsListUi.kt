@@ -36,6 +36,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.collections
@@ -185,9 +186,9 @@ internal fun CollectionListUi(
                 selectionState = state.selectionState,
                 onSelectAllToggle = {
                     state.selectionState.toggleSelectAll(
-                        ids = state.lazyPagingItems.itemSnapshotList.items
+                        items = state.lazyPagingItems.itemSnapshotList.items
                             .filterNot { item -> item.isRemote }
-                            .map { item -> item.id },
+                            .map { item -> SelectableId(id = item.id) },
                     )
                 },
                 additionalBar = {
@@ -240,7 +241,7 @@ internal fun CollectionListUi(
                             isSelected = state.selectionState.selectedIds.contains(collectionListItemModel.id),
                             onSelect = {
                                 state.selectionState.toggleSelection(
-                                    id = it,
+                                    item = SelectableId(id = it),
                                     totalLoadedCount = state.lazyPagingItems.itemSnapshotList.items
                                         .filterNot { item -> item.isRemote }
                                         .map { item -> item.id }.size,

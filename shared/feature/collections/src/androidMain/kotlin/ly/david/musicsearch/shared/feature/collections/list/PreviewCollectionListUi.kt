@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.topappbar.rememberSelectionState
 
 @PreviewLightDark
@@ -69,7 +70,7 @@ internal fun PreviewCollectionListUiSelection() {
         )
 
         val selectionState = rememberSelectionState(totalCount = 300)
-        selectionState.toggleSelection(id = "2", totalLoadedCount = 200)
+        selectionState.toggleSelection(item = SelectableId(id = "2"), totalLoadedCount = 200)
         CollectionListUi(
             state = CollectionsListUiState(
                 selectionState = selectionState,
@@ -105,7 +106,7 @@ internal fun PreviewCollectionListUiSelectedAll() {
         )
 
         val selectionState = rememberSelectionState(totalCount = 2)
-        selectionState.toggleSelectAll(ids = listOf("1", "2"))
+        selectionState.toggleSelectAll(items = listOf(SelectableId(id = "1"), SelectableId(id = "2")))
         CollectionListUi(
             state = CollectionsListUiState(
                 selectionState = selectionState,

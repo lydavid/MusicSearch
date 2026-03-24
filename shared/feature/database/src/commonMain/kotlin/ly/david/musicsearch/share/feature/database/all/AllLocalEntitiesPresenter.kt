@@ -46,7 +46,7 @@ internal class AllLocalEntitiesPresenter(
         val entitiesListEventSink = entitiesListUiState.eventSink
 
         val selectionState = rememberSelectionState(
-            totalCount = entitiesListUiState.getTotalLocalCount(screen.entityType),
+            totalCount = entitiesListUiState.getTotalLocalCount(tab = screen.entityType.toTab()),
         )
 
         val loginUiState = musicBrainzLoginPresenter.present()
