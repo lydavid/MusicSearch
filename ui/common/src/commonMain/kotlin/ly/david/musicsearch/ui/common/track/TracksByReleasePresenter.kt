@@ -44,6 +44,28 @@ class TracksByReleasePresenter(
         val lazyListState: LazyListState = rememberLazyListState()
         var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
 
+        fun eventSink(event: TracksByReleaseUiEvent) {
+            when (event) {
+                is TracksByReleaseUiEvent.Get -> {
+                    releaseId = event.byReleaseId
+                    mostListenedTrackCount = event.mostListenedTrackCount
+                }
+
+                is TracksByReleaseUiEvent.UpdateQuery -> {
+                    query = event.query
+                }
+
+                is TracksByReleaseUiEvent.ToggleMedium -> {
+                    val mediumId = event.id.toLong()
+                    collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
+                        collapsedMediumIds.filter { it != mediumId }.toSet()
+                    } else {
+                        collapsedMediumIds + setOf(mediumId)
+                    }
+                }
+            }
+        }
+
         return TracksByReleaseUiState(
             pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
@@ -51,47 +73,9 @@ class TracksByReleasePresenter(
             count = count,
             mostListenedTrackCount = mostListenedTrackCount,
             eventSink = { event ->
-                // TODO: eventSink = { event -> eventSink(event) },
-                handleEvent(
-                    event = event,
-                    onGet = { id, count ->
-                        releaseId = id
-                        mostListenedTrackCount = count
-                    },
-                    onQueryChanged = { query = it },
-                    onToggleMedium = { id ->
-                        val mediumId = id.toLong()
-                        collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
-                            collapsedMediumIds.filter { it != mediumId }.toSet()
-                        } else {
-                            collapsedMediumIds + setOf(mediumId)
-                        }
-                    },
-                )
+                eventSink(event = event)
             },
         )
-    }
-
-    private fun handleEvent(
-        event: TracksByReleaseUiEvent,
-        onGet: (id: String, count: Long) -> Unit,
-        onQueryChanged: (String) -> Unit,
-        onToggleMedium: (String) -> Unit = {},
-    ) {
-        when (event) {
-            is TracksByReleaseUiEvent.Get -> {
-                onGet(
-                    event.byReleaseId,
-                    event.mostListenedTrackCount,
-                )
-            }
-            is TracksByReleaseUiEvent.UpdateQuery -> {
-                onQueryChanged(event.query)
-            }
-            is TracksByReleaseUiEvent.ToggleMedium -> {
-                onToggleMedium(event.id)
-            }
-        }
     }
 }
 
