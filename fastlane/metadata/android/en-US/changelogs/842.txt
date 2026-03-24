@@ -1,0 +1,4 @@
+
+### Features
+
+* allow selecting all tracks to add their recordings to a collection; use a list instead of set when adding to a collection to preserve order
