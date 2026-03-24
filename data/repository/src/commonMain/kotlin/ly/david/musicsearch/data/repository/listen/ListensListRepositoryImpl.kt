@@ -89,7 +89,7 @@ class ListensListRepositoryImpl(
                 onReachedLatest = onReachedLatest,
                 onReachedOldest = onReachedOldest,
             )
-                // Provide a smoother experience if we don't try to load data while the user is faceting on a recording
+                // Don't try to load remote data while the user is faceting
                 .takeIf { facetEntity == null },
             pagingSourceFactory = {
                 listenDao.getListensByUser(
@@ -196,7 +196,7 @@ class ListensListRepositoryImpl(
                 // the user may have submitted other listens in the past through other methods.
                 // In one extreme case, the user may have 100 other listens at the same time,
                 // then it's possible the recently submitted listen will not be fetched.
-                // I don't think it's worth fetching until we found our submitted listens to be worth the overhead
+                // I don't think fetching until we found our submitted listens to be worth the overhead
                 // to handle this extreme case.
             )
             listenDao.insert(listens = listensResponse.asListOfListens())

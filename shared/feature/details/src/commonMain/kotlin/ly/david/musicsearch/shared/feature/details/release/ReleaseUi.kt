@@ -150,9 +150,13 @@ internal fun ReleaseUi(
                 onSelectAllToggle = {
                     eventSink(
                         DetailsUiEvent.ToggleSelectAllItems(
-                            collectableIds = entitiesLazyPagingItems.getLoadedIdsForTab(
-                                tab = selectedTab,
-                            ),
+                            collectableIds = if (selectedTab == Tab.TRACKS) {
+                                state.allEntitiesListUiState.tracksByReleaseUiState.trackIds
+                            } else {
+                                entitiesLazyPagingItems.getLoadedIdsForTab(
+                                    tab = selectedTab,
+                                )
+                            },
                         ),
                     )
                 },

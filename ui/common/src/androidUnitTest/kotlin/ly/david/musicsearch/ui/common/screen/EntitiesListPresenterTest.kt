@@ -11,12 +11,13 @@ import ly.david.data.test.itouKanakoArtistListItemModel
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
-import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
+import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
+import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
@@ -134,7 +135,7 @@ class EntitiesListPresenterTest {
             },
         ),
         tracksByReleasePresenter = TracksByReleasePresenter(
-            getTracksByRelease = object : GetTracksByRelease {
+            observeTracksByRelease = object : ObserveTracksByRelease {
                 override fun invoke(
                     releaseId: String,
                     query: String,
@@ -142,9 +143,9 @@ class EntitiesListPresenterTest {
                     return flowOf(PagingData.from(areasListItems))
                 }
             },
-            observeTrackCount = object : ObserveTrackCount {
-                override fun invoke(releaseId: String): Flow<Int> {
-                    return flowOf(areasListItems.size)
+            getTracksIdsByRelease = object : GetTrackIdsByRelease {
+                override fun invoke(releaseId: String): List<SelectableId> {
+                    return listOf()
                 }
             },
         ),

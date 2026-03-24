@@ -26,8 +26,8 @@ import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationship
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationshipsImpl
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCaseImpl
-import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByRelease
-import ly.david.musicsearch.shared.domain.release.usecase.GetTracksByReleaseImpl
+import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
+import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByReleaseImpl
 import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory
@@ -59,7 +59,7 @@ val domainModule = module {
     singleOf(::GetNowPlayingHistory)
     singleOf(::ObserveRelationStatsUseCaseImpl) bind ObserveRelationStatsUseCase::class
     singleOf(::GetEntityRelationshipsImpl) bind GetEntityRelationships::class
-    singleOf(::GetTracksByReleaseImpl) bind GetTracksByRelease::class
+    singleOf(::ObserveTracksByReleaseImpl) bind ObserveTracksByRelease::class
     singleOf(::DeleteSearchHistory)
     singleOf(::GetSearchHistory)
     singleOf(::RecordSearchHistory)

@@ -13,13 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.topappbar.SelectableId
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
@@ -66,7 +68,7 @@ internal fun TracksByReleaseUi(
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    collapsedMediumIds: Set<Long> = setOf(),
+    collapsedMediumIds: ImmutableSet<Long> = persistentSetOf(),
     onToggleMedium: (id: String) -> Unit = {},
     onRecordingClick: (id: String) -> Unit = {},
     selectedIds: ImmutableList<SelectableId> = persistentListOf(),

@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import lydavidmusicsearchdatadatabase.Track
 
 class TrackDao(
@@ -71,7 +72,7 @@ class TrackDao(
     }
 
     fun observeCountOfTracksByRelease(releaseId: String): Flow<Int> =
-        transacter.getNumberOfTracksByRelease(
+        transacter.getCountOfTracksByRelease(
             releaseId = releaseId,
             query = "%%",
         )
@@ -86,7 +87,7 @@ class TrackDao(
     ): PagingSource<Int, TrackAndMedium> {
         val queryWithWildcards = "%$query%"
         return QueryPagingSource(
-            countQuery = transacter.getNumberOfTracksByRelease(
+            countQuery = transacter.getCountOfTracksByRelease(
                 releaseId = releaseId,
                 query = queryWithWildcards,
             ),
@@ -103,6 +104,17 @@ class TrackDao(
                 )
             },
         )
+    }
+
+    fun getAllTrackIdsByRelease(releaseId: String): List<SelectableId> {
+        return transacter.getAllTrackIdsByRelease(
+            releaseId = releaseId,
+        ).executeAsList().map {
+            SelectableId(
+                id = it.id,
+                recordingId = it.recording_id,
+            )
+        }
     }
 }
 

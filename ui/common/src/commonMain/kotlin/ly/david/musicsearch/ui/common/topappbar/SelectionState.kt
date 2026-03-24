@@ -13,6 +13,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 
 @Composable
 fun rememberSelectionState(
@@ -32,15 +33,6 @@ enum class SelectAllState {
     Some,
     All,
 }
-
-/**
- * @param id Should be the unique [ly.david.musicsearch.shared.domain.listitem.EntityListItemModel.id].
- * @param recordingId For [ly.david.musicsearch.shared.domain.listitem.TrackListItemModel].
- */
-data class SelectableId(
-    val id: String,
-    val recordingId: String? = null,
-)
 
 @Stable
 class SelectionState {

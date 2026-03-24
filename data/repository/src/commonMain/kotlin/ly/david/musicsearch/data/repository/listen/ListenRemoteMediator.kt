@@ -89,8 +89,6 @@ internal class ListenRemoteMediator(
             onReachedOldest(true)
         }
 
-        // Note that we will constantly attempt to find older listens whenever the user changes their query
-        // and scrolls to the bottom. These calls are small and fast, so it is okay for now.
         return MediatorResult.Success(
             endOfPaginationReached = currentOldestTimeStampS == newOldestTimeStampS,
         )
@@ -115,8 +113,6 @@ internal class ListenRemoteMediator(
             onReachedLatest(true)
         }
 
-        // We also constantly try to fetch new listens when the user changes their query.
-        // Any way to not do that?
         return MediatorResult.Success(
             endOfPaginationReached = currentLatestTimeStampS == newLatestTimeStampS,
         )

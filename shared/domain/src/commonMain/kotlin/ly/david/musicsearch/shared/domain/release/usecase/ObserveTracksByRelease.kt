@@ -10,17 +10,17 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import kotlin.time.Clock
 
-interface GetTracksByRelease {
+interface ObserveTracksByRelease {
     operator fun invoke(
         releaseId: String,
         query: String,
     ): Flow<PagingData<ListItemModel>>
 }
 
-class GetTracksByReleaseImpl(
+class ObserveTracksByReleaseImpl(
     private val releaseRepository: ReleaseRepository,
     private val coroutineScope: CoroutineScope,
-) : GetTracksByRelease {
+) : ObserveTracksByRelease {
     override operator fun invoke(
         releaseId: String,
         query: String,

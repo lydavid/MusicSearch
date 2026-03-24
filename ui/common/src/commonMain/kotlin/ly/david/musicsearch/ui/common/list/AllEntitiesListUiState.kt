@@ -41,7 +41,7 @@ fun AllEntitiesListUiState.getTotalLocalCount(tab: Tab?): Int {
         Tab.RELEASE_GROUPS -> releaseGroupsListUiState.count
         Tab.SERIES -> seriesListUiState.count
         Tab.WORKS -> worksListUiState.count
-        Tab.TRACKS -> tracksByReleaseUiState.count
+        Tab.TRACKS -> tracksByReleaseUiState.trackIds.size
         Tab.DETAILS,
         Tab.RELATIONSHIPS,
         null,

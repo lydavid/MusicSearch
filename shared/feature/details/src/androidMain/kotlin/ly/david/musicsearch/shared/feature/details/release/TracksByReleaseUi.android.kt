@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
@@ -124,7 +125,7 @@ internal fun PreviewTracksByReleaseUi() {
             TracksByReleaseUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
                 mostListenedTrackCount = 10,
-                collapsedMediumIds = setOf(2),
+                collapsedMediumIds = persistentSetOf(2),
             )
         }
     }

@@ -42,7 +42,7 @@ import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
-import ly.david.musicsearch.ui.common.topappbar.SelectableId
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.moreActionsFor
 import org.jetbrains.compose.resources.stringResource

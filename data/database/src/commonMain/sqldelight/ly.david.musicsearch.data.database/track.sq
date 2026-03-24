@@ -26,7 +26,7 @@ UPDATE track
 SET recording_id = :newId
 WHERE recording_id = :oldId;
 
-getNumberOfTracksByRelease:
+getCountOfTracksByRelease:
 SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT track.id)
@@ -130,3 +130,12 @@ AND (
 GROUP BY track.id
 ORDER BY medium.position, track.position
 LIMIT :limit OFFSET :offset;
+
+getAllTrackIdsByRelease:
+SELECT
+  track.id,
+  recording_id
+FROM track
+INNER JOIN medium ON track.medium_id = medium.id
+INNER JOIN `release` ON medium.release_id = `release`.id
+WHERE `release`.id = :releaseId;
