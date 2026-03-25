@@ -1,0 +1,10 @@
+
+### Bug Fixes
+
+* Select all for tracks actually selects all (even when there are over hundreds)
+* standardize all dialogs' background color and corner radius
+
+
+### Features
+
+* **desktop:** support click to paste MusicBrainz authorization code
