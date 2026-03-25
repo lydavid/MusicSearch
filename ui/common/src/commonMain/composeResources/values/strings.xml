@@ -237,4 +237,6 @@
     <string name="moreActionsForXByY">More actions for %1$s by %2$s</string>
     <string name="moreActionsFor">More actions for %1$s</string>
     <string name="login">Login</string>
+    <string name="authorizationCode">Authorization Code</string>
+    <string name="enterAuthorizationCode">Enter authorization code from your browser:</string>
 </resources>

@@ -30,6 +30,9 @@ import ly.david.musicsearch.ui.common.icons.Login
 import ly.david.musicsearch.ui.common.icons.Logout
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.login
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ListenBrainzProfileCard(
@@ -147,7 +150,7 @@ fun TokenInput(
         textLabel = "User token",
         textHint = "Enter your user token",
         text = text,
-        buttonText = "Log in",
+        buttonText = stringResource(Res.string.login),
         onTextChange = onTextChange,
         onButtonClick = onSetToken,
     )
