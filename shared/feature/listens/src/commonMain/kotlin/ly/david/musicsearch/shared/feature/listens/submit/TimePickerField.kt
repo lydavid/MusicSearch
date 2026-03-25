@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
@@ -27,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
@@ -37,6 +33,7 @@ import ly.david.musicsearch.shared.domain.SECONDS_IN_HOUR
 import ly.david.musicsearch.shared.domain.SECONDS_IN_MINUTE
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
+import ly.david.musicsearch.ui.common.dialog.BasicDialog
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Schedule
 import ly.david.musicsearch.ui.common.modifier.onKeyboardClick
@@ -115,46 +112,40 @@ internal fun TimePickerDialog(
         initialMinute = initialMinute,
     )
 
-    Dialog(
-        onDismissRequest = onDismiss,
+    BasicDialog(
+        onDismiss = onDismiss,
     ) {
-        Surface(
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surface,
-            modifier = modifier,
+        Column(
+            modifier = modifier.padding(24.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-            ) {
-                TimePicker(state = timePickerState)
+            TimePicker(state = timePickerState)
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp),
-                    horizontalArrangement = Arrangement.End,
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                TextButton(
+                    onClick = onDismiss,
                 ) {
-                    TextButton(
-                        onClick = onDismiss,
-                    ) {
-                        Text(stringResource(Res.string.cancel))
-                    }
-                    TextButton(
-                        onClick = {
-                            val outputSeconds = timePickerState.hour * 60 * 60 + timePickerState.minute * 60
-                            val epochSecondsLocal = Instant.fromEpochSeconds(outputSeconds.toLong())
-                                .toLocalDateTime(TimeZone.UTC)
-                                .toInstant(timeZone)
-                                .toEpochMilliseconds() / MS_IN_SECOND
-                            val nonOverflowEpochSecondsLocal = epochSecondsLocal % SECONDS_IN_DAY
-                            onSelectTime(
-                                nonOverflowEpochSecondsLocal,
-                            )
-                            onDismiss()
-                        },
-                    ) {
-                        Text(stringResource(Res.string.ok))
-                    }
+                    Text(stringResource(Res.string.cancel))
+                }
+                TextButton(
+                    onClick = {
+                        val outputSeconds = timePickerState.hour * 60 * 60 + timePickerState.minute * 60
+                        val epochSecondsLocal = Instant.fromEpochSeconds(outputSeconds.toLong())
+                            .toLocalDateTime(TimeZone.UTC)
+                            .toInstant(timeZone)
+                            .toEpochMilliseconds() / MS_IN_SECOND
+                        val nonOverflowEpochSecondsLocal = epochSecondsLocal % SECONDS_IN_DAY
+                        onSelectTime(
+                            nonOverflowEpochSecondsLocal,
+                        )
+                        onDismiss()
+                    },
+                ) {
+                    Text(stringResource(Res.string.ok))
                 }
             }
         }

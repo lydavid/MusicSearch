@@ -2,11 +2,9 @@ package ly.david.musicsearch.ui.common.musicbrainz
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -23,7 +21,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import ly.david.musicsearch.ui.common.dialog.BasicDialog
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -72,63 +70,57 @@ private fun AuthorizationDialog(
     val focusRequester = remember { FocusRequester() }
     var authorizationCode by rememberSaveable { mutableStateOf("") }
 
-    Dialog(
-        onDismissRequest = {
-            onDismiss()
-        },
+    BasicDialog(
+        onDismiss = onDismiss,
     ) {
-        Surface(
-            shape = RoundedCornerShape(28.dp),
+        Column(
+            modifier = Modifier.padding(24.dp),
         ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
+            Text(
+                modifier = Modifier,
+                text = "Enter authorization code from your browser:",
+                style = TextStyles.getHeaderTextStyle(),
+            )
+
+            TextField(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .focusRequester(focusRequester),
+                shape = RectangleShape,
+                value = authorizationCode,
+                label = { Text("Authorization Code") },
+                placeholder = { Text("Authorization Code") },
+                maxLines = 1,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                trailingIcon = {
+                    if (authorizationCode.isEmpty()) return@TextField
+                    IconButton(onClick = {
+                        authorizationCode = ""
+                        focusRequester.requestFocus()
+                    }) {
+                        Icon(
+                            CustomIcons.Clear,
+                            contentDescription = null,
+                        )
+                    }
+                },
+                onValueChange = { newText ->
+                    if (!newText.contains("\n")) {
+                        authorizationCode = newText
+                    }
+                },
+            )
+
+            TextButton(
+                onClick = {
+                    onSubmit(authorizationCode)
+                    onDismiss()
+                },
             ) {
                 Text(
-                    modifier = Modifier,
-                    text = "Enter authorization code from your browser:",
-                    style = TextStyles.getHeaderTextStyle(),
+                    text = stringResource(Res.string.ok),
                 )
-
-                TextField(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .focusRequester(focusRequester),
-                    shape = RectangleShape,
-                    value = authorizationCode,
-                    label = { Text("Authorization Code") },
-                    placeholder = { Text("Authorization Code") },
-                    maxLines = 1,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    trailingIcon = {
-                        if (authorizationCode.isEmpty()) return@TextField
-                        IconButton(onClick = {
-                            authorizationCode = ""
-                            focusRequester.requestFocus()
-                        }) {
-                            Icon(
-                                CustomIcons.Clear,
-                                contentDescription = null,
-                            )
-                        }
-                    },
-                    onValueChange = { newText ->
-                        if (!newText.contains("\n")) {
-                            authorizationCode = newText
-                        }
-                    },
-                )
-
-                TextButton(
-                    onClick = {
-                        onSubmit(authorizationCode)
-                        onDismiss()
-                    },
-                ) {
-                    Text(
-                        text = stringResource(Res.string.ok),
-                    )
-                }
             }
         }
     }
