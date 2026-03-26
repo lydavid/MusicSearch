@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* fix crash when app is put in background while a release screen is part of the backstack (Parcel IllegalArgumentException)
