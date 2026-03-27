@@ -3,7 +3,7 @@ package ly.david.musicsearch.shared.domain.common
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-internal class IntExtTest {
+internal class ToDisplayTimeTest {
 
     @Test
     fun `null`() {
@@ -58,5 +58,10 @@ internal class IntExtTest {
     @Test
     fun `spotify track length example`() {
         assertEquals("3:54", 234283.toDisplayTime())
+    }
+
+    @Test
+    fun long() {
+        assertEquals("596:31:23", (Int.MAX_VALUE + 1L).toDisplayTime())
     }
 }

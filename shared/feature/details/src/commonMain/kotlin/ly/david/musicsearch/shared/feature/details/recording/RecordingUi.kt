@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
@@ -62,6 +63,7 @@ internal fun RecordingUi(
     val browseMethod = state.browseMethod
     val entityId = browseMethod.entityId
     val entityType = browseMethod.entityType
+    val recordingDetailsModel = state.detailsModel
     val overlayHost = LocalOverlayHost.current
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -140,7 +142,7 @@ internal fun RecordingUi(
             FeedbackSnackbarHost(snackbarHostState)
         },
         topBar = {
-            val annotatedName = state.detailsModel.getAnnotatedName()
+            val annotatedName = recordingDetailsModel.getAnnotatedName()
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
@@ -160,7 +162,7 @@ internal fun RecordingUi(
                         onLoginClick = {
                             loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
-                        nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
+                        nameWithDisambiguation = recordingDetailsModel.getAnnotatedName().text,
                     )
                 },
                 overflowDropdownMenuItems = {
@@ -175,9 +177,11 @@ internal fun RecordingUi(
                             }
                         },
                     )
+
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
+
                     StatsMenuItem(
                         statsScreen = StatsScreen(
                             browseMethod = browseMethod,
@@ -187,17 +191,18 @@ internal fun RecordingUi(
                         coroutineScope = coroutineScope,
                     )
 
-                    val recordingDetailsModel = state.detailsModel
                     if (state.showListenSubmission && recordingDetailsModel != null) {
                         SubmitListenMenuItem(
                             submitListenType = SubmitListenType.Track(
-                                name = recordingDetailsModel.name,
-                                disambiguation = recordingDetailsModel.disambiguation,
-                                aliases = recordingDetailsModel.aliases,
-                                // prefer to get it from details model, as the id can change after a fetch
-                                recordingId = recordingDetailsModel.id,
-                                lengthMilliseconds = recordingDetailsModel.length,
-                                artists = recordingDetailsModel.artistCredits,
+                                info = TrackInfo(
+                                    name = recordingDetailsModel.name,
+                                    disambiguation = recordingDetailsModel.disambiguation,
+                                    aliases = recordingDetailsModel.aliases,
+                                    // prefer to get it from details model, as the id can change after a fetch
+                                    recordingId = recordingDetailsModel.id,
+                                    lengthMilliseconds = recordingDetailsModel.length?.toLong(),
+                                    artists = recordingDetailsModel.artistCredits,
+                                ),
                                 releaseName = null,
                                 releaseId = null,
                             ),
@@ -211,6 +216,7 @@ internal fun RecordingUi(
                     }
 
                     CopyToClipboardMenuItem(entityId)
+
                     when (
                         val sortOption =
                             state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
@@ -247,6 +253,7 @@ internal fun RecordingUi(
                             // nothing
                         }
                     }
+
                     AddAllToCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,
@@ -259,7 +266,7 @@ internal fun RecordingUi(
                     )
                 },
                 subtitleDropdownMenuItems = {
-                    state.detailsModel?.artistCredits?.forEach { artistCredit ->
+                    recordingDetailsModel?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entityType = MusicBrainzEntityType.ARTIST) },

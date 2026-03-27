@@ -53,4 +53,11 @@ class SubmitListenUiScreenshotTest : ScreenshotTest() {
             PreviewSubmitListenUiFinishedCustomLocalWithoutAlbum()
         }
     }
+
+    @Test
+    fun albumTypeFinishedCustom() {
+        snapshot {
+            PreviewSubmitListenUiAlbumTypeFinishedCustom()
+        }
+    }
 }

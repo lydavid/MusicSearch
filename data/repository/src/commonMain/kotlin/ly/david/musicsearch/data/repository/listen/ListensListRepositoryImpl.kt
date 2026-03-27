@@ -7,13 +7,17 @@ import androidx.paging.TerminalSeparatorType
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.listenbrainz.api.DEFAULT_GET_LISTENS_COUNT
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
+import ly.david.musicsearch.data.listenbrainz.api.MAX_GET_POST_LISTENS_COUNT
 import ly.david.musicsearch.data.listenbrainz.api.asListOfListens
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.common.toUUID
@@ -186,20 +190,17 @@ class ListensListRepositoryImpl(
         listenSubmissions: List<ListenSubmission>,
     ): Feedback<SubmitListenFeedback> {
         return try {
-            listenBrainzApi.submitListens(
-                listenSubmissions = listenSubmissions,
+            val clampedTotalCount = listenSubmissions.size.coerceIn(
+                minimumValue = DEFAULT_GET_LISTENS_COUNT,
+                maximumValue = MAX_GET_POST_LISTENS_COUNT,
             )
-            val listensResponse = listenBrainzApi.getListensByUser(
-                username = username,
-                maxTimestamp = listenSubmissions.maxByOrNull { it.listenedAtS }?.listenedAtS?.plus(1),
-                // Count should be at least the size of the number of listens, but ideally larger, as
-                // the user may have submitted other listens in the past through other methods.
-                // In one extreme case, the user may have 100 other listens at the same time,
-                // then it's possible the recently submitted listen will not be fetched.
-                // I don't think fetching until we found our submitted listens to be worth the overhead
-                // to handle this extreme case.
-            )
-            listenDao.insert(listens = listensResponse.asListOfListens())
+
+            listenSubmissions.chunked(clampedTotalCount).forEach { chunkedListens ->
+                submitListensInChunksThenFetch(
+                    chunkedListens = chunkedListens,
+                    username = username,
+                )
+            }
 
             Feedback.Success(
                 data = SubmitListenFeedback.SubmittedListens,
@@ -216,6 +217,36 @@ class ListensListRepositoryImpl(
                 errorResolution = ErrorResolution.None,
             )
         }
+    }
+
+    private suspend fun submitListensInChunksThenFetch(
+        chunkedListens: List<ListenSubmission>,
+        username: String,
+    ) {
+        listenBrainzApi.submitListens(
+            listenSubmissions = chunkedListens,
+        )
+
+        // Need to wait a bit for the server to process the listens.
+        // This isn't enough time for larger releases, but we don't want to make the user wait too long.
+        delay(MS_IN_SECOND.toLong())
+
+        // Count should be at least the size of the number of listens, but ideally larger, as
+        // the user may have submitted other listens in the past through other methods.
+        // In one extreme case, the user may have 100 other listens at the same time,
+        // then it's possible the recently submitted listen will not be fetched.
+        // I don't think fetching until we find our submitted listens to be worth the overhead
+        // to handle this extreme case.
+        val clampedChunkCount = chunkedListens.size.coerceIn(
+            minimumValue = DEFAULT_GET_LISTENS_COUNT,
+            maximumValue = MAX_GET_POST_LISTENS_COUNT,
+        )
+        val listensResponse = listenBrainzApi.getListensByUser(
+            username = username,
+            maxTimestamp = chunkedListens.maxByOrNull { it.listenedAtS }?.listenedAtS?.plus(1),
+            count = clampedChunkCount,
+        )
+        listenDao.insert(listens = listensResponse.asListOfListens())
     }
 
     override suspend fun refreshMapping(

@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
@@ -14,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import lydavidmusicsearchdatadatabase.Track
 
@@ -104,6 +106,25 @@ class TrackDao(
                 )
             },
         )
+    }
+
+    fun getTracksByReleaseForListenSubmission(releaseId: String): List<TrackInfo> {
+        return transacter.getTracksByReleaseForListenSubmission(
+            releaseId = releaseId,
+        ).executeAsList().map {
+            TrackInfo(
+                name = it.title,
+                disambiguation = null,
+                aliases = persistentListOf(),
+                recordingId = it.recording_id,
+                lengthMilliseconds = it.length?.toLong(),
+                artists = combineToArtistCredits(
+                    names = it.credit_names,
+                    ids = it.credit_artist_ids,
+                    joinPhrases = it.credit_join_phrases,
+                ),
+            )
+        }
     }
 
     fun getAllTrackIdsByRelease(releaseId: String): List<SelectableId> {

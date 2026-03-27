@@ -25,11 +25,13 @@ import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.withTime
+import ly.david.musicsearch.shared.domain.listen.GetTracksByReleaseForListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import kotlin.time.Clock
@@ -40,24 +42,45 @@ internal class SubmitListenPresenter(
     private val navigator: Navigator,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
+    private val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission,
     val clock: Clock,
     val timeZone: TimeZone,
 ) : Presenter<SubmitListenUiState> {
     @Composable
     override fun present(): SubmitListenUiState {
+        val type = screen.submitListenType
+
         val coroutineScope = rememberCoroutineScope()
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
-
         var dateTimeEpochSeconds: Long by rememberSaveable { mutableLongStateOf(0) }
         var timestampIsStartTime by rememberSaveable { mutableStateOf(true) }
         var useCustomTime by rememberSaveable { mutableStateOf(false) }
-        val listenedAtDateTimeEpochSeconds by rememberSaveable(dateTimeEpochSeconds, timestampIsStartTime) {
-            mutableLongStateOf(
-                dateTimeEpochSeconds - if (timestampIsStartTime) {
-                    0
-                } else {
-                    ((screen.submitListenType as? SubmitListenType.Track)?.lengthMilliseconds ?: 0) / MS_IN_SECOND
+
+        val allSelectedTrackInfo: List<TrackInfo>? by rememberSaveable {
+            mutableStateOf(
+                when (type) {
+                    is SubmitListenType.Album -> {
+                        val allTrackInfo = getTracksByReleaseForListenSubmission(releaseId = type.releaseId)
+                        allTrackInfo.filter { trackInfo ->
+                            trackInfo.recordingId in type.recordingIds
+                        }
+                    }
+
+                    is SubmitListenType.Track -> null
                 },
+            )
+        }
+        val listenedAtDateTimeEpochSeconds by rememberSaveable(
+            dateTimeEpochSeconds,
+            timestampIsStartTime,
+            allSelectedTrackInfo,
+        ) {
+            mutableLongStateOf(
+                dateTimeEpochSeconds - offsetStartTimeSeconds(
+                    timestampIsStartTime = timestampIsStartTime,
+                    type = type,
+                    allSelectedTrackInfo = allSelectedTrackInfo,
+                ),
             )
         }
 
@@ -98,30 +121,41 @@ internal class SubmitListenPresenter(
 
                 is SubmitListenUiEvent.Submit -> {
                     coroutineScope.launch {
-                        when (val listenType = screen.submitListenType) {
+                        val submissions = when (type) {
                             is SubmitListenType.Track -> {
-                                val feedback = listensListRepository.submitListens(
-                                    username = loggedInUsername,
-                                    listenSubmissions = listOf(
-                                        ListenSubmission(
-                                            listenedAtS = listenedAtDateTimeEpochSeconds,
-                                            trackName = listenType.name,
-                                            recordingMbid = listenType.recordingId,
-                                            durationMs = listenType.lengthMilliseconds?.toLong(),
-                                            artistName = listenType.artists.getDisplayNames(),
-                                            artistMbids = listenType.artists.map { it.artistId },
-                                            releaseName = listenType.releaseName,
-                                            releaseMbid = listenType.releaseId,
-                                        ),
-                                    ),
-                                )
-                                navigator.pop(
-                                    result = SnackbarPopResultV2(
-                                        feedback = feedback.withTime(clock.now()),
+                                listOf(
+                                    ListenSubmission(
+                                        listenedAtS = listenedAtDateTimeEpochSeconds,
+                                        trackName = type.info.name,
+                                        recordingMbid = type.info.recordingId,
+                                        durationMs = type.info.lengthMilliseconds,
+                                        artistName = type.info.artists.getDisplayNames(),
+                                        artistMbids = type.info.artists.map { it.artistId },
+                                        releaseName = type.releaseName,
+                                        releaseMbid = type.releaseId,
                                     ),
                                 )
                             }
+
+                            is SubmitListenType.Album -> {
+                                val tracks = allSelectedTrackInfo ?: return@launch
+                                tracks.toSubmissions(
+                                    listenedAtDateTimeEpochSeconds = listenedAtDateTimeEpochSeconds,
+                                    album = type,
+                                )
+                            }
                         }
+
+                        // TODO: emit flow, so that we can show more feedback, don't pop until final feedback
+                        val feedback = listensListRepository.submitListens(
+                            username = loggedInUsername,
+                            listenSubmissions = submissions,
+                        )
+                        navigator.pop(
+                            result = SnackbarPopResultV2(
+                                feedback = feedback.withTime(clock.now()),
+                            ),
+                        )
                     }
                 }
 
@@ -137,9 +171,48 @@ internal class SubmitListenPresenter(
             listenedAtDateTimeEpochSeconds = listenedAtDateTimeEpochSeconds,
             timestampIsStartTime = timestampIsStartTime,
             useCustomTime = useCustomTime,
+            allSelectedTrackInfo = allSelectedTrackInfo,
             // This style is required for presenter tests, or we get KotlinReflectionInternalError
             eventSink = { event -> eventSink(event) },
         )
+    }
+}
+
+private fun offsetStartTimeSeconds(
+    timestampIsStartTime: Boolean,
+    type: SubmitListenType,
+    allSelectedTrackInfo: List<TrackInfo>?,
+): Long = if (timestampIsStartTime) {
+    0
+} else {
+    val fullLengthMilliseconds = when (type) {
+        is SubmitListenType.Album -> allSelectedTrackInfo?.getTotalListenLength() ?: 0
+        is SubmitListenType.Track -> type.info.lengthMilliseconds ?: 0
+    }
+    fullLengthMilliseconds / MS_IN_SECOND
+}
+
+private fun List<TrackInfo>.toSubmissions(
+    listenedAtDateTimeEpochSeconds: Long,
+    album: SubmitListenType.Album,
+): List<ListenSubmission> {
+    var cumulativeOffsetSeconds = 0L
+
+    return this.map { trackInfo ->
+        val submission = ListenSubmission(
+            listenedAtS = listenedAtDateTimeEpochSeconds + cumulativeOffsetSeconds,
+            trackName = trackInfo.name,
+            recordingMbid = trackInfo.recordingId,
+            // non-zero length is only to make it more sensible for the user's listens.
+            // we don't want to pass incorrect duration to the mapper, so don't pass a fake length.
+            durationMs = trackInfo.lengthMilliseconds,
+            artistName = trackInfo.artists.getDisplayNames(),
+            artistMbids = trackInfo.artists.map { it.artistId },
+            releaseName = album.releaseName,
+            releaseMbid = album.releaseId,
+        )
+        cumulativeOffsetSeconds += trackInfo.nonZeroLengthMilliseconds / MS_IN_SECOND
+        submission
     }
 }
 
@@ -154,6 +227,7 @@ internal data class SubmitListenUiState(
     val listenedAtDateTimeEpochSeconds: Long,
     val timestampIsStartTime: Boolean = true,
     val useCustomTime: Boolean = false,
+    val allSelectedTrackInfo: List<TrackInfo>? = null,
     val eventSink: (SubmitListenUiEvent) -> Unit,
 ) : CircuitUiState
 

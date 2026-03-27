@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.repository.list.ObserveCollectedCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveLocalCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveTrackCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveVisitedCountImpl
+import ly.david.musicsearch.data.repository.listen.GetTracksByReleaseForListenSubmissionImpl
 import ly.david.musicsearch.data.repository.listen.ListensListRepositoryImpl
 import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
@@ -67,6 +68,7 @@ import ly.david.musicsearch.shared.domain.list.ObserveCollectedCount
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
+import ly.david.musicsearch.shared.domain.listen.GetTracksByReleaseForListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
@@ -137,4 +139,5 @@ val repositoryDataModule = module {
     singleOf(::ObserveVisitedCountImpl) bind ObserveVisitedCount::class
     singleOf(::ListensListRepositoryImpl) bind ListensListRepository::class
     singleOf(::GetTrackIdsByReleaseImpl) bind GetTrackIdsByRelease::class
+    singleOf(::GetTracksByReleaseForListenSubmissionImpl) bind GetTracksByReleaseForListenSubmission::class
 }

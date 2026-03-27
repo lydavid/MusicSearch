@@ -33,7 +33,7 @@ interface ListenBrainzApi {
         username: String,
         minTimestamp: Long? = null,
         maxTimestamp: Long? = null,
-        count: Int = LISTENS_COUNT,
+        count: Int = DEFAULT_GET_LISTENS_COUNT,
     ): GetListensResponse
 
     suspend fun submitManualMapping(
@@ -96,7 +96,15 @@ interface ListenBrainzApi {
     }
 }
 
-private const val LISTENS_COUNT = 100
+const val DEFAULT_GET_LISTENS_COUNT = 100
+
+/**
+ * https://listenbrainz.readthedocs.io/en/latest/users/api/core.html#listenbrainz.webserver.views.api_tools.MAX_ITEMS_PER_GET
+ * and
+ * https://listenbrainz.readthedocs.io/en/latest/users/api/core.html#listenbrainz.webserver.views.api_tools.MAX_LISTENS_PER_REQUEST
+ */
+const val MAX_GET_POST_LISTENS_COUNT = 1000
+
 private const val CONTENT_TYPE = "Content-Type"
 private const val APPLICATION_JSON = "application/json"
 

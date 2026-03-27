@@ -8,16 +8,20 @@ private const val SINGLE_DIGIT_THRESHOLD = 10
 
 const val UNKNOWN_TIME = "?:??"
 
+fun Int?.toDisplayTime(): String {
+    return this?.toLong().toDisplayTime()
+}
+
 /**
  * Given time in milliseconds, returns a human-readable time string.
  */
-fun Int?.toDisplayTime(): String {
+fun Long?.toDisplayTime(): String {
     if (this == null || this < 0) return UNKNOWN_TIME
 
     val timeWithoutMs = this / MS_IN_SECOND
     var minutes = timeWithoutMs / SECONDS_IN_MINUTE
 
-    var hours = 0
+    var hours = 0L
     if (minutes >= MINUTES_IN_HOUR) {
         hours = minutes / MINUTES_IN_HOUR
         minutes %= hours

@@ -220,7 +220,8 @@
     <string name="invalidMusicBrainzId">Invalid MusicBrainz ID: %1$s</string>
     <string name="deletedListens">Deleted %1$d</string>
     <string name="failedToDeleteListen">Failed to delete listen</string>
-    <string name="submitToListenBrainz">Submit listen to ListenBrainz</string>
+    <string name="submitTrackListenToListenBrainz">Submit track listen to ListenBrainz</string>
+    <string name="submitAlbumListenToListenBrainz">Submit album listen to ListenBrainz</string>
     <string name="started">Started</string>
     <string name="finished">Finished</string>
     <string name="now">Now</string>
@@ -239,4 +240,6 @@
     <string name="login">Login</string>
     <string name="authorizationCode">Authorization Code</string>
     <string name="enterAuthorizationCode">Enter authorization code from your browser:</string>
+    <string name="startedAt">Started at: %1$s</string>
+    <string name="xTracksWithYLength">%1$d tracks (%2$s)</string>
 </resources>

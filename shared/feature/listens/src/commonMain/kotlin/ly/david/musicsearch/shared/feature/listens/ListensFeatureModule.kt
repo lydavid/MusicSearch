@@ -31,7 +31,8 @@ val listensFeatureModule = module {
                     navigator = navigator,
                     listenBrainzAuthStore = get(),
                     listensListRepository = get(),
-                    clock = Clock.System,
+                    getTracksByReleaseForListenSubmission = get(),
+                    clock = get(),
                     timeZone = TimeZone.currentSystemDefault(),
                 )
 

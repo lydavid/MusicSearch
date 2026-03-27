@@ -131,6 +131,37 @@ GROUP BY track.id
 ORDER BY medium.position, track.position
 LIMIT :limit OFFSET :offset;
 
+getTracksByReleaseForListenSubmission:
+SELECT
+  track.recording_id,
+  track.title,
+  track.length,
+  track_credits.credit_names,
+  track_credits.credit_artist_ids,
+  track_credits.credit_join_phrases
+FROM track
+INNER JOIN medium ON track.medium_id = medium.id
+INNER JOIN `release` ON medium.release_id = `release`.id
+LEFT JOIN (
+  SELECT
+    ace.entity_id AS track_id,
+    GROUP_CONCAT(acn.name, CHAR(9)) AS credit_names,
+    GROUP_CONCAT(acn.artist_id, CHAR(9)) AS credit_artist_ids,
+    GROUP_CONCAT(acn.join_phrase, CHAR(9)) AS credit_join_phrases
+  FROM artist_credit_entity ace
+  INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ace.artist_credit_id
+  WHERE ace.entity_id IN (
+    SELECT t.id
+    FROM track t
+    INNER JOIN medium m ON t.medium_id = m.id
+    WHERE m.release_id = :releaseId
+  )
+  GROUP BY ace.entity_id
+) AS track_credits ON track_credits.track_id = track.id
+WHERE `release`.id = :releaseId
+GROUP BY track.id
+ORDER BY medium.position, track.position;
+
 getAllTrackIdsByRelease:
 SELECT
   track.id,

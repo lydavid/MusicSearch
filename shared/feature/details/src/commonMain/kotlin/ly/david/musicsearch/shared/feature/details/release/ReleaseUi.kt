@@ -18,6 +18,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -39,6 +40,7 @@ import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
+import ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -63,6 +65,7 @@ internal fun ReleaseUi(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val selectedTab = state.selectedTab
+    val selectionState = state.selectionState
     val pagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(selectedTab),
         pageCount = state.tabs::size,
@@ -146,7 +149,7 @@ internal fun ReleaseUi(
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
-                selectionState = state.selectionState,
+                selectionState = selectionState,
                 onSelectAllToggle = {
                     eventSink(
                         DetailsUiEvent.ToggleSelectAllItems(
@@ -184,9 +187,11 @@ internal fun ReleaseUi(
                             }
                         },
                     )
+
                     OpenInBrowserMenuItem(
                         url = state.url,
                     )
+
                     StatsMenuItem(
                         statsScreen = StatsScreen(
                             browseMethod = browseMethod,
@@ -195,13 +200,36 @@ internal fun ReleaseUi(
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
                     )
+
+                    if (state.showListenSubmission &&
+                        selectionState.selectedRecordingIds.isNotEmpty() &&
+                        releaseDetailsModel != null
+                    ) {
+                        SubmitListenMenuItem(
+                            submitListenType = SubmitListenType.Album(
+                                recordingIds = selectionState.selectedRecordingIds,
+                                releaseName = releaseDetailsModel.name,
+                                // prefer to get it from details model, as the id can change after a fetch
+                                releaseId = releaseDetailsModel.id,
+                                releaseArtists = releaseDetailsModel.artistCredits,
+                            ),
+                            overlayHost = overlayHost,
+                            coroutineScope = coroutineScope,
+                            snackbarHostState = snackbarHostState,
+                            onSuccess = {
+                                eventSink(DetailsUiEvent.RefreshLocalDetails)
+                            },
+                        )
+                    }
+
                     CopyToClipboardMenuItem(entityId)
+
                     AddAllToCollectionMenuItem(
                         tab = selectedTab,
                         entityIds = if (selectedTab == Tab.TRACKS) {
-                            state.selectionState.selectedRecordingIds
+                            selectionState.selectedRecordingIds
                         } else {
-                            state.selectionState.selectedIds
+                            selectionState.selectedIds
                         },
                         overlayHost = overlayHost,
                         coroutineScope = coroutineScope,
@@ -279,14 +307,15 @@ internal fun ReleaseUi(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     submitListenType = SubmitListenType.Track(
-                        name = track.name,
-                        disambiguation = track.disambiguation,
-                        aliases = track.aliases,
-                        recordingId = track.recordingId,
-                        lengthMilliseconds = track.length,
-                        artists = track.artists,
+                        info = TrackInfo(
+                            name = track.name,
+                            disambiguation = track.disambiguation,
+                            aliases = track.aliases,
+                            recordingId = track.recordingId,
+                            lengthMilliseconds = track.length?.toLong(),
+                            artists = track.artists,
+                        ),
                         releaseName = releaseDetailsModel?.name,
-                        // prefer to get it from details model, as the id can change after a fetch
                         releaseId = releaseDetailsModel?.id,
                     ),
                     snackbarHostState = snackbarHostState,

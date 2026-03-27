@@ -35,8 +35,11 @@ import musicsearch.ui.common.generated.resources.custom
 import musicsearch.ui.common.generated.resources.finished
 import musicsearch.ui.common.generated.resources.now
 import musicsearch.ui.common.generated.resources.started
+import musicsearch.ui.common.generated.resources.startedAt
 import musicsearch.ui.common.generated.resources.submit
-import musicsearch.ui.common.generated.resources.submitToListenBrainz
+import musicsearch.ui.common.generated.resources.submitAlbumListenToListenBrainz
+import musicsearch.ui.common.generated.resources.submitTrackListenToListenBrainz
+import musicsearch.ui.common.generated.resources.xTracksWithYLength
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -61,13 +64,13 @@ internal fun SubmitListenUi(
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
     ) {
-        Text(
-            text = stringResource(Res.string.submitToListenBrainz),
-            style = TextStyles.getHeaderTextStyle(),
-        )
-
         when (val type = state.submitListenType) {
             is SubmitListenType.Track -> {
+                Text(
+                    text = stringResource(Res.string.submitTrackListenToListenBrainz),
+                    style = TextStyles.getHeaderTextStyle(),
+                )
+
                 Text(
                     text = buildAnnotatedString {
                         withStyle(
@@ -75,18 +78,19 @@ internal fun SubmitListenUi(
                                 fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                             ),
                         ) {
-                            append(type.getAnnotatedName())
+                            append(type.info.getAnnotatedName())
                         }
                         withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
-                            append(" ${type.lengthMilliseconds.toDisplayTime()}")
+                            append(" ${type.info.lengthMilliseconds.toDisplayTime()}")
                         }
                     },
                     style = TextStyles.getCardBodyTextStyle(),
                     lineHeight = 24.sp,
                     modifier = Modifier.padding(top = 16.dp),
                 )
+
                 Text(
-                    text = type.artists.getDisplayNames(),
+                    text = type.info.artists.getDisplayNames(),
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
@@ -98,18 +102,50 @@ internal fun SubmitListenUi(
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
+            }
 
-                val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
-                val time = instant.getTimeFormatted(timeZone = timeZone)
-                val shortDate = instant.getShortDateFormatted(timeZone = timeZone)
+            is SubmitListenType.Album -> {
+                Text(
+                    text = stringResource(Res.string.submitAlbumListenToListenBrainz),
+                    style = TextStyles.getHeaderTextStyle(),
+                )
 
                 Text(
-                    text = "$shortDate$DOT_SEPARATOR$time",
+                    text = type.releaseName,
+                    style = TextStyles.getCardBodyTextStyle(),
+                    lineHeight = 24.sp,
+                    modifier = Modifier.padding(top = 16.dp),
+                )
+
+                Text(
+                    text = type.releaseArtists.getDisplayNames(),
+                    modifier = Modifier.padding(top = 4.dp),
+                    style = TextStyles.getCardBodySubTextStyle(),
+                )
+
+                val numberOfTracks = type.recordingIds.size
+                val totalFormattedLength = state.allSelectedTrackInfo?.getTotalListenLength().toDisplayTime()
+                Text(
+                    text = stringResource(
+                        Res.string.xTracksWithYLength,
+                        numberOfTracks,
+                        totalFormattedLength,
+                    ),
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
             }
         }
+
+        val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
+        val time = instant.getTimeFormatted(timeZone = timeZone)
+        val shortDate = instant.getShortDateFormatted(timeZone = timeZone)
+
+        Text(
+            text = stringResource(Res.string.startedAt, "$shortDate$DOT_SEPARATOR$time"),
+            modifier = Modifier.padding(top = 4.dp),
+            style = TextStyles.getCardBodySubTextStyle(),
+        )
 
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier.padding(top = 8.dp),
