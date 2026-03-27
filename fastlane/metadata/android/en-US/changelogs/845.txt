@@ -1,0 +1,4 @@
+
+### Features
+
+* support selecting tracks from a release to submit to ListenBrainz
