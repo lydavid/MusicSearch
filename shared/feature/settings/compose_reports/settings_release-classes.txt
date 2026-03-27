@@ -42,7 +42,6 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiSta
   runtime val listenBrainzLoginState: ListenBrainzLoginState?
   stable val listenBrainzUsername: String
   stable val listenBrainzUserToken: String
-  stable val showMoreInfoInReleaseListItem: Boolean
   stable val showCrashReporterSettings: Boolean
   stable val isCrashReportingEnabled: Boolean
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
@@ -67,10 +66,6 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEve
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.DismissSnackbar {
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.UpdateShowMoreInfoInReleaseListItem {
-  stable val show: Boolean
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.EnableCrashReporting {

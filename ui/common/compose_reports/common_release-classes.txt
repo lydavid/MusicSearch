@@ -1,6 +1,7 @@
 stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenterImpl {
   runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
   unstable val login: Login
+  unstable val clock: Clock
   <runtime stability> = Stable
 }
 stable class musicsearch.ui.common.generated.resources.Res.drawable {
@@ -153,6 +154,7 @@ stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent.
 }
 stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState {
   stable val showDialog: Boolean
+  stable val successfulLoginAt: Instant?
   stable val errorMessage: String?
   stable val eventSink: Function1<MusicBrainzLoginUiEvent, Unit>
   <runtime stability> = Stable
@@ -251,7 +253,7 @@ stable class ly.david.musicsearch.ui.common.screen.CollectionScreen {
 }
 stable class ly.david.musicsearch.ui.common.screen.AddToCollectionScreen {
   stable val entityType: MusicBrainzEntityType
-  unstable val collectableIds: Set<String>
+  unstable val collectableIds: List<String>
   runtime var CREATOR: Creator<AddToCollectionScreen>
   <runtime stability> = Stable
 }
@@ -356,7 +358,7 @@ stable class ly.david.musicsearch.ui.common.theme.TextStyles {
 stable class ly.david.musicsearch.ui.common.topappbar.SelectionState {
   stable var totalCount$delegate: MutableIntState
   stable var loadedCount$delegate: MutableIntState
-  stable var selectedIds$delegate: MutableState<PersistentSet<String>>
+  stable var selectedItems$delegate: MutableState<PersistentList<SelectableId>>
 }
 stable class ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState {
   stable val transitionType: TransitionType
@@ -365,13 +367,15 @@ stable class ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState {
   stable var show$delegate: MutableState<Boolean>
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleasePresenter {
-  unstable val getTracksByRelease: GetTracksByRelease
+  unstable val observeTracksByRelease: ObserveTracksByRelease
+  unstable val getTracksIdsByRelease: GetTrackIdsByRelease
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
-  unstable val collapsedMediumIds: Set<Long>
+  stable val collapsedMediumIds: ImmutableSet<Long>
+  runtime val trackIds: ImmutableList<SelectableId>
   stable val mostListenedTrackCount: Long
   stable val eventSink: Function1<TracksByReleaseUiEvent, Unit>
 }

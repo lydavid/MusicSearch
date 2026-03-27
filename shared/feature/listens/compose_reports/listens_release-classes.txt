@@ -99,6 +99,7 @@ stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPres
   stable val navigator: Navigator
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
   unstable val listensListRepository: ListensListRepository
+  unstable val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission
   unstable val clock: Clock
   unstable val timeZone: TimeZone
   <runtime stability> = Stable
@@ -109,6 +110,7 @@ stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiSt
   stable val listenedAtDateTimeEpochSeconds: Long
   stable val timestampIsStartTime: Boolean
   stable val useCustomTime: Boolean
+  unstable val allSelectedTrackInfo: List<TrackInfo>?
   stable val eventSink: Function1<SubmitListenUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUiEvent.UpdateDate {

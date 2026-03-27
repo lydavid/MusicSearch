@@ -148,12 +148,12 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.Up
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleSelectItem {
-  stable val collectableId: String
+  runtime val collectableId: SelectableId
   stable val loadedCount: Int
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleSelectAllItems {
-  unstable val collectableIds: List<String>
+  unstable val collectableIds: List<SelectableId>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ClickItem {

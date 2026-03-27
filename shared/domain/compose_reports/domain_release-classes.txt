@@ -618,15 +618,28 @@ runtime class ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback.Net
   <runtime stability> = Uncertain(Creator)
 }
 stable class ly.david.musicsearch.shared.domain.listen.SubmitListenType.Track {
+  runtime val info: TrackInfo
+  stable val releaseName: String?
+  stable val releaseId: String?
+  runtime var CREATOR: Creator<Track>
+  <runtime stability> = 
+}
+stable class ly.david.musicsearch.shared.domain.listen.SubmitListenType.Album {
+  stable val recordingIds: ImmutableList<String>
+  stable val releaseName: String
+  stable val releaseId: String
+  runtime val releaseArtists: ImmutableList<ArtistCreditUiModel>
+  runtime var CREATOR: Creator<Album>
+  <runtime stability> = 
+}
+stable class ly.david.musicsearch.shared.domain.listen.TrackInfo {
   stable val name: String
   stable val disambiguation: String?
   runtime val aliases: ImmutableList<BasicAlias>
   stable val recordingId: String
-  stable val lengthMilliseconds: Int?
+  stable val lengthMilliseconds: Long?
   runtime val artists: ImmutableList<ArtistCreditUiModel>
-  stable val releaseName: String?
-  stable val releaseId: String?
-  runtime var CREATOR: Creator<Track>
+  runtime var CREATOR: Creator<TrackInfo>
   <runtime stability> = 
 }
 runtime class ly.david.musicsearch.shared.domain.listen.ListenBrainzLoginState.InvalidToken {
@@ -879,6 +892,12 @@ stable class ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemMo
   stable val entityType: MusicBrainzEntityType
   <runtime stability> = Stable
 }
+runtime class ly.david.musicsearch.shared.domain.listitem.SelectableId {
+  stable val id: String
+  stable val recordingId: String?
+  runtime var CREATOR: Creator<SelectableId>
+  <runtime stability> = Uncertain(Creator)
+}
 stable class ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel {
   stable val id: String
   stable val name: String
@@ -1021,7 +1040,7 @@ stable class ly.david.musicsearch.shared.domain.release.TextRepresentationUiMode
   stable val language: String
   <runtime stability> = Stable
 }
-unstable class ly.david.musicsearch.shared.domain.release.usecase.GetTracksByReleaseImpl {
+unstable class ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByReleaseImpl {
   runtime val releaseRepository: ReleaseRepository
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
