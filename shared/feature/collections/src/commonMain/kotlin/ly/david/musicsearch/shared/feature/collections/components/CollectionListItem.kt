@@ -94,7 +94,6 @@ internal fun CollectionListItem(
                     text = "${collection.cachedEntityCount}",
                     modifier = Modifier.padding(end = 8.dp),
                     style = TextStyles.getCardBodyTextStyle(),
-                    fontWeight = collection.fontWeight,
                 )
                 if (collection.isRemote) {
                     Icon(

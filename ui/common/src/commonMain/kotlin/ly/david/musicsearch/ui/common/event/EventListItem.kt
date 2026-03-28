@@ -51,7 +51,6 @@ fun EventListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = event.fontWeight,
                         )
                     }
 
@@ -64,7 +63,6 @@ fun EventListItem(
                                 modifier = Modifier.padding(top = 4.dp),
                                 text = lifeSpanText,
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = event.fontWeight,
                             )
                         }
                         time.ifNotEmpty { time ->
@@ -75,7 +73,6 @@ fun EventListItem(
                                     append(time)
                                 },
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = event.fontWeight,
                             )
                         }
                         if (cancelled) {
@@ -86,7 +83,6 @@ fun EventListItem(
                                     append("(${stringResource(Res.string.cancelled)})")
                                 },
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = event.fontWeight,
                                 color = MaterialTheme.colorScheme.error,
                             )
                         }

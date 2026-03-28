@@ -62,7 +62,6 @@ fun ArtistListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = artist.fontWeight,
                     )
                 }
 

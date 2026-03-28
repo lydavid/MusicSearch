@@ -49,7 +49,6 @@ fun UrlListItem(
                 Text(
                     text = "${relation.type}:",
                     style = TextStyles.getCardBodySubTextStyle(),
-                    fontWeight = relation.fontWeight,
                 )
 
                 Row(

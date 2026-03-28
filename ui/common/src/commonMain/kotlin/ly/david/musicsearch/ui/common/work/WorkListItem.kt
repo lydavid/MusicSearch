@@ -48,14 +48,12 @@ fun WorkListItem(
                         Text(
                             text = it.joinToString(", "),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = work.fontWeight,
                         )
                     }
                     type.ifNotEmpty {
                         Text(
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = work.fontWeight,
                         )
                     }
                     languages.ifNotEmpty {
@@ -64,7 +62,6 @@ fun WorkListItem(
                                 language.getDisplayLanguage()
                             }.joinToString(", "),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = work.fontWeight,
                         )
                     }
 

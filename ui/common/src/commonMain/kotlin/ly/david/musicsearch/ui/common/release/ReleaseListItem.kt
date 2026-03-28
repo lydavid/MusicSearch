@@ -85,7 +85,6 @@ fun ReleaseListItem(
                             text = countryAndDate,
                             style = TextStyles.getCardBodySubTextStyle(),
                             textAlign = TextAlign.End,
-                            fontWeight = release.fontWeight,
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
@@ -100,7 +99,6 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                fontWeight = release.fontWeight,
                             )
                         }
 
@@ -112,7 +110,6 @@ fun ReleaseListItem(
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 textAlign = TextAlign.End,
-                                fontWeight = release.fontWeight,
                             )
                         }
                     }
@@ -124,7 +121,6 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = release.fontWeight,
                         )
                     }
 
@@ -135,7 +131,6 @@ fun ReleaseListItem(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = release.fontWeight,
                         )
                     }
 

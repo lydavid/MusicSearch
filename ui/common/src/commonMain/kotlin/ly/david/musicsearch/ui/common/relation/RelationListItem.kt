@@ -49,7 +49,6 @@ fun RelationListItem(
                 Text(
                     text = "${relation.type}:",
                     style = TextStyles.getCardBodySubTextStyle(),
-                    fontWeight = relation.fontWeight,
                 )
 
                 Text(
@@ -66,7 +65,6 @@ fun RelationListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = "($it)",
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = relation.fontWeight,
                     )
                 }
 
@@ -75,7 +73,6 @@ fun RelationListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = "($it)",
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = relation.fontWeight,
                     )
                 }
             }

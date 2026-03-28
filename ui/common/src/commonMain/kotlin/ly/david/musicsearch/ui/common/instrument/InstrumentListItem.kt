@@ -44,7 +44,6 @@ fun InstrumentListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = instrument.fontWeight,
                         )
                     }
 
@@ -53,7 +52,6 @@ fun InstrumentListItem(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = instrument.fontWeight,
                         )
                     }
                 }

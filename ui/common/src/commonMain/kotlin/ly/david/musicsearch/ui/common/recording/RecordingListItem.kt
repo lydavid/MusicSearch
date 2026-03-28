@@ -73,7 +73,6 @@ fun RecordingListItem(
                     Text(
                         text = dateAndLength,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = recording.fontWeight,
                     )
 
                     if (recording.video) {
@@ -92,7 +91,6 @@ fun RecordingListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = recording.fontWeight,
                     )
                 }
 

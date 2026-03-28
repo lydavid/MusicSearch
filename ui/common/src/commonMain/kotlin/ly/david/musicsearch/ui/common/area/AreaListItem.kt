@@ -88,7 +88,6 @@ fun AreaListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = type,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = area.fontWeight,
                     )
                 }
 
@@ -97,7 +96,6 @@ fun AreaListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = area.fontWeight,
                     )
                 }
             }
@@ -117,7 +115,6 @@ fun AreaListItem(
                     Text(
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = area.fontWeight,
                     )
                 }
             }

@@ -70,7 +70,6 @@ fun LabelListItem(
                         text = it,
                         color = getSubTextColor(),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = label.fontWeight,
                     )
                 }
 
@@ -79,7 +78,6 @@ fun LabelListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = stringResource(Res.string.lc, labelCode),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = label.fontWeight,
                     )
                 }
 
@@ -88,7 +86,6 @@ fun LabelListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = label.fontWeight,
                     )
                 }
             }

@@ -64,7 +64,6 @@ fun ReleaseGroupListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = releaseGroup.fontWeight,
                         )
                     }
                 }
@@ -74,7 +73,6 @@ fun ReleaseGroupListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = releaseGroup.fontWeight,
                     )
                 }
 
@@ -83,7 +81,6 @@ fun ReleaseGroupListItem(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = releaseGroup.fontWeight,
                     )
                 }
             }

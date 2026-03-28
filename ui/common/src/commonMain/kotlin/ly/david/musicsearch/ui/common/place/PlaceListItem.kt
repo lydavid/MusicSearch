@@ -45,7 +45,6 @@ fun PlaceListItem(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = place.fontWeight,
                         )
                     }
 
@@ -54,7 +53,6 @@ fun PlaceListItem(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = place.fontWeight,
                         )
                     }
 
@@ -63,7 +61,6 @@ fun PlaceListItem(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = place.fontWeight,
                         )
                     }
                 }

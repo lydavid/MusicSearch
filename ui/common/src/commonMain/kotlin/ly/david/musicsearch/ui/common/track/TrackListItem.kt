@@ -28,6 +28,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
+import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.icon.CollectionIcon
 import ly.david.musicsearch.ui.common.icons.CheckCircle
@@ -42,7 +43,6 @@ import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
-import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.moreActionsFor
 import org.jetbrains.compose.resources.stringResource
@@ -105,7 +105,6 @@ fun TrackListItem(
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
                     style = TextStyles.getCardBodySubTextStyle(),
-                    fontWeight = track.fontWeight,
                 )
 
                 val listenCount = track.listenCount
@@ -149,14 +148,18 @@ fun TrackListItem(
 fun TrackTitleWithLength(track: TrackListItemModel) {
     Text(
         text = buildAnnotatedString {
-            withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodyTextStyle().fontSize)) {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = TextStyles.getCardBodyTextStyle().fontSize,
+                    fontWeight = track.fontWeight,
+                ),
+            ) {
                 append(track.getAnnotatedName())
             }
             withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                 append(" ${track.length.toDisplayTime()}")
             }
         },
-        fontWeight = track.fontWeight,
     )
 }
 
@@ -185,7 +188,6 @@ fun TrackNumber(
             Text(
                 text = track.number,
                 style = TextStyles.getHeaderTextStyle(),
-                fontWeight = track.fontWeight,
                 textAlign = TextAlign.Center,
             )
         }
