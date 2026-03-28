@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,21 +16,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Login
 import ly.david.musicsearch.ui.common.icons.Logout
 import ly.david.musicsearch.ui.common.text.TextInput
+import ly.david.musicsearch.ui.common.text.buildStringWithSingleLink
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.clickToLogoutFromListenBrainz
+import musicsearch.ui.common.generated.resources.enterYourUserToken
+import musicsearch.ui.common.generated.resources.findYourListenBrainzUserTokenAt
+import musicsearch.ui.common.generated.resources.letsYouModifyYourListens
 import musicsearch.ui.common.generated.resources.login
+import musicsearch.ui.common.generated.resources.loginToListenBrainz
+import musicsearch.ui.common.generated.resources.userToken
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -88,11 +88,11 @@ internal fun ListenBrainzProfileCard(
             Column {
                 if (showLogin) {
                     Text(
-                        text = "Login to ListenBrainz",
+                        text = stringResource(Res.string.loginToListenBrainz),
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     Text(
-                        text = "This lets you modify your listens",
+                        text = stringResource(Res.string.letsYouModifyYourListens),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 } else {
@@ -105,7 +105,7 @@ internal fun ListenBrainzProfileCard(
                         )
                     }
                     Text(
-                        text = "Click to logout from ListenBrainz",
+                        text = stringResource(Res.string.clickToLogoutFromListenBrainz),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
@@ -125,30 +125,13 @@ fun TokenInput(
     val settingsUrl = "$listenBrainzUrl/settings"
     TextInput(
         modifier = modifier,
-        instructions = buildAnnotatedString {
-            append("Find your ListenBrainz user token at ")
-            withLink(
-                LinkAnnotation.Url(
-                    settingsUrl,
-                    styles = TextLinkStyles(
-                        style = SpanStyle(color = MaterialTheme.colorScheme.primary),
-                        hoveredStyle = SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                        pressedStyle = SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                    ),
-                ),
-            ) {
-                append(settingsUrl)
-            }
-            append(".")
-        },
-        textLabel = "User token",
-        textHint = "Enter your user token",
+        instructions = buildStringWithSingleLink(
+            resourceWithPlaceholder = Res.string.findYourListenBrainzUserTokenAt,
+            linkLabel = settingsUrl,
+            url = settingsUrl,
+        ),
+        textLabel = stringResource(Res.string.userToken),
+        textHint = stringResource(Res.string.enterYourUserToken),
         text = text,
         buttonText = stringResource(Res.string.login),
         onTextChange = onTextChange,

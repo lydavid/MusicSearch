@@ -7,6 +7,9 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.aliases
+import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.aliasesSection(
     filteredAliases: ImmutableList<BasicAlias>,
@@ -21,7 +24,7 @@ internal fun LazyListScope.aliasesSection(
                 total = totalAliases,
             )
             CollapsibleListSeparatorHeader(
-                text = "Aliases $numberOfFilteredItems",
+                text = stringResource(Res.string.aliases) + " $numberOfFilteredItems",
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
             )

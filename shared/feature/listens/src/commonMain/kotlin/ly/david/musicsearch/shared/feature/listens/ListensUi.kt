@@ -10,7 +10,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -26,12 +25,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -53,14 +46,18 @@ import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.text.TextInput
+import ly.david.musicsearch.ui.common.text.buildStringWithSingleLink
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.changeUsername
+import musicsearch.ui.common.generated.resources.clearFacets
 import musicsearch.ui.common.generated.resources.deletedListens
 import musicsearch.ui.common.generated.resources.enterUsername
+import musicsearch.ui.common.generated.resources.enterYourListenBrainzUsername
+import musicsearch.ui.common.generated.resources.facets
 import musicsearch.ui.common.generated.resources.failedToDeleteListen
 import musicsearch.ui.common.generated.resources.failedToRefreshMapping
 import musicsearch.ui.common.generated.resources.failedToSubmitMapping
@@ -73,6 +70,7 @@ import musicsearch.ui.common.generated.resources.setAction
 import musicsearch.ui.common.generated.resources.updated
 import musicsearch.ui.common.generated.resources.username
 import musicsearch.ui.common.generated.resources.xListens
+import musicsearch.ui.common.generated.resources.xSongs
 import org.jetbrains.compose.resources.stringResource
 
 private const val ROTATE_DOWN = 90f
@@ -175,7 +173,7 @@ internal fun ListensUi(
                     ) {
                         Icon(
                             imageVector = CustomIcons.Clear,
-                            contentDescription = "Clear facets",
+                            contentDescription = stringResource(Res.string.clearFacets),
                         )
                     }
                 }
@@ -199,7 +197,7 @@ internal fun ListensUi(
                     },
                     label = {
                         Text(
-                            text = "Facets",
+                            text = stringResource(Res.string.facets),
                         )
                     },
                     onClick = {
@@ -259,7 +257,7 @@ internal fun ListensUi(
                     eventSink(ListensUiEvent.NavigateUp)
                 },
                 title = title,
-                subtitle = state.totalCountOfListens?.let { "$it songs" }.orEmpty(),
+                subtitle = state.totalCountOfListens?.let { stringResource(Res.string.xSongs, it) }.orEmpty(),
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
                 additionalBar = additionalBar,
@@ -415,28 +413,11 @@ private fun UsernameInput(
 ) {
     TextInput(
         modifier = modifier,
-        instructions = buildAnnotatedString {
-            append("Enter your ")
-            withLink(
-                LinkAnnotation.Url(
-                    listenBrainzUrl,
-                    styles = TextLinkStyles(
-                        style = SpanStyle(color = MaterialTheme.colorScheme.primary),
-                        hoveredStyle = SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                        pressedStyle = SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                    ),
-                ),
-            ) {
-                append("ListenBrainz")
-            }
-            append(" username to load your listens into the app.")
-        },
+        instructions = buildStringWithSingleLink(
+            resourceWithPlaceholder = Res.string.enterYourListenBrainzUsername,
+            linkLabel = "ListenBrainz",
+            url = listenBrainzUrl,
+        ),
         textLabel = stringResource(Res.string.username),
         textHint = stringResource(Res.string.enterUsername),
         text = text,

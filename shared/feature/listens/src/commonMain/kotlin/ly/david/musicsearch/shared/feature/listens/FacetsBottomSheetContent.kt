@@ -37,6 +37,10 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.filterByEntity
+import musicsearch.ui.common.generated.resources.unlinkedListens
+import org.jetbrains.compose.resources.stringResource
 
 internal val tabs = persistentListOf(
     Tab.RECORDINGS,
@@ -69,7 +73,7 @@ internal fun FacetsBottomSheetContent(
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBarWithFilter(
-            title = "Filter by entity",
+            title = stringResource(Res.string.filterByEntity),
             modifier = Modifier,
             onBack = onDismiss,
             topAppBarFilterState = state.filterState,
@@ -124,7 +128,7 @@ internal fun FacetsBottomSheetContent(
                                 val title = buildAnnotatedString {
                                     append(
                                         if (hasUnknownId) {
-                                            "(Unlinked listens)"
+                                            "(${stringResource(Res.string.unlinkedListens)})"
                                         } else {
                                             facet.getAnnotatedName()
                                         },

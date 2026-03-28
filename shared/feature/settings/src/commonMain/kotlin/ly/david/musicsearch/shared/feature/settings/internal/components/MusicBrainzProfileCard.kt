@@ -18,6 +18,8 @@ import ly.david.musicsearch.ui.common.icons.Login
 import ly.david.musicsearch.ui.common.icons.Logout
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.clickToLogoutFromMusicBrainz
+import musicsearch.ui.common.generated.resources.letsYouSyncYourCollections
 import musicsearch.ui.common.generated.resources.loginToMusicBrainz
 import org.jetbrains.compose.resources.stringResource
 
@@ -56,7 +58,7 @@ internal fun MusicBrainzProfileCard(
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     Text(
-                        text = "This lets you sync your collections",
+                        text = stringResource(Res.string.letsYouSyncYourCollections),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 } else {
@@ -69,7 +71,7 @@ internal fun MusicBrainzProfileCard(
                         )
                     }
                     Text(
-                        text = "Click to logout from MusicBrainz",
+                        text = stringResource(Res.string.clickToLogoutFromMusicBrainz),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

@@ -17,6 +17,9 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.images
+import musicsearch.ui.common.generated.resources.imagesGridPadding
+import musicsearch.ui.common.generated.resources.numberOfImagesPerRow
+import musicsearch.ui.common.generated.resources.reset
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +49,7 @@ internal fun ImagesSettingsUi(
                 .padding(16.dp),
         ) {
             Column {
-                Text(text = "Number of images per row: ${state.numberOfImagesPerRow}")
+                Text(text = stringResource(Res.string.numberOfImagesPerRow) + ": ${state.numberOfImagesPerRow}")
                 Slider(
                     value = state.numberOfImagesPerRow.toFloat(),
                     onValueChange = { eventSink(ImagesSettingsUiEvent.UpdateNumberOfImagesPerRow(it.toInt())) },
@@ -56,7 +59,7 @@ internal fun ImagesSettingsUi(
             }
 
             Column {
-                Text(text = "Images grid padding: ${state.imagesGridPaddingDp}")
+                Text(text = stringResource(Res.string.imagesGridPadding) + ": ${state.imagesGridPaddingDp}")
                 Slider(
                     value = state.imagesGridPaddingDp.toFloat(),
                     onValueChange = { eventSink(ImagesSettingsUiEvent.UpdateImagesGridPaddingDp(it.toInt())) },
@@ -73,7 +76,7 @@ internal fun ImagesSettingsUi(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             ) {
                 Text(
-                    text = "Reset",
+                    text = stringResource(Res.string.reset),
                 )
             }
         }

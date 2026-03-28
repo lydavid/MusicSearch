@@ -39,8 +39,11 @@ import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.appearance
 import musicsearch.ui.common.generated.resources.dark
 import musicsearch.ui.common.generated.resources.light
+import musicsearch.ui.common.generated.resources.reset
+import musicsearch.ui.common.generated.resources.seedColor
 import musicsearch.ui.common.generated.resources.system
 import musicsearch.ui.common.generated.resources.theme
+import musicsearch.ui.common.generated.resources.useMaterialYou
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -86,7 +89,7 @@ internal fun AppearanceSettingsUi(
             val useMaterialYou = state.useMaterialYou
             if (isAndroid12Plus) {
                 SettingSwitch(
-                    header = "Use Material You",
+                    header = stringResource(Res.string.useMaterialYou),
                     checked = useMaterialYou,
                     onCheckedChange = {
                         eventSink(AppearanceSettingsUiEvent.UpdateUseMaterialYou(it))
@@ -119,7 +122,7 @@ private fun ColumnScope.CustomColorPickerSection(
                 .padding(16.dp),
         ) {
             Text(
-                text = "Seed color: #${hexColor.uppercase()}",
+                text = stringResource(Res.string.seedColor) + ": #${hexColor.uppercase()}",
             )
             Spacer(Modifier.weight(1f))
             TextButton(
@@ -129,7 +132,7 @@ private fun ColumnScope.CustomColorPickerSection(
                 },
             ) {
                 Text(
-                    text = "Reset",
+                    text = stringResource(Res.string.reset),
                 )
             }
         }

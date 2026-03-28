@@ -48,9 +48,12 @@ import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.about
+import musicsearch.ui.common.generated.resources.appRestartRequired
 import musicsearch.ui.common.generated.resources.appVersion
 import musicsearch.ui.common.generated.resources.appearance
+import musicsearch.ui.common.generated.resources.database
 import musicsearch.ui.common.generated.resources.databaseVersion
+import musicsearch.ui.common.generated.resources.enableCrashReporting
 import musicsearch.ui.common.generated.resources.enableNotificationListener
 import musicsearch.ui.common.generated.resources.enableNotificationListenerSubtitle
 import musicsearch.ui.common.generated.resources.experimentalSearch
@@ -60,6 +63,7 @@ import musicsearch.ui.common.generated.resources.listens
 import musicsearch.ui.common.generated.resources.nowPlayingHistory
 import musicsearch.ui.common.generated.resources.nowPlayingHistorySubtitle
 import musicsearch.ui.common.generated.resources.openSourceLicenses
+import musicsearch.ui.common.generated.resources.saveDatabase
 import musicsearch.ui.common.generated.resources.settings
 import musicsearch.ui.common.generated.resources.spotify
 import musicsearch.ui.common.generated.resources.spotifySubtitle
@@ -205,8 +209,8 @@ internal fun SettingsUi(
 
             if (state.showCrashReporterSettings) {
                 SettingSwitch(
-                    header = "Enable crash reporting",
-                    subtitle = "App restart is required when switching off",
+                    header = stringResource(Res.string.enableCrashReporting),
+                    subtitle = stringResource(Res.string.appRestartRequired),
                     checked = state.isCrashReportingEnabled,
                     onCheckedChange = { eventSink(SettingsUiEvent.EnableCrashReporting(it)) },
                 )
@@ -250,12 +254,12 @@ internal fun SettingsUi(
                 )
             }
 
-            ListSeparatorHeader(text = "Database")
+            ListSeparatorHeader(text = stringResource(Res.string.database))
 
             TextButton(onClick = { eventSink(SettingsUiEvent.ExportDatabase) }) {
                 TextWithIcon(
                     imageVector = CustomIcons.Download,
-                    text = "Save database to Downloads",
+                    text = stringResource(Res.string.saveDatabase),
                 )
             }
 

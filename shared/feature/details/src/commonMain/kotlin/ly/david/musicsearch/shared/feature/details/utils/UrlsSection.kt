@@ -7,6 +7,9 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.externalLinks
+import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.urlsSection(
     filteredUrls: ImmutableList<RelationListItemModel>,
@@ -21,7 +24,7 @@ internal fun LazyListScope.urlsSection(
                 total = totalUrls,
             )
             CollapsibleListSeparatorHeader(
-                text = "External links $numberOfFilteredItems",
+                text = stringResource(Res.string.externalLinks) + " $numberOfFilteredItems",
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
             )
