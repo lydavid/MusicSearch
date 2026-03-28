@@ -20,8 +20,9 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
 
-// TODO: if we fail to delete item, would be nice to show it again instead of a red background
-//  this may suggest we shouldn't use swipe to delete for remote items, as the ux will be strange no matter what we do
+/**
+ * Don't use this for items that need to be synced with a server because it's not built for handling undo.
+ */
 @Composable
 fun SwipeToDeleteListItem(
     modifier: Modifier = Modifier,
