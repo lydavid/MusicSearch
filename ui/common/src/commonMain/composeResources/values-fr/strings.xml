@@ -243,4 +243,14 @@
     <string name="submitAlbumListenToListenBrainz">Envoyer l'album vers ListenBrainz</string>
     <string name="startedAt">Début à : %1$s</string>
     <string name="xTracksWithYLength">%1$d titres (%2$s)</string>
+    <string name="choir">Chœur</string>
+    <string name="group">Groupe</string>
+    <string name="orchestra">Orchestre</string>
+    <string name="other">Autres</string>
+    <string name="person">Personne</string>
+    <string name="female">Femme</string>
+    <string name="male">Homme</string>
+    <string name="nonBinary">Non binaire</string>
+    <string name="notApplicable">Sans objet</string>
+    <string name="character">Personnage</string>
 </resources>
