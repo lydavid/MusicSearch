@@ -248,4 +248,8 @@
     <string name="orchestra">Orchestra</string>
     <string name="other">Other</string>
     <string name="person">Person</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="nonBinary">Non-binary</string>
+    <string name="notApplicable">Not applicable</string>
 </resources>

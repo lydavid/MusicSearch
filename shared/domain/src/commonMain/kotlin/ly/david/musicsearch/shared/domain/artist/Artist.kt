@@ -10,5 +10,4 @@ interface Artist : NameWithDisambiguation {
     override val name: String
     val sortName: String
     override val disambiguation: String?
-    val gender: String?
 }

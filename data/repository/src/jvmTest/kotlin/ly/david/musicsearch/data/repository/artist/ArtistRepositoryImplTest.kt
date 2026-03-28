@@ -24,6 +24,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -136,7 +137,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 type = ArtistType.PERSON,
-                gender = "Male",
+                gender = ArtistGender.MALE,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1947-01-08",
                     end = "2016-01-10",

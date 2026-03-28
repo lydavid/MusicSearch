@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -40,7 +41,7 @@ private val canadianArtists = MutableStateFlow(
                 name = "Céline Dion",
                 sortName = "Dion, Céline",
                 type = ArtistType.PERSON,
-                gender = "Female",
+                gender = ArtistGender.FEMALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1968-03-30"),
             ),
@@ -60,7 +61,7 @@ private val canadianArtists = MutableStateFlow(
                 name = "Neil Young",
                 sortName = "Young, Neil",
                 type = ArtistType.PERSON,
-                gender = "Male",
+                gender = ArtistGender.MALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1945-11-12"),
             ),
@@ -69,7 +70,7 @@ private val canadianArtists = MutableStateFlow(
                 name = "Joni Mitchell",
                 sortName = "Mitchell, Joni",
                 type = ArtistType.PERSON,
-                gender = "Female",
+                gender = ArtistGender.FEMALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1943-11-07"),
             ),
@@ -79,7 +80,7 @@ private val canadianArtists = MutableStateFlow(
                 sortName = "Weeknd, The",
                 disambiguation = "Canadian R&B singer",
                 type = ArtistType.PERSON,
-                gender = "Male",
+                gender = ArtistGender.MALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1990-02-16"),
             ),
@@ -88,7 +89,7 @@ private val canadianArtists = MutableStateFlow(
                 name = "Shania Twain",
                 sortName = "Twain, Shania",
                 type = ArtistType.PERSON,
-                gender = "Female",
+                gender = ArtistGender.FEMALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1965-08-28"),
             ),
@@ -106,7 +107,7 @@ private val canadianArtists = MutableStateFlow(
                 sortName = "Cohen, Leonard",
                 disambiguation = "Canadian singer‐songwriter and poet",
                 type = ArtistType.PERSON,
-                gender = "Male",
+                gender = ArtistGender.MALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1934-09-21",
@@ -118,7 +119,7 @@ private val canadianArtists = MutableStateFlow(
                 name = "Avril Lavigne",
                 sortName = "Lavigne, Avril",
                 type = ArtistType.PERSON,
-                gender = "Female",
+                gender = ArtistGender.FEMALE,
                 countryCode = "CA",
                 lifeSpan = LifeSpanUiModel(begin = "1984-09-27"),
             ),

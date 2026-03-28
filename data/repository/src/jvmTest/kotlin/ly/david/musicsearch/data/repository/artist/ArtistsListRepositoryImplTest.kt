@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
@@ -175,7 +176,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         sortName = "Weeknd, The",
         disambiguation = "Canadian R&B singer",
         type = ArtistType.PERSON,
-        gender = "Male",
+        gender = ArtistGender.MALE,
         countryCode = "CA",
         lifeSpan = LifeSpanUiModel(begin = "1990-02-16"),
     )

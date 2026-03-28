@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetwor
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -147,7 +148,7 @@ class ArtistDao(
             sortName = sortName,
             disambiguation = disambiguation,
             type = ArtistType.fromId(typeId),
-            gender = gender,
+            gender = ArtistGender.fromId(gender),
             ipis = ipis.toPersistentList(),
             isnis = isnis.toPersistentList(),
             lifeSpan = LifeSpanUiModel(

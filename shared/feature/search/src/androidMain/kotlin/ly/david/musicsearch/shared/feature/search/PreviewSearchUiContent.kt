@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.Header
@@ -31,7 +32,7 @@ internal fun PreviewSearchUiSearchResults() {
                         sortName = "Aimer",
                         disambiguation = "Japanese pop singer",
                         type = ArtistType.PERSON,
-                        gender = "female",
+                        gender = ArtistGender.FEMALE,
                         countryCode = "JP",
                         lifeSpan = LifeSpanUiModel(
                             ended = false,
@@ -44,7 +45,7 @@ internal fun PreviewSearchUiSearchResults() {
                         sortName = "AIMER",
                         disambiguation = "dubstep artist from Brisbane",
                         type = ArtistType.PERSON,
-                        gender = "female",
+                        gender = ArtistGender.FEMALE,
                         countryCode = "AU",
                         lifeSpan = LifeSpanUiModel(
                             ended = false,
@@ -56,7 +57,7 @@ internal fun PreviewSearchUiSearchResults() {
                         sortName = "Aimer",
                         disambiguation = "Italian guitarist",
                         type = ArtistType.PERSON,
-                        gender = "male",
+                        gender = ArtistGender.MALE,
                         countryCode = "IT",
                         lifeSpan = LifeSpanUiModel(
                             ended = false,
@@ -79,7 +80,7 @@ internal fun PreviewSearchUiSearchResults() {
                         sortName = "Hofhaimer, Paul",
                         disambiguation = "composer",
                         type = ArtistType.PERSON,
-                        gender = "male",
+                        gender = ArtistGender.MALE,
                         countryCode = "AT",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1459-01-25",

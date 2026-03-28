@@ -15,7 +15,7 @@ data class ArtistMusicBrainzNetworkModel(
     @SerialName("disambiguation") override val disambiguation: String? = null,
     @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
-    @SerialName("gender") override val gender: String? = null,
+    @SerialName("gender") val gender: String? = null,
     @SerialName("ipis") val ipis: List<String>? = null,
     @SerialName("isnis") val isnis: List<String>? = null,
     @SerialName("country") val countryCode: String? = null,

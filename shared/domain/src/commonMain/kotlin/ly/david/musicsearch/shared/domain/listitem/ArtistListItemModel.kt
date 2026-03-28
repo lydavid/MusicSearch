@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.Artist
+import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.image.ImageId
 
@@ -15,7 +16,7 @@ data class ArtistListItemModel(
     override val sortName: String = "",
     override val disambiguation: String = "",
     val type: ArtistType? = null,
-    override val gender: String = "",
+    val gender: ArtistGender? = null,
     val countryCode: String = "",
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val imageUrl: String? = null,

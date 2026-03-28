@@ -115,7 +115,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
             filterText = filterText,
         )
     }
-    gender.ifNotEmpty {
+    gender?.getDisplayString()?.let {
         TextWithHeading(
             heading = stringResource(Res.string.gender),
             text = it,
