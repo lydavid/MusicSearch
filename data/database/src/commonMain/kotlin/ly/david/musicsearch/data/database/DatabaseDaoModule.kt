@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database
 
 import ly.david.musicsearch.data.database.dao.AliasDao
+import ly.david.musicsearch.data.database.dao.AllEntitiesDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaDaoImpl
 import ly.david.musicsearch.data.database.dao.ArtistCollaborationDao
@@ -90,4 +91,5 @@ val databaseDaoModule = module {
     singleOf(::CollectedStatsDao)
     singleOf(::VisitedStatsDao)
     singleOf(::ListenDaoImpl) bind ListenDao::class
+    singleOf(::AllEntitiesDao)
 }

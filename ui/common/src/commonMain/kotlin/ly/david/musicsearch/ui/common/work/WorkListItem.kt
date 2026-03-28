@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -81,7 +82,7 @@ fun WorkListItem(
                                 modifier = Modifier.padding(top = 4.dp),
                                 imageVector = CustomIcons.Headphones,
                                 iconSize = TINY_ICON_SIZE,
-                                text = if (hasListens) state.listenCount.toString() else "?",
+                                text = if (hasListens) state.listenCount.toString() else UNKNOWN,
                                 textStyle = TextStyles.getCardBodySubTextStyle(),
                             )
                         }

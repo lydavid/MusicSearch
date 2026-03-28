@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -28,7 +29,7 @@ internal fun CompletionProgressBar(
     ) {
         Text(
             style = TextStyles.getCardBodyTextStyle(),
-            text = "$formatProgressText $currentCount / ${(totalCount ?: "?")}",
+            text = "$formatProgressText $currentCount / ${(totalCount ?: UNKNOWN)}",
         )
 
         if (totalCount != null) {

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.slack.circuit.runtime.screen.Screen
+import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.getIcon
@@ -101,7 +102,7 @@ internal fun DatabaseUi(
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
-                    subtitle = state.countOfAllImages.toString(),
+                    subtitle = (state.countOfAllImages ?: UNKNOWN).toString(),
                     startIcon = CustomIcons.Image,
                     endIcon = CustomIcons.ChevronRight,
                     onClick = {
@@ -118,7 +119,7 @@ internal fun DatabaseUi(
                 if (title.contains(filterText, ignoreCase = true)) {
                     ClickableItem(
                         title = title,
-                        subtitle = (state.entitiesCount[entity] ?: 0).toString(),
+                        subtitle = (state.entitiesCount[entity] ?: UNKNOWN).toString(),
                         startIcon = entity.getIcon(),
                         endIcon = CustomIcons.ChevronRight,
                         onClick = { onDestinationClick(AllEntitiesScreen(entityType = entity)) },

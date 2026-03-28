@@ -42,7 +42,7 @@ internal fun PreviewDatabaseUiWithCounts() {
                             MusicBrainzEntityType.RELEASE_GROUP -> 3_654_363
                             MusicBrainzEntityType.SERIES -> 27_234
                             MusicBrainzEntityType.WORK -> 2_362_008
-                            else -> 0
+                            else -> 0L
                         }
                     }.toImmutableMap(),
                 ),

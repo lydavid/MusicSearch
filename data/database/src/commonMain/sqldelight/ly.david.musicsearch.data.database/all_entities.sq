@@ -1,0 +1,15 @@
+getCountsOfAllEntities:
+SELECT
+  (SELECT COUNT(area.id) FROM area),
+  (SELECT COUNT(artist.id) FROM artist),
+  (SELECT COUNT(event.id) FROM event),
+  (SELECT COUNT(genre.id) FROM genre),
+  (SELECT COUNT(instrument.id) FROM instrument),
+  (SELECT COUNT(label.id) FROM label),
+  (SELECT COUNT(place.id) FROM place),
+  (SELECT COUNT(recording.id) FROM recording),
+  (SELECT COUNT(`release`.id) FROM `release`),
+  (SELECT COUNT(release_group.id) FROM release_group),
+  (SELECT COUNT(series.id) FROM series),
+  (SELECT COUNT(work.id) FROM work)
+;

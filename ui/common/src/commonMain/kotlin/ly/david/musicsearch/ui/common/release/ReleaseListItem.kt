@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
@@ -150,7 +151,7 @@ fun ReleaseListItem(
                                 TextWithIcon(
                                     imageVector = CustomIcons.Headphones,
                                     iconSize = TINY_ICON_SIZE,
-                                    text = if (hasListens) state.listenCount.toString() else "?",
+                                    text = if (hasListens) state.listenCount.toString() else UNKNOWN,
                                     textStyle = TextStyles.getCardBodySubTextStyle(),
                                 )
                                 if (hasListens && state.completeListenCount > 0) {
