@@ -6,9 +6,8 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.listSaver
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.retained.rememberRetained
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -19,7 +18,7 @@ import ly.david.musicsearch.shared.domain.listitem.SelectableId
 fun rememberSelectionState(
     totalCount: Int = 0,
 ): SelectionState {
-    val selectionState = rememberSaveable(saver = SelectionState.Saver) {
+    val selectionState = rememberRetained {
         SelectionState()
     }
     LaunchedEffect(totalCount) {
@@ -118,33 +117,5 @@ class SelectionState {
 
     fun clearSelection() {
         selectedItems = persistentListOf()
-    }
-
-    companion object {
-        val Saver = listSaver<SelectionState, Any>(
-            save = {
-                listOf(
-                    it.totalCount,
-                    it.loadedCount,
-                    it.selectedItems.map { item ->
-                        listOf(item.id, item.recordingId ?: "")
-                    },
-                )
-            },
-            restore = {
-                SelectionState().apply {
-                    totalCount = it[0] as Int
-                    loadedCount = it[1] as Int
-                    selectedItems = (it[2] as List<List<String>>)
-                        .map { pair ->
-                            SelectableId(
-                                id = pair[0],
-                                recordingId = pair[1].ifEmpty { null },
-                            )
-                        }
-                        .toPersistentList()
-                }
-            },
-        )
     }
 }
