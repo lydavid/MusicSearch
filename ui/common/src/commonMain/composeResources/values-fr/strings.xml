@@ -239,4 +239,8 @@
     <string name="authorizationCode">Code d'autorisation</string>
     <string name="enterAuthorizationCode">Saisissez le code d'autorisation depuis votre navigateur :</string>
     <string name="artificialLanguage">[Artificiel (Autre)]</string>
+    <string name="submitTrackListenToListenBrainz">Envoyer le morceau vers ListenBrainz</string>
+    <string name="submitAlbumListenToListenBrainz">Envoyer l'album vers ListenBrainz</string>
+    <string name="startedAt">Début à : %1$s</string>
+    <string name="xTracksWithYLength">%1$d titres (%2$s)</string>
 </resources>
