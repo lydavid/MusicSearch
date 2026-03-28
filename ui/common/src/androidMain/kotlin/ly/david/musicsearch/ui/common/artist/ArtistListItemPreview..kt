@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.artist
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -43,7 +44,7 @@ internal fun PreviewArtistListItemAllInfoUnvisited() {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
-                type = "Group, but for some reason it is really long and wraps around the screen",
+                type = ArtistType.ORCHESTRA,
                 name = "wow, this artist name is so long it will wrap around the screen",
                 sortName = "sort name should not be seen",
                 disambiguation = "blah, blah, blah, some really long text that forces wrapping",
@@ -64,7 +65,7 @@ internal fun PreviewArtistListItemAllInfoVisited() {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
-                type = "Group, but for some reason it is really long and wraps around the screen",
+                type = ArtistType.ORCHESTRA,
                 name = "wow, this artist name is so long it will wrap around the screen",
                 sortName = "sort name should not be seen",
                 disambiguation = "blah, blah, blah, some really long text that forces wrapping",

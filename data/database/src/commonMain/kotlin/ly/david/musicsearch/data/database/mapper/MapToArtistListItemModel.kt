@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 
@@ -9,7 +10,7 @@ fun mapToArtistListItemModel(
     name: String,
     sortName: String,
     disambiguation: String,
-    type: String,
+    typeId: String,
     gender: String,
     countryCode: String,
     begin: String,
@@ -26,7 +27,7 @@ fun mapToArtistListItemModel(
     name = name,
     sortName = sortName,
     disambiguation = disambiguation,
-    type = type,
+    type = ArtistType.fromId(typeId),
     gender = gender,
     countryCode = countryCode,
     lifeSpan = LifeSpanUiModel(

@@ -242,4 +242,10 @@
     <string name="enterAuthorizationCode">Enter authorization code from your browser:</string>
     <string name="startedAt">Started at: %1$s</string>
     <string name="xTracksWithYLength">%1$d tracks (%2$s)</string>
+    <string name="character">Character</string>
+    <string name="choir">Choir</string>
+    <string name="group">Group</string>
+    <string name="orchestra">Orchestra</string>
+    <string name="other">Other</string>
+    <string name="person">Person</string>
 </resources>

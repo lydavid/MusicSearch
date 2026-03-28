@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
@@ -21,6 +22,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.artist.getDisplayString
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -106,7 +108,7 @@ private fun ArtistDetailsModel.ArtistInformationSection(
             filterText = filterText,
         )
     }
-    type.ifNotEmpty {
+    type?.getDisplayString()?.let {
         TextWithHeading(
             heading = stringResource(Res.string.type),
             text = it,
@@ -124,12 +126,12 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         lifeSpan = lifeSpan,
         heading = stringResource(Res.string.date),
         beginHeading = when (type) {
-            "Person" -> stringResource(Res.string.born)
-            "Character" -> stringResource(Res.string.created)
+            ArtistType.PERSON -> stringResource(Res.string.born)
+            ArtistType.CHARACTER -> stringResource(Res.string.created)
             else -> stringResource(Res.string.founded)
         },
         endHeading = when (type) {
-            "Person" -> stringResource(Res.string.died)
+            ArtistType.PERSON -> stringResource(Res.string.died)
             // Characters do not "die": https://musicbrainz.org/doc/Artist
             else -> stringResource(Res.string.dissolved)
         },

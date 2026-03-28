@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
-import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
@@ -58,7 +57,7 @@ fun ArtistListItem(
         colors = listItemColors(isSelected = isSelected),
         supportingContent = {
             Column {
-                artist.type.ifNotEmpty {
+                artist.type?.getDisplayString()?.let {
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),

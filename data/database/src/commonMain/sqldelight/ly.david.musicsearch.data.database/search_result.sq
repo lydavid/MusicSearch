@@ -95,7 +95,7 @@ SELECT
   artist.name,
   artist.sort_name,
   artist.disambiguation,
-  artist.type,
+  artist.type_id,
   artist.gender,
   artist.country_code,
   artist.`begin`,

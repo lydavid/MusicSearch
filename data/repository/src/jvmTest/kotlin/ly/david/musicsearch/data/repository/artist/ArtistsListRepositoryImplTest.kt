@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -120,6 +121,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         name = "Arcade Fire",
         sortName = "Arcade Fire",
         type = "Group",
+        typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
         countryCode = "CA",
         lifeSpan = LifeSpanMusicBrainzModel(begin = "2001"),
     )
@@ -129,6 +131,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         sortName = "Weeknd, The",
         disambiguation = "Canadian R&B singer",
         type = "Person",
+        typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
         gender = "Male",
         countryCode = "CA",
         lifeSpan = LifeSpanMusicBrainzModel(begin = "1990-02-16"),
@@ -139,7 +142,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         name = "あたらよ",
         sortName = "Atarayo",
         disambiguation = "",
-        type = "Group",
+        type = ArtistType.GROUP,
         countryCode = "JP",
         lifeSpan = LifeSpanUiModel(
             begin = "2019-09",
@@ -151,7 +154,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         name = "BUMP OF CHICKEN",
         sortName = "BUMP OF CHICKEN",
         disambiguation = "",
-        type = "Group",
+        type = ArtistType.GROUP,
         countryCode = "JP",
         lifeSpan = LifeSpanUiModel(
             begin = "1994",
@@ -162,7 +165,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         id = "52074ba6-e495-4ef3-9bb4-0703888a9f68",
         name = "Arcade Fire",
         sortName = "Arcade Fire",
-        type = "Group",
+        type = ArtistType.GROUP,
         countryCode = "CA",
         lifeSpan = LifeSpanUiModel(begin = "2001"),
     )
@@ -171,7 +174,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         name = "The Weeknd",
         sortName = "Weeknd, The",
         disambiguation = "Canadian R&B singer",
-        type = "Person",
+        type = ArtistType.PERSON,
         gender = "Male",
         countryCode = "CA",
         lifeSpan = LifeSpanUiModel(begin = "1990-02-16"),
@@ -515,7 +518,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                     name = "Roselia",
                     sortName = "Roselia",
-                    type = "Group",
+                    type = ArtistType.GROUP,
                     disambiguation = "different changes will show up",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
@@ -536,7 +539,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                     name = "Roselia",
                     sortName = "Roselia",
-                    type = "Group",
+                    type = ArtistType.GROUP,
                     disambiguation = "different changes will show up",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
@@ -563,7 +566,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                     name = "Roselia",
                     sortName = "Roselia",
-                    type = "Group",
+                    type = ArtistType.GROUP,
                     disambiguation = "different changes will show up",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",
@@ -584,7 +587,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     id = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
                     name = "Roselia",
                     sortName = "Roselia",
-                    type = "Group",
+                    type = ArtistType.GROUP,
                     disambiguation = "more changes won't show up until refresh",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2016-09-15",

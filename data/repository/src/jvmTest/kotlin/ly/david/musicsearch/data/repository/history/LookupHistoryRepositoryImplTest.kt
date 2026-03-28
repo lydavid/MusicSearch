@@ -31,6 +31,7 @@ import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
 import ly.david.musicsearch.shared.domain.alias.AliasType
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -277,7 +278,7 @@ class LookupHistoryRepositoryImplTest :
                         name = "ずっと真夜中でいいのに",
                         disambiguation = "Japanese pop band",
                         sortName = "Zutto Mayonaka de Iinoni.",
-                        type = "Group",
+                        type = ArtistType.GROUP,
                         aliases = persistentListOf(
                             BasicAlias(
                                 name = "ZUTOMAYO",
@@ -312,7 +313,7 @@ class LookupHistoryRepositoryImplTest :
                     id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                     name = "ずっと真夜中でいいのに",
                     disambiguation = "Japanese pop band",
-                    type = "Group",
+                    type = ArtistType.GROUP,
                     sortName = "Zutto Mayonaka de Iinoni.",
                     lastUpdated = currentTime,
                     aliases = persistentListOf(

@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -29,7 +30,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Aimer",
                         sortName = "Aimer",
                         disambiguation = "Japanese pop singer",
-                        type = "Person",
+                        type = ArtistType.PERSON,
                         gender = "female",
                         countryCode = "JP",
                         lifeSpan = LifeSpanUiModel(
@@ -42,7 +43,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "AIMER",
                         sortName = "AIMER",
                         disambiguation = "dubstep artist from Brisbane",
-                        type = "Person",
+                        type = ArtistType.PERSON,
                         gender = "female",
                         countryCode = "AU",
                         lifeSpan = LifeSpanUiModel(
@@ -54,7 +55,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Aimer",
                         sortName = "Aimer",
                         disambiguation = "Italian guitarist",
-                        type = "Person",
+                        type = ArtistType.PERSON,
                         gender = "male",
                         countryCode = "IT",
                         lifeSpan = LifeSpanUiModel(
@@ -65,7 +66,7 @@ internal fun PreviewSearchUiSearchResults() {
                         id = "1303b976-b862-4f04-94fd-a8d444e06714",
                         name = "The Proclaimers",
                         sortName = "Proclaimers, The",
-                        type = "Group",
+                        type = ArtistType.GROUP,
                         countryCode = "",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1983",
@@ -77,7 +78,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Paul Hofhaimer",
                         sortName = "Hofhaimer, Paul",
                         disambiguation = "composer",
-                        type = "Person",
+                        type = ArtistType.PERSON,
                         gender = "male",
                         countryCode = "AT",
                         lifeSpan = LifeSpanUiModel(
@@ -90,7 +91,7 @@ internal fun PreviewSearchUiSearchResults() {
                         id = "cc86a0b3-e216-4807-b351-cf63c69f42dc",
                         name = "Shimon Craimer",
                         sortName = "Craimer, Shimon",
-                        type = "Person",
+                        type = ArtistType.PERSON,
                         countryCode = "GB",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1978",
@@ -102,7 +103,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "AIMERS",
                         sortName = "AIMERS",
                         disambiguation = "South Korean boy band",
-                        type = "Group",
+                        type = ArtistType.GROUP,
                         countryCode = "KR",
                         lifeSpan = LifeSpanUiModel(
                             ended = false,

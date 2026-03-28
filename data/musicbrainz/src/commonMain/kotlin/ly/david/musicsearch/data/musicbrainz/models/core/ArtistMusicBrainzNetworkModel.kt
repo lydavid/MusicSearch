@@ -13,7 +13,7 @@ data class ArtistMusicBrainzNetworkModel(
     @SerialName("name") override val name: String = "",
     @SerialName("sort-name") override val sortName: String = "",
     @SerialName("disambiguation") override val disambiguation: String? = null,
-    @SerialName("type") override val type: String? = null,
+    @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("gender") override val gender: String? = null,
     @SerialName("ipis") val ipis: List<String>? = null,

@@ -6,6 +6,7 @@ import com.slack.circuit.overlay.ContentWithOverlays
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
@@ -26,7 +27,7 @@ private val detailsModel = ArtistDetailsModel(
     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
     name = "The Beatles",
     disambiguation = "UK rock band, “The Fab Four”",
-    type = "Group",
+    type = ArtistType.GROUP,
     lifeSpan = LifeSpanUiModel(
         begin = "1960",
         end = "1970-04-10",
@@ -231,7 +232,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
             artist = ArtistDetailsModel(
                 id = "89ad4ac3-39f7-470e-963a-56509c546377",
                 name = "Various Artists",
-                type = "Other",
+                type = ArtistType.OTHER,
                 sortName = "Various Artists",
                 wikipediaExtract = WikipediaExtract(
                     wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",

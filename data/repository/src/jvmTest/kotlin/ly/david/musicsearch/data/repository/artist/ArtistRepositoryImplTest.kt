@@ -24,6 +24,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -59,6 +60,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
                 lifeSpan = LifeSpanMusicBrainzModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -79,7 +81,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = "Group",
+                type = ArtistType.GROUP,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -106,6 +108,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
                 type = "Person",
+                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
                 gender = "Male",
                 lifeSpan = LifeSpanMusicBrainzModel(
                     begin = "1947-01-08",
@@ -132,7 +135,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                 name = "David Bowie",
-                type = "Person",
+                type = ArtistType.PERSON,
                 gender = "Male",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1947-01-08",
@@ -177,6 +180,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                                 name = "The Beatles",
                                 type = "Group",
+                                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
                                 lifeSpan = LifeSpanMusicBrainzModel(
                                     begin = "1960",
                                     end = "1970-04-10",
@@ -209,7 +213,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistListItemModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = "Group",
+                type = ArtistType.GROUP,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -226,6 +230,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
                 lifeSpan = LifeSpanMusicBrainzModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -245,7 +250,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = "Group",
+                type = ArtistType.GROUP,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -293,6 +298,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
                 type = "Group",
+                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
                 sortName = "Beatles, The",
                 lifeSpan = LifeSpanMusicBrainzModel(
                     begin = "1960",
@@ -326,7 +332,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = "Group",
+                type = ArtistType.GROUP,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",

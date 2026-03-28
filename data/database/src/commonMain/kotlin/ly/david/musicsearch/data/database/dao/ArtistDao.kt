@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetwor
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
+import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
@@ -117,7 +118,7 @@ class ArtistDao(
         name: String,
         sortName: String,
         disambiguation: String,
-        type: String,
+        typeId: String,
         gender: String,
         ipis: List<String>,
         isnis: List<String>,
@@ -145,7 +146,7 @@ class ArtistDao(
             name = name,
             sortName = sortName,
             disambiguation = disambiguation,
-            type = type,
+            type = ArtistType.fromId(typeId),
             gender = gender,
             ipis = ipis.toPersistentList(),
             isnis = isnis.toPersistentList(),

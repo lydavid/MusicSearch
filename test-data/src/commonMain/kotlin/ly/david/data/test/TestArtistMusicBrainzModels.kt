@@ -209,4 +209,5 @@ val zutomayoArtistMusicBrainzNetworkModel = ArtistMusicBrainzNetworkModel(
     disambiguation = "Japanese pop band",
     sortName = "Zutto Mayonaka de Iinoni.",
     type = "Group",
+    typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
 )
