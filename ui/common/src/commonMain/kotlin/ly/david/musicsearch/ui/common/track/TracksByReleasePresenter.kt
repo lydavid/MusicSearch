@@ -48,7 +48,7 @@ class TracksByReleasePresenter(
         //  tracks is special in that all are cached at once
         //  For other screens, it's possible new remote data appears as the user scrolls,
         //  but then it would just be similar to now where they can click select all again to pick up the new data.
-        val trackIds: List<SelectableId> by rememberSaveable(releaseId) {
+        val trackIds: List<SelectableId> by rememberRetained(releaseId) {
             mutableStateOf(getTracksIdsByRelease(releaseId))
         }
         val lazyListState: LazyListState = rememberLazyListState()
