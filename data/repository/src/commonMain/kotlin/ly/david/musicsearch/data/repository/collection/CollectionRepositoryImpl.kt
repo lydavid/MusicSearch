@@ -213,12 +213,13 @@ class CollectionRepositoryImpl(
                 ),
             )
             try {
-                // TODO: support adding more than 16KB worth of items at a time
-                collectionApi.addToCollection(
-                    collectionId = collectionId,
-                    resourceUriPlural = entityType.resourceUriPlural,
-                    mbids = entityIds,
-                )
+                entityIds.chunked(CollectionApi.MAX_ENTITIES_IN_REQUEST).forEach { chunkedIds ->
+                    collectionApi.addToCollection(
+                        collectionId = collectionId,
+                        resourceUriPlural = entityType.resourceUriPlural,
+                        mbids = chunkedIds,
+                    )
+                }
             } catch (ex: HandledException) {
                 emit(
                     Feedback.Error(

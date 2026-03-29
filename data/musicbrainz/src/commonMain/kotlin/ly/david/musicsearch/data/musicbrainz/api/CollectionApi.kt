@@ -13,6 +13,11 @@ interface CollectionApi {
 
     companion object {
         const val USER_COLLECTIONS = "user-collections"
+
+        /**
+         * https://musicbrainz.org/doc/MusicBrainz_API#collections
+         */
+        const val MAX_ENTITIES_IN_REQUEST = 400
     }
 
     suspend fun addToCollection(
