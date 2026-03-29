@@ -1,0 +1,15 @@
+
+### Bug Fixes
+
+* don't crash when visiting too many releases with many tracks
+* map artist gender to localized text
+* map artist type to localized text
+* no more crashes when selecting 1000s of tracks, then putting the app in the background
+* only bold an unvisited entity's name/disambiguation/aliases instead of everything
+* possibly speed up counts of entity in local database screen; show ? instead of 0 while loading
+
+
+### Features
+
+* enable selecting app language (English, German, French, or Estonian) through App Info for Android 13+
+* show highlight over filtered text in Details screens
