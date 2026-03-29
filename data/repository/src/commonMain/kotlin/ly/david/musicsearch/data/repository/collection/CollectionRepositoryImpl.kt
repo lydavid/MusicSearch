@@ -153,7 +153,12 @@ class CollectionRepositoryImpl(
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
 
         if (collection.isRemote) {
-            emit(Feedback.Loading(EditACollectionFeedback.SyncingWithMusicBrainz))
+            emit(
+                Feedback.Loading(
+                    EditACollectionFeedback.SyncingWithMusicBrainz,
+                    time = clock.now(),
+                ),
+            )
             try {
                 idsMarkedForDeletion.chunked(CollectionApi.MAX_ENTITIES_PER_REQUEST).forEach { chunkedIds ->
                     collectionApi.deleteFromCollection(
@@ -171,6 +176,7 @@ class CollectionRepositoryImpl(
                         ),
                         action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
                         errorResolution = ex.errorResolution,
+                        time = clock.now(),
                     ),
                 )
                 return@flow
@@ -184,6 +190,7 @@ class CollectionRepositoryImpl(
                     count = idsMarkedForDeletion.size,
                     collectionName = collection.name,
                 ),
+                time = clock.now(),
             ),
         )
     }
