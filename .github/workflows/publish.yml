@@ -28,7 +28,7 @@ jobs:
     needs:
       - checks
       - test-e2e
-    timeout-minutes: 60
+    timeout-minutes: 120
     runs-on: ubuntu-latest
     permissions:
       contents: write
