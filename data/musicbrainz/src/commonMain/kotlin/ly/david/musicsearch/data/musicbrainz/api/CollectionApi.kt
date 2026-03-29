@@ -17,7 +17,7 @@ interface CollectionApi {
         /**
          * https://musicbrainz.org/doc/MusicBrainz_API#collections
          */
-        const val MAX_ENTITIES_IN_REQUEST = 400
+        const val MAX_ENTITIES_PER_REQUEST = 400
     }
 
     suspend fun addToCollection(

@@ -155,13 +155,13 @@ class CollectionRepositoryImpl(
         if (collection.isRemote) {
             emit(Feedback.Loading(EditACollectionFeedback.SyncingWithMusicBrainz))
             try {
-                // TODO: handle deleting more than 400 items at a time
-                //  https://musicbrainz.org/doc/MusicBrainz_API#collections
-                collectionApi.deleteFromCollection(
-                    collectionId = collection.id,
-                    resourceUriPlural = collection.entity.resourceUriPlural,
-                    mbids = idsMarkedForDeletion,
-                )
+                idsMarkedForDeletion.chunked(CollectionApi.MAX_ENTITIES_PER_REQUEST).forEach { chunkedIds ->
+                    collectionApi.deleteFromCollection(
+                        collectionId = collection.id,
+                        resourceUriPlural = collection.entity.resourceUriPlural,
+                        mbids = chunkedIds.toSet(),
+                    )
+                }
             } catch (ex: HandledException) {
                 emit(
                     Feedback.Error(
@@ -213,7 +213,7 @@ class CollectionRepositoryImpl(
                 ),
             )
             try {
-                entityIds.chunked(CollectionApi.MAX_ENTITIES_IN_REQUEST).forEach { chunkedIds ->
+                entityIds.chunked(CollectionApi.MAX_ENTITIES_PER_REQUEST).forEach { chunkedIds ->
                     collectionApi.addToCollection(
                         collectionId = collectionId,
                         resourceUriPlural = entityType.resourceUriPlural,
