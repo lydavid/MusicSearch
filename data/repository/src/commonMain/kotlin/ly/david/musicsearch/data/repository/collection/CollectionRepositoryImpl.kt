@@ -85,7 +85,7 @@ class CollectionRepositoryImpl(
             entityId = username,
             browseEntity = MusicBrainzEntityType.COLLECTION,
             remoteCount = response.count,
-            lastUpdated = Clock.System.now(),
+            lastUpdated = clock.now(),
         )
 
         val collectionMusicBrainzModels = response.musicBrainzModels

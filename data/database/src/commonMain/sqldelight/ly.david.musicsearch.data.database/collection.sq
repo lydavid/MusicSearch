@@ -44,6 +44,7 @@ SELECT
   c.name,
   c.entity,
   COALESCE(ce.entity_count, 0) AS entity_count,
+  browse_remote_metadata.remote_count,
   details_metadata.entity_id IS NOT NULL AS visited,
   (
     SELECT COUNT(*) > 0
@@ -56,6 +57,7 @@ LEFT JOIN (
   FROM collection_entity
   GROUP BY id
 ) ce ON c.id = ce.id
+LEFT JOIN browse_remote_metadata ON browse_remote_metadata.entity_id = c.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = c.id
 WHERE c.id IN (
   SELECT id FROM collection_view

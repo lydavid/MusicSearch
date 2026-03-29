@@ -15,6 +15,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.CheckCircle
@@ -94,10 +95,15 @@ internal fun CollectionListItem(
         },
         trailingContent = {
             Row {
-                // TODO: not accurate for remote collections we have not clicked into yet
-                //  or haven't loaded all
+                val cachedEntityCount = collection.cachedEntityCount
+                val hasUnknown = collection.isRemote && collection.remoteEntityCount != cachedEntityCount
+                val countText = "$cachedEntityCount" + if (hasUnknown) {
+                    " + $UNKNOWN"
+                } else {
+                    ""
+                }
                 Text(
-                    text = "${collection.cachedEntityCount}",
+                    text = countText,
                     modifier = Modifier.padding(end = 8.dp),
                     style = TextStyles.getCardBodyTextStyle(),
                 )

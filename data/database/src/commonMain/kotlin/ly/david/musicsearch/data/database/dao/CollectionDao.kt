@@ -147,6 +147,7 @@ class CollectionDao(
         name = name,
         entity = entity,
         entityCount = entityCount,
+        remoteCount = null,
         visited = visited,
         containsEntity = null,
     )
@@ -157,6 +158,7 @@ class CollectionDao(
         name: String,
         entity: MusicBrainzEntityType,
         entityCount: Long,
+        remoteCount: Int?,
         visited: Boolean?,
         containsEntity: Boolean?,
     ) = CollectionListItemModel(
@@ -165,6 +167,7 @@ class CollectionDao(
         name = name,
         entity = entity,
         cachedEntityCount = entityCount.toInt(),
+        remoteEntityCount = remoteCount,
         visited = visited == true,
         containsEntity = containsEntity == true,
     )
