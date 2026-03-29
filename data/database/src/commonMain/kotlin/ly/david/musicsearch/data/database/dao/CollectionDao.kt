@@ -71,12 +71,12 @@ class CollectionDao(
         showLocal: Boolean,
         showRemote: Boolean,
         query: String,
-        entity: MusicBrainzEntityType?,
+        entityType: MusicBrainzEntityType?,
     ): Query<Long> = transacter.getCountOfCollections(
         showLocal = showLocal,
         showRemote = showRemote,
         query = query,
-        entity = entity,
+        entityType = entityType,
     )
 
     fun getCountOfRemoteCollections() =
@@ -84,7 +84,7 @@ class CollectionDao(
             showLocal = false,
             showRemote = true,
             query = "%%",
-            entity = null,
+            entityType = null,
         )
             .executeAsOne()
             .toInt()
@@ -94,14 +94,14 @@ class CollectionDao(
             showLocal = true,
             showRemote = false,
             query = "%%",
-            entity = null,
+            entityType = null,
         )
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getAllCollections(
-        entity: MusicBrainzEntityType?,
+        entityType: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
@@ -112,14 +112,14 @@ class CollectionDao(
             showLocal = showLocal,
             showRemote = showRemote,
             query = query,
-            entity = entity,
+            entityType = entityType,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getAllCollections(
                 entityIdToCheckExists = entityIdToCheckExists.orEmpty(),
-                entity = entity,
+                entityType = entityType,
                 query = query,
                 showLocal = showLocal,
                 showRemote = showRemote,

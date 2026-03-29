@@ -32,7 +32,7 @@ SELECT IFNULL(
       WHERE is_remote AND :showRemote
     )
     AND name LIKE :query
-    AND (:entity = NULL OR entity = :entity)
+    AND (:entityType = NULL OR entity = :entityType)
   ),
   0
 ) AS count;
@@ -65,7 +65,7 @@ WHERE c.id IN (
   WHERE is_remote AND :showRemote
 )
 AND name LIKE :query
-AND (:entity = NULL OR entity = :entity)
+AND (:entityType = NULL OR entity = :entityType)
 ORDER BY
   CASE WHEN :alphabetically THEN `name` END ASC,
   CASE WHEN :alphabeticallyReverse THEN `name` END DESC,

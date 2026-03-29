@@ -79,7 +79,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "user",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -125,7 +125,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "user",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -184,7 +184,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "user",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -245,7 +245,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "user",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -306,7 +306,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         repository.observeAllCollections(
             username = "user",
-            entity = MusicBrainzEntityType.ARTIST,
+            entityType = MusicBrainzEntityType.ARTIST,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -363,7 +363,7 @@ class CollectionRepositoryImplTest : KoinTest {
 
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "user",
-            entity = null,
+            entityType = null,
             query = "art",
             showLocal = true,
             showRemote = true,
@@ -400,7 +400,7 @@ class CollectionRepositoryImplTest : KoinTest {
     private fun testAddingACollection(repository: CollectionRepository) = runTest {
         val flow: Flow<PagingData<CollectionListItemModel>> = repository.observeAllCollections(
             username = "",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -450,7 +450,7 @@ class CollectionRepositoryImplTest : KoinTest {
         )
         repository.observeAllCollections(
             username = "",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -465,7 +465,7 @@ class CollectionRepositoryImplTest : KoinTest {
         repository.unMarkDeletedCollections()
         repository.observeAllCollections(
             username = "",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -485,7 +485,7 @@ class CollectionRepositoryImplTest : KoinTest {
         repository.deleteCollectionsMarkedForDeletion()
         repository.observeAllCollections(
             username = "",
-            entity = null,
+            entityType = null,
             query = "",
             showLocal = true,
             showRemote = true,
@@ -577,7 +577,7 @@ class CollectionRepositoryImplTest : KoinTest {
         )
         repository.observeAllCollections(
             username = "user",
-            entity = MusicBrainzEntityType.ARTIST,
+            entityType = MusicBrainzEntityType.ARTIST,
             query = "",
             showLocal = true,
             showRemote = true,

@@ -37,7 +37,7 @@ class CollectionRepositoryImpl(
     @OptIn(ExperimentalPagingApi::class)
     override fun observeAllCollections(
         username: String,
-        entity: MusicBrainzEntityType?,
+        entityType: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,
@@ -49,7 +49,7 @@ class CollectionRepositoryImpl(
             remoteMediator = getRemoteMediator(username).takeIf { username.isNotEmpty() },
             pagingSourceFactory = {
                 collectionDao.getAllCollections(
-                    entity = entity,
+                    entityType = entityType,
                     query = "%$query%",
                     showLocal = showLocal,
                     showRemote = showRemote,

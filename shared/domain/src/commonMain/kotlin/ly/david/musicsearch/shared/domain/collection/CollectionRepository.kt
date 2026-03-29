@@ -12,7 +12,7 @@ import ly.david.musicsearch.shared.domain.parcelize.Parcelize
 interface CollectionRepository {
     fun observeAllCollections(
         username: String,
-        entity: MusicBrainzEntityType?,
+        entityType: MusicBrainzEntityType?,
         query: String,
         showLocal: Boolean,
         showRemote: Boolean,

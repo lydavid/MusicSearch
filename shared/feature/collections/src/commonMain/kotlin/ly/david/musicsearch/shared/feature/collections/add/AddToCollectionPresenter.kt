@@ -45,7 +45,7 @@ internal class AddToCollectionPresenter(
         val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
             mutableStateOf(
                 getAllCollections(
-                    entity = screen.entityType,
+                    entityType = screen.entityType,
                     showLocal = true,
                     showRemote = true,
                     entityIdToCheckExists = if (screen.collectableIds.size == 1) {
