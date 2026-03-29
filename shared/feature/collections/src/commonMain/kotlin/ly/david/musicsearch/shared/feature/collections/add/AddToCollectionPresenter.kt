@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -17,13 +19,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
+import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
-import ly.david.musicsearch.shared.domain.error.ActionableResult
+import ly.david.musicsearch.shared.domain.error.Feedback
+import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import kotlin.time.Clock
 
 internal class AddToCollectionPresenter(
     private val screen: AddToCollectionScreen,
@@ -31,10 +36,12 @@ internal class AddToCollectionPresenter(
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
     private val collectionRepository: CollectionRepository,
+    private val clock: Clock,
 ) : Presenter<AddToCollectionUiState> {
     @Composable
     override fun present(): AddToCollectionUiState {
         val scope = rememberCoroutineScope()
+        var intermediateFeedback: Feedback<EditACollectionFeedback>? by remember { mutableStateOf(null) }
         val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
             mutableStateOf(
                 getAllCollections(
@@ -65,17 +72,29 @@ internal class AddToCollectionPresenter(
 
                 is AddToCollectionUiEvent.AddToCollection -> {
                     scope.launch {
-                        val result: ActionableResult = collectionRepository.addToCollection(
+                        collectionRepository.addToCollection(
                             collectionId = event.collectionId,
                             entityType = screen.entityType,
                             entityIds = screen.collectableIds,
-                        )
-                        navigator.pop(
-                            SnackbarPopResult(
-                                message = result.message,
-                                actionLabel = result.action?.name,
-                            ),
-                        )
+                        ).collect { feedback ->
+                            when (feedback) {
+                                is Feedback.Loading<*>,
+                                is Feedback.Actionable<*>,
+                                -> {
+                                    intermediateFeedback = feedback
+                                }
+
+                                is Feedback.Error<*>,
+                                is Feedback.Success<*>,
+                                -> {
+                                    navigator.pop(
+                                        SnackbarPopResultV2(
+                                            feedback = feedback.withTime(clock.now()),
+                                        ),
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -84,6 +103,7 @@ internal class AddToCollectionPresenter(
         return AddToCollectionUiState(
             defaultEntityType = screen.entityType,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
+            feedback = intermediateFeedback,
             eventSink = ::eventSink,
         )
     }
@@ -93,6 +113,7 @@ internal class AddToCollectionPresenter(
 internal data class AddToCollectionUiState(
     val defaultEntityType: MusicBrainzEntityType,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
+    val feedback: Feedback<EditACollectionFeedback>?,
     val eventSink: (AddToCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 

@@ -43,8 +43,8 @@ internal class SubmitListenPresenter(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
     private val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission,
-    val clock: Clock,
-    val timeZone: TimeZone,
+    private val clock: Clock,
+    private val timeZone: TimeZone,
 ) : Presenter<SubmitListenUiState> {
     @Composable
     override fun present(): SubmitListenUiState {

@@ -11,9 +11,9 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
-import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
 import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -31,6 +31,7 @@ class CollectionRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val browseEntityCountRepository: BrowseRemoteMetadataRepository,
+    private val clock: Clock,
 ) : CollectionRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -126,14 +127,14 @@ class CollectionRepositoryImpl(
     override fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: List<String>,
-    ): Flow<Feedback<CollectionFeedback>> = flow {
+    ): Flow<Feedback<EditACollectionFeedback>> = flow {
         collectionEntityDao.markDeletedFromCollection(
             collectionId = collection.id,
             collectableIds = collectableIds,
         )
         emit(
             Feedback.Actionable(
-                data = CollectionFeedback.Deleting(
+                data = EditACollectionFeedback.Deleting(
                     count = collectableIds.size,
                     collectionName = collection.name,
                 ),
@@ -148,11 +149,11 @@ class CollectionRepositoryImpl(
 
     override suspend fun deleteFromCollection(
         collection: CollectionListItemModel,
-    ): Flow<Feedback<CollectionFeedback>> = flow {
-        emit(Feedback.Loading(CollectionFeedback.Loading))
-
+    ): Flow<Feedback<EditACollectionFeedback>> = flow {
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
+
         if (collection.isRemote) {
+            emit(Feedback.Loading(EditACollectionFeedback.SyncingWithMusicBrainz))
             try {
                 // TODO: handle deleting more than 400 items at a time
                 //  https://musicbrainz.org/doc/MusicBrainz_API#collections
@@ -164,7 +165,7 @@ class CollectionRepositoryImpl(
             } catch (ex: HandledException) {
                 emit(
                     Feedback.Error(
-                        data = CollectionFeedback.Failed(
+                        data = EditACollectionFeedback.FailedToDelete(
                             collectionName = collection.name,
                             errorMessage = ex.userMessage,
                         ),
@@ -179,7 +180,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.deleteFromCollection(collectionId = collection.id)
         emit(
             Feedback.Success(
-                data = CollectionFeedback.Deleted(
+                data = EditACollectionFeedback.Deleted(
                     count = idsMarkedForDeletion.size,
                     collectionName = collection.name,
                 ),
@@ -191,11 +192,26 @@ class CollectionRepositoryImpl(
         collectionId: String,
         entityType: MusicBrainzEntityType,
         entityIds: List<String>,
-    ): ActionableResult {
-        val collection = collectionDao.getCollection(collectionId) ?: return ActionableResult("Does not exist")
+    ): Flow<Feedback<EditACollectionFeedback>> = flow {
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection == null) {
+            emit(
+                Feedback.Error(
+                    data = EditACollectionFeedback.DoesNotExist,
+                    errorResolution = ErrorResolution.None,
+                    time = clock.now(),
+                ),
+            )
+            return@flow
+        }
 
-        var result = ActionableResult()
         if (collection.isRemote) {
+            emit(
+                Feedback.Loading(
+                    data = EditACollectionFeedback.SyncingWithMusicBrainz,
+                    time = clock.now(),
+                ),
+            )
             try {
                 // TODO: support adding more than 16KB worth of items at a time
                 collectionApi.addToCollection(
@@ -204,31 +220,65 @@ class CollectionRepositoryImpl(
                     mbids = entityIds,
                 )
             } catch (ex: HandledException) {
-                val userFacingError = "Failed to add to ${collection.name}. ${ex.userMessage}"
-                return ActionableResult(
-                    message = userFacingError,
-                    action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
-                    errorResolution = ex.errorResolution,
+                emit(
+                    Feedback.Error(
+                        data = EditACollectionFeedback.FailedToAdd(
+                            collectionName = collection.name,
+                            errorMessage = ex.userMessage,
+                        ),
+                        action = Action.Login.takeIf { ex.errorResolution == ErrorResolution.Login },
+                        errorResolution = ex.errorResolution,
+                        time = clock.now(),
+                    ),
                 )
+                return@flow
             }
         }
 
-        collectionEntityDao.withTransaction {
-            val insertions = collectionEntityDao.addAllToCollection(
-                collectionId = collectionId,
-                entityIds = entityIds.toList(),
+        val feedback: EditACollectionFeedback = insertAndGetResult(
+            collectionId = collectionId,
+            entityIds = entityIds,
+            collection = collection,
+        )
+        emit(
+            Feedback.Success(
+                data = feedback,
+                time = clock.now(),
+            ),
+        )
+    }
+
+    private fun insertAndGetResult(
+        collectionId: String,
+        entityIds: List<String>,
+        collection: CollectionListItemModel,
+    ): EditACollectionFeedback {
+        val insertions = collectionEntityDao.addAllToCollection(
+            collectionId = collectionId,
+            entityIds = entityIds,
+        ).toInt()
+
+        val data: EditACollectionFeedback = when {
+            insertions == 0 -> EditACollectionFeedback.AlreadyIn(
+                collectionName = collection.name,
             )
 
-            result = ActionableResult(
-                message = when {
-                    insertions == 0L -> "Already in ${collection.name}."
-                    entityIds.size == 1 -> "Added to ${collection.name}."
-                    else -> "Added ${insertions.toInt()} to ${collection.name}."
-                },
+            entityIds.size == 1 -> EditACollectionFeedback.AddedOne(
+                collectionName = collection.name,
+            )
+
+            insertions == entityIds.size -> EditACollectionFeedback.AddedMultiple(
+                newInsertions = insertions,
+                collectionName = collection.name,
+            )
+
+            else -> EditACollectionFeedback.AddedMultipleSomeAlreadyAdded(
+                newInsertions = insertions,
+                collectionName = collection.name,
+                countAlreadyAdded = entityIds.size - insertions,
             )
         }
-
-        return result
+        return data
     }
 
     override fun markDeletedCollections(

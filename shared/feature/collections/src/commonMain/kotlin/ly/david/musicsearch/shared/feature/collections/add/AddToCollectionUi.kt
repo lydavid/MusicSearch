@@ -7,7 +7,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult
-import ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent
 import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent
 import ly.david.musicsearch.ui.common.dialog.BasicDialog
 
@@ -45,6 +44,7 @@ internal fun AddToCollectionUi(
     CollectionBottomSheetContent(
         collections = state.lazyPagingItems,
         modifier = modifier,
+        feedback = state.feedback,
         onCreateCollectionClick = {
             showDialog = true
         },

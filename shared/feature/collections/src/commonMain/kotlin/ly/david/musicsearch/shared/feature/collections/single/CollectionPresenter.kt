@@ -18,8 +18,8 @@ import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
+import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
@@ -60,8 +60,8 @@ internal class CollectionPresenter(
 
         var collection: CollectionListItemModel? by rememberRetained { mutableStateOf(null) }
         var title: String by rememberSaveable { mutableStateOf("") }
-        var softDeleteFeedback: Feedback<CollectionFeedback>? by remember { mutableStateOf(null) }
-        var hardDeleteFeedback: Feedback<CollectionFeedback>? by remember { mutableStateOf(null) }
+        var softDeleteFeedback: Feedback<EditACollectionFeedback>? by remember { mutableStateOf(null) }
+        var finalFeedback: Feedback<EditACollectionFeedback>? by remember { mutableStateOf(null) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
@@ -88,7 +88,9 @@ internal class CollectionPresenter(
                 collectionId = nonNullCollection.id,
                 entityType = nonNullCollection.entity,
                 entityIds = oneShotNewCollectableId?.run { listOf(this) } ?: return@LaunchedEffect,
-            )
+            ).collect {
+                finalFeedback = it
+            }
             oneShotNewCollectableId = null
         }
 
@@ -158,7 +160,7 @@ internal class CollectionPresenter(
                         collectionRepository.deleteFromCollection(
                             collection = collection ?: return@launch,
                         ).collect {
-                            hardDeleteFeedback = it
+                            finalFeedback = it
                         }
                     }
                 }
@@ -170,7 +172,7 @@ internal class CollectionPresenter(
             collection = collection,
             url = getMusicBrainzUrl(MusicBrainzEntityType.COLLECTION, screen.collectionId),
             softDeleteFeedback = softDeleteFeedback,
-            hardDeleteFeedback = hardDeleteFeedback,
+            finalFeedback = finalFeedback,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             musicBrainzLoginUiState = loginUiState,
@@ -184,8 +186,8 @@ internal class CollectionPresenter(
 internal data class CollectionUiState(
     val title: String,
     val collection: CollectionListItemModel?,
-    val softDeleteFeedback: Feedback<CollectionFeedback>?,
-    val hardDeleteFeedback: Feedback<CollectionFeedback>?,
+    val softDeleteFeedback: Feedback<EditACollectionFeedback>?,
+    val finalFeedback: Feedback<EditACollectionFeedback>?,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val url: String,
     val selectionState: SelectionState,

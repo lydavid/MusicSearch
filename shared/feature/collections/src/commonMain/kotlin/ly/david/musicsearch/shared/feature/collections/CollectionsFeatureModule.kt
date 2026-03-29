@@ -50,6 +50,7 @@ val collectionsFeatureModule = module {
                     getAllCollections = get(),
                     createCollection = get(),
                     collectionRepository = get(),
+                    clock = get(),
                 )
 
                 else -> null

@@ -7,11 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,6 +24,7 @@ import ly.david.musicsearch.ui.common.icons.Image
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.database
@@ -55,13 +52,7 @@ internal fun DatabaseUi(
             )
         },
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
+            FeedbackSnackbarHost(snackbarHostState)
         },
     ) { innerPadding ->
         DatabaseUi(

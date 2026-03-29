@@ -21,8 +21,6 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ELLIPSIS
-import ly.david.musicsearch.shared.domain.collection.CollectionFeedback
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.list.showTypes
@@ -32,6 +30,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
+import ly.david.musicsearch.ui.common.collection.getMessage
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
@@ -56,11 +55,6 @@ import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
-import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.deletedCountFromCollection
-import musicsearch.ui.common.generated.resources.deletingCountFromCollection
-import musicsearch.ui.common.generated.resources.failedToDeleteFromCollection
-import org.jetbrains.compose.resources.getString
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -152,7 +146,7 @@ internal fun CollectionUi(
             try {
                 val snackbarResult = snackbarHostState.showSnackbar(
                     visuals = FeedbackSnackbarVisuals(
-                        message = getMessage(feedback),
+                        message = feedback.getMessage(),
                         actionLabel = (feedback as? Feedback.Actionable)?.action?.name,
                         duration = SnackbarDuration.Short,
                         withDismissAction = false,
@@ -174,11 +168,11 @@ internal fun CollectionUi(
             }
         }
     }
-    state.hardDeleteFeedback?.let { feedback ->
+    state.finalFeedback?.let { feedback ->
         LaunchedEffect(feedback) {
             val snackbarResult = snackbarHostState.showSnackbar(
                 visuals = FeedbackSnackbarVisuals(
-                    message = getMessage(feedback),
+                    message = feedback.getMessage(),
                     actionLabel = (feedback as? Feedback.Error)?.action?.name,
                     duration = when (feedback) {
                         is Feedback.Loading -> SnackbarDuration.Indefinite
@@ -480,23 +474,6 @@ internal fun CollectionUi(
                     loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                 },
             )
-        }
-    }
-}
-
-private suspend fun getMessage(feedback: Feedback<CollectionFeedback>): String {
-    return when (val data = feedback.data) {
-        is CollectionFeedback.Loading -> ELLIPSIS
-        is CollectionFeedback.Deleting -> {
-            getString(Res.string.deletingCountFromCollection, data.count, data.collectionName)
-        }
-
-        is CollectionFeedback.Deleted -> {
-            getString(Res.string.deletedCountFromCollection, data.count, data.collectionName)
-        }
-
-        is CollectionFeedback.Failed -> {
-            getString(Res.string.failedToDeleteFromCollection, data.collectionName, data.errorMessage)
         }
     }
 }

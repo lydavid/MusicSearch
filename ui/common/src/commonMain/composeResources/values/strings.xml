@@ -278,4 +278,11 @@
     <string name="enterYourListenBrainzUsername">Enter your %1$s username to load your listens into the app.</string>
     <string name="filterByEntity">Filter by entity</string>
     <string name="unlinkedListens">Unlinked listens</string>
+    <string name="syncingWithMusicBrainz">Syncing with MusicBrainz</string>
+    <string name="collectionDoesNotExist">The collection does not exist</string>
+    <string name="failedToAddToCollection">Failed to add to %1$s. %2$s</string>
+    <string name="alreadyInCollection">Already in %1$s</string>
+    <string name="addedOneToCollection">Added to %1$s</string>
+    <string name="addedMultipleToCollection">Added %1$d to %2$s</string>
+    <string name="addedMultipleToCollectionSomeAlreadyAdded">Added %1$d to %2$s. %3$d already in collection</string>
 </resources>

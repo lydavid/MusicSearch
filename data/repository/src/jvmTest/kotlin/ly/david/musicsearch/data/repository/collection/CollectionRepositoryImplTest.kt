@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeCollectionApi
+import ly.david.data.test.clock.FixedClock
 import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -18,6 +19,8 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBr
 import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
+import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert
@@ -25,6 +28,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import kotlin.time.Instant
 
 private const val NEW_COLLECTION_ID = "f3fff548-8282-4c9a-9cea-0e2af40029fe"
 
@@ -37,6 +41,8 @@ class CollectionRepositoryImplTest : KoinTest {
     private val collectionEntityDao: CollectionEntityDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
 
+    private val now = Instant.parse("1970-01-02T05:00:00Z")
+
     private fun createRepository(
         collectionApi: CollectionApi,
     ): CollectionRepository {
@@ -48,6 +54,7 @@ class CollectionRepositoryImplTest : KoinTest {
             browseEntityCountRepository = BrowseRemoteMetadataRepositoryImpl(
                 browseRemoteMetadataDao = browseRemoteMetadataDao,
             ),
+            clock = FixedClock(now = now),
         )
     }
 
@@ -543,7 +550,9 @@ class CollectionRepositoryImplTest : KoinTest {
     }
 
     @Test
-    fun `observe entity is part of a collection`() = runTest {
+    fun `observe entity is part of a remote collection`() = runTest {
+        val collectionName = "Artists"
+
         val repository = createRepository(
             collectionApi = object : FakeCollectionApi() {
                 override suspend fun browseCollectionsByUser(
@@ -558,7 +567,7 @@ class CollectionRepositoryImplTest : KoinTest {
                         musicBrainzModels = listOf(
                             CollectionMusicBrainzNetworkModel(
                                 id = "1",
-                                name = "Artists",
+                                name = collectionName,
                                 entityType = SerializableMusicBrainzEntity.ARTIST,
                             ),
                         ),
@@ -578,7 +587,7 @@ class CollectionRepositoryImplTest : KoinTest {
                 listOf(
                     CollectionListItemModel(
                         id = "1",
-                        name = "Artists",
+                        name = collectionName,
                         entity = MusicBrainzEntityType.ARTIST,
                         isRemote = true,
                     ),
@@ -595,7 +604,23 @@ class CollectionRepositoryImplTest : KoinTest {
                 collectionId = "1",
                 entityType = MusicBrainzEntityType.ARTIST,
                 entityIds = listOf(entityId),
-            )
+            ).test {
+                Assert.assertEquals(
+                    Feedback.Loading(
+                        data = EditACollectionFeedback.SyncingWithMusicBrainz,
+                        time = now,
+                    ),
+                    awaitItem(),
+                )
+                Assert.assertEquals(
+                    Feedback.Success(
+                        data = EditACollectionFeedback.AddedOne(collectionName = collectionName),
+                        time = now,
+                    ),
+                    awaitItem(),
+                )
+                awaitComplete()
+            }
             Assert.assertEquals(true, awaitItem())
         }
     }

@@ -31,7 +31,7 @@ interface CollectionRepository {
     fun markDeletedFromCollection(
         collection: CollectionListItemModel,
         collectableIds: List<String>,
-    ): Flow<Feedback<CollectionFeedback>>
+    ): Flow<Feedback<EditACollectionFeedback>>
 
     fun unMarkDeletedFromCollection(
         collectionId: String,
@@ -39,13 +39,13 @@ interface CollectionRepository {
 
     suspend fun deleteFromCollection(
         collection: CollectionListItemModel,
-    ): Flow<Feedback<CollectionFeedback>>
+    ): Flow<Feedback<EditACollectionFeedback>>
 
     suspend fun addToCollection(
         collectionId: String,
         entityType: MusicBrainzEntityType,
         entityIds: List<String>,
-    ): ActionableResult
+    ): Flow<Feedback<EditACollectionFeedback>>
 
     fun markDeletedCollections(
         collectionIds: List<String>,
@@ -61,9 +61,43 @@ interface CollectionRepository {
 }
 
 @Parcelize
-sealed interface CollectionFeedback : CommonParcelable {
-    data object Loading : CollectionFeedback
-    data class Deleting(val count: Int, val collectionName: String) : CollectionFeedback
-    data class Deleted(val count: Int, val collectionName: String) : CollectionFeedback
-    data class Failed(val collectionName: String, val errorMessage: String) : CollectionFeedback
+sealed interface EditACollectionFeedback : CommonParcelable {
+    data object SyncingWithMusicBrainz : EditACollectionFeedback
+
+    data class Deleting(
+        val count: Int,
+        val collectionName: String,
+    ) : EditACollectionFeedback
+
+    data class Deleted(
+        val count: Int,
+        val collectionName: String,
+    ) : EditACollectionFeedback
+
+    data class FailedToDelete(
+        val collectionName: String,
+        val errorMessage: String,
+    ) : EditACollectionFeedback
+
+    data class FailedToAdd(
+        val collectionName: String,
+        val errorMessage: String,
+    ) : EditACollectionFeedback
+
+    data object DoesNotExist : EditACollectionFeedback
+
+    data class AlreadyIn(val collectionName: String) : EditACollectionFeedback
+
+    data class AddedOne(val collectionName: String) : EditACollectionFeedback
+
+    data class AddedMultiple(
+        val newInsertions: Int,
+        val collectionName: String,
+    ) : EditACollectionFeedback
+
+    data class AddedMultipleSomeAlreadyAdded(
+        val newInsertions: Int,
+        val collectionName: String,
+        val countAlreadyAdded: Int,
+    ) : EditACollectionFeedback
 }

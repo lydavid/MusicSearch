@@ -10,14 +10,16 @@ import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.overlay.OverlayHost
 import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuitx.overlays.BottomSheetOverlay
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 
-suspend fun OverlayHost.showInBottomSheet(
+@Suppress("UNCHECKED_CAST")
+suspend fun <T : CommonParcelable> OverlayHost.showInBottomSheetForResult(
     screen: Screen,
-): SnackbarPopResult = show(
+): SnackbarPopResultV2<T> = show(
     @OptIn(ExperimentalMaterial3Api::class)
     BottomSheetOverlay(
         model = Unit,
-        onDismiss = { SnackbarPopResult() },
+        onDismiss = { SnackbarPopResultV2(feedback = null) },
         contentWindowInsets = { WindowInsets.navigationBars },
     ) { _, overlayNavigator ->
         CircuitContent(
@@ -25,7 +27,7 @@ suspend fun OverlayHost.showInBottomSheet(
             modifier = Modifier.navigationBarsPadding(),
             onNavEvent = { event ->
                 when (event) {
-                    is NavEvent.Pop -> overlayNavigator.finish(event.result as SnackbarPopResult)
+                    is NavEvent.Pop -> overlayNavigator.finish(event.result as SnackbarPopResultV2<T>)
                     else -> {}
                 }
             },
