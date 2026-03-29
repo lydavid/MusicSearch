@@ -11,4 +11,11 @@ class AliasesSectionTest : ScreenshotTest() {
             PreviewAliasesSection()
         }
     }
+
+    @Test
+    fun withFilter() {
+        snapshot {
+            PreviewAliasesSectionWithFilter()
+        }
+    }
 }

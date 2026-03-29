@@ -21,10 +21,20 @@ internal fun PreviewUrlListItem() {
                     name = "https://www.example.com",
                     visited = true,
                 ),
+                filterText = "",
             )
         }
     }
 }
+
+private val wikipediaRelation = RelationListItemModel(
+    id = "wikipedia_section",
+    linkedEntityId = "wikipedia_section",
+    linkedEntity = MusicBrainzEntityType.URL,
+    type = "Wikipedia",
+    name = "https://en.wikipedia.org/wiki/Creepy_Nuts",
+    visited = true,
+)
 
 @PreviewLightDark
 @Composable
@@ -32,14 +42,21 @@ internal fun PreviewUrlListItemWikipedia() {
     PreviewTheme {
         Surface {
             UrlListItem(
-                relation = RelationListItemModel(
-                    id = "wikipedia_section",
-                    linkedEntityId = "wikipedia_section",
-                    linkedEntity = MusicBrainzEntityType.URL,
-                    type = "Wikipedia",
-                    name = "https://en.wikipedia.org/wiki/Creepy_Nuts",
-                    visited = true,
-                ),
+                relation = wikipediaRelation,
+                filterText = "",
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewUrlListItemWikipediaWithFilter() {
+    PreviewTheme {
+        Surface {
+            UrlListItem(
+                relation = wikipediaRelation,
+                filterText = "wiki",
             )
         }
     }
@@ -59,6 +76,7 @@ internal fun PreviewUrlListItemWikidata() {
                     name = "https://www.wikidata.org/wiki/Q20039817",
                     visited = true,
                 ),
+                filterText = "",
             )
         }
     }

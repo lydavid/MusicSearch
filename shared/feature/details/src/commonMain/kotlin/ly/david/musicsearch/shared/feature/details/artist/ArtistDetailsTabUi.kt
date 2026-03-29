@@ -196,6 +196,7 @@ private fun LazyListScope.listenSection(
                     name = artist.listenBrainzUrl,
                     linkedEntityId = "listenbrainz_url",
                 ),
+                filterText = "",
             )
         }
     }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -18,6 +17,9 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -26,6 +28,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.icons.Wikidata
 import ly.david.musicsearch.ui.common.icons.Wikipedia
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
@@ -36,6 +39,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun UrlListItem(
     relation: RelationListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
 ) {
     val clipboard = LocalClipboard.current
@@ -46,8 +50,9 @@ fun UrlListItem(
     ListItem(
         headlineContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = "${relation.type}:",
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
 
@@ -79,10 +84,13 @@ fun UrlListItem(
                             .size(24.dp),
                     )
 
-                    Text(
-                        text = relation.name,
-                        style = TextStyles.getCardBodyTextStyle(),
-                        fontWeight = relation.fontWeight,
+                    HighlightableText(
+                        text = buildAnnotatedString {
+                            withStyle(style = SpanStyle(fontWeight = relation.fontWeight)) {
+                                append(relation.name)
+                            }
+                        },
+                        highlightedText = filterText,
                     )
                 }
             }

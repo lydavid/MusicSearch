@@ -20,6 +20,13 @@ class UrlListItemTest : ScreenshotTest() {
     }
 
     @Test
+    fun wikipediaWithFilter() {
+        snapshot {
+            PreviewUrlListItemWikipediaWithFilter()
+        }
+    }
+
+    @Test
     fun wikidata() {
         snapshot {
             PreviewUrlListItemWikidata()

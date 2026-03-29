@@ -33,7 +33,6 @@ import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
-import ly.david.musicsearch.shared.feature.details.alias.filterAliases
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -288,13 +287,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             tabs = getTabs(),
             selectedTab = selectedTab,
             url = getMusicBrainzUrl(screen.entityType, screen.id),
-            detailsModel = detailsModel
-                ?.withUrls(
-                    urls = detailsModel?.urls.filterUrlRelations(query = query),
-                )
-                ?.withAliases(
-                    aliases = detailsModel?.aliases.filterAliases(query = query),
-                ) as DetailsModel?,
+            detailsModel = detailsModel,
             collected = collected,
             snackbarMessage = snackbarMessage,
             topAppBarFilterState = topAppBarFilterState,
@@ -308,8 +301,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
                 isAliasesCollapsed = isAliasesCollapsed,
-                totalUrls = detailsModel?.urls?.size ?: 0,
-                totalAliases = detailsModel?.aliases?.size ?: 0,
             ),
             allEntitiesListUiState = entitiesListUiState,
             musicBrainzLoginUiState = loginUiState,
@@ -345,8 +336,6 @@ internal data class DetailsTabUiState(
     val isExternalLinksCollapsed: Boolean = false,
     val isAliasesCollapsed: Boolean = false,
     val now: Instant = Clock.System.now(),
-    val totalUrls: Int = 0,
-    val totalAliases: Int = 0,
 )
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {

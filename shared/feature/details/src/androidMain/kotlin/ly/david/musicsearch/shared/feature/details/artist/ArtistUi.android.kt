@@ -117,7 +117,6 @@ private val detailsUiState = DetailsUiState(
     detailsModel = detailsModel,
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-09-06T18:42:20Z"),
-        totalUrls = 2,
     ),
 )
 
@@ -156,9 +155,7 @@ internal fun PreviewArtistDetailsUiWithFilter() {
         topAppBarFilterState.updateFilterText("https")
         ArtistUi(
             state = detailsUiState.copy(
-                detailsTabUiState = detailsUiState.detailsTabUiState.copy(
-                    totalUrls = 3,
-                ),
+                detailsTabUiState = detailsUiState.detailsTabUiState,
                 topAppBarFilterState = topAppBarFilterState,
             ),
         )
@@ -250,7 +247,6 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
             ),
             detailsTabUiState = DetailsTabUiState(
                 now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 1,
             ),
         )
     }

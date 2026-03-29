@@ -12,16 +12,17 @@ import musicsearch.ui.common.generated.resources.externalLinks
 import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.urlsSection(
-    filteredUrls: ImmutableList<RelationListItemModel>,
-    totalUrls: Int,
+    urls: ImmutableList<RelationListItemModel>,
+    filterText: String,
     collapsed: Boolean = false,
     onCollapseExpand: () -> Unit = {},
 ) {
+    val filteredUrls = urls.filterUrlRelations(query = filterText)
     filteredUrls.ifNotNullOrEmpty {
         stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredUrls.size,
-                total = totalUrls,
+                total = urls.size,
             )
             CollapsibleListSeparatorHeader(
                 text = stringResource(Res.string.externalLinks) + " $numberOfFilteredItems",
@@ -34,6 +35,7 @@ internal fun LazyListScope.urlsSection(
         items(filteredUrls) {
             UrlListItem(
                 relation = it,
+                filterText = filterText,
             )
         }
     }

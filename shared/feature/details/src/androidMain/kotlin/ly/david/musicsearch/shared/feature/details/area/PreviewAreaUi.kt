@@ -520,12 +520,7 @@ private val detailsUiState = DetailsUiState(
 internal fun PreviewAreaDetails() {
     PreviewWithTransitionAndOverlays {
         AreaUi(
-            state = detailsUiState.copy(
-                detailsTabUiState = DetailsTabUiState(
-                    totalUrls = 2,
-                    totalAliases = 3,
-                ),
-            ),
+            state = detailsUiState,
         )
     }
 }
@@ -538,8 +533,6 @@ internal fun PreviewAreaDetailsCollapsed() {
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     isExternalLinksCollapsed = true,
-                    totalUrls = 2,
-                    totalAliases = 3,
                 ),
             ),
         )

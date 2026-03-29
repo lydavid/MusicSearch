@@ -1,15 +1,19 @@
 package ly.david.musicsearch.shared.feature.details.alias
 
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import androidx.compose.runtime.Composable
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 
-internal fun ImmutableList<BasicAlias>?.filterAliases(query: String): ImmutableList<BasicAlias> {
-    return this?.filter { alias ->
-        val searchText = query.lowercase()
-        listOf(
-            alias.name,
-            alias.locale,
-        ).any { it.lowercase().contains(searchText) }
-    }.orEmpty().toPersistentList()
+@Composable
+internal fun BasicAlias.toAliasListItemModel(): AliasListItemModel {
+    return AliasListItemModel(
+        name = name,
+        type = type?.getDisplayString(),
+        isPrimary = isPrimary,
+        locale = locale,
+        language = locale.getDisplayLanguage(),
+        begin = begin,
+        end = end,
+        ended = ended,
+    )
 }

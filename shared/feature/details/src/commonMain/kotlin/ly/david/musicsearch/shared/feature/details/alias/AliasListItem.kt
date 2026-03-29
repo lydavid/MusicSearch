@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.alias
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -14,59 +13,51 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
-import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
-import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
-import ly.david.musicsearch.ui.common.work.getDisplayLanguage
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.primary
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AliasListItem(
-    alias: BasicAlias,
+    alias: AliasListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
 ) {
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
 
+    val primaryLabel = stringResource(Res.string.primary)
+
     ListItem(
         headlineContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = alias.name,
-                    style = TextStyles.getCardBodyTextStyle(),
+                    highlightedText = filterText,
                 )
 
-                val locale = alias.locale
-                val displayLanguage = locale.getDisplayLanguage()
-                    .transformThisIfNotNullOrEmpty { "$it ($locale)" }
-                val typeAndLifeSpan = listOfNotNull(
-                    alias.type?.getDisplayString(),
-                    alias.getLifeSpanForDisplay().takeIf { it.isNotEmpty() },
-                    displayLanguage.takeIf { it.isNotEmpty() },
-                    stringResource(Res.string.primary).takeIf { alias.isPrimary },
-                ).joinToString(DOT_SEPARATOR)
-                typeAndLifeSpan.ifNotEmpty { typeAndLifeSpan ->
-                    Text(
+                val displayString = alias.getFormattedTypeAndLifeSpan(primaryLabel)
+                displayString.ifNotEmpty { displayString ->
+                    HighlightableText(
                         text = buildAnnotatedString {
-                            append(typeAndLifeSpan)
-                            if (alias.isPrimary && stringResource(Res.string.primary).isNotEmpty()) {
-                                val primaryStart = typeAndLifeSpan.lastIndexOf(stringResource(Res.string.primary))
+                            append(displayString)
+                            if (alias.isPrimary && primaryLabel.isNotEmpty()) {
+                                val primaryStart = displayString.lastIndexOf(primaryLabel)
                                 if (primaryStart >= 0) {
                                     addStyle(
                                         SpanStyle(fontWeight = FontWeight.SemiBold),
                                         start = primaryStart,
-                                        end = primaryStart + stringResource(Res.string.primary).length,
+                                        end = primaryStart + primaryLabel.length,
                                     )
                                 }
                             }
                         },
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

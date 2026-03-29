@@ -4,9 +4,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -15,7 +17,28 @@ fun HighlightableText(
     text: String,
     highlightedText: String,
     modifier: Modifier = Modifier,
-    fontWeight: FontWeight = FontWeight.Normal,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+    style: TextStyle = TextStyles.getCardBodyTextStyle(),
+) {
+    HighlightableText(
+        text = AnnotatedString(text),
+        highlightedText = highlightedText,
+        modifier = modifier,
+        maxLines = maxLines,
+        overflow = overflow,
+        style = style,
+    )
+}
+
+@Composable
+fun HighlightableText(
+    text: AnnotatedString,
+    highlightedText: String,
+    modifier: Modifier = Modifier,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Clip,
+    style: TextStyle = TextStyles.getCardBodyTextStyle(),
 ) {
     val annotatedString = buildAnnotatedString {
         if (highlightedText.isEmpty()) {
@@ -24,24 +47,24 @@ fun HighlightableText(
         }
 
         var currentIndex = 0
-        val searchText = text.lowercase()
+        val searchText = text.text.lowercase()
         val searchHighlight = highlightedText.lowercase()
 
         while (currentIndex < text.length) {
             val index = searchText.indexOf(searchHighlight, currentIndex)
             if (index == -1) {
-                append(text.substring(currentIndex))
+                append(text.subSequence(currentIndex, text.length))
                 break
             }
 
-            append(text.substring(currentIndex, index))
+            append(text.subSequence(currentIndex, index))
 
             withStyle(
                 style = SpanStyle(
                     background = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                 ),
             ) {
-                append(text.substring(index, index + highlightedText.length))
+                append(text.subSequence(index, index + highlightedText.length))
             }
 
             currentIndex = index + highlightedText.length
@@ -51,7 +74,8 @@ fun HighlightableText(
     Text(
         text = annotatedString,
         modifier = modifier,
-        style = TextStyles.getCardBodyTextStyle(),
-        fontWeight = fontWeight,
+        style = style,
+        maxLines = maxLines,
+        overflow = overflow,
     )
 }

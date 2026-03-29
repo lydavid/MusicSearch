@@ -4,8 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -23,9 +22,9 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
-import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.readMore
 import musicsearch.ui.common.generated.resources.wikipedia
@@ -54,8 +53,9 @@ fun WikipediaSection(
             var expanded by remember { mutableStateOf(false) }
 
             if (showExtract) {
-                Text(
-                    text = extract.extract,
+                HighlightableText(
+                    text = AnnotatedString(extract.extract),
+                    highlightedText = filterText,
                     modifier = Modifier
                         .combinedClickable(
                             onClick = {
@@ -72,8 +72,6 @@ fun WikipediaSection(
                         .animateContentSize(),
                     maxLines = if (expanded) Int.MAX_VALUE else 4,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = TextStyles.getCardBodyTextStyle(),
                 )
             }
 
@@ -86,6 +84,7 @@ fun WikipediaSection(
                         name = extract.wikipediaUrl,
                         linkedEntityId = "wikipedia_section",
                     ),
+                    filterText = filterText,
                 )
             }
         }

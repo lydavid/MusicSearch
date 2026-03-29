@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
@@ -17,6 +18,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
+import ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -30,6 +32,7 @@ import musicsearch.ui.common.generated.resources.informationHeader
 import musicsearch.ui.common.generated.resources.instrument
 import musicsearch.ui.common.generated.resources.label
 import musicsearch.ui.common.generated.resources.place
+import musicsearch.ui.common.generated.resources.primary
 import musicsearch.ui.common.generated.resources.recording
 import musicsearch.ui.common.generated.resources.release
 import musicsearch.ui.common.generated.resources.releaseGroup
@@ -69,6 +72,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     onCollapseExpandExternalLinks: () -> Unit = {},
     onCollapseExpandAliases: () -> Unit = {},
 ) {
+    val primaryLabel = stringResource(Res.string.primary)
+    val aliases = detailsModel.aliases.map { it.toAliasListItemModel() }.toPersistentList()
+
     LazyColumn(
         modifier = modifier,
         state = detailsTabUiState.lazyListState,
@@ -108,15 +114,16 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
             bringYourOwnLabelsSection()
 
             urlsSection(
-                filteredUrls = urls,
-                totalUrls = detailsTabUiState.totalUrls,
+                urls = urls,
+                filterText = filterText,
                 collapsed = detailsTabUiState.isExternalLinksCollapsed,
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
 
             aliasesSection(
-                filteredAliases = aliases,
-                totalAliases = detailsTabUiState.totalAliases,
+                aliases = aliases,
+                primaryLabel = primaryLabel,
+                filterText = filterText,
                 collapsed = detailsTabUiState.isAliasesCollapsed,
                 onCollapseExpand = onCollapseExpandAliases,
             )

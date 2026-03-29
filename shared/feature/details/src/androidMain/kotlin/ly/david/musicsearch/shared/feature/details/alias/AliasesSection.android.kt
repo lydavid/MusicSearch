@@ -5,8 +5,40 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+
+private val aliases = persistentListOf(
+    AliasListItemModel(
+        name = "Various Artists",
+        type = null,
+        locale = "en",
+        language = "English",
+        isPrimary = true,
+        begin = "",
+        end = "",
+        ended = false,
+    ),
+    AliasListItemModel(
+        name = "ヴァリアス・アーティスト",
+        type = null,
+        locale = "ja",
+        language = "Japanese",
+        isPrimary = true,
+        begin = "",
+        end = "",
+        ended = false,
+    ),
+    AliasListItemModel(
+        name = "群星",
+        type = null,
+        locale = "zh",
+        language = "Chinese",
+        isPrimary = true,
+        begin = "",
+        end = "",
+        ended = false,
+    ),
+)
 
 @PreviewLightDark
 @Composable
@@ -15,24 +47,25 @@ internal fun PreviewAliasesSection() {
         Surface {
             LazyColumn {
                 aliasesSection(
-                    filteredAliases = persistentListOf(
-                        BasicAlias(
-                            name = "Various Artists",
-                            locale = "en",
-                            isPrimary = true,
-                        ),
-                        BasicAlias(
-                            name = "ヴァリアス・アーティスト",
-                            locale = "ja",
-                            isPrimary = true,
-                        ),
-                        BasicAlias(
-                            name = "群星",
-                            locale = "zh",
-                            isPrimary = true,
-                        ),
-                    ),
-                    totalAliases = 50,
+                    aliases = aliases,
+                    primaryLabel = "Primary",
+                    filterText = "",
+                )
+            }
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewAliasesSectionWithFilter() {
+    PreviewTheme {
+        Surface {
+            LazyColumn {
+                aliasesSection(
+                    aliases = aliases,
+                    primaryLabel = "Primary",
+                    filterText = "en",
                 )
             }
         }

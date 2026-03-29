@@ -48,7 +48,6 @@ internal fun PreviewWorkDetailsUi() {
             work = work,
             detailsTabUiState = DetailsTabUiState(
                 now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 1,
             ),
         )
     }
@@ -69,7 +68,6 @@ internal fun PreviewWorkDetailsUiWithListens() {
             ),
             detailsTabUiState = DetailsTabUiState(
                 now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 1,
             ),
         )
     }

@@ -326,6 +326,7 @@ private fun LazyListScope.listenSection(
                     name = release.listenBrainzUrl,
                     linkedEntityId = "listenbrainz_url",
                 ),
+                filterText = "",
             )
         }
     }

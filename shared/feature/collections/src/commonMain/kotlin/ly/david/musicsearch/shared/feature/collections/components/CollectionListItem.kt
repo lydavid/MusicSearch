@@ -11,6 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
@@ -50,9 +53,12 @@ internal fun CollectionListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = collection.name,
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = collection.fontWeight)) {
+                        append(collection.name)
+                    }
+                },
                 highlightedText = query,
-                fontWeight = collection.fontWeight,
             )
         },
         modifier = listItemModifier,

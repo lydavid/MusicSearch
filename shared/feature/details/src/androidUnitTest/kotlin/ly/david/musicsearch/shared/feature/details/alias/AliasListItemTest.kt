@@ -13,9 +13,23 @@ class AliasListItemTest : ScreenshotTest() {
     }
 
     @Test
+    fun primaryWithFilter() {
+        snapshot {
+            PreviewAliasListItemPrimaryWithFilter()
+        }
+    }
+
+    @Test
     fun ended() {
         snapshot {
             PreviewAliasListItemEnded()
+        }
+    }
+
+    @Test
+    fun endedWithFilter() {
+        snapshot {
+            PreviewAliasListItemEndedWithFilter()
         }
     }
 }

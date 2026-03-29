@@ -3,13 +3,13 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import kotlin.time.Instant
 
 private val releaseGroup = ReleaseGroupDetailsModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
@@ -60,7 +60,6 @@ internal fun PreviewReleaseGroupDetailsUi() {
             detailsTabUiState = DetailsTabUiState(
                 numberOfImages = 1,
                 now = Instant.parse("2025-06-05T19:42:20Z"),
-                totalUrls = 3,
             ),
         )
     }
@@ -76,7 +75,6 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
                 numberOfImages = 1,
                 now = Instant.parse("2025-06-05T19:42:20Z"),
                 isExternalLinksCollapsed = true,
-                totalUrls = 3,
             ),
         )
     }

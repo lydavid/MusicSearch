@@ -7,8 +7,8 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 internal fun ImmutableList<RelationListItemModel>?.filterUrlRelations(
     query: String,
 ): ImmutableList<RelationListItemModel> {
+    val searchText = query.lowercase()
     return this?.filter { relationListItemModel ->
-        val searchText = query.lowercase()
         listOf(
             relationListItemModel.name,
             relationListItemModel.type,
