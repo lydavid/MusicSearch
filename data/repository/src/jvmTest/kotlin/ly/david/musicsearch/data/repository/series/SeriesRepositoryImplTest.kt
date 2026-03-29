@@ -163,7 +163,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -174,7 +174,7 @@ class SeriesRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                 ),

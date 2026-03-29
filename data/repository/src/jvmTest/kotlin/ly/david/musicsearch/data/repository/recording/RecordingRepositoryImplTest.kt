@@ -183,7 +183,7 @@ class RecordingRepositoryImplTest :
                         disambiguation = null,
                         attributes = "video",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                 ),

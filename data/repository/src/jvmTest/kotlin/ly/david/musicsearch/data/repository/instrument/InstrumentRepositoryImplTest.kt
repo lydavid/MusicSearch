@@ -180,7 +180,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -191,7 +191,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -202,7 +202,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -213,7 +213,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                 ),

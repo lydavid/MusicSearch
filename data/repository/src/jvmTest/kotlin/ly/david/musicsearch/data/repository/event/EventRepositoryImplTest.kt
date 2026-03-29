@@ -121,7 +121,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                         lastUpdated = null,
                     ),

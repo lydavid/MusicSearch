@@ -489,7 +489,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -500,7 +500,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -511,7 +511,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -522,7 +522,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -533,7 +533,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -544,7 +544,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -555,7 +555,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -566,7 +566,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -577,7 +577,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -588,7 +588,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -599,7 +599,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -610,7 +610,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                     RelationListItemModel(
@@ -621,7 +621,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = false,
                     ),
                 ),

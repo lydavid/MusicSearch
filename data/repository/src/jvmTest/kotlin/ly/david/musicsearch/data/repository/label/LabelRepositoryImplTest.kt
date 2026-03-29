@@ -182,7 +182,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -193,7 +193,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -204,7 +204,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -215,7 +215,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                     RelationListItemModel(
@@ -226,7 +226,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                         disambiguation = null,
                         attributes = "",
                         linkedEntity = MusicBrainzEntityType.URL,
-                        visited = true,
+                        visited = false,
                         isForwardDirection = true,
                     ),
                 ),
