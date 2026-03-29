@@ -22,7 +22,6 @@ import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -54,7 +53,6 @@ fun RelationListItem(
                 Text(
                     text = relation.getAnnotatedName(),
                     style = TextStyles.getCardBodyTextStyle(),
-                    fontWeight = relation.fontWeight,
                 )
             }
         },

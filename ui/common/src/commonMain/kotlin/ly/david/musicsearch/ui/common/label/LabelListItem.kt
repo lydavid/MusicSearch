@@ -19,7 +19,6 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
 import musicsearch.ui.common.generated.resources.Res
@@ -61,7 +60,6 @@ fun LabelListItem(
                 Text(
                     text = label.getAnnotatedName(),
                     style = TextStyles.getCardBodyTextStyle(),
-                    fontWeight = label.fontWeight,
                 )
 
                 label.type.ifNotEmpty {

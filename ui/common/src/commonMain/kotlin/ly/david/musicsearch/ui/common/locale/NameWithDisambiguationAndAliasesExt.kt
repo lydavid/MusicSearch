@@ -5,11 +5,14 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.withStyle
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.listitem.Visitable
+import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
 
 private const val SCRIPT_LENGTH = 4
@@ -66,7 +69,13 @@ private fun matches(
 fun NameWithDisambiguationAndAliases?.getAnnotatedName(): AnnotatedString {
     if (this == null) return AnnotatedString("")
     return buildAnnotatedString {
-        append(name)
+        val fontWeight = when (this@getAnnotatedName) {
+            is Visitable -> this@getAnnotatedName.fontWeight
+            else -> FontWeight.Normal
+        }
+        withStyle(style = SpanStyle(fontWeight = fontWeight)) {
+            append(name)
+        }
 
         val alias: String? = withAliases(
             aliases = aliases.filter { alias -> alias.isPrimary }.toPersistentList(),

@@ -22,7 +22,6 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -48,7 +47,6 @@ fun ReleaseGroupListItem(
             Text(
                 text = releaseGroup.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = releaseGroup.fontWeight,
             )
         },
         modifier = modifier.combinedClickable(

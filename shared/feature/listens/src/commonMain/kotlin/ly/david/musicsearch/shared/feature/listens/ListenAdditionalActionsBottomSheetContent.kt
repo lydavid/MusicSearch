@@ -72,7 +72,6 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                     Text(
                         text = listen.getAnnotatedName(),
                         style = TextStyles.getCardBodyTextStyle(),
-                        fontWeight = listen.fontWeight,
                     )
                     Text(
                         text = listen.formattedArtistCredits,

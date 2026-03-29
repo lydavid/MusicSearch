@@ -27,7 +27,6 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackListItem
@@ -52,7 +51,6 @@ fun RecordingListItem(
             Text(
                 text = recording.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = recording.fontWeight,
             )
         },
         modifier = modifier.combinedClickable(

@@ -23,7 +23,6 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.moreActionsForXByY
@@ -43,7 +42,6 @@ fun ListenListItem(
                     withStyle(
                         style = SpanStyle(
                             fontSize = TextStyles.getCardBodyTextStyle().fontSize,
-                            fontWeight = listen.fontWeight,
                         ),
                     ) {
                         append(listen.getAnnotatedName())

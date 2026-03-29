@@ -17,9 +17,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -29,7 +26,6 @@ import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.icons.Wikidata
 import ly.david.musicsearch.ui.common.icons.Wikipedia
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.readMore
@@ -85,11 +81,7 @@ fun UrlListItem(
                     )
 
                     HighlightableText(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(fontWeight = relation.fontWeight)) {
-                                append(relation.name)
-                            }
-                        },
+                        text = relation.name,
                         highlightedText = filterText,
                     )
                 }

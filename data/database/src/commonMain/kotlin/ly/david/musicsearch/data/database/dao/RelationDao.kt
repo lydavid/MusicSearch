@@ -134,7 +134,7 @@ class RelationDao(
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        visited = visited == true || linkedEntity == MusicBrainzEntityType.URL,
+        visited = visited == true,
         isForwardDirection = isForwardDirection,
         lifeSpan = LifeSpanUiModel(
             begin = begin.orEmpty(),

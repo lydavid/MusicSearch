@@ -39,7 +39,6 @@ import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.text.TextWithIcon
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -151,7 +150,6 @@ fun TrackTitleWithLength(track: TrackListItemModel) {
             withStyle(
                 style = SpanStyle(
                     fontSize = TextStyles.getCardBodyTextStyle().fontSize,
-                    fontWeight = track.fontWeight,
                 ),
             ) {
                 append(track.getAnnotatedName())

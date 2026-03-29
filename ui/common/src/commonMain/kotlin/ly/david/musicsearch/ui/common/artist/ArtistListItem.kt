@@ -20,7 +20,6 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 /**
@@ -42,7 +41,6 @@ fun ArtistListItem(
             Text(
                 text = artist.getAnnotatedName(),
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = artist.fontWeight,
             )
         },
         modifier = modifier

@@ -20,7 +20,6 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icon.CollectionIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.HeadphonesAdd
-import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackNumber
 import ly.david.musicsearch.ui.common.track.TrackTitleWithLength
@@ -58,7 +57,6 @@ internal fun TrackAdditionalActionsBottomSheetContent(
                             .padding(top = 4.dp)
                             .fillMaxWidth(),
                         style = TextStyles.getCardBodySubTextStyle(),
-                        fontWeight = track.fontWeight,
                     )
                 }
             }
