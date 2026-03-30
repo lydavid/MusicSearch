@@ -1,7 +1,10 @@
-CREATE TABLE IF NOT EXISTS mbid_wikipedia (
-  `mbid` TEXT NOT NULL PRIMARY KEY,
-  `extract` TEXT NOT NULL,
-  `url` TEXT NOT NULL
+CREATE TABLE mbid_wikipedia (
+  mbid TEXT NOT NULL,
+  language_tag TEXT NOT NULL,
+  extract TEXT NOT NULL,
+  url TEXT NOT NULL,
+
+  PRIMARY KEY (mbid, language_tag)
 );
 
 insert:
@@ -9,10 +12,13 @@ INSERT OR IGNORE INTO mbid_wikipedia
 VALUES ?;
 
 get:
-SELECT * FROM mbid_wikipedia
-WHERE mbid = :mbid
+SELECT
+  extract,
+  url
+FROM mbid_wikipedia
+WHERE mbid = :mbid AND language_tag = :languageTag
 LIMIT 1;
 
-deleteById:
+deleteByIdAndTag:
 DELETE FROM mbid_wikipedia
-WHERE mbid = :mbid;
+WHERE mbid = :mbid AND language_tag = :languageTag;

@@ -57,4 +57,27 @@ class NameWithDisambiguationAndAliasesExtTest {
             ),
         )
     }
+
+    @Test
+    fun `fallback to en`() {
+        val nameWithDisambiguationAndAliases = ArtistDetailsModel(
+            id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
+            name = "月詠み",
+            disambiguation = "",
+            aliases = persistentListOf(
+                BasicAlias(
+                    name = "Tsukuyomi",
+                    locale = "en",
+                    isPrimary = true,
+                ),
+            ),
+        )
+
+        Assert.assertEquals(
+            "Tsukuyomi",
+            nameWithDisambiguationAndAliases.getAliasForLocale(
+                systemLocale = Locale("de"),
+            ),
+        )
+    }
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.intl.Locale
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
 import com.slack.circuit.retained.collectAsRetainedState
@@ -169,6 +170,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             wikimediaRepository.getWikipediaExtract(
                 mbid = detailsModel?.id ?: return@LaunchedEffect,
                 urls = detailsModel?.urls ?: return@LaunchedEffect,
+                languageTag = Locale.current.language,
                 forceRefresh = forceRefreshDetails,
             ).onSuccess { wikipediaExtract ->
                 detailsModel = detailsModel?.withWikipediaExtract(
