@@ -21,7 +21,7 @@ internal class WikimediaApiImpl(
         wikidataId: String,
         languageTag: String,
     ): WikipediaExtract {
-        // 1. Get Wikipedia page title using the Wikidata ID
+        // 1. Get Wikipedia url using the Wikidata ID
         val wikidataUrl = WIKIDATA_BASE_URL +
             "?action=wbgetentities" +
             "&format=json" +
@@ -43,11 +43,11 @@ internal class WikimediaApiImpl(
             ?.jsonPrimitive?.content
 
         if (wikipediaUrl == null) {
-            logger.d("Wikipedia page title not found for Wikidata ID: $wikidataId")
+            logger.d("Wikipedia url not found for Wikidata ID: $wikidataId")
             return WikipediaExtract()
         }
 
-        // 2. Get Wikipedia extract using the page title by transforming it to the api endpoint
+        // 2. Get Wikipedia extract using the url by transforming it to the api endpoint
         val parameters = "action=query" +
             "&format=json" +
             "&prop=extracts" +

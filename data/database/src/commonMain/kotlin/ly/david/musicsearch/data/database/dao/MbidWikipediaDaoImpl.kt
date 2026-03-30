@@ -40,7 +40,7 @@ class MbidWikipediaDaoImpl(
             },
         ).executeAsOneOrNull()
 
-    override fun deleteById(
+    override fun deleteByIdAndTag(
         mbid: String,
         languageTag: String,
     ) {

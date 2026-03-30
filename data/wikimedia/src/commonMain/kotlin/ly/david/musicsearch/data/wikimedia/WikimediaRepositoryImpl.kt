@@ -22,7 +22,10 @@ internal class WikimediaRepositoryImpl(
         forceRefresh: Boolean,
     ): Result<WikipediaExtract> {
         if (forceRefresh) {
-            mbidWikipediaDao.deleteById(mbid, languageTag)
+            mbidWikipediaDao.deleteByIdAndTag(
+                mbid = mbid,
+                languageTag = languageTag,
+            )
         }
 
         val cachedExtract = mbidWikipediaDao.get(mbid, languageTag)

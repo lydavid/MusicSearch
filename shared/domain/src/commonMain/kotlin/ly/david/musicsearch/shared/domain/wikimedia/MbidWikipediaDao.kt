@@ -19,7 +19,7 @@ interface MbidWikipediaDao {
         languageTag: String,
     ): WikipediaExtract?
 
-    fun deleteById(
+    fun deleteByIdAndTag(
         mbid: String,
         languageTag: String,
     )
