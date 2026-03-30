@@ -1,0 +1,8 @@
+
+### Bug Fixes
+
+* improve add to collection messages and make them localizable; show syncing message when adding to or deleting from a remote collection; use colored snackbar in all details screens
+* only bold unvisited item's name without bolding its disambiguation and aliases
+* show  + ? after remote collection count if you have not fetched all items in it (or if it's out of sync with the remote count from adding/deleting)
+* support adding more than 400 entities at a time to a remote collection
+* support deleting more than 400 entities at a time from a remote collection
