@@ -12,23 +12,27 @@ class MbidWikipediaDaoImpl(
 
     override fun save(
         mbid: String,
+        languageTag: String,
         wikipediaExtract: WikipediaExtract,
     ) {
-        transacter.transaction {
-            transacter.insert(
-                mbid_wikipedia = Mbid_wikipedia(
-                    mbid = mbid,
-                    extract = wikipediaExtract.extract,
-                    url = wikipediaExtract.wikipediaUrl,
-                ),
-            )
-        }
+        transacter.insert(
+            mbid_wikipedia = Mbid_wikipedia(
+                mbid = mbid,
+                language_tag = languageTag,
+                extract = wikipediaExtract.extract,
+                url = wikipediaExtract.wikipediaUrl,
+            ),
+        )
     }
 
-    override fun get(mbid: String): WikipediaExtract? =
+    override fun get(
+        mbid: String,
+        languageTag: String,
+    ): WikipediaExtract? =
         transacter.get(
             mbid = mbid,
-            mapper = { _: String, extract: String, url: String ->
+            languageTag = languageTag,
+            mapper = { extract: String, url: String ->
                 WikipediaExtract(
                     extract = extract,
                     wikipediaUrl = url,
@@ -36,7 +40,13 @@ class MbidWikipediaDaoImpl(
             },
         ).executeAsOneOrNull()
 
-    override fun deleteById(mbid: String) {
-        transacter.deleteById(mbid)
+    override fun deleteById(
+        mbid: String,
+        languageTag: String,
+    ) {
+        transacter.deleteByIdAndTag(
+            mbid = mbid,
+            languageTag = languageTag,
+        )
     }
 }

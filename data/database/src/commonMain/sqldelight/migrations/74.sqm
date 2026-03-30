@@ -1,0 +1,24 @@
+CREATE TABLE temp_mbid_wikipedia (
+  mbid TEXT NOT NULL,
+  language_tag TEXT NOT NULL,
+  extract TEXT NOT NULL,
+  url TEXT NOT NULL,
+
+  PRIMARY KEY (mbid, language_tag)
+);
+
+INSERT INTO temp_mbid_wikipedia (
+  mbid,
+  language_tag,
+  extract,
+  url
+)
+SELECT
+  mbid,
+  'en',
+  extract,
+  url
+FROM mbid_wikipedia;
+
+DROP TABLE mbid_wikipedia;
+ALTER TABLE temp_mbid_wikipedia RENAME TO mbid_wikipedia;

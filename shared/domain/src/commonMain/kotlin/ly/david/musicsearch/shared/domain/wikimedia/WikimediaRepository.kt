@@ -12,6 +12,7 @@ interface WikimediaRepository {
     suspend fun getWikipediaExtract(
         mbid: String,
         urls: List<RelationListItemModel>,
+        languageTag: String,
         forceRefresh: Boolean,
     ): Result<WikipediaExtract>
 }
