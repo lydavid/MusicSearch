@@ -18,6 +18,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.common.decodeUrl
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
@@ -81,7 +82,10 @@ fun WikipediaSection(
                         id = "wikipedia_section",
                         type = stringResource(Res.string.readMore),
                         linkedEntity = MusicBrainzEntityType.URL,
-                        name = extract.wikipediaUrl,
+                        // TODO: eventually, migrate the stored url to be decoded
+                        //  so that we can search with utf-8
+                        //  at that point, decode the url before storing
+                        name = extract.wikipediaUrl.decodeUrl(),
                         linkedEntityId = "wikipedia_section",
                     ),
                     filterText = filterText,

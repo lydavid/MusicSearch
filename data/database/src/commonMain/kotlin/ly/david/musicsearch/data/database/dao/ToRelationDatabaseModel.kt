@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttribu
 import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributes
 import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.common.decodeUrl
 import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 
@@ -150,5 +151,3 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         ),
     )
 }
-
-internal expect fun String.decodeUrl(): String

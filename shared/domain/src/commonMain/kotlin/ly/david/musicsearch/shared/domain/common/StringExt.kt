@@ -130,3 +130,5 @@ fun String.toUUID(): Uuid {
     // so let this Uuid library give us its error with the original string when we fail to match.
     return Uuid.parse(uuidString ?: this)
 }
+
+expect fun String.decodeUrl(): String
