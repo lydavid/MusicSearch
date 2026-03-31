@@ -18,6 +18,7 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -27,6 +28,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun WorkListItem(
     work: WorkListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onWorkClick: WorkListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -35,8 +37,9 @@ fun WorkListItem(
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = work.getAnnotatedName(),
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
@@ -44,8 +47,9 @@ fun WorkListItem(
             Column {
                 work.run {
                     iswcs.ifNotEmpty {
-                        Text(
+                        HighlightableText(
                             text = it.joinToString(", "),
+                            highlightedText = filterText,
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }

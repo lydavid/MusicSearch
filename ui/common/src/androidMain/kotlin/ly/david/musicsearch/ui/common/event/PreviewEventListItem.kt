@@ -19,6 +19,7 @@ internal fun PreviewEventListItem() {
                 disambiguation = "that one",
                 type = "Concert",
             ),
+            filterText = "one",
         )
     }
 }
@@ -39,6 +40,7 @@ internal fun PreviewEventListItemLong() {
                     ended = true,
                 ),
             ),
+            filterText = "",
         )
     }
 }
@@ -60,6 +62,7 @@ internal fun PreviewEventListItemVisited() {
                 ),
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }
@@ -81,6 +84,7 @@ internal fun PreviewEventListItemMultiDay() {
                 ),
                 visited = false,
             ),
+            filterText = "",
         )
     }
 }
@@ -99,6 +103,7 @@ internal fun PreviewEventListItemCancelled() {
                 ),
                 cancelled = true,
             ),
+            filterText = "",
         )
     }
 }
@@ -121,6 +126,7 @@ internal fun PreviewEventListItemWithCoverArt() {
                 imageUrl = "www.example.com/image",
                 imageId = ImageId(1L),
             ),
+            filterText = "",
         )
     }
 }

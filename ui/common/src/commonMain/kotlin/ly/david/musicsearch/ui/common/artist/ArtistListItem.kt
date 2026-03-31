@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
@@ -30,6 +31,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun ArtistListItem(
     artist: ArtistListItemModel,
+    filterText: String = "",
     modifier: Modifier = Modifier,
     onClick: ArtistListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -38,8 +40,9 @@ fun ArtistListItem(
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = artist.getAnnotatedName(),
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },

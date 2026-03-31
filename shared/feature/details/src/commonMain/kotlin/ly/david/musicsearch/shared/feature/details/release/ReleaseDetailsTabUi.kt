@@ -173,6 +173,7 @@ internal fun ReleaseDetailsTabUi(
     val bringYourOwnLabelsSection: LazyListScope.() -> Unit = {
         release
             .copy(
+                // TODO: move these filters to their sections
                 labels = release.labels.filter { label ->
                     val searchText = filterText.lowercase()
                     listOf(
@@ -191,14 +192,15 @@ internal fun ReleaseDetailsTabUi(
                 },
             )
             .run {
-                item {
-                    labels.ifNotNullOrEmpty {
+                labels.ifNotNullOrEmpty {
+                    item {
                         ListSeparatorHeader(stringResource(Res.string.labels))
                     }
                 }
                 items(labels) { label ->
                     LabelListItem(
                         label = label,
+                        filterText = filterText,
                         onLabelClick = {
                             onItemClick(
                                 MusicBrainzEntityType.LABEL,
@@ -213,6 +215,7 @@ internal fun ReleaseDetailsTabUi(
                 releaseEventsSection(
                     collapsed = detailsTabUiState.isReleaseEventsCollapsed,
                     areas = areas,
+                    filterText = filterText,
                     onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
                     onItemClick = onItemClick,
                 )
@@ -241,6 +244,7 @@ internal fun ReleaseDetailsTabUi(
 private fun LazyListScope.releaseEventsSection(
     collapsed: Boolean,
     areas: List<AreaListItemModel>,
+    filterText: String,
     onCollapseExpandReleaseEvents: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
 ) {
@@ -257,6 +261,7 @@ private fun LazyListScope.releaseEventsSection(
         items(areas) { area: AreaListItemModel ->
             AreaListItem(
                 area = area,
+                filterText = filterText,
                 showType = false,
                 showIcon = false,
                 showEditCollection = false,

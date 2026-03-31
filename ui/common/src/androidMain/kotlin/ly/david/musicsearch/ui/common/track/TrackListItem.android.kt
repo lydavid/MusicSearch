@@ -24,6 +24,7 @@ internal fun PreviewTrackListItem() {
                     recordingId = "r1",
                     mediumPosition = 1,
                 ),
+                filterText = "",
                 mostListenedTrackCount = 0,
             )
         }
@@ -67,6 +68,7 @@ internal fun PreviewTrackListItemAllInfo() {
                     ),
                     collected = true,
                 ),
+                filterText = "a",
                 mostListenedTrackCount = 5,
             )
         }
@@ -103,6 +105,7 @@ internal fun PreviewTrackListItemVisited() {
                     visited = true,
                     mediumPosition = 1,
                 ),
+                filterText = "",
                 mostListenedTrackCount = 0,
             )
         }

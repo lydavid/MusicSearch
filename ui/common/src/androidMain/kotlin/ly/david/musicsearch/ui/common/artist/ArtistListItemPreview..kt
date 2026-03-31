@@ -54,6 +54,7 @@ internal fun PreviewArtistListItemAllInfoUnvisited() {
                     end = "2022-01-01",
                 ),
             ),
+            filterText = "wrap",
         )
     }
 }

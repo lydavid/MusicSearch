@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.area
 import org.jetbrains.compose.resources.stringResource
@@ -19,9 +20,10 @@ internal fun AreaSection(
     areaListItemModel?.run {
         ListSeparatorHeader(text = stringResource(Res.string.area))
 
-        if (name.contains(filterText, ignoreCase = true)) {
+        if (getAnnotatedName().contains(filterText, ignoreCase = true)) {
             AreaListItem(
                 area = this,
+                filterText = filterText,
                 showType = false,
                 showIcon = false,
                 showEditCollection = false,

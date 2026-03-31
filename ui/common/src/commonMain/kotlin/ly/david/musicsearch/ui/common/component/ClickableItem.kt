@@ -14,8 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -23,6 +27,7 @@ fun ClickableItem(
     title: String,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
+    filterText: String = "",
     subtitle: String? = null,
     startIcon: ImageVector? = null,
     endIcon: ImageVector? = null,
@@ -47,6 +52,7 @@ fun ClickableItem(
         title = title,
         modifier = modifier,
         iconModifier = iconModifier,
+        filterText = filterText,
         subtitle = subtitle,
         startIcon = startIconComposable,
         endIcon = endIcon,
@@ -61,6 +67,7 @@ fun ClickableItem(
     title: String,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
+    filterText: String = "",
     subtitle: String? = null,
     startIcon: @Composable (BoxScope.() -> Unit)?,
     endIcon: ImageVector? = null,
@@ -84,11 +91,15 @@ fun ClickableItem(
                     end = if (endIcon == null) 0.dp else 32.dp,
                 ),
         ) {
-            Text(
-                text = title,
+            HighlightableText(
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = fontWeight)) {
+                        append(title)
+                    }
+                },
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
-                fontWeight = fontWeight,
-                color = foregroundColor,
+                foregroundColor = foregroundColor,
             )
 
             subtitle?.let {

@@ -288,6 +288,7 @@ internal fun ReleaseUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             onEditCollectionClick = {
                 val entityType =
                     selectedTab.toMusicBrainzEntityTypeWhereTracksAreRecordings() ?: return@DetailsHorizontalPager

@@ -10,29 +10,34 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
-internal fun SpotifyHistoryCard(
+internal fun SpotifyHistoryListItem(
     spotifyHistory: SpotifyHistoryListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onClick: SpotifyHistoryListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = spotifyHistory.trackName.orEmpty(),
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
         supportingContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = spotifyHistory.albumName.orEmpty(),
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
-                Text(
+                HighlightableText(
                     text = spotifyHistory.artistName.orEmpty(),
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
             }

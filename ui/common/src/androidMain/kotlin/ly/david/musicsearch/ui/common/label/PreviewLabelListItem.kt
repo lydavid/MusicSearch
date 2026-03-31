@@ -14,6 +14,7 @@ internal fun PreviewLabelListItem() {
                 id = "1",
                 name = "Music Label",
             ),
+            filterText = "1",
         )
     }
 }
@@ -31,6 +32,7 @@ internal fun PreviewLabelListItemAllInfo() {
                 labelCode = 10746,
                 catalogNumbers = "CAT-123",
             ),
+            filterText = "1",
         )
     }
 }
@@ -49,6 +51,7 @@ internal fun PreviewLabelListItemVisited() {
                 catalogNumbers = "CAT-123",
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

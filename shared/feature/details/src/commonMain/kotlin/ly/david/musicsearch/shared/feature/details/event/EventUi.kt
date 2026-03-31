@@ -215,6 +215,7 @@ internal fun EventUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             onEditCollectionClick = {
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,

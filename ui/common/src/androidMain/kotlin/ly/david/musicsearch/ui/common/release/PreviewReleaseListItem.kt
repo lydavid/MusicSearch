@@ -17,6 +17,7 @@ internal fun PreviewReleaseListItem() {
                 id = "1",
                 name = "Release title",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -32,6 +33,7 @@ internal fun PreviewReleaseListItemDisambiguation() {
                 name = "Release title",
                 disambiguation = "Disambiguation text",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -48,6 +50,7 @@ internal fun PreviewReleaseListItemDisambiguationCountry() {
                 disambiguation = "Disambiguation text",
                 countryCode = "US",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -63,6 +66,7 @@ internal fun PreviewReleaseListItemCountry() {
                 name = "Release title",
                 countryCode = "CA",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -81,6 +85,7 @@ internal fun PreviewReleaseListItemDateCountryFormatsTracks() {
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -97,6 +102,7 @@ internal fun PreviewReleaseListItemCountryDate() {
                 date = "2022-04-03",
                 countryCode = "NL",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -113,6 +119,7 @@ internal fun PreviewReleaseListItemDateArtistCredits() {
                 date = "2022-04-03",
                 formattedArtistCredits = "Some artist feat. Other artist",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -130,6 +137,7 @@ internal fun PreviewReleaseListItemMultipleCountries() {
                 formattedArtistCredits = "Some artist feat. another",
                 releaseCountryCount = 3,
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -149,6 +157,7 @@ internal fun PreviewReleaseListItemShowLessInfo() {
                 formattedFormats = "2×CD + Blu-ray",
                 formattedTracks = "15 + 8 + 24",
             ),
+            filterText = "",
             showMoreInfo = false,
         )
     }
@@ -178,6 +187,7 @@ internal fun PreviewReleaseListItemCatalog() {
     PreviewWithTransitionAndOverlays {
         ReleaseListItem(
             release = release,
+            filterText = "ty",
             showMoreInfo = true,
         )
     }
@@ -191,6 +201,7 @@ internal fun PreviewReleaseListItemVisited() {
             release = release.copy(
                 visited = true,
             ),
+            filterText = "0",
             showMoreInfo = true,
         )
     }
@@ -208,6 +219,7 @@ internal fun PreviewReleaseListItemWithListens() {
                     completeListenCount = 1,
                 ),
             ),
+            filterText = "JP",
             showMoreInfo = true,
         )
     }
@@ -222,6 +234,7 @@ internal fun PreviewReleaseListItemWithUnknownNumberOfListens() {
                 visited = false,
                 listenState = ReleaseListItemModel.ListenState.Unknown,
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }
@@ -238,6 +251,7 @@ internal fun PreviewReleaseListItemWithCoverArt() {
                 name = "Release title",
                 imageUrl = "www.example.com/image",
             ),
+            filterText = "",
             showMoreInfo = true,
         )
     }

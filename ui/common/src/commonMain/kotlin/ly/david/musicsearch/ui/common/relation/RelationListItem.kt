@@ -21,12 +21,14 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
 fun RelationListItem(
     relation: RelationListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
@@ -50,8 +52,9 @@ fun RelationListItem(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
 
-                Text(
+                HighlightableText(
                     text = relation.getAnnotatedName(),
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }

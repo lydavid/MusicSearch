@@ -253,6 +253,7 @@ internal fun AreaUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             requestForMissingCoverArtUrl = { id, _ ->
                 releasesByEntityEventSink(
                     EntitiesListUiEvent.RequestForMissingCoverArtUrl(

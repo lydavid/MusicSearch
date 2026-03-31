@@ -9,7 +9,6 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +16,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -34,6 +35,7 @@ import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
 import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.fontWeight
@@ -42,6 +44,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
+    filterText: String,
     filteringByThisRecording: Boolean,
     allowedToEdit: Boolean,
     onGoToReleaseClick: (releaseId: String) -> Unit = {},
@@ -69,21 +72,27 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 Column(
                     modifier = Modifier.padding(start = 16.dp),
                 ) {
-                    Text(
+                    HighlightableText(
                         text = listen.getAnnotatedName(),
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )
-                    Text(
+                    HighlightableText(
                         text = listen.formattedArtistCredits,
+                        highlightedText = filterText,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                     release.name?.let { releaseName ->
-                        Text(
-                            text = releaseName,
+                        HighlightableText(
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(fontWeight = release.fontWeight)) {
+                                    append(releaseName)
+                                }
+                            },
+                            highlightedText = filterText,
                             modifier = Modifier.padding(top = 4.dp),
                             style = TextStyles.getCardBodySubTextStyle(),
-                            fontWeight = release.fontWeight,
                         )
                     }
                 }

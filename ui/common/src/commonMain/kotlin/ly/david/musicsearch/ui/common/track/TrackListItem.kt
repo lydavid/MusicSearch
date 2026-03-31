@@ -35,6 +35,7 @@ import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MoreVert
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.recording.RecordingListItem
@@ -52,6 +53,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun TrackListItem(
     track: TrackListItemModel,
+    filterText: String,
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     onRecordingClick: (recordingId: String) -> Unit = {},
@@ -62,7 +64,10 @@ fun TrackListItem(
     ListItem(
         headlineContent = {
             Row {
-                TrackTitleWithLength(track = track)
+                TrackTitleWithLength(
+                    track = track,
+                    filterText = filterText,
+                )
             }
         },
         modifier = modifier
@@ -98,8 +103,9 @@ fun TrackListItem(
         },
         supportingContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = track.artists.getDisplayNames(),
+                    highlightedText = filterText,
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
@@ -144,8 +150,11 @@ fun TrackListItem(
 }
 
 @Composable
-fun TrackTitleWithLength(track: TrackListItemModel) {
-    Text(
+fun TrackTitleWithLength(
+    track: TrackListItemModel,
+    filterText: String = "",
+) {
+    HighlightableText(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
@@ -158,6 +167,7 @@ fun TrackTitleWithLength(track: TrackListItemModel) {
                 append(" ${track.length.toDisplayTime()}")
             }
         },
+        highlightedText = filterText,
     )
 }
 

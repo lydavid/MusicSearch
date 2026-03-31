@@ -421,6 +421,7 @@ internal fun CollectionUi(
             }
             EntitiesPagingListUi(
                 uiState = uiState,
+                filterText = state.topAppBarFilterState.filterText,
                 now = now,
                 modifier = Modifier
                     .padding(innerPadding)

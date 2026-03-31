@@ -20,6 +20,7 @@ internal fun PreviewReleaseGroupListItem() {
     PreviewWithTransitionAndOverlays {
         ReleaseGroupListItem(
             releaseGroup = testReleaseGroup,
+            filterText = "",
             showType = false,
         )
     }
@@ -31,6 +32,7 @@ internal fun PreviewReleaseGroupListItemWithType() {
     PreviewWithTransitionAndOverlays {
         ReleaseGroupListItem(
             releaseGroup = testReleaseGroup,
+            filterText = "",
             showType = true,
         )
     }
@@ -50,6 +52,7 @@ internal fun PreviewReleaseGroupListItemVisited() {
                 formattedArtistCredits = "Some artist feat. some other artist",
                 visited = true,
             ),
+            filterText = "artist",
             showType = true,
         )
     }

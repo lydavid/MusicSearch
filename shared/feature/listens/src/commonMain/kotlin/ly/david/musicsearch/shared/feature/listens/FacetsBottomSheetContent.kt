@@ -13,7 +13,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +29,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -136,14 +136,16 @@ internal fun FacetsBottomSheetContent(
                                     append(" (${facet.count})")
                                 }
                                 val hasSubtitle = !hasUnknownId && facet.formattedArtistCredits.isNotEmpty()
-                                Text(
+                                HighlightableText(
                                     text = title,
+                                    highlightedText = state.filterState.filterText,
                                     modifier = Modifier.padding(vertical = if (hasSubtitle) 0.dp else 8.dp),
                                     style = TextStyles.getCardBodyTextStyle(),
                                 )
                                 if (hasSubtitle) {
-                                    Text(
+                                    HighlightableText(
                                         text = facet.formattedArtistCredits,
+                                        highlightedText = state.filterState.filterText,
                                         modifier = Modifier.padding(top = 4.dp),
                                         style = TextStyles.getCardBodySubTextStyle(),
                                     )

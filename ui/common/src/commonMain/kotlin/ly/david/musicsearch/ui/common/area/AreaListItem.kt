@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -30,6 +31,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun AreaListItem(
     area: AreaListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     showType: Boolean = true,
     showIcon: Boolean = true,
@@ -64,8 +66,9 @@ fun AreaListItem(
                 flags.ifNotNullOrEmpty { append("$it ") }
                 append(area.getAnnotatedName())
             }
-            Text(
+            HighlightableText(
                 text = fullName,
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
@@ -110,8 +113,9 @@ fun AreaListItem(
             // Only for release events
             area.date.ifNotNullOrEmpty {
                 Column(horizontalAlignment = Alignment.End) {
-                    Text(
+                    HighlightableText(
                         text = it,
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

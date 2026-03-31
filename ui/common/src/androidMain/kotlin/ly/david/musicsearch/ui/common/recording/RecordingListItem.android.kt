@@ -14,6 +14,7 @@ internal fun PreviewRecordingListItem() {
                 id = "1",
                 name = "Recording name",
             ),
+            filterText = "",
         )
     }
 }
@@ -33,6 +34,7 @@ internal fun PreviewRecordingListItemAllInfo() {
                 formattedArtistCredits = "Some artist feat. Other artist",
                 listenCount = 38,
             ),
+            filterText = "feat",
         )
     }
 }
@@ -52,6 +54,7 @@ internal fun PreviewRecordingListItemVisited() {
                 formattedArtistCredits = "Some artist feat. Other artist",
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

@@ -28,6 +28,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.StarFilled
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -37,6 +38,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun ReleaseListItem(
     release: ReleaseListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
@@ -54,8 +56,9 @@ fun ReleaseListItem(
 
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = release.getAnnotatedName(),
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
@@ -80,8 +83,9 @@ fun ReleaseListItem(
                         }
                     } ?: release.date
                     if (countryAndDate.isNotEmpty()) {
-                        Text(
+                        HighlightableText(
                             text = countryAndDate,
+                            highlightedText = filterText,
                             style = TextStyles.getCardBodySubTextStyle(),
                             textAlign = TextAlign.End,
                             modifier = Modifier.padding(top = 4.dp),
@@ -114,8 +118,9 @@ fun ReleaseListItem(
                     }
 
                     release.formattedArtistCredits.ifNotNullOrEmpty {
-                        Text(
+                        HighlightableText(
                             text = it,
+                            highlightedText = filterText,
                             modifier = Modifier
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
@@ -124,8 +129,9 @@ fun ReleaseListItem(
                     }
 
                     release.catalogNumbers.ifNotNullOrEmpty {
-                        Text(
+                        HighlightableText(
                             text = it,
+                            highlightedText = filterText,
                             modifier = Modifier
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),

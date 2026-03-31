@@ -16,6 +16,7 @@ internal fun PreviewAreaListItem() {
                 id = "1",
                 name = "Area Name",
             ),
+            filterText = "",
             showIcon = false,
         )
     }
@@ -31,6 +32,7 @@ internal fun PreviewAreaListItemDisambiguation() {
                 name = "Area Name",
                 disambiguation = "That one",
             ),
+            filterText = "",
             showIcon = false,
         )
     }
@@ -47,6 +49,7 @@ internal fun PreviewAreaListItemCountry() {
                 type = COUNTRY,
                 countryCodes = persistentListOf("GS"),
             ),
+            filterText = "south",
         )
     }
 }
@@ -61,6 +64,7 @@ internal fun PreviewAreaListItemWorldwide() {
                 name = "[Worldwide]",
                 countryCodes = persistentListOf("XW"),
             ),
+            filterText = "",
         )
     }
 }
@@ -77,6 +81,7 @@ internal fun PreviewReleaseEvent() {
                 countryCodes = persistentListOf("GS"),
                 date = "2006-03-21",
             ),
+            filterText = "200",
             showType = false,
             showIcon = false,
             showEditCollection = false,
@@ -94,6 +99,7 @@ internal fun PreviewReleaseEventNoDate() {
                 name = "[Worldwide]",
                 countryCodes = persistentListOf("XW"),
             ),
+            filterText = "",
             showType = false,
         )
     }
@@ -111,6 +117,7 @@ internal fun PreviewAreaListItemVisited() {
                 countryCodes = persistentListOf("GS"),
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }
@@ -128,6 +135,7 @@ internal fun PreviewReleaseEventVisited() {
                 date = "2006-03-21",
                 visited = true,
             ),
+            filterText = "",
             showType = false,
             showEditCollection = false,
         )

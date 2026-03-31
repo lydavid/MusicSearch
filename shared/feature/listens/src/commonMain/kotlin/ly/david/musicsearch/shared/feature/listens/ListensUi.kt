@@ -271,6 +271,7 @@ internal fun ListensUi(
             noUsernameSet = noUsernameSet,
             innerPadding = innerPadding,
             state = state,
+            filterText = state.topAppBarFilterState.filterText,
             eventSink = eventSink,
             selectedEntityFacet = selectedEntityFacet,
             lazyPagingItems = lazyPagingItems,
@@ -300,6 +301,7 @@ private fun ListensContent(
     noUsernameSet: Boolean,
     innerPadding: PaddingValues,
     state: ListensUiState,
+    filterText: String,
     eventSink: (ListensUiEvent) -> Unit,
     selectedEntityFacet: MusicBrainzEntity?,
     lazyPagingItems: LazyPagingItems<Identifiable>,
@@ -327,6 +329,7 @@ private fun ListensContent(
             ) {
                 ListenAdditionalActionsBottomSheetContent(
                     listen = listen,
+                    filterText = filterText,
                     filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
                     allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
                     onGoToReleaseClick = { releaseId ->
@@ -382,6 +385,7 @@ private fun ListensContent(
             when (listItemModel) {
                 is ListenListItemModel -> ListenListItem(
                     listen = listItemModel,
+                    filterText = filterText,
                     onClick = { id ->
                         eventSink(
                             ListensUiEvent.ClickItem(

@@ -4,10 +4,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -20,6 +22,8 @@ fun HighlightableText(
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
     style: TextStyle = TextStyles.getCardBodyTextStyle(),
+    textAlign: TextAlign? = null,
+    foregroundColor: Color = Color.Unspecified,
 ) {
     HighlightableText(
         text = AnnotatedString(text),
@@ -28,6 +32,8 @@ fun HighlightableText(
         maxLines = maxLines,
         overflow = overflow,
         style = style,
+        textAlign = textAlign,
+        foregroundColor = foregroundColor,
     )
 }
 
@@ -39,6 +45,8 @@ fun HighlightableText(
     maxLines: Int = Int.MAX_VALUE,
     overflow: TextOverflow = TextOverflow.Clip,
     style: TextStyle = TextStyles.getCardBodyTextStyle(),
+    textAlign: TextAlign? = null,
+    foregroundColor: Color = Color.Unspecified,
 ) {
     val annotatedString = buildAnnotatedString {
         if (highlightedText.isEmpty()) {
@@ -77,5 +85,7 @@ fun HighlightableText(
         style = style,
         maxLines = maxLines,
         overflow = overflow,
+        textAlign = textAlign,
+        color = foregroundColor,
     )
 }

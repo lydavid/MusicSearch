@@ -76,6 +76,31 @@ internal fun PreviewTracksByReleaseUi() {
                             visited = false,
                             listenCount = 2,
                         ),
+                        TrackListItemModel(
+                            id = "3c7ffb8f-f7c3-4def-9efb-a6f0956b080c",
+                            position = 5,
+                            number = "5",
+                            name = "馴れ合いサーブ",
+                            aliases = persistentListOf(
+                                BasicAlias(
+                                    name = "Nareai Serve",
+                                    locale = "en",
+                                    isPrimary = true,
+                                ),
+                            ),
+                            length = 237000,
+                            artists = persistentListOf(
+                                ArtistCreditUiModel(
+                                    artistId = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
+                                    name = "ずっと真夜中でいいのに。",
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            mediumId = 1,
+                            mediumPosition = 1,
+                            visited = false,
+                            listenCount = 1,
+                        ),
                         ListSeparator(
                             id = "2",
                             text = "2・CD",
@@ -124,6 +149,7 @@ internal fun PreviewTracksByReleaseUi() {
 
             TracksByReleaseUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
+                filterText = "い",
                 mostListenedTrackCount = 10,
                 collapsedMediumIds = persistentSetOf(2),
             )

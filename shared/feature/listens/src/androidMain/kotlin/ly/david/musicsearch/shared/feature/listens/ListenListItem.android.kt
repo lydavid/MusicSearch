@@ -31,6 +31,7 @@ internal fun PreviewListenListItem() {
                         ),
                     ),
                 ),
+                filterText = "ze",
             )
         }
     }

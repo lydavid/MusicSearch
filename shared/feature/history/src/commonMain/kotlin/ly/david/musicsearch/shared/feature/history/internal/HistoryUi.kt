@@ -154,6 +154,7 @@ internal fun HistoryUi(
         val lazyPagingItems = state.pagingDataFlow.collectAsLazyPagingItems()
         HistoryUi(
             lazyPagingItems = lazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -187,7 +188,7 @@ internal fun HistoryUi(
                                 eventSink(HistoryUiEvent.DeleteHistory(history))
                             }
                         }
-                    } catch (ex: CancellationException) {
+                    } catch (_: CancellationException) {
                         eventSink(HistoryUiEvent.DeleteHistory(history))
                     }
                 }
@@ -199,6 +200,7 @@ internal fun HistoryUi(
 @Composable
 internal fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    filterText: String,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
@@ -217,6 +219,7 @@ internal fun HistoryUi(
             is LookupHistoryListItemModel -> {
                 HistoryListItem(
                     lookupHistory = listItemModel,
+                    filterText = filterText,
                     onItemClick = onItemClick,
                     onDeleteItem = onDeleteItem,
                 )

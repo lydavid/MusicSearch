@@ -17,7 +17,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
     InitializeFakeImageLoader()
     PreviewWithTransitionAndOverlays {
         HistoryListItem(
-            LookupHistoryListItemModel(
+            lookupHistory = LookupHistoryListItemModel(
                 title = "欠けた心象、世のよすが",
                 entity = MusicBrainzEntityType.RELEASE_GROUP,
                 id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
@@ -25,6 +25,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
                 imageUrl = imageUrl,
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
+            filterText = "",
         )
     }
 }
@@ -37,13 +38,14 @@ internal fun PreviewLookupHistoryRelease(
     InitializeFakeImageLoader()
     PreviewWithTransitionAndOverlays {
         HistoryListItem(
-            LookupHistoryListItemModel(
+            lookupHistory = LookupHistoryListItemModel(
                 title = "欠けた心象、世のよすが",
                 entity = MusicBrainzEntityType.RELEASE,
                 id = "165f6643-2edb-4795-9abe-26bd0533e59d",
                 imageUrl = imageUrl,
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
+            filterText = "",
         )
     }
 }
@@ -56,13 +58,32 @@ internal fun PreviewLookupHistoryArtist(
     InitializeFakeImageLoader()
     PreviewWithTransitionAndOverlays {
         HistoryListItem(
-            LookupHistoryListItemModel(
+            lookupHistory = LookupHistoryListItemModel(
                 title = "月詠み",
                 entity = MusicBrainzEntityType.ARTIST,
                 id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                 imageUrl = imageUrl,
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
+            filterText = "",
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewLookupHistoryWithFilter() {
+    InitializeFakeImageLoader()
+    PreviewWithTransitionAndOverlays {
+        HistoryListItem(
+            lookupHistory = LookupHistoryListItemModel(
+                title = "いのちの名前 (Name of Life)",
+                entity = MusicBrainzEntityType.WORK,
+                id = "412c8cf4-6905-3b4b-a59a-1a71f98e2677",
+                imageUrl = "",
+                lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
+            ),
+            filterText = "name",
         )
     }
 }

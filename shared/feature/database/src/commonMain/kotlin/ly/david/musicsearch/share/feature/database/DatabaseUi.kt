@@ -82,6 +82,7 @@ internal fun DatabaseUi(
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
+                    filterText = filterText,
                     startIcon = CustomIcons.History,
                     endIcon = CustomIcons.ChevronRight,
                     onClick = { onDestinationClick(HistoryScreen) },
@@ -93,6 +94,7 @@ internal fun DatabaseUi(
             if (this.contains(filterText, ignoreCase = true)) {
                 ClickableItem(
                     title = this,
+                    filterText = filterText,
                     subtitle = (state.countOfAllImages ?: UNKNOWN).toString(),
                     startIcon = CustomIcons.Image,
                     endIcon = CustomIcons.ChevronRight,
@@ -110,6 +112,7 @@ internal fun DatabaseUi(
                 if (title.contains(filterText, ignoreCase = true)) {
                     ClickableItem(
                         title = title,
+                        filterText = filterText,
                         subtitle = (state.entitiesCount[entity] ?: UNKNOWN).toString(),
                         startIcon = entity.getIcon(),
                         endIcon = CustomIcons.ChevronRight,

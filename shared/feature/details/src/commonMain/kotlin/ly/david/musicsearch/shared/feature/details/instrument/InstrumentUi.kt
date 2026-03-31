@@ -212,6 +212,7 @@ internal fun InstrumentUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             detailsScreen = { detailsModel ->
                 InstrumentDetailsTabUi(
                     instrument = detailsModel,

@@ -24,6 +24,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -40,6 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun RecordingListItem(
     recording: RecordingListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onRecordingClick: RecordingListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -48,8 +50,9 @@ fun RecordingListItem(
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = recording.getAnnotatedName(),
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
@@ -85,8 +88,9 @@ fun RecordingListItem(
                 }
 
                 recording.formattedArtistCredits.ifNotNullOrEmpty {
-                    Text(
+                    HighlightableText(
                         text = it,
+                        highlightedText = filterText,
                         modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )

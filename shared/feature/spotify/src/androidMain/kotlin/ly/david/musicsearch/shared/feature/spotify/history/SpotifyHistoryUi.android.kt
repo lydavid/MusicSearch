@@ -6,11 +6,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -59,6 +60,9 @@ internal fun PreviewNowPlayingHistoryUi() {
             )
             SpotifyHistoryUi(
                 lazyPagingItems = items.collectAsLazyPagingItems(),
+                topAppBarFilterState = TopAppBarFilterState(
+                    initialFilterText = "u",
+                ),
             )
         }
     }

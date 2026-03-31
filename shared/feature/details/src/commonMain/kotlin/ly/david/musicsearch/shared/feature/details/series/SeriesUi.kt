@@ -213,6 +213,7 @@ internal fun SeriesUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             detailsScreen = { detailsModel ->
                 SeriesDetailsTabUi(
                     series = detailsModel,

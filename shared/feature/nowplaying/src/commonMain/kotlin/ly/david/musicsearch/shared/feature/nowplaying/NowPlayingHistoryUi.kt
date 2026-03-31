@@ -81,6 +81,7 @@ internal fun NowPlayingHistoryUi(
     ) { innerPadding ->
         NowPlayingHistoryContent(
             lazyPagingItems = lazyPagingItems,
+            filterText = topAppBarFilterState.filterText,
             lazyListState = lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
@@ -94,6 +95,7 @@ internal fun NowPlayingHistoryUi(
 @Composable
 private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    filterText: String,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
@@ -112,8 +114,9 @@ private fun NowPlayingHistoryContent(
             is NowPlayingHistoryListItemModel -> {
                 SwipeToDeleteListItem(
                     content = {
-                        NowPlayingHistoryCard(
+                        NowPlayingHistoryListItem(
                             nowPlayingHistory = listItemModel,
+                            filterText = filterText,
                             onClick = {
                                 searchMusicBrainz(
                                     "\"$title\" artist:\"$artist\"",

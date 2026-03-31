@@ -46,4 +46,11 @@ class HistoryListItemTest : ScreenshotTest() {
             PreviewLookupHistoryArtist()
         }
     }
+
+    @Test
+    fun withFilter() {
+        snapshot {
+            PreviewLookupHistoryWithFilter()
+        }
+    }
 }

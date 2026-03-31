@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -22,6 +23,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun InstrumentListItem(
     instrument: InstrumentListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onInstrumentClick: InstrumentListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -32,8 +34,9 @@ fun InstrumentListItem(
         headlineContent = {
             Column {
                 instrument.run {
-                    Text(
+                    HighlightableText(
                         text = getAnnotatedName(),
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )
 
@@ -46,9 +49,10 @@ fun InstrumentListItem(
                     }
 
                     description.ifNotEmpty {
-                        Text(
+                        HighlightableText(
                             modifier = Modifier.padding(top = 4.dp),
                             text = it,
+                            highlightedText = filterText,
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }

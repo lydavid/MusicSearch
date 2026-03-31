@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import org.jetbrains.compose.resources.stringResource
@@ -21,6 +22,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
@@ -29,8 +31,9 @@ internal fun HistoryListItem(
         content = {
             ListItem(
                 headlineContent = {
-                    Text(
+                    HighlightableText(
                         text = lookupHistory.title,
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                 },

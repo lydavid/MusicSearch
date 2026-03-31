@@ -31,6 +31,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     pagerState: PagerState,
     state: DetailsUiState<T>,
     entitiesLazyPagingItems: EntitiesLazyPagingItems,
+    filterText: String,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     onEditCollectionClick: (String) -> Unit = {},
@@ -66,6 +67,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             Tab.TRACKS -> {
                 TracksByReleaseUi(
                     uiState = state.allEntitiesListUiState.tracksByReleaseUiState,
+                    filterText = state.topAppBarFilterState.filterText,
                     onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.ClickItem(
@@ -144,6 +146,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 val tabEntity = tab.toMusicBrainzEntityType()
                 EntitiesPagingListUi(
                     uiState = uiState,
+                    filterText = filterText,
                     now = state.detailsTabUiState.now,
                     onItemClick = { entity, id ->
                         eventSink(

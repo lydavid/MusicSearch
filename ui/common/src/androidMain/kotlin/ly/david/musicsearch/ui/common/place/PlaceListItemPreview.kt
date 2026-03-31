@@ -16,6 +16,7 @@ internal fun PreviewPlaceListItem() {
                 name = "Place Name",
                 address = "123 Fake St",
             ),
+            filterText = "",
         )
     }
 }
@@ -37,6 +38,7 @@ internal fun PreviewPlaceListItemAllInfo() {
                     ended = true,
                 ),
             ),
+            filterText = "0",
         )
     }
 }
@@ -59,6 +61,7 @@ internal fun PreviewPlaceListItemVisited() {
                 ),
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

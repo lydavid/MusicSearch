@@ -13,7 +13,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
@@ -22,6 +21,7 @@ import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MoreVert
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
@@ -31,13 +31,14 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun ListenListItem(
     listen: ListenListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onClick: (id: String) -> Unit = {},
     onClickMoreActions: ListenListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = buildAnnotatedString {
                     withStyle(
                         style = SpanStyle(
@@ -50,8 +51,8 @@ fun ListenListItem(
                         append(" ${listen.durationMs.toDisplayTime()}")
                     }
                 },
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
-                lineHeight = 24.sp,
             )
         },
         modifier = modifier.clickable {
@@ -62,8 +63,9 @@ fun ListenListItem(
         },
         supportingContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = listen.formattedArtistCredits,
+                    highlightedText = filterText,
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )

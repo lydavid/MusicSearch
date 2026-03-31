@@ -253,6 +253,7 @@ internal fun LabelUi(
             innerPadding = innerPadding,
             scrollBehavior = scrollBehavior,
             entitiesLazyPagingItems = entitiesLazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
             onEditCollectionClick = {
                 showAddToCollectionSheet(
                     coroutineScope = coroutineScope,

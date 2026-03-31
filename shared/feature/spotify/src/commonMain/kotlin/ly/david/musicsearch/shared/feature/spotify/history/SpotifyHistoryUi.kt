@@ -117,6 +117,7 @@ internal fun SpotifyHistoryUi(
     ) { innerPadding ->
         SpotifyHistoryContent(
             lazyPagingItems = lazyPagingItems,
+            filterText = topAppBarFilterState.filterText,
             lazyListState = lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
@@ -157,6 +158,7 @@ internal fun SpotifyHistoryUi(
 @Composable
 private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    filterText: String,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
@@ -194,8 +196,9 @@ private fun SpotifyHistoryContent(
             is SpotifyHistoryListItemModel -> {
                 SwipeToDeleteListItem(
                     content = {
-                        SpotifyHistoryCard(
+                        SpotifyHistoryListItem(
                             spotifyHistory = listItemModel,
+                            filterText = filterText,
                             onClick = {
                                 clickListItem = this
                             },

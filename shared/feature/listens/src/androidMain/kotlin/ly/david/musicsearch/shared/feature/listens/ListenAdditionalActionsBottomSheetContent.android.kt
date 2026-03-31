@@ -25,6 +25,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
                         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
                     ),
                 ),
+                filterText = "",
                 allowedToEdit = false,
                 filteringByThisRecording = false,
             )
@@ -51,6 +52,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
                         visited = true,
                     ),
                 ),
+                filterText = "sound",
                 allowedToEdit = true,
                 filteringByThisRecording = true,
             )
@@ -71,6 +73,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
                 ),
+                filterText = "",
                 allowedToEdit = false,
                 filteringByThisRecording = false,
             )
@@ -91,6 +94,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
                     name = "Color Your Night",
                     formattedArtistCredits = "Lotus Juice & 高橋あず美",
                 ),
+                filterText = "",
                 allowedToEdit = false,
                 filteringByThisRecording = true,
             )

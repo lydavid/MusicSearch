@@ -14,6 +14,7 @@ internal fun PreviewSeriesListItem() {
                 id = "1",
                 name = "series name",
             ),
+            filterText = "",
         )
     }
 }
@@ -29,6 +30,7 @@ internal fun PreviewSeriesListItemAllInfo() {
                 disambiguation = "that one",
                 type = "Tour",
             ),
+            filterText = "se",
         )
     }
 }
@@ -45,6 +47,7 @@ internal fun PreviewSeriesListItemVisited() {
                 type = "Tour",
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

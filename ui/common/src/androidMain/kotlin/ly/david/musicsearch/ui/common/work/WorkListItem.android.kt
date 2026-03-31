@@ -18,6 +18,7 @@ internal fun PreviewWorkListItem() {
                 languages = persistentListOf("jpn", "eng", "deu"),
                 iswcs = persistentListOf("T-915.750.016-8"),
             ),
+            filterText = "",
         )
     }
 }
@@ -36,6 +37,7 @@ internal fun PreviewWorkListItemAllInfo() {
                 languages = persistentListOf("jpn"),
                 listenState = WorkListItemModel.ListenState.Known(listenCount = 3),
             ),
+            filterText = "ne",
         )
     }
 }
@@ -54,6 +56,7 @@ internal fun PreviewWorkListItemVisited() {
                 visited = true,
                 listenState = WorkListItemModel.ListenState.Hide,
             ),
+            filterText = "",
         )
     }
 }
@@ -72,6 +75,7 @@ internal fun PreviewWorkListItemUnknownListens() {
                 visited = true,
                 listenState = WorkListItemModel.ListenState.Unknown,
             ),
+            filterText = "",
         )
     }
 }

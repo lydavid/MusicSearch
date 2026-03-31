@@ -4,15 +4,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -20,6 +23,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 @Composable
 fun GenreListItem(
     genre: GenreListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onGenreClick: GenreListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -29,10 +33,14 @@ fun GenreListItem(
     ListItem(
         headlineContent = {
             Column {
-                Text(
-                    text = genre.getNameWithDisambiguation(),
+                HighlightableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = genre.fontWeight)) {
+                            append(genre.getNameWithDisambiguation())
+                        }
+                    },
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodyTextStyle(),
-                    fontWeight = genre.fontWeight,
                 )
             }
         },

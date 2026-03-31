@@ -43,6 +43,7 @@ import kotlin.time.Instant
 @Composable
 fun EntitiesPagingListUi(
     uiState: EntitiesPagingListUiState,
+    filterText: String,
     now: Instant,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
@@ -63,6 +64,7 @@ fun EntitiesPagingListUi(
                 is AreaListItemModel -> {
                     AreaListItem(
                         area = listItemModel,
+                        filterText = filterText,
                         onAreaClick = {
                             onItemClick(
                                 MusicBrainzEntityType.AREA,
@@ -78,6 +80,7 @@ fun EntitiesPagingListUi(
                 is ArtistListItemModel -> {
                     ArtistListItem(
                         artist = listItemModel,
+                        filterText = filterText,
                         onClick = {
                             onItemClick(
                                 MusicBrainzEntityType.ARTIST,
@@ -93,6 +96,7 @@ fun EntitiesPagingListUi(
                 is EventListItemModel -> {
                     EventListItem(
                         event = listItemModel,
+                        filterText = filterText,
                         onEventClick = {
                             onItemClick(
                                 MusicBrainzEntityType.EVENT,
@@ -108,6 +112,7 @@ fun EntitiesPagingListUi(
                 is GenreListItemModel -> {
                     GenreListItem(
                         genre = listItemModel,
+                        filterText = filterText,
                         onGenreClick = {
                             onItemClick(
                                 MusicBrainzEntityType.GENRE,
@@ -123,6 +128,7 @@ fun EntitiesPagingListUi(
                 is InstrumentListItemModel -> {
                     InstrumentListItem(
                         instrument = listItemModel,
+                        filterText = filterText,
                         onInstrumentClick = {
                             onItemClick(
                                 MusicBrainzEntityType.INSTRUMENT,
@@ -138,6 +144,7 @@ fun EntitiesPagingListUi(
                 is LabelListItemModel -> {
                     LabelListItem(
                         label = listItemModel,
+                        filterText = filterText,
                         onLabelClick = {
                             onItemClick(
                                 MusicBrainzEntityType.LABEL,
@@ -153,6 +160,7 @@ fun EntitiesPagingListUi(
                 is PlaceListItemModel -> {
                     PlaceListItem(
                         place = listItemModel,
+                        filterText = filterText,
                         onPlaceClick = {
                             onItemClick(
                                 MusicBrainzEntityType.PLACE,
@@ -168,6 +176,7 @@ fun EntitiesPagingListUi(
                 is RecordingListItemModel -> {
                     RecordingListItem(
                         recording = listItemModel,
+                        filterText = filterText,
                         onRecordingClick = {
                             onItemClick(
                                 MusicBrainzEntityType.RECORDING,
@@ -183,6 +192,7 @@ fun EntitiesPagingListUi(
                 is ReleaseListItemModel -> {
                     ReleaseListItem(
                         release = listItemModel,
+                        filterText = filterText,
                         showMoreInfo = uiState.showMoreInfo,
                         requestForMissingCoverArtUrl = {
                             requestForMissingCoverArtUrl(listItemModel.id)
@@ -202,6 +212,7 @@ fun EntitiesPagingListUi(
                 is ReleaseGroupListItemModel -> {
                     ReleaseGroupListItem(
                         releaseGroup = listItemModel,
+                        filterText = filterText,
                         showType = uiState.showMoreInfo,
                         requestForMissingCoverArtUrl = {
                             requestForMissingCoverArtUrl(listItemModel.id)
@@ -221,6 +232,7 @@ fun EntitiesPagingListUi(
                 is SeriesListItemModel -> {
                     SeriesListItem(
                         series = listItemModel,
+                        filterText = filterText,
                         onSeriesClick = {
                             onItemClick(
                                 MusicBrainzEntityType.SERIES,
@@ -236,6 +248,7 @@ fun EntitiesPagingListUi(
                 is WorkListItemModel -> {
                     WorkListItem(
                         work = listItemModel,
+                        filterText = filterText,
                         onWorkClick = {
                             onItemClick(
                                 MusicBrainzEntityType.WORK,
@@ -251,6 +264,7 @@ fun EntitiesPagingListUi(
                 is RelationListItemModel -> {
                     RelationListItem(
                         relation = listItemModel,
+                        filterText = filterText,
                         onItemClick = { entity, id ->
                             require(entity != MusicBrainzEntityType.URL)
                             onItemClick(

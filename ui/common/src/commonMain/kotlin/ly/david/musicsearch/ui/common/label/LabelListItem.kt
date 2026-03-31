@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -28,6 +29,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun LabelListItem(
     label: LabelListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     showIcon: Boolean = true,
     showEditCollection: Boolean = true,
@@ -57,8 +59,9 @@ fun LabelListItem(
     ListItem(
         headlineContent = {
             Column {
-                Text(
+                HighlightableText(
                     text = label.getAnnotatedName(),
+                    highlightedText = filterText,
                     style = TextStyles.getCardBodyTextStyle(),
                 )
 
@@ -72,17 +75,19 @@ fun LabelListItem(
                 }
 
                 label.labelCode?.ifNotNull { labelCode ->
-                    Text(
+                    HighlightableText(
                         modifier = Modifier.padding(top = 4.dp),
                         text = stringResource(Res.string.lc, labelCode),
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
                 label.catalogNumbers.ifNotNullOrEmpty {
-                    Text(
+                    HighlightableText(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

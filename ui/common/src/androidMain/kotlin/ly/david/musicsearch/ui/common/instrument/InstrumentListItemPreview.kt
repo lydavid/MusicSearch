@@ -14,6 +14,7 @@ internal fun PreviewInstrumentListItemModel() {
                 id = "b3eac5f9-7859-4416-ac39-7154e2e8d348",
                 name = "Piano",
             ),
+            filterText = "",
         )
     }
 }
@@ -32,6 +33,7 @@ internal fun PreviewInstrumentListItemModelAllInfo() {
                     "it had gut strings and even gut frets. " +
                     "First described in 1555, it surpassed the Renaissance lute's popularity.",
             ),
+            filterText = "guitar",
         )
     }
 }
@@ -51,6 +53,7 @@ internal fun PreviewInstrumentListItemModelVisited() {
                     "First described in 1555, it surpassed the Renaissance lute's popularity.",
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

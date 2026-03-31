@@ -20,6 +20,7 @@ internal fun PreviewArtistRelationListItem() {
                 disambiguation = "that guy",
                 attributes = "task: director & organizer, strings",
             ),
+            filterText = "t",
         )
     }
 }
@@ -37,6 +38,7 @@ internal fun PreviewRecordingRelationListItem() {
                 name = "Recording Name",
                 attributes = "number: 10",
             ),
+            filterText = "",
         )
     }
 }
@@ -55,6 +57,7 @@ internal fun PreviewRecordingRelationListItemVisited() {
                 attributes = "number: 10",
                 visited = true,
             ),
+            filterText = "",
         )
     }
 }

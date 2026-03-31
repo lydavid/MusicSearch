@@ -64,6 +64,7 @@ internal fun SearchResultsUi(
 @Composable
 private fun ListItemUi(
     listItemModel: ListItemModel?,
+    filterText: String = "", // not used yet
     onItemClick: MusicBrainzItemClickHandler,
 ) {
     when (listItemModel) {
@@ -81,6 +82,7 @@ private fun ListItemUi(
         is AreaListItemModel -> {
             AreaListItem(
                 area = listItemModel,
+                filterText = filterText,
                 showType = true,
                 onAreaClick = {
                     onItemClick(
@@ -94,6 +96,7 @@ private fun ListItemUi(
         is ArtistListItemModel -> {
             ArtistListItem(
                 artist = listItemModel,
+                filterText = filterText,
                 onClick = {
                     onItemClick(
                         MusicBrainzEntityType.ARTIST,
@@ -106,6 +109,7 @@ private fun ListItemUi(
         is EventListItemModel -> {
             EventListItem(
                 event = listItemModel,
+                filterText = filterText,
                 onEventClick = {
                     onItemClick(
                         MusicBrainzEntityType.EVENT,
@@ -118,6 +122,7 @@ private fun ListItemUi(
         is InstrumentListItemModel -> {
             InstrumentListItem(
                 instrument = listItemModel,
+                filterText = filterText,
                 onInstrumentClick = {
                     onItemClick(
                         MusicBrainzEntityType.INSTRUMENT,
@@ -130,6 +135,7 @@ private fun ListItemUi(
         is LabelListItemModel -> {
             LabelListItem(
                 label = listItemModel,
+                filterText = filterText,
                 onLabelClick = {
                     onItemClick(
                         MusicBrainzEntityType.LABEL,
@@ -142,6 +148,7 @@ private fun ListItemUi(
         is PlaceListItemModel -> {
             PlaceListItem(
                 place = listItemModel,
+                filterText = filterText,
                 onPlaceClick = {
                     onItemClick(
                         MusicBrainzEntityType.PLACE,
@@ -154,6 +161,7 @@ private fun ListItemUi(
         is RecordingListItemModel -> {
             RecordingListItem(
                 recording = listItemModel,
+                filterText = filterText,
                 onRecordingClick = {
                     onItemClick(
                         MusicBrainzEntityType.RECORDING,
@@ -166,6 +174,7 @@ private fun ListItemUi(
         is ReleaseListItemModel -> {
             ReleaseListItem(
                 release = listItemModel,
+                filterText = filterText,
                 onClick = {
                     onItemClick(
                         MusicBrainzEntityType.RELEASE,
@@ -178,6 +187,7 @@ private fun ListItemUi(
         is ReleaseGroupListItemModel -> {
             ReleaseGroupListItem(
                 releaseGroup = listItemModel,
+                filterText = filterText,
                 showType = true,
                 onClick = {
                     onItemClick(
@@ -191,6 +201,7 @@ private fun ListItemUi(
         is SeriesListItemModel -> {
             SeriesListItem(
                 series = listItemModel,
+                filterText = filterText,
                 onSeriesClick = {
                     onItemClick(
                         MusicBrainzEntityType.SERIES,
@@ -203,6 +214,7 @@ private fun ListItemUi(
         is WorkListItemModel -> {
             WorkListItem(
                 work = listItemModel,
+                filterText = filterText,
                 onWorkClick = {
                     onItemClick(
                         MusicBrainzEntityType.WORK,

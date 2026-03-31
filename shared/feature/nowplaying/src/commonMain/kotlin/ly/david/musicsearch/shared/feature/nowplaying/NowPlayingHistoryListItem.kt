@@ -7,24 +7,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.getTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
-internal fun NowPlayingHistoryCard(
+internal fun NowPlayingHistoryListItem(
     nowPlayingHistory: NowPlayingHistoryListItemModel,
+    filterText: String,
     modifier: Modifier = Modifier,
     onClick: NowPlayingHistoryListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
-            Text(
+            HighlightableText(
                 text = nowPlayingHistory.title,
+                highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )
         },
         supportingContent = {
-            Text(
+            HighlightableText(
                 text = nowPlayingHistory.artist,
+                highlightedText = filterText,
                 style = TextStyles.getCardBodySubTextStyle(),
             )
         },

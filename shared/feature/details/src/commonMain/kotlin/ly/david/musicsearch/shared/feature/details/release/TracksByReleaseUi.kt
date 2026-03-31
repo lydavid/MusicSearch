@@ -29,6 +29,7 @@ import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 @Composable
 internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
+    filterText: String,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
     selectedIds: ImmutableList<SelectableId> = persistentListOf(),
@@ -40,6 +41,7 @@ internal fun TracksByReleaseUi(
 
     TracksByReleaseUi(
         lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
+        filterText = filterText,
         mostListenedTrackCount = uiState.mostListenedTrackCount,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
@@ -65,6 +67,7 @@ internal fun TracksByReleaseUi(
 @Composable
 internal fun TracksByReleaseUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    filterText: String,
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
@@ -100,6 +103,7 @@ internal fun TracksByReleaseUi(
                 if (!collapsedMediumIds.contains(listItemModel.mediumId)) {
                     TrackListItem(
                         track = listItemModel,
+                        filterText = filterText,
                         mostListenedTrackCount = mostListenedTrackCount,
                         onRecordingClick = onRecordingClick,
                         isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
