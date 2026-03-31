@@ -1,0 +1,4 @@
+
+### Features
+
+* get wikipedia extract based on device language setting
