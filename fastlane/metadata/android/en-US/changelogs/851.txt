@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* show decoded Wikipedia url (without percent-encoding)
+
+
+### Features
+
+* show highlight over filtered text in list screens
