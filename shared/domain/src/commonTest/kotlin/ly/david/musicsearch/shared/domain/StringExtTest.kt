@@ -1,7 +1,7 @@
 package ly.david.musicsearch.shared.domain
 
 import ly.david.musicsearch.shared.domain.common.getYear
-import ly.david.musicsearch.shared.domain.common.prependHttps
+import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.common.toUUID
 import kotlin.test.Test
@@ -75,7 +75,15 @@ internal class StringExtTest {
     fun `prepend https`() {
         assertEquals(
             "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185",
-            "coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".prependHttps(),
+            "coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".prependHttpsIfMissing(),
+        )
+    }
+
+    @Test
+    fun `prepend https only if missing`() {
+        assertEquals(
+            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185",
+            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185".prependHttpsIfMissing(),
         )
     }
     // endregion

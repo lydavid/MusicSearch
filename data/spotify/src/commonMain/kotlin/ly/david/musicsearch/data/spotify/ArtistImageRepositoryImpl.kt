@@ -5,17 +5,22 @@ import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
+import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
+import ly.david.musicsearch.shared.domain.common.trimProtocolAndExtension
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import kotlin.coroutines.cancellation.CancellationException
 
 class ArtistImageRepositoryImpl(
+    private val spotifyOAuthInfo: SpotifyOAuthInfo,
     private val spotifyApi: SpotifyApi,
+    private val wikimediaRepository: WikimediaRepository,
     private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
 ) : ArtistImageRepository {
@@ -41,17 +46,20 @@ class ArtistImageRepositoryImpl(
         detailsModel: MusicBrainzDetailsModel,
     ) {
         try {
+            val noSpotifySecrets = spotifyOAuthInfo.clientSecret.isEmpty() || spotifyOAuthInfo.clientId.isEmpty()
             val spotifyUrl =
                 detailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
 
-            val imageMetadata: ImageMetadata = if (spotifyUrl == null) {
-                ImageMetadata()
+            val imageMetadata = if (noSpotifySecrets || spotifyUrl == null) {
+                wikimediaRepository.getWikimediaImage(
+                    urls = detailsModel.urls,
+                )
             } else {
                 val spotifyArtistId = spotifyUrl.split("/").last()
                 val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
                 ImageMetadata(
-                    thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
-                    largeUrl = spotifyArtist.getLargeImageUrl(),
+                    thumbnailUrl = spotifyArtist.getThumbnailImageUrl().trimProtocolAndExtension(),
+                    largeUrl = spotifyArtist.getLargeImageUrl().trimProtocolAndExtension(),
                 )
             }
 

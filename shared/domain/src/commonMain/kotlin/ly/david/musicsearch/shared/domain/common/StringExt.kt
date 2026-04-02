@@ -21,7 +21,18 @@ fun String.getYear(): String =
 /**
  * Ensure we use https because Coil doesn't accept it otherwise.
  */
-fun String.prependHttps(): String = "https://$this"
+fun String.prependHttpsIfMissing(): String {
+    return if (startsWith("https://")) {
+        this
+    } else {
+        "https://$this"
+    }
+}
+
+fun String.trimProtocolAndExtension(): String = this
+    .removePrefix("https://")
+    .removePrefix("http://")
+    .removeSuffix(".jpg")
 
 inline fun String.ifNotEmpty(block: (String) -> Unit) {
     if (this.isNotEmpty()) {

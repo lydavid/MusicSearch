@@ -4,10 +4,13 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.wikimedia.api.WikimediaApi
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+
+private const val WIKIDATA_URL = "www.wikidata.org/wiki/"
 
 internal class WikimediaRepositoryImpl(
     private val wikimediaApi: WikimediaApi,
@@ -46,10 +49,7 @@ internal class WikimediaRepositoryImpl(
         languageTag: String,
     ): Result<WikipediaExtract> {
         return try {
-            val wikidataUrl =
-                urls.firstOrNull { it.name.contains("www.wikidata.org/wiki/") }?.name
-                    ?: return Result.success(WikipediaExtract())
-            val wikidataId = wikidataUrl.split("/").last()
+            val wikidataId = getWikimediaId(urls) ?: return Result.success(WikipediaExtract())
             val wikipediaExtract = wikimediaApi.getWikipediaExtract(
                 wikidataId = wikidataId,
                 languageTag = languageTag,
@@ -68,6 +68,14 @@ internal class WikimediaRepositoryImpl(
         }
     }
 
+    private fun getWikimediaId(
+        urls: List<RelationListItemModel>,
+    ): String? {
+        val wikidataUrl = urls.firstOrNull { it.name.contains(WIKIDATA_URL) }?.name
+        val wikidataId = wikidataUrl?.split("/")?.last()
+        return wikidataId
+    }
+
     private fun cache(
         mbid: String,
         languageTag: String,
@@ -77,6 +85,15 @@ internal class WikimediaRepositoryImpl(
             mbid = mbid,
             languageTag = languageTag,
             wikipediaExtract = wikipediaExtract,
+        )
+    }
+
+    override suspend fun getWikimediaImage(
+        urls: List<RelationListItemModel>,
+    ): ImageMetadata {
+        val wikidataId = getWikimediaId(urls) ?: return ImageMetadata()
+        return wikimediaApi.getWikimediaImageUrls(
+            wikidataId = wikidataId,
         )
     }
 }

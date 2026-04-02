@@ -32,6 +32,7 @@ kotlin {
                 implementation(libs.paging.common)
                 implementation(libs.paging.compose)
                 implementation(libs.zoomable)
+                implementation(libs.coil.network.core)
             }
         }
         val jvmCommon by creating {

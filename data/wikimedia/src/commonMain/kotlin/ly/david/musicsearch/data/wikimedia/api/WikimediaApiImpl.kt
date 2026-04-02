@@ -5,9 +5,12 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 private const val WIKIDATA_BASE_URL = "https://www.wikidata.org/w/api.php"
@@ -74,6 +77,43 @@ internal class WikimediaApiImpl(
         return WikipediaExtract(
             extract = extract.orEmpty(),
             wikipediaUrl = wikipediaUrl,
+        )
+    }
+
+    override suspend fun getWikimediaImageUrls(
+        wikidataId: String,
+    ): ImageMetadata {
+        val wikidataUrl = WIKIDATA_BASE_URL +
+            "?action=wbgetclaims" +
+            "&format=json" +
+            "&property=P18" +
+            "&entity=$wikidataId"
+        val wikidataResponse: HttpResponse = client.get(wikidataUrl)
+        val wikidataJson = Json.parseToJsonElement(wikidataResponse.body<String>()).jsonObject
+
+        val imageObjects: JsonArray? = wikidataJson["claims"]
+            ?.jsonObject?.get("P18")
+            ?.jsonArray
+        val preferredImageObject = imageObjects?.firstOrNull {
+            it.jsonObject["rank"]?.jsonPrimitive?.content == "preferred"
+        }
+        val imageObject = preferredImageObject ?: imageObjects?.firstOrNull()
+        val imageName = imageObject
+            ?.jsonObject?.get("mainsnak")
+            ?.jsonObject?.get("datavalue")
+            ?.jsonObject?.get("value")
+            ?.jsonPrimitive?.content
+
+        if (imageName == null) {
+            return ImageMetadata()
+        }
+
+        val fullSizeUrl = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/$imageName"
+        val thumbnailUrl = "$fullSizeUrl&width=64"
+
+        return ImageMetadata(
+            thumbnailUrl = thumbnailUrl,
+            largeUrl = fullSizeUrl,
         )
     }
 }
