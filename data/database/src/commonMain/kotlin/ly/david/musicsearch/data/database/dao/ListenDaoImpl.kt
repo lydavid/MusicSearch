@@ -101,7 +101,7 @@ class ListenDaoImpl(
         val coverArtId = entityMapping.caaId
         val coverArtReleaseMbid = entityMapping.caaReleaseMbid
         if (coverArtReleaseMbid == null || coverArtId == null) return
-        val coverArtUrl = "https://coverartarchive.org/release/$coverArtReleaseMbid/$coverArtId"
+        val coverArtUrl = "coverartarchive.org/release/$coverArtReleaseMbid/$coverArtId"
         imageUrlDao.saveImageMetadata(
             mbid = coverArtReleaseMbid,
             imageMetadataList = listOf(

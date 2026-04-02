@@ -51,7 +51,11 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(projects.testData)
+                implementation(libs.kotlin.test)
+                implementation(libs.koin.test)
                 implementation(libs.junit)
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
     }

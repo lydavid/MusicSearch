@@ -11,10 +11,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
+import coil3.network.NetworkHeaders
+import coil3.network.httpHeaders
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
-import ly.david.musicsearch.shared.domain.common.prependHttps
+import ly.david.musicsearch.shared.domain.USER_AGENT
+import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
+import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
 import net.engawapg.lib.zoomable.rememberZoomState
@@ -92,13 +96,18 @@ fun LargeImage(
         }
 
         if (url.isNotEmpty()) {
+            val headers = NetworkHeaders.Builder()
+                .set(USER_AGENT, USER_AGENT_VALUE)
+                .build()
+            val imageRequest = ImageRequest.Builder(LocalPlatformContext.current)
+                .data(url.prependHttpsIfMissing())
+                .httpHeaders(headers)
+                .crossfade(true)
+                .placeholderMemoryCacheKey(imageId?.value?.toString().orEmpty())
+                .build()
             AsyncImage(
                 modifier = clickableZoomableImageModifier,
-                model = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(url.prependHttps())
-                    .crossfade(true)
-                    .placeholderMemoryCacheKey(imageId?.value?.toString().orEmpty())
-                    .build(),
+                model = imageRequest,
                 contentDescription = null,
                 contentScale = contentScale,
             )

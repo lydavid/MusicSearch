@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.wikimedia.api
 
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 interface WikimediaApi {
@@ -11,4 +12,12 @@ interface WikimediaApi {
         wikidataId: String,
         languageTag: String,
     ): WikipediaExtract
+
+    /**
+     * Given a [wikidataId] (e.g. Q303), return urls to find the full-size and thumbnail image.
+     * We try to get the "preferred" image if any, otherwise fall back to the first image.
+     */
+    suspend fun getWikimediaImageUrls(
+        wikidataId: String,
+    ): ImageMetadata
 }

@@ -31,19 +31,14 @@ class MbidImageDao(
             imageMetadataList.forEach { urls ->
                 transacter.insert(
                     mbid = mbid,
-                    thumbnailUrl = urls.thumbnailUrl.trimProtocolAndExtension(),
-                    largeUrl = urls.largeUrl.trimProtocolAndExtension(),
+                    thumbnailUrl = urls.thumbnailUrl,
+                    largeUrl = urls.largeUrl,
                     types = urls.types,
                     comment = urls.comment,
                 )
             }
         }
     }
-
-    private fun String.trimProtocolAndExtension(): String = this
-        .removePrefix("https://")
-        .removePrefix("http://")
-        .removeSuffix(".jpg")
 
     override fun saveImageMetadata(mbidToImageMetadataMap: Map<String, List<ImageMetadata>>) {
         transacter.transaction {

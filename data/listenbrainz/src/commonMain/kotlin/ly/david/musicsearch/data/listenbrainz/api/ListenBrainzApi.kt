@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.listenbrainz.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.AuthProvider
 import io.ktor.client.plugins.defaultRequest
@@ -17,7 +16,6 @@ import io.ktor.http.auth.HttpAuthHeader
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
-import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
@@ -69,9 +67,6 @@ interface ListenBrainzApi {
             val extendedClient = httpClient.config {
                 defaultRequest {
                     url(API_BASE_URL)
-                }
-                install(UserAgent) {
-                    agent = USER_AGENT_VALUE
                 }
                 install(Auth) {
                     providers += object : AuthProvider {

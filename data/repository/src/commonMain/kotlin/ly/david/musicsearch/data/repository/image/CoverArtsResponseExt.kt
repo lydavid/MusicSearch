@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.image
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
+import ly.david.musicsearch.shared.domain.common.trimProtocolAndExtension
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 internal fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
@@ -11,8 +12,8 @@ internal fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
 
 private fun CoverArtUrls.toImageMetadata(): ImageMetadata {
     return ImageMetadata(
-        thumbnailUrl = getThumbnailUrl().orEmpty(),
-        largeUrl = getUrl().orEmpty(),
+        thumbnailUrl = getThumbnailUrl()?.trimProtocolAndExtension().orEmpty(),
+        largeUrl = getUrl()?.trimProtocolAndExtension().orEmpty(),
         types = types.toPersistentList(),
         comment = comment,
     )

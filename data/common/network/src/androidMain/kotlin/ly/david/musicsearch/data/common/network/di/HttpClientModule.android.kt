@@ -5,11 +5,13 @@ import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.engine.okhttp.OkHttpEngine
 import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.HttpHeaders
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.common.network.ApiHttpClient
+import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
@@ -26,6 +28,9 @@ actual val HttpClientModule: Module = module {
         ApiHttpClient.configAndCreate(
             engine = OkHttpEngine(config = okHttpConfig),
         ) {
+            install(UserAgent) {
+                agent = USER_AGENT_VALUE
+            }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->
                     handleRecoverableException(
