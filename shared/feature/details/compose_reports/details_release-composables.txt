@@ -1,6 +1,9 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimary()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemPrimaryWithFilter()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEnded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasListItemEndedWithFilter()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.PreviewAliasesSectionWithFilter()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetails()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.PreviewAreaDetailsError()
@@ -41,12 +44,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUiWithListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.alias.AliasListItem(
-  alias: BasicAlias
+  stable alias: AliasListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
 )
 fun ly.david.musicsearch.shared.feature.details.alias.getDisplayString(
   stable <this>: AliasType
 ): String
+fun ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel(
+  <this>: BasicAlias
+): AliasListItemModel
 restartable skippable fun ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi(
   area: AreaDetailsModel
   detailsTabUiState: DetailsTabUiState
@@ -187,6 +194,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   stable uiState: TracksByReleaseUiState
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   selectedIds: ImmutableList<SelectableId>? = @static <expression>
@@ -196,6 +204,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable filterText: String
   stable mostListenedTrackCount: Long
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
@@ -236,6 +245,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable pagerState: PagerState
   stable state: DetailsUiState<T>
   entitiesLazyPagingItems: EntitiesLazyPagingItems
+  stable filterText: String
   stable innerPadding: PaddingValues
   stable scrollBehavior: TopAppBarScrollBehavior
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>

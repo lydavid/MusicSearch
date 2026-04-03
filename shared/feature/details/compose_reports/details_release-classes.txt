@@ -16,6 +16,17 @@ stable class musicsearch.shared.feature.details.generated.resources.Res.font {
 stable class musicsearch.shared.feature.details.generated.resources.Res {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.feature.details.alias.AliasListItemModel {
+  stable val name: String
+  stable val locale: String
+  stable val isPrimary: Boolean
+  stable val language: String?
+  stable val type: String?
+  stable val begin: String
+  stable val end: String
+  stable val ended: Boolean
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.details.area.AreaPresenter {
   unstable val repository: AreaRepository
   unstable val incrementLookupHistory: IncrementLookupHistory
@@ -130,8 +141,6 @@ runtime class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiStat
   stable val isExternalLinksCollapsed: Boolean
   stable val isAliasesCollapsed: Boolean
   stable val now: Instant
-  stable val totalUrls: Int
-  stable val totalAliases: Int
   <runtime stability> = Runtime(HandledException)
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateUp {

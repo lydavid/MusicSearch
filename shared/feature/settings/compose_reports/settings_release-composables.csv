@@ -29,7 +29,7 @@ ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSetti
 ly.david.musicsearch.shared.feature.settings.internal.appearance.CustomColorPickerSection,CustomColorPickerSection,1,1,1,0,0,0,0,0,3,5,
 ly.david.musicsearch.shared.feature.settings.internal.appearance.getText,getText,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.settings.internal.components.ListenBrainzProfileCard,ListenBrainzProfileCard,1,1,1,0,0,0,0,0,3,5,
-ly.david.musicsearch.shared.feature.settings.internal.components.TokenInput,TokenInput,1,1,1,0,0,0,0,0,2,2,
+ly.david.musicsearch.shared.feature.settings.internal.components.TokenInput,TokenInput,1,1,1,0,0,0,0,0,1,5,
 ly.david.musicsearch.shared.feature.settings.internal.components.MusicBrainzProfileCard,MusicBrainzProfileCard,1,1,1,0,0,0,0,0,1,2,
 ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch,SettingSwitch,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices,SettingWithDialogChoices,1,1,1,0,0,0,0,0,3,3,

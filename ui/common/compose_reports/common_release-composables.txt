@@ -68,6 +68,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewRecordingRelationListItemVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikipedia()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikipediaWithFilter()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikidata()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemDisambiguation()
@@ -154,6 +155,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.AreaListItem(
   area: AreaListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable showType: Boolean = @static true
   stable showIcon: Boolean = @static true
@@ -163,14 +165,21 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.artist.getDisplayString(
+  stable <this>: ArtistGender
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.ArtistListItem(
   artist: ArtistListItemModel
+  stable filterText: String? = @static ""
   stable modifier: Modifier? = @static <expression>
   stable onClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.artist.getDisplayString(
+  stable <this>: ArtistType
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.ButtonWithIcon(
   stable imageVector: ImageVector
   stable text: String
@@ -185,6 +194,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable title: String
   stable modifier: Modifier? = @static <expression>
   stable iconModifier: Modifier? = @static <expression>
+  stable filterText: String? = @static ""
   stable subtitle: String? = @static null
   stable startIcon: ImageVector? = @static null
   stable endIcon: ImageVector? = @static null
@@ -196,6 +206,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable title: String
   stable modifier: Modifier? = @static <expression>
   stable iconModifier: Modifier? = @static <expression>
+  stable filterText: String? = @static ""
   stable subtitle: String? = @static null
   stable startIcon: @[ExtensionFunctionType] Function3<BoxScope, Composer, Int, Unit>?
   stable endIcon: ImageVector? = @static null
@@ -247,6 +258,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.EventListItem(
   event: EventListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -280,6 +292,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.genre.GenreListItem(
   genre: GenreListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onGenreClick: @[ExtensionFunctionType] Function1<GenreListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -325,6 +338,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.InstrumentListItem(
   instrument: InstrumentListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -333,6 +347,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.LabelListItem(
   label: LabelListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable showIcon: Boolean = @static true
   stable showEditCollection: Boolean = @static true
@@ -357,7 +372,21 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable text: String
   stable highlightedText: String
   stable modifier: Modifier? = @static <expression>
-  stable fontWeight: FontWeight? = @static <expression>
+  stable maxLines: Int = @static 2147483647
+  stable overflow: TextOverflow = @static <expression>
+  stable style: TextStyle? = @dynamic <expression>
+  stable textAlign: TextAlign? = @static null
+  stable foregroundColor: Color = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.HighlightableText(
+  stable text: AnnotatedString
+  stable highlightedText: String
+  stable modifier: Modifier? = @static <expression>
+  stable maxLines: Int = @static 2147483647
+  stable overflow: TextOverflow = @static <expression>
+  stable style: TextStyle? = @dynamic <expression>
+  stable textAlign: TextAlign? = @static null
+  stable foregroundColor: Color = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem(
   stable lastUpdated: Instant
@@ -428,6 +457,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi(
   uiState: EntitiesPagingListUiState
+  stable filterText: String
   stable now: Instant
   stable modifier: Modifier? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
@@ -458,6 +488,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PlaceListItem(
   place: PlaceListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static <expression>
   stable onSelect: Function1<String, Unit>? = @static <expression>
@@ -473,6 +504,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.RecordingListItem(
   recording: RecordingListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -481,6 +513,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.RelationListItem(
   relation: RelationListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
@@ -492,10 +525,12 @@ open fun ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl.present(
 ): RelationsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.UrlListItem(
   relation: RelationListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseListItem(
   release: ReleaseListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable showMoreInfo: Boolean = @static true
   unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic <expression>
@@ -506,6 +541,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem(
   releaseGroup: ReleaseGroupListItemModel
+  stable filterText: String
   stable showType: Boolean
   stable modifier: Modifier? = @static <expression>
   unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic <expression>
@@ -524,6 +560,7 @@ open fun ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit(
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.SeriesListItem(
   series: SeriesListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -552,6 +589,11 @@ restartable skippable fun ly.david.musicsearch.ui.common.sort.SortOptionsBottomS
   selectedSortOption: T
   stable onSortOptionClick: Function1<T, Unit>
 )
+fun ly.david.musicsearch.ui.common.text.buildStringWithSingleLink(
+  stable resourceWithPlaceholder: StringResource
+  stable linkLabel: String
+  stable url: String
+): AnnotatedString
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
   stable text: String
   stable textLabel: String?
@@ -781,6 +823,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackListItem(
   track: TrackListItemModel
+  stable filterText: String
   stable mostListenedTrackCount: Long
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
@@ -790,6 +833,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackTitleWithLength(
   track: TrackListItemModel
+  stable filterText: String? = @static ""
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackNumber(
   track: TrackListItemModel
@@ -810,6 +854,7 @@ fun ly.david.musicsearch.ui.common.work.getDisplayScript(
 ): String?
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.WorkListItem(
   work: WorkListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false

@@ -1,12 +1,13 @@
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewSearchSpotifyBottomSheetContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewSpotifyHistoryCard()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewSpotifyHistoryListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.PreviewNowPlayingHistoryUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SearchSpotifyBottomSheetContent(
   spotifyHistory: SpotifyHistoryListItemModel?
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'id')] MusicBrainzEntityType, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryCard(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryListItem(
   spotifyHistory: SpotifyHistoryListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onClick: @[ExtensionFunctionType] Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
 )
@@ -30,6 +31,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>

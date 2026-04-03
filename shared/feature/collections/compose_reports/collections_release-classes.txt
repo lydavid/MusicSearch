@@ -22,11 +22,13 @@ stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollection
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
   unstable val collectionRepository: CollectionRepository
+  unstable val clock: Clock
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState {
   stable val defaultEntityType: MusicBrainzEntityType
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  unstable val feedback: Feedback<EditACollectionFeedback>?
   stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiEvent.CreateNewCollection {
@@ -103,8 +105,8 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionPr
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiState {
   stable val title: String
   runtime val collection: CollectionListItemModel?
-  unstable val softDeleteFeedback: Feedback<CollectionFeedback>?
-  unstable val hardDeleteFeedback: Feedback<CollectionFeedback>?
+  unstable val softDeleteFeedback: Feedback<EditACollectionFeedback>?
+  unstable val finalFeedback: Feedback<EditACollectionFeedback>?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val url: String
   stable val selectionState: SelectionState

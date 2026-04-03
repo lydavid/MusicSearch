@@ -7,8 +7,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryArtist(
   stable imageUrl: String? = @static "www.example.com/image"
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.PreviewLookupHistoryWithFilter()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.internal.HistoryListItem(
   lookupHistory: LookupHistoryListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static <expression>
@@ -25,6 +27,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.history.internal.HistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>

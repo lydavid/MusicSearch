@@ -81,26 +81,59 @@ stable class ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata {
   stable val lastUpdated: Instant
   <runtime stability> = Stable
 }
-runtime class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Loading {
-  runtime var CREATOR: Creator<Loading>
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.SyncingWithMusicBrainz {
+  runtime var CREATOR: Creator<SyncingWithMusicBrainz>
   <runtime stability> = Uncertain(Creator)
 }
-runtime class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Deleting {
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.Deleting {
   stable val count: Int
   stable val collectionName: String
   runtime var CREATOR: Creator<Deleting>
   <runtime stability> = Uncertain(Creator)
 }
-runtime class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Deleted {
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.Deleted {
   stable val count: Int
   stable val collectionName: String
   runtime var CREATOR: Creator<Deleted>
   <runtime stability> = Uncertain(Creator)
 }
-runtime class ly.david.musicsearch.shared.domain.collection.CollectionFeedback.Failed {
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.FailedToDelete {
   stable val collectionName: String
   stable val errorMessage: String
-  runtime var CREATOR: Creator<Failed>
+  runtime var CREATOR: Creator<FailedToDelete>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.FailedToAdd {
+  stable val collectionName: String
+  stable val errorMessage: String
+  runtime var CREATOR: Creator<FailedToAdd>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.DoesNotExist {
+  runtime var CREATOR: Creator<DoesNotExist>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AlreadyIn {
+  stable val collectionName: String
+  runtime var CREATOR: Creator<AlreadyIn>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedOne {
+  stable val collectionName: String
+  runtime var CREATOR: Creator<AddedOne>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultiple {
+  stable val newInsertions: Int
+  stable val collectionName: String
+  runtime var CREATOR: Creator<AddedMultiple>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultipleSomeAlreadyAdded {
+  stable val newInsertions: Int
+  stable val collectionName: String
+  stable val countAlreadyAdded: Int
+  runtime var CREATOR: Creator<AddedMultipleSomeAlreadyAdded>
   <runtime stability> = Uncertain(Creator)
 }
 stable class ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult.NewCollection {
@@ -153,8 +186,8 @@ stable class ly.david.musicsearch.shared.domain.details.ArtistDetailsModel {
   stable val name: String
   stable val sortName: String
   stable val disambiguation: String
-  stable val type: String
-  stable val gender: String
+  stable val type: ArtistType?
+  stable val gender: ArtistGender?
   stable val ipis: ImmutableList<String>
   stable val isnis: ImmutableList<String>
   stable val lifeSpan: LifeSpanUiModel
@@ -681,8 +714,8 @@ stable class ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel {
   stable val name: String
   stable val sortName: String
   stable val disambiguation: String
-  stable val type: String
-  stable val gender: String
+  stable val type: ArtistType?
+  stable val gender: ArtistGender?
   stable val countryCode: String
   stable val lifeSpan: LifeSpanUiModel
   stable val imageUrl: String?
@@ -699,6 +732,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
   stable val description: String
   stable val entity: MusicBrainzEntityType
   stable val cachedEntityCount: Int
+  stable val remoteEntityCount: Int?
   stable val visited: Boolean
   stable val containsEntity: Boolean
   <runtime stability> = Stable

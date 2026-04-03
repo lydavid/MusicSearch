@@ -19,14 +19,14 @@ stable class musicsearch.shared.feature.database.generated.resources.Res {
 stable class ly.david.musicsearch.share.feature.database.DatabasePresenter {
   stable val navigator: Navigator
   unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
-  unstable val observeLocalCount: ObserveLocalCount
+  unstable val observeLocalCountsOfAllEntities: ObserveLocalCountsOfAllEntities
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.share.feature.database.DatabaseUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val lazyListState: LazyListState
-  stable val countOfAllImages: Long
-  stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Int>
+  stable val countOfAllImages: Long?
+  stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Long>
   stable val eventSink: Function1<DatabaseUiEvent, Unit>
 }
 stable class ly.david.musicsearch.share.feature.database.DatabaseUiEvent.GoToScreen {

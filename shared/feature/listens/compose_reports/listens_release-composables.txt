@@ -30,6 +30,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
   listen: ListenListItemModel
+  stable filterText: String
   stable filteringByThisRecording: Boolean
   stable allowedToEdit: Boolean
   stable onGoToReleaseClick: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
@@ -44,6 +45,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
   listen: ListenListItemModel
+  stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onClickMoreActions: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
@@ -62,6 +64,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable noUsernameSet: Boolean
   stable innerPadding: PaddingValues
   stable state: ListensUiState
+  stable filterText: String
   stable eventSink: Function1<ListensUiEvent, Unit>
   selectedEntityFacet: MusicBrainzEntity?
   lazyPagingItems: LazyPagingItems<Identifiable>

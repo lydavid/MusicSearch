@@ -1,4 +1,5 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionBottomSheet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.PreviewCollectionBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.PreviewCollectionBottomSheetContentSyncing()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItem(
   stable isRemote: Boolean = @static true
   stable visited: Boolean = @static true
@@ -18,9 +19,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: AddToCollectionUiState
   stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.CollectionBottomSheetContent(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.CollectionBottomSheetContent(
   collections: LazyPagingItems<CollectionListItemModel>
   stable modifier: Modifier? = @static <expression>
+  unstable feedback: Feedback<EditACollectionFeedback>? = @static null
   stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
   stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>
 )

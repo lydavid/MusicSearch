@@ -31,7 +31,7 @@ ly.david.musicsearch.shared.feature.listens.ListensPresenter.present,present,1,0
 ly.david.musicsearch.shared.feature.listens.ListensUi,ListensUi,1,1,1,0,0,0,0,0,15,14,
 ly.david.musicsearch.shared.feature.listens.getMessage,getMessage,1,0,0,0,0,0,0,0,12,9,
 ly.david.musicsearch.shared.feature.listens.ListensContent,ListensContent,1,1,1,0,0,0,0,0,5,3,
-ly.david.musicsearch.shared.feature.listens.UsernameInput,UsernameInput,1,1,1,0,0,0,0,0,2,4,
+ly.david.musicsearch.shared.feature.listens.UsernameInput,UsernameInput,1,1,1,0,0,0,0,0,1,5,
 ly.david.musicsearch.shared.feature.listens.submit.DatePickerField,DatePickerField,1,1,1,0,0,0,0,0,3,2,
 ly.david.musicsearch.shared.feature.listens.submit.DatePickerDialog,DatePickerDialog,1,1,1,0,0,0,0,0,1,5,
 ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPresenter.present,present,1,0,0,0,0,0,0,0,3,8,
