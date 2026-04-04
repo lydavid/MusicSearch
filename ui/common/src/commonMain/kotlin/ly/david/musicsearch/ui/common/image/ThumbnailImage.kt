@@ -41,11 +41,12 @@ fun ThumbnailImage(
     clipCircle: Boolean = false,
     isSelected: Boolean = false,
     size: Dp = SMALL_IMAGE_SIZE.dp,
+    enableSharedTransition: Boolean = true,
 ) {
     SharedElementTransitionScope {
         val resizeModifier = modifier.size(size)
         val imageId = imageMetadata?.imageId
-        val modifierWithSharedBounds = if (imageId == null) {
+        val modifierWithSharedBounds = if (imageId == null || !enableSharedTransition) {
             resizeModifier
         } else {
             resizeModifier.sharedBounds(

@@ -65,6 +65,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             ThumbnailImage(
                 imageMetadata = listen.imageMetadata,
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
+                enableSharedTransition = false,
             )
 
             SelectionContainer {
