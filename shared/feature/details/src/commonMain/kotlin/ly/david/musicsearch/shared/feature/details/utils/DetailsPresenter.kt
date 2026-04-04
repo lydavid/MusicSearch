@@ -31,6 +31,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -160,10 +161,11 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 entity = screen.entityType,
                 forceRefresh = forceRefreshDetails,
             )
+            numberOfImages = imageMetadataWithCount?.count ?: 0
+            val imageMetadata = imageMetadataWithCount?.imageMetadata ?: return@LaunchedEffect
             detailsModel = detailsModel?.withImageMetadata(
-                imageMetadata = imageMetadataWithCount.imageMetadata,
+                imageMetadata = imageMetadata,
             ) as DetailsModel?
-            numberOfImages = imageMetadataWithCount.count
         }
 
         LaunchedEffect(forceRefreshDetails, detailsModel) {
@@ -251,8 +253,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             CoverArtsScreen(
-                                id = screen.id,
-                                entity = screen.entityType,
+                                entity = MusicBrainzEntity(
+                                    id = screen.id,
+                                    type = screen.entityType,
+                                ),
                             ),
                         ),
                     )
@@ -288,7 +292,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             subtitle = subtitle,
             tabs = getTabs(),
             selectedTab = selectedTab,
-            url = getMusicBrainzUrl(screen.entityType, screen.id),
+            url = getMusicBrainzUrl(entity = MusicBrainzEntity(type = screen.entityType, id = screen.id)),
             detailsModel = detailsModel,
             collected = collected,
             snackbarMessage = snackbarMessage,

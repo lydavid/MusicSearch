@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.feature.history
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.history.internal.HistoryListItem
@@ -22,7 +23,9 @@ internal fun PreviewLookupHistoryReleaseGroup(
                 entity = MusicBrainzEntityType.RELEASE_GROUP,
                 id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 numberOfVisits = 9999,
-                imageUrl = imageUrl,
+                imageMetadata = ImageMetadata.InternetArchive(
+                    rawThumbnailUrl = imageUrl,
+                ),
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
             filterText = "",
@@ -42,7 +45,9 @@ internal fun PreviewLookupHistoryRelease(
                 title = "欠けた心象、世のよすが",
                 entity = MusicBrainzEntityType.RELEASE,
                 id = "165f6643-2edb-4795-9abe-26bd0533e59d",
-                imageUrl = imageUrl,
+                imageMetadata = ImageMetadata.InternetArchive(
+                    rawThumbnailUrl = imageUrl,
+                ),
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
             filterText = "",
@@ -62,7 +67,9 @@ internal fun PreviewLookupHistoryArtist(
                 title = "月詠み",
                 entity = MusicBrainzEntityType.ARTIST,
                 id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                imageUrl = imageUrl,
+                imageMetadata = ImageMetadata.Spotify(
+                    rawThumbnailUrl = imageUrl,
+                ),
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
             filterText = "",
@@ -80,7 +87,6 @@ internal fun PreviewLookupHistoryWithFilter() {
                 title = "いのちの名前 (Name of Life)",
                 entity = MusicBrainzEntityType.WORK,
                 id = "412c8cf4-6905-3b4b-a59a-1a71f98e2677",
-                imageUrl = "",
                 lastAccessed = Instant.parse("2023-05-02T00:00:00Z"),
             ),
             filterText = "name",

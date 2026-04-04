@@ -7,9 +7,10 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
+import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
@@ -123,6 +124,7 @@ class RelationDao(
         ended: Boolean?,
         thumbnailUrl: String?,
         imageId: Long?,
+        source: ImageSource?,
         aliasNames: String? = null,
         aliasLocales: String? = null,
         lastUpdated: Instant? = null,
@@ -141,8 +143,11 @@ class RelationDao(
             end = end.orEmpty(),
             ended = ended == true,
         ),
-        imageUrl = thumbnailUrl,
-        imageId = imageId?.let { ImageId(it) },
+        imageMetadata = mapToImageMetadata(
+            id = imageId,
+            thumbnailUrl = thumbnailUrl,
+            source = source,
+        ),
         aliases = combineToAliases(
             aliasNames = aliasNames,
             aliasLocales = aliasLocales,

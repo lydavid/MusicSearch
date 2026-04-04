@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.wikimedia.api
 
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 interface WikimediaApi {
@@ -19,5 +19,5 @@ interface WikimediaApi {
      */
     suspend fun getWikimediaImageUrls(
         wikidataId: String,
-    ): ImageMetadata
+    ): RawImageMetadata
 }

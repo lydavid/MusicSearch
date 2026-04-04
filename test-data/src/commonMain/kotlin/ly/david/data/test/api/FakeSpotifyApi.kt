@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.api.SpotifyImage
 
-class FakeSpotifyApi : SpotifyApi {
+open class FakeSpotifyApi : SpotifyApi {
     override suspend fun getArtist(spotifyArtistId: String): SpotifyArtist {
         return SpotifyArtist(
             images = listOf(

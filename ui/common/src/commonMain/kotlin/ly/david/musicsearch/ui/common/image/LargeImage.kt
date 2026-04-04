@@ -18,20 +18,15 @@ import coil3.request.crossfade
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
 import ly.david.musicsearch.shared.domain.USER_AGENT
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
-import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
-/**
- * @param imageId A unique ID that we use as a cache key.
- */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun LargeImage(
-    url: String,
-    imageId: ImageId?,
+    imageMetadata: ImageMetadata?,
     modifier: Modifier = Modifier,
     isCompact: Boolean = true,
     zoomEnabled: Boolean = false,
@@ -50,6 +45,7 @@ fun LargeImage(
                     Modifier.fillMaxHeight()
                 },
             )
+        val imageId = imageMetadata?.imageId
         val modifierWithSharedBounds = if (imageId == null) {
             imageModifier
         } else {
@@ -95,12 +91,13 @@ fun LargeImage(
             ContentScale.Fit
         }
 
-        if (url.isNotEmpty()) {
+        val url = imageMetadata?.largeImageUrl
+        if (!url.isNullOrEmpty()) {
             val headers = NetworkHeaders.Builder()
                 .set(USER_AGENT, USER_AGENT_VALUE)
                 .build()
             val imageRequest = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(url.prependHttpsIfMissing())
+                .data(url)
                 .httpHeaders(headers)
                 .crossfade(true)
                 .placeholderMemoryCacheKey(imageId?.value?.toString().orEmpty())

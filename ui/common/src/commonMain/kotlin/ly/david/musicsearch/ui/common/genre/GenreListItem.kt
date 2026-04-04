@@ -51,8 +51,7 @@ fun GenreListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.GENRE.getIcon(),
                 modifier = Modifier
                     .clickable {

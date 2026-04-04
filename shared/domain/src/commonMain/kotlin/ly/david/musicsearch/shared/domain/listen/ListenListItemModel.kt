@@ -5,7 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.Visitable
 import kotlin.time.Instant
 
@@ -18,8 +18,7 @@ data class ListenListItemModel(
     val formattedArtistCredits: String,
     val recordingId: String = "",
     val durationMs: Int? = null,
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
     override val visited: Boolean = false,
     val release: ListenRelease = ListenRelease(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

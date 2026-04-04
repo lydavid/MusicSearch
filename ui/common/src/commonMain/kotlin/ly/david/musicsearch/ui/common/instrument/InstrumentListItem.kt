@@ -66,8 +66,7 @@ fun InstrumentListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.INSTRUMENT.getIcon(),
                 modifier = Modifier
                     .clickable {

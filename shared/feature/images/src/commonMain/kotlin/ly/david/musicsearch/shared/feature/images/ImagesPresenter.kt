@@ -22,12 +22,13 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
-import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
@@ -40,7 +41,7 @@ internal class ImagesPresenter(
     private val navigator: Navigator,
     private val appPreferences: AppPreferences,
     private val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository,
-    private val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl,
+    private val getMusicBrainzUrl: GetMusicBrainzUrl,
 ) : Presenter<ImagesUiState> {
 
     @Composable
@@ -53,13 +54,13 @@ internal class ImagesPresenter(
         val imagesGridPaddingDp by appPreferences.observeImagesGridPaddingDp.collectAsState(
             initial = DEFAULT_IMAGES_GRID_PADDING_DP,
         )
-        val imageMetadataFlow: Flow<PagingData<ImageMetadata>> by rememberRetained(
+        val imageMetadataFlow: Flow<PagingData<ImageMetadataWithEntity>> by rememberRetained(
             topAppBarFilterState.filterText,
             sortOption,
         ) {
             mutableStateOf(
                 musicBrainzImageMetadataRepository.observeAllImageMetadata(
-                    mbid = screen.id,
+                    mbid = screen.entity?.id,
                     query = topAppBarFilterState.filterText,
                     sortOption = sortOption,
                 ),
@@ -72,11 +73,11 @@ internal class ImagesPresenter(
         var isSingleImage: Boolean by rememberRetained {
             mutableStateOf(false)
         }
-        var imageMetadataListSnapshot: ImmutableList<ImageMetadata?> by rememberRetained {
+        var imageMetadataListSnapshot: ImmutableList<ImageMetadataWithEntity?> by rememberRetained {
             mutableStateOf(persistentListOf())
         }
 
-        val selectedImageMetadata: ImageMetadata? by rememberRetained(
+        val selectedImageMetadataWithEntity: ImageMetadataWithEntity? by rememberRetained(
             selectedIndex,
             imageMetadataListSnapshot,
         ) {
@@ -91,19 +92,22 @@ internal class ImagesPresenter(
         }
 
         val title by rememberRetained(
-            selectedImageMetadata,
+            selectedImageMetadataWithEntity,
             selectedIndex,
             imageMetadataListSnapshot,
         ) {
             val index = selectedIndex
             derivedStateOf {
-                if (selectedImageMetadata == null || index == null) {
+                if (selectedImageMetadataWithEntity == null || index == null) {
                     ImagesTitle.All
                 } else {
-                    val imageMetadata = selectedImageMetadata
+                    val typeAndComment = when (val imageMetadata = selectedImageMetadataWithEntity?.imageMetadata) {
+                        is ImageMetadata.InternetArchive -> {
+                            imageMetadata.types.joinToString().appendOptionalText(imageMetadata.comment)
+                        }
+                        else -> ""
+                    }
 
-                    val typeAndComment =
-                        imageMetadata?.types?.joinToString()?.appendOptionalText(imageMetadata.comment).orEmpty()
                     ImagesTitle.Selected(
                         page = index + 1,
                         totalPages = imageMetadataListSnapshot.size,
@@ -113,15 +117,18 @@ internal class ImagesPresenter(
             }
         }
 
-        val subtitle = selectedImageMetadata?.getNameWithDisambiguation().orEmpty()
+        val subtitle = selectedImageMetadataWithEntity?.getNameWithDisambiguation().orEmpty()
 
-        val url = selectedImageMetadata?.largeUrl?.prependHttpsIfMissing()
-            ?: screen.id?.let { entityId ->
-                getMusicBrainzCoverArtUrl(
-                    entityId = entityId,
-                    entity = screen.entity ?: MusicBrainzEntityType.RELEASE,
+        val linkUrl: String by rememberRetained(
+            selectedImageMetadataWithEntity,
+        ) {
+            derivedStateOf {
+                getImageLinkUrl(
+                    imageMetadata = selectedImageMetadataWithEntity?.imageMetadata,
+                    entity = screen.entity ?: selectedImageMetadataWithEntity?.musicBrainzEntity,
                 )
             }
+        }
 
         topAppBarFilterState.show(selectedIndex == null)
 
@@ -171,18 +178,46 @@ internal class ImagesPresenter(
         return ImagesUiState(
             title = title,
             subtitle = subtitle,
-            url = url,
+            linkUrl = linkUrl,
             numberOfImagesPerRow = numberOfImagesPerRow,
             imagesGridPaddingDp = imagesGridPaddingDp,
             selectedImageIndex = selectedIndex,
-            selectedImageMetadata = selectedImageMetadata,
+            selectedImageMetadata = selectedImageMetadataWithEntity,
             imageMetadataPagingDataFlow = imageMetadataFlow,
             lazyGridState = lazyGridState,
             sortOption = sortOption,
             topAppBarFilterState = topAppBarFilterState,
-            showSort = screen.id == null && selectedIndex == null,
+            showSort = screen.entity?.id == null && selectedIndex == null,
             eventSink = ::eventSink,
         )
+    }
+
+    private fun getImageLinkUrl(
+        entity: MusicBrainzEntity?,
+        imageMetadata: ImageMetadata?,
+    ): String {
+        return when {
+            entity == null -> { // all images screen
+                ""
+            }
+            imageMetadata == null -> { // no image selected in an entity's images screen
+                getMusicBrainzCoverArtUrl(entity = entity)
+            }
+            else -> {
+                imageMetadata.linkUrl
+            }
+        }
+    }
+
+    private fun getMusicBrainzCoverArtUrl(
+        entity: MusicBrainzEntity,
+    ): String {
+        val entityUrl = "${getMusicBrainzUrl(entity = entity)}/"
+        return when (entity.type) {
+            MusicBrainzEntityType.EVENT -> entityUrl + "event-art"
+            MusicBrainzEntityType.RELEASE -> entityUrl + "cover-art"
+            else -> entityUrl
+        }
     }
 }
 
@@ -199,14 +234,14 @@ internal sealed class ImagesTitle {
 internal data class ImagesUiState(
     val title: ImagesTitle = ImagesTitle.All,
     val subtitle: String = "",
-    val url: String? = null,
+    val linkUrl: String = "",
     val numberOfImagesPerRow: Int = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
     val imagesGridPaddingDp: Int = DEFAULT_IMAGES_GRID_PADDING_DP,
-    val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>,
+    val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadataWithEntity>>,
     val lazyGridState: LazyGridState = LazyGridState(),
     val sortOption: ImagesSortOption = ImagesSortOption.RECENTLY_ADDED,
     val selectedImageIndex: Int? = null,
-    val selectedImageMetadata: ImageMetadata? = null,
+    val selectedImageMetadata: ImageMetadataWithEntity? = null,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val showSort: Boolean = false,
     val eventSink: (ImagesUiEvent) -> Unit = {},
@@ -217,7 +252,7 @@ internal sealed interface ImagesUiEvent : CircuitUiEvent {
 
     data class SelectImage(
         val index: Int,
-        val imageMetadataSnapshot: List<ImageMetadata?>,
+        val imageMetadataSnapshot: List<ImageMetadataWithEntity?>,
     ) : ImagesUiEvent
 
     data object AutoSelectSingleImage : ImagesUiEvent

@@ -78,8 +78,7 @@ fun ListenListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                url = listen.imageUrl.orEmpty(),
-                imageId = listen.imageId,
+                imageMetadata = listen.imageMetadata,
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
             )
         },

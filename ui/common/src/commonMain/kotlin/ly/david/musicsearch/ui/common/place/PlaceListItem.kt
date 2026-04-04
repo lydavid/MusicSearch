@@ -75,8 +75,7 @@ fun PlaceListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.PLACE.getIcon(),
                 modifier = Modifier
                     .clickable {

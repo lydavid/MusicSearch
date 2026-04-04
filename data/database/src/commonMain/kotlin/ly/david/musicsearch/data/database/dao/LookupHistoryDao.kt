@@ -3,9 +3,10 @@ package ly.david.musicsearch.data.database.dao
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.LookupHistory
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import kotlin.time.Instant
@@ -101,14 +102,18 @@ private fun mapToLookupHistoryListItemModel(
     entity: MusicBrainzEntityType,
     numberOfVisits: Int,
     lastAccessed: Instant,
-    imageUrl: String?,
+    thumbnailUrl: String?,
     imageId: Long?,
+    imageSource: ImageSource?,
 ) = LookupHistoryListItemModel(
     id = mbid,
     title = title,
     entity = entity,
     numberOfVisits = numberOfVisits,
     lastAccessed = lastAccessed,
-    imageUrl = imageUrl,
-    imageId = imageId?.let { ImageId(it) },
+    imageMetadata = mapToImageMetadata(
+        id = imageId,
+        source = imageSource,
+        thumbnailUrl = thumbnailUrl,
+    ),
 )

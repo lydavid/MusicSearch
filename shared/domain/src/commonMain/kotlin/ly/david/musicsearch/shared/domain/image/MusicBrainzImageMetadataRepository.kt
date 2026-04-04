@@ -20,7 +20,7 @@ interface MusicBrainzImageMetadataRepository {
         mbid: String,
         entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount
+    ): ImageMetadataWithCount?
 
     /**
      * Saves metadata for an image, eventually. For performance reasons, we will batch the write to the database.
@@ -42,7 +42,7 @@ interface MusicBrainzImageMetadataRepository {
         mbid: String?,
         query: String,
         sortOption: ImagesSortOption,
-    ): Flow<PagingData<ImageMetadata>>
+    ): Flow<PagingData<ImageMetadataWithEntity>>
 
     fun observeCountOfAllImageMetadata(): Flow<Long>
 }

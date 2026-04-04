@@ -194,8 +194,9 @@ SELECT
   -- TODO: Don't select all fields
   `release`.*,
   ac.name AS artist_credit_names,
-  images.thumbnail_url,
   images.id AS image_id,
+  images.source,
+  images.thumbnail_url,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -241,8 +242,9 @@ LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,
-    mbid_image.thumbnail_url,
-    mbid_image.id
+    mbid_image.id,
+    mbid_image.source,
+    mbid_image.thumbnail_url
   FROM mbid_image
   WHERE mbid_image.mbid IN (
     SELECT releases_by_entity.release_id
@@ -343,8 +345,9 @@ getReleasesByCollection:
 SELECT
   `release`.*,
   ac.name AS artist_credit_names,
-  images.thumbnail_url,
   images.id AS image_id,
+  images.source,
+  images.thumbnail_url,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -375,8 +378,9 @@ LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,
-    mbid_image.thumbnail_url,
-    mbid_image.id
+    mbid_image.id,
+    mbid_image.source,
+    mbid_image.thumbnail_url
   FROM mbid_image
   WHERE mbid_image.mbid IN (
     SELECT collection_entity.entity_id
@@ -471,8 +475,9 @@ getReleasesByEntity:
 SELECT
   `release`.*,
   ac.name AS artist_credit_names,
-  images.thumbnail_url,
   images.id AS image_id,
+  images.source,
+  images.thumbnail_url,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -505,8 +510,9 @@ LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,
-    mbid_image.thumbnail_url,
-    mbid_image.id
+    mbid_image.id,
+    mbid_image.source,
+    mbid_image.thumbnail_url
   FROM mbid_image
   WHERE mbid_image.mbid IN (
     SELECT releases_by_entity.release_id
@@ -608,8 +614,9 @@ getAllReleases:
 SELECT
   `release`.*,
   ac.name AS artist_credit_names,
-  images.thumbnail_url,
   images.id AS image_id,
+  images.source,
+  images.thumbnail_url,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -640,8 +647,9 @@ LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,
-    mbid_image.thumbnail_url,
-    mbid_image.id
+    mbid_image.id,
+    mbid_image.source,
+    mbid_image.thumbnail_url
   FROM mbid_image
   GROUP BY mbid_image.mbid
   ORDER BY mbid_image.id

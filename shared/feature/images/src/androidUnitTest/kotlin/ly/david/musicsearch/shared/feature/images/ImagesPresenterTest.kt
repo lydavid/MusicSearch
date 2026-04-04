@@ -12,10 +12,12 @@ import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzCoverArtUrl
-import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
+import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
@@ -32,7 +34,7 @@ class ImagesPresenterTest {
     )
 
     private fun createPresenter(
-        imageMetadataList: List<ImageMetadata>,
+        imageMetadataList: List<ImageMetadataWithEntity>,
     ) = ImagesPresenter(
         screen = CoverArtsScreen(),
         navigator = navigator,
@@ -45,8 +47,8 @@ class ImagesPresenterTest {
                 mbid: String,
                 entity: MusicBrainzEntityType,
                 forceRefresh: Boolean,
-            ): ImageMetadataWithCount {
-                return ImageMetadataWithCount()
+            ): ImageMetadataWithCount? {
+                return null
             }
 
             override suspend fun saveImageMetadata(
@@ -61,7 +63,7 @@ class ImagesPresenterTest {
                 mbid: String?,
                 query: String,
                 sortOption: ImagesSortOption,
-            ): Flow<PagingData<ImageMetadata>> {
+            ): Flow<PagingData<ImageMetadataWithEntity>> {
                 return flowOf(PagingData.from(imageMetadataList))
             }
 
@@ -69,13 +71,10 @@ class ImagesPresenterTest {
                 error("Not used")
             }
         },
-        getMusicBrainzCoverArtUrl = GetMusicBrainzCoverArtUrl(
-            getMusicBrainzUrl = object : GetMusicBrainzUrl {
-                override fun invoke(
-                    entity: MusicBrainzEntityType,
-                    entityId: String,
-                ): String {
-                    return ""
+        getMusicBrainzUrl = GetMusicBrainzUrlImpl(
+            musicbrainzRepository = object : MusicbrainzRepository {
+                override fun getBaseUrl(): String {
+                    return "https://custommusicbrainz.org"
                 }
             },
         ),
@@ -89,19 +88,26 @@ class ImagesPresenterTest {
 
         presenterTestOf({ presenter.present() }) {
             val state = awaitItem()
-            assertEquals(listOf<ImageMetadata>(), state.imageMetadataPagingDataFlow.asSnapshot())
+            assertEquals(listOf<ImageMetadataWithEntity>(), state.imageMetadataPagingDataFlow.asSnapshot())
         }
     }
 
     @Test
     fun simple() = runTest {
+        val imageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.InternetArchive(
+                imageId = ImageId(1L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "b",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "r",
+                type = MusicBrainzEntityType.RELEASE_GROUP,
+            ),
+        )
         val presenter = createPresenter(
             imageMetadataList = listOf(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                ),
+                imageMetadataWithEntity,
             ),
         )
 
@@ -110,16 +116,14 @@ class ImagesPresenterTest {
             val snapshot = state.imageMetadataPagingDataFlow.asSnapshot()
             assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                    ),
+                    imageMetadataWithEntity,
                 ),
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
             assertEquals(ImagesTitle.All, state.title)
+            assertEquals("", state.subtitle)
+            assertEquals("", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -129,31 +133,39 @@ class ImagesPresenterTest {
             )
             state = awaitItem()
             assertEquals(0, state.selectedImageIndex)
+            assertEquals(ImagesTitle.All, state.title)
+            assertEquals("", state.subtitle)
+            assertEquals("", state.linkUrl)
 
             state = awaitItem()
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                ),
+                imageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(ImagesTitle.Selected(page = 1, totalPages = 1, typeAndComment = ""), state.title)
+            assertEquals("", state.subtitle)
+            assertEquals("https://b", state.linkUrl)
         }
     }
 
     @Test
     fun `with types and comment`() = runTest {
+        val imageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.InternetArchive(
+                imageId = ImageId(1L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "b",
+                types = persistentListOf("Booklet"),
+                comment = "p. 14-15",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "r",
+                type = MusicBrainzEntityType.RELEASE,
+            ),
+        )
         val presenter = createPresenter(
             imageMetadataList = listOf(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                ),
+                imageMetadataWithEntity,
             ),
         )
 
@@ -162,19 +174,14 @@ class ImagesPresenterTest {
             val snapshot = state.imageMetadataPagingDataFlow.asSnapshot()
             assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                        types = persistentListOf("Booklet"),
-                        comment = "p. 14-15",
-                    ),
+                    imageMetadataWithEntity,
                 ),
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
             assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
+            assertEquals("", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -187,13 +194,7 @@ class ImagesPresenterTest {
 
             state = awaitItem()
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                ),
+                imageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(
@@ -201,23 +202,30 @@ class ImagesPresenterTest {
                 state.title,
             )
             assertEquals("", state.subtitle)
+            assertEquals("https://b", state.linkUrl)
         }
     }
 
     @Test
     fun `with mbid, name, and entity`() = runTest {
+        val imageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.InternetArchive(
+                imageId = ImageId(1L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "b",
+                types = persistentListOf("Booklet"),
+                comment = "p. 14-15",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "c",
+                type = MusicBrainzEntityType.RELEASE,
+            ),
+            name = "Release name",
+            disambiguation = "that one",
+        )
         val presenter = createPresenter(
             imageMetadataList = listOf(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                    mbid = "c",
-                    name = "Release name",
-                    entity = MusicBrainzEntityType.RELEASE,
-                ),
+                imageMetadataWithEntity,
             ),
         )
 
@@ -226,22 +234,14 @@ class ImagesPresenterTest {
             val snapshot = state.imageMetadataPagingDataFlow.asSnapshot()
             assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                        types = persistentListOf("Booklet"),
-                        comment = "p. 14-15",
-                        mbid = "c",
-                        name = "Release name",
-                        entity = MusicBrainzEntityType.RELEASE,
-                    ),
+                    imageMetadataWithEntity,
                 ),
                 snapshot,
             )
             assertEquals(null, state.selectedImageIndex)
             assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
+            assertEquals("", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -254,56 +254,63 @@ class ImagesPresenterTest {
 
             state = awaitItem()
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                    mbid = "c",
-                    name = "Release name",
-                    entity = MusicBrainzEntityType.RELEASE,
-                ),
+                imageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(
                 ImagesTitle.Selected(page = 1, totalPages = 1, typeAndComment = "Booklet (p. 14-15)"),
                 state.title,
             )
-            assertEquals("Release name", state.subtitle)
+            assertEquals("Release name (that one)", state.subtitle)
+            assertEquals("https://b", state.linkUrl)
         }
     }
 
     @Test
     fun `change page`() = runTest {
+        val releaseImageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.InternetArchive(
+                imageId = ImageId(1L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "re",
+                types = persistentListOf("Booklet"),
+                comment = "p. 14-15",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "c",
+                type = MusicBrainzEntityType.RELEASE,
+            ),
+            name = "Release name",
+        )
+        val eventImageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.InternetArchive(
+                imageId = ImageId(2L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "e",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "c",
+                type = MusicBrainzEntityType.EVENT,
+            ),
+            name = "Event name",
+        )
+        val artistImageMetadataWithEntity = ImageMetadataWithEntity(
+            imageMetadata = ImageMetadata.Wikimedia(
+                imageId = ImageId(3L),
+                rawThumbnailUrl = "a",
+                rawLargeUrl = "art",
+            ),
+            musicBrainzEntity = MusicBrainzEntity(
+                id = "c",
+                type = MusicBrainzEntityType.ARTIST,
+            ),
+            name = "Artist name",
+        )
         val presenter = createPresenter(
             imageMetadataList = listOf(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                    mbid = "c",
-                    name = "Release name",
-                    entity = MusicBrainzEntityType.RELEASE,
-                ),
-                ImageMetadata(
-                    imageId = ImageId(2L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    mbid = "c",
-                    name = "Release group name",
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
-                ),
-                ImageMetadata(
-                    imageId = ImageId(3L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    mbid = "c",
-                    name = "Artist name",
-                    entity = MusicBrainzEntityType.ARTIST,
-                ),
+                releaseImageMetadataWithEntity,
+                eventImageMetadataWithEntity,
+                artistImageMetadataWithEntity,
             ),
         )
 
@@ -312,32 +319,9 @@ class ImagesPresenterTest {
             val snapshot = state.imageMetadataPagingDataFlow.asSnapshot()
             assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                        types = persistentListOf("Booklet"),
-                        comment = "p. 14-15",
-                        mbid = "c",
-                        name = "Release name",
-                        entity = MusicBrainzEntityType.RELEASE,
-                    ),
-                    ImageMetadata(
-                        imageId = ImageId(2L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                        mbid = "c",
-                        name = "Release group name",
-                        entity = MusicBrainzEntityType.RELEASE_GROUP,
-                    ),
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "a",
-                        largeUrl = "b",
-                        mbid = "c",
-                        name = "Artist name",
-                        entity = MusicBrainzEntityType.ARTIST,
-                    ),
+                    releaseImageMetadataWithEntity,
+                    eventImageMetadataWithEntity,
+                    artistImageMetadataWithEntity,
                 ),
                 snapshot,
             )
@@ -356,16 +340,7 @@ class ImagesPresenterTest {
 
             state = awaitItem()
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    types = persistentListOf("Booklet"),
-                    comment = "p. 14-15",
-                    mbid = "c",
-                    name = "Release name",
-                    entity = MusicBrainzEntityType.RELEASE,
-                ),
+                releaseImageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(
@@ -373,6 +348,7 @@ class ImagesPresenterTest {
                 state.title,
             )
             assertEquals("Release name", state.subtitle)
+            assertEquals("https://re", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -383,21 +359,15 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(1, state.selectedImageIndex)
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(2L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    mbid = "c",
-                    name = "Release group name",
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
-                ),
+                eventImageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(
                 ImagesTitle.Selected(page = 2, totalPages = 3, typeAndComment = ""),
                 state.title,
             )
-            assertEquals("Release group name", state.subtitle)
+            assertEquals("Event name", state.subtitle)
+            assertEquals("https://e", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.SelectImage(
@@ -408,14 +378,7 @@ class ImagesPresenterTest {
             state = awaitItem()
             assertEquals(2, state.selectedImageIndex)
             assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(3L),
-                    thumbnailUrl = "a",
-                    largeUrl = "b",
-                    mbid = "c",
-                    name = "Artist name",
-                    entity = MusicBrainzEntityType.ARTIST,
-                ),
+                artistImageMetadataWithEntity,
                 state.selectedImageMetadata,
             )
             assertEquals(
@@ -423,6 +386,7 @@ class ImagesPresenterTest {
                 state.title,
             )
             assertEquals("Artist name", state.subtitle)
+            assertEquals("https://commons.wikimedia.org/wiki/File:art", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.NavigateUp,
@@ -432,6 +396,7 @@ class ImagesPresenterTest {
             assertEquals(null, state.selectedImageMetadata)
             assertEquals(ImagesTitle.All, state.title)
             assertEquals("", state.subtitle)
+            assertEquals("", state.linkUrl)
 
             state.eventSink(
                 ImagesUiEvent.NavigateUp,

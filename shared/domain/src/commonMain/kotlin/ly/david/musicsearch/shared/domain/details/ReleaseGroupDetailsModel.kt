@@ -20,7 +20,7 @@ data class ReleaseGroupDetailsModel(
     override val secondaryTypes: ImmutableList<String> = persistentListOf(),
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
-    override val imageMetadata: ImageMetadata = ImageMetadata(),
+    override val imageMetadata: ImageMetadata? = null,
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

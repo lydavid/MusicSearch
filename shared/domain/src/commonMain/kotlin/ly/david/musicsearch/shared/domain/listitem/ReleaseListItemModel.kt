@@ -4,7 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -25,8 +25,7 @@ data class ReleaseListItemModel(
     val catalogNumbers: String? = null,
 
     val textRepresentation: TextRepresentationUiModel? = TextRepresentationUiModel(),
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
 
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,

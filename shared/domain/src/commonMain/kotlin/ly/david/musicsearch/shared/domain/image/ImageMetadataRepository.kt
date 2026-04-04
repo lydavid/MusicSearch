@@ -16,7 +16,7 @@ interface ImageMetadataRepository {
         detailsModel: MusicBrainzDetailsModel,
         entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount
+    ): ImageMetadataWithCount?
 }
 
 class ImageMetadataRepositoryImpl(
@@ -27,7 +27,7 @@ class ImageMetadataRepositoryImpl(
         detailsModel: MusicBrainzDetailsModel,
         entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount {
+    ): ImageMetadataWithCount? {
         return when (entity) {
             MusicBrainzEntityType.ARTIST -> {
                 artistImageRepository.getArtistImageMetadata(

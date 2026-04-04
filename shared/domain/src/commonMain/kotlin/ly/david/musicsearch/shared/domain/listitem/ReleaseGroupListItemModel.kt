@@ -4,7 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 
 data class ReleaseGroupListItemModel(
@@ -15,8 +15,7 @@ data class ReleaseGroupListItemModel(
     override val primaryType: String = "",
     override val secondaryTypes: ImmutableList<String> = persistentListOf(),
     val formattedArtistCredits: String? = null,
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

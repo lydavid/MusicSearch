@@ -45,8 +45,7 @@ fun AreaListItem(
         if (showIcon) {
             {
                 ThumbnailImage(
-                    url = "",
-                    imageId = null,
+                    imageMetadata = null,
                     placeholderIcon = MusicBrainzEntityType.AREA.getIcon(),
                     modifier = Modifier
                         .clickable {

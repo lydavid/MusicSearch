@@ -22,7 +22,7 @@ data class WorkDetailsModel(
     override val lastUpdated: Instant = Clock.System.now(),
     val attributes: ImmutableList<WorkAttributeUiModel> = persistentListOf(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
-    override val imageMetadata: ImageMetadata = ImageMetadata(),
+    override val imageMetadata: ImageMetadata? = null,
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

@@ -154,6 +154,7 @@ SELECT
   COALESCE(listen.release_mbid, listen.caa_release_mbid) AS releaseId,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   EXISTS (
     SELECT 1 FROM details_metadata
     WHERE details_metadata.entity_id = listen.recording_musicbrainz_id

@@ -1,0 +1,57 @@
+import kotlin.String;
+import kotlinx.collections.immutable.ImmutableList;
+import ly.david.musicsearch.shared.domain.image.ImageSource;
+
+CREATE TABLE temp_mbid_image (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mbid TEXT NOT NULL,
+  source TEXT AS ImageSource NOT NULL,
+  thumbnail_url TEXT NOT NULL,
+  large_url TEXT NOT NULL,
+  types TEXT AS ImmutableList<String>,
+  comment TEXT,
+
+  UNIQUE(mbid, thumbnail_url)
+);
+
+INSERT INTO temp_mbid_image (
+  id,
+  mbid,
+  source,
+  thumbnail_url,
+  large_url,
+  types,
+  comment
+)
+SELECT
+  id,
+  mbid,
+  CASE
+    WHEN substr(thumbnail_url, 1, 1) = 'c' THEN 'internet_archive'
+    WHEN substr(thumbnail_url, 1, 1) = 'e' THEN 'internet_archive'
+    WHEN substr(thumbnail_url, 1, 1) = 'i' THEN 'spotify'
+    WHEN thumbnail_url = '' AND EXISTS (SELECT 1 FROM artist WHERE artist.id = mbid_image.mbid) THEN 'spotify'
+    WHEN thumbnail_url = '' AND EXISTS (SELECT 1 FROM event WHERE event.id = mbid_image.mbid) THEN 'internet_archive'
+    WHEN thumbnail_url = '' AND EXISTS (SELECT 1 FROM `release` WHERE `release`.id = mbid_image.mbid) THEN 'internet_archive'
+    WHEN thumbnail_url = '' AND EXISTS (SELECT 1 FROM `release_group` WHERE `release_group`.id = mbid_image.mbid) THEN 'internet_archive'
+    ELSE 'unknown'
+  END,
+  thumbnail_url,
+  large_url,
+  types,
+  comment
+FROM mbid_image;
+
+-- these are merged/delete entities that we tried to get images for but found none
+-- when we next visit them, they should have a new id, so we don't want these lingering around
+DELETE FROM temp_mbid_image
+WHERE source = 'unknown';
+
+-- unused, but referenced images
+DROP VIEW release_group_base;
+
+DROP INDEX idx_mbid_image_mbid;
+DROP TABLE mbid_image;
+ALTER TABLE temp_mbid_image RENAME TO mbid_image;
+
+CREATE INDEX idx_mbid_image_mbid ON mbid_image(mbid);

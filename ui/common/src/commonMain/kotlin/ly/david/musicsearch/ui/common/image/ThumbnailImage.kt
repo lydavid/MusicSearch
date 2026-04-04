@@ -26,8 +26,7 @@ import coil3.size.Scale
 import com.slack.circuit.sharedelements.SharedElementTransitionScope
 import ly.david.musicsearch.shared.domain.USER_AGENT
 import ly.david.musicsearch.shared.domain.USER_AGENT_VALUE
-import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.ui.common.icons.CheckCircle
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey
@@ -36,8 +35,7 @@ import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ThumbnailImage(
-    url: String,
-    imageId: ImageId?,
+    imageMetadata: ImageMetadata?,
     placeholderIcon: ImageVector?,
     modifier: Modifier = Modifier,
     clipCircle: Boolean = false,
@@ -46,6 +44,7 @@ fun ThumbnailImage(
 ) {
     SharedElementTransitionScope {
         val resizeModifier = modifier.size(size)
+        val imageId = imageMetadata?.imageId
         val modifierWithSharedBounds = if (imageId == null) {
             resizeModifier
         } else {
@@ -69,6 +68,7 @@ fun ThumbnailImage(
         }
 
         val placeholder = rememberVectorPainter(placeholderIcon ?: DefaultPlaceholderImageVector)
+        val url = imageMetadata?.thumbnailImageUrl.orEmpty()
         when {
             isSelected -> {
                 Icon(
@@ -84,7 +84,7 @@ fun ThumbnailImage(
                     .set(USER_AGENT, USER_AGENT_VALUE)
                     .build()
                 val imageRequest = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(url.prependHttpsIfMissing())
+                    .data(url)
                     .httpHeaders(headers)
                     .scale(Scale.FILL)
                     .crossfade(true)

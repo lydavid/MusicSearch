@@ -7,29 +7,39 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewManyDevices
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
-val images = MutableStateFlow(
-    PagingData.from(
-        listOf(
-            ImageMetadata(
-                imageId = ImageId(1),
-                thumbnailUrl = "www.example.com/blue",
-                largeUrl = "www.example.com/blue",
-                types = persistentListOf("Front"),
-                comment = "",
-            ),
-            ImageMetadata(
-                imageId = ImageId(2),
-                thumbnailUrl = "www.example.com/red",
-                largeUrl = "www.example.com/red",
-                types = persistentListOf("Back"),
-                comment = "",
-            ),
+private val images = listOf(
+    ImageMetadataWithEntity(
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(1),
+            rawThumbnailUrl = "www.example.com/blue",
+            rawLargeUrl = "www.example.com/blue",
+            types = persistentListOf("Front"),
+            comment = "page 1",
+        ),
+        musicBrainzEntity = MusicBrainzEntity(
+            id = "r",
+            type = MusicBrainzEntityType.RELEASE,
+        ),
+        name = "Title",
+        disambiguation = "with disambiguation",
+    ),
+    ImageMetadataWithEntity(
+        imageMetadata = ImageMetadata.Spotify(
+            imageId = ImageId(2),
+            rawThumbnailUrl = "www.example.com/red",
+            rawLargeUrl = "www.example.com/red",
         ),
     ),
+)
+private val imagesFlow = MutableStateFlow(
+    PagingData.from(images),
 )
 
 @PreviewLightDark
@@ -40,7 +50,7 @@ internal fun PreviewImagesGridUi() {
         ImagesUi(
             state = ImagesUiState(
                 title = ImagesTitle.All,
-                imageMetadataPagingDataFlow = images,
+                imageMetadataPagingDataFlow = imagesFlow,
             ),
             isCompact = false,
         )
@@ -60,8 +70,9 @@ internal fun PreviewImagesPagerUiCompact() {
                     totalPages = 2,
                 ),
                 subtitle = "Title (with disambiguation)",
-                imageMetadataPagingDataFlow = images,
+                imageMetadataPagingDataFlow = imagesFlow,
                 selectedImageIndex = 0,
+                selectedImageMetadata = images[0],
             ),
             isCompact = true,
         )
@@ -81,8 +92,9 @@ internal fun PreviewImagesPagerUiNonCompact() {
                     totalPages = 2,
                 ),
                 subtitle = "Title (with disambiguation)",
-                imageMetadataPagingDataFlow = images,
+                imageMetadataPagingDataFlow = imagesFlow,
                 selectedImageIndex = 0,
+                selectedImageMetadata = images[0],
             ),
             isCompact = false,
         )

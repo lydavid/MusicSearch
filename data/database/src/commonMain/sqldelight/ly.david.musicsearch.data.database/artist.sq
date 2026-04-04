@@ -138,6 +138,7 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   EXISTS (
     SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = artist.id
   ) AS visited,
@@ -201,6 +202,7 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
   ce.id IS NOT NULL AS collected,
   GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
@@ -261,6 +263,7 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id

@@ -8,7 +8,7 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.Artist
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 data class ArtistListItemModel(
     override val id: String,
@@ -19,8 +19,7 @@ data class ArtistListItemModel(
     val gender: ArtistGender? = null,
     val countryCode: String = "",
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

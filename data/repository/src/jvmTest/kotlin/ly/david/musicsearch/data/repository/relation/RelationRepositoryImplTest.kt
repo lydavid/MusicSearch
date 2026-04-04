@@ -36,6 +36,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -588,8 +589,10 @@ class RelationRepositoryImplTest :
                         linkedEntity = MusicBrainzEntityType.RELEASE,
                         visited = true,
                         isForwardDirection = false,
-                        imageUrl = "coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250",
-                        imageId = ImageId(1),
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1),
+                            rawThumbnailUrl = "coverartarchive.org/release/f6832901-a1ff-4ba9-8574-d3c54663fac4/28470415015-250",
+                        ),
                         lastUpdated = testDateTimeInThePast,
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),

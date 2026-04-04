@@ -2,13 +2,13 @@ package ly.david.musicsearch.shared.domain.listitem
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.Relation
+import kotlin.time.Instant
 
 /**
  * @param id For reordering animation in a lazy list.
@@ -29,8 +29,7 @@ data class RelationListItemModel(
     override val isForwardDirection: Boolean? = null,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
     val lastUpdated: Instant? = null,
 ) : ListItemModel, Relation, Visitable, NameWithDisambiguationAndAliases {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {

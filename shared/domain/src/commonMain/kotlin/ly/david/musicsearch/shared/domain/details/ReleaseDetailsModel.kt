@@ -31,7 +31,7 @@ data class ReleaseDetailsModel(
     override val quality: String = "",
 
     override val lastUpdated: Instant = Clock.System.now(),
-    override val imageMetadata: ImageMetadata = ImageMetadata(),
+    override val imageMetadata: ImageMetadata? = null,
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),

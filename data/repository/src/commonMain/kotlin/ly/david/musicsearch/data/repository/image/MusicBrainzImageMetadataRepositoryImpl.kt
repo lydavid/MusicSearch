@@ -19,11 +19,13 @@ import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
@@ -44,7 +46,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
         mbid: String,
         entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount {
+    ): ImageMetadataWithCount? {
         if (forceRefresh) {
             imageUrlDao.deleteAllImageMetadtaById(mbid)
         }
@@ -52,7 +54,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
         val cachedImageMetadata = imageUrlDao.getFrontImageMetadata(mbid)
         return if (cachedImageMetadata == null) {
             saveImageMetadataFromNetwork(mbid, entity)
-            imageUrlDao.getFrontImageMetadata(mbid) ?: ImageMetadataWithCount()
+            imageUrlDao.getFrontImageMetadata(mbid)
         } else {
             cachedImageMetadata
         }
@@ -76,21 +78,35 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
     private suspend fun fetchImageMetadataFromNetwork(
         mbid: String,
         entity: MusicBrainzEntityType,
-        completion: suspend (List<ImageMetadata>) -> Unit,
+        completion: suspend (List<RawImageMetadata>) -> Unit,
     ) {
         try {
             val coverArts: CoverArtsResponse = coverArtArchiveApi.getCoverArts(mbid, entity)
-            val imageMetadataList: MutableList<ImageMetadata> = coverArts.toImageMetadataList().toMutableList()
+            val imageMetadataList = coverArts.toImageMetadataList().toMutableList()
 
-            // We use an empty ImageUrls to represent that we've searched but failed to find any images.
+            // We use an empty instance to represent that we've searched but failed to find any images.
             if (imageMetadataList.isEmpty()) {
-                imageMetadataList.add(ImageMetadata())
+                imageMetadataList.add(
+                    RawImageMetadata(
+                        thumbnailUrl = "",
+                        largeUrl = "",
+                        source = ImageSource.INTERNET_ARCHIVE,
+                    ),
+                )
             }
 
             completion(imageMetadataList)
         } catch (ex: HandledException) {
             if (ex.errorResolution == ErrorResolution.None) {
-                completion(listOf(ImageMetadata()))
+                completion(
+                    listOf(
+                        RawImageMetadata(
+                            thumbnailUrl = "",
+                            largeUrl = "",
+                            source = ImageSource.INTERNET_ARCHIVE,
+                        ),
+                    ),
+                )
             } else {
                 logger.e(ex)
             }
@@ -103,7 +119,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
 
     private val mutex = Mutex()
     private var saveImageMetadataJob: Job? = null
-    private var mbidToImageMetadataMap: HashMap<String, List<ImageMetadata>> = hashMapOf()
+    private var mbidToImageMetadataMap: HashMap<String, List<RawImageMetadata>> = hashMapOf()
     private var lastSaved = Clock.System.now()
 
     override suspend fun saveImageMetadata(
@@ -159,7 +175,7 @@ internal class MusicBrainzImageMetadataRepositoryImpl(
         mbid: String?,
         query: String,
         sortOption: ImagesSortOption,
-    ): Flow<PagingData<ImageMetadata>> = Pager(
+    ): Flow<PagingData<ImageMetadataWithEntity>> = Pager(
         config = PagingConfig(
             pageSize = 100,
             initialLoadSize = 100,

@@ -4,7 +4,8 @@ import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.wikimedia.api.WikimediaApi
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageSource
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.wikimedia.MbidWikipediaDao
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -90,8 +91,12 @@ internal class WikimediaRepositoryImpl(
 
     override suspend fun getWikimediaImage(
         urls: List<RelationListItemModel>,
-    ): ImageMetadata {
-        val wikidataId = getWikimediaId(urls) ?: return ImageMetadata()
+    ): RawImageMetadata {
+        val wikidataId = getWikimediaId(urls) ?: return RawImageMetadata(
+            thumbnailUrl = "",
+            largeUrl = "",
+            source = ImageSource.WIKIMEDIA,
+        )
         return wikimediaApi.getWikimediaImageUrls(
             wikidataId = wikidataId,
         )

@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -249,7 +251,10 @@ internal fun PreviewReleaseListItemWithCoverArt() {
             release = ReleaseListItemModel(
                 id = "1",
                 name = "Release title",
-                imageUrl = "www.example.com/image",
+                imageMetadata = ImageMetadata.InternetArchive(
+                    imageId = ImageId(1L),
+                    rawThumbnailUrl = "www.example.com/image",
+                ),
             ),
             filterText = "",
             showMoreInfo = true,

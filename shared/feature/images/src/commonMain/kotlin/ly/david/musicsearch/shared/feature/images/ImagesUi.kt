@@ -53,7 +53,9 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.common.appendOptionalText
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
+import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
@@ -101,7 +103,7 @@ internal fun ImagesUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadata> = state
+    val imageMetadataLazyPagingItems: LazyPagingItems<ImageMetadataWithEntity> = state
         .imageMetadataPagingDataFlow
         .collectAsLazyPagingItems()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -119,14 +121,6 @@ internal fun ImagesUi(
         )
     }
 
-    val title = when (val title = state.title) {
-        is ImagesTitle.All -> stringResource(Res.string.images)
-        is ImagesTitle.Selected -> {
-            val pages = "${title.page}/${title.totalPages}"
-            "[$pages]".appendOptionalText(title.typeAndComment)
-        }
-    }
-
     LaunchedEffect(imageMetadataLazyPagingItems.itemCount) {
         if (imageMetadataLazyPagingItems.itemCount == 1) {
             eventSink(ImagesUiEvent.AutoSelectSingleImage)
@@ -137,6 +131,14 @@ internal fun ImagesUi(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
         topBar = {
+            val title = when (val title = state.title) {
+                is ImagesTitle.All -> stringResource(Res.string.images)
+                is ImagesTitle.Selected -> {
+                    val pages = "${title.page}/${title.totalPages}"
+                    "[$pages]".appendOptionalText(title.typeAndComment)
+                }
+            }
+
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
@@ -146,7 +148,7 @@ internal fun ImagesUi(
                 subtitle = state.subtitle,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
-                    state.url?.let { url ->
+                    state.linkUrl.ifNotEmpty { url ->
                         OpenInBrowserMenuItem(
                             url = url,
                         )
@@ -162,19 +164,18 @@ internal fun ImagesUi(
                     }
                 },
                 subtitleDropdownMenuItems = {
-                    val name = state.selectedImageMetadata?.name ?: return@TopAppBarWithFilter
-                    val entity = state.selectedImageMetadata.entity ?: return@TopAppBarWithFilter
-                    val id = state.selectedImageMetadata.mbid ?: return@TopAppBarWithFilter
+                    val name = state.selectedImageMetadata?.getNameWithDisambiguation() ?: return@TopAppBarWithFilter
+                    val entity = state.selectedImageMetadata.musicBrainzEntity ?: return@TopAppBarWithFilter
 
                     DropdownMenuItem(
                         text = { Text(name) },
-                        leadingIcon = { EntityIcon(entityType = entity) },
+                        leadingIcon = { EntityIcon(entityType = entity.type) },
                         onClick = {
                             closeMenu()
                             eventSink(
                                 ImagesUiEvent.ClickItem(
-                                    entityType = entity,
-                                    id = id,
+                                    entityType = entity.type,
+                                    id = entity.id,
                                 ),
                             )
                         },
@@ -188,7 +189,7 @@ internal fun ImagesUi(
 
         if (capturedSelectedImageIndex == null) {
             CoverArtsGrid(
-                imageMetadataList = imageMetadataLazyPagingItems,
+                imageMetadataWithEntityList = imageMetadataLazyPagingItems,
                 onImageClick = { index ->
                     val snapshot = imageMetadataLazyPagingItems
                         .itemSnapshotList
@@ -206,7 +207,7 @@ internal fun ImagesUi(
             )
         } else {
             CoverArtsPager(
-                imageMetadataList = imageMetadataLazyPagingItems,
+                imageMetadataWithEntityList = imageMetadataLazyPagingItems,
                 selectedImageIndex = capturedSelectedImageIndex,
                 isCompact = isCompact,
                 onImageChange = { index ->
@@ -227,7 +228,7 @@ internal fun ImagesUi(
 
 @Composable
 private fun CoverArtsGrid(
-    imageMetadataList: LazyPagingItems<ImageMetadata>,
+    imageMetadataWithEntityList: LazyPagingItems<ImageMetadataWithEntity>,
     onImageClick: (index: Int) -> Unit,
     lazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
@@ -249,17 +250,15 @@ private fun CoverArtsGrid(
         verticalArrangement = Arrangement.spacedBy(imagesGridPaddingDp.dp),
     ) {
         items(
-            count = imageMetadataList.itemCount,
-            key = imageMetadataList.itemKey { it.imageId.value },
-            contentType = { ImageMetadata() },
+            count = imageMetadataWithEntityList.itemCount,
+            key = imageMetadataWithEntityList.itemKey { it.imageMetadata.imageId.value },
         ) { index ->
-            imageMetadataList[index]?.let { imageMetadata ->
+            imageMetadataWithEntityList[index]?.let { imageMetadataWithEntity ->
                 // Because the number of images displayed can change when we filter
                 // the placeholder key must not depend on the index of the initial set of images
                 ThumbnailImage(
-                    url = imageMetadata.thumbnailUrl,
-                    imageId = imageMetadata.imageId,
-                    placeholderIcon = imageMetadata.entity?.getIcon(),
+                    imageMetadata = imageMetadataWithEntity.imageMetadata,
+                    placeholderIcon = imageMetadataWithEntity.musicBrainzEntity?.type?.getIcon(),
                     size = imageSize,
                     modifier = Modifier.clickable {
                         onImageClick(index)
@@ -272,7 +271,7 @@ private fun CoverArtsGrid(
 
 @Composable
 private fun CoverArtsPager(
-    imageMetadataList: LazyPagingItems<ImageMetadata>,
+    imageMetadataWithEntityList: LazyPagingItems<ImageMetadataWithEntity>,
     selectedImageIndex: Int,
     isCompact: Boolean,
     onImageChange: (index: Int) -> Unit,
@@ -283,7 +282,7 @@ private fun CoverArtsPager(
     val latestOnImageChange by rememberUpdatedState(onImageChange)
     val pagerState = rememberPagerState(
         initialPage = selectedImageIndex,
-        pageCount = { imageMetadataList.itemCount },
+        pageCount = { imageMetadataWithEntityList.itemCount },
     )
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -330,15 +329,14 @@ private fun CoverArtsPager(
             state = pagerState,
             beyondViewportPageCount = 1,
         ) { page ->
-            imageMetadataList[page]?.let { imageMetadata ->
+            imageMetadataWithEntityList[page]?.let { imageMetadataWithEntity ->
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     LargeImage(
-                        url = imageMetadata.largeUrl,
-                        imageId = imageMetadata.imageId,
+                        imageMetadata = imageMetadataWithEntity.imageMetadata,
                         isCompact = isCompact,
                         zoomEnabled = true,
                     )

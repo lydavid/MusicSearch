@@ -59,7 +59,8 @@ SELECT
   lookup_history.number_of_visits,
   lookup_history.last_accessed,
   mi.thumbnail_url,
-  mi.id AS imageId
+  mi.id AS imageId,
+  mi.source
 FROM lookup_history
 LEFT JOIN all_primary_alias ON lookup_history.mbid = all_primary_alias.mbid
 LEFT JOIN mbid_image mi ON mi.mbid = lookup_history.mbid
