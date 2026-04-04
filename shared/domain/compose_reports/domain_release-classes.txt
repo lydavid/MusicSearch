@@ -287,7 +287,7 @@ stable class ly.david.musicsearch.shared.domain.details.RecordingDetailsModel {
   stable val listenBrainzUrl: String
   <runtime stability> = 
 }
-unstable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
+stable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
@@ -308,9 +308,9 @@ unstable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val textRepresentation: TextRepresentationUiModel
   stable val formattedFormats: String
   stable val formattedTracks: String
-  unstable val releaseGroup: ReleaseGroupForRelease?
-  unstable val areas: List<AreaListItemModel>
-  unstable val labels: List<LabelListItemModel>
+  stable val releaseGroup: ReleaseGroupForRelease?
+  runtime val areas: ImmutableList<AreaListItemModel>
+  runtime val labels: ImmutableList<LabelListItemModel>
   stable val releaseLength: Int?
   stable val hasNullLength: Boolean
   stable val listenCount: Long?
@@ -318,7 +318,7 @@ unstable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val listenBrainzUrl: String
   stable val mostListenedTrackCount: Long
   stable val completeListenCount: Long
-  <runtime stability> = Unstable
+  <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel {
   stable val id: String
@@ -463,18 +463,27 @@ stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.InternetArch
   stable val rawLargeUrl: String
   stable val types: ImmutableList<String>
   stable val comment: String
+  stable val thumbnailImageUrl: String
+  stable val largeImageUrl: String
+  stable val linkUrl: String
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.Spotify {
   stable val imageId: ImageId
   stable val rawThumbnailUrl: String
   stable val rawLargeUrl: String
+  stable val thumbnailImageUrl: String
+  stable val largeImageUrl: String
+  stable val linkUrl: String
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.Wikimedia {
   stable val imageId: ImageId
   stable val rawThumbnailUrl: String
   stable val rawLargeUrl: String
+  stable val thumbnailImageUrl: String
+  stable val largeImageUrl: String
+  stable val linkUrl: String
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.image.ImageMetadataRepositoryImpl {
@@ -1091,14 +1100,14 @@ unstable class ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksB
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
-unstable class ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease {
+stable class ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
   stable val firstReleaseDate: String
   stable val primaryType: String
-  unstable val secondaryTypes: List<String>
-  <runtime stability> = Unstable
+  stable val secondaryTypes: ImmutableList<String>
+  <runtime stability> = 
 }
 unstable class ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount {
   stable val primaryType: String?
