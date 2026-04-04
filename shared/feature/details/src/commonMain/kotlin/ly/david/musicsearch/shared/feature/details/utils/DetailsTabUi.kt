@@ -83,7 +83,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
             item {
                 if (filterText.isBlank()) {
                     LargeImage(
-                        imageMetadata = imageMetadata,
+                        imageMetadata = detailsTabUiState.imageMetadata,
                         onClick = onImageClick,
                     )
                 }
@@ -105,7 +105,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
 
             item {
                 WikipediaSection(
-                    extract = wikipediaExtract,
+                    extract = detailsTabUiState.wikipediaExtract,
                     filterText = filterText,
                 )
             }

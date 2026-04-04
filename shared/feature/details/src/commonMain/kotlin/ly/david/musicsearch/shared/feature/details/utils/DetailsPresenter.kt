@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
@@ -35,6 +36,7 @@ import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
+import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -66,7 +68,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val wikimediaRepository: WikimediaRepository,
     private val collectionRepository: CollectionRepository,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
-    private val clock: Clock = Clock.System,
 ) : Presenter<DetailsUiState<DetailsModel>>, RecordVisit {
 
     abstract fun getTabs(): ImmutableList<Tab>
@@ -95,11 +96,12 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var isLoading by rememberSaveable { mutableStateOf(true) }
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var numberOfImages: Int? by rememberSaveable { mutableStateOf(null) }
+        var imageMetadata: ImageMetadata? by rememberRetained { mutableStateOf(null) }
+        var wikipediaExtract: WikipediaExtract by rememberRetained { mutableStateOf(WikipediaExtract()) }
         var detailsModel: DetailsModel? by rememberRetained { mutableStateOf(null) }
         var selectedTab by rememberSaveable { mutableStateOf(Tab.DETAILS) }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
-        var refreshedLocalAt by remember { mutableStateOf(clock.now()) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
@@ -120,12 +122,16 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
 
         val loginUiState = musicBrainzLoginPresenter.present()
 
-        LaunchedEffect(forceRefreshDetails, refreshedLocalAt) {
+        var detailsRequestKey by remember { mutableStateOf(0) }
+        var imageMetadataRequestKey by remember { mutableStateOf(0) }
+        var wikipediaRequestKey by remember { mutableStateOf(0) }
+
+        LaunchedEffect(detailsRequestKey) {
             try {
                 isLoading = true
                 val newDetailsModel = lookupDetailsModel(
-                    screen.id,
-                    forceRefreshDetails,
+                    id = screen.id,
+                    forceRefresh = forceRefreshDetails,
                 )
                 subtitle = getSubtitle(newDetailsModel)
                 detailsModel = newDetailsModel
@@ -147,7 +153,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             searchHint = getSearchHint(detailsModel),
         )
 
-        LaunchedEffect(forceRefreshDetails, detailsModel) {
+        LaunchedEffect(detailsModel?.id, imageMetadataRequestKey) {
             val showImage = setOf(
                 MusicBrainzEntityType.ARTIST,
                 MusicBrainzEntityType.EVENT,
@@ -162,22 +168,17 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 forceRefresh = forceRefreshDetails,
             )
             numberOfImages = imageMetadataWithCount?.count ?: 0
-            val imageMetadata = imageMetadataWithCount?.imageMetadata ?: return@LaunchedEffect
-            detailsModel = detailsModel?.withImageMetadata(
-                imageMetadata = imageMetadata,
-            ) as DetailsModel?
+            imageMetadata = imageMetadataWithCount?.imageMetadata ?: return@LaunchedEffect
         }
 
-        LaunchedEffect(forceRefreshDetails, detailsModel) {
+        LaunchedEffect(detailsModel?.id, wikipediaRequestKey) {
             wikimediaRepository.getWikipediaExtract(
                 mbid = detailsModel?.id ?: return@LaunchedEffect,
                 urls = detailsModel?.urls ?: return@LaunchedEffect,
                 languageTag = Locale.current.language,
                 forceRefresh = forceRefreshDetails,
-            ).onSuccess { wikipediaExtract ->
-                detailsModel = detailsModel?.withWikipediaExtract(
-                    wikipediaExtract = wikipediaExtract,
-                ) as DetailsModel?
+            ).onSuccess { newWikipediaExtract ->
+                wikipediaExtract = newWikipediaExtract
             }.onFailure {
                 snackbarMessage = it.message
             }
@@ -215,11 +216,14 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 }
 
                 DetailsUiEvent.RefreshLocalDetails -> {
-                    refreshedLocalAt = clock.now()
+                    detailsRequestKey++
                 }
 
                 DetailsUiEvent.ForceRefreshDetails -> {
                     forceRefreshDetails = true
+                    detailsRequestKey++
+                    imageMetadataRequestKey++
+                    wikipediaRequestKey++
                 }
 
                 is DetailsUiEvent.ToggleSelectItem -> {
@@ -302,7 +306,9 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             detailsTabUiState = DetailsTabUiState(
                 isLoading = isLoading,
                 handledException = handledException,
+                imageMetadata = imageMetadata,
                 numberOfImages = numberOfImages,
+                wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
@@ -336,7 +342,9 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
 internal data class DetailsTabUiState(
     val isLoading: Boolean = false,
     val handledException: HandledException? = null,
+    val imageMetadata: ImageMetadata? = null,
     val numberOfImages: Int? = null,
+    val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,
     val isExternalLinksCollapsed: Boolean = false,

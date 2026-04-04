@@ -8,11 +8,9 @@ import ly.david.musicsearch.shared.domain.artist.Artist
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -29,9 +27,7 @@ data class ArtistDetailsModel(
     val areaListItemModel: AreaListItemModel? = null,
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
-    override val imageMetadata: ImageMetadata? = null,
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
-    override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenCount: Long? = null,
     val latestListens: ImmutableList<ListenWithRecording> = persistentListOf(),
@@ -39,14 +35,6 @@ data class ArtistDetailsModel(
 ) : Artist, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
-    }
-
-    override fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel {
-        return copy(imageMetadata = imageMetadata)
-    }
-
-    override fun withWikipediaExtract(wikipediaExtract: WikipediaExtract): MusicBrainzDetailsModel {
-        return copy(wikipediaExtract = wikipediaExtract)
     }
 
     override fun withUrls(urls: ImmutableList<RelationListItemModel>): MusicBrainzDetailsModel {

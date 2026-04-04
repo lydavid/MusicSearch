@@ -1211,7 +1211,7 @@ class ReleasesListRepositoryImplTest :
                 primaryType = "Single",
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-            areas = listOf(
+            areas = persistentListOf(
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",
@@ -1384,7 +1384,7 @@ class ReleasesListRepositoryImplTest :
                 primaryType = "Single",
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-            areas = listOf(
+            areas = persistentListOf(
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",
@@ -1555,7 +1555,7 @@ class ReleasesListRepositoryImplTest :
                 primaryType = "Single",
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
-            areas = listOf(
+            areas = persistentListOf(
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",

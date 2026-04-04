@@ -17,15 +17,6 @@ private val releaseGroup = ReleaseGroupDetailsModel(
     primaryType = "Single",
     firstReleaseDate = "1981-10",
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-    wikipediaExtract = WikipediaExtract(
-        extract = "\"Under Pressure\" is a song by the British rock band Queen and " +
-            "singer David Bowie. Originally released as a single in October 1981, " +
-            "it was later included on Queen's 1982 album Hot Space. The song reached " +
-            "number one on the UK Singles Chart, becoming Queen's second number-one hit " +
-            "in their home country and Bowie's third, and also charted in the top 10 in " +
-            "more than 10 countries around the world.",
-        wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
-    ),
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
@@ -51,16 +42,27 @@ private val releaseGroup = ReleaseGroupDetailsModel(
     ),
 )
 
+private val detailsTabUiState = DetailsTabUiState(
+    numberOfImages = 1,
+    now = Instant.parse("2025-06-05T19:42:20Z"),
+    wikipediaExtract = WikipediaExtract(
+        extract = "\"Under Pressure\" is a song by the British rock band Queen and " +
+            "singer David Bowie. Originally released as a single in October 1981, " +
+            "it was later included on Queen's 1982 album Hot Space. The song reached " +
+            "number one on the UK Singles Chart, becoming Queen's second number-one hit " +
+            "in their home country and Bowie's third, and also charted in the top 10 in " +
+            "more than 10 countries around the world.",
+        wikipediaUrl = "https://en.wikipedia.org/wiki/Under_Pressure",
+    ),
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupDetailsUi() {
     PreviewWithTransitionAndOverlays {
         ReleaseGroupDetailsTabUi(
             releaseGroup = releaseGroup,
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 1,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-            ),
+            detailsTabUiState = detailsTabUiState,
         )
     }
 }
@@ -71,9 +73,7 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
     PreviewWithTransitionAndOverlays {
         ReleaseGroupDetailsTabUi(
             releaseGroup = releaseGroup,
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 1,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
+            detailsTabUiState = detailsTabUiState.copy(
                 isExternalLinksCollapsed = true,
             ),
         )

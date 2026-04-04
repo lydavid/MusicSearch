@@ -4,7 +4,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -13,7 +12,6 @@ import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
-import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -31,9 +29,7 @@ data class ReleaseDetailsModel(
     override val quality: String = "",
 
     override val lastUpdated: Instant = Clock.System.now(),
-    override val imageMetadata: ImageMetadata? = null,
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
-    override val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 
@@ -57,14 +53,6 @@ data class ReleaseDetailsModel(
 ) : Release, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)
-    }
-
-    override fun withImageMetadata(imageMetadata: ImageMetadata): MusicBrainzDetailsModel {
-        return copy(imageMetadata = imageMetadata)
-    }
-
-    override fun withWikipediaExtract(wikipediaExtract: WikipediaExtract): MusicBrainzDetailsModel {
-        return copy(wikipediaExtract = wikipediaExtract)
     }
 
     override fun withUrls(urls: ImmutableList<RelationListItemModel>): MusicBrainzDetailsModel {

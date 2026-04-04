@@ -453,12 +453,6 @@ private val country = AreaDetailsModel(
             name = "https://m.wikidata.org/wiki/Q16",
         ),
     ),
-    wikipediaExtract = WikipediaExtract(
-        extract = "Canada is a country in North America. Its ten provinces and three territories extend from " +
-            "the Atlantic Ocean to the Pacific Ocean and northward into the Arctic Ocean, " +
-            "making it the world's second-largest country by total area, with the world's longest coastline.",
-        wikipediaUrl = "https://en.wikipedia.org/wiki/Canada",
-    ),
 )
 
 private val detailsUiState = DetailsUiState(
@@ -489,6 +483,12 @@ private val detailsUiState = DetailsUiState(
     ),
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-06-05T20:42:20Z"),
+        wikipediaExtract = WikipediaExtract(
+            extract = "Canada is a country in North America. Its ten provinces and three territories extend from " +
+                "the Atlantic Ocean to the Pacific Ocean and northward into the Arctic Ocean, " +
+                "making it the world's second-largest country by total area, with the world's longest coastline.",
+            wikipediaUrl = "https://en.wikipedia.org/wiki/Canada",
+        ),
     ),
     allEntitiesListUiState = AllEntitiesListUiState(
         artistsListUiState = EntitiesListUiState(
