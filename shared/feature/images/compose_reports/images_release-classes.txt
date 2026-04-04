@@ -21,7 +21,7 @@ stable class ly.david.musicsearch.shared.feature.images.ImagesPresenter {
   stable val navigator: Navigator
   unstable val appPreferences: AppPreferences
   unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
-  runtime val getMusicBrainzCoverArtUrl: GetMusicBrainzCoverArtUrl
+  unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.images.ImagesTitle.All {
@@ -39,14 +39,14 @@ stable class ly.david.musicsearch.shared.feature.images.ImagesTitle {
 stable class ly.david.musicsearch.shared.feature.images.ImagesUiState {
   stable val title: ImagesTitle
   stable val subtitle: String
-  stable val url: String?
+  stable val linkUrl: String
   stable val numberOfImagesPerRow: Int
   stable val imagesGridPaddingDp: Int
-  unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadata>>
+  unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadataWithEntity>>
   stable val lazyGridState: LazyGridState
   stable val sortOption: ImagesSortOption
   stable val selectedImageIndex: Int?
-  runtime val selectedImageMetadata: ImageMetadata?
+  runtime val selectedImageMetadata: ImageMetadataWithEntity?
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val showSort: Boolean
   stable val eventSink: Function1<ImagesUiEvent, Unit>
@@ -56,7 +56,7 @@ stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.NavigateUp
 }
 stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.SelectImage {
   stable val index: Int
-  unstable val imageMetadataSnapshot: List<ImageMetadata?>
+  unstable val imageMetadataSnapshot: List<ImageMetadataWithEntity?>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.AutoSelectSingleImage {

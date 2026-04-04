@@ -316,8 +316,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable fun ly.david.musicsearch.ui.common.image.InitializeImageLoader()
 restartable skippable fun ly.david.musicsearch.ui.common.image.LargeImage(
-  stable url: String
-  stable imageId: ImageId?
+  unstable imageMetadata: ImageMetadata?
   stable modifier: Modifier? = @static <expression>
   stable isCompact: Boolean = @static true
   stable zoomEnabled: Boolean = @static false
@@ -328,8 +327,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable placeholderIcon: ImageVector? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.image.ThumbnailImage(
-  stable url: String
-  stable imageId: ImageId?
+  unstable imageMetadata: ImageMetadata?
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static <expression>
   stable clipCircle: Boolean = @static false

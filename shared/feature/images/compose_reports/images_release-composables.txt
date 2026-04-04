@@ -17,7 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.CoverArtsGrid(
-  imageMetadataList: LazyPagingItems<ImageMetadata>
+  imageMetadataWithEntityList: LazyPagingItems<ImageMetadataWithEntity>
   stable onImageClick: Function1<@[ParameterName(name = 'index')] Int, Unit>
   stable lazyGridState: LazyGridState
   stable modifier: Modifier? = @static <expression>
@@ -25,7 +25,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable imagesGridPaddingDp: Int = @static 2
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.CoverArtsPager(
-  imageMetadataList: LazyPagingItems<ImageMetadata>
+  imageMetadataWithEntityList: LazyPagingItems<ImageMetadataWithEntity>
   stable selectedImageIndex: Int
   stable isCompact: Boolean
   stable onImageChange: Function1<@[ParameterName(name = 'index')] Int, Unit>

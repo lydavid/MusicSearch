@@ -279,8 +279,7 @@ stable class ly.david.musicsearch.ui.common.screen.DetailsScreen {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.CoverArtsScreen {
-  stable val id: String?
-  stable val entity: MusicBrainzEntityType?
+  runtime val entity: MusicBrainzEntity?
   runtime var CREATOR: Creator<CoverArtsScreen>
   <runtime stability> = Stable
 }
