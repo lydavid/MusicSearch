@@ -25,6 +25,6 @@ appId: io.github.lydavid.musicsearch.debug
 - tapOn: "Releases"
 - tapOn: "More actions"
 - tapOn: "Stats"
-- assertVisible: "Cached 5 / 5"
+- assertVisible: "Cached 6 / 6"
 
 - stopRecording
