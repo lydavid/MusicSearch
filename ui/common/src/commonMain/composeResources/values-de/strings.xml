@@ -270,4 +270,19 @@
     <string name="letsYouModifyYourListens">Dies lässt dich deine Gehörten anpassen</string>
     <string name="clickToLogoutFromListenBrainz">Zum Ausloggen von ListenBrainz klicken</string>
     <string name="findYourListenBrainzUserTokenAt">Finde deinen ListenBrainz Benutzer Token bei %1$s.</string>
+    <string name="userToken">Benutzer Token</string>
+    <string name="enterYourUserToken">Geben Sie Ihr Benutzer Token ein</string>
+    <string name="facets">Facetten</string>
+    <string name="clearFacets">Facetten löschen</string>
+    <string name="xSongs">%1$d Lieder</string>
+    <string name="filterByEntity">Nach Entität filtern</string>
+    <string name="unlinkedListens">Nicht verlinkte Gehörte</string>
+    <string name="syncingWithMusicBrainz">Mit MusicBrainz synchronisieren</string>
+    <string name="collectionDoesNotExist">Die Sammlung existiert nicht</string>
+    <string name="failedToAddToCollection">Das Hinzufügen zu %1$s ist fehlgeschlagen. %2$s</string>
+    <string name="alreadyInCollection">Bereits in %1$s</string>
+    <string name="addedOneToCollection">Hinzugefügt zu %1$s</string>
+    <string name="addedMultipleToCollection">%1$d hinzugefügt zu %2$s</string>
+    <string name="addedMultipleToCollectionSomeAlreadyAdded">%1$d hinzugefügt zu%2$s. %3$d bereits in der Sammlung</string>
+    <string name="enterYourListenBrainzUsername">Gib deinen Benutzernamen %1$s ein, um deine Gehörten in die App zu laden.</string>
 </resources>
