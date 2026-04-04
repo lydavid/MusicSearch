@@ -133,7 +133,7 @@ class ReleaseGroupDaoImpl(
                     disambiguation = disambiguation,
                     firstReleaseDate = firstReleaseDate,
                     primaryType = primaryType,
-                    secondaryTypes = secondaryTypes,
+                    secondaryTypes = secondaryTypes.toPersistentList(),
                 )
             },
         ).executeAsOneOrNull()

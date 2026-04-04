@@ -36,9 +36,9 @@ private val release = ReleaseDetailsModel(
         name = "ウタの歌 ONE PIECE FILM RED",
         firstReleaseDate = "",
         primaryType = "Album",
-        secondaryTypes = listOf("Soundtrack"),
+        secondaryTypes = persistentListOf("Soundtrack"),
     ),
-    areas = listOf(
+    areas = persistentListOf(
         AreaListItemModel(
             id = "2db42837-c832-3c27-b4a3-08198f75693c",
             name = "Japan",
@@ -47,7 +47,7 @@ private val release = ReleaseDetailsModel(
             date = "2022-08-10",
         ),
     ),
-    labels = listOf(
+    labels = persistentListOf(
         LabelListItemModel(
             id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
             name = "Virgin Music " +

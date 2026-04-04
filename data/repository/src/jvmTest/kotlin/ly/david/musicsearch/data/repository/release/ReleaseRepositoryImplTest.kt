@@ -734,7 +734,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
-                areas = listOf(
+                areas = persistentListOf(
                     AreaListItemModel(
                         id = "2db42837-c832-3c27-b4a3-08198f75693c",
                         name = "Japan",
@@ -742,7 +742,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         date = "2011-03-16",
                     ),
                 ),
-                labels = listOf(
+                labels = persistentListOf(
                     LabelListItemModel(
                         id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
                         name = "Sony Records",
@@ -948,13 +948,13 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     firstReleaseDate = "2011-03-16",
                     disambiguation = "",
                     primaryType = "Album",
-                    secondaryTypes = listOf(
+                    secondaryTypes = persistentListOf(
                         "Compilation",
                         "Soundtrack",
                     ),
                 ),
                 listenBrainzUrl = "/album/a5a83577-ddca-4428-bf6b-b852296bc5f3",
-                areas = listOf(
+                areas = persistentListOf(
                     AreaListItemModel(
                         id = "2db42837-c832-3c27-b4a3-08198f75693c",
                         name = "Japan",
@@ -964,7 +964,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         visited = false,
                     ),
                 ),
-                labels = emptyList(),
+                labels = persistentListOf(),
                 urls = persistentListOf(),
                 releaseLength = 18733,
                 hasNullLength = false,
@@ -1169,12 +1169,12 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     firstReleaseDate = "2011-03-16",
                     disambiguation = "",
                     primaryType = "Album",
-                    secondaryTypes = listOf(
+                    secondaryTypes = persistentListOf(
                         "Compilation",
                         "Soundtrack",
                     ),
                 ),
-                areas = listOf(
+                areas = persistentListOf(
                     AreaListItemModel(
                         id = "2db42837-c832-3c27-b4a3-08198f75693c",
                         name = "Japan",
@@ -1184,7 +1184,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         visited = false,
                     ),
                 ),
-                labels = emptyList(),
+                labels = persistentListOf(),
                 urls = persistentListOf(),
                 releaseLength = 5619900,
                 hasNullLength = false,
@@ -1305,11 +1305,11 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 id = "22760f81-37ce-47ce-98b6-65f8a285f083",
                 name = "ウタの歌 ONE PIECE FILM RED",
                 primaryType = "Album",
-                secondaryTypes = listOf(),
+                secondaryTypes = persistentListOf(),
                 firstReleaseDate = "2022-08-10",
             ),
             listenBrainzUrl = "/album/22760f81-37ce-47ce-98b6-65f8a285f083",
-            areas = listOf(
+            areas = persistentListOf(
                 AreaListItemModel(
                     id = "2db42837-c832-3c27-b4a3-08198f75693c",
                     name = "Japan",
@@ -1318,7 +1318,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     visited = false,
                 ),
             ),
-            labels = listOf(
+            labels = persistentListOf(
                 LabelListItemModel(
                     id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
                     name = "Virgin Music",
@@ -1394,7 +1394,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 primaryType = "Album",
                 firstReleaseDate = "",
             ),
-            areas = listOf(
+            areas = persistentListOf(
                 AreaListItemModel(
                     id = "8a754a16-0027-3a29-b6d7-2b40ea0481ed",
                     name = "United Kingdom",
@@ -1431,7 +1431,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     visited = false,
                 ),
             ),
-            labels = listOf(
+            labels = persistentListOf(
                 LabelListItemModel(
                     id = "1a917e6f-54f5-4964-bebf-5d4e2442ceb4",
                     name = "Big Machine Records",

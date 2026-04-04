@@ -43,8 +43,8 @@ data class ReleaseDetailsModel(
     val formattedTracks: String = "",
 
     val releaseGroup: ReleaseGroupForRelease? = null,
-    val areas: List<AreaListItemModel> = listOf(),
-    val labels: List<LabelListItemModel> = listOf(),
+    val areas: ImmutableList<AreaListItemModel> = persistentListOf(),
+    val labels: ImmutableList<LabelListItemModel> = persistentListOf(),
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,

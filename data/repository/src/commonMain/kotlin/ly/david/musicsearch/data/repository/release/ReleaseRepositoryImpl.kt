@@ -109,8 +109,8 @@ class ReleaseRepositoryImpl(
         return release.copy(
             artistCredits = artistCredits.toPersistentList(),
             releaseGroup = releaseGroup,
-            labels = labels,
-            areas = releaseEvents.map { it.toAreaListItemModel() },
+            labels = labels.toPersistentList(),
+            areas = releaseEvents.map { it.toAreaListItemModel() }.toPersistentList(),
             urls = urlRelations,
             aliases = aliases,
             listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/album/${releaseGroup.id}",

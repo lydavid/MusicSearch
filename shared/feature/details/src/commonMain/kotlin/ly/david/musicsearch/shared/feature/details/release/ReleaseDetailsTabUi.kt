@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
@@ -182,14 +183,14 @@ internal fun ReleaseDetailsTabUi(
                         label.labelCode.toString(),
                         label.catalogNumbers,
                     ).any { it?.lowercase()?.contains(searchText) == true }
-                },
+                }.toPersistentList(),
                 areas = release.areas.filter { area ->
                     val searchText = filterText.lowercase()
                     listOf(
                         area.getNameWithDisambiguation(),
                         area.date,
                     ).any { it?.lowercase()?.contains(searchText) == true }
-                },
+                }.toPersistentList(),
             )
             .run {
                 labels.ifNotNullOrEmpty {
