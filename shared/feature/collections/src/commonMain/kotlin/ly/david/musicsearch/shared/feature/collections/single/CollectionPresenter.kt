@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
@@ -170,7 +171,12 @@ internal class CollectionPresenter(
         return CollectionUiState(
             title = title,
             collection = collection,
-            url = getMusicBrainzUrl(MusicBrainzEntityType.COLLECTION, screen.collectionId),
+            url = getMusicBrainzUrl(
+                entity = MusicBrainzEntity(
+                    type = MusicBrainzEntityType.COLLECTION,
+                    id = screen.collectionId,
+                ),
+            ),
             softDeleteFeedback = softDeleteFeedback,
             finalFeedback = finalFeedback,
             topAppBarFilterState = topAppBarFilterState,

@@ -63,8 +63,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             ThumbnailImage(
-                url = listen.imageUrl.orEmpty(),
-                imageId = null,
+                imageMetadata = listen.imageMetadata,
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
             )
 

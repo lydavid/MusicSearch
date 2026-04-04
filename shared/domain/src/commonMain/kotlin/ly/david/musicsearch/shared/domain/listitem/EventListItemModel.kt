@@ -6,7 +6,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.event.Event
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 
 data class EventListItemModel(
     override val id: String,
@@ -16,8 +16,7 @@ data class EventListItemModel(
     override val time: String = "",
     override val cancelled: Boolean = false,
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

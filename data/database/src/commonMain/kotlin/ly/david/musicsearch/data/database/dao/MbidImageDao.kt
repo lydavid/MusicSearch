@@ -9,12 +9,16 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
+import ly.david.musicsearch.shared.domain.common.trimProtocolAndExtension
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.image.ImageId
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 
 class MbidImageDao(
@@ -25,22 +29,39 @@ class MbidImageDao(
 
     override fun saveImageMetadata(
         mbid: String,
-        imageMetadataList: List<ImageMetadata>,
+        imageMetadataList: List<RawImageMetadata>,
     ) {
         transacter.transaction {
-            imageMetadataList.forEach { urls ->
+            imageMetadataList.forEach { imageMetadata ->
+                val imageSource = imageMetadata.source
+                val processedThumbnailUrl = when (imageSource) {
+                    ImageSource.INTERNET_ARCHIVE,
+                    ImageSource.SPOTIFY,
+                    -> imageMetadata.thumbnailUrl.trimProtocolAndExtension()
+
+                    ImageSource.WIKIMEDIA -> imageMetadata.thumbnailUrl
+                }
+                val processedLargeUrl = when (imageSource) {
+                    ImageSource.INTERNET_ARCHIVE,
+                    ImageSource.SPOTIFY,
+                    -> imageMetadata.largeUrl.trimProtocolAndExtension()
+
+                    ImageSource.WIKIMEDIA -> imageMetadata.largeUrl
+                }
+
                 transacter.insert(
                     mbid = mbid,
-                    thumbnailUrl = urls.thumbnailUrl,
-                    largeUrl = urls.largeUrl,
-                    types = urls.types,
-                    comment = urls.comment,
+                    thumbnailUrl = processedThumbnailUrl,
+                    largeUrl = processedLargeUrl,
+                    types = imageMetadata.types,
+                    comment = imageMetadata.comment,
+                    source = imageSource,
                 )
             }
         }
     }
 
-    override fun saveImageMetadata(mbidToImageMetadataMap: Map<String, List<ImageMetadata>>) {
+    override fun saveImageMetadata(mbidToImageMetadataMap: Map<String, List<RawImageMetadata>>) {
         transacter.transaction {
             mbidToImageMetadataMap.forEach { (mbid, imageMetadataList) ->
                 saveImageMetadata(mbid, imageMetadataList)
@@ -58,7 +79,7 @@ class MbidImageDao(
     override fun getAllImageMetadataById(
         mbid: String,
         query: String,
-    ): PagingSource<Int, ImageMetadata> {
+    ): PagingSource<Int, ImageMetadataWithEntity> {
         return QueryPagingSource(
             countQuery = transacter.getCountOfAllImageMetadataById(
                 mbid = mbid,
@@ -72,7 +93,7 @@ class MbidImageDao(
                     query = "%$query%",
                     limit = limit,
                     offset = offset,
-                    mapper = ::mapToImageMetadata,
+                    mapper = ::mapToImageMetadataWithEntity,
                 )
             },
         )
@@ -92,7 +113,7 @@ class MbidImageDao(
     override fun getAllImageMetadata(
         query: String,
         sortOption: ImagesSortOption,
-    ): PagingSource<Int, ImageMetadata> {
+    ): PagingSource<Int, ImageMetadataWithEntity> {
         return QueryPagingSource(
             countQuery = getCountOfAllImageMetadata(
                 query = query,
@@ -108,7 +129,7 @@ class MbidImageDao(
                     leastRecentlyAdded = sortOption == ImagesSortOption.LEAST_RECENTLY_ADDED,
                     limit = limit,
                     offset = offset,
-                    mapper = ::mapToImageMetadata,
+                    mapper = ::mapToImageMetadataWithEntity,
                 )
             },
         )
@@ -119,30 +140,18 @@ class MbidImageDao(
     }
 }
 
-private fun mapToImageMetadata(
-    id: Long,
-    thumbnailUrl: String,
-    largeUrl: String,
-    types: ImmutableList<String>?,
-    comment: String?,
-) = ImageMetadata(
-    imageId = ImageId(id),
-    thumbnailUrl = thumbnailUrl,
-    largeUrl = largeUrl,
-    types = types ?: persistentListOf(),
-    comment = comment.orEmpty(),
-)
-
 private fun mapToImageMetadataWithCount(
     id: Long,
+    source: ImageSource,
     thumbnailUrl: String,
     largeUrl: String,
     types: ImmutableList<String>?,
     comment: String?,
     count: Long,
 ) = ImageMetadataWithCount(
-    imageMetadata = ImageMetadata(
-        imageId = ImageId(id),
+    imageMetadata = mapToImageMetadata(
+        id = id,
+        source = source,
         thumbnailUrl = thumbnailUrl,
         largeUrl = largeUrl,
         types = types ?: persistentListOf(),
@@ -151,8 +160,9 @@ private fun mapToImageMetadataWithCount(
     count = count.toInt(),
 )
 
-private fun mapToImageMetadata(
+private fun mapToImageMetadataWithEntity(
     id: Long,
+    source: ImageSource,
     thumbnailUrl: String,
     largeUrl: String,
     types: ImmutableList<String>?,
@@ -161,14 +171,27 @@ private fun mapToImageMetadata(
     name: String? = null,
     disambiguation: String? = null,
     entity: String? = null,
-) = ImageMetadata(
-    imageId = ImageId(id),
-    thumbnailUrl = thumbnailUrl,
-    largeUrl = largeUrl,
-    types = types ?: persistentListOf(),
-    comment = comment.orEmpty(),
-    mbid = mbid,
-    name = name,
-    disambiguation = disambiguation,
-    entity = entity?.toMusicBrainzEntityType(),
-)
+): ImageMetadataWithEntity {
+    val type = entity?.toMusicBrainzEntityType()
+    val musicBrainzEntity = if (mbid == null || type == null) {
+        null
+    } else {
+        MusicBrainzEntity(
+            id = mbid,
+            type = type,
+        )
+    }
+    return ImageMetadataWithEntity(
+        imageMetadata = mapToImageMetadata(
+            id = id,
+            source = source,
+            thumbnailUrl = thumbnailUrl,
+            largeUrl = largeUrl,
+            types = types ?: persistentListOf(),
+            comment = comment.orEmpty(),
+        ),
+        musicBrainzEntity = musicBrainzEntity,
+        name = name,
+        disambiguation = disambiguation,
+    )
+}

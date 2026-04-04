@@ -103,6 +103,7 @@ SELECT
   artist.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
@@ -134,6 +135,7 @@ SELECT
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
+  mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = event.id
@@ -262,8 +264,9 @@ getReleaseSearchResults:
 SELECT
   `release`.*,
   ac.name AS artist_credit_names,
-  images.thumbnail_url,
   images.id AS image_id,
+  images.source,
+  images.thumbnail_url,
   COALESCE(
     (
       SELECT COUNT(cc.area_id)
@@ -311,21 +314,31 @@ LIMIT :limit OFFSET :offset;
 
 getReleaseGroupSearchResults:
 SELECT
-  release_group_base.id,
-  release_group_base.name,
-  release_group_base.disambiguation,
-  release_group_base.first_release_date,
-  release_group_base.primary_type,
-  release_group_base.secondary_types,
-  release_group_base.artist_credits,
-  release_group_base.thumbnail_url,
-  release_group_base.image_id,
-  release_group_base.visited,
-  release_group_base.collected,
-  release_group_base.alias_names,
-  release_group_base.alias_locales
+  release_group.id,
+  release_group.name,
+  release_group.disambiguation,
+  release_group.first_release_date,
+  release_group.primary_type,
+  release_group.secondary_types,
+  ac.name AS artist_credits,
+  mi.id AS image_id,
+  mi.source,
+  mi.thumbnail_url,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = release_group.id
+  ) AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
+  ) AS collected,
+  GROUP_CONCAT(release_group_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
 FROM search_result sr
-INNER JOIN release_group_base ON sr.entity_id = release_group_base.id
+INNER JOIN release_group ON sr.entity_id = release_group.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
+LEFT JOIN mbid_image mi ON mi.mbid = release_group.id
+GROUP BY sr.id
 ORDER BY sr.id
 LIMIT :limit OFFSET :offset;
 

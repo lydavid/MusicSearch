@@ -10,7 +10,8 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ly.david.musicsearch.core.logging.Logger
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageSource
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 
 private const val WIKIDATA_BASE_URL = "https://www.wikidata.org/w/api.php"
@@ -82,7 +83,7 @@ internal class WikimediaApiImpl(
 
     override suspend fun getWikimediaImageUrls(
         wikidataId: String,
-    ): ImageMetadata {
+    ): RawImageMetadata {
         val wikidataUrl = WIKIDATA_BASE_URL +
             "?action=wbgetclaims" +
             "&format=json" +
@@ -105,15 +106,17 @@ internal class WikimediaApiImpl(
             ?.jsonPrimitive?.content
 
         if (imageName == null) {
-            return ImageMetadata()
+            return RawImageMetadata(
+                thumbnailUrl = "",
+                largeUrl = "",
+                source = ImageSource.WIKIMEDIA,
+            )
         }
 
-        val fullSizeUrl = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/$imageName"
-        val thumbnailUrl = "$fullSizeUrl&width=64"
-
-        return ImageMetadata(
-            thumbnailUrl = thumbnailUrl,
-            largeUrl = fullSizeUrl,
+        return RawImageMetadata(
+            thumbnailUrl = "$imageName&width=64",
+            largeUrl = imageName,
+            source = ImageSource.WIKIMEDIA,
         )
     }
 }

@@ -52,8 +52,7 @@ internal fun HistoryListItem(
                 },
                 leadingContent = {
                     ThumbnailImage(
-                        url = lookupHistory.imageUrl.orEmpty(),
-                        imageId = lookupHistory.imageId,
+                        imageMetadata = lookupHistory.imageMetadata,
                         placeholderIcon = lookupHistory.entity.getIcon(),
                         clipCircle = lookupHistory.entity == MusicBrainzEntityType.ARTIST,
                     )

@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.genre.GenreRepository
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
@@ -78,7 +79,7 @@ internal class GenrePresenter(
             title = title,
             handledException = handledException,
             genre = genre,
-            url = getMusicBrainzUrl(screen.entityType, screen.id),
+            url = getMusicBrainzUrl(entity = MusicBrainzEntity(type = screen.entityType, id = screen.id)),
             eventSink = ::genreSink,
         )
     }

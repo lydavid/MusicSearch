@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database
 
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.db.SqlDriver
+import ly.david.musicsearch.data.database.adapter.ImageSourceStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ImmutableListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.InstantLongColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
@@ -101,6 +102,7 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         mbid_imageAdapter = Mbid_image.Adapter(
             typesAdapter = ImmutableListStringColumnAdapter,
+            sourceAdapter = ImageSourceStringColumnAdapter,
         ),
         details_metadataAdapter = Details_metadata.Adapter(
             last_updatedAdapter = InstantLongColumnAdapter,

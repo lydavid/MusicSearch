@@ -38,6 +38,7 @@ import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
@@ -112,8 +113,11 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "ano feat. 幾田りら",
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
-                            imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                            imageId = ImageId(1),
+                            imageMetadata = ImageMetadata.InternetArchive(
+
+                                imageId = ImageId(1),
+                                rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                            ),
                             release = ListenRelease(
                                 id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
                                 name = "絶絶絶絶対聖域",
@@ -131,8 +135,10 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "Lotus Juice & 高橋あず美",
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -146,8 +152,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -169,8 +177,10 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "いとうかなこ",
                             recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
                             durationMs = 275640,
-                            imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
-                            imageId = ImageId(value = 4),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(value = 4),
+                                rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                            ),
                             visited = false,
                             release = ListenRelease(
                                 name = "ChaosAttractor",
@@ -187,8 +197,10 @@ class ListensListRepositoryImplTest :
                             formattedArtistCredits = "Roselia×いとうかなこ",
                             recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
                             durationMs = 273866,
-                            imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
-                            imageId = ImageId(value = 5),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(value = 5),
+                                rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                            ),
                             visited = false,
                             release = ListenRelease(
                                 name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
@@ -214,8 +226,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -239,8 +253,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track1ListenedAtMs,
                             recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
                             durationMs = 213868,
-                            imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                            imageId = ImageId(1),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(1),
+                                rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                            ),
                             release = ListenRelease(
                                 id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
                                 name = "絶絶絶絶対聖域",
@@ -264,8 +280,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -279,8 +297,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track3ListenedAtMs,
                             recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
                             durationMs = 293493,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -323,8 +343,10 @@ class ListensListRepositoryImplTest :
                             listenedAtMs = track2ListenedAtMs,
                             recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                             durationMs = 227240,
-                            imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            imageId = ImageId(2),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(2),
+                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                            ),
                             release = ListenRelease(
                                 id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                                 name = "Persona 3 Reload Original Soundtrack",
@@ -388,41 +410,57 @@ class ListensListRepositoryImplTest :
         ).asSnapshot()
         Assert.assertEquals(
             listOf(
-                ImageMetadata(
-                    imageId = ImageId(value = 5),
-                    thumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
-                    largeUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-1200",
-                    mbid = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(value = 5),
+                        rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                        rawLargeUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-1200",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
                     disambiguation = "",
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
-                ImageMetadata(
-                    imageId = ImageId(value = 4),
-                    thumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
-                    largeUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-1200",
-                    mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(value = 4),
+                        rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                        rawLargeUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-1200",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = "ChaosAttractor",
                     disambiguation = "",
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
-                ImageMetadata(
-                    imageId = ImageId(2L),
-                    thumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                    largeUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
-                    mbid = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(2L),
+                        rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        rawLargeUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-1200",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = "Persona 3 Reload Original Soundtrack",
                     disambiguation = "",
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                    largeUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-1200",
-                    mbid = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(1L),
+                        rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                        rawLargeUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-1200",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = "絶絶絶絶対聖域",
                     disambiguation = "",
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
             ),
             imageMetadataList,
@@ -443,26 +481,34 @@ class ListensListRepositoryImplTest :
                 ReleaseListItemModel(
                     id = "71c9f176-e6e3-4610-807d-b8a11b870df3",
                     name = "絶絶絶絶対聖域",
-                    imageUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                    imageId = ImageId(1L),
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+                        imageId = ImageId(1L),
+                    ),
                 ),
                 ReleaseListItemModel(
                     id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                     name = "Persona 3 Reload Original Soundtrack",
-                    imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                    imageId = ImageId(2L),
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        imageId = ImageId(2L),
+                    ),
                 ),
                 ReleaseListItemModel(
                     id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
                     name = "ChaosAttractor",
-                    imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
-                    imageId = ImageId(4L),
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                        imageId = ImageId(4L),
+                    ),
                 ),
                 ReleaseListItemModel(
                     id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
                     name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
-                    imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
-                    imageId = ImageId(5L),
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(5L),
+                        rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                    ),
                 ),
             ),
             releases,

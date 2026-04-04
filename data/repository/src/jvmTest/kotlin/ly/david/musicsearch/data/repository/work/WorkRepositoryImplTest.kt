@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
@@ -172,8 +173,10 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         formattedArtistCredits = "いとうかなこ",
                         recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
                         durationMs = 275640,
-                        imageUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
-                        imageId = ImageId(value = 4),
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(value = 4),
+                            rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+                        ),
                         visited = false,
                         release = ListenRelease(
                             name = "ChaosAttractor",
@@ -190,8 +193,10 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         formattedArtistCredits = "Roselia×いとうかなこ",
                         recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
                         durationMs = 273866,
-                        imageUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
-                        imageId = ImageId(value = 5),
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(value = 5),
+                            rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+                        ),
                         visited = false,
                         release = ListenRelease(
                             name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",

@@ -2,9 +2,9 @@ package ly.david.musicsearch.ui.common.screen
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
@@ -13,7 +13,7 @@ class NoOpMusicBrainzImageMetadataRepository : MusicBrainzImageMetadataRepositor
         mbid: String,
         entity: MusicBrainzEntityType,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount {
+    ): ImageMetadataWithCount? {
         error("Not used")
     }
 
@@ -29,7 +29,7 @@ class NoOpMusicBrainzImageMetadataRepository : MusicBrainzImageMetadataRepositor
         mbid: String?,
         query: String,
         sortOption: ImagesSortOption,
-    ): Flow<PagingData<ImageMetadata>> {
+    ): Flow<PagingData<ImageMetadataWithEntity>> {
         error("Not used")
     }
 

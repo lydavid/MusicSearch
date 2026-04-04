@@ -13,7 +13,7 @@ import kotlin.time.Instant
 sealed interface MusicBrainzDetailsModel : MusicBrainzModel, NameWithDisambiguationAndAliases {
     val lastUpdated: Instant
     val artistCredits: ImmutableList<ArtistCreditUiModel>
-    val imageMetadata: ImageMetadata
+    val imageMetadata: ImageMetadata?
     val wikipediaExtract: WikipediaExtract
     val urls: ImmutableList<RelationListItemModel>
     override val aliases: ImmutableList<BasicAlias>

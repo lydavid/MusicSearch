@@ -3,17 +3,18 @@ package ly.david.musicsearch.data.repository.image
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
-import ly.david.musicsearch.shared.domain.common.trimProtocolAndExtension
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageSource
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 
-internal fun CoverArtsResponse.toImageMetadataList(): List<ImageMetadata> {
+internal fun CoverArtsResponse.toImageMetadataList(): List<RawImageMetadata> {
     return coverArtUrls.map { it.toImageMetadata() }
 }
 
-private fun CoverArtUrls.toImageMetadata(): ImageMetadata {
-    return ImageMetadata(
-        thumbnailUrl = getThumbnailUrl()?.trimProtocolAndExtension().orEmpty(),
-        largeUrl = getUrl()?.trimProtocolAndExtension().orEmpty(),
+private fun CoverArtUrls.toImageMetadata(): RawImageMetadata {
+    return RawImageMetadata(
+        thumbnailUrl = getThumbnailUrl().orEmpty(),
+        largeUrl = getUrl().orEmpty(),
+        source = ImageSource.INTERNET_ARCHIVE,
         types = types.toPersistentList(),
         comment = comment,
     )

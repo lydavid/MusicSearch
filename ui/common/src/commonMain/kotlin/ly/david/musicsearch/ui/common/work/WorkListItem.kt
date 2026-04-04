@@ -99,8 +99,7 @@ fun WorkListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.WORK.getIcon(),
                 modifier = Modifier
                     .clickable {

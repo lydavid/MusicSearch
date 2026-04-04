@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.domain.wikimedia
 
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 
 interface WikimediaRepository {
@@ -24,5 +24,5 @@ interface WikimediaRepository {
      */
     suspend fun getWikimediaImage(
         urls: List<RelationListItemModel>,
-    ): ImageMetadata
+    ): RawImageMetadata
 }

@@ -7,13 +7,13 @@ import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
 import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
-import ly.david.musicsearch.shared.domain.common.trimProtocolAndExtension
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -28,7 +28,7 @@ class ArtistImageRepositoryImpl(
     override suspend fun getArtistImageMetadata(
         detailsModel: MusicBrainzDetailsModel,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount {
+    ): ImageMetadataWithCount? {
         if (forceRefresh) {
             imageUrlDao.deleteAllImageMetadtaById(detailsModel.id)
         }
@@ -36,7 +36,7 @@ class ArtistImageRepositoryImpl(
         val cachedImageUrl = imageUrlDao.getFrontImageMetadata(detailsModel.id)
         return if (cachedImageUrl == null) {
             saveArtistImageMetadataFromNetwork(detailsModel)
-            imageUrlDao.getFrontImageMetadata(detailsModel.id) ?: ImageMetadataWithCount()
+            imageUrlDao.getFrontImageMetadata(detailsModel.id)
         } else {
             cachedImageUrl
         }
@@ -57,9 +57,10 @@ class ArtistImageRepositoryImpl(
             } else {
                 val spotifyArtistId = spotifyUrl.split("/").last()
                 val spotifyArtist: SpotifyArtist = spotifyApi.getArtist(spotifyArtistId)
-                ImageMetadata(
-                    thumbnailUrl = spotifyArtist.getThumbnailImageUrl().trimProtocolAndExtension(),
-                    largeUrl = spotifyArtist.getLargeImageUrl().trimProtocolAndExtension(),
+                RawImageMetadata(
+                    thumbnailUrl = spotifyArtist.getThumbnailImageUrl(),
+                    largeUrl = spotifyArtist.getLargeImageUrl(),
+                    source = ImageSource.SPOTIFY,
                 )
             }
 
@@ -73,7 +74,13 @@ class ArtistImageRepositoryImpl(
             if (ex.errorResolution == ErrorResolution.None) {
                 imageUrlDao.saveImageMetadata(
                     mbid = detailsModel.id,
-                    imageMetadataList = listOf(ImageMetadata()),
+                    imageMetadataList = listOf(
+                        RawImageMetadata(
+                            thumbnailUrl = "",
+                            largeUrl = "",
+                            source = ImageSource.SPOTIFY,
+                        ),
+                    ),
                 )
             } else {
                 logger.e(ex)

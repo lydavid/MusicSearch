@@ -37,8 +37,10 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import org.junit.After
@@ -50,6 +52,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Duration.Companion.seconds
 
+@Suppress("LargeClass")
 @OptIn(ExperimentalCoroutinesApi::class)
 class ImageMetadataRepositoryImplTest :
     KoinTest,
@@ -87,7 +90,7 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                ImageMetadata(
+                ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
                 ),
                 count = 0,
@@ -143,10 +146,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -164,14 +167,18 @@ class ImageMetadataRepositoryImplTest :
             imageMetadataList.size,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                imageId = ImageId(1L),
-                thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                mbid = eventId,
+            ImageMetadataWithEntity(
+                imageMetadata = ImageMetadata.InternetArchive(
+                    imageId = ImageId(1L),
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                ),
+                musicBrainzEntity = MusicBrainzEntity(
+                    id = eventId,
+                    type = MusicBrainzEntityType.EVENT,
+                ),
                 name = eventName,
                 disambiguation = eventDisambiguation,
-                entity = MusicBrainzEntityType.EVENT,
             ),
             imageMetadataList[0],
         )
@@ -235,10 +242,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 2,
             ),
@@ -257,23 +264,31 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             listOf(
-                ImageMetadata(
-                    imageId = ImageId(2L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
-                    mbid = releaseId,
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(2L),
+                        rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
+                        rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510392",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = releaseId,
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    mbid = releaseId,
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(1L),
+                        rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                        rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = releaseId,
+                        type = MusicBrainzEntityType.RELEASE,
+                    ),
                     name = releaseName,
                     disambiguation = releaseDisambiguation,
-                    entity = MusicBrainzEntityType.RELEASE,
                 ),
             ),
             imageMetadataList,
@@ -313,10 +328,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -335,14 +350,14 @@ class ImageMetadataRepositoryImplTest :
             imageMetadataList.size,
         )
         Assert.assertEquals(
-            ImageMetadata(
-                imageId = ImageId(1L),
-                thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                mbid = releaseId,
+            ImageMetadataWithEntity(
+                imageMetadata = ImageMetadata.InternetArchive(
+                    imageId = ImageId(1L),
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                ),
                 name = null,
                 disambiguation = null,
-                entity = null,
             ),
             imageMetadataList[0],
         )
@@ -394,10 +409,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
                 ),
                 count = 1,
             ),
@@ -414,14 +429,18 @@ class ImageMetadataRepositoryImplTest :
                 size,
             )
             Assert.assertEquals(
-                ImageMetadata(
-                    imageId = ImageId(1L),
-                    thumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    largeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
-                    mbid = releaseGroupId,
+                ImageMetadataWithEntity(
+                    imageMetadata = ImageMetadata.InternetArchive(
+                        imageId = ImageId(1L),
+                        rawThumbnailUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                        rawLargeUrl = "coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391",
+                    ),
+                    musicBrainzEntity = MusicBrainzEntity(
+                        id = releaseGroupId,
+                        type = MusicBrainzEntityType.RELEASE_GROUP,
+                    ),
                     name = releaseGroupName,
                     disambiguation = releaseGroupDisambiguation,
-                    entity = MusicBrainzEntityType.RELEASE_GROUP,
                 ),
                 this[0],
             )
@@ -462,10 +481,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(1L),
-                    thumbnailUrl = "someartarchive.org/event/$eventId/1",
-                    largeUrl = "someartarchive.org/event/$eventId/1",
+                    rawThumbnailUrl = "someartarchive.org/event/$eventId/1",
+                    rawLargeUrl = "someartarchive.org/event/$eventId/1",
                 ),
                 count = 1,
             ),
@@ -489,10 +508,10 @@ class ImageMetadataRepositoryImplTest :
         )
         Assert.assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.InternetArchive(
                     imageId = ImageId(2L),
-                    thumbnailUrl = "someartarchive.org/release/$releaseId/1",
-                    largeUrl = "someartarchive.org/release/$releaseId/1",
+                    rawThumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                    rawLargeUrl = "someartarchive.org/release/$releaseId/1",
                 ),
                 count = 1,
             ),
@@ -518,10 +537,10 @@ class ImageMetadataRepositoryImplTest :
         Assert.assertEquals(
             ImageMetadataWithCount(
                 imageMetadata =
-                ImageMetadata(
+                ImageMetadata.InternetArchive(
                     imageId = ImageId(3L),
-                    thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                    largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                    rawThumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                    rawLargeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
                 ),
                 count = 1,
             ),
@@ -539,32 +558,44 @@ class ImageMetadataRepositoryImplTest :
             )
             Assert.assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        mbid = releaseGroupId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(3L),
+                            rawThumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                            rawLargeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseGroupId,
+                            type = MusicBrainzEntityType.RELEASE_GROUP,
+                        ),
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(2L),
-                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
-                        largeUrl = "someartarchive.org/release/$releaseId/1",
-                        mbid = releaseId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2L),
+                            rawThumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                            rawLargeUrl = "someartarchive.org/release/$releaseId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseId,
+                            type = MusicBrainzEntityType.RELEASE,
+                        ),
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
-                        largeUrl = "someartarchive.org/event/$eventId/1",
-                        mbid = eventId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "someartarchive.org/event/$eventId/1",
+                            rawLargeUrl = "someartarchive.org/event/$eventId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = eventId,
+                            type = MusicBrainzEntityType.EVENT,
+                        ),
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntityType.EVENT,
                     ),
                 ),
                 imageMetadataList,
@@ -582,32 +613,44 @@ class ImageMetadataRepositoryImplTest :
             )
             Assert.assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
-                        largeUrl = "someartarchive.org/event/$eventId/1",
-                        mbid = eventId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "someartarchive.org/event/$eventId/1",
+                            rawLargeUrl = "someartarchive.org/event/$eventId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = eventId,
+                            type = MusicBrainzEntityType.EVENT,
+                        ),
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntityType.EVENT,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(2L),
-                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
-                        largeUrl = "someartarchive.org/release/$releaseId/1",
-                        mbid = releaseId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2L),
+                            rawThumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                            rawLargeUrl = "someartarchive.org/release/$releaseId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseId,
+                            type = MusicBrainzEntityType.RELEASE,
+                        ),
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        mbid = releaseGroupId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(3L),
+                            rawThumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                            rawLargeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseGroupId,
+                            type = MusicBrainzEntityType.RELEASE_GROUP,
+                        ),
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
                 ),
                 imageMetadataList,
@@ -625,32 +668,44 @@ class ImageMetadataRepositoryImplTest :
             )
             Assert.assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
-                        largeUrl = "someartarchive.org/event/$eventId/1",
-                        mbid = eventId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "someartarchive.org/event/$eventId/1",
+                            rawLargeUrl = "someartarchive.org/event/$eventId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = eventId,
+                            type = MusicBrainzEntityType.EVENT,
+                        ),
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntityType.EVENT,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        mbid = releaseGroupId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(3L),
+                            rawThumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                            rawLargeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseGroupId,
+                            type = MusicBrainzEntityType.RELEASE_GROUP,
+                        ),
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(2L),
-                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
-                        largeUrl = "someartarchive.org/release/$releaseId/1",
-                        mbid = releaseId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2L),
+                            rawThumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                            rawLargeUrl = "someartarchive.org/release/$releaseId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseId,
+                            type = MusicBrainzEntityType.RELEASE,
+                        ),
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE,
                     ),
                 ),
                 imageMetadataList,
@@ -668,32 +723,44 @@ class ImageMetadataRepositoryImplTest :
             )
             Assert.assertEquals(
                 listOf(
-                    ImageMetadata(
-                        imageId = ImageId(2L),
-                        thumbnailUrl = "someartarchive.org/release/$releaseId/1",
-                        largeUrl = "someartarchive.org/release/$releaseId/1",
-                        mbid = releaseId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2L),
+                            rawThumbnailUrl = "someartarchive.org/release/$releaseId/1",
+                            rawLargeUrl = "someartarchive.org/release/$releaseId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseId,
+                            type = MusicBrainzEntityType.RELEASE,
+                        ),
                         name = releaseName,
                         disambiguation = releaseDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(3L),
-                        thumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        largeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
-                        mbid = releaseGroupId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(3L),
+                            rawThumbnailUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                            rawLargeUrl = "someartarchive.org/release-group/$releaseGroupId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = releaseGroupId,
+                            type = MusicBrainzEntityType.RELEASE_GROUP,
+                        ),
                         name = releaseGroupName,
                         disambiguation = releaseGroupDisambiguation,
-                        entity = MusicBrainzEntityType.RELEASE_GROUP,
                     ),
-                    ImageMetadata(
-                        imageId = ImageId(1L),
-                        thumbnailUrl = "someartarchive.org/event/$eventId/1",
-                        largeUrl = "someartarchive.org/event/$eventId/1",
-                        mbid = eventId,
+                    ImageMetadataWithEntity(
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "someartarchive.org/event/$eventId/1",
+                            rawLargeUrl = "someartarchive.org/event/$eventId/1",
+                        ),
+                        musicBrainzEntity = MusicBrainzEntity(
+                            id = eventId,
+                            type = MusicBrainzEntityType.EVENT,
+                        ),
                         name = eventName,
                         disambiguation = eventDisambiguation,
-                        entity = MusicBrainzEntityType.EVENT,
                     ),
                 ),
                 imageMetadataList,

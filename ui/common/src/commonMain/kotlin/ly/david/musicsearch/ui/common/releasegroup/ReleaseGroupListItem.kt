@@ -39,7 +39,7 @@ fun ReleaseGroupListItem(
 ) {
     val latestRequestForMissingCoverArtUrl by rememberUpdatedState(requestForMissingCoverArtUrl)
     LaunchedEffect(key1 = releaseGroup.id) {
-        if (releaseGroup.imageUrl == null) {
+        if (releaseGroup.imageMetadata == null) {
             latestRequestForMissingCoverArtUrl()
         }
     }
@@ -90,8 +90,7 @@ fun ReleaseGroupListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                url = releaseGroup.imageUrl.orEmpty(),
-                imageId = releaseGroup.imageId,
+                imageMetadata = releaseGroup.imageMetadata,
                 placeholderIcon = MusicBrainzEntityType.RELEASE_GROUP.getIcon(),
                 modifier = Modifier
                     .clickable {

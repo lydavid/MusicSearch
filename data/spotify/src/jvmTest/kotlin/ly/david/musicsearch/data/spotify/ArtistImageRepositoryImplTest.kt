@@ -5,12 +5,15 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSpotifyApi
 import ly.david.musicsearch.core.logging.Logger
+import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
@@ -21,8 +24,9 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 
-private const val LARGE_URL = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Radwinps2016.jpg"
-private const val THUMBNAIL_URL =
+private const val WIKIMEDIA_LARGE_URL =
+    "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Radwinps2016.jpg"
+private const val WIKIMEDIA_THUMBNAIL_URL =
     "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/Radwinps2016.jpg&width=64"
 
 class ArtistImageRepositoryImplTest : KoinTest {
@@ -47,10 +51,11 @@ class ArtistImageRepositoryImplTest : KoinTest {
 
     fun createArtistImageRepository(
         spotifyOAuthInfo: SpotifyOAuthInfo,
-        wikidataImage: ImageMetadata,
+        wikidataImage: RawImageMetadata,
+        spotifyApi: FakeSpotifyApi,
     ) = ArtistImageRepositoryImpl(
         spotifyOAuthInfo = spotifyOAuthInfo,
-        spotifyApi = FakeSpotifyApi(),
+        spotifyApi = spotifyApi,
         wikimediaRepository = object : WikimediaRepository {
             override suspend fun getWikipediaExtract(
                 mbid: String,
@@ -61,7 +66,7 @@ class ArtistImageRepositoryImplTest : KoinTest {
                 error("Never called")
             }
 
-            override suspend fun getWikimediaImage(urls: List<RelationListItemModel>): ImageMetadata {
+            override suspend fun getWikimediaImage(urls: List<RelationListItemModel>): RawImageMetadata {
                 return wikidataImage
             }
         },
@@ -78,16 +83,18 @@ class ArtistImageRepositoryImplTest : KoinTest {
     )
 
     @Test
-    fun `with Spotify secrets`() = runTest {
+    fun `with Spotify secrets and link`() = runTest {
         val artistImageRepository = createArtistImageRepository(
             spotifyOAuthInfo = SpotifyOAuthInfo(
                 clientId = "id",
                 clientSecret = "secret",
             ),
-            wikidataImage = ImageMetadata(
-                largeUrl = LARGE_URL,
-                thumbnailUrl = THUMBNAIL_URL,
+            wikidataImage = RawImageMetadata(
+                largeUrl = WIKIMEDIA_LARGE_URL,
+                thumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
+                source = ImageSource.WIKIMEDIA,
             ),
+            spotifyApi = FakeSpotifyApi(),
         )
 
         val artistImageMetadata = artistImageRepository.getArtistImageMetadata(
@@ -96,14 +103,52 @@ class ArtistImageRepositoryImplTest : KoinTest {
         )
         assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.Spotify(
                     imageId = ImageId(
                         value = 1,
                     ),
-                    largeUrl = "i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
-                    thumbnailUrl = "i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                    rawLargeUrl = "i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
+                    rawThumbnailUrl = "i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228",
                 ),
                 count = 1,
+            ),
+            artistImageMetadata,
+        )
+    }
+
+    @Test
+    fun `with Spotify secrets and link but no images returned by API`() = runTest {
+        val artistImageRepository = createArtistImageRepository(
+            spotifyOAuthInfo = SpotifyOAuthInfo(
+                clientId = "id",
+                clientSecret = "secret",
+            ),
+            wikidataImage = RawImageMetadata(
+                largeUrl = WIKIMEDIA_LARGE_URL,
+                thumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
+                source = ImageSource.WIKIMEDIA,
+            ),
+            spotifyApi = object : FakeSpotifyApi() {
+                override suspend fun getArtist(spotifyArtistId: String): SpotifyArtist {
+                    return SpotifyArtist()
+                }
+            },
+        )
+
+        val artistImageMetadata = artistImageRepository.getArtistImageMetadata(
+            detailsModel = artistDetailsModel,
+            forceRefresh = false,
+        )
+        assertEquals(
+            ImageMetadataWithCount(
+                imageMetadata = ImageMetadata.Spotify(
+                    imageId = ImageId(
+                        value = 1,
+                    ),
+                    rawLargeUrl = "",
+                    rawThumbnailUrl = "",
+                ),
+                count = 0,
             ),
             artistImageMetadata,
         )
@@ -116,10 +161,12 @@ class ArtistImageRepositoryImplTest : KoinTest {
                 clientId = "id",
                 clientSecret = "secret",
             ),
-            wikidataImage = ImageMetadata(
-                largeUrl = LARGE_URL,
-                thumbnailUrl = THUMBNAIL_URL,
+            wikidataImage = RawImageMetadata(
+                largeUrl = WIKIMEDIA_LARGE_URL,
+                thumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
+                source = ImageSource.WIKIMEDIA,
             ),
+            spotifyApi = FakeSpotifyApi(),
         )
 
         val artistImageMetadata = artistImageRepository.getArtistImageMetadata(
@@ -130,12 +177,12 @@ class ArtistImageRepositoryImplTest : KoinTest {
         )
         assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.Wikimedia(
                     imageId = ImageId(
                         value = 1,
                     ),
-                    largeUrl = LARGE_URL,
-                    thumbnailUrl = THUMBNAIL_URL,
+                    rawLargeUrl = WIKIMEDIA_LARGE_URL,
+                    rawThumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
                 ),
                 count = 1,
             ),
@@ -151,10 +198,12 @@ class ArtistImageRepositoryImplTest : KoinTest {
                     clientId = "",
                     clientSecret = "",
                 ),
-                wikidataImage = ImageMetadata(
-                    largeUrl = LARGE_URL,
-                    thumbnailUrl = THUMBNAIL_URL,
+                wikidataImage = RawImageMetadata(
+                    largeUrl = WIKIMEDIA_LARGE_URL,
+                    thumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
+                    source = ImageSource.WIKIMEDIA,
                 ),
+                spotifyApi = FakeSpotifyApi(),
             )
 
             val artistImageMetadata = artistImageRepository.getArtistImageMetadata(
@@ -163,12 +212,12 @@ class ArtistImageRepositoryImplTest : KoinTest {
             )
             assertEquals(
                 ImageMetadataWithCount(
-                    imageMetadata = ImageMetadata(
+                    imageMetadata = ImageMetadata.Wikimedia(
                         imageId = ImageId(
                             value = 1,
                         ),
-                        largeUrl = LARGE_URL,
-                        thumbnailUrl = THUMBNAIL_URL,
+                        rawLargeUrl = WIKIMEDIA_LARGE_URL,
+                        rawThumbnailUrl = WIKIMEDIA_THUMBNAIL_URL,
                     ),
                     count = 1,
                 ),
@@ -184,7 +233,12 @@ class ArtistImageRepositoryImplTest : KoinTest {
                 clientId = "",
                 clientSecret = "",
             ),
-            wikidataImage = ImageMetadata(),
+            wikidataImage = RawImageMetadata(
+                largeUrl = "",
+                thumbnailUrl = "",
+                source = ImageSource.WIKIMEDIA,
+            ),
+            spotifyApi = FakeSpotifyApi(),
         )
 
         val artistImageMetadata = artistImageRepository.getArtistImageMetadata(
@@ -193,7 +247,7 @@ class ArtistImageRepositoryImplTest : KoinTest {
         )
         assertEquals(
             ImageMetadataWithCount(
-                imageMetadata = ImageMetadata(
+                imageMetadata = ImageMetadata.Wikimedia(
                     imageId = ImageId(
                         value = 1,
                     ),

@@ -57,8 +57,7 @@ fun SeriesListItem(
         colors = listItemColors(isSelected = isSelected),
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.SERIES.getIcon(),
                 modifier = Modifier
                     .clickable {

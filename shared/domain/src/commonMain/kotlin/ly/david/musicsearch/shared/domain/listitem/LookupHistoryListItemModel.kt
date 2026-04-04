@@ -1,9 +1,9 @@
 package ly.david.musicsearch.shared.domain.listitem
 
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import kotlin.time.Clock
 import kotlin.time.Instant
-import ly.david.musicsearch.shared.domain.image.ImageId
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 data class LookupHistoryListItemModel(
     override val id: String,
@@ -11,6 +11,5 @@ data class LookupHistoryListItemModel(
     val entity: MusicBrainzEntityType,
     val numberOfVisits: Int = 1,
     val lastAccessed: Instant = Clock.System.now(),
-    val imageUrl: String? = null,
-    val imageId: ImageId? = null,
+    val imageMetadata: ImageMetadata? = null,
 ) : ListItemModel

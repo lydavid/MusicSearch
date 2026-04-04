@@ -122,8 +122,7 @@ fun RecordingListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                url = "",
-                imageId = null,
+                imageMetadata = null,
                 placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
                 modifier = Modifier
                     .clickable {

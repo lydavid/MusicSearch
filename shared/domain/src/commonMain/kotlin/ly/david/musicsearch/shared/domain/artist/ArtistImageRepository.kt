@@ -14,5 +14,5 @@ interface ArtistImageRepository {
     suspend fun getArtistImageMetadata(
         detailsModel: MusicBrainzDetailsModel,
         forceRefresh: Boolean,
-    ): ImageMetadataWithCount
+    ): ImageMetadataWithCount?
 }

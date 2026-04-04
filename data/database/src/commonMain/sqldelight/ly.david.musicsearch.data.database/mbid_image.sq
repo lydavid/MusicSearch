@@ -1,11 +1,13 @@
 import kotlin.String;
 import kotlinx.collections.immutable.ImmutableList;
+import ly.david.musicsearch.shared.domain.image.ImageSource;
 
 -- If an entity with mbid has no image urls, we will add an entry
 -- with empty values to mark that we've tried fetching its image urls but failed to find any.
 CREATE TABLE mbid_image (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   mbid TEXT NOT NULL,
+  source TEXT AS ImageSource NOT NULL,
   thumbnail_url TEXT NOT NULL,
   large_url TEXT NOT NULL,
   types TEXT AS ImmutableList<String>,
@@ -19,6 +21,7 @@ CREATE INDEX idx_mbid_image_mbid ON mbid_image(mbid);
 insert:
 INSERT OR IGNORE INTO mbid_image (
   mbid,
+  source,
   thumbnail_url,
   large_url,
   types,
@@ -26,6 +29,7 @@ INSERT OR IGNORE INTO mbid_image (
 )
 VALUES (
   :mbid,
+  :source,
   :thumbnailUrl,
   :largeUrl,
   :types,
@@ -36,6 +40,7 @@ VALUES (
 getFrontImageMetadata:
 SELECT
   id,
+  source,
   thumbnail_url,
   large_url,
   types,
@@ -69,6 +74,7 @@ FROM (
 getAllImageMetadataById:
 SELECT
   id,
+  source,
   thumbnail_url,
   large_url,
   types,
@@ -103,6 +109,7 @@ FROM (
 getAllImageMetadata:
 SELECT
   mbid_image.id,
+  mbid_image.source,
   mbid_image.thumbnail_url,
   mbid_image.large_url,
   mbid_image.types,

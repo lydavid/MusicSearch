@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -123,8 +124,10 @@ internal fun PreviewEventListItemWithCoverArt() {
                     end = "2024-12-30",
                     ended = true,
                 ),
-                imageUrl = "www.example.com/image",
-                imageId = ImageId(1L),
+                imageMetadata = ImageMetadata.InternetArchive(
+                    imageId = ImageId(1L),
+                    rawThumbnailUrl = "www.example.com/image",
+                ),
             ),
             filterText = "",
         )

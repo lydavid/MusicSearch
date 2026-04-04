@@ -83,8 +83,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
             item {
                 if (filterText.isBlank()) {
                     LargeImage(
-                        url = imageMetadata.largeUrl,
-                        imageId = imageMetadata.imageId,
+                        imageMetadata = imageMetadata,
                         onClick = onImageClick,
                     )
                 }

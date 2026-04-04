@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.data.database.UNKNOWN_LISTENS_FLAG
-import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
@@ -21,8 +21,9 @@ internal fun mapToReleaseListItemModel(
     script: String,
     language: String,
     formattedArtistCreditNames: String?,
-    thumbnailUrl: String?,
     imageId: Long?,
+    source: ImageSource?,
+    thumbnailUrl: String?,
     releaseCountryCount: Long,
     visited: Boolean,
     collected: Boolean,
@@ -46,8 +47,11 @@ internal fun mapToReleaseListItemModel(
         script = script,
         language = language,
     ),
-    imageUrl = thumbnailUrl,
-    imageId = imageId?.let { ImageId(it) },
+    imageMetadata = mapToImageMetadata(
+        id = imageId,
+        thumbnailUrl = thumbnailUrl,
+        source = source,
+    ),
     formattedArtistCredits = formattedArtistCreditNames,
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited,
@@ -77,8 +81,9 @@ internal fun mapToReleaseListItemModel(
     script: String,
     language: String,
     formattedArtistCreditNames: String?,
-    thumbnailUrl: String?,
     imageId: Long?,
+    source: ImageSource?,
+    thumbnailUrl: String?,
     releaseCountryCount: Long,
     visited: Boolean,
     collected: Boolean,
@@ -104,8 +109,11 @@ internal fun mapToReleaseListItemModel(
         script = script,
         language = language,
     ),
-    imageUrl = thumbnailUrl,
-    imageId = imageId?.let { ImageId(it) },
+    imageMetadata = mapToImageMetadata(
+        id = imageId,
+        thumbnailUrl = thumbnailUrl,
+        source = source,
+    ),
     formattedArtistCredits = formattedArtistCreditNames,
     releaseCountryCount = releaseCountryCount.toInt(),
     visited = visited,

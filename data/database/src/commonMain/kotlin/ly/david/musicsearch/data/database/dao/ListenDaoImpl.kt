@@ -7,12 +7,13 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
+import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
-import ly.david.musicsearch.shared.domain.image.ImageId
-import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
@@ -105,9 +106,10 @@ class ListenDaoImpl(
         imageUrlDao.saveImageMetadata(
             mbid = coverArtReleaseMbid,
             imageMetadataList = listOf(
-                ImageMetadata(
+                RawImageMetadata(
                     thumbnailUrl = "$coverArtUrl-250",
                     largeUrl = "$coverArtUrl-1200",
+                    source = ImageSource.INTERNET_ARCHIVE,
                 ),
             ),
         )
@@ -356,8 +358,9 @@ private fun mapToListenListItemModel(
     fallbackArtistCreditNames: String,
     releaseName: String?,
     releaseId: String?,
-    imageUrl: String?,
+    thumbnailUrl: String?,
     imageId: Long?,
+    source: ImageSource?,
     visitedRecording: Boolean,
     visitedRelease: Boolean,
 //    media_player: String?,
@@ -380,8 +383,11 @@ private fun mapToListenListItemModel(
     listenedAtMs = listenedAtMs,
     recordingId = recordingMusicbrainzId,
     durationMs = durationMs?.toInt(),
-    imageUrl = imageUrl,
-    imageId = imageId?.let { ImageId(it) },
+    imageMetadata = mapToImageMetadata(
+        id = imageId,
+        thumbnailUrl = thumbnailUrl,
+        source = source,
+    ),
     visited = visitedRecording,
     release = ListenRelease(
         name = releaseName,

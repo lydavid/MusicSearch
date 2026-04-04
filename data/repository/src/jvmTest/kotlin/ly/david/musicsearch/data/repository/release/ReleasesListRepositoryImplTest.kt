@@ -28,7 +28,6 @@ import ly.david.data.test.utaNoUtaReleaseMusicBrainzModel
 import ly.david.data.test.virginMusicLabelMusicBrainzModel
 import ly.david.data.test.weirdAlGreatestHitsReleaseListItemModel
 import ly.david.data.test.weirdAlGreatestHitsReleaseMusicBrainzModel
-import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -72,6 +71,10 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
+import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.image.ImageSource
+import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -103,7 +106,6 @@ class ReleasesListRepositoryImplTest :
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val database: Database by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionDao: CollectionDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
@@ -123,6 +125,7 @@ class ReleasesListRepositoryImplTest :
     override val aliasDao: AliasDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     override val listenDao: ListenDao by inject()
+    private val imageUrlDao: ImageUrlDao by inject()
 
     @Test
     fun `releases by label - release with multiple catalog numbers with the same label, multiple cover arts`() =
@@ -143,19 +146,20 @@ class ReleasesListRepositoryImplTest :
                 ),
             )
 
-            database.mbid_imageQueries.insert(
+            imageUrlDao.saveImageMetadata(
                 mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-                thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
-                types = persistentListOf(),
-                comment = null,
-            )
-            database.mbid_imageQueries.insert(
-                mbid = releaseWith3CatalogNumbersWithSameLabel.id,
-                thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
-                largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
-                types = persistentListOf(),
-                comment = null,
+                imageMetadataList = listOf(
+                    RawImageMetadata(
+                        thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-1200.jpg",
+                        source = ImageSource.INTERNET_ARCHIVE,
+                    ),
+                    RawImageMetadata(
+                        thumbnailUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-250.jpg",
+                        largeUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/37564563886-1200.jpg",
+                        source = ImageSource.INTERNET_ARCHIVE,
+                    ),
+                ),
             )
 
             releasesListRepository.observeReleases(
@@ -173,8 +177,10 @@ class ReleasesListRepositoryImplTest :
                         utaNoUtaReleaseListItemModel.copy(
                             catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                             textRepresentation = TextRepresentationUiModel(script = "Jpan", language = "jpn"),
-                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
-                            imageId = ImageId(1L),
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                                imageId = ImageId(1L),
+                            ),
                         ),
                     ),
                     this,
@@ -618,8 +624,10 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         weirdAlGreatestHitsReleaseListItemModel,
                         utaNoUtaReleaseListItemModel.copy(
-                            imageId = ImageId(1L),
-                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(1L),
+                                rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                            ),
                         ),
                     ),
                 ),
@@ -647,8 +655,10 @@ class ReleasesListRepositoryImplTest :
                 listOf(
                     weirdAlGreatestHitsReleaseListItemModel,
                     utaNoUtaReleaseListItemModel.copy(
-                        imageId = ImageId(1L),
-                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                        ),
                     ),
                 ),
                 this,
@@ -674,8 +684,10 @@ class ReleasesListRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
-                        imageId = ImageId(1L),
-                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                        ),
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),
                 ),
@@ -726,8 +738,10 @@ class ReleasesListRepositoryImplTest :
                     expectedResult = listOf(
                         weirdAlGreatestHitsReleaseListItemModel,
                         utaNoUtaReleaseListItemModel.copy(
-                            imageId = ImageId(1L),
-                            imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(1L),
+                                rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                            ),
                         ),
                     ),
                 ),
@@ -756,8 +770,10 @@ class ReleasesListRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
-                        imageId = ImageId(1L),
-                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                        ),
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),
                 ),
@@ -779,8 +795,10 @@ class ReleasesListRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
-                        imageId = ImageId(1L),
-                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                        ),
                     ),
                 ),
                 this,
@@ -800,8 +818,10 @@ class ReleasesListRepositoryImplTest :
             assertEquals(
                 listOf(
                     utaNoUtaReleaseListItemModel.copy(
-                        imageId = ImageId(1L),
-                        imageUrl = "http://coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250.jpg",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(1L),
+                            rawThumbnailUrl = "coverartarchive.org/release/38650e8c-3c6b-431e-b10b-2cfb6db847d5/33345773281-250",
+                        ),
                         catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
                     ),
                 ),
@@ -1647,8 +1667,10 @@ class ReleasesListRepositoryImplTest :
                         name = "Persona 3 Reload Original Soundtrack", // stubbed values from listens
                         disambiguation = "", // won't be overwritten
                         date = "", // until we visit this release
-                        imageId = ImageId(2),
-                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2),
+                            rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        ),
                         listenState = ReleaseListItemModel.ListenState.Unknown,
                     ),
                     persona3ReloadOriginalSoundtrackReleaseListItemModel.copy(
@@ -1868,8 +1890,10 @@ class ReleasesListRepositoryImplTest :
             assertEquals(
                 listOf(
                     persona3ReloadSoundtrackAigisReleaseListItemModel.copy(
-                        imageId = ImageId(2),
-                        imageUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        imageMetadata = ImageMetadata.InternetArchive(
+                            imageId = ImageId(2),
+                            rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        ),
                         listenState = ReleaseListItemModel.ListenState.Known(
                             listenCount = 2,
                             completeListenCount = 0,
