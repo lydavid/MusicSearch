@@ -1,0 +1,11 @@
+
+### Bug Fixes
+
+* fix crash when clicking a listen's more action icon button due to image transition
+* reduce excessive network requests to fetch data from Spotify/Wikimedia when refreshing a details screen
+
+
+### Features
+
+* support getting artist image from Wikimedia if wikidata url exists as fallback if Spotify secrets or url does not exist
+* support opening wikimedia image url in wikimedia commons page that shows license; restructure image models; update database version to 76
