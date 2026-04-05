@@ -286,4 +286,11 @@
     <string name="addedOneToCollection">Ajouté à %1$s</string>
     <string name="addedMultipleToCollection">Ajout de %1$d à %2$s</string>
     <string name="addedMultipleToCollectionSomeAlreadyAdded">%1$d a été ajouté à %2$s. %3$d figure déjà dans la collection</string>
+    <string name="goToAlbum">Aller à l'album</string>
+    <string name="refreshMapping">Actualiser le mappage</string>
+    <string name="delete">Supprimer</string>
+    <string name="linkListenWithMusicBrainz">Reliez-le à MusicBrainz pour récupérer les métadonnées</string>
+    <string name="MusicBrainzUrlMBID">URL MusicBrainz/MBID</string>
+    <string name="addMapping">Ajouter un mappage</string>
+    <string name="linkWithMusicBrainz">Lien vers MusicBrainz</string>
 </resources>
