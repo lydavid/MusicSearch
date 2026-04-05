@@ -14,7 +14,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      # see if this matters, otherwise delete
+      # If previous jobs pushed to main, then we need to pull those changes
       - run: git pull
 
       - name: Setup gradle
