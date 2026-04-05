@@ -285,4 +285,11 @@
     <string name="addedOneToCollection">Added to %1$s</string>
     <string name="addedMultipleToCollection">Added %1$d to %2$s</string>
     <string name="addedMultipleToCollectionSomeAlreadyAdded">Added %1$d to %2$s. %3$d already in collection</string>
+    <string name="goToAlbum">Go to album</string>
+    <string name="refreshMapping">Refresh mapping</string>
+    <string name="delete">Delete</string>
+    <string name="linkListenWithMusicBrainz">Link listen with MusicBrainz to get metadata</string>
+    <string name="MusicBrainzUrlMBID">MusicBrainz URL/MBID</string>
+    <string name="addMapping">Add mapping</string>
+    <string name="linkWithMusicBrainz">Link with MusicBrainz</string>
 </resources>

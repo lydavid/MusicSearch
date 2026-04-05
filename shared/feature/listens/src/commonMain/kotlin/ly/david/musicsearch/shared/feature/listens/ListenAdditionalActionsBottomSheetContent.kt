@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.icons.DeleteOutline
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
+import ly.david.musicsearch.ui.common.icons.OpenInNew
 import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -40,6 +41,16 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.addMapping
+import musicsearch.ui.common.generated.resources.delete
+import musicsearch.ui.common.generated.resources.goToAlbum
+import musicsearch.ui.common.generated.resources.linkListenWithMusicBrainz
+import musicsearch.ui.common.generated.resources.linkWithMusicBrainz
+import musicsearch.ui.common.generated.resources.openInBrowser
+import musicsearch.ui.common.generated.resources.refreshMapping
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
@@ -51,6 +62,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     onFilterByRecordingClick: (recordingId: String) -> Unit = {},
     onSubmitMapping: (recordingMessyBrainzId: String, recordingId: String) -> Unit = { _, _ -> },
     onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
+    onOpenInBrowser: (listenedAtMs: Long) -> Unit = {},
     onDelete: (listenedAtMs: Long, username: String, recordingMessyBrainzId: String) -> Unit = { _, _, _ -> },
     onDismiss: () -> Unit = {},
 ) {
@@ -102,7 +114,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
 
         release.id?.let { releaseId ->
             ClickableItem(
-                title = "Go to album",
+                title = stringResource(Res.string.goToAlbum),
                 startIcon = CustomIcons.Album,
                 endIcon = CustomIcons.ChevronRight,
                 fontWeight = release.fontWeight,
@@ -145,9 +157,9 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             },
         )
 
-        if (allowedToEdit) {
-            HorizontalDivider()
+        HorizontalDivider()
 
+        if (allowedToEdit) {
             LinkWithMusicBrainzItem(
                 onSubmitMapping = {
                     onSubmitMapping(listen.recordingMessybrainzId, it)
@@ -156,18 +168,29 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             )
 
             ClickableItem(
-                title = "Refresh mapping",
+                title = stringResource(Res.string.refreshMapping),
                 startIcon = CustomIcons.Refresh,
                 onClick = {
                     onRefreshMapping(listen.recordingMessybrainzId)
                     onDismiss()
                 },
             )
+        }
 
+        ClickableItem(
+            title = stringResource(Res.string.openInBrowser),
+            startIcon = CustomIcons.OpenInNew,
+            onClick = {
+                onOpenInBrowser(listen.listenedAtMs)
+                onDismiss()
+            },
+        )
+
+        if (allowedToEdit) {
             HorizontalDivider()
 
             ClickableItem(
-                title = "Delete",
+                title = stringResource(Res.string.delete),
                 startIcon = CustomIcons.DeleteOutline,
                 foregroundColor = MaterialTheme.colorScheme.error,
                 onClick = {
@@ -197,13 +220,13 @@ private fun LinkWithMusicBrainzItem(
         ) {
             TextInput(
                 instructions = buildAnnotatedString {
-                    append("Link listen with MusicBrainz to get metadata")
+                    append(stringResource(Res.string.linkListenWithMusicBrainz))
                 },
                 text = mbid,
-                textLabel = "MusicBrainz URL/MBID",
+                textLabel = stringResource(Res.string.MusicBrainzUrlMBID),
                 textHint = null,
                 onTextChange = { mbid = it },
-                buttonText = "Add mapping",
+                buttonText = stringResource(Res.string.addMapping),
                 onButtonClick = {
                     onSubmitMapping(mbid)
                 },
@@ -213,7 +236,7 @@ private fun LinkWithMusicBrainzItem(
     }
 
     ClickableItem(
-        title = "Link with MusicBrainz",
+        title = stringResource(Res.string.linkWithMusicBrainz),
         startIcon = CustomIcons.AddLink,
         onClick = {
             showDialog = true

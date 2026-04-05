@@ -25,11 +25,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.CancellationException
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
@@ -306,6 +308,8 @@ private fun ListensContent(
     selectedEntityFacet: MusicBrainzEntity?,
     lazyPagingItems: LazyPagingItems<Identifiable>,
 ) {
+    val uriHandler = LocalUriHandler.current
+
     if (noUsernameSet) {
         UsernameInput(
             modifier = Modifier
@@ -360,6 +364,9 @@ private fun ListensContent(
                     },
                     onRefreshMapping = {
                         eventSink(ListensUiEvent.RefreshMapping(it))
+                    },
+                    onOpenInBrowser = {
+                        uriHandler.openUri("${state.userListensUrl}/?max_ts=${(it / MS_IN_SECOND) + 1}")
                     },
                     onDelete = { listenedAtMs, username, recordingMessyBrainzId ->
                         eventSink(
