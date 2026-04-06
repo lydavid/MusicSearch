@@ -6,6 +6,8 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -14,8 +16,8 @@ data class ReleaseGroupDetailsModel(
     override val name: String,
     override val disambiguation: String = "",
     override val firstReleaseDate: String = "",
-    override val primaryType: String = "",
-    override val secondaryTypes: ImmutableList<String> = persistentListOf(),
+    override val primaryType: ReleaseGroupPrimaryType? = null,
+    override val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType> = persistentListOf(),
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),

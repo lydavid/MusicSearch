@@ -51,6 +51,8 @@ import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -99,6 +101,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                     primaryType = "Album",
+                    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
@@ -122,7 +125,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseGroup = ReleaseGroupForRelease(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
@@ -623,6 +626,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                     primaryType = "Album",
+                    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
@@ -688,7 +692,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseGroup = ReleaseGroupForRelease(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
@@ -730,7 +734,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
                 releaseGroup = ReleaseGroupForRelease(
                     id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     name = "Today Is A Beautiful Day",
                     firstReleaseDate = "2011-03-16",
                 ),
@@ -856,9 +860,14 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 releaseGroup = ReleaseGroupMusicBrainzNetworkModel(
                     id = "a5a83577-ddca-4428-bf6b-b852296bc5f3",
                     primaryType = "Album",
+                    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
                     secondaryTypes = listOf(
                         "Compilation",
                         "Soundtrack",
+                    ),
+                    secondaryTypeIds = listOf(
+                        "dd2a21e1-0c00-3729-a7a0-de60b84eb5d1",
+                        "22a628ad-c082-3c4f-b1b6-d41665107b88",
                     ),
                     name = "真・女神転生30th Anniversary Special Sound Compilation",
                     firstReleaseDate = "2011-03-16",
@@ -947,10 +956,10 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "真・女神転生30th Anniversary Special Sound Compilation",
                     firstReleaseDate = "2011-03-16",
                     disambiguation = "",
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     secondaryTypes = persistentListOf(
-                        "Compilation",
-                        "Soundtrack",
+                        ReleaseGroupSecondaryType.Compilation,
+                        ReleaseGroupSecondaryType.Soundtrack,
                     ),
                 ),
                 listenBrainzUrl = "/album/a5a83577-ddca-4428-bf6b-b852296bc5f3",
@@ -1168,10 +1177,10 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     name = "真・女神転生30th Anniversary Special Sound Compilation",
                     firstReleaseDate = "2011-03-16",
                     disambiguation = "",
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     secondaryTypes = persistentListOf(
-                        "Compilation",
-                        "Soundtrack",
+                        ReleaseGroupSecondaryType.Compilation,
+                        ReleaseGroupSecondaryType.Soundtrack,
                     ),
                 ),
                 areas = persistentListOf(
@@ -1304,7 +1313,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             releaseGroup = ReleaseGroupForRelease(
                 id = "22760f81-37ce-47ce-98b6-65f8a285f083",
                 name = "ウタの歌 ONE PIECE FILM RED",
-                primaryType = "Album",
+                primaryType = ReleaseGroupPrimaryType.Album,
                 secondaryTypes = persistentListOf(),
                 firstReleaseDate = "2022-08-10",
             ),
@@ -1362,6 +1371,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                     id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
                     name = "Red",
                     primaryType = "Album",
+                    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
                 ),
             ),
         )
@@ -1391,7 +1401,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             releaseGroup = ReleaseGroupForRelease(
                 id = "a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
                 name = "Red",
-                primaryType = "Album",
+                primaryType = ReleaseGroupPrimaryType.Album,
                 firstReleaseDate = "",
             ),
             areas = persistentListOf(

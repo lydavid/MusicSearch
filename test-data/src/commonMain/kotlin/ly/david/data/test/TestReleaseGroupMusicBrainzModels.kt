@@ -20,6 +20,7 @@ val underPressureReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzNetworkMo
         ),
     ),
     primaryType = "Single",
+    primaryTypeId = "d6038452-8ee0-3f68-affc-2de9a1ede0b9",
     firstReleaseDate = "1981-10",
 )
 
@@ -27,6 +28,7 @@ val utaNoUtaReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzNetworkModel(
     id = "22760f81-37ce-47ce-98b6-65f8a285f083",
     name = "ウタの歌 ONE PIECE FILM RED",
     primaryType = "Album",
+    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
     secondaryTypes = listOf(),
     disambiguation = "",
     artistCredits = listOf(adoArtistCreditMusicBrainzModel),
@@ -83,6 +85,7 @@ val alsoSprachZarathustraReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzN
         ),
     ),
     primaryType = "Album",
+    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
     firstReleaseDate = "1974",
     disambiguation = "1973 recordings",
 )
@@ -126,6 +129,7 @@ val nutcrackerReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzNetworkModel
         ),
     ),
     primaryType = "Album",
+    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
     firstReleaseDate = "2010-10-11",
     disambiguation = "",
 )
@@ -169,6 +173,7 @@ val tchaikovskyOverturesReleaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzNe
         ),
     ),
     primaryType = "Album",
+    primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
     firstReleaseDate = "2000-02-01",
     disambiguation = "",
 )

@@ -13,9 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.getTitle
@@ -67,7 +67,7 @@ internal fun LazyListScope.addEntityStatsSection(
         ) {
             Text(
                 style = TextStyles.getCardBodySubTextStyle(),
-                text = "${it.getDisplayTypes()}: ${it.count}",
+                text = "${it.getDisplayString()}: ${it.count}",
             )
 
             if (releaseGroupTypeCounts.isNotEmpty()) {

@@ -45,8 +45,9 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
@@ -450,7 +451,12 @@ class ReleaseGroupsListRepositoryImplTest :
                         ),
                     ),
                     expectedResult = listOf(
-                        ListSeparator(id = "null_d0c3b18b-060b-41a8-9629-b880b2a95c13", text = "Album"),
+                        ReleaseGroupListSeparator(
+                            id = "null_d0c3b18b-060b-41a8-9629-b880b2a95c13",
+                            types = alsoSprachZarathustraReleaseGroupListItemModel.copy(
+                                collected = true,
+                            ),
+                        ),
                         alsoSprachZarathustraReleaseGroupListItemModel.copy(
                             collected = true,
                         ),
@@ -606,7 +612,7 @@ class ReleaseGroupsListRepositoryImplTest :
                             joinPhrase = "",
                         ),
                     ),
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     firstReleaseDate = "2000-02-01",
                     disambiguation = "new changes",
                     lastUpdated = testDateTimeInThePast,
@@ -640,7 +646,7 @@ class ReleaseGroupsListRepositoryImplTest :
                             joinPhrase = "",
                         ),
                     ),
-                    primaryType = "Album",
+                    primaryType = ReleaseGroupPrimaryType.Album,
                     firstReleaseDate = "2000-02-01",
                     disambiguation = "new changes",
                     lastUpdated = testDateTimeInThePast,

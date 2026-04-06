@@ -8,6 +8,6 @@ data class ReleaseGroupForRelease(
     override val name: String,
     override val disambiguation: String = "",
     override val firstReleaseDate: String,
-    override val primaryType: String = "",
-    override val secondaryTypes: ImmutableList<String> = persistentListOf(),
+    override val primaryType: ReleaseGroupPrimaryType? = null,
+    override val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType> = persistentListOf(),
 ) : ReleaseGroup

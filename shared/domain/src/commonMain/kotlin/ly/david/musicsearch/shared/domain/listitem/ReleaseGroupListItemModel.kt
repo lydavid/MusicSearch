@@ -6,14 +6,16 @@ import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 
 data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
     override val firstReleaseDate: String = "",
-    override val primaryType: String = "",
-    override val secondaryTypes: ImmutableList<String> = persistentListOf(),
+    override val primaryType: ReleaseGroupPrimaryType? = null,
+    override val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType> = persistentListOf(),
     val formattedArtistCredits: String? = null,
     val imageMetadata: ImageMetadata? = null,
     override val visited: Boolean = false,

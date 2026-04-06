@@ -25,7 +25,6 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.area.AreaListItem
@@ -40,6 +39,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.release.getDisplayString
+import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
@@ -124,7 +124,7 @@ internal fun ReleaseDetailsTabUi(
         releaseGroup?.let {
             TextWithHeading(
                 heading = stringResource(Res.string.type),
-                text = it.getDisplayTypes(),
+                text = it.getDisplayString(),
                 filterText = filterText,
             )
         }

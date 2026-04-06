@@ -5,6 +5,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -46,14 +48,14 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
                         totalCollected = 200,
                         releaseGroupTypeCounts = persistentListOf(
                             ReleaseGroupTypeCount(
-                                primaryType = "Album",
+                                primaryType = ReleaseGroupPrimaryType.Album,
                                 count = 13,
                             ),
                             ReleaseGroupTypeCount(
-                                primaryType = "Album",
-                                secondaryTypes = listOf(
-                                    "Compilation",
-                                    "Demo",
+                                primaryType = ReleaseGroupPrimaryType.Album,
+                                secondaryTypes = persistentListOf(
+                                    ReleaseGroupSecondaryType.Compilation,
+                                    ReleaseGroupSecondaryType.Demo,
                                 ),
                                 count = 1,
                             ),

@@ -5,13 +5,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -47,14 +49,14 @@ internal fun PreviewStatsUi() {
                             totalCollected = 23,
                             releaseGroupTypeCounts = persistentListOf(
                                 ReleaseGroupTypeCount(
-                                    primaryType = "Album",
+                                    primaryType = ReleaseGroupPrimaryType.Album,
                                     count = 13,
                                 ),
                                 ReleaseGroupTypeCount(
-                                    primaryType = "Album",
-                                    secondaryTypes = listOf(
-                                        "Compilation",
-                                        "Demo",
+                                    primaryType = ReleaseGroupPrimaryType.Album,
+                                    secondaryTypes = persistentListOf(
+                                        ReleaseGroupSecondaryType.Compilation,
+                                        ReleaseGroupSecondaryType.Demo,
                                     ),
                                     count = 1,
                                 ),

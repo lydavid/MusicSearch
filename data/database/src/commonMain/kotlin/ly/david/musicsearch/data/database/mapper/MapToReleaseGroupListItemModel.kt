@@ -3,14 +3,16 @@ package ly.david.musicsearch.data.database.mapper
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 
 internal fun mapToReleaseGroupListItemModel(
     id: String,
     name: String,
     disambiguation: String,
     firstReleaseDate: String,
-    primaryType: String,
-    secondaryTypes: List<String>,
+    primaryTypeId: String,
+    secondaryTypeIds: List<String>,
     formattedArtistCreditNames: String,
     imageId: Long?,
     source: ImageSource?,
@@ -24,8 +26,10 @@ internal fun mapToReleaseGroupListItemModel(
     name = name,
     disambiguation = disambiguation,
     firstReleaseDate = firstReleaseDate,
-    primaryType = primaryType,
-    secondaryTypes = secondaryTypes.toPersistentList(),
+    primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+    secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+        ReleaseGroupSecondaryType.fromId(id)
+    }.toPersistentList(),
     formattedArtistCredits = formattedArtistCreditNames,
     imageMetadata = mapToImageMetadata(
         id = imageId,

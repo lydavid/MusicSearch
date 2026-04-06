@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
@@ -35,6 +36,7 @@ import ly.david.musicsearch.ui.common.recording.RecordingListItem
 import ly.david.musicsearch.ui.common.relation.RelationListItem
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
+import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
 import kotlin.time.Instant
@@ -277,6 +279,10 @@ fun EntitiesPagingListUi(
 
                 is ListSeparator -> {
                     ListSeparatorHeader(text = listItemModel.text)
+                }
+
+                is ReleaseGroupListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.types.getDisplayString())
                 }
 
                 is LastUpdatedFooter -> {

@@ -6,7 +6,6 @@ import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 
 @Serializable
 data class ReleaseGroupMusicBrainzNetworkModel(
@@ -14,10 +13,10 @@ data class ReleaseGroupMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String = "",
     @SerialName("disambiguation") override val disambiguation: String = "",
-    @SerialName("first-release-date") override val firstReleaseDate: String = "",
-    @SerialName("primary-type") override val primaryType: String? = null,
+    @SerialName("first-release-date") val firstReleaseDate: String = "",
+    @SerialName("primary-type") val primaryType: String? = null,
     @SerialName("primary-type-id") val primaryTypeId: String? = null,
-    @SerialName("secondary-types") override val secondaryTypes: List<String>? = null,
+    @SerialName("secondary-types") val secondaryTypes: List<String>? = null,
     @SerialName("secondary-type-ids") val secondaryTypeIds: List<String>? = null,
 
     // Lookup: inc=artists; Browse: inc=artist-credits
@@ -34,4 +33,4 @@ data class ReleaseGroupMusicBrainzNetworkModel(
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-) : MusicBrainzNetworkModel, ReleaseGroup
+) : MusicBrainzNetworkModel

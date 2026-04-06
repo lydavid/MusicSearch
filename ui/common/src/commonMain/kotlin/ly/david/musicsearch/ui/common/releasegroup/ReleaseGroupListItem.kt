@@ -16,7 +16,6 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -60,13 +59,11 @@ fun ReleaseGroupListItem(
         supportingContent = {
             Column {
                 if (showType) {
-                    releaseGroup.getDisplayTypes().ifNotNullOrEmpty {
-                        Text(
-                            text = it,
-                            modifier = Modifier.padding(top = 4.dp),
-                            style = TextStyles.getCardBodySubTextStyle(),
-                        )
-                    }
+                    Text(
+                        text = releaseGroup.getDisplayString(),
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
                 }
 
                 releaseGroup.firstReleaseDate.ifNotNullOrEmpty {

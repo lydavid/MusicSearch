@@ -45,15 +45,21 @@ SELECT
   rg.name,
   rg.disambiguation,
   rg.first_release_date,
-  rg.primary_type,
-  rg.secondary_types,
+  rg.primary_type_id,
+  rg.secondary_type_ids,
   details_metadata.last_updated
 FROM release_group rg
 LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
 WHERE rg.id = :releaseGroupId;
 
 getReleaseGroupForRelease:
-SELECT rg.*
+SELECT
+  rg.id,
+  rg.name,
+  rg.disambiguation,
+  rg.first_release_date,
+  rg.primary_type_id,
+  rg.secondary_type_ids
 FROM release_group rg
 INNER JOIN release_release_group rrg ON rg.id = rrg.release_group_id
 INNER JOIN release r ON rrg.release_id = r.id
@@ -82,24 +88,36 @@ DELETE FROM release_groups_by_entity WHERE entity_id = :entityId;
 }
 
 getCountOfEachAlbumTypes:
-SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+SELECT
+  rg.primary_type_id,
+  rg.secondary_type_ids,
+  COUNT(rg.id) AS count
 FROM release_group rg
-GROUP BY rg.primary_type, rg.secondary_types;
+GROUP BY rg.primary_type_id, rg.secondary_type_ids
+ORDER BY rg.primary_type, rg.secondary_types;
 
 getCountOfEachAlbumTypesByEntity:
-SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+SELECT
+  rg.primary_type_id,
+  rg.secondary_type_ids,
+  COUNT(rg.id) AS count
 FROM release_group rg
 INNER JOIN release_groups_by_entity ON rg.id = release_groups_by_entity.release_group_id
 WHERE release_groups_by_entity.entity_id = :entityId
-GROUP BY rg.primary_type, rg.secondary_types;
+GROUP BY rg.primary_type_id, rg.secondary_type_ids
+ORDER BY rg.primary_type, rg.secondary_types;
 
 getCountOfEachAlbumTypesByCollection:
-SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+SELECT
+  rg.primary_type_id,
+  rg.secondary_type_ids,
+  COUNT(rg.id) AS count
 FROM release_group rg
 INNER JOIN collection_entity ON rg.id = collection_entity.entity_id
 INNER JOIN collection ON collection.id = collection_entity.id
 WHERE collection.id = :collectionId
-GROUP BY rg.primary_type, rg.secondary_types;
+GROUP BY rg.primary_type_id, rg.secondary_type_ids
+ORDER BY rg.primary_type, rg.secondary_types;
 
 getCountOfReleaseGroupsByEntity:
 SELECT IFNULL(
@@ -128,8 +146,8 @@ SELECT
   release_group.name,
   release_group.disambiguation,
   release_group.first_release_date,
-  release_group.primary_type,
-  release_group.secondary_types,
+  release_group.primary_type_id,
+  release_group.secondary_type_ids,
   ac.name AS artist_credits,
   images.id AS image_id,
   images.source,
@@ -221,8 +239,8 @@ SELECT
   release_group.name,
   release_group.disambiguation,
   release_group.first_release_date,
-  release_group.primary_type,
-  release_group.secondary_types,
+  release_group.primary_type_id,
+  release_group.secondary_type_ids,
   ac.name AS artist_credits,
   images.id AS image_id,
   images.source,
@@ -317,8 +335,8 @@ SELECT
   release_group.name,
   release_group.disambiguation,
   release_group.first_release_date,
-  release_group.primary_type,
-  release_group.secondary_types,
+  release_group.primary_type_id,
+  release_group.secondary_type_ids,
   ac.name AS artist_credits,
   images.id AS image_id,
   images.source,

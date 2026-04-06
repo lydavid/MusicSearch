@@ -13,6 +13,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
@@ -35,8 +37,8 @@ private val release = ReleaseDetailsModel(
         id = "1",
         name = "ウタの歌 ONE PIECE FILM RED",
         firstReleaseDate = "",
-        primaryType = "Album",
-        secondaryTypes = persistentListOf("Soundtrack"),
+        primaryType = ReleaseGroupPrimaryType.Album,
+        secondaryTypes = persistentListOf(ReleaseGroupSecondaryType.Soundtrack),
     ),
     areas = persistentListOf(
         AreaListItemModel(

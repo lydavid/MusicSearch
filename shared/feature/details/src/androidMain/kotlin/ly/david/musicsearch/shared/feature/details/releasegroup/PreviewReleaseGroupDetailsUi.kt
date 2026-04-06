@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -14,7 +15,7 @@ import kotlin.time.Instant
 private val releaseGroup = ReleaseGroupDetailsModel(
     id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
     name = "Under Pressure",
-    primaryType = "Single",
+    primaryType = ReleaseGroupPrimaryType.Single,
     firstReleaseDate = "1981-10",
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     urls = persistentListOf(

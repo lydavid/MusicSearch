@@ -18,12 +18,11 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import kotlin.time.Instant
 
 class ReleaseGroupsListRepositoryImpl(
@@ -59,11 +58,11 @@ class ReleaseGroupsListRepositoryImpl(
                     ).contains((listFilters.sortOption as? SortOption.ReleaseGroup)?.option)
                     when {
                         showTypeDividers && rg2 != null &&
-                            (rg1?.primaryType != rg2.primaryType || rg1.secondaryTypes != rg2.secondaryTypes)
+                            (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
                         -> {
-                            ListSeparator(
+                            ReleaseGroupListSeparator(
                                 id = "${rg1?.id}_${rg2.id}",
-                                text = rg2.getDisplayTypes(),
+                                types = rg2,
                             )
                         }
 

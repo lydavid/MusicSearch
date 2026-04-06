@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -89,6 +90,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
             musicBrainzModel = ReleaseGroupMusicBrainzNetworkModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
                 primaryType = "Album",
+                primaryTypeId = "f529b476-6e62-324f-b0aa-1f3e33d313fc",
                 name = "Today Is A Beautiful Day",
                 firstReleaseDate = "2011-03-16",
                 artistCredits = persistentListOf(
@@ -167,7 +169,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
         assertEquals(
             ReleaseGroupDetailsModel(
                 id = "93bb79c2-2995-4607-af5e-061a25a4e06f",
-                primaryType = "Album",
+                primaryType = ReleaseGroupPrimaryType.Album,
                 name = "Today Is A Beautiful Day",
                 firstReleaseDate = "2011-03-16",
                 artistCredits = persistentListOf(

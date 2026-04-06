@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
-import ly.david.musicsearch.shared.domain.releasegroup.getDisplayTypes
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.firstReleaseDate
@@ -34,7 +34,7 @@ internal fun ReleaseGroupDetailsTabUi(
         entityInfoSection = {
             TextWithHeading(
                 heading = stringResource(Res.string.type),
-                text = getDisplayTypes(),
+                text = getDisplayString(),
                 filterText = filterText,
             )
             firstReleaseDate.ifNotNullOrEmpty {

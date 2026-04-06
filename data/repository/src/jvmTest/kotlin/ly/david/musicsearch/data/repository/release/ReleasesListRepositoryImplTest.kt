@@ -85,6 +85,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -1208,7 +1209,7 @@ class ReleasesListRepositoryImplTest :
                 id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
                 name = "Under Pressure",
                 firstReleaseDate = "1981-10",
-                primaryType = "Single",
+                primaryType = ReleaseGroupPrimaryType.Single,
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
             areas = persistentListOf(
@@ -1381,7 +1382,7 @@ class ReleasesListRepositoryImplTest :
                 id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
                 name = "Under Pressure",
                 firstReleaseDate = "1981-10",
-                primaryType = "Single",
+                primaryType = ReleaseGroupPrimaryType.Single,
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
             areas = persistentListOf(
@@ -1552,7 +1553,7 @@ class ReleasesListRepositoryImplTest :
                 id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
                 name = "Under Pressure",
                 firstReleaseDate = "1981-10",
-                primaryType = "Single",
+                primaryType = ReleaseGroupPrimaryType.Single,
             ),
             listenBrainzUrl = "/album/bdaeec2d-94f1-46b5-91f3-340ec6939c66",
             areas = persistentListOf(

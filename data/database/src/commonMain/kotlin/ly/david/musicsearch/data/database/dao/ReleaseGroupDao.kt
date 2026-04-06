@@ -18,6 +18,8 @@ import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
@@ -110,30 +112,34 @@ class ReleaseGroupDaoImpl(
         name: String,
         disambiguation: String,
         firstReleaseDate: String,
-        primaryType: String,
-        secondaryTypes: List<String>,
+        primaryTypeId: String,
+        secondaryTypeIds: List<String>,
         lastUpdated: Instant?,
     ) = ReleaseGroupDetailsModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         firstReleaseDate = firstReleaseDate,
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes.toPersistentList(),
+        primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+        secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+            ReleaseGroupSecondaryType.fromId(id)
+        }.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 
     override fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
         transacter.getReleaseGroupForRelease(
             releaseId = releaseId,
-            mapper = { id, name, disambiguation, firstReleaseDate, primaryType, _, secondaryTypes, _ ->
+            mapper = { id, name, disambiguation, firstReleaseDate, primaryTypeId, secondaryTypeIds ->
                 ReleaseGroupForRelease(
                     id = id,
                     name = name,
                     disambiguation = disambiguation,
                     firstReleaseDate = firstReleaseDate,
-                    primaryType = primaryType,
-                    secondaryTypes = secondaryTypes.toPersistentList(),
+                    primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+                    secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+                        ReleaseGroupSecondaryType.fromId(id)
+                    }.toPersistentList(),
                 )
             },
         ).executeAsOneOrNull()
@@ -183,10 +189,12 @@ class ReleaseGroupDaoImpl(
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
                     transacter.getCountOfEachAlbumTypesByCollection(
                         collectionId = browseMethod.entityId,
-                        mapper = { primaryType, secondaryTypes, count ->
+                        mapper = { primaryTypeId, secondaryTypeIds, count ->
                             ReleaseGroupTypeCount(
-                                primaryType = primaryType,
-                                secondaryTypes = secondaryTypes,
+                                primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+                                secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+                                    ReleaseGroupSecondaryType.fromId(id)
+                                }.toPersistentList(),
                                 count = count.toInt(),
                             )
                         },
@@ -194,10 +202,12 @@ class ReleaseGroupDaoImpl(
                 } else {
                     transacter.getCountOfEachAlbumTypesByEntity(
                         entityId = browseMethod.entityId,
-                        mapper = { primaryType, secondaryTypes, count ->
+                        mapper = { primaryTypeId, secondaryTypeIds, count ->
                             ReleaseGroupTypeCount(
-                                primaryType = primaryType,
-                                secondaryTypes = secondaryTypes,
+                                primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+                                secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+                                    ReleaseGroupSecondaryType.fromId(id)
+                                }.toPersistentList(),
                                 count = count.toInt(),
                             )
                         },
@@ -207,10 +217,12 @@ class ReleaseGroupDaoImpl(
 
             BrowseMethod.All -> {
                 transacter.getCountOfEachAlbumTypes(
-                    mapper = { primaryType, secondaryTypes, count ->
+                    mapper = { primaryTypeId, secondaryTypeIds, count ->
                         ReleaseGroupTypeCount(
-                            primaryType = primaryType,
-                            secondaryTypes = secondaryTypes,
+                            primaryType = ReleaseGroupPrimaryType.fromId(primaryTypeId),
+                            secondaryTypes = secondaryTypeIds.mapNotNull { id ->
+                                ReleaseGroupSecondaryType.fromId(id)
+                            }.toPersistentList(),
                             count = count.toInt(),
                         )
                     },

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.releasegroup
 
+import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.domain.NameWithDisambiguation
 
 /**
@@ -12,6 +13,6 @@ interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
     override val disambiguation: String
     val firstReleaseDate: String
 
-    override val primaryType: String?
-    override val secondaryTypes: List<String>?
+    override val primaryType: ReleaseGroupPrimaryType?
+    override val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType>
 }
