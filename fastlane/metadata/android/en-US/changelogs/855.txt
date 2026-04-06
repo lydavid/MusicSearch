@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* map release group types to localizable text
+
+
+### Features
+
+* add action to open in browser at listen timestamp from a listen
