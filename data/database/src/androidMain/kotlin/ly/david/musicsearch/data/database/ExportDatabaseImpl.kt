@@ -9,23 +9,25 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.time.Clock
 
 internal class ExportDatabaseImpl(
     private val context: Context,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val clock: Clock,
 ) : ExportDatabase {
     override suspend operator fun invoke(): String {
         return try {
             withContext(coroutineDispatchers.io) {
                 val databasePath = context.getDatabasePath(DATABASE_FILE_FULL_NAME)
                 val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                val destinationFile = File(downloadsDirectory, exportFileName)
+                val destinationFile = File(downloadsDirectory, getExportFileName(clock = clock))
                 FileInputStream(databasePath).use { inputStream ->
                     FileOutputStream(destinationFile).use { outputStream ->
                         inputStream.copyTo(outputStream)
                     }
                 }
-                "Successfully exported database to ${destinationFile.absolutePath}!"
+                "Successfully exported database to ${destinationFile.absolutePath}"
             }
         } catch (ex: IOException) {
             "Error: $ex"

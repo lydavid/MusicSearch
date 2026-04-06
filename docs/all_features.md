@@ -11,7 +11,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Aliases](#aliases)                                         | ✅       | ✅       | ✅   |
 | [Browse](#browse)                                           | ✅       | ✅       | ✅   |
 | [Collections](#collections)                                 | ✅       | ✅       | ✅   |
-| [Export](#export)                                           | ✅       | ✅       | ⬜   |
+| [Export](#export)                                           | ✅       | ✅       | ✅   |
 | [Filtering](#filtering)                                     | ✅       | ✅       | ✅   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
@@ -108,6 +108,8 @@ See below for the supported types of collections.
 ## Export
 
 Exporting the app's database as a sqlite database is supported.
+This includes all the data that have been cached by the app,
+excluding some private information such as your MusicBrainz/ListenBrainz tokens.
 
 You will need to use a tool such as [SQLite's CLI](https://www.sqlite.org/cli.html) to interact with it.
 
@@ -123,20 +125,20 @@ Most screen supports filtering its content by text.
 
 ## Images
 
-| Entity        | Supported | Source                                                                                 |
-|---------------|-----------|----------------------------------------------------------------------------------------|
-| area          | ⬜️        | wikidata?                                                                              |
-| artist        | ✅         | [Spotify](https://developer.spotify.com/documentation/web-api/reference/get-an-artist) |
-| collection    | ⬜️        |                                                                                        |
-| event         | ✅️        | [Event Art Archive](https://musicbrainz.org/doc/Event_Art_Archive)                     |
-| instrument    | ❌         |                                                                                        |
-| label         | ⬜️        | wikidata?                                                                              |
-| place         | ❌         |                                                                                        |
-| recording     | ❌         |                                                                                        |
-| release       | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                     |
-| release group | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                     |
-| series        | ❌         |                                                                                        |
-| work          | ❌         |                                                                                        |
+| Entity        | Supported | Sources                                                                                                                                             |
+|---------------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| area          | ⬜️        | wikidata?                                                                                                                                           |
+| artist        | ✅         | [Spotify](https://developer.spotify.com/documentation/web-api/reference/get-an-artist), [Wikimedia](https://commons.wikimedia.org/wiki/Commons:API) |
+| collection    | ⬜️        |                                                                                                                                                     |
+| event         | ✅️        | [Event Art Archive](https://musicbrainz.org/doc/Event_Art_Archive)                                                                                  |
+| instrument    | ❌         |                                                                                                                                                     |
+| label         | ⬜️        | wikidata?                                                                                                                                           |
+| place         | ❌         |                                                                                                                                                     |
+| recording     | ❌         |                                                                                                                                                     |
+| release       | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                                                                                  |
+| release group | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                                                                                  |
+| series        | ❌         |                                                                                                                                                     |
+| work          | ❌         |                                                                                                                                                     |
 
 ## Graph
 
@@ -155,12 +157,24 @@ the linked recording's name, disambiguation and aliases.
 
 You can also filter by facets such as by:
 - recording
+- release (album)
+- artist
+- work
 
 The facets are organized by most listened first. The facets can also be filtered by text.
 
 Some features are only available if you log in with [your user token](https://listenbrainz.org/settings/).
 These include:
-- refreshing individual listen metadata
+- linking your listen to a MusicBrainz recording to get metadata about it
+- refreshing listen metadata
+- deleting a listen
+
+### Submit listens
+
+You can submit manual listens to ListenBrainz from a few places:
+- Recording: submit the recording without album data
+- Release: single track: submit its recording with the release as the album
+- Release: multiple tracks: submit all selected tracks' recordings with the release as the album
 
 
 ## Local Database
@@ -206,6 +220,11 @@ and tracks (recordings) in MusicBrianz.
 
 ## Swipe to Refresh
 
+By default, the app caches any page/tab you visit,
+so the next time you visit it, the data will not change.
+However, if you want the latest data from MusicBrainz,
+you can swipe down to refresh. Or do so from the More Actions button.
+
 TODO: screenshot of details screen
 TODO: screenshot of list screen
 
@@ -245,6 +264,8 @@ From the subtitle of the following screens, you can navigate "up" without having
 - Recording -> Artist
 - Release -> Artist, Release Group
 - Release Group -> Artist
+- Image pager within Images -> Artist, Event, Release, Release Group
+
 
 ## Wikipedia extract
 
@@ -252,7 +273,7 @@ Displays a Wikipedia excerpt of the entity along with a link to deep link into W
 This depends on the existence of a [Wikidata link](https://musicbrainz.org/doc/Wikidata).
 If an entity is missing one, consider adding it to [MusicBrainz](https://musicbrainz.org/), and/or to [Wikidata](https://www.wikidata.org).
 
-At the moment, we always get the English Wikipedia article's extract.
+The app will try to get the extract in your device's language, or app language if set.
 
 | Entity        | Details |
 |---------------|---------|
