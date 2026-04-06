@@ -293,4 +293,21 @@
     <string name="MusicBrainzUrlMBID">URL MusicBrainz/MBID</string>
     <string name="addMapping">Ajouter un mappage</string>
     <string name="linkWithMusicBrainz">Lien vers MusicBrainz</string>
+    <string name="album">Album</string>
+    <string name="broadcast">Diffusion</string>
+    <string name="ep">EP</string>
+    <string name="single">Single</string>
+    <string name="audioDrama">Pièce Radiophonique</string>
+    <string name="audiobook">Livre Audio</string>
+    <string name="compilation">Compilation</string>
+    <string name="djMix">Mix DJ</string>
+    <string name="demo">Demo</string>
+    <string name="fieldRecording">Enregistrement sur le terrain</string>
+    <string name="interview">Interview</string>
+    <string name="live">Live</string>
+    <string name="mixtapeStreet">Mixtape/Rue</string>
+    <string name="remix">Remix</string>
+    <string name="soundtrack">Bande Originale</string>
+    <string name="spokenword">Parole parlée</string>
+    <string name="unspecifiedType">Type non spécifié</string>
 </resources>
