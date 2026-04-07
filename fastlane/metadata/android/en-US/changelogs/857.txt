@@ -1,0 +1,4 @@
+
+### Features
+
+* **ios:** support exporting database to app Documents folder and expose this folder to Files app
