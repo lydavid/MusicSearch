@@ -11,3 +11,10 @@ Features:
 - Scrobbling to ListenBrainz? Enter your username to explore your listens
 - Customize the app's appearance with: Light/Dark theme, Material theme based on your wallpaper, or pick a custom color
 - An artist's discography is incomplete? Aliases missing? Other data missing? Contribute it to MusicBrainz: https://musicbrainz.org/
+
+See all features here: https://lydavid.github.io/MusicSearch/docs/all_features.html
+
+This is a music database/discovery app, not a music player.
+There are external links to various streaming platforms which will open the album/song in their app if it's installed.
+
+The source code for this project can be found at: https://github.com/lydavid/MusicSearch
