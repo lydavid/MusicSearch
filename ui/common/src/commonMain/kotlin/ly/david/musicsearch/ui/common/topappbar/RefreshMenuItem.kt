@@ -5,6 +5,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.intl.Locale
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Refresh
 import musicsearch.ui.common.generated.resources.Res
@@ -23,8 +24,12 @@ fun OverflowMenuScope.RefreshMenuItem(
     val title = if (tabTitle == null) {
         stringResource(Res.string.refresh)
     } else {
-        // TODO: We need to have strings for title case and sentence case
-        stringResource(Res.string.refreshXTab, tabTitle.lowercase())
+        val tabName = if (Locale.current.language == "de") {
+            tabTitle
+        } else {
+            tabTitle.lowercase()
+        }
+        stringResource(Res.string.refreshXTab, tabName)
     }
 
     if (show) {
