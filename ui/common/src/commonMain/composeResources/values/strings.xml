@@ -309,4 +309,13 @@
     <string name="soundtrack">Soundtrack</string>
     <string name="spokenword">Spokenword</string>
     <string name="unspecifiedType">Unspecified type</string>
+    <string name="copyIDToClipboard">Copy ID to clipboard</string>
+    <string name="local">Local</string>
+    <string name="remote">Remote</string>
+    <string name="sortX">Sort: %1$s</string>
+    <string name="foundXResults">Found %1$d results.</string>
+    <string name="endOfSearchResults">End of search results.</string>
+    <string name="addXCountToCollection">Add %1$d to collection</string>
+    <string name="tapRelationshipsTab">Tap Relationships tab to see more stats.</string>
+    <string name="totalRelationships">Total relationships: %1$d</string>
 </resources>

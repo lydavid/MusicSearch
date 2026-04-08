@@ -12,6 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PlaylistAdd
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.addXCountToCollection
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OverflowMenuScope.AddAllToCollectionMenuItem(
@@ -32,7 +35,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
     DropdownMenuItem(
         text = {
             Text(
-                text = "Add ${distinctEntityIds.size} to collection",
+                text = stringResource(Res.string.addXCountToCollection, distinctEntityIds.size),
             )
         },
         leadingIcon = {

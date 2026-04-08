@@ -11,6 +11,9 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
 import ly.david.musicsearch.ui.common.icons.ContentCopy
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.copyIDToClipboard
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun OverflowMenuScope.CopyToClipboardMenuItem(
@@ -21,7 +24,7 @@ fun OverflowMenuScope.CopyToClipboardMenuItem(
     val coroutineScope = rememberCoroutineScope()
 
     DropdownMenuItem(
-        text = { Text("Copy ID to clipboard") },
+        text = { Text(stringResource(Res.string.copyIDToClipboard)) },
         leadingIcon = {
             Icon(
                 imageVector = CustomIcons.ContentCopy,

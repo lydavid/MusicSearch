@@ -40,6 +40,8 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.endOfSearchResults
+import musicsearch.ui.common.generated.resources.foundXResults
 import musicsearch.ui.common.generated.resources.noResultsFoundSearch
 import org.jetbrains.compose.resources.stringResource
 
@@ -74,7 +76,7 @@ private fun ListItemUi(
                     .padding(16.dp)
                     .fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium,
-                text = "Found ${listItemModel.remoteCount} results.",
+                text = stringResource(Res.string.foundXResults, listItemModel.remoteCount),
             )
         }
 
@@ -231,7 +233,7 @@ private fun ListItemUi(
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
-                text = "End of search results.",
+                text = stringResource(Res.string.endOfSearchResults),
             )
         }
 

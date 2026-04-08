@@ -19,6 +19,11 @@ import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.KeyboardArrowDown
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.local
+import musicsearch.ui.common.generated.resources.remote
+import musicsearch.ui.common.generated.resources.sortX
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CollectionsFilterChipsBar(
@@ -39,7 +44,7 @@ internal fun CollectionsFilterChipsBar(
         FilterChip(
             selected = showLocal,
             onClick = { onShowLocalToggle(!showLocal) },
-            label = { Text(text = "Local") },
+            label = { Text(text = stringResource(Res.string.local)) },
             leadingIcon = {
                 if (showLocal) {
                     Icon(
@@ -53,7 +58,7 @@ internal fun CollectionsFilterChipsBar(
         FilterChip(
             selected = showRemote,
             onClick = { onShowRemoteToggle(!showRemote) },
-            label = { Text(text = "Remote") },
+            label = { Text(text = stringResource(Res.string.remote)) },
             leadingIcon = {
                 if (showRemote) {
                     Icon(
@@ -73,7 +78,7 @@ internal fun CollectionsFilterChipsBar(
         FilterChip(
             selected = false,
             onClick = onSortClick,
-            label = { Text(text = "Sort: ${sortOption.getLabel()}") },
+            label = { Text(text = stringResource(Res.string.sortX, sortOption.getLabel())) },
             trailingIcon = {
                 Icon(
                     imageVector = CustomIcons.KeyboardArrowDown,

@@ -24,6 +24,8 @@ import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.relationships
+import musicsearch.ui.common.generated.resources.tapRelationshipsTab
+import musicsearch.ui.common.generated.resources.totalRelationships
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -44,9 +46,9 @@ internal fun LazyListScope.addRelationshipsSection(
                 .padding(top = 4.dp),
             style = TextStyles.getCardBodyTextStyle(),
             text = if (lastUpdated == null) {
-                "Tap Relationships tab to see more stats."
+                stringResource(Res.string.tapRelationshipsTab)
             } else {
-                "Total relationships: $totalRelations"
+                stringResource(Res.string.totalRelationships, totalRelations)
             },
         )
     }
