@@ -79,7 +79,7 @@ desktop-jvm-macos-arm64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-
 desktop-jvm-macos-x64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-macos-x64", version.ref = "compose-multiplatform" }
 desktop-jvm-windows-x64 = { module = "org.jetbrains.compose.desktop:desktop-jvm-windows-x64", version.ref = "compose-multiplatform" }
 desugarjdklibs = "com.android.tools:desugar_jdk_libs:2.1.5"
-detekt-compose = "io.nlopez.compose.rules:detekt:0.5.6"
+detekt-compose = "io.nlopez.compose.rules:detekt:0.5.7"
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
