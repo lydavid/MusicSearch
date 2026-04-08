@@ -47,7 +47,7 @@ platform :ios do
       automatic_release: true,
       phased_release: true,
       precheck_include_in_app_purchases: false,
-      overwrite_screenshots: true
+      overwrite_screenshots: false
     )
   end
 end
