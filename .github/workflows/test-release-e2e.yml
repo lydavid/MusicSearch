@@ -18,14 +18,14 @@ jobs:
     steps:
       - name: Checkout main
         if: github.ref != 'refs/heads/main'
-        uses: nschloe/action-cached-lfs-checkout@1c185ad576953eab13e35ffe1bffef437d97e9d2 # v1
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
         with:
           token: ${{ secrets.PAT }}
           ref: main
 
       - name: Checkout main
         if: github.ref == 'refs/heads/main'
-        uses: nschloe/action-cached-lfs-checkout@1c185ad576953eab13e35ffe1bffef437d97e9d2 # v1
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
         with:
           token: ${{ secrets.PAT }}
           ref: ${{ github.event.before }}
@@ -116,7 +116,7 @@ jobs:
           path: before_artifacts
 
       - name: Checkout PR
-        uses: nschloe/action-cached-lfs-checkout@1c185ad576953eab13e35ffe1bffef437d97e9d2 # v1
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
         with:
           token: ${{ secrets.PAT }}
 
