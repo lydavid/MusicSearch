@@ -26,8 +26,8 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
             entity = browseEntity,
         )
 
-        combine(this, metadataFlow) { listItems, browseRemoteMetadata ->
-            val mappedItems = listItems.map { it as ListItemModel }
+        combine(this, metadataFlow) { pagingData, browseRemoteMetadata ->
+            val mappedItems = pagingData.map { it as ListItemModel }
 
             if (browseRemoteMetadata != null) {
                 mappedItems.insertFooterItemForNonEmpty(
@@ -39,6 +39,6 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
             }
         }
     } else {
-        map { listItems -> listItems.map { it as ListItemModel } }
+        map { pagingData -> pagingData.map { it as ListItemModel } }
     }
 }
