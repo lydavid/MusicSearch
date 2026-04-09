@@ -310,4 +310,13 @@
     <string name="soundtrack">Bande Originale</string>
     <string name="spokenword">Parole parlée</string>
     <string name="unspecifiedType">Type non spécifié</string>
+    <string name="copyIDToClipboard">Copier l'identifiant dans le presse-papiers</string>
+    <string name="local">Locale</string>
+    <string name="remote">Distant</string>
+    <string name="sortX">Tri : %1$s</string>
+    <string name="foundXResults">%1$d résultats trouvés.</string>
+    <string name="endOfSearchResults">Fin des résultats de recherche.</string>
+    <string name="addXCountToCollection">Ajouter %1$d à la collection</string>
+    <string name="tapRelationshipsTab">Appuyez sur l'onglet « Relations » pour afficher davantage de statistiques.</string>
+    <string name="totalRelationships">Nombre total de relations : %1$d</string>
 </resources>
