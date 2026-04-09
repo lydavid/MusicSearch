@@ -161,7 +161,7 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 dependency-analysis = "com.autonomousapps.dependency-analysis:3.6.1"
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-crashlytics = "com.google.firebase.crashlytics:3.0.6"
+firebase-crashlytics = "com.google.firebase.crashlytics:3.0.7"
 google-services = "com.google.gms.google-services:4.4.4"
 gradle-versions = "com.github.ben-manes.versions:0.53.0"
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
