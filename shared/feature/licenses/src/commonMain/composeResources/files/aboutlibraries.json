@@ -1473,7 +1473,7 @@
                     "name": "Arnaud Giuliani"
                 }
             ],
-            "artifactVersion": "4.2.0",
+            "artifactVersion": "4.2.1",
             "description": "KOIN - Kotlin simple Dependency Injection Framework",
             "scm": {
                 "connection": "scm:git:https://github.com/InsertKoinIO/koin.git",
