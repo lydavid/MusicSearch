@@ -15,7 +15,7 @@ jobs:
         api-level: [ 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 ]
     steps:
       - name: Checkout
-        uses: nschloe/action-cached-lfs-checkout@1c185ad576953eab13e35ffe1bffef437d97e9d2 # v1
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
         with:
           token: ${{ secrets.PAT }}
 
