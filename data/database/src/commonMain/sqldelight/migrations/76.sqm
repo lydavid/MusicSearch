@@ -1,12 +1,3 @@
-CREATE TABLE mbid_wikipedia (
-  mbid TEXT NOT NULL,
-  language_tag TEXT NOT NULL,
-  extract TEXT NOT NULL,
-  url TEXT NOT NULL,
-
-  PRIMARY KEY (mbid, language_tag)
-);
-
 CREATE VIRTUAL TABLE mbid_wikipedia_fts USING fts5(
   extract,
   content='mbid_wikipedia',
@@ -33,20 +24,6 @@ BEGIN
   VALUES (new.rowid, new.extract);
 END;
 
--- queries
-
-insert:
-INSERT OR IGNORE INTO mbid_wikipedia
-VALUES ?;
-
-get:
-SELECT
-  extract,
-  url
-FROM mbid_wikipedia
-WHERE mbid = :mbid AND language_tag = :languageTag
-LIMIT 1;
-
-deleteByIdAndTag:
-DELETE FROM mbid_wikipedia
-WHERE mbid = :mbid AND language_tag = :languageTag;
+INSERT INTO mbid_wikipedia_fts(rowid, extract)
+SELECT rowid, extract
+FROM mbid_wikipedia;
