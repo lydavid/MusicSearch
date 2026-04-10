@@ -333,6 +333,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable clipCircle: Boolean = @static false
   stable isSelected: Boolean = @static false
   stable size: Dp = @static <expression>
+  stable enableSharedTransition: Boolean = @static true
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.InstrumentListItem(
   instrument: InstrumentListItemModel
@@ -548,6 +549,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  unstable <this>: ReleaseGroupTypes
+): String
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  stable <this>: ReleaseGroupPrimaryType
+): String
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  stable <this>: ReleaseGroupSecondaryType
+): String
 open fun ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit(
   stable oldId: String
   stable mbid: String?

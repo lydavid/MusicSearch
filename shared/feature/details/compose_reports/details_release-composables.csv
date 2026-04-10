@@ -77,7 +77,7 @@ ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi,ReleaseG
 ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi,SeriesDetailsTabUi,1,1,1,0,0,0,1,0,2,2,
 ly.david.musicsearch.shared.feature.details.series.SeriesUi,SeriesUi,1,1,1,0,0,0,0,0,3,23,
 ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager,DetailsHorizontalPager,1,1,1,0,0,0,0,0,1,2,
-ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter.present,present,1,0,0,0,0,0,0,0,1,23,
+ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter.present,present,1,0,0,0,0,0,0,0,1,25,
 ly.david.musicsearch.shared.feature.details.utils.getCapitalizedName,getCapitalizedName,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi,DetailsTabUi,1,1,1,0,0,0,0,0,2,2,
 ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem,LastListenedListItem,1,1,1,0,0,0,0,0,1,3,

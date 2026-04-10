@@ -111,7 +111,6 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter 
   unstable val wikimediaRepository: WikimediaRepository
   unstable val collectionRepository: CollectionRepository
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
-  unstable val clock: Clock
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
@@ -126,22 +125,24 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
   stable val showListenSubmission: Boolean
-  runtime val detailsTabUiState: DetailsTabUiState
+  unstable val detailsTabUiState: DetailsTabUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val eventSink: Function1<DetailsUiEvent, Unit>
   <runtime stability> = Stable
 }
-runtime class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState {
+unstable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState {
   stable val isLoading: Boolean
   runtime val handledException: HandledException?
+  unstable val imageMetadata: ImageMetadata?
   stable val numberOfImages: Int?
+  runtime val wikipediaExtract: WikipediaExtract
   stable val lazyListState: LazyListState
   stable val isReleaseEventsCollapsed: Boolean
   stable val isExternalLinksCollapsed: Boolean
   stable val isAliasesCollapsed: Boolean
   stable val now: Instant
-  <runtime stability> = Runtime(HandledException)
+  <runtime stability> = Unstable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateUp {
   <runtime stability> = Stable

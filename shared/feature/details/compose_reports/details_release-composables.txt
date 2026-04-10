@@ -56,7 +56,7 @@ fun ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel(
 ): AliasListItemModel
 restartable skippable fun ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi(
   area: AreaDetailsModel
-  detailsTabUiState: DetailsTabUiState
+  unstable detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
@@ -74,7 +74,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi(
   artist: ArtistDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onImageClick: Function0<Unit>? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
@@ -97,7 +97,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable fun ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi(
   event: EventDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onImageClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
@@ -117,7 +117,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi(
   instrument: InstrumentDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
@@ -129,7 +129,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi(
   label: LabelDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
@@ -142,7 +142,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi(
   place: PlaceDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
@@ -155,7 +155,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingDetailsTabUi(
   recording: RecordingDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onSeeAllListensClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
@@ -167,7 +167,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi(
   release: ReleaseDetailsModel
-  detailsTabUiState: DetailsTabUiState
+  unstable detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
   stable onImageClick: Function0<Unit>? = @static <expression>
@@ -218,7 +218,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi(
   releaseGroup: ReleaseGroupDetailsModel
-  detailsTabUiState: DetailsTabUiState
+  unstable detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
   stable onImageClick: Function0<Unit>? = @static <expression>
@@ -232,7 +232,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi(
   series: SeriesDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
   stable onCollapseExpandAliases: Function0<Unit>? = @static <expression>
@@ -261,7 +261,7 @@ fun ly.david.musicsearch.shared.feature.details.utils.getCapitalizedName(
 ): String
 restartable skippable fun ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi(
   detailsModel: T
-  detailsTabUiState: DetailsTabUiState
+  unstable detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
   stable entityInfoSection: @[ExtensionFunctionType] Function3<T, Composer, Int, Unit>? = @static <expression>
@@ -278,7 +278,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi(
   work: WorkDetailsModel
   stable modifier: Modifier? = @static <expression>
-  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onSeeAllListensClick: Function0<Unit>? = @static <expression>
   stable onCollapseExpandExternalLinks: Function0<Unit>? = @static <expression>
