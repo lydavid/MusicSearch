@@ -26,66 +26,56 @@ import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
-private const val THEME_KEY = "theme"
-private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
-private const val USE_MATERIAL_YOU_KEY = "useMaterialYou"
-private val USE_MATERIAL_YOU_PREFERENCE = booleanPreferencesKey(USE_MATERIAL_YOU_KEY)
-private const val SEED_COLOR_KEY = "seedColor"
-private val SEED_COLOR_PREFERENCE = intPreferencesKey(SEED_COLOR_KEY)
-private const val SHOW_LOCAL_COLLECTIONS = "showLocalCollections"
-private val SHOW_LOCAL_COLLECTIONS_PREFERENCE =
-    booleanPreferencesKey(SHOW_LOCAL_COLLECTIONS)
-private const val SHOW_REMOTE_COLLECTIONS = "showRemoteCollections"
-private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
-    booleanPreferencesKey(SHOW_REMOTE_COLLECTIONS)
-
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,
     private val crashReporterSettings: CrashReporterSettings,
 ) : AppPreferences {
 
+    private val themePreference = stringPreferencesKey("theme")
     override val theme: Flow<AppPreferences.Theme>
         get() = preferencesDataStore.data
             .map {
-                AppPreferences.Theme.valueOf(it[THEME_PREFERENCE] ?: AppPreferences.Theme.SYSTEM.name)
+                AppPreferences.Theme.valueOf(it[themePreference] ?: AppPreferences.Theme.SYSTEM.name)
             }
             .distinctUntilChanged()
 
     override fun setTheme(theme: AppPreferences.Theme) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[THEME_PREFERENCE] = theme.name
+                it[themePreference] = theme.name
             }
         }
     }
 
+    private val useMaterialYouPreference = booleanPreferencesKey("useMaterialYou")
     override val useMaterialYou: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[USE_MATERIAL_YOU_PREFERENCE] ?: false
+                it[useMaterialYouPreference] ?: false
             }
             .distinctUntilChanged()
 
     override fun setUseMaterialYou(use: Boolean) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[USE_MATERIAL_YOU_PREFERENCE] = use
+                it[useMaterialYouPreference] = use
             }
         }
     }
 
+    private val seedColorPreference = intPreferencesKey("seedColor")
     override val observeSeedColor: Flow<Int>
         get() = preferencesDataStore.data
             .map {
-                it[SEED_COLOR_PREFERENCE] ?: DEFAULT_SEED_COLOR_INT
+                it[seedColorPreference] ?: DEFAULT_SEED_COLOR_INT
             }
             .distinctUntilChanged()
 
     override fun setSeedColor(seedColor: Int) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[SEED_COLOR_PREFERENCE] = seedColor
+                it[seedColorPreference] = seedColor
             }
         }
     }
@@ -164,39 +154,40 @@ internal class AppPreferencesImpl(
     }
     // endregion
 
+    private val showLocalCollectionsPreference = booleanPreferencesKey("showLocalCollections")
     override val showLocalCollections: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[SHOW_LOCAL_COLLECTIONS_PREFERENCE] ?: true
+                it[showLocalCollectionsPreference] ?: true
             }
             .distinctUntilChanged()
 
     override fun setShowLocalCollections(show: Boolean) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[SHOW_LOCAL_COLLECTIONS_PREFERENCE] = show
+                it[showLocalCollectionsPreference] = show
             }
         }
     }
 
+    private val showRemoteCollectionsPreference = booleanPreferencesKey("showRemoteCollections")
     override val showRemoteCollections: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
-                it[SHOW_REMOTE_COLLECTIONS_PREFERENCE] ?: true
+                it[showRemoteCollectionsPreference] ?: true
             }
             .distinctUntilChanged()
 
     override fun setShowRemoteCollections(show: Boolean) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[SHOW_REMOTE_COLLECTIONS_PREFERENCE] = show
+                it[showRemoteCollectionsPreference] = show
             }
         }
     }
 
     // region History
     private val historySortOptionPreference = stringPreferencesKey("historySortOption")
-
     override val historySortOption: Flow<HistorySortOption>
         get() = preferencesDataStore.data
             .map {
@@ -214,7 +205,6 @@ internal class AppPreferencesImpl(
 
     // region Collection
     private val collectionSortOptionPreference = stringPreferencesKey("collectionSortOption")
-
     override val collectionSortOption: Flow<CollectionSortOption>
         get() = preferencesDataStore.data
             .map {
@@ -234,7 +224,6 @@ internal class AppPreferencesImpl(
 
     // region Cover Arts
     private val coverArtsSortOptionPreference = stringPreferencesKey("coverArtsSortOption")
-
     override val imagesSortOption: Flow<ImagesSortOption>
         get() = preferencesDataStore.data
             .map {
