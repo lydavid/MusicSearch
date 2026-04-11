@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz.auth.store
+package ly.david.musicsearch.data.musicbrainz.auth
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlin.time.Clock
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
 
 private val accessTokenPreference = stringPreferencesKey("MUSICBRAINZ_ACCESS_TOKEN")
