@@ -1,4 +1,4 @@
 
 ### Bug Fixes
 
-* do not lowercase German tab name in Refresh X, closes [/github.com/lydavid/MusicSearch/issues/2095#issuecomment-4198924093](https://github.com//github.com/lydavid/MusicSearch/issues/2095/issues/issuecomment-4198924093)
+* do not lowercase German tab name in Refresh X
