@@ -267,7 +267,7 @@
     <string name="imagesGridPadding">Espacement entre les images dans la grille</string>
     <string name="letsYouSyncYourCollections">Cela vous permet de synchroniser vos collections</string>
     <string name="clickToLogoutFromMusicBrainz">Cliquez ici pour vous déconnecter de MusicBrainz</string>
-    <string name="loginToListenBrainz">Connectez-vous à ListenBrainz</string>
+    <string name="loginToListenBrainz">Se connecter à ListenBrainz</string>
     <string name="letsYouModifyYourListens">Cela vous permet de modifier vos écoutes</string>
     <string name="clickToLogoutFromListenBrainz">Cliquez ici pour vous déconnecter de ListenBrainz</string>
     <string name="findYourListenBrainzUserTokenAt">Retrouvez votre identifiant ListenBrainz à l'adresse %1$s.</string>
@@ -319,4 +319,5 @@
     <string name="addXCountToCollection">Ajouter %1$d à la collection</string>
     <string name="tapRelationshipsTab">Appuyez sur l'onglet « Relations » pour afficher davantage de statistiques.</string>
     <string name="totalRelationships">Nombre total de relations : %1$d</string>
+    <string name="scrollToHideTopAppBar">Faites défiler pour masquer la barre d'applications supérieure</string>
 </resources>
