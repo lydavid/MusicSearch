@@ -11,10 +11,16 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,7 +81,9 @@ internal fun AppearanceSettingsUi(
         },
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState()),
         ) {
             SettingWithDialogChoices(
                 title = stringResource(Res.string.theme),
@@ -106,6 +114,7 @@ internal fun AppearanceSettingsUi(
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 private fun ColumnScope.CustomColorPickerSection(
     state: AppearanceSettingsUiState,
@@ -138,6 +147,13 @@ private fun ColumnScope.CustomColorPickerSection(
         }
     }
 
+    val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
+    val padding = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+        16.dp
+    } else {
+        64.dp
+    }
+
     AnimatedVisibility(
         visible = !useMaterialYou,
         enter = scaleIn(),
@@ -146,8 +162,8 @@ private fun ColumnScope.CustomColorPickerSection(
         HsvColorPicker(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp)
-                .padding(16.dp),
+                .padding(horizontal = padding)
+                .height(450.dp),
             controller = controller,
             initialColor = seedColor,
             onColorChanged = { colorEnvelope: ColorEnvelope ->

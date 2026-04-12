@@ -36,6 +36,7 @@ kotlin {
                 implementation(libs.circuit.foundation)
                 implementation(libs.koin.core)
                 implementation(libs.compose.colorpicker)
+                implementation(libs.windowSizeClass)
             }
         }
         val androidMain by getting {
