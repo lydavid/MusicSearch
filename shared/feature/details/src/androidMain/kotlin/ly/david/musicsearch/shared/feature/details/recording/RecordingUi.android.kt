@@ -125,6 +125,7 @@ private val detailsUiState = DetailsUiState(
             pagingDataFlow = relations,
         ),
     ),
+    scrollToHideTopAppBar = false,
 )
 
 @PreviewLightDark

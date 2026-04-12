@@ -19,6 +19,7 @@ val searchFeatureModule: Module = module {
                     getSearchHistory = get(),
                     recordSearchHistory = get(),
                     deleteSearchHistory = get(),
+                    appPreferences = get(),
                 )
 
                 else -> null

@@ -1,21 +1,14 @@
 package ly.david.musicsearch.shared.feature.history.internal
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +30,7 @@ import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.clearHistory
@@ -56,7 +50,6 @@ internal fun HistoryUi(
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -111,10 +104,11 @@ internal fun HistoryUi(
         )
     }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
@@ -141,16 +135,7 @@ internal fun HistoryUi(
                 },
             )
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
-        },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         val lazyPagingItems = state.pagingDataFlow.collectAsLazyPagingItems()
         HistoryUi(
             lazyPagingItems = lazyPagingItems,

@@ -68,4 +68,7 @@ interface AppPreferences {
 
     val observeCollaborationEntityType: Flow<MusicBrainzEntityType>
     fun setCollaborationEntityType(entity: MusicBrainzEntityType)
+
+    val scrollToHideTopAppBar: Flow<Boolean>
+    fun setScrollToHideTopAppBar(enable: Boolean)
 }

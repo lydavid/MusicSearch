@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.settings.internal.appearance
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
@@ -17,6 +18,7 @@ internal class AppearanceSettingsPresenter(
     @Composable
     override fun present(): AppearanceSettingsUiState {
         val theme by appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val seedColor by appPreferences.observeSeedColor.collectAsState(initial = DEFAULT_SEED_COLOR_INT)
 
@@ -26,6 +28,10 @@ internal class AppearanceSettingsPresenter(
 
                 is AppearanceSettingsUiEvent.UpdateTheme -> {
                     appPreferences.setTheme(event.theme)
+                }
+
+                is AppearanceSettingsUiEvent.UpdateScrollToHideTopAppBar -> {
+                    appPreferences.setScrollToHideTopAppBar(event.enable)
                 }
 
                 is AppearanceSettingsUiEvent.UpdateUseMaterialYou -> {
@@ -40,6 +46,7 @@ internal class AppearanceSettingsPresenter(
 
         return AppearanceSettingsUiState(
             theme = theme,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             useMaterialYou = useMaterialYou,
             seedColor = seedColor,
             eventSink = ::eventSink,
@@ -49,6 +56,7 @@ internal class AppearanceSettingsPresenter(
 
 internal data class AppearanceSettingsUiState(
     val theme: AppPreferences.Theme = AppPreferences.Theme.SYSTEM,
+    val scrollToHideTopAppBar: Boolean = false,
     val useMaterialYou: Boolean = false,
     val seedColor: Int = DEFAULT_SEED_COLOR_INT,
     val eventSink: (AppearanceSettingsUiEvent) -> Unit = {},
@@ -57,6 +65,7 @@ internal data class AppearanceSettingsUiState(
 internal sealed interface AppearanceSettingsUiEvent : CircuitUiEvent {
     data object NavigateUp : AppearanceSettingsUiEvent
     data class UpdateTheme(val theme: AppPreferences.Theme) : AppearanceSettingsUiEvent
+    data class UpdateScrollToHideTopAppBar(val enable: Boolean) : AppearanceSettingsUiEvent
     data class UpdateUseMaterialYou(val use: Boolean) : AppearanceSettingsUiEvent
     data class SetSeedColor(val seedColor: Int) : AppearanceSettingsUiEvent
 }

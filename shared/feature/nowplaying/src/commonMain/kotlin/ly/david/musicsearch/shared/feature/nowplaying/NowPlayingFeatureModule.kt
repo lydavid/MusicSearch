@@ -15,6 +15,7 @@ val nowPlayingFeatureModule = module {
                     navigator = navigator,
                     getNowPlayingHistory = get(),
                     deleteNowPlayingHistory = get(),
+                    appPreferences = get(),
                 )
 
                 else -> null

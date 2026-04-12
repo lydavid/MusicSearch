@@ -1,12 +1,9 @@
 package ly.david.musicsearch.shared.feature.nowplaying
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -18,12 +15,13 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.nowPlayingHistory
 import org.jetbrains.compose.resources.stringResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun NowPlayingHistoryUi(
     state: NowPlayingHistoryUiState,
@@ -31,63 +29,38 @@ internal fun NowPlayingHistoryUi(
 ) {
     val eventSink = state.eventSink
 
-    NowPlayingHistoryUi(
-        lazyPagingItems = state.lazyPagingItems,
-        lazyListState = state.lazyListState,
+    AppScaffold(
         modifier = modifier,
-        onBack = {
-            eventSink(NowPlayingHistoryUiEvent.NavigateUp)
-        },
-        searchMusicBrainz = { query, entity ->
-            eventSink(
-                NowPlayingHistoryUiEvent.GoToSearch(
-                    query = query,
-                    entityType = entity,
-                ),
-            )
-        },
-        topAppBarFilterState = state.topAppBarFilterState,
-        onDelete = { id ->
-            eventSink(NowPlayingHistoryUiEvent.DeleteHistory(id))
-        },
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun NowPlayingHistoryUi(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
-    modifier: Modifier = Modifier,
-    lazyListState: LazyListState = LazyListState(),
-    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    onBack: () -> Unit = {},
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
-    onDelete: (String) -> Unit = {},
-) {
-    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
-    Scaffold(
-        modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = SnackbarHostState(),
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 showBackButton = true,
-                onBack = onBack,
+                onBack = { eventSink(NowPlayingHistoryUiEvent.NavigateUp) },
                 title = stringResource(Res.string.nowPlayingHistory),
                 scrollBehavior = scrollBehavior,
-                topAppBarFilterState = topAppBarFilterState,
+                topAppBarFilterState = state.topAppBarFilterState,
             )
         },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         NowPlayingHistoryContent(
-            lazyPagingItems = lazyPagingItems,
-            filterText = topAppBarFilterState.filterText,
-            lazyListState = lazyListState,
+            lazyPagingItems = state.lazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
+            lazyListState = state.lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            searchMusicBrainz = searchMusicBrainz,
-            onDelete = onDelete,
+            searchMusicBrainz = { query, entity ->
+                eventSink(
+                    NowPlayingHistoryUiEvent.GoToSearch(
+                        query = query,
+                        entityType = entity,
+                    ),
+                )
+            },
+            onDelete = { id ->
+                eventSink(NowPlayingHistoryUiEvent.DeleteHistory(id))
+            },
         )
     }
 }

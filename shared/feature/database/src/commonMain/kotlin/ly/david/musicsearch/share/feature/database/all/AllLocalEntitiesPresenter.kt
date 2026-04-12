@@ -9,12 +9,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -34,6 +36,7 @@ internal class AllLocalEntitiesPresenter(
     private val navigator: Navigator,
     private val allEntitiesListPresenter: AllEntitiesListPresenter,
     private val musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
+    private val appPreferences: AppPreferences,
 ) : Presenter<AllLocalEntitiesUiState> {
 
     @Composable
@@ -41,6 +44,7 @@ internal class AllLocalEntitiesPresenter(
         var subtitle: String by rememberSaveable { mutableStateOf("") }
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -87,6 +91,7 @@ internal class AllLocalEntitiesPresenter(
         return AllLocalEntitiesUiState(
             subtitle = subtitle,
             entityType = screen.entityType,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             allEntitiesListUiState = entitiesListUiState,
@@ -100,6 +105,7 @@ internal class AllLocalEntitiesPresenter(
 internal data class AllLocalEntitiesUiState(
     val subtitle: String,
     val entityType: MusicBrainzEntityType,
+    val scrollToHideTopAppBar: Boolean = false,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val allEntitiesListUiState: AllEntitiesListUiState,

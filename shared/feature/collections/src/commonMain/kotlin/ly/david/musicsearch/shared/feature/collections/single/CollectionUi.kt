@@ -1,14 +1,11 @@
 package ly.david.musicsearch.shared.feature.collections.single
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -42,8 +39,8 @@ import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
-import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -83,7 +80,6 @@ internal fun CollectionUi(
     val releasesByEntityEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsByEntityEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
 
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val overlayHost = LocalOverlayHost.current
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -198,10 +194,11 @@ internal fun CollectionUi(
         }
     }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(CollectionUiEvent.NavigateUp)
@@ -314,10 +311,7 @@ internal fun CollectionUi(
                 },
             )
         },
-        snackbarHost = {
-            FeedbackSnackbarHost(snackbarHostState)
-        },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         if (collection == null) {
             FullScreenText(
                 text = "Cannot find collection.",

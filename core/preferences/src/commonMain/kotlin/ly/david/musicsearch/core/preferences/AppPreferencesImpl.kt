@@ -314,4 +314,23 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val scrollToHideTopAppBarPreference =
+        booleanPreferencesKey(AppPreferencesKey.SCROLL_TO_HIDE_TOP_APP_BAR.name)
+    override val scrollToHideTopAppBar: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[scrollToHideTopAppBarPreference] == true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setScrollToHideTopAppBar(enable: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[scrollToHideTopAppBarPreference] = enable
+            }
+        }
+    }
 }

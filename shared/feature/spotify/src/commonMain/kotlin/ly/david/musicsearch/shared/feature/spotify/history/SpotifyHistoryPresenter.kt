@@ -11,6 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -28,12 +30,14 @@ import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 internal class SpotifyHistoryPresenter(
     private val navigator: Navigator,
     private val spotifyHistoryRepository: SpotifyHistoryRepository,
+    private val appPreferences: AppPreferences,
 ) : Presenter<SpotifyUiState> {
 
     @Composable
     override fun present(): SpotifyUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
         val listItems: Flow<PagingData<ListItemModel>> by rememberRetained(query) {
             mutableStateOf(
                 spotifyHistoryRepository.observeSpotifyHistory(
@@ -85,6 +89,7 @@ internal class SpotifyHistoryPresenter(
 
         return SpotifyUiState(
             topAppBarFilterState = topAppBarFilterState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -95,9 +100,10 @@ internal class SpotifyHistoryPresenter(
 @Stable
 internal data class SpotifyUiState(
     val topAppBarFilterState: TopAppBarFilterState,
+    val scrollToHideTopAppBar: Boolean,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
-    val lazyListState: LazyListState,
-    val eventSink: (SpotifyUiEvent) -> Unit,
+    val lazyListState: LazyListState = LazyListState(),
+    val eventSink: (SpotifyUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface SpotifyUiEvent : CircuitUiEvent {

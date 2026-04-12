@@ -120,6 +120,7 @@ private val detailsUiState = DetailsUiState(
         now = Instant.parse("2025-09-06T18:42:20Z"),
         wikipediaExtract = wikipediaExtract,
     ),
+    scrollToHideTopAppBar = false,
 )
 
 @PreviewLightDark

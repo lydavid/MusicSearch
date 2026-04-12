@@ -318,4 +318,5 @@
     <string name="addXCountToCollection">Add %1$d to collection</string>
     <string name="tapRelationshipsTab">Tap Relationships tab to see more stats.</string>
     <string name="totalRelationships">Total relationships: %1$d</string>
+    <string name="scrollToHideTopAppBar">Scroll to hide top app bar</string>
 </resources>

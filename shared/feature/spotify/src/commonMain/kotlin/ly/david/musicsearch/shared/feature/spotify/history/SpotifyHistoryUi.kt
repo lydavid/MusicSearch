@@ -1,20 +1,12 @@
 package ly.david.musicsearch.shared.feature.spotify.history
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,99 +25,56 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.spotifyHistory
 import org.jetbrains.compose.resources.stringResource
 import kotlin.coroutines.cancellation.CancellationException
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Suppress("SwallowedException")
 @Composable
 internal fun SpotifyHistoryUi(
     state: SpotifyUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
-
-    SpotifyHistoryUi(
-        lazyPagingItems = state.lazyPagingItems,
-        lazyListState = state.lazyListState,
-        modifier = modifier,
-        onBack = {
-            eventSink(SpotifyUiEvent.NavigateUp)
-        },
-        searchMusicBrainz = { query, entity ->
-            eventSink(
-                SpotifyUiEvent.GoToSearch(
-                    query = query,
-                    entityType = entity,
-                ),
-            )
-        },
-        topAppBarFilterState = state.topAppBarFilterState,
-        onMarkForDeletion = {
-            eventSink(SpotifyUiEvent.MarkForDeletion(it))
-        },
-        onUndoMarkForDeletion = {
-            eventSink(SpotifyUiEvent.UndoMarkForDeletion(it))
-        },
-        onDelete = {
-            eventSink(SpotifyUiEvent.Delete(it))
-        },
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Suppress("SwallowedException")
-@Composable
-internal fun SpotifyHistoryUi(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
-    modifier: Modifier = Modifier,
-    topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
-    lazyListState: LazyListState = LazyListState(),
-    onBack: () -> Unit = {},
-    searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
-    onMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
-    onUndoMarkForDeletion: (SpotifyHistoryListItemModel) -> Unit = {},
-    onDelete: (SpotifyHistoryListItemModel) -> Unit = {},
-) {
-    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 showBackButton = true,
-                onBack = onBack,
+                onBack = { eventSink(SpotifyUiEvent.NavigateUp) },
                 title = stringResource(Res.string.spotifyHistory),
                 scrollBehavior = scrollBehavior,
-                topAppBarFilterState = topAppBarFilterState,
+                topAppBarFilterState = state.topAppBarFilterState,
             )
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                SwipeToDismissBox(
-                    state = rememberSwipeToDismissBoxState(),
-                    backgroundContent = {},
-                    content = { Snackbar(snackbarData) },
-                )
-            }
-        },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         SpotifyHistoryContent(
-            lazyPagingItems = lazyPagingItems,
-            filterText = topAppBarFilterState.filterText,
-            lazyListState = lazyListState,
+            lazyPagingItems = state.lazyPagingItems,
+            filterText = state.topAppBarFilterState.filterText,
+            lazyListState = state.lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            searchMusicBrainz = searchMusicBrainz,
+            searchMusicBrainz = { query, entity ->
+                eventSink(
+                    SpotifyUiEvent.GoToSearch(
+                        query = query,
+                        entityType = entity,
+                    ),
+                )
+            },
             onDelete = { history ->
                 scope.launch {
-                    onMarkForDeletion(history)
+                    eventSink(SpotifyUiEvent.MarkForDeletion(history))
 
                     try {
                         val snackbarResult = snackbarHostState.showSnackbar(
@@ -136,15 +85,15 @@ internal fun SpotifyHistoryUi(
 
                         when (snackbarResult) {
                             SnackbarResult.ActionPerformed -> {
-                                onUndoMarkForDeletion(history)
+                                eventSink(SpotifyUiEvent.UndoMarkForDeletion(history))
                             }
 
                             SnackbarResult.Dismissed -> {
-                                onDelete(history)
+                                eventSink(SpotifyUiEvent.Delete(history))
                             }
                         }
-                    } catch (ex: CancellationException) {
-                        onDelete(history)
+                    } catch (_: CancellationException) {
+                        eventSink(SpotifyUiEvent.Delete(history))
                     }
                 }
             },

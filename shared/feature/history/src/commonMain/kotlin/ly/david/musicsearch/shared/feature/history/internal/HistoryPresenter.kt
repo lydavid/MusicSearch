@@ -43,6 +43,7 @@ internal class HistoryPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val sortOption by appPreferences.historySortOption.collectAsRetainedState(HistorySortOption.RECENTLY_VISITED)
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(query, sortOption) {
             mutableStateOf(
                 getPagedHistory(
@@ -107,6 +108,7 @@ internal class HistoryPresenter(
 
         return HistoryUiState(
             topAppBarFilterState = topAppBarFilterState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             sortOption = sortOption,
             pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
@@ -118,6 +120,7 @@ internal class HistoryPresenter(
 @Stable
 internal data class HistoryUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val scrollToHideTopAppBar: Boolean,
     val sortOption: HistorySortOption,
     val pagingDataFlow: Flow<PagingData<ListItemModel>>,
     val lazyListState: LazyListState = LazyListState(),

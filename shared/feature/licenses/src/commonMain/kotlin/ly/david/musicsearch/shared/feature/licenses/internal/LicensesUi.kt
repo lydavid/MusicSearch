@@ -1,15 +1,16 @@
 package ly.david.musicsearch.shared.feature.licenses.internal
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.produceLibraries
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.openSourceLicenses
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -25,17 +26,23 @@ internal fun LicensesUi(
 ) {
     val eventSink = state.eventSink
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = SnackbarHostState(),
+        topBar = { scrollBehavior ->
             ScrollableTopAppBar(
-                onBack = { eventSink(LicensesUiEvent.NavigateUp) },
                 title = stringResource(CommonRes.string.openSourceLicenses),
+                scrollBehavior = scrollBehavior,
+                onBack = { eventSink(LicensesUiEvent.NavigateUp) },
             )
         },
-    ) { innerPadding ->
-        LicensesUi(modifier = Modifier.padding(innerPadding))
+    ) { innerPadding, scrollBehavior ->
+        LicensesUi(
+            modifier = Modifier
+                .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+        )
     }
 }
 

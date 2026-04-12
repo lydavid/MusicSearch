@@ -35,6 +35,7 @@ import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
@@ -68,6 +69,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
     private val wikimediaRepository: WikimediaRepository,
     private val collectionRepository: CollectionRepository,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val appPreferences: AppPreferences,
 ) : Presenter<DetailsUiState<DetailsModel>>, RecordVisit {
 
     abstract fun getTabs(): ImmutableList<Tab>
@@ -112,6 +114,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             entityId = screen.id,
         ).collectAsRetainedState(false)
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -316,6 +319,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             ),
             allEntitiesListUiState = entitiesListUiState,
             musicBrainzLoginUiState = loginUiState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
     }
@@ -336,6 +340,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
+    val scrollToHideTopAppBar: Boolean,
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState
 

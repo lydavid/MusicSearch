@@ -1,15 +1,12 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -38,9 +35,9 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
-import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
@@ -72,7 +69,6 @@ internal fun ArtistUi(
     val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val overlayHost = LocalOverlayHost.current
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val pagerState: PagerState = rememberPagerState(
         initialPage = state.tabs.indexOf(state.selectedTab),
         pageCount = state.tabs::size,
@@ -145,13 +141,11 @@ internal fun ArtistUi(
         }
     }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        snackbarHost = {
-            FeedbackSnackbarHost(snackbarHostState)
-        },
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             val annotatedName = state.detailsModel.getAnnotatedName()
             TopAppBarWithFilter(
                 onBack = {
@@ -294,7 +288,7 @@ internal fun ArtistUi(
                 },
             )
         },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
 
         DetailsHorizontalPager(
             pagerState = pagerState,

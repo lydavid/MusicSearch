@@ -5,7 +5,6 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,7 +14,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -43,6 +42,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -62,6 +62,7 @@ import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.screenContainerSize
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
@@ -127,10 +128,11 @@ internal fun ImagesUi(
         }
     }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = SnackbarHostState(),
+        topBar = { scrollBehavior ->
             val title = when (val title = state.title) {
                 is ImagesTitle.All -> stringResource(Res.string.images)
                 is ImagesTitle.Selected -> {
@@ -146,6 +148,7 @@ internal fun ImagesUi(
                 },
                 title = title,
                 subtitle = state.subtitle,
+                scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = {
                     state.linkUrl.ifNotEmpty { url ->
@@ -183,7 +186,7 @@ internal fun ImagesUi(
                 },
             )
         },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
 
         val capturedSelectedImageIndex = state.selectedImageIndex
 
@@ -201,7 +204,9 @@ internal fun ImagesUi(
                     )
                 },
                 lazyGridState = state.lazyGridState,
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
                 numberOfImagesPerRow = state.numberOfImagesPerRow,
                 imagesGridPaddingDp = state.imagesGridPaddingDp,
             )

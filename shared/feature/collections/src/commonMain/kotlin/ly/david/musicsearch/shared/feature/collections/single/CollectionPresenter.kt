@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -27,6 +28,7 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -52,6 +54,7 @@ internal class CollectionPresenter(
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
     private val collectionRepository: CollectionRepository,
     private val externalScope: CoroutineScope,
+    private val appPreferences: AppPreferences,
 ) : Presenter<CollectionUiState>, RecordVisit {
 
     @Suppress("CyclomaticComplexMethod")
@@ -66,6 +69,7 @@ internal class CollectionPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         val loginUiState = musicBrainzLoginPresenter.present()
         val entitiesListUiState = allEntitiesListPresenter.present()
@@ -183,6 +187,7 @@ internal class CollectionPresenter(
             selectionState = selectionState,
             musicBrainzLoginUiState = loginUiState,
             allEntitiesListUiState = entitiesListUiState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
     }
@@ -199,6 +204,7 @@ internal data class CollectionUiState(
     val selectionState: SelectionState,
     val musicBrainzLoginUiState: MusicBrainzLoginUiState,
     val allEntitiesListUiState: AllEntitiesListUiState,
+    val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState
 

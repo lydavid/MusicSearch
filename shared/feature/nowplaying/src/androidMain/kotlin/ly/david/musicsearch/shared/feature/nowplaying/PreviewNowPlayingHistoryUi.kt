@@ -6,10 +6,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import kotlin.time.Instant
 
 // region Previews
 @PreviewLightDark
@@ -50,7 +50,9 @@ internal fun PreviewNowPlayingHistoryUi() {
                 ),
             )
             NowPlayingHistoryUi(
-                lazyPagingItems = items.collectAsLazyPagingItems(),
+                state = NowPlayingHistoryUiState(
+                    lazyPagingItems = items.collectAsLazyPagingItems(),
+                ),
             )
         }
     }

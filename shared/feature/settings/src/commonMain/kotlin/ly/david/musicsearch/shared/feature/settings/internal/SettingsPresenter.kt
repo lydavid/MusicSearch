@@ -53,6 +53,7 @@ internal class SettingsPresenter(
         val isCrashReportingEnabled by appPreferences.isCrashReportingEnabled.collectAsRetainedState(false)
         val isDeveloperMode by appPreferences.isDeveloperMode.collectAsRetainedState(false)
         var snackbarMessage: String? by remember { mutableStateOf(null) }
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         val coroutineScope = rememberCoroutineScope()
         val loginUiState = musicBrainzLoginPresenter.present()
@@ -122,6 +123,7 @@ internal class SettingsPresenter(
             appDatabaseVersion = metadataRepository.getAppDatabaseVersion(),
             sqliteVersion = metadataRepository.getSQLiteVersion(),
             isDeveloperMode = isDeveloperMode,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
     }
@@ -142,6 +144,7 @@ internal data class SettingsUiState(
     val appDatabaseVersion: String = "",
     val sqliteVersion: String = "",
     val isDeveloperMode: Boolean = false,
+    val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (SettingsUiEvent) -> Unit = {},
 ) : CircuitUiState
 

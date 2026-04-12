@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -47,6 +48,7 @@ internal class ImagesPresenter(
     @Composable
     override fun present(): ImagesUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
         val sortOption by appPreferences.imagesSortOption.collectAsState(ImagesSortOption.RECENTLY_ADDED)
         val numberOfImagesPerRow by appPreferences.observeNumberOfImagesPerRow.collectAsState(
             initial = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
@@ -179,6 +181,7 @@ internal class ImagesPresenter(
             title = title,
             subtitle = subtitle,
             linkUrl = linkUrl,
+            scrollToHideTopAppBar = scrollToHideTopAppBar && selectedIndex == null,
             numberOfImagesPerRow = numberOfImagesPerRow,
             imagesGridPaddingDp = imagesGridPaddingDp,
             selectedImageIndex = selectedIndex,
@@ -235,6 +238,7 @@ internal data class ImagesUiState(
     val title: ImagesTitle = ImagesTitle.All,
     val subtitle: String = "",
     val linkUrl: String = "",
+    val scrollToHideTopAppBar: Boolean = false,
     val numberOfImagesPerRow: Int = DEFAULT_NUMBER_OF_IMAGES_PER_ROW,
     val imagesGridPaddingDp: Int = DEFAULT_IMAGES_GRID_PADDING_DP,
     val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadataWithEntity>>,

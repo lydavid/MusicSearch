@@ -24,6 +24,7 @@ val listensFeatureModule = module {
                     listensListRepository = get(),
                     listenBrainzRepository = get(),
                     externalScope = get(),
+                    appPreferences = get(),
                 )
 
                 is SubmitListenScreen -> SubmitListenPresenter(

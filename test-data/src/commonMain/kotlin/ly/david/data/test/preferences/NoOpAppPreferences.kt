@@ -133,4 +133,11 @@ open class NoOpAppPreferences : AppPreferences {
     override fun setCollaborationEntityType(entity: MusicBrainzEntityType) {
         // No-op.
     }
+
+    override val scrollToHideTopAppBar: Flow<Boolean>
+        get() = flowOf()
+
+    override fun setScrollToHideTopAppBar(enable: Boolean) {
+        // No-op.
+    }
 }

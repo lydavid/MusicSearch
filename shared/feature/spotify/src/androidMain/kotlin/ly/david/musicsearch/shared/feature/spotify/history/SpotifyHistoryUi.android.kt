@@ -59,9 +59,12 @@ internal fun PreviewNowPlayingHistoryUi() {
                 ),
             )
             SpotifyHistoryUi(
-                lazyPagingItems = items.collectAsLazyPagingItems(),
-                topAppBarFilterState = TopAppBarFilterState(
-                    initialFilterText = "u",
+                state = SpotifyUiState(
+                    lazyPagingItems = items.collectAsLazyPagingItems(),
+                    topAppBarFilterState = TopAppBarFilterState(
+                        initialFilterText = "u",
+                    ),
+                    scrollToHideTopAppBar = false,
                 ),
             )
         }

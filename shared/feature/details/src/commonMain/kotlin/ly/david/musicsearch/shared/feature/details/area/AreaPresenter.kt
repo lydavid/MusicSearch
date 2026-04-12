@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.image.ImageMetadataRepository
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
@@ -42,6 +43,7 @@ internal class AreaPresenter(
     wikimediaRepository: WikimediaRepository,
     collectionRepository: CollectionRepository,
     listenBrainzAuthStore: ListenBrainzAuthStore,
+    appPreferences: AppPreferences,
 ) : DetailsPresenter<AreaDetailsModel>(
     screen = screen,
     navigator = navigator,
@@ -54,6 +56,7 @@ internal class AreaPresenter(
     wikimediaRepository = wikimediaRepository,
     collectionRepository = collectionRepository,
     listenBrainzAuthStore = listenBrainzAuthStore,
+    appPreferences = appPreferences,
 ) {
     override fun getTabs(): ImmutableList<Tab> {
         return areaTabs

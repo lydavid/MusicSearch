@@ -1,16 +1,15 @@
 package ly.david.musicsearch.share.feature.database
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.slack.circuit.runtime.screen.Screen
 import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -21,10 +20,10 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.History
 import ly.david.musicsearch.ui.common.icons.Image
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.AllEntitiesScreen
 import ly.david.musicsearch.ui.common.screen.CoverArtsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
-import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.database
@@ -41,27 +40,27 @@ internal fun DatabaseUi(
     val eventSink = state.eventSink
     val snackbarHostState = remember { SnackbarHostState() }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 showBackButton = false,
                 title = stringResource(Res.string.database),
+                scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
             )
         },
-        snackbarHost = {
-            FeedbackSnackbarHost(snackbarHostState)
-        },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         DatabaseUi(
             state = state,
             onDestinationClick = {
                 eventSink(DatabaseUiEvent.GoToScreen(it))
             },
             modifier = Modifier
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         )
     }
 }

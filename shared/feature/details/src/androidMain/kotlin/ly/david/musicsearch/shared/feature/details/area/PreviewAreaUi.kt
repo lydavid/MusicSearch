@@ -513,6 +513,7 @@ private val detailsUiState = DetailsUiState(
             pagingDataFlow = canadianRelations,
         ),
     ),
+    scrollToHideTopAppBar = false,
 )
 
 @PreviewLightDark

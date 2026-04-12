@@ -48,6 +48,7 @@ internal class CollectionListPresenter(
     override fun present(): CollectionsListUiState {
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
         val showLocal by appPreferences.showLocalCollections.collectAsRetainedState(true)
         val showRemote by appPreferences.showRemoteCollections.collectAsRetainedState(true)
         val sortOption by appPreferences.collectionSortOption.collectAsRetainedState(
@@ -147,6 +148,7 @@ internal class CollectionListPresenter(
 
         return CollectionsListUiState(
             topAppBarFilterState = topAppBarFilterState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             showLocal = showLocal,
             showRemote = showRemote,
             sortOption = sortOption,
@@ -163,6 +165,7 @@ internal class CollectionListPresenter(
 @Stable
 internal data class CollectionsListUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
+    val scrollToHideTopAppBar: Boolean = false,
     val showLocal: Boolean = true,
     val showRemote: Boolean = true,
     val sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,

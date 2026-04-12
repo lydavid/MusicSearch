@@ -19,6 +19,7 @@ val databaseFeatureModule = module {
                     navigator = navigator,
                     musicBrainzImageMetadataRepository = get(),
                     observeLocalCountsOfAllEntities = get(),
+                    appPreferences = get(),
                 )
 
                 is AllEntitiesScreen -> AllLocalEntitiesPresenter(
@@ -26,6 +27,7 @@ val databaseFeatureModule = module {
                     navigator = navigator,
                     allEntitiesListPresenter = get(),
                     musicBrainzLoginPresenter = get(),
+                    appPreferences = get(),
                 )
 
                 else -> null

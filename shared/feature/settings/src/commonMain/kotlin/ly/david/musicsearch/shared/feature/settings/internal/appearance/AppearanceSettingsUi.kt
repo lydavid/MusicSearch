@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -30,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
@@ -40,12 +40,14 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_LONG
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingWithDialogChoices
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.appearance
 import musicsearch.ui.common.generated.resources.dark
 import musicsearch.ui.common.generated.resources.light
 import musicsearch.ui.common.generated.resources.reset
+import musicsearch.ui.common.generated.resources.scrollToHideTopAppBar
 import musicsearch.ui.common.generated.resources.seedColor
 import musicsearch.ui.common.generated.resources.system
 import musicsearch.ui.common.generated.resources.theme
@@ -67,22 +69,25 @@ internal fun AppearanceSettingsUi(
 ) {
     val eventSink = state.eventSink
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = SnackbarHostState(),
+        topBar = { scrollBehavior ->
             ScrollableTopAppBar(
                 showBackButton = true,
                 title = stringResource(Res.string.appearance),
+                scrollBehavior = scrollBehavior,
                 onBack = {
                     eventSink(AppearanceSettingsUiEvent.NavigateUp)
                 },
             )
         },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         Column(
             modifier = Modifier
                 .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .verticalScroll(rememberScrollState()),
         ) {
             SettingWithDialogChoices(
@@ -91,6 +96,14 @@ internal fun AppearanceSettingsUi(
                 selectedChoiceIndex = state.theme.ordinal,
                 onSelectChoiceIndex = {
                     eventSink(AppearanceSettingsUiEvent.UpdateTheme(AppPreferences.Theme.entries[it]))
+                },
+            )
+
+            SettingSwitch(
+                header = stringResource(Res.string.scrollToHideTopAppBar),
+                checked = state.scrollToHideTopAppBar,
+                onCheckedChange = {
+                    eventSink(AppearanceSettingsUiEvent.UpdateScrollToHideTopAppBar(it))
                 },
             )
 

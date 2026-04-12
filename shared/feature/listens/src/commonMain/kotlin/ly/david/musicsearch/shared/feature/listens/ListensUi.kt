@@ -2,7 +2,6 @@ package ly.david.musicsearch.shared.feature.listens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
@@ -11,11 +10,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.InputChip
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
@@ -45,7 +45,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
-import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost
+import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.buildStringWithSingleLink
@@ -249,10 +249,11 @@ internal fun ListensUi(
         }
     }
 
-    Scaffold(
+    AppScaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
+        scrollToHideTopAppBar = state.scrollToHideTopAppBar,
+        snackbarHostState = snackbarHostState,
+        topBar = { scrollBehavior ->
             TopAppBarWithFilter(
                 showBackButton = true,
                 onBack = {
@@ -260,18 +261,17 @@ internal fun ListensUi(
                 },
                 title = title,
                 subtitle = state.totalCountOfListens?.let { stringResource(Res.string.xSongs, it) }.orEmpty(),
+                scrollBehavior = scrollBehavior,
                 topAppBarFilterState = state.topAppBarFilterState,
                 overflowDropdownMenuItems = overflowDropdownMenuItems,
                 additionalBar = additionalBar,
             )
         },
-        snackbarHost = {
-            FeedbackSnackbarHost(snackbarHostState)
-        },
-    ) { innerPadding ->
+    ) { innerPadding, scrollBehavior ->
         ListensContent(
             noUsernameSet = noUsernameSet,
             innerPadding = innerPadding,
+            scrollBehavior = scrollBehavior,
             state = state,
             filterText = state.topAppBarFilterState.filterText,
             eventSink = eventSink,
@@ -302,6 +302,7 @@ private fun getMessage(feedback: Feedback<ListensListFeedback>): String {
 private fun ListensContent(
     noUsernameSet: Boolean,
     innerPadding: PaddingValues,
+    scrollBehavior: TopAppBarScrollBehavior,
     state: ListensUiState,
     filterText: String,
     eventSink: (ListensUiEvent) -> Unit,
@@ -385,7 +386,8 @@ private fun ListensContent(
         ScreenWithPagingLoadingAndError(
             lazyPagingItems = lazyPagingItems,
             modifier = Modifier
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
             keyed = true,
         ) { listItemModel: Identifiable? ->

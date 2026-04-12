@@ -12,6 +12,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.foundation.NavEvent
 import com.slack.circuit.foundation.onNavEvent
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory
@@ -35,12 +37,15 @@ internal class SearchPresenter(
     private val getSearchHistory: GetSearchHistory,
     private val recordSearchHistory: RecordSearchHistory,
     private val deleteSearchHistory: DeleteSearchHistory,
+    private val appPreferences: AppPreferences,
 ) : Presenter<SearchUiState> {
 
     @Composable
     override fun present(): SearchUiState {
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
         var entity by rememberSaveable { mutableStateOf(screen.entityType ?: MusicBrainzEntityType.ARTIST) }
+
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         val searchResults by rememberRetained(query, entity) {
             mutableStateOf(
@@ -115,6 +120,7 @@ internal class SearchPresenter(
             searchResultsListState = searchResultsListState,
             searchHistory = searchHistory.collectAsLazyPagingItems(),
             searchHistoryListState = searchHistoryListState,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
     }
@@ -128,6 +134,7 @@ internal data class SearchUiState(
     val searchResultsListState: LazyListState = LazyListState(),
     val searchHistory: LazyPagingItems<ListItemModel>,
     val searchHistoryListState: LazyListState = LazyListState(),
+    val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (SearchUiEvent) -> Unit,
 ) : CircuitUiState
 

@@ -17,6 +17,7 @@ val spotifyFeatureModule = module {
                 is SpotifyHistoryScreen -> SpotifyHistoryPresenter(
                     navigator = navigator,
                     spotifyHistoryRepository = get(),
+                    appPreferences = get(),
                 )
 
                 else -> null

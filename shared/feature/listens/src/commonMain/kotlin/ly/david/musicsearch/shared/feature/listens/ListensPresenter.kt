@@ -31,6 +31,7 @@ import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -47,6 +48,7 @@ internal class ListensPresenter(
     private val listensListRepository: ListensListRepository,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val externalScope: CoroutineScope,
+    private val appPreferences: AppPreferences,
 ) : Presenter<ListensUiState> {
     @Suppress("CyclomaticComplexMethod")
     @Composable
@@ -89,6 +91,8 @@ internal class ListensPresenter(
                 ) { hasReachedOldest = it },
             )
         }
+
+        val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
         topAppBarFilterState.show(browseUsername.isNotEmpty())
 
@@ -194,6 +198,7 @@ internal class ListensPresenter(
             lazyListState = lazyListState,
             listensPagingDataFlow = listens,
             browsingUserIsSameAsLoggedInUser = loggedInUsername.isNotBlank() && browseUsername == loggedInUsername,
+            scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
     }
@@ -212,6 +217,7 @@ internal data class ListensUiState(
     val lazyListState: LazyListState = LazyListState(),
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val browsingUserIsSameAsLoggedInUser: Boolean = false,
+    val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
     val noUsernameSet: Boolean

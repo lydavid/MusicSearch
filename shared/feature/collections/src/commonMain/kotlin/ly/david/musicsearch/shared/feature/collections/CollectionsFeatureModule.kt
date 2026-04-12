@@ -42,6 +42,7 @@ val collectionsFeatureModule = module {
                     getMusicBrainzUrl = get(),
                     collectionRepository = get(),
                     externalScope = get(),
+                    appPreferences = get(),
                 )
 
                 is AddToCollectionScreen -> AddToCollectionPresenter(
