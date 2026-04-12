@@ -6,31 +6,22 @@
     <img alt="Custom badge" src="https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=green&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dio.github.lydavid.musicsearch%26gl%3DUS%26hl%3Den%26l%3DGoogle%2520Play%26m%3Dv%24version">
 </p>
 
-An Android app for browsing songs, artists, and anything related to them
+An app for browsing songs, artists, and anything related to them
 using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 Multiplatform distributions are heavily WIP. Only the Android app is considered stable.
 
 ## Releases
 
-<a href="https://f-droid.org/packages/io.github.lydavid.musicsearch">
-    <img alt="Get it on F-Droid" height="80"
-        src="https://f-droid.org/badge/get-it-on.png" />
-</a>
+| Platform | Links |
+|---|---|
+| Android | <a href="https://f-droid.org/packages/io.github.lydavid.musicsearch"><img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png" /></a> <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch"><img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" /></a> |
+| iOS/macOS | <a href="https://apps.apple.com/us/app/musicsearch-music-database/id6745536099"><img alt="Get it on Apple App Store" height="60" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"/></a> |
 
-<a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch">
-    <img alt="Get it on Google Play" height="80"
-        src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" />
-</a>
-
-<a href="https://www.openapk.net/musicsearch/io.github.lydavid.musicsearch/">
-    <img alt="Get it on OpenAPK" height="80"
-        src="https://www.openapk.net/images/openapk-badge.png" />
-</a>
 
 Or you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
 
-Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html).
+Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html). They are currently self-signed.
 
 ## Features
 
