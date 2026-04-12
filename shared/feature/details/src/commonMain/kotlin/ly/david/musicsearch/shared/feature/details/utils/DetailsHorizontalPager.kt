@@ -47,9 +47,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             .padding(innerPadding)
             .nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { page ->
-        val tab = state.tabs[page]
-
-        when (tab) {
+        when (val tab = state.tabs[page]) {
             Tab.DETAILS -> {
                 DetailsWithErrorHandling(
                     modifier = Modifier.fillMaxSize(),
