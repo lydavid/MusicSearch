@@ -10,13 +10,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
 
-private val accessTokenPreference = stringPreferencesKey("MUSICBRAINZ_ACCESS_TOKEN")
-private val refreshTokenPreference = stringPreferencesKey("MUSICBRAINZ_REFRESH_TOKEN")
-private val expiryTimePreference = longPreferencesKey("MUSICBRAINZ_EXPIRY_TIME")
-private val usernamePreference = stringPreferencesKey("MUSICBRAINZ_USERNAME")
+private val accessTokenPreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_ACCESS_TOKEN.name)
+private val refreshTokenPreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_REFRESH_TOKEN.name)
+private val expiryTimePreference = longPreferencesKey(AppPreferencesKey.MUSICBRAINZ_EXPIRY_TIME.name)
+private val usernamePreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_USERNAME.name)
 
 class MusicBrainzAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,

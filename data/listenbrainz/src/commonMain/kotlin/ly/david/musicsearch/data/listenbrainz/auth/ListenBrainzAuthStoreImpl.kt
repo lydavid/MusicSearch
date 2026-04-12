@@ -9,13 +9,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 
-// TODO: use an enum for all preferences name
-private val userTokenPreference = stringPreferencesKey("LISTENBRAINZ_USER_TOKEN")
-private val usernamePreference = stringPreferencesKey("LISTENBRAINZ_USER_USERNAME")
-
-// backwards-compatible name
-private val browseUsernamePreference = stringPreferencesKey("LISTENBRAINZ_USERNAME")
+private val userTokenPreference = stringPreferencesKey(AppPreferencesKey.LISTENBRAINZ_USER_TOKEN.name)
+private val userUsernamePreference = stringPreferencesKey(AppPreferencesKey.LISTENBRAINZ_USER_USERNAME.name)
+private val browseUsernamePreference = stringPreferencesKey(AppPreferencesKey.LISTENBRAINZ_BROWSE_USERNAME.name)
 
 class ListenBrainzAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -42,13 +40,13 @@ class ListenBrainzAuthStoreImpl(
     override val username: Flow<String>
         get() = preferencesDataStore.data
             .map {
-                it[usernamePreference].orEmpty()
+                it[userUsernamePreference].orEmpty()
             }
             .distinctUntilChanged()
 
     override suspend fun setUsername(username: String) {
         preferencesDataStore.edit {
-            it[usernamePreference] = username
+            it[userUsernamePreference] = username
         }
     }
 

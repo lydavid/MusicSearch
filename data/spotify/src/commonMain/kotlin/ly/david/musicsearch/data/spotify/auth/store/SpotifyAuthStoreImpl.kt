@@ -5,8 +5,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
+import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 
-private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
+private val accessTokenPreference = stringPreferencesKey(AppPreferencesKey.SPOTIFY_ACCESS_TOKEN.name)
 
 class SpotifyAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,

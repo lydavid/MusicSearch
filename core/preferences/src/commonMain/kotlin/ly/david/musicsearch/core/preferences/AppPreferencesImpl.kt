@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
@@ -32,7 +33,7 @@ internal class AppPreferencesImpl(
     private val crashReporterSettings: CrashReporterSettings,
 ) : AppPreferences {
 
-    private val themePreference = stringPreferencesKey("theme")
+    private val themePreference = stringPreferencesKey(AppPreferencesKey.THEME.name)
     override val theme: Flow<AppPreferences.Theme>
         get() = preferencesDataStore.data
             .map {
@@ -48,7 +49,7 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val useMaterialYouPreference = booleanPreferencesKey("useMaterialYou")
+    private val useMaterialYouPreference = booleanPreferencesKey(AppPreferencesKey.USE_MATERIAL_YOU.name)
     override val useMaterialYou: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
@@ -64,7 +65,7 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val seedColorPreference = intPreferencesKey("seedColor")
+    private val seedColorPreference = intPreferencesKey(AppPreferencesKey.SEED_COLOR.name)
     override val observeSeedColor: Flow<Int>
         get() = preferencesDataStore.data
             .map {
@@ -81,7 +82,7 @@ internal class AppPreferencesImpl(
     }
 
     // region Recording
-    private val recordingSortOptionPreference = stringPreferencesKey("recordingSortOption")
+    private val recordingSortOptionPreference = stringPreferencesKey(AppPreferencesKey.RECORDING_SORT_OPTION.name)
 
     override val recordingSortOption: Flow<RecordingSortOption>
         get() = preferencesDataStore.data
@@ -100,7 +101,7 @@ internal class AppPreferencesImpl(
     // endregion
 
     // region Releases
-    private val releaseSortOptionPreference = stringPreferencesKey("releaseSortOption")
+    private val releaseSortOptionPreference = stringPreferencesKey(AppPreferencesKey.RELEASE_SORT_OPTION.name)
     override val releaseSortOption: Flow<ReleaseSortOption>
         get() = preferencesDataStore.data
             .map {
@@ -119,7 +120,7 @@ internal class AppPreferencesImpl(
     }
 
     private val showMoreInfoInReleaseListItemPreference =
-        booleanPreferencesKey("showMoreInfoInReleaseListItem")
+        booleanPreferencesKey(AppPreferencesKey.SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM.name)
     override val showMoreInfoInReleaseListItem: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
@@ -137,7 +138,8 @@ internal class AppPreferencesImpl(
     // endregion
 
     // region Release Groups
-    private val releaseGroupSortOptionPreference = stringPreferencesKey("releaseGroupSortOption")
+    private val releaseGroupSortOptionPreference =
+        stringPreferencesKey(AppPreferencesKey.RELEASE_GROUP_SORT_OPTION.name)
     override val releaseGroupSortOption: Flow<ReleaseGroupSortOption>
         get() = preferencesDataStore.data
             .map {
@@ -154,7 +156,7 @@ internal class AppPreferencesImpl(
     }
     // endregion
 
-    private val showLocalCollectionsPreference = booleanPreferencesKey("showLocalCollections")
+    private val showLocalCollectionsPreference = booleanPreferencesKey(AppPreferencesKey.SHOW_LOCAL_COLLECTIONS.name)
     override val showLocalCollections: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
@@ -170,7 +172,7 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val showRemoteCollectionsPreference = booleanPreferencesKey("showRemoteCollections")
+    private val showRemoteCollectionsPreference = booleanPreferencesKey(AppPreferencesKey.SHOW_REMOTE_COLLECTIONS.name)
     override val showRemoteCollections: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
@@ -187,7 +189,7 @@ internal class AppPreferencesImpl(
     }
 
     // region History
-    private val historySortOptionPreference = stringPreferencesKey("historySortOption")
+    private val historySortOptionPreference = stringPreferencesKey(AppPreferencesKey.HISTORY_SORT_OPTION.name)
     override val historySortOption: Flow<HistorySortOption>
         get() = preferencesDataStore.data
             .map {
@@ -204,7 +206,7 @@ internal class AppPreferencesImpl(
     // endregion
 
     // region Collection
-    private val collectionSortOptionPreference = stringPreferencesKey("collectionSortOption")
+    private val collectionSortOptionPreference = stringPreferencesKey(AppPreferencesKey.COLLECTION_SORT_OPTION.name)
     override val collectionSortOption: Flow<CollectionSortOption>
         get() = preferencesDataStore.data
             .map {
@@ -223,7 +225,7 @@ internal class AppPreferencesImpl(
     // endregion
 
     // region Cover Arts
-    private val coverArtsSortOptionPreference = stringPreferencesKey("coverArtsSortOption")
+    private val coverArtsSortOptionPreference = stringPreferencesKey(AppPreferencesKey.COVER_ARTS_SORT_OPTION.name)
     override val imagesSortOption: Flow<ImagesSortOption>
         get() = preferencesDataStore.data
             .map {
@@ -250,7 +252,7 @@ internal class AppPreferencesImpl(
         crashReporterSettings.enableCrashReporting(enable)
     }
 
-    private val isDeveloperModePreference = booleanPreferencesKey("isDeveloperMode")
+    private val isDeveloperModePreference = booleanPreferencesKey(AppPreferencesKey.IS_DEVELOPER_MODE.name)
     override val isDeveloperMode: Flow<Boolean>
         get() = preferencesDataStore.data
             .map {
@@ -266,7 +268,7 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val numberOfImagesPerRowPreference = intPreferencesKey("numberOfImagesPerRow")
+    private val numberOfImagesPerRowPreference = intPreferencesKey(AppPreferencesKey.NUMBER_OF_IMAGES_PER_ROW.name)
     override val observeNumberOfImagesPerRow: Flow<Int>
         get() = preferencesDataStore.data
             .map {
@@ -281,7 +283,7 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val imagesGridPaddingDpPreference = intPreferencesKey("imagesGridPaddingDp")
+    private val imagesGridPaddingDpPreference = intPreferencesKey(AppPreferencesKey.IMAGES_GRID_PADDING_DP.name)
     override val observeImagesGridPaddingDp: Flow<Int>
         get() = preferencesDataStore.data
             .map {
@@ -296,7 +298,8 @@ internal class AppPreferencesImpl(
         }
     }
 
-    private val collaborationEntityTypePreference = stringPreferencesKey("collaborationEntityType")
+    private val collaborationEntityTypePreference =
+        stringPreferencesKey(AppPreferencesKey.COLLABORATION_ENTITY_TYPE.name)
     override val observeCollaborationEntityType: Flow<MusicBrainzEntityType>
         get() = preferencesDataStore.data
             .map {
