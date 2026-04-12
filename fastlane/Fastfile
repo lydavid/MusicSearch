@@ -43,7 +43,7 @@ platform :ios do
       api_key_path: "app_store_api_key.json",
       metadata_path: "fastlane/metadata/ios",
       force: true,
-      submit_for_review: false,
+      submit_for_review: true,
       automatic_release: true,
       phased_release: true,
       precheck_include_in_app_purchases: false,
