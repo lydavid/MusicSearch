@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.listitem.Header
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
+import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.ui.common.button.RetryButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithActionableButton
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator
@@ -96,7 +97,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                 ) {
                     for (index in 0 until lazyPagingItems.itemCount) {
                         when (val item = lazyPagingItems.peek(index)) {
-                            is ListSeparator -> {
+                            is ListSeparator, is ReleaseGroupListSeparator -> {
                                 stickyHeader(
                                     key = item.id.takeIf { keyed },
                                 ) {
