@@ -9,8 +9,6 @@
 An app for browsing songs, artists, and anything related to them
 using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
-Multiplatform distributions are heavily WIP. Only the Android app is considered stable.
-
 ## Releases
 
 | Platform | Links                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -21,7 +19,8 @@ Multiplatform distributions are heavily WIP. Only the Android app is considered 
 
 Or you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
 
-Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html). They are currently self-signed.
+Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html).
+They are currently self-signed.
 
 ## Features
 
