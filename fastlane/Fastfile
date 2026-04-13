@@ -15,6 +15,21 @@
 
 default_platform(:ios)
 
+platform :android do
+  lane :publish do |options|
+    upload_to_play_store(
+      package_name: "io.github.lydavid.musicsearch",
+      track: options[:track],
+      json_key: options[:json_key_path],
+      aab: "android/app/build/outputs/bundle/googlePlayRelease/app-googlePlay-release.aab",
+      mapping: "android/app/build/outputs/mapping/googlePlayRelease/mapping.txt",
+      skip_upload_apk: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end
+
 platform :ios do
   lane :matchAppStore do
     match(

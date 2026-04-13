@@ -151,13 +151,10 @@ jobs:
       # so subsequent steps should always run
       - name: Publish build to Google Play
         id: publish_play_store
-        uses: r0adkll/upload-google-play@935ef9c68bb393a8e6116b1575626a7f5be3a7fb # v1.1.3
-        with:
-          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
-          packageName: io.github.lydavid.musicsearch
-          track: ${{ inputs.track }}
-          releaseFiles: android/app/build/outputs/bundle/googlePlayRelease/app-googlePlay-release.aab
-          mappingFile: android/app/build/outputs/mapping/googlePlayRelease/mapping.txt
+        run: |
+          fastlane android publish \
+            track:${{ inputs.track }} \
+            json_key_path:${{ steps.auth.outputs.credentials_file_path }}
 
       - name: Setup desktop
         if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' && !inputs.skip-desktop }}

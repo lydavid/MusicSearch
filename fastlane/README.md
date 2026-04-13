@@ -13,6 +13,19 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+## Android
+
+### android publish
+
+```sh
+[bundle exec] fastlane android publish
+```
+
+
+
+----
+
+
 ## iOS
 
 ### ios matchAppStore
