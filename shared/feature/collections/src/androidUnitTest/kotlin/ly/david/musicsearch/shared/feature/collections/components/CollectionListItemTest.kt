@@ -1,10 +1,16 @@
 package ly.david.musicsearch.shared.feature.collections.components
 
+import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
-import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import ly.david.musicsearch.ui.test.screenshot.BaseScreenshotTest
 import org.junit.Test
+import org.junit.runner.RunWith
 
-class CollectionListItemTest : ScreenshotTest() {
+@RunWith(TestParameterInjector::class)
+class CollectionListItemTest(
+    @param:TestParameter override var nightMode: NightMode,
+) : BaseScreenshotTest() {
 
     @Test
     fun isRemoteVisitedCollected(
