@@ -1,0 +1,10 @@
+
+### Bug Fixes
+
+* scale color wheel properly in landscape mode
+* standardize datastore preferences names; use an enum to make sure we don't reuse the same name
+
+
+### Features
+
+* add option under Appearance to enable/disable scroll to hide top app bar; support this in more screens; default is now disable
