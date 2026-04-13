@@ -8,10 +8,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class CollectionListItemTest : BaseScreenshotTest() {
-
-    @TestParameter
-    override lateinit var nightMode: NightMode
+class CollectionListItemTest(
+    @param:TestParameter override var nightMode: NightMode,
+) : BaseScreenshotTest() {
 
     @Test
     fun isRemoteVisitedCollected(
