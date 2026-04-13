@@ -69,6 +69,9 @@ jobs:
           npx semantic-release --dry-run
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
+          
+      - name: Determine whether we will release iOS in the next job
+        run: echo "has_new_version_name=${{ steps.get-next-version.outputs.new-release-published }}" >> $GITHUB_OUTPUT
 
       # -b preserves our line separator preference
       - name: Bump version code
@@ -207,7 +210,7 @@ jobs:
 
   publish-ios:
     needs: publish # depends on it modifying and committing some files
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && needs.publish.outputs.has_new_version_name == 'true' }}
     permissions:
       contents: read
     uses: ./.github/workflows/publish-ios.yml
