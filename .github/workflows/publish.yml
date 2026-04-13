@@ -69,9 +69,6 @@ jobs:
           npx semantic-release --dry-run
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-          
-      - name: Determine whether we will release iOS in the next job
-        run: echo "has_new_version_name=${{ steps.get-next-version.outputs.new-release-published }}" >> $GITHUB_OUTPUT
 
       # -b preserves our line separator preference
       - name: Bump version code
@@ -189,6 +186,8 @@ jobs:
         if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         run: |
           sed -i 's/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = ${{ env.VERSION_NAME }};/g' ios-app/musicsearch.xcodeproj/project.pbxproj
+          sed -i 's/CURRENT_PROJECT_VERSION = [^;]*;/CURRENT_PROJECT_VERSION = ${{ env.VERSION_CODE }};/g' ios-app/musicsearch.xcodeproj/project.pbxproj
+          echo "has_new_version_name=true" >> $GITHUB_OUTPUT
 
       - name: Commit version code bump
         if: ${{ !cancelled() }}
