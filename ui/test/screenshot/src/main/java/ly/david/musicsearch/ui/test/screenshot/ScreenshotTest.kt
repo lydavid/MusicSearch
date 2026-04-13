@@ -24,16 +24,24 @@ import org.junit.runner.RunWith
 
 private const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
 
+@RunWith(TestParameterInjector::class)
+abstract class ScreenshotTest(
+    isFullScreen: Boolean = false,
+) : BaseScreenshotTest(isFullScreen = isFullScreen) {
+
+    @TestParameter
+    override lateinit var nightMode: NightMode
+}
+
 /**
  * Common setup for running screenshot tests on light and dark mode.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(TestParameterInjector::class)
-abstract class ScreenshotTest(
+abstract class BaseScreenshotTest(
     private val isFullScreen: Boolean = false,
 ) {
-    @TestParameter
-    private lateinit var nightMode: NightMode
+
+    open lateinit var nightMode: NightMode
 
     // Note we cannot override junit Rule
     @get:Rule
