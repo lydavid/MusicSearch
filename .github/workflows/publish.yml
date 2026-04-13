@@ -100,6 +100,7 @@ jobs:
             tail -n +3 | \
             sed 's/ ([[][^]]*]([^)]*))//g')
           echo "$release_notes" > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
+          echo "$release_notes" > fastlane/metadata/ios/en-US/release_notes.txt
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
