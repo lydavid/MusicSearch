@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* bring back sticky header for release group types
