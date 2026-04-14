@@ -182,7 +182,8 @@ SELECT IFNULL(
       artist.sort_name LIKE :query OR
       artist.type LIKE :query OR
       artist.gender LIKE :query OR
-      artist.country_code LIKE :query
+      artist.country_code LIKE :query OR
+      artist_alias.name LIKE :query
     )
   ),
   0
