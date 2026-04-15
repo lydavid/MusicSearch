@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
-import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedBanner
+import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedFooter
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 interface GetEntities {
@@ -40,7 +40,7 @@ class GetEntitiesImpl(
                 listFilters = listFilters,
             )
                 .cachedIn(scope = coroutineScope)
-                .appendLastUpdatedBanner(
+                .appendLastUpdatedFooter(
                     browseRemoteMetadataRepository = browseRemoteMetadataRepository,
                     browseMethod = browseMethod,
                     browseEntity = entity,

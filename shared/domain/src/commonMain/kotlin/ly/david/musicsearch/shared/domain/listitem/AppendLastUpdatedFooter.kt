@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.paging.insertFooterItemForNonEmpty
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedBanner(
+fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedFooter(
     browseRemoteMetadataRepository: BrowseRemoteMetadataRepository,
     browseMethod: BrowseMethod,
     browseEntity: MusicBrainzEntityType,
