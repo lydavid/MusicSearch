@@ -114,8 +114,7 @@ SELECT
   COUNT(rg.id) AS count
 FROM release_group rg
 INNER JOIN collection_entity ON rg.id = collection_entity.entity_id
-INNER JOIN collection ON collection.id = collection_entity.id
-WHERE collection.id = :collectionId
+WHERE collection_entity.id = :collectionId
 GROUP BY rg.primary_type_id, rg.secondary_type_ids
 ORDER BY rg.primary_type, rg.secondary_types;
 
@@ -216,13 +215,12 @@ SELECT IFNULL(
   0
 ) AS count
 FROM release_group
-INNER JOIN collection_entity ce ON release_group.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_group_alias ON release_group.id = release_group_alias.release_group_id AND release_group_alias.is_primary
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   release_group.name LIKE :query OR
   release_group.disambiguation LIKE :query OR
@@ -255,7 +253,6 @@ SELECT
   aliases.alias_locales
 FROM release_group
 INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
-INNER JOIN collection ON collection.id = collection_entity.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image images ON images.mbid = release_group.id
@@ -273,7 +270,7 @@ LEFT JOIN (
   )
   GROUP BY release_group_alias.release_group_id
 ) AS aliases ON aliases.release_group_id = release_group.id
-WHERE collection.id = :collectionId
+WHERE collection_entity.id = :collectionId
 AND collection_entity.deleted = 0
 AND (
   release_group.name LIKE :query OR

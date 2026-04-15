@@ -165,11 +165,10 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT work.id)
     FROM work
-    INNER JOIN collection_entity ce ON work.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
+    INNER JOIN collection_entity ON work.id = collection_entity.entity_id
     LEFT JOIN work_alias ON work.id = work_alias.work_id AND work_alias.is_primary
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
+    WHERE collection_entity.id = :collectionId
+    AND collection_entity.deleted = 0
     AND (
       work.name LIKE :query OR
       work.disambiguation LIKE :query OR
@@ -191,7 +190,7 @@ SELECT
   work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected,
+  collection_entity.id IS NOT NULL AS collected,
   aliases.alias_names,
   aliases.alias_locales,
   CASE
@@ -203,8 +202,7 @@ SELECT
       COUNT(listen.recording_musicbrainz_id)
   END AS listen_count
 FROM work
-INNER JOIN collection_entity ce ON work.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity ON work.id = collection_entity.entity_id
 LEFT JOIN (
   SELECT
     work_alias.work_id,
@@ -222,8 +220,8 @@ LEFT JOIN (
 LEFT JOIN details_metadata ON details_metadata.entity_id = work.id
 LEFT JOIN relation ON work.id = relation.entity_id
 LEFT JOIN listen ON listen.recording_musicbrainz_id = relation.linked_entity_id AND listen.username = :username
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   work.name LIKE :query OR
   work.disambiguation LIKE :query OR

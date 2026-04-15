@@ -325,13 +325,12 @@ WHERE label_id = :labelId;
 getNumberOfReleasesByCollection:
 SELECT COUNT(`release`.id) AS count
 FROM `release`
-INNER JOIN collection_entity ce ON `release`.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity collection_entity ON `release`.id = collection_entity.entity_id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -372,7 +371,6 @@ SELECT
   COALESCE(track_listen_counts.complete_listen_count, 0) AS complete_listen_count
 FROM `release`
 INNER JOIN collection_entity ON `release`.id = collection_entity.entity_id
-INNER JOIN collection ON collection.id = collection_entity.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN (
@@ -423,7 +421,7 @@ LEFT JOIN (
   )
   GROUP BY release_alias.release_id
 ) AS aliases ON aliases.release_id = `release`.id
-WHERE collection.id = :collectionId
+WHERE collection_entity.id = :collectionId
 AND collection_entity.deleted = 0
 AND (
   `release`.name LIKE :query OR

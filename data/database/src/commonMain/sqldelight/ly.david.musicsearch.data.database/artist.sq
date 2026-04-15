@@ -171,11 +171,10 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT artist.id)
     FROM artist
-    INNER JOIN collection_entity ce ON artist.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
+    INNER JOIN collection_entity ON artist.id = collection_entity.entity_id
     LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
+    WHERE collection_entity.id = :collectionId
+    AND collection_entity.deleted = 0
     AND (
       artist.name LIKE :query OR
       artist.disambiguation LIKE :query OR
@@ -205,17 +204,16 @@ SELECT
   mi.id AS imageId,
   mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected,
+  collection_entity.id IS NOT NULL AS collected,
   GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
 FROM artist
-INNER JOIN collection_entity ce ON artist.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity ON artist.id = collection_entity.entity_id
 LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   artist.name LIKE :query OR
   artist.disambiguation LIKE :query OR

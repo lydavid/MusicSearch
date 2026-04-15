@@ -22,10 +22,9 @@ SELECT IFNULL(
   (
     SELECT COUNT(*)
     FROM genre
-    INNER JOIN collection_entity ce ON genre.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
+    INNER JOIN collection_entity ON genre.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+    AND collection_entity.deleted = 0
     AND (
       genre.name LIKE :query OR
       genre.disambiguation LIKE :query
@@ -42,12 +41,11 @@ SELECT
   EXISTS (
     SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = genre.id
   ) AS visited,
-  ce.id IS NOT NULL AS collected
+  collection_entity.id IS NOT NULL AS collected
 FROM genre
-INNER JOIN collection_entity ce ON genre.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+INNER JOIN collection_entity ON genre.id = collection_entity.entity_id
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   genre.name LIKE :query OR
   genre.disambiguation LIKE :query

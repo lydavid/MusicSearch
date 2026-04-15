@@ -47,11 +47,10 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT series.id)
     FROM series
-    INNER JOIN collection_entity ce ON series.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
+    INNER JOIN collection_entity ON series.id = collection_entity.entity_id
     LEFT JOIN series_alias ON series.id = series_alias.series_id AND series_alias.is_primary
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
+    WHERE collection_entity.id = :collectionId
+    AND collection_entity.deleted = 0
     AND (
       series.name LIKE :query OR
       series.disambiguation LIKE :query OR
@@ -69,16 +68,15 @@ SELECT
   series.disambiguation,
   series.type,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected,
+  collection_entity.id IS NOT NULL AS collected,
   GROUP_CONCAT(series_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(series_alias.locale, CHAR(9)) AS alias_locales
 FROM series
-INNER JOIN collection_entity ce ON series.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity ON series.id = collection_entity.entity_id
 LEFT JOIN series_alias ON series.id = series_alias.series_id AND series_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = series.id
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   series.name LIKE :query OR
   series.disambiguation LIKE :query OR

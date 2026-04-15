@@ -147,11 +147,10 @@ SELECT IFNULL(
   (
     SELECT COUNT(DISTINCT event.id)
     FROM event
-    INNER JOIN collection_entity ce ON event.id = ce.entity_id
-    INNER JOIN collection c ON c.id = ce.id
+    INNER JOIN collection_entity ON event.id = collection_entity.entity_id
     LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
-    WHERE c.id = :collectionId
-    AND ce.deleted = 0
+    WHERE collection_entity.id = :collectionId
+    AND collection_entity.deleted = 0
     AND (
       event.name LIKE :query OR
       event.disambiguation LIKE :query OR
@@ -177,17 +176,16 @@ SELECT
   mi.id AS imageId,
   mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
-  ce.id IS NOT NULL AS collected,
+  collection_entity.id IS NOT NULL AS collected,
   GROUP_CONCAT(event_alias.name, CHAR(9)) AS alias_names,
   GROUP_CONCAT(event_alias.locale, CHAR(9)) AS alias_locales
 FROM event
-INNER JOIN collection_entity ce ON event.id = ce.entity_id
-INNER JOIN collection c ON c.id = ce.id
+INNER JOIN collection_entity ON event.id = collection_entity.entity_id
 LEFT JOIN event_alias ON event.id = event_alias.event_id AND event_alias.is_primary
 LEFT JOIN mbid_image mi ON mi.mbid = event.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = event.id
-WHERE c.id = :collectionId
-AND ce.deleted = 0
+WHERE collection_entity.id = :collectionId
+AND collection_entity.deleted = 0
 AND (
   event.name LIKE :query OR
   event.disambiguation LIKE :query OR
