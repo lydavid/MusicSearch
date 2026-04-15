@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.di
 import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.RelationRepositoryImpl
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasListRepositoryImpl

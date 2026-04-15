@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository
+package ly.david.musicsearch.data.repository.relation
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -29,7 +29,6 @@ import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import kotlin.time.Instant
 
-// TODO: move
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
     private val relationsMetadataDao: RelationsMetadataDao,
