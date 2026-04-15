@@ -1,10 +1,13 @@
 package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
+import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
 import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
@@ -54,10 +57,10 @@ class RelationDao(
 
     fun getEntityRelationships(
         entityId: String,
-        query: String = "%%",
+        query: String,
         relatedEntities: Set<MusicBrainzEntityType>,
     ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
-        countQuery = transacter.countEntityRelationships(
+        countQuery = getCountOfRelationshipsByEntityQuery(
             entityId = entityId,
             relatedEntities = relatedEntities,
             query = query,
@@ -65,16 +68,41 @@ class RelationDao(
         transacter = transacter,
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
-            transacter.getEntityRelationships(
+            transacter.getRelationshipsByEntity(
                 entityId = entityId,
                 relatedEntities = relatedEntities,
-                query = query,
+                query = "%$query%",
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRelationListItemModel,
             )
         },
     )
+
+    private fun getCountOfRelationshipsByEntityQuery(
+        entityId: String,
+        relatedEntities: Set<MusicBrainzEntityType>,
+        query: String,
+    ): Query<Long> = transacter.getCountOfRelationshipsByEntity(
+        entityId = entityId,
+        relatedEntities = relatedEntities,
+        query = "%$query%",
+    )
+
+    fun observeCountOfRelationshipsByEntity(
+        entityId: String,
+        relatedEntities: Set<MusicBrainzEntityType>,
+        query: String,
+    ): Flow<Int> {
+        return getCountOfRelationshipsByEntityQuery(
+            entityId = entityId,
+            relatedEntities = relatedEntities,
+            query = query,
+        )
+            .asFlow()
+            .mapToOne(coroutineDispatchers.io)
+            .map { it.toInt() }
+    }
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,

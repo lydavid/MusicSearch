@@ -67,6 +67,9 @@ fun RecordingListItem(
                     modifier = Modifier.padding(top = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    // TODO: highlight date when filtering for recording list item
+                    //  I guess I skipped it because I didn't want to give the wrong idea that we can filter
+                    //  on the formatted length
                     val dateAndLength = listOfNotNull(
                         recording.firstReleaseDate.takeIf { it.isNotEmpty() },
                         recording.length.toDisplayTime(),

@@ -88,6 +88,7 @@ internal class StatsPresenter(
         val localCountFlow = observeLocalCount(
             browseEntity = browseEntityType,
             browseMethod = browseMethod,
+            query = "",
         )
         val visitedCountFlow = observeVisitedCount(
             browseEntity = browseEntityType,

@@ -54,13 +54,15 @@ interface ReleaseGroupDao : EntityDao {
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
-    fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int>
+    fun observeCountOfReleaseGroups(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int>
 }
 
 class ReleaseGroupDaoImpl(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseGroupDao {
     override val transacter = database.release_groupQueries
@@ -262,23 +264,27 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun observeLocalCount(browseMethod: BrowseMethod): Flow<Int> =
+    override fun observeCountOfReleaseGroups(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfReleaseGroupsByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfReleaseGroupsByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
             is BrowseMethod.All -> {
-                getCountOfAllReleaseGroups(query = "")
+                getCountOfAllReleaseGroups(query = query)
             }
         }
             .asFlow()
@@ -339,9 +345,9 @@ class ReleaseGroupDaoImpl(
         query: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
-        countQuery = transacter.getCountOfReleaseGroupsByCollection(
+        countQuery = getCountOfReleaseGroupsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -355,5 +361,13 @@ class ReleaseGroupDaoImpl(
                 mapper = ::mapToReleaseGroupListItemModel,
             )
         },
+    )
+
+    private fun getCountOfReleaseGroupsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getCountOfReleaseGroupsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 }

@@ -20,7 +20,6 @@ import kotlin.time.Instant
 
 class SeriesDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: SeriesQueries = database.seriesQueries
@@ -101,9 +100,9 @@ class SeriesDao(
         entityId: String,
         query: String,
     ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfSeriesByCollection(
+        countQuery = getCountOfSeriesByCollectionQuery(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -118,16 +117,28 @@ class SeriesDao(
         },
     )
 
-    fun observeCountOfSeries(browseMethod: BrowseMethod): Flow<Int> =
+    private fun getCountOfSeriesByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfSeriesByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
+    )
+
+    fun observeCountOfSeries(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                getCountOfSeriesByCollectionQuery(
                     collectionId = browseMethod.entityId,
+                    query = query,
                 )
             }
 
-            else -> {
-                getCountOfAllSeries(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllSeries(query = query)
             }
         }
             .asFlow()

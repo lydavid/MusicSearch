@@ -1,9 +1,7 @@
 package ly.david.musicsearch.ui.common.list
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -14,10 +12,8 @@ import androidx.paging.PagingData
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
-import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
@@ -56,11 +52,14 @@ abstract class BaseListPresenter(
         val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
         val sortOption: SortOption = when (getEntityType()) {
             MusicBrainzEntityType.RECORDING -> SortOption.Recording(recordingSortOption)
+
             MusicBrainzEntityType.RELEASE -> SortOption.Release(
                 option = releaseSortOption,
                 showMoreInfo = showMoreInfoInReleaseListItem,
             )
+
             MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(releaseGroupSortOption)
+
             else -> SortOption.None
         }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(
@@ -80,61 +79,75 @@ abstract class BaseListPresenter(
                 ),
             )
         }
-        val count by observeLocalCount(
+
+        val totalCount by observeLocalCount(
             browseEntity = getEntityType(),
             browseMethod = browseMethod,
+            query = "",
         ).collectAsRetainedState(0)
+        val filteredCount by observeLocalCount(
+            browseEntity = getEntityType(),
+            browseMethod = browseMethod,
+            query = query,
+        ).collectAsRetainedState(0)
+
         val lazyListState = rememberLazyListState()
         val scope = rememberCoroutineScope()
 
         var requestedImageMetadataForIds: Set<String> by remember { mutableStateOf(setOf()) }
 
+        fun eventSink(event: EntitiesListUiEvent) {
+            when (event) {
+                is EntitiesListUiEvent.Get -> {
+                    browseMethod = event.browseMethod
+                    isRemote = event.isRemote
+                }
+
+                is EntitiesListUiEvent.UpdateQuery -> {
+                    query = event.query
+                }
+
+                is EntitiesListUiEvent.RequestForMissingCoverArtUrl -> {
+                    val entityId = event.entityId
+                    if (!requestedImageMetadataForIds.contains(entityId)) {
+                        requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(entityId)
+                        scope.launch {
+                            musicBrainzImageMetadataRepository.saveImageMetadata(
+                                mbid = entityId,
+                                entity = getEntityType(),
+                                // pass filteredCount?
+                                itemsCount = totalCount,
+                            )
+                        }
+                    }
+                }
+
+                is EntitiesListUiEvent.UpdateSortRecordingListItem -> {
+                    appPreferences.setRecordingSortOption(event.sortOption)
+                }
+
+                is EntitiesListUiEvent.UpdateSortReleaseListItem -> {
+                    appPreferences.setReleaseSortOption(event.sortOption)
+                }
+
+                is EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
+                    appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
+                }
+
+                is EntitiesListUiEvent.UpdateSortReleaseGroupListItem -> {
+                    appPreferences.setReleaseGroupSortOption(event.sortOption)
+                }
+            }
+        }
+
         return EntitiesListUiState(
             pagingDataFlow = pagingDataFlow,
-            count = count,
+            totalCount = totalCount,
+            filteredCount = filteredCount,
             lazyListState = lazyListState,
             sortOption = sortOption,
             eventSink = { event ->
-                when (event) {
-                    is EntitiesListUiEvent.Get -> {
-                        browseMethod = event.browseMethod
-                        isRemote = event.isRemote
-                    }
-
-                    is EntitiesListUiEvent.UpdateQuery -> {
-                        query = event.query
-                    }
-
-                    is EntitiesListUiEvent.RequestForMissingCoverArtUrl -> {
-                        val entityId = event.entityId
-                        if (!requestedImageMetadataForIds.contains(entityId)) {
-                            requestedImageMetadataForIds = requestedImageMetadataForIds + setOf(entityId)
-                            scope.launch {
-                                musicBrainzImageMetadataRepository.saveImageMetadata(
-                                    mbid = entityId,
-                                    entity = getEntityType(),
-                                    itemsCount = count,
-                                )
-                            }
-                        }
-                    }
-
-                    is EntitiesListUiEvent.UpdateSortRecordingListItem -> {
-                        appPreferences.setRecordingSortOption(event.sortOption)
-                    }
-
-                    is EntitiesListUiEvent.UpdateSortReleaseListItem -> {
-                        appPreferences.setReleaseSortOption(event.sortOption)
-                    }
-
-                    is EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
-                        appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
-                    }
-
-                    is EntitiesListUiEvent.UpdateSortReleaseGroupListItem -> {
-                        appPreferences.setReleaseGroupSortOption(event.sortOption)
-                    }
-                }
+                eventSink(event)
             },
         )
     }
@@ -170,12 +183,3 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
         val sortOption: ReleaseGroupSortOption,
     ) : EntitiesListUiEvent
 }
-
-@Stable
-data class EntitiesListUiState(
-    val pagingDataFlow: Flow<PagingData<ListItemModel>> = emptyFlow(),
-    val count: Int = 0,
-    val lazyListState: LazyListState = LazyListState(),
-    val sortOption: SortOption = SortOption.None,
-    val eventSink: (EntitiesListUiEvent) -> Unit = {},
-) : CircuitUiState

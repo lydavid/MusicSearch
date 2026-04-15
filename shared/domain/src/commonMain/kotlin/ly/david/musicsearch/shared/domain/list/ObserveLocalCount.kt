@@ -8,5 +8,6 @@ interface ObserveLocalCount {
     operator fun invoke(
         browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
+        query: String,
     ): Flow<Int>
 }

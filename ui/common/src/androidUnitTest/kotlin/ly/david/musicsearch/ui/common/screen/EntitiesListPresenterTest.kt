@@ -14,8 +14,10 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveCountOfRelationshipsByEntity
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
 import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
@@ -49,6 +51,7 @@ class EntitiesListPresenterTest {
     private fun createPresenter(
         areasListItems: List<ListItemModel>,
         artistsListItems: List<ListItemModel>,
+        relationListItems: List<ListItemModel> = listOf(),
     ) = AllEntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
             getEntities = FakeGetEntities(areasListItems),
@@ -125,12 +128,20 @@ class EntitiesListPresenterTest {
         relationsPresenter = RelationsPresenterImpl(
             getEntityRelationships = object : GetEntityRelationships {
                 override fun invoke(
-                    entityId: String,
-                    entity: MusicBrainzEntityType?,
+                    entity: MusicBrainzEntity?,
                     relatedEntities: Set<MusicBrainzEntityType>,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
-                    return flowOf(PagingData.from(areasListItems))
+                    return flowOf(PagingData.from(relationListItems))
+                }
+            },
+            observeCountOfRelationshipsByEntity = object : ObserveCountOfRelationshipsByEntity {
+                override fun invoke(
+                    entityId: String,
+                    relatedEntities: Set<MusicBrainzEntityType>,
+                    query: String,
+                ): Flow<Int> {
+                    return flowOf(relationListItems.size)
                 }
             },
         ),
@@ -181,7 +192,7 @@ class EntitiesListPresenterTest {
                 )
                 assertEquals(
                     0,
-                    areasListUiState.count,
+                    areasListUiState.totalCount,
                 )
             }
             awaitItem().run {
@@ -197,7 +208,7 @@ class EntitiesListPresenterTest {
                 )
                 assertEquals(
                     1,
-                    areasListUiState.count,
+                    areasListUiState.totalCount,
                 )
                 assertEquals(
                     listOf(
@@ -208,7 +219,7 @@ class EntitiesListPresenterTest {
                 )
                 assertEquals(
                     2,
-                    artistsListUiState.count,
+                    artistsListUiState.totalCount,
                 )
                 // whether we sink this event or not, it doesn't matter in this test
                 eventSink(
@@ -230,7 +241,7 @@ class EntitiesListPresenterTest {
                 )
                 assertEquals(
                     2,
-                    artistsListUiState.count,
+                    artistsListUiState.totalCount,
                 )
             }
         }

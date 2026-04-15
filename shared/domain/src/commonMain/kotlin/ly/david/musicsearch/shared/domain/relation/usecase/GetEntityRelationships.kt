@@ -14,8 +14,7 @@ import kotlin.time.Clock
 
 interface GetEntityRelationships {
     operator fun invoke(
-        entityId: String,
-        entity: MusicBrainzEntityType?,
+        entity: MusicBrainzEntity?,
         relatedEntities: Set<MusicBrainzEntityType>,
         query: String,
     ): Flow<PagingData<ListItemModel>>
@@ -24,23 +23,20 @@ interface GetEntityRelationships {
 class GetEntityRelationshipsImpl(
     private val relationRepository: RelationRepository,
     private val coroutineScope: CoroutineScope,
+    private val clock: Clock,
 ) : GetEntityRelationships {
     override operator fun invoke(
-        entityId: String,
-        entity: MusicBrainzEntityType?,
+        entity: MusicBrainzEntity?,
         relatedEntities: Set<MusicBrainzEntityType>,
         query: String,
     ): Flow<PagingData<ListItemModel>> {
         return when {
-            entityId.isEmpty() || entity == null -> emptyFlow()
+            entity == null -> emptyFlow()
             else -> relationRepository.observeEntityRelationships(
-                entity = MusicBrainzEntity(
-                    id = entityId,
-                    type = entity,
-                ),
+                entity = entity,
                 relatedEntityTypes = relatedEntities,
                 query = query,
-                lastUpdated = Clock.System.now(),
+                lastUpdated = clock.now(),
             )
                 .cachedIn(scope = coroutineScope)
                 .distinctUntilChanged()

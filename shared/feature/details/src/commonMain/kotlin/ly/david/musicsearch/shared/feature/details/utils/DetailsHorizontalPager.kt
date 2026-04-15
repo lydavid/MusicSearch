@@ -11,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
-import ly.david.musicsearch.shared.domain.list.SortOption
-import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -20,8 +18,8 @@ import ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi
 import ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
-import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
@@ -87,60 +85,10 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             }
 
             else -> {
-                val uiState = when (tab) {
-                    Tab.ARTISTS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.artistsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.artistsListUiState.lazyListState,
-                    )
-
-                    Tab.EVENTS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.eventsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.eventsListUiState.lazyListState,
-                    )
-
-                    Tab.LABELS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.labelsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.labelsListUiState.lazyListState,
-                    )
-
-                    Tab.PLACES -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.placesLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.placesListUiState.lazyListState,
-                    )
-
-                    Tab.RECORDINGS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.recordingsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.recordingsListUiState.lazyListState,
-                    )
-
-                    Tab.RELEASES -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.releasesLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.releasesListUiState.lazyListState,
-                        showMoreInfo = (
-                            state.allEntitiesListUiState.releasesListUiState.sortOption as? SortOption.Release
-                            )?.showMoreInfo == true,
-                    )
-
-                    Tab.RELEASE_GROUPS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.releaseGroupsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.releaseGroupsListUiState.lazyListState,
-                        showMoreInfo = state.allEntitiesListUiState.releaseGroupsListUiState.sortOption.showTypes(),
-                    )
-
-                    Tab.WORKS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.worksLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.worksListUiState.lazyListState,
-                    )
-
-                    Tab.RELATIONSHIPS -> EntitiesPagingListUiState(
-                        lazyPagingItems = entitiesLazyPagingItems.relationsLazyPagingItems,
-                        lazyListState = state.allEntitiesListUiState.relationsUiState.lazyListState,
-                    )
-
-                    else -> {
-                        error("$tab tab should not be accessible for ${state.browseMethod.entityType}.")
-                    }
-                }
+                val uiState = state.allEntitiesListUiState.toEntitiesPagingListUiState(
+                    tab = tab,
+                    entitiesLazyPagingItems = entitiesLazyPagingItems,
+                )
                 val tabEntity = tab.toMusicBrainzEntityType()
                 EntitiesPagingListUi(
                     uiState = uiState,

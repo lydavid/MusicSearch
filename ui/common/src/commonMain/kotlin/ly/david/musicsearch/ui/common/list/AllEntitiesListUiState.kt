@@ -29,18 +29,18 @@ data class AllEntitiesListUiState(
 
 fun AllEntitiesListUiState.getTotalLocalCount(tab: Tab?): Int {
     return when (tab) {
-        Tab.AREAS -> areasListUiState.count
-        Tab.ARTISTS -> artistsListUiState.count
-        Tab.EVENTS -> eventsListUiState.count
-        Tab.GENRES -> genresListUiState.count
-        Tab.INSTRUMENTS -> instrumentsListUiState.count
-        Tab.LABELS -> labelsListUiState.count
-        Tab.PLACES -> placesListUiState.count
-        Tab.RECORDINGS -> recordingsListUiState.count
-        Tab.RELEASES -> releasesListUiState.count
-        Tab.RELEASE_GROUPS -> releaseGroupsListUiState.count
-        Tab.SERIES -> seriesListUiState.count
-        Tab.WORKS -> worksListUiState.count
+        Tab.AREAS -> areasListUiState.totalCount
+        Tab.ARTISTS -> artistsListUiState.totalCount
+        Tab.EVENTS -> eventsListUiState.totalCount
+        Tab.GENRES -> genresListUiState.totalCount
+        Tab.INSTRUMENTS -> instrumentsListUiState.totalCount
+        Tab.LABELS -> labelsListUiState.totalCount
+        Tab.PLACES -> placesListUiState.totalCount
+        Tab.RECORDINGS -> recordingsListUiState.totalCount
+        Tab.RELEASES -> releasesListUiState.totalCount
+        Tab.RELEASE_GROUPS -> releaseGroupsListUiState.totalCount
+        Tab.SERIES -> seriesListUiState.totalCount
+        Tab.WORKS -> worksListUiState.totalCount
         Tab.TRACKS -> tracksByReleaseUiState.trackIds.size
         Tab.DETAILS,
         Tab.RELATIONSHIPS,

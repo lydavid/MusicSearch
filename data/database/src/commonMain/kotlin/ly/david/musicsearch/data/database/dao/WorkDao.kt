@@ -24,7 +24,6 @@ import kotlin.time.Instant
 
 class WorkDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: WorkQueries = database.workQueries
@@ -163,23 +162,27 @@ class WorkDao(
         }
     }
 
-    fun observeCountOfWorks(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfWorks(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfWorksByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfWorksByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllWorks(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllWorks(query = query)
             }
         }
             .asFlow()
@@ -245,9 +248,9 @@ class WorkDao(
         query: String,
         username: String,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfWorksByCollection(
+        countQuery = getCountOfWorksByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -261,5 +264,13 @@ class WorkDao(
                 mapper = ::mapToWorkListItemModel,
             )
         },
+    )
+
+    private fun getCountOfWorksByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfWorksByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 }

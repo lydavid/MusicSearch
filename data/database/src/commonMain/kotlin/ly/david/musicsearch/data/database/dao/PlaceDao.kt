@@ -23,7 +23,6 @@ import kotlin.time.Instant
 
 class PlaceDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.placeQueries
@@ -168,23 +167,27 @@ class PlaceDao(
         }
     }
 
-    fun observeCountOfPlaces(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfPlaces(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfPlacesByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getPlacesByAreaCountQuery(
                         areaId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllPlaces(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllPlaces(query = query)
             }
         }
             .asFlow()
@@ -245,9 +248,9 @@ class PlaceDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfPlacesByCollection(
+        countQuery = getCountOfPlacesByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -260,6 +263,14 @@ class PlaceDao(
                 mapper = ::mapToPlaceListItemModel,
             )
         },
+    )
+
+    private fun getCountOfPlacesByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfPlacesByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
     // endregion
 }

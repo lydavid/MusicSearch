@@ -40,7 +40,10 @@ interface AreaDao : EntityDao {
         query: String,
     ): PagingSource<Int, AreaListItemModel>
 
-    fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int>
+    fun observeCountOfAreas(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int>
 
     fun getAreaByPlace(placeId: String): AreaListItemModel?
     fun deleteAreaPlaceLink(placeId: String)
@@ -58,7 +61,6 @@ class AreaDaoImpl(
     database: Database,
     private val countryCodeDao: CountryCodeDao,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : AreaDao {
     override val transacter: AreaQueries = database.areaQueries
@@ -187,16 +189,20 @@ class AreaDaoImpl(
         }
     }
 
-    override fun observeCountOfAreas(browseMethod: BrowseMethod): Flow<Int> =
+    override fun observeCountOfAreas(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                getCountOfAreasByCollectionQuery(
                     collectionId = browseMethod.entityId,
+                    query = query,
                 )
             }
 
-            else -> {
-                getCountOfAllAreas(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllAreas(query = query)
             }
         }
             .asFlow()
@@ -231,9 +237,9 @@ class AreaDaoImpl(
         mbid: String,
         query: String,
     ) = QueryPagingSource(
-        countQuery = transacter.getNumberOfAreasByCollection(
+        countQuery = getCountOfAreasByCollectionQuery(
             collectionId = mbid,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -246,6 +252,14 @@ class AreaDaoImpl(
                 mapper = ::mapToAreaListItemModel,
             )
         },
+    )
+
+    private fun getCountOfAreasByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfAreasByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
     // endregion
 

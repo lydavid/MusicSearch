@@ -1,7 +1,12 @@
 package ly.david.musicsearch.ui.common.paging
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -39,6 +44,9 @@ import ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.series.SeriesListItem
 import ly.david.musicsearch.ui.common.work.WorkListItem
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.showingXOfY
+import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
 @Suppress("CyclomaticComplexMethod")
@@ -55,12 +63,31 @@ fun EntitiesPagingListUi(
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
     onLogin: () -> Unit = {},
 ) {
+    val header: @Composable (() -> Unit)? = if (filterText.isEmpty()) {
+        null
+    } else {
+        {
+            Text(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.bodyMedium,
+                text = stringResource(
+                    Res.string.showingXOfY,
+                    uiState.filteredCount,
+                    uiState.totalCount,
+                ),
+            )
+        }
+    }
+
     ScreenWithPagingLoadingAndError(
         lazyPagingItems = uiState.lazyPagingItems,
         modifier = modifier,
         lazyListState = uiState.lazyListState,
         keyed = true,
         onLogin = onLogin,
+        header = header,
         itemContent = { listItemModel: ListItemModel? ->
             when (listItemModel) {
                 is AreaListItemModel -> {

@@ -73,6 +73,7 @@ kotlin {
                 implementation(libs.koin.test)
                 implementation(libs.kotlin.test)
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.mockk)
             }
         }
         val commonTest by getting {

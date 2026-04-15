@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
@@ -216,8 +217,10 @@ class AllEntitiesListPresenter(
                     val browseByEntity = capturedBrowseMethod as? BrowseMethod.ByEntity ?: return@LaunchedEffect
                     relationsEventSink(
                         RelationsUiEvent.GetRelations(
-                            byEntityId = browseByEntity.entityId,
-                            byEntity = browseByEntity.entityType,
+                            byEntity = MusicBrainzEntity(
+                                id = browseByEntity.entityId,
+                                type = browseByEntity.entityType,
+                            ),
                         ),
                     )
                     relationsEventSink(RelationsUiEvent.UpdateQuery(query))

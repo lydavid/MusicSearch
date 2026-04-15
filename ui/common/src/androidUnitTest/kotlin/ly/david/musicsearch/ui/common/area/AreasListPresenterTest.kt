@@ -53,7 +53,7 @@ class AreasListPresenterTest {
                 )
                 assertEquals(
                     0,
-                    count,
+                    totalCount,
                 )
             }
             awaitItem().run {
@@ -69,7 +69,7 @@ class AreasListPresenterTest {
                 )
                 assertEquals(
                     1,
-                    count,
+                    totalCount,
                 )
             }
         }

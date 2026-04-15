@@ -29,7 +29,6 @@ import kotlin.time.Instant
 
 class ArtistDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.artistQueries
@@ -226,23 +225,27 @@ class ArtistDao(
         }
     }
 
-    fun observeCountOfArtists(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfArtists(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfArtistsByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfArtistsByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllArtists(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllArtists(query = query)
             }
         }
             .asFlow()
@@ -298,9 +301,9 @@ class ArtistDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, ArtistListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfArtistsByCollection(
+        countQuery = getCountOfArtistsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -313,5 +316,13 @@ class ArtistDao(
                 mapper = ::mapToArtistListItemModel,
             )
         },
+    )
+
+    private fun getCountOfArtistsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfArtistsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 }

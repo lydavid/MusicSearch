@@ -11,6 +11,7 @@ class FakeObserveLocalCount(private val listItems: List<ListItemModel>) : Observ
     override operator fun invoke(
         browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
+        query: String,
     ): Flow<Int> {
         return flowOf(listItems.size)
     }

@@ -33,6 +33,7 @@ import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesListRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingsListRepositoryImpl
+import ly.david.musicsearch.data.repository.relation.ObserveCountOfRelationshipsByEntityImpl
 import ly.david.musicsearch.data.repository.release.GetTrackIdsByReleaseImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleasesListRepositoryImpl
@@ -79,6 +80,7 @@ import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
+import ly.david.musicsearch.shared.domain.relation.usecase.ObserveCountOfRelationshipsByEntity
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
@@ -143,4 +145,5 @@ val repositoryDataModule = module {
     singleOf(::GetTrackIdsByReleaseImpl) bind GetTrackIdsByRelease::class
     singleOf(::GetTracksByReleaseForListenSubmissionImpl) bind GetTracksByReleaseForListenSubmission::class
     singleOf(::ObserveLocalCountsOfAllEntitiesImpl) bind ObserveLocalCountsOfAllEntities::class
+    singleOf(::ObserveCountOfRelationshipsByEntityImpl) bind ObserveCountOfRelationshipsByEntity::class
 }

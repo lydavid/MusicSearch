@@ -29,7 +29,6 @@ import kotlin.time.Instant
 class RecordingDao(
     private val database: Database,
     private val artistCreditDao: ArtistCreditDao,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.recordingQueries
@@ -194,23 +193,27 @@ class RecordingDao(
         }
     }
 
-    fun observeCountOfRecordings(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfRecordings(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfRecordingsByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfRecordingsByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllRecordings(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllRecordings(query = query)
             }
         }
             .asFlow()
@@ -281,9 +284,9 @@ class RecordingDao(
         username: String,
         sortOption: RecordingSortOption,
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfRecordingsByCollection(
+        countQuery = getCountOfRecordingsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -298,5 +301,13 @@ class RecordingDao(
                 mapper = ::mapToRecordingListItemModel,
             )
         },
+    )
+
+    private fun getCountOfRecordingsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfRecordingsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 }

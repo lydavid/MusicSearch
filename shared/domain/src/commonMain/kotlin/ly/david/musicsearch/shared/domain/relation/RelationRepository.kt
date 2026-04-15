@@ -46,6 +46,12 @@ interface RelationRepository {
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>
 
+    fun observeCountOfRelationshipsByEntity(
+        entityId: String,
+        relatedEntityTypes: Set<MusicBrainzEntityType>,
+        query: String,
+    ): Flow<Int>
+
     fun observeCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
 
     fun observeLastUpdated(entityId: String): Flow<Instant?>

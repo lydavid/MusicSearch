@@ -41,11 +41,15 @@ import org.jetbrains.compose.resources.stringResource
  *  This is already true for any item that uses MB's UUID, but separators must also have a unique id.
  * @param modifier For lazy column containing [itemContent].
  *
+ * @param header Composable UI for a single header. Good for content that doesn't come from the paging source.
  * @param itemContent Composable UI for each [lazyPagingItems].
  *
  * Any [ListSeparator] will be displayed as a sticky header.
  */
-@Suppress("ContentSlotReused") // crashes if we use moveableContentOf together with filtering
+@Suppress(
+    "ContentSlotReused", // crashes if we use moveableContentOf together with filtering
+    "CyclomaticComplexMethod",
+)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T : Identifiable> ScreenWithPagingLoadingAndError(
@@ -55,6 +59,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     customNoResultsText: String = "",
     keyed: Boolean = false,
     onLogin: () -> Unit = {},
+    header: @Composable (() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
     val noResultsText = customNoResultsText.ifEmpty {
@@ -103,9 +108,21 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
                                 ) {
                                     itemContent(this, lazyPagingItems[index])
                                 }
+
+                                if (header != null && index == 0) {
+                                    item {
+                                        header()
+                                    }
+                                }
                             }
 
                             else -> {
+                                if (header != null && index == 0) {
+                                    item {
+                                        header()
+                                    }
+                                }
+
                                 item(
                                     key = item?.id.takeIf { keyed },
                                 ) {

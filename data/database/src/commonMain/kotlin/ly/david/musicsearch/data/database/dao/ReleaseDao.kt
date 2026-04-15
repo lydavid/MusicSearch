@@ -34,12 +34,14 @@ class ReleaseDao(
     private val artistCreditDao: ArtistCreditDao,
     private val mediumDao: MediumDao,
     private val releaseLabelDao: ReleaseLabelDao,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
-    fun upsert(oldId: String, release: ReleaseMusicBrainzNetworkModel) {
+    fun upsert(
+        oldId: String,
+        release: ReleaseMusicBrainzNetworkModel,
+    ) {
         release.run {
             if (oldId != id) {
                 delete(oldId)
@@ -384,9 +386,9 @@ class ReleaseDao(
         username: String,
         sortOption: ReleaseSortOption,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleasesByCollection(
+        countQuery = getCountOfReleasesByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -403,25 +405,35 @@ class ReleaseDao(
         },
     )
 
+    private fun getCountOfReleasesByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfReleasesByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
+    )
+
     fun observeCountOfReleases(
         browseMethod: BrowseMethod,
+        query: String,
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfReleasesByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfReleasesByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllReleases(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllReleases(query = query)
             }
         }
             .asFlow()

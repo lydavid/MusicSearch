@@ -28,7 +28,6 @@ class LabelDao(
     database: Database,
     private val areaDao: AreaDao,
     private val releaseLabelDao: ReleaseLabelDao,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.labelQueries
@@ -198,23 +197,27 @@ class LabelDao(
         }
     }
 
-    fun observeCountOfLabels(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfLabels(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfLabelsByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfLabelsByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllLabels(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllLabels(query = query)
             }
         }
             .asFlow()
@@ -249,9 +252,9 @@ class LabelDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfLabelsByCollection(
+        countQuery = getCountOfLabelsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -264,6 +267,14 @@ class LabelDao(
                 mapper = ::mapToLabelListItemModel,
             )
         },
+    )
+
+    private fun getCountOfLabelsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfLabelsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 
     private fun getLabelsByEntity(

@@ -22,7 +22,6 @@ import kotlin.time.Instant
 
 class EventDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.eventQueries
@@ -151,23 +150,27 @@ class EventDao(
         }
     }
 
-    fun observeCountOfEvents(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfEvents(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
                 if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
-                    collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                    getCountOfEventsByCollectionQuery(
                         collectionId = browseMethod.entityId,
+                        query = query,
                     )
                 } else {
                     getCountOfEventsByEntityQuery(
                         entityId = browseMethod.entityId,
-                        query = "",
+                        query = query,
                     )
                 }
             }
 
-            else -> {
-                getCountOfAllEvents(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllEvents(query = query)
             }
         }
             .asFlow()
@@ -231,9 +234,9 @@ class EventDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfEventsByCollection(
+        countQuery = getCountOfEventsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -246,5 +249,13 @@ class EventDao(
                 mapper = ::mapToEventListItemModel,
             )
         },
+    )
+
+    private fun getCountOfEventsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfEventsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 }

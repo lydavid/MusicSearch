@@ -65,7 +65,7 @@ VALUES (
   :`ended`
 );
 
-countEntityRelationships:
+getCountOfRelationshipsByEntity:
 SELECT COUNT(DISTINCT linked_entity_id)
 FROM relation
 LEFT JOIN all_primary_alias ON all_primary_alias.mbid = linked_entity_id
@@ -79,7 +79,7 @@ AND (
   all_primary_alias.name LIKE :query
 );
 
-getEntityRelationships:
+getRelationshipsByEntity:
 SELECT
   `linked_entity_id`,
   `linked_entity`,

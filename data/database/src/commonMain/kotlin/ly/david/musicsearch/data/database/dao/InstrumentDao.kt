@@ -19,7 +19,6 @@ import kotlin.time.Instant
 
 class InstrumentDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.instrumentQueries
@@ -99,15 +98,19 @@ class InstrumentDao(
         }
     }
 
-    fun observeCountOfInstruments(browseMethod: BrowseMethod): Flow<Int> = when (browseMethod) {
+    fun observeCountOfInstruments(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> = when (browseMethod) {
         is BrowseMethod.ByEntity -> {
-            collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+            getCountOfInstrumentsByCollectionQuery(
                 collectionId = browseMethod.entityId,
+                query = query,
             )
         }
 
-        else -> {
-            getCountOfAllInstruments(query = "")
+        is BrowseMethod.All -> {
+            getCountOfAllInstruments(query = query)
         }
     }.asFlow().mapToOne(coroutineDispatchers.io).map { it.toInt() }
 
@@ -121,9 +124,9 @@ class InstrumentDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfInstrumentsByCollection(
+        countQuery = getCountOfInstrumentsByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -136,6 +139,14 @@ class InstrumentDao(
                 mapper = ::mapToInstrumentListItemModel,
             )
         },
+    )
+
+    private fun getCountOfInstrumentsByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfInstrumentsByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 
     private fun getAllInstruments(

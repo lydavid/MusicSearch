@@ -35,55 +35,68 @@ class ObserveLocalCountImpl(
     override fun invoke(
         browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
+        query: String,
     ): Flow<Int> {
         if (browseMethod == null) return flowOf(0)
         return when (browseEntity) {
             MusicBrainzEntityType.AREA -> areaDao.observeCountOfAreas(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.ARTIST -> artistDao.observeCountOfArtists(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.EVENT -> eventDao.observeCountOfEvents(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.GENRE -> genreDao.observeCountOfGenres(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.INSTRUMENT -> instrumentDao.observeCountOfInstruments(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.LABEL -> labelDao.observeCountOfLabels(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.PLACE -> placeDao.observeCountOfPlaces(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.RECORDING -> recordingDao.observeCountOfRecordings(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.RELEASE -> releaseDao.observeCountOfReleases(
                 browseMethod = browseMethod,
+                query = query,
             )
 
-            MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupDao.observeLocalCount(
+            MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupDao.observeCountOfReleaseGroups(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.WORK -> workDao.observeCountOfWorks(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.SERIES -> seriesDao.observeCountOfSeries(
                 browseMethod = browseMethod,
+                query = query,
             )
 
             MusicBrainzEntityType.COLLECTION,

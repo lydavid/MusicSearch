@@ -89,6 +89,7 @@ class StatsPresenterTest {
                 override fun invoke(
                     browseEntity: MusicBrainzEntityType,
                     browseMethod: BrowseMethod?,
+                    query: String,
                 ): Flow<Int> {
                     return flowOf(200)
                 }

@@ -17,7 +17,6 @@ import lydavidmusicsearchdatadatabase.Genre
 
 class GenreDao(
     database: Database,
-    private val collectionEntityDao: CollectionEntityDao,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.genreQueries
@@ -60,16 +59,20 @@ class GenreDao(
         }
     }
 
-    fun observeCountOfGenres(browseMethod: BrowseMethod): Flow<Int> =
+    fun observeCountOfGenres(
+        browseMethod: BrowseMethod,
+        query: String,
+    ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
-                collectionEntityDao.getCountOfEntitiesByCollectionQuery(
+                getCountOfGenresByCollectionQuery(
                     collectionId = browseMethod.entityId,
+                    query = query,
                 )
             }
 
-            else -> {
-                getCountOfAllGenres(query = "")
+            BrowseMethod.All -> {
+                getCountOfAllGenres(query = query)
             }
         }
             .asFlow()
@@ -86,9 +89,9 @@ class GenreDao(
         collectionId: String,
         query: String,
     ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfGenresByCollection(
+        countQuery = getCountOfGenresByCollectionQuery(
             collectionId = collectionId,
-            query = "%$query%",
+            query = query,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -101,6 +104,14 @@ class GenreDao(
                 mapper = ::mapToGenreListItemModel,
             )
         },
+    )
+
+    private fun getCountOfGenresByCollectionQuery(
+        collectionId: String,
+        query: String,
+    ): Query<Long> = transacter.getNumberOfGenresByCollection(
+        collectionId = collectionId,
+        query = "%$query%",
     )
 
     private fun getAllGenres(

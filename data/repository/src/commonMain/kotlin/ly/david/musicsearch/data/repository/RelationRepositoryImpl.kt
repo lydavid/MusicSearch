@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.RelationWithOrder
 import kotlin.time.Instant
 
+// TODO: move
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
     private val relationsMetadataDao: RelationsMetadataDao,
@@ -85,7 +86,7 @@ class RelationRepositoryImpl(
                 relationDao.getEntityRelationships(
                     entityId = entity.id,
                     relatedEntities = relatedEntityTypes,
-                    query = "%$query%",
+                    query = query,
                 )
             },
         ).flow
@@ -288,6 +289,18 @@ class RelationRepositoryImpl(
         relationDao.deleteRelationshipsByType(
             entityId = entityId,
             entity = entity,
+        )
+    }
+
+    override fun observeCountOfRelationshipsByEntity(
+        entityId: String,
+        relatedEntityTypes: Set<MusicBrainzEntityType>,
+        query: String,
+    ): Flow<Int> {
+        return relationDao.observeCountOfRelationshipsByEntity(
+            entityId = entityId,
+            relatedEntities = relatedEntityTypes,
+            query = query,
         )
     }
 
