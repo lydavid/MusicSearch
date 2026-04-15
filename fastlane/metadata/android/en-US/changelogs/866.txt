@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* sometimes the count of artists by collection is off due to not filtering by artist aliases
