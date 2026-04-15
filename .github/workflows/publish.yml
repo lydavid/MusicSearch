@@ -187,7 +187,7 @@ jobs:
         run: |
           sed -i 's/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = ${{ env.VERSION_NAME }};/g' ios-app/musicsearch.xcodeproj/project.pbxproj
           sed -i 's/CURRENT_PROJECT_VERSION = [^;]*;/CURRENT_PROJECT_VERSION = ${{ env.VERSION_CODE }};/g' ios-app/musicsearch.xcodeproj/project.pbxproj
-          echo "has_new_version_name=true" >> $GITHUB_OUTPUT
+          echo "has_new_version_name='true'" >> $GITHUB_OUTPUT
 
       - name: Commit version code bump
         if: ${{ !cancelled() }}
