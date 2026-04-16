@@ -27,6 +27,8 @@ import ly.david.musicsearch.shared.domain.search.history.usecase.DeleteSearchHis
 import ly.david.musicsearch.shared.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHistory
 import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResults
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 
@@ -38,6 +40,7 @@ internal class SearchPresenter(
     private val recordSearchHistory: RecordSearchHistory,
     private val deleteSearchHistory: DeleteSearchHistory,
     private val appPreferences: AppPreferences,
+    private val musicBrainzLoginPresenter: MusicBrainzLoginPresenter,
 ) : Presenter<SearchUiState> {
 
     @Composable
@@ -69,6 +72,8 @@ internal class SearchPresenter(
             )
         }
         val searchHistoryListState = rememberLazyListState()
+
+        val loginUiState = musicBrainzLoginPresenter.present()
 
         fun eventSink(event: SearchUiEvent) {
             when (event) {
@@ -121,6 +126,7 @@ internal class SearchPresenter(
             searchHistory = searchHistory.collectAsLazyPagingItems(),
             searchHistoryListState = searchHistoryListState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            musicBrainzLoginUiState = loginUiState,
             eventSink = ::eventSink,
         )
     }
@@ -135,6 +141,7 @@ internal data class SearchUiState(
     val searchHistory: LazyPagingItems<ListItemModel>,
     val searchHistoryListState: LazyListState = LazyListState(),
     val scrollToHideTopAppBar: Boolean = false,
+    val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val eventSink: (SearchUiEvent) -> Unit,
 ) : CircuitUiState
 

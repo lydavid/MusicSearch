@@ -20,6 +20,7 @@ val searchFeatureModule: Module = module {
                     recordSearchHistory = get(),
                     deleteSearchHistory = get(),
                     appPreferences = get(),
+                    musicBrainzLoginPresenter = get(),
                 )
 
                 else -> null

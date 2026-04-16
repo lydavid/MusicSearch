@@ -116,7 +116,7 @@ internal fun PreviewSearchUiSearchResults() {
         val searchHistory = MutableStateFlow(
             PagingData.empty<ListItemModel>(),
         )
-        SearchUiContent(
+        SearchUi(
             state = SearchUiState(
                 query = "aimer",
                 entityType = MusicBrainzEntityType.ARTIST,
@@ -147,7 +147,7 @@ internal fun PreviewSearchUiSearchHistory() {
                 ),
             ),
         )
-        SearchUiContent(
+        SearchUi(
             state = SearchUiState(
                 query = "",
                 entityType = MusicBrainzEntityType.ARTIST,

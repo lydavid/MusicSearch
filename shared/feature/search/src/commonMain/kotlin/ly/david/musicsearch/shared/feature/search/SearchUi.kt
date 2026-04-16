@@ -20,11 +20,14 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
+import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
+import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
@@ -55,6 +58,7 @@ internal fun SearchUi(
     ) { innerPadding, scrollBehavior ->
         SearchUiContent(
             state = state,
+            snackbarHostState = snackbarHostState,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -64,14 +68,19 @@ internal fun SearchUi(
 }
 
 @Composable
-internal fun SearchUiContent(
+private fun SearchUiContent(
     state: SearchUiState,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     eventSink: (SearchUiEvent) -> Unit = {},
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    val scope = rememberCoroutineScope()
+    val overlayHost = LocalOverlayHost.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val selectedEntityType = state.entityType
+    val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     Column(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -101,7 +110,7 @@ internal fun SearchUiContent(
                 onValueChange = { newText ->
                     if (!newText.contains("\n")) {
                         eventSink(SearchUiEvent.UpdateQuery(newText))
-                        scope.launch {
+                        coroutineScope.launch {
                             state.searchResultsListState.scrollToItem(0)
                         }
                     }
@@ -112,10 +121,10 @@ internal fun SearchUiContent(
                 modifier = Modifier
                     .weight(1f),
                 options = searchableEntities,
-                selectedOption = state.entityType,
+                selectedOption = selectedEntityType,
                 onSelectOption = { entity ->
                     eventSink(SearchUiEvent.UpdateEntity(entity))
-                    scope.launch {
+                    coroutineScope.launch {
                         state.searchResultsListState.scrollToItem(0)
                     }
                 },
@@ -141,6 +150,18 @@ internal fun SearchUiContent(
             SearchResultsUi(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
+                onEditCollectionClick = {
+                    showAddToCollectionSheet(
+                        coroutineScope = coroutineScope,
+                        overlayHost = overlayHost,
+                        entityType = selectedEntityType,
+                        entityIds = listOf(it),
+                        snackbarHostState = snackbarHostState,
+                        onLoginClick = {
+                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
+                        },
+                    )
+                },
                 onItemClick = { entity, id ->
                     focusManager.clearFocus()
                     eventSink(SearchUiEvent.RecordSearch)

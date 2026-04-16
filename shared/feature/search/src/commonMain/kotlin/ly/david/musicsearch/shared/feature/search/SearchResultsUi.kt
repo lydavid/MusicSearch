@@ -49,6 +49,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun SearchResultsUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
+    onEditCollectionClick: (String) -> Unit,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     ScreenWithPagingLoadingAndError(
@@ -58,6 +59,7 @@ internal fun SearchResultsUi(
     ) { listItemModel: ListItemModel? ->
         ListItemUi(
             listItemModel = listItemModel,
+            onEditCollectionClick = onEditCollectionClick,
             onItemClick = onItemClick,
         )
     }
@@ -67,6 +69,7 @@ internal fun SearchResultsUi(
 private fun ListItemUi(
     listItemModel: ListItemModel?,
     filterText: String = "", // not used yet
+    onEditCollectionClick: (String) -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
 ) {
     when (listItemModel) {
@@ -80,12 +83,12 @@ private fun ListItemUi(
             )
         }
 
-        // TODO: support editing collection from search results
         is AreaListItemModel -> {
             AreaListItem(
                 area = listItemModel,
                 filterText = filterText,
                 showType = true,
+                onEditCollectionClick = onEditCollectionClick,
                 onAreaClick = {
                     onItemClick(
                         MusicBrainzEntityType.AREA,
@@ -99,6 +102,7 @@ private fun ListItemUi(
             ArtistListItem(
                 artist = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onClick = {
                     onItemClick(
                         MusicBrainzEntityType.ARTIST,
@@ -112,6 +116,7 @@ private fun ListItemUi(
             EventListItem(
                 event = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onEventClick = {
                     onItemClick(
                         MusicBrainzEntityType.EVENT,
@@ -125,6 +130,7 @@ private fun ListItemUi(
             InstrumentListItem(
                 instrument = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onInstrumentClick = {
                     onItemClick(
                         MusicBrainzEntityType.INSTRUMENT,
@@ -138,6 +144,7 @@ private fun ListItemUi(
             LabelListItem(
                 label = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onLabelClick = {
                     onItemClick(
                         MusicBrainzEntityType.LABEL,
@@ -151,6 +158,7 @@ private fun ListItemUi(
             PlaceListItem(
                 place = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onPlaceClick = {
                     onItemClick(
                         MusicBrainzEntityType.PLACE,
@@ -164,6 +172,7 @@ private fun ListItemUi(
             RecordingListItem(
                 recording = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onRecordingClick = {
                     onItemClick(
                         MusicBrainzEntityType.RECORDING,
@@ -177,6 +186,7 @@ private fun ListItemUi(
             ReleaseListItem(
                 release = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onClick = {
                     onItemClick(
                         MusicBrainzEntityType.RELEASE,
@@ -190,6 +200,7 @@ private fun ListItemUi(
             ReleaseGroupListItem(
                 releaseGroup = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 showType = true,
                 onClick = {
                     onItemClick(
@@ -204,6 +215,7 @@ private fun ListItemUi(
             SeriesListItem(
                 series = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onSeriesClick = {
                     onItemClick(
                         MusicBrainzEntityType.SERIES,
@@ -217,6 +229,7 @@ private fun ListItemUi(
             WorkListItem(
                 work = listItemModel,
                 filterText = filterText,
+                onEditCollectionClick = onEditCollectionClick,
                 onWorkClick = {
                     onItemClick(
                         MusicBrainzEntityType.WORK,
