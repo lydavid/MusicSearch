@@ -17,8 +17,11 @@ import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
 import ly.david.musicsearch.shared.domain.release.ObserveCountOfEachStatus
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.ReleaseStatusCount
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
+import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.artist.artistTabs
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -116,12 +119,31 @@ class StatsPresenterTest {
                 override operator fun invoke(
                     browseMethod: BrowseMethod,
                 ): Flow<List<ReleaseGroupTypeCount>> {
-                    return flowOf(listOf())
+                    return flowOf(
+                        listOf(
+                            ReleaseGroupTypeCount(
+                                primaryType = ReleaseGroupPrimaryType.Album,
+                                secondaryTypes = persistentListOf(ReleaseGroupSecondaryType.Compilation),
+                                count = 2,
+                            ),
+                        ),
+                    )
                 }
             },
             observeCountOfEachStatus = object : ObserveCountOfEachStatus {
                 override fun invoke(browseMethod: BrowseMethod): Flow<List<ReleaseStatusCount>> {
-                    return flowOf(listOf())
+                    return flowOf(
+                        listOf(
+                            ReleaseStatusCount(
+                                status = null,
+                                count = 2,
+                            ),
+                            ReleaseStatusCount(
+                                status = ReleaseStatus.OFFICIAL,
+                                count = 1,
+                            ),
+                        ),
+                    )
                 }
             },
         )
@@ -132,12 +154,12 @@ class StatsPresenterTest {
                     StatsUiState(
                         stats = Stats(
                             tabToStats = persistentHashMapOf(
-                                Tab.RELATIONSHIPS to EntityStats(),
-                                Tab.RECORDINGS to EntityStats(),
-                                Tab.RELEASE_GROUPS to EntityStats(),
-                                Tab.EVENTS to EntityStats(),
-                                Tab.WORKS to EntityStats(),
-                                Tab.RELEASES to EntityStats(),
+                                Tab.RELATIONSHIPS to EntityStats.Default(),
+                                Tab.RECORDINGS to EntityStats.Default(),
+                                Tab.RELEASE_GROUPS to EntityStats.Default(),
+                                Tab.EVENTS to EntityStats.Default(),
+                                Tab.WORKS to EntityStats.Default(),
+                                Tab.RELEASES to EntityStats.Default(),
                             ),
                         ),
                         tabs = artistTabs,
@@ -167,40 +189,57 @@ class StatsPresenterTest {
                                 lastUpdated = lastUpdated,
                             ),
                             tabToStats = persistentHashMapOf(
-                                Tab.RELATIONSHIPS to EntityStats(),
-                                Tab.RECORDINGS to EntityStats(
+                                Tab.RELATIONSHIPS to EntityStats.Default(),
+                                Tab.RECORDINGS to EntityStats.Default(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
                                     totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
-                                Tab.RELEASE_GROUPS to EntityStats(
+                                Tab.RELEASE_GROUPS to EntityStats.ReleaseGroup(
+                                    totalRemote = 300,
+                                    totalLocal = 200,
+                                    totalVisited = 2,
+                                    totalCollected = 1,
+                                    typeCounts = persistentListOf(
+                                        ReleaseGroupTypeCount(
+                                            primaryType = ReleaseGroupPrimaryType.Album,
+                                            secondaryTypes = persistentListOf(ReleaseGroupSecondaryType.Compilation),
+                                            count = 2,
+                                        ),
+                                    ),
+                                    lastUpdated = lastUpdated,
+                                ),
+                                Tab.EVENTS to EntityStats.Default(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
                                     totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
-                                Tab.EVENTS to EntityStats(
+                                Tab.WORKS to EntityStats.Default(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
                                     totalCollected = 1,
                                     lastUpdated = lastUpdated,
                                 ),
-                                Tab.WORKS to EntityStats(
+                                Tab.RELEASES to EntityStats.Release(
                                     totalRemote = 300,
                                     totalLocal = 200,
                                     totalVisited = 2,
                                     totalCollected = 1,
-                                    lastUpdated = lastUpdated,
-                                ),
-                                Tab.RELEASES to EntityStats(
-                                    totalRemote = 300,
-                                    totalLocal = 200,
-                                    totalVisited = 2,
-                                    totalCollected = 1,
+                                    statusCounts = persistentListOf(
+                                        ReleaseStatusCount(
+                                            status = null,
+                                            count = 2,
+                                        ),
+                                        ReleaseStatusCount(
+                                            status = ReleaseStatus.OFFICIAL,
+                                            count = 1,
+                                        ),
+                                    ),
                                     lastUpdated = lastUpdated,
                                 ),
                             ),
