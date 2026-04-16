@@ -320,4 +320,6 @@
     <string name="tapRelationshipsTab">Appuyez sur l'onglet « Relations » pour afficher davantage de statistiques.</string>
     <string name="totalRelationships">Nombre total de relations : %1$d</string>
     <string name="scrollToHideTopAppBar">Faites défiler pour masquer la barre d'applications supérieure</string>
+    <string name="showingXOfY">Affichage de %1$d sur %2$d.</string>
+    <string name="unknown">Inconnu</string>
 </resources>
