@@ -20,6 +20,7 @@ val statsFeatureModule = module {
                         observeVisitedCount = get(),
                         observeCollectedCount = get(),
                         observeCountOfEachAlbumType = get(),
+                        observeCountOfEachStatus = get(),
                     )
                 }
 

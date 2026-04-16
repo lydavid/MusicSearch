@@ -135,13 +135,11 @@ internal fun ReleaseDetailsTabUi(
                 filterText = filterText,
             )
         }
-        status?.let { status ->
-            TextWithHeading(
-                heading = stringResource(Res.string.status),
-                text = stringResource(status.getDisplayString()),
-                filterText = filterText,
-            )
-        }
+        TextWithHeading(
+            heading = stringResource(Res.string.status),
+            text = status.getDisplayString(),
+            filterText = filterText,
+        )
         textRepresentation.language.getDisplayLanguage().ifNotNullOrEmpty {
             TextWithHeading(
                 heading = stringResource(Res.string.language),

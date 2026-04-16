@@ -320,4 +320,5 @@
     <string name="totalRelationships">Total relationships: %1$d</string>
     <string name="scrollToHideTopAppBar">Scroll to hide top app bar</string>
     <string name="showingXOfY">Showing %1$d of %2$d.</string>
+    <string name="unknown">Unknown</string>
 </resources>

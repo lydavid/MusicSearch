@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -58,30 +59,9 @@ internal fun LazyListScope.addEntityStatsSection(
             )
         }
     }
-    val releaseGroupTypeCounts = entityStats.releaseGroupTypeCounts
-    items(releaseGroupTypeCounts) {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(top = 4.dp),
-        ) {
-            Text(
-                style = TextStyles.getCardBodySubTextStyle(),
-                text = "${it.getDisplayString()}: ${it.count}",
-            )
 
-            if (releaseGroupTypeCounts.isNotEmpty()) {
-                LinearProgressIndicator(
-                    progress = { it.count / releaseGroupTypeCounts.sumOf { it.count }.toFloat() },
-                    modifier = Modifier
-                        .height(4.dp)
-                        .fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = Color.Transparent,
-                )
-            }
-        }
-    }
+    additionalStats(entityStats)
+
     item {
         entityStats.lastUpdated?.let { lastUpdated ->
             LastUpdatedText(
@@ -91,5 +71,67 @@ internal fun LazyListScope.addEntityStatsSection(
             )
         }
         Spacer(modifier = Modifier.padding(top = 16.dp))
+    }
+}
+
+private fun LazyListScope.additionalStats(entityStats: EntityStats) {
+    when (entityStats) {
+        is EntityStats.Default -> {
+            // nothing extra
+        }
+
+        is EntityStats.Release -> {
+            val statusCounts = entityStats.statusCounts
+            val totalCount = statusCounts.sumOf { it.count }.toFloat()
+            items(statusCounts) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 4.dp),
+                ) {
+                    Text(
+                        text = "${it.status.getDisplayString()}: ${it.count}",
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+
+                    LinearProgressIndicator(
+                        progress = { it.count / totalCount },
+                        modifier = Modifier
+                            .height(4.dp)
+                            .fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.primary,
+                        trackColor = Color.Transparent,
+                    )
+                }
+            }
+        }
+
+        is EntityStats.ReleaseGroup -> {
+            val typeCounts = entityStats.typeCounts
+            val totalCount = typeCounts.sumOf { it.count }.toFloat()
+            items(typeCounts) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 4.dp),
+                ) {
+                    Text(
+                        text = "${it.getDisplayString()}: ${it.count}",
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+
+                    if (typeCounts.isNotEmpty()) {
+                        LinearProgressIndicator(
+                            progress = { it.count / totalCount },
+                            modifier = Modifier
+                                .height(4.dp)
+                                .fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.primary,
+                            trackColor = Color.Transparent,
+                        )
+                    }
+                }
+            }
+        }
     }
 }

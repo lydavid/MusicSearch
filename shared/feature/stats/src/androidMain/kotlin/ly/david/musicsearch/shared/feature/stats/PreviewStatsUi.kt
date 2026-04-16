@@ -8,6 +8,8 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.release.ReleaseStatusCount
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
@@ -42,12 +44,12 @@ internal fun PreviewStatsUi() {
                         lastUpdated = Instant.parse("2025-02-26T07:42:20Z"),
                     ),
                     persistentHashMapOf(
-                        Tab.RELEASE_GROUPS to EntityStats(
+                        Tab.RELEASE_GROUPS to EntityStats.ReleaseGroup(
                             totalRemote = 280,
                             totalLocal = 279,
                             totalVisited = 100,
                             totalCollected = 23,
-                            releaseGroupTypeCounts = persistentListOf(
+                            typeCounts = persistentListOf(
                                 ReleaseGroupTypeCount(
                                     primaryType = ReleaseGroupPrimaryType.Album,
                                     count = 13,
@@ -63,10 +65,20 @@ internal fun PreviewStatsUi() {
                             ),
                             lastUpdated = Instant.parse("2025-03-26T06:42:20Z"),
                         ),
-                        Tab.RELEASES to EntityStats(
+                        Tab.RELEASES to EntityStats.Release(
                             totalRemote = 20,
                             totalLocal = 15,
                             totalVisited = 5,
+                            statusCounts = persistentListOf(
+                                ReleaseStatusCount(
+                                    status = ReleaseStatus.OFFICIAL,
+                                    count = 12,
+                                ),
+                                ReleaseStatusCount(
+                                    status = ReleaseStatus.PSEUDO_RELEASE,
+                                    count = 3,
+                                ),
+                            ),
                             lastUpdated = Instant.parse("2024-04-26T06:42:20Z"),
                         ),
                     ),

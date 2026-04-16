@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.repository.di
 import ly.david.musicsearch.data.repository.BrowseRemoteMetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.SpotifyHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreasListRepositoryImpl
@@ -34,7 +33,9 @@ import ly.david.musicsearch.data.repository.place.PlacesListRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingsListRepositoryImpl
 import ly.david.musicsearch.data.repository.relation.ObserveCountOfRelationshipsByEntityImpl
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.release.GetTrackIdsByReleaseImpl
+import ly.david.musicsearch.data.repository.release.ObserveCountOfEachStatusImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleasesListRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ObserveCountOfEachAlbumTypeImpl
@@ -81,6 +82,7 @@ import ly.david.musicsearch.shared.domain.recording.RecordingRepository
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveCountOfRelationshipsByEntity
+import ly.david.musicsearch.shared.domain.release.ObserveCountOfEachStatus
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
@@ -146,4 +148,5 @@ val repositoryDataModule = module {
     singleOf(::GetTracksByReleaseForListenSubmissionImpl) bind GetTracksByReleaseForListenSubmission::class
     singleOf(::ObserveLocalCountsOfAllEntitiesImpl) bind ObserveLocalCountsOfAllEntities::class
     singleOf(::ObserveCountOfRelationshipsByEntityImpl) bind ObserveCountOfRelationshipsByEntity::class
+    singleOf(::ObserveCountOfEachStatusImpl) bind ObserveCountOfEachStatus::class
 }

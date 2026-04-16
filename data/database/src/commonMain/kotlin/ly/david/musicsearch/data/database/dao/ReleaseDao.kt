@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import androidx.paging.PagingSource
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.collections.immutable.persistentListOf
@@ -24,6 +25,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.FormatTrackCount
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.release.ReleaseStatusCount
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import lydavidmusicsearchdatadatabase.Releases_by_entity
 import kotlin.time.Clock
@@ -467,4 +469,42 @@ class ReleaseDao(
             )
         },
     )
+
+    fun observeCountOfEachStatus(
+        browseMethod: BrowseMethod,
+    ): Flow<List<ReleaseStatusCount>> {
+        return when (browseMethod) {
+            is BrowseMethod.ByEntity -> {
+                if (browseMethod.entityType == MusicBrainzEntityType.COLLECTION) {
+                    transacter.getCountOfEachStatusByCollection(
+                        collectionId = browseMethod.entityId,
+                        mapper = ::mapToReleaseStatusWithCount,
+                    )
+                } else {
+                    transacter.getCountOfEachStatusByEntity(
+                        entityId = browseMethod.entityId,
+                        mapper = ::mapToReleaseStatusWithCount,
+                    )
+                }
+            }
+
+            BrowseMethod.All -> {
+                transacter.getCountOfEachStatus(
+                    mapper = ::mapToReleaseStatusWithCount,
+                )
+            }
+        }
+            .asFlow()
+            .mapToList(coroutineDispatchers.io)
+    }
+
+    private fun mapToReleaseStatusWithCount(
+        statusId: String,
+        count: Long,
+    ): ReleaseStatusCount {
+        return ReleaseStatusCount(
+            status = ReleaseStatus.fromId(statusId),
+            count = count.toInt(),
+        )
+    }
 }

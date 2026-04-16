@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.toPersistentHashMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
@@ -18,6 +19,7 @@ import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationStats
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCase
+import ly.david.musicsearch.shared.domain.release.ObserveCountOfEachStatus
 import ly.david.musicsearch.shared.domain.releasegroup.ObserveCountOfEachAlbumType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -32,6 +34,7 @@ internal class StatsPresenter(
     private val observeVisitedCount: ObserveVisitedCount,
     private val observeCollectedCount: ObserveCollectedCount,
     private val observeCountOfEachAlbumType: ObserveCountOfEachAlbumType,
+    private val observeCountOfEachStatus: ObserveCountOfEachStatus,
 ) : Presenter<StatsUiState> {
 
     @Composable
@@ -42,20 +45,11 @@ internal class StatsPresenter(
         val tabToStats = screen.tabs
             .filterNot { setOf(Tab.DETAILS, Tab.TRACKS).contains(it) }
             .associateWith { tab ->
-                val browseEntity = tab.toMusicBrainzEntityType() ?: return@associateWith EntityStats()
+                val browseEntity = tab.toMusicBrainzEntityType() ?: return@associateWith EntityStats.Default()
                 observeEntityStats(
                     browseEntityType = browseEntity,
                     browseMethod = browseMethod,
-                    countOfEachAlbumTypeFlow = {
-                        if (browseEntity == MusicBrainzEntityType.RELEASE_GROUP) {
-                            observeCountOfEachAlbumType(
-                                browseMethod = browseMethod,
-                            )
-                        } else {
-                            flowOf(listOf())
-                        }
-                    },
-                ).collectAsState(EntityStats()).value
+                ).collectAsState(EntityStats.Default()).value
             }.toPersistentHashMap()
 
         val stats = Stats(
@@ -69,61 +63,93 @@ internal class StatsPresenter(
         )
     }
 
+    @Suppress("LongMethod", "DestructuringDeclarationWithTooManyEntries")
     private fun observeEntityStats(
         browseEntityType: MusicBrainzEntityType,
         browseMethod: BrowseMethod,
-        countOfEachAlbumTypeFlow: () -> Flow<List<ReleaseGroupTypeCount>>,
     ): Flow<EntityStats> {
-        val browseRemoteMetadataFlow: Flow<BrowseRemoteMetadata?> = when (browseMethod) {
-            BrowseMethod.All -> {
-                flowOf(null)
-            }
-            is BrowseMethod.ByEntity -> {
-                browseRemoteMetadataRepository.observe(
-                    entityId = browseMethod.entityId,
-                    entity = browseEntityType,
-                )
-            }
-        }
-        val localCountFlow = observeLocalCount(
-            browseEntity = browseEntityType,
-            browseMethod = browseMethod,
-            query = "",
-        )
-        val visitedCountFlow = observeVisitedCount(
-            browseEntity = browseEntityType,
-            browseMethod = browseMethod,
-        )
-        val collectedCountFlow = observeCollectedCount(
-            browseEntity = browseEntityType,
-            browseMethod = browseMethod,
-        )
-        return combine(
+        val browseRemoteMetadataFlow = observeBrowseRemoteMetadata(browseEntityType, browseMethod)
+        val localCountFlow = observeLocalCount(browseEntity = browseEntityType, browseMethod = browseMethod, query = "")
+        val visitedCountFlow = observeVisitedCount(browseEntity = browseEntityType, browseMethod = browseMethod)
+        val collectedCountFlow = observeCollectedCount(browseEntity = browseEntityType, browseMethod = browseMethod)
+
+        val baseFlow = combine(
             browseRemoteMetadataFlow,
             localCountFlow,
             visitedCountFlow,
             collectedCountFlow,
-            countOfEachAlbumTypeFlow(),
-        ) { browseRemoteMetadata, localCount, visitedCount, collectedCount, releaseGroupTypeCount ->
-            EntityStats(
-                totalRemote = getTotalRemote(
-                    browseRemoteMetadata = browseRemoteMetadata,
-                    localCount = localCount,
-                ),
-                totalLocal = localCount,
-                totalVisited = visitedCount,
-                totalCollected = collectedCount,
-                releaseGroupTypeCounts = releaseGroupTypeCount.map {
-                    ReleaseGroupTypeCount(
-                        primaryType = it.primaryType,
-                        secondaryTypes = it.secondaryTypes,
-                        count = it.count,
+        ) { browseRemoteMetadata, localCount, visitedCount, collectedCount ->
+            BaseStats(browseRemoteMetadata, localCount, visitedCount, collectedCount)
+        }
+
+        return when (browseEntityType) {
+            MusicBrainzEntityType.RELEASE_GROUP -> {
+                combine(
+                    baseFlow,
+                    observeCountOfEachAlbumType(browseMethod),
+                ) { (metadata, local, visited, collected), typeCounts ->
+                    EntityStats.ReleaseGroup(
+                        totalRemote = getTotalRemote(metadata, local),
+                        totalLocal = local,
+                        totalVisited = visited,
+                        totalCollected = collected,
+                        lastUpdated = metadata?.lastUpdated,
+                        typeCounts = typeCounts.map {
+                            ReleaseGroupTypeCount(it.primaryType, it.secondaryTypes, it.count)
+                        }.toImmutableList(),
                     )
-                }.toImmutableList(),
-                lastUpdated = browseRemoteMetadata?.lastUpdated,
-            )
+                }
+            }
+
+            MusicBrainzEntityType.RELEASE -> {
+                combine(
+                    baseFlow,
+                    observeCountOfEachStatus(browseMethod),
+                ) { (metadata, local, visited, collected), statusCounts ->
+                    EntityStats.Release(
+                        totalRemote = getTotalRemote(metadata, local),
+                        totalLocal = local,
+                        totalVisited = visited,
+                        totalCollected = collected,
+                        lastUpdated = metadata?.lastUpdated,
+                        statusCounts = statusCounts
+                            .sortedBy { it.status?.ordinal }
+                            .toImmutableList(),
+                    )
+                }
+            }
+
+            else -> {
+                baseFlow.map { (metadata, local, visited, collected) ->
+                    EntityStats.Default(
+                        totalRemote = getTotalRemote(metadata, local),
+                        totalLocal = local,
+                        totalVisited = visited,
+                        totalCollected = collected,
+                        lastUpdated = metadata?.lastUpdated,
+                    )
+                }
+            }
         }
     }
+
+    private fun observeBrowseRemoteMetadata(
+        browseEntityType: MusicBrainzEntityType,
+        browseMethod: BrowseMethod,
+    ): Flow<BrowseRemoteMetadata?> = when (browseMethod) {
+        BrowseMethod.All -> flowOf(null)
+        is BrowseMethod.ByEntity -> browseRemoteMetadataRepository.observe(
+            entityId = browseMethod.entityId,
+            entity = browseEntityType,
+        )
+    }
+
+    private data class BaseStats(
+        val browseRemoteMetadata: BrowseRemoteMetadata?,
+        val localCount: Int,
+        val visitedCount: Int,
+        val collectedCount: Int,
+    )
 
     private fun getTotalRemote(
         browseRemoteMetadata: BrowseRemoteMetadata?,

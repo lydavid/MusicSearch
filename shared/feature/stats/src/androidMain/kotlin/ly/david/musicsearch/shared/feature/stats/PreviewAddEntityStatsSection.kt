@@ -19,7 +19,7 @@ internal fun PreviewAddEntityStatsSection() {
         Surface {
             LazyColumn {
                 addEntityStatsSection(
-                    entityStats = EntityStats(
+                    entityStats = EntityStats.Default(
                         totalLocal = 100,
                         totalRemote = 200,
                         totalVisited = 18,
@@ -41,12 +41,12 @@ internal fun PreviewAddEntityStatsSectionReleaseGroup() {
         Surface {
             LazyColumn {
                 addEntityStatsSection(
-                    entityStats = EntityStats(
+                    entityStats = EntityStats.ReleaseGroup(
                         totalRemote = 280,
                         totalLocal = 280,
                         totalVisited = 140,
                         totalCollected = 200,
-                        releaseGroupTypeCounts = persistentListOf(
+                        typeCounts = persistentListOf(
                             ReleaseGroupTypeCount(
                                 primaryType = ReleaseGroupPrimaryType.Album,
                                 count = 13,

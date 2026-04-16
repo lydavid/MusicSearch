@@ -13,6 +13,6 @@ enum class ReleaseStatus(val id: String) {
     companion object {
         private val ID_MAP = entries.associateBy { it.id }
 
-        fun fromId(id: String?): ReleaseStatus? = ID_MAP[id]
+        fun fromId(id: String): ReleaseStatus? = ID_MAP[id]
     }
 }
