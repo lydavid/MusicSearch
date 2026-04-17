@@ -1,0 +1,6 @@
+
+### Features
+
+* add release status stats
+* show number of items shown out of total as a header list item when filtering
+* support adding items to collections from search screen
