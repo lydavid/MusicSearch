@@ -34,7 +34,7 @@ jobs:
       contents: write
       id-token: write # This is required for requesting the JWT
     outputs:
-      status: ${{ steps.update-ios-version.outputs.has_new_version_name }}
+      has_new_version_name: ${{ steps.update-ios-version.outputs.has_new_version_name }}
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
