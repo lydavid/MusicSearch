@@ -140,7 +140,7 @@ internal class StatsPresenter(
         BrowseMethod.All -> flowOf(null)
         is BrowseMethod.ByEntity -> browseRemoteMetadataRepository.observe(
             entityId = browseMethod.entityId,
-            entity = browseEntityType,
+            browseEntityType = browseEntityType,
         )
     }
 

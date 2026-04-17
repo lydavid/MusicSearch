@@ -97,7 +97,7 @@ class CollectionRepositoryImpl(
     private fun getRemoteLinkedEntitiesCountByEntity(username: String): Int? {
         return browseEntityCountRepository.get(
             entityId = username,
-            entity = MusicBrainzEntityType.COLLECTION,
+            browseEntityType = MusicBrainzEntityType.COLLECTION,
         )?.remoteCount
     }
 

@@ -11,13 +11,19 @@ class BrowseRemoteMetadataRepositoryImpl(
 ) : BrowseRemoteMetadataRepository {
     override fun observe(
         entityId: String,
-        entity: MusicBrainzEntityType,
+        browseEntityType: MusicBrainzEntityType,
     ): Flow<BrowseRemoteMetadata?> =
-        browseRemoteMetadataDao.observe(entityId, entity)
+        browseRemoteMetadataDao.observe(
+            entityId = entityId,
+            browseEntity = browseEntityType,
+        )
 
     override fun get(
         entityId: String,
-        entity: MusicBrainzEntityType,
+        browseEntityType: MusicBrainzEntityType,
     ): BrowseRemoteMetadata? =
-        browseRemoteMetadataDao.get(entityId, entity)
+        browseRemoteMetadataDao.get(
+            entityId = entityId,
+            browseEntity = browseEntityType,
+        )
 }

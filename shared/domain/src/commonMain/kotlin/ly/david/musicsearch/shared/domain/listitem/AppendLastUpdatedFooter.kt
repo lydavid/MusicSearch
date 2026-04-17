@@ -23,7 +23,7 @@ fun <T : ListItemModel> Flow<PagingData<T>>.appendLastUpdatedFooter(
     return if (browseByEntity != null) {
         val metadataFlow = browseRemoteMetadataRepository.observe(
             entityId = browseByEntity.entityId,
-            entity = browseEntity,
+            browseEntityType = browseEntity,
         )
 
         combine(this, metadataFlow) { pagingData, browseRemoteMetadata ->

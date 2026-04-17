@@ -6,11 +6,11 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 interface BrowseRemoteMetadataRepository {
     fun observe(
         entityId: String,
-        entity: MusicBrainzEntityType,
+        browseEntityType: MusicBrainzEntityType,
     ): Flow<BrowseRemoteMetadata?>
 
     fun get(
         entityId: String,
-        entity: MusicBrainzEntityType,
+        browseEntityType: MusicBrainzEntityType,
     ): BrowseRemoteMetadata?
 }
