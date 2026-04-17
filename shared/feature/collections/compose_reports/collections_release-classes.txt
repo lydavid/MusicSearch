@@ -51,6 +51,7 @@ stable class ly.david.musicsearch.shared.feature.collections.list.CollectionList
 }
 stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
   stable val showLocal: Boolean
   stable val showRemote: Boolean
   stable val sortOption: CollectionSortOption
@@ -100,6 +101,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionPr
   unstable val getMusicBrainzUrl: GetMusicBrainzUrl
   unstable val collectionRepository: CollectionRepository
   unstable val externalScope: CoroutineScope
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiState {
@@ -112,6 +114,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUi
   stable val selectionState: SelectionState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val scrollToHideTopAppBar: Boolean
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.NavigateUp {

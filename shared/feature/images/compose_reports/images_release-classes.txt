@@ -40,6 +40,7 @@ stable class ly.david.musicsearch.shared.feature.images.ImagesUiState {
   stable val title: ImagesTitle
   stable val subtitle: String
   stable val linkUrl: String
+  stable val scrollToHideTopAppBar: Boolean
   stable val numberOfImagesPerRow: Int
   stable val imagesGridPaddingDp: Int
   unstable val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadataWithEntity>>

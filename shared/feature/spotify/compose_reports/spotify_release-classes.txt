@@ -30,10 +30,12 @@ stable class musicsearch.shared.feature.spotify.generated.resources.Res {
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryPresenter {
   stable val navigator: Navigator
   unstable val spotifyHistoryRepository: SpotifyHistoryRepository
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SpotifyUiEvent, Unit>

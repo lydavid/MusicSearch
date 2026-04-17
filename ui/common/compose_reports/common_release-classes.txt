@@ -129,8 +129,9 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortR
 }
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
-  stable val count: Int
   stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
   unstable val sortOption: SortOption
   stable val eventSink: Function1<EntitiesListUiEvent, Unit>
 }
@@ -179,6 +180,8 @@ runtime class ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems {
 runtime class ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState {
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
   stable val showMoreInfo: Boolean
   <runtime stability> = Runtime(LazyPagingItems)
 }
@@ -190,11 +193,11 @@ stable class ly.david.musicsearch.ui.common.recording.RecordingsListPresenter {
 }
 stable class ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl {
   unstable val getEntityRelationships: GetEntityRelationships
+  unstable val observeCountOfRelationshipsByEntity: ObserveCountOfRelationshipsByEntity
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.GetRelations {
-  stable val byEntityId: String
-  stable val byEntity: MusicBrainzEntityType
+  runtime val byEntity: MusicBrainzEntity
   unstable val relatedEntities: Set<MusicBrainzEntityType>
   <runtime stability> = Stable
 }
@@ -205,6 +208,8 @@ stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.UpdateQuer
 stable class ly.david.musicsearch.ui.common.relation.RelationsUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
   stable val eventSink: Function1<RelationsUiEvent, Unit>
 }
 stable class ly.david.musicsearch.ui.common.release.ReleasesListPresenter {

@@ -111,6 +111,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter 
   unstable val wikimediaRepository: WikimediaRepository
   unstable val collectionRepository: CollectionRepository
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
@@ -128,6 +129,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
   unstable val detailsTabUiState: DetailsTabUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val scrollToHideTopAppBar: Boolean
   stable val eventSink: Function1<DetailsUiEvent, Unit>
   <runtime stability> = Stable
 }

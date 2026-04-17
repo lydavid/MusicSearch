@@ -13,15 +13,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: NowPlayingHistoryUiState
   stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi(
-  lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable modifier: Modifier? = @static <expression>
-  stable lazyListState: LazyListState? = @dynamic <expression>
-  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
-  stable onBack: Function0<Unit>? = @static <expression>
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
-  stable onDelete: Function1<String, Unit>? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable filterText: String

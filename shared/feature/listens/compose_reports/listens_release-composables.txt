@@ -64,6 +64,7 @@ fun ly.david.musicsearch.shared.feature.listens.getMessage(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensContent(
   stable noUsernameSet: Boolean
   stable innerPadding: PaddingValues
+  stable scrollBehavior: TopAppBarScrollBehavior
   stable state: ListensUiState
   stable filterText: String
   stable eventSink: Function1<ListensUiEvent, Unit>

@@ -18,16 +18,33 @@ stable class musicsearch.shared.feature.stats.generated.resources.Res {
 }
 stable class ly.david.musicsearch.shared.feature.stats.Stats {
   runtime val relationStats: RelationStats
-  runtime val tabToStats: ImmutableMap<Tab, EntityStats>
+  stable val tabToStats: ImmutableMap<Tab, EntityStats>
 }
-runtime class ly.david.musicsearch.shared.feature.stats.EntityStats {
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.Default {
   stable val totalRemote: Int?
   stable val totalLocal: Int
   stable val totalVisited: Int
   stable val totalCollected: Int
-  runtime val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
   stable val lastUpdated: Instant?
-  <runtime stability> = Runtime(ReleaseGroupTypeCount)
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.ReleaseGroup {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  stable val totalVisited: Int
+  stable val totalCollected: Int
+  stable val lastUpdated: Instant?
+  runtime val typeCounts: ImmutableList<ReleaseGroupTypeCount>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.Release {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  stable val totalVisited: Int
+  stable val totalCollected: Int
+  stable val lastUpdated: Instant?
+  runtime val statusCounts: ImmutableList<ReleaseStatusCount>
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.stats.StatsPresenter {
   stable val screen: StatsScreen
@@ -37,6 +54,7 @@ stable class ly.david.musicsearch.shared.feature.stats.StatsPresenter {
   unstable val observeVisitedCount: ObserveVisitedCount
   unstable val observeCollectedCount: ObserveCollectedCount
   unstable val observeCountOfEachAlbumType: ObserveCountOfEachAlbumType
+  unstable val observeCountOfEachStatus: ObserveCountOfEachStatus
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.stats.StatsUiState {

@@ -1,7 +1,7 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchResults()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchHistory()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewRecentSearchesHeader()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchHistoryListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchResults()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.PreviewSearchUiSearchHistory()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.RecentSearchesHeader(
   stable onDeleteAllHistory: Function0<Unit>? = @static <expression>
 )
@@ -18,17 +18,19 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static <expression>
   stable onDeleteAllHistory: Function0<Unit>? = @static <expression>
 )
-open fun ly.david.musicsearch.shared.feature.search.SearchPresenter.present(
+open scheme("[presenter]") fun ly.david.musicsearch.shared.feature.search.SearchPresenter.present(
   stable <this>: SearchPresenter
 ): SearchUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchResultsUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState? = @dynamic <expression>
+  stable onEditCollectionClick: Function1<String, Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.ListItemUi(
   unstable listItemModel: ListItemModel?
   stable filterText: String? = @static ""
+  stable onEditCollectionClick: Function1<String, Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchUi(
@@ -37,6 +39,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchUiContent(
   stable state: SearchUiState
+  stable snackbarHostState: SnackbarHostState
   stable modifier: Modifier? = @static <expression>
   stable eventSink: Function1<SearchUiEvent, Unit>? = @static <expression>
 )

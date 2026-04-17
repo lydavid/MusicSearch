@@ -23,6 +23,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensPresenter {
   unstable val listensListRepository: ListensListRepository
   unstable val listenBrainzRepository: ListenBrainzRepository
   unstable val externalScope: CoroutineScope
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
@@ -37,6 +38,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   stable val lazyListState: LazyListState
   unstable val listensPagingDataFlow: Flow<PagingData<Identifiable>>
   stable val browsingUserIsSameAsLoggedInUser: Boolean
+  stable val scrollToHideTopAppBar: Boolean
   stable val eventSink: Function1<ListensUiEvent, Unit>
 }
 unstable class ly.david.musicsearch.shared.feature.listens.FacetsUiState {

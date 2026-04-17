@@ -27,6 +27,7 @@ stable class ly.david.musicsearch.shared.feature.history.internal.HistoryPresent
 }
 stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
   stable val sortOption: HistorySortOption
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState

@@ -20,6 +20,7 @@ stable class ly.david.musicsearch.share.feature.database.DatabasePresenter {
   stable val navigator: Navigator
   unstable val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
   unstable val observeLocalCountsOfAllEntities: ObserveLocalCountsOfAllEntities
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.share.feature.database.DatabaseUiState {
@@ -27,6 +28,7 @@ stable class ly.david.musicsearch.share.feature.database.DatabaseUiState {
   stable val lazyListState: LazyListState
   stable val countOfAllImages: Long?
   stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Long>
+  stable val scrollToHideTopAppBar: Boolean
   stable val eventSink: Function1<DatabaseUiEvent, Unit>
 }
 stable class ly.david.musicsearch.share.feature.database.DatabaseUiEvent.GoToScreen {
@@ -38,11 +40,13 @@ stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPre
   stable val navigator: Navigator
   stable val allEntitiesListPresenter: AllEntitiesListPresenter
   stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiState {
   stable val subtitle: String
   stable val entityType: MusicBrainzEntityType
+  stable val scrollToHideTopAppBar: Boolean
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
   stable val allEntitiesListUiState: AllEntitiesListUiState

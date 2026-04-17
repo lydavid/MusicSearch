@@ -18,17 +18,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: SpotifyUiState
   stable modifier: Modifier? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryUi(
-  lazyPagingItems: LazyPagingItems<ListItemModel>
-  stable modifier: Modifier? = @static <expression>
-  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
-  stable lazyListState: LazyListState? = @dynamic <expression>
-  stable onBack: Function0<Unit>? = @static <expression>
-  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
-  stable onMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
-  stable onUndoMarkForDeletion: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
-  stable onDelete: Function1<SpotifyHistoryListItemModel, Unit>? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryContent(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable filterText: String

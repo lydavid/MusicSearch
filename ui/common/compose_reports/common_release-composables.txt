@@ -466,14 +466,20 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   unstable requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic <expression>
   stable onLogin: Function0<Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState(
+  stable <this>: AllEntitiesListUiState
+  stable tab: Tab?
+  entitiesLazyPagingItems: EntitiesLazyPagingItems
+): EntitiesPagingListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.FooterLoadingIndicator()
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [_]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [_], [_]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
   lazyPagingItems: LazyPagingItems<T>
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable customNoResultsText: String? = @static ""
   stable keyed: Boolean = @static false
   stable onLogin: Function0<Unit>? = @static <expression>
+  stable header: Function2<Composer, Int, Unit>? = @static null
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.AppendFooter(
@@ -538,6 +544,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.release.getDisplayString(
+  stable <this>: ReleaseStatus?
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem(
   releaseGroup: ReleaseGroupListItemModel
   stable filterText: String
@@ -558,6 +567,13 @@ fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
 fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
   stable <this>: ReleaseGroupSecondaryType
 ): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.scaffold.AppScaffold(
+  stable scrollToHideTopAppBar: Boolean
+  stable topBar: Function3<TopAppBarScrollBehavior, Composer, Int, Unit>
+  stable snackbarHostState: SnackbarHostState
+  stable modifier: Modifier? = @static <expression>
+  stable content: Function4<PaddingValues, TopAppBarScrollBehavior, Composer, Int, Unit>
+)
 open fun ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit(
   stable oldId: String
   stable mbid: String?

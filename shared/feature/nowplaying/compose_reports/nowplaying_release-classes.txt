@@ -26,10 +26,12 @@ stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPre
   stable val navigator: Navigator
   runtime val getNowPlayingHistory: GetNowPlayingHistory
   runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
+  unstable val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
