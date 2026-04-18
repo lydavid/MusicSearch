@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 class EventsListRepositoryImpl(
@@ -51,56 +52,53 @@ class EventsListRepositoryImpl(
     }
 
     override fun deleteEntityLinksByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
-                entityId = entityId,
+                entityId = entity.id,
                 browseEntity = browseEntity,
             )
 
-            when (entity) {
+            when (entity.type) {
                 MusicBrainzEntityType.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entity.id)
                 }
 
                 else -> {
-                    eventDao.deleteEventLinksByEntity(entityId)
+                    eventDao.deleteEventLinksByEntity(entity.id)
                 }
             }
         }
     }
 
     override suspend fun browseEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseEventsResponse {
         return browseApi.browseEventsByEntity(
-            entityId = entityId,
-            entity = entity,
+            entityId = entity.id,
+            entity = entity.type,
             offset = offset,
         )
     }
 
     override fun insertAll(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         musicBrainzModels: List<EventMusicBrainzNetworkModel>,
     ) {
         eventDao.upsertAll(musicBrainzModels)
-        when (entity) {
+        when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
-                    collectionId = entityId,
+                    collectionId = entity.id,
                     entityIds = musicBrainzModels.map { event -> event.id },
                 )
             }
 
             else -> {
                 eventDao.insertEventsByEntity(
-                    entityId = entityId,
+                    entityId = entity.id,
                     eventIds = musicBrainzModels.map { event -> event.id },
                 )
             }
@@ -108,16 +106,15 @@ class EventsListRepositoryImpl(
     }
 
     override fun getLocalLinkedEntitiesCountByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ): Int {
-        return when (entity) {
+        return when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
-                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+                collectionEntityDao.getCountOfEntitiesByCollection(entity.id)
             }
 
             else -> {
-                eventDao.getCountOfEventsByEntity(entityId)
+                eventDao.getCountOfEventsByEntity(entity.id)
             }
         }
     }

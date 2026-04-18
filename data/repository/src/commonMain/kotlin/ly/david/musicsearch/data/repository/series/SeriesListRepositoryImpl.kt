@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 
@@ -51,66 +52,62 @@ class SeriesListRepositoryImpl(
     }
 
     override fun deleteEntityLinksByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
-                entityId = entityId,
+                entityId = entity.id,
                 browseEntity = browseEntity,
             )
 
-            when (entity) {
+            when (entity.type) {
                 MusicBrainzEntityType.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entity.id)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> error(browseEntitiesNotSupported(entity.type))
             }
         }
     }
 
     override suspend fun browseEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseSeriesResponse {
-        return when (entity) {
+        return when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
                 browseApi.browseSeriesByCollection(
-                    collectionId = entityId,
+                    collectionId = entity.id,
                     offset = offset,
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> error(browseEntitiesNotSupported(entity.type))
         }
     }
 
     override fun insertAll(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         musicBrainzModels: List<SeriesMusicBrainzNetworkModel>,
     ) {
         seriesDao.upsertAll(musicBrainzModels)
-        when (entity) {
+        when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
-                    collectionId = entityId,
+                    collectionId = entity.id,
                     entityIds = musicBrainzModels.map { series -> series.id },
                 )
             }
 
             else -> {
-                error(browseEntitiesNotSupported(entity))
+                error(browseEntitiesNotSupported(entity.type))
             }
         }
     }
 
     override fun getLocalLinkedEntitiesCountByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ): Int {
-        return collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+        return collectionEntityDao.getCountOfEntitiesByCollection(entity.id)
     }
 }

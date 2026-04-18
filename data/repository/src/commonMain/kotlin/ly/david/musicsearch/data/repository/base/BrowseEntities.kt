@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMe
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUriPlural
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
@@ -37,8 +38,10 @@ abstract class BrowseEntities<
     ): Flow<PagingData<LI>> {
         val remoteMediator = if (browseMethod is BrowseMethod.ByEntity) {
             getRemoteMediator(
-                entityId = browseMethod.entityId,
-                entity = browseMethod.entityType,
+                entity = MusicBrainzEntity(
+                    id = browseMethod.entityId,
+                    type = browseMethod.entityType,
+                ),
                 now = now,
             )
         } else {
@@ -57,26 +60,22 @@ abstract class BrowseEntities<
     }
 
     private fun getRemoteMediator(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         now: Instant,
     ) = BrowseEntityRemoteMediator<LI>(
-        getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entityId) },
+        getRemoteEntityCount = { getRemoteLinkedEntitiesCountByEntity(entity.id) },
         getLocalEntityCount = {
             getLocalLinkedEntitiesCountByEntity(
-                entityId = entityId,
                 entity = entity,
             )
         },
         deleteLocalEntity = {
             deleteEntityLinksByEntity(
-                entityId = entityId,
                 entity = entity,
             )
         },
         browseLinkedEntitiesAndStore = { offset ->
             browseLinkedEntitiesAndStore(
-                entityId = entityId,
                 entity = entity,
                 nextOffset = offset,
                 now = now,
@@ -91,13 +90,11 @@ abstract class BrowseEntities<
         )?.remoteCount
 
     abstract fun getLocalLinkedEntitiesCountByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ): Int
 
     abstract fun deleteEntityLinksByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     )
 
     abstract fun getLinkedEntitiesPagingSource(
@@ -106,13 +103,11 @@ abstract class BrowseEntities<
     ): PagingSource<Int, LI>
 
     private suspend fun browseLinkedEntitiesAndStore(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         nextOffset: Int,
         now: Instant,
     ): Int {
         val response = browseEntitiesByEntity(
-            entityId = entityId,
             entity = entity,
             offset = nextOffset,
         )
@@ -120,7 +115,7 @@ abstract class BrowseEntities<
 
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.upsert(
-                entityId = entityId,
+                entityId = entity.id,
                 browseEntity = browseEntity,
                 remoteCount = response.count,
                 lastUpdated = now,
@@ -128,7 +123,6 @@ abstract class BrowseEntities<
 
             // Make sure to insert the entities before inserting the aliases.
             insertAll(
-                entityId = entityId,
                 entity = entity,
                 musicBrainzModels = musicBrainzModels,
             )
@@ -142,14 +136,12 @@ abstract class BrowseEntities<
     }
 
     abstract suspend fun browseEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         offset: Int,
     ): B
 
     abstract fun insertAll(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         musicBrainzModels: List<MB>,
     )
 

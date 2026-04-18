@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
@@ -87,77 +88,73 @@ class ReleaseGroupsListRepositoryImpl(
     }
 
     override fun deleteEntityLinksByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ) {
         browseRemoteMetadataDao.withTransaction {
             browseRemoteMetadataDao.deleteBrowseRemoteCountByEntity(
-                entityId = entityId,
+                entityId = entity.id,
                 browseEntity = browseEntity,
             )
 
-            when (entity) {
+            when (entity.type) {
                 MusicBrainzEntityType.ARTIST -> {
-                    releaseGroupDao.deleteReleaseGroupLinksByEntity(entityId)
+                    releaseGroupDao.deleteReleaseGroupLinksByEntity(entity.id)
                 }
 
                 MusicBrainzEntityType.COLLECTION -> {
-                    collectionEntityDao.deleteAllFromCollection(entityId)
+                    collectionEntityDao.deleteAllFromCollection(entity.id)
                 }
 
-                else -> error(browseEntitiesNotSupported(entity))
+                else -> error(browseEntitiesNotSupported(entity.type))
             }
         }
     }
 
     override suspend fun browseEntitiesByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseReleaseGroupsResponse {
         return browseApi.browseReleaseGroupsByEntity(
-            entityId = entityId,
-            entity = entity,
+            entityId = entity.id,
+            entity = entity.type,
             offset = offset,
         )
     }
 
     override fun insertAll(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
         musicBrainzModels: List<ReleaseGroupMusicBrainzNetworkModel>,
     ) {
         releaseGroupDao.insertAllReleaseGroups(musicBrainzModels)
-        when (entity) {
+        when (entity.type) {
             MusicBrainzEntityType.ARTIST -> {
                 releaseGroupDao.insertReleaseGroupsByEntity(
-                    entityId = entityId,
+                    entityId = entity.id,
                     releaseGroupIds = musicBrainzModels.map { releaseGroup -> releaseGroup.id },
                 )
             }
 
             MusicBrainzEntityType.COLLECTION -> {
                 collectionEntityDao.addAllToCollection(
-                    collectionId = entityId,
+                    collectionId = entity.id,
                     entityIds = musicBrainzModels.map { releaseGroup -> releaseGroup.id },
                 )
             }
 
-            else -> error(browseEntitiesNotSupported(entity))
+            else -> error(browseEntitiesNotSupported(entity.type))
         }
     }
 
     override fun getLocalLinkedEntitiesCountByEntity(
-        entityId: String,
-        entity: MusicBrainzEntityType,
+        entity: MusicBrainzEntity,
     ): Int {
-        return when (entity) {
+        return when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
-                collectionEntityDao.getCountOfEntitiesByCollection(entityId)
+                collectionEntityDao.getCountOfEntitiesByCollection(entity.id)
             }
 
             else -> {
-                releaseGroupDao.getCountOfReleaseGroupsByArtist(entityId)
+                releaseGroupDao.getCountOfReleaseGroupsByArtist(entity.id)
             }
         }
     }
