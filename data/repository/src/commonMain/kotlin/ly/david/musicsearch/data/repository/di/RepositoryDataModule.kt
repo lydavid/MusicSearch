@@ -45,6 +45,7 @@ import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesListRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
+import ly.david.musicsearch.data.repository.url.LookupUrlRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorksListRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaRepository
@@ -94,6 +95,7 @@ import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
+import ly.david.musicsearch.shared.domain.url.LookupUrlRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.koin.core.module.dsl.singleOf
@@ -149,4 +151,5 @@ val repositoryDataModule = module {
     singleOf(::ObserveLocalCountsOfAllEntitiesImpl) bind ObserveLocalCountsOfAllEntities::class
     singleOf(::ObserveCountOfRelationshipsByEntityImpl) bind ObserveCountOfRelationshipsByEntity::class
     singleOf(::ObserveCountOfEachStatusImpl) bind ObserveCountOfEachStatus::class
+    singleOf(::LookupUrlRepositoryImpl) bind LookupUrlRepository::class
 }

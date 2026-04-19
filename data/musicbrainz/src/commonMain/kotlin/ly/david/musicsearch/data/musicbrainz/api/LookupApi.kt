@@ -16,7 +16,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNet
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.UrlMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.network.relatableEntities
+import ly.david.musicsearch.shared.domain.network.resourceUri
 
 private const val RECORDING_REL = "recording-rels"
 const val URL_REL = "url-rels"
@@ -101,6 +105,10 @@ interface LookupApi {
         workId: String,
         include: String? = "$URL_REL+$ALIASES+$RECORDING_REL",
     ): WorkMusicBrainzNetworkModel
+
+    suspend fun lookupUrl(
+        url: String,
+    ): UrlMusicBrainzNetworkModel
 }
 
 interface LookupApiImpl : LookupApi {
@@ -250,4 +258,29 @@ interface LookupApiImpl : LookupApi {
             }
         }.body()
     }
+
+    // https://musicbrainz.org/doc/MusicBrainz_API#url_(by_text)
+    // example url linked to multiple entities: https://musicbrainz.org/ws/2/url?limit=1&fmt=json&inc=artist-rels+release-rels+recording-rels&resource=https://open.spotify.com/artist/7wcH6naXfssACcXRregV1H
+    override suspend fun lookupUrl(
+        url: String,
+    ): UrlMusicBrainzNetworkModel {
+        return httpClient.get {
+            url {
+                appendPathSegments("url")
+                parameter("limit", 1)
+                parameter(
+                    key = "inc",
+                    value = relatableEntities
+                        .minus(MusicBrainzEntityType.URL)
+                        .asRelationshipParameters,
+                )
+                parameter("resource", url)
+            }
+        }.body()
+    }
 }
+
+val Iterable<MusicBrainzEntityType>.asRelationshipParameters: String
+    get() {
+        return this.joinToString(separator = "+") { "${it.resourceUri}-rels" }
+    }

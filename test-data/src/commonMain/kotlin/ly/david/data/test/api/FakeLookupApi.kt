@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNet
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.UrlMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 
 open class FakeLookupApi : LookupApi {
@@ -133,5 +134,9 @@ open class FakeLookupApi : LookupApi {
             id = "",
             name = "",
         )
+    }
+
+    override suspend fun lookupUrl(url: String): UrlMusicBrainzNetworkModel {
+        return UrlMusicBrainzNetworkModel()
     }
 }

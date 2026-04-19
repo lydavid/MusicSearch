@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,11 +28,15 @@ import ly.david.musicsearch.ui.common.ResourceDropdownPicker
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.Link
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.LookupUrlScreen
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.clearSearch
+import musicsearch.ui.common.generated.resources.lookupUrl
 import musicsearch.ui.common.generated.resources.search
 import musicsearch.ui.common.generated.resources.searchMusicbrainz
 import org.jetbrains.compose.resources.stringResource
@@ -53,6 +58,21 @@ internal fun SearchUi(
                 showBackButton = false,
                 title = stringResource(Res.string.searchMusicbrainz),
                 scrollBehavior = scrollBehavior,
+                overflowDropdownMenuItems = {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(Res.string.lookupUrl)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = CustomIcons.Link,
+                                contentDescription = null,
+                            )
+                        },
+                        onClick = {
+                            state.eventSink(SearchUiEvent.GoToScreen(LookupUrlScreen()))
+                            closeMenu()
+                        },
+                    )
+                },
             )
         },
     ) { innerPadding, scrollBehavior ->
@@ -166,9 +186,11 @@ private fun SearchUiContent(
                     focusManager.clearFocus()
                     eventSink(SearchUiEvent.RecordSearch)
                     eventSink(
-                        SearchUiEvent.ClickItem(
-                            entityType = entity,
-                            id = id,
+                        SearchUiEvent.GoToScreen(
+                            DetailsScreen(
+                                entityType = entity,
+                                id = id,
+                            ),
                         ),
                     )
                 },

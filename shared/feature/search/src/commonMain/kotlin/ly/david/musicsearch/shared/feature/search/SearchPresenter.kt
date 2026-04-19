@@ -18,6 +18,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHistoryListItemModel
@@ -29,7 +30,6 @@ import ly.david.musicsearch.shared.domain.search.history.usecase.RecordSearchHis
 import ly.david.musicsearch.shared.domain.search.results.usecase.GetSearchResults
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
-import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 
 internal class SearchPresenter(
@@ -105,13 +105,10 @@ internal class SearchPresenter(
                     )
                 }
 
-                is SearchUiEvent.ClickItem -> {
+                is SearchUiEvent.GoToScreen -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            DetailsScreen(
-                                entityType = event.entityType,
-                                id = event.id,
-                            ),
+                            screen = event.screen,
                         ),
                     )
                 }
@@ -151,8 +148,7 @@ internal sealed interface SearchUiEvent : CircuitUiEvent {
     data object RecordSearch : SearchUiEvent
     data class DeleteSearchHistory(val item: SearchHistoryListItemModel) : SearchUiEvent
     data object DeleteAllEntitySearchHistory : SearchUiEvent
-    data class ClickItem(
-        val entityType: MusicBrainzEntityType,
-        val id: String,
+    data class GoToScreen(
+        val screen: Screen,
     ) : SearchUiEvent
 }

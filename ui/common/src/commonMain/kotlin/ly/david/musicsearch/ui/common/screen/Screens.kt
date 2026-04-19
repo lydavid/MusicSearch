@@ -18,6 +18,11 @@ data class SearchScreen(
 ) : Screen
 
 @Parcelize
+data class LookupUrlScreen(
+    val query: String? = null,
+) : Screen
+
+@Parcelize
 data class ArtistCollaborationScreen(
     val id: String,
     val name: String,

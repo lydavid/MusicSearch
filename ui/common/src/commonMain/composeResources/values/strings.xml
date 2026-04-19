@@ -313,7 +313,6 @@
     <string name="local">Local</string>
     <string name="remote">Remote</string>
     <string name="sortX">Sort: %1$s</string>
-    <string name="foundXResults">Found %1$d results.</string>
     <string name="endOfSearchResults">End of search results.</string>
     <string name="addXCountToCollection">Add %1$d to collection</string>
     <string name="tapRelationshipsTab">Tap Relationships tab to see more stats.</string>
@@ -321,4 +320,9 @@
     <string name="scrollToHideTopAppBar">Scroll to hide top app bar</string>
     <string name="showingXOfY">Showing %1$d of %2$d.</string>
     <string name="unknown">Unknown</string>
+    <plurals name="foundXResults">
+        <item quantity="one">Found %1$d result.</item>
+        <item quantity="other">Found %1$d results.</item>
+    </plurals>
+    <string name="lookupUrl">Lookup URL</string>
 </resources>

@@ -43,6 +43,7 @@ import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.endOfSearchResults
 import musicsearch.ui.common.generated.resources.foundXResults
 import musicsearch.ui.common.generated.resources.noResultsFoundSearch
+import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -79,7 +80,11 @@ private fun ListItemUi(
                     .padding(16.dp)
                     .fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium,
-                text = stringResource(Res.string.foundXResults, listItemModel.remoteCount),
+                text = pluralStringResource(
+                    resource = Res.plurals.foundXResults,
+                    quantity = listItemModel.remoteCount,
+                    listItemModel.remoteCount,
+                ),
             )
         }
 

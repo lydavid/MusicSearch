@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -46,10 +47,12 @@ fun RelationListItem(
         },
         headlineContent = {
             Column {
-                Text(
-                    text = "${relation.type}:",
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
+                relation.type.ifNotEmpty { type ->
+                    Text(
+                        text = "$type:",
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
 
                 HighlightableText(
                     text = relation.getAnnotatedName(),
@@ -81,9 +84,10 @@ fun RelationListItem(
             .combinedClickable(
                 onClick = {
                     val entity = relation.linkedEntity
+                    val entityId = relation.linkedEntityId
                     onItemClick(
                         entity,
-                        relation.linkedEntityId,
+                        entityId,
                     )
                 },
                 onLongClick = {

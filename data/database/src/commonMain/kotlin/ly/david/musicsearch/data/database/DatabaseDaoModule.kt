@@ -40,6 +40,7 @@ import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.SpotifyHistoryDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.database.dao.UrlDao
 import ly.david.musicsearch.data.database.dao.VisitedStatsDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -92,4 +93,5 @@ val databaseDaoModule = module {
     singleOf(::VisitedStatsDao)
     singleOf(::ListenDaoImpl) bind ListenDao::class
     singleOf(::AllEntitiesDao)
+    singleOf(::UrlDao)
 }

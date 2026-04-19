@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.asRelationshipParameters
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -22,7 +23,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
@@ -175,7 +175,7 @@ class RelationRepositoryImpl(
         entityId: String,
         relatedEntities: Set<MusicBrainzEntityType>,
     ): List<RelationMusicBrainzModel>? {
-        val include = relatedEntities.joinToString(separator = "+") { "${it.resourceUri}-rels" }
+        val include = relatedEntities.asRelationshipParameters
         return when (entityType) {
             MusicBrainzEntityType.AREA -> {
                 lookupApi.lookupArea(

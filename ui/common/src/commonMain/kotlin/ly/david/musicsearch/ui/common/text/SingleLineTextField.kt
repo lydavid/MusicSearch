@@ -30,6 +30,25 @@ fun SingleLineTextField(
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    LimitedLinesTextField(
+        maxLines = 1,
+        text = text,
+        textLabel = textLabel,
+        textHint = textHint,
+        onTextChange = onTextChange,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun LimitedLinesTextField(
+    maxLines: Int,
+    text: String,
+    textLabel: String?,
+    textHint: String?,
+    onTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val focusRequester = remember { FocusRequester() }
     TextField(
         modifier = modifier
@@ -41,7 +60,7 @@ fun SingleLineTextField(
             {
                 Text(
                     text = textLabel,
-                    maxLines = 1,
+                    maxLines = maxLines,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
@@ -50,13 +69,13 @@ fun SingleLineTextField(
             {
                 Text(
                     text = textHint,
-                    maxLines = 1,
+                    maxLines = maxLines,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
         },
-        maxLines = 1,
-        singleLine = true,
+        maxLines = maxLines,
+        singleLine = maxLines == 1,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         trailingIcon = {
             if (text.isEmpty()) {

@@ -314,7 +314,6 @@
     <string name="local">Locale</string>
     <string name="remote">Distant</string>
     <string name="sortX">Tri : %1$s</string>
-    <string name="foundXResults">%1$d résultats trouvés.</string>
     <string name="endOfSearchResults">Fin des résultats de recherche.</string>
     <string name="addXCountToCollection">Ajouter %1$d à la collection</string>
     <string name="tapRelationshipsTab">Appuyez sur l'onglet « Relations » pour afficher davantage de statistiques.</string>

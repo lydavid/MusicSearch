@@ -1,0 +1,16 @@
+getAdditionalInfoForEntity:
+SELECT
+  GROUP_CONCAT(all_primary_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(all_primary_alias.locale, CHAR(9)) AS alias_locales,
+  mi.thumbnail_url,
+  mi.id AS imageId,
+  mi.source,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = entity.id
+  ) AS visited
+FROM (
+  SELECT CAST(:entityId AS TEXT) AS id
+) entity
+LEFT OUTER JOIN all_primary_alias ON all_primary_alias.mbid = entity.id
+LEFT OUTER JOIN mbid_image mi ON mi.mbid = entity.id
+GROUP BY all_primary_alias.mbid;

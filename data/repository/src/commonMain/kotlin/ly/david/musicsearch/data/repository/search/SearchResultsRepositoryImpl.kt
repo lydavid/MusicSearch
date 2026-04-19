@@ -22,13 +22,13 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
-import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.data.repository.internal.paging.insertHeaderItemForNonEmpty
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.Footer
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SearchHeader
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.paging.insertFooterItemForNonEmpty
 import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 
