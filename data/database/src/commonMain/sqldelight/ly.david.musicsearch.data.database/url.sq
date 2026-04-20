@@ -14,3 +14,75 @@ FROM (
 LEFT OUTER JOIN all_primary_alias ON all_primary_alias.mbid = entity.id
 LEFT OUTER JOIN mbid_image mi ON mi.mbid = entity.id
 GROUP BY all_primary_alias.mbid;
+
+getEntityInfoForUrl:
+SELECT
+  relation.entity_id,
+  COALESCE(
+    area.name,
+    artist.name,
+    event.name,
+    genre.name,
+    instrument.name,
+    label.name,
+    place.name,
+    recording.name,
+    `release`.name,
+    release_group.name,
+    series.name,
+    work.name
+  ) AS name,
+  COALESCE(
+    area.disambiguation,
+    artist.disambiguation,
+    event.disambiguation,
+    genre.disambiguation,
+    instrument.disambiguation,
+    label.disambiguation,
+    place.disambiguation,
+    recording.disambiguation,
+    `release`.disambiguation,
+    release_group.disambiguation,
+    series.disambiguation,
+    work.disambiguation
+  ) AS disambiguation,
+  CASE
+    WHEN area.name IS NOT NULL THEN 'area'
+    WHEN artist.name IS NOT NULL THEN 'artist'
+    WHEN event.name IS NOT NULL THEN 'event'
+    WHEN genre.name IS NOT NULL THEN 'genre'
+    WHEN instrument.name IS NOT NULL THEN 'instrument'
+    WHEN label.name IS NOT NULL THEN 'label'
+    WHEN place.name IS NOT NULL THEN 'place'
+    WHEN recording.name IS NOT NULL THEN 'recording'
+    WHEN `release`.name IS NOT NULL THEN 'release'
+    WHEN release_group.name IS NOT NULL THEN 'release-group'
+    WHEN series.name IS NOT NULL THEN 'series'
+    WHEN work.name IS NOT NULL THEN 'work'
+    ELSE CAST(NULL AS TEXT)
+  END AS entity_type,
+  GROUP_CONCAT(all_primary_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(all_primary_alias.locale, CHAR(9)) AS alias_locales,
+  mi.thumbnail_url,
+  mi.id AS imageId,
+  mi.source,
+  EXISTS (
+    SELECT 1 FROM details_metadata WHERE details_metadata.entity_id = relation.entity_id
+  ) AS visited
+FROM relation
+LEFT JOIN area ON area.id = relation.entity_id
+LEFT JOIN artist ON artist.id = relation.entity_id
+LEFT JOIN event ON event.id = relation.entity_id
+LEFT JOIN genre ON genre.id = relation.entity_id
+LEFT JOIN instrument ON instrument.id = relation.entity_id
+LEFT JOIN label ON label.id = relation.entity_id
+LEFT JOIN place ON place.id = relation.entity_id
+LEFT JOIN recording ON recording.id = relation.entity_id
+LEFT JOIN `release` ON `release`.id = relation.entity_id
+LEFT JOIN release_group ON release_group.id = relation.entity_id
+LEFT JOIN series ON series.id = relation.entity_id
+LEFT JOIN work ON work.id = relation.entity_id
+LEFT OUTER JOIN all_primary_alias ON all_primary_alias.mbid = relation.entity_id
+LEFT OUTER JOIN mbid_image mi ON mi.mbid = relation.entity_id
+WHERE relation.name = :url
+GROUP BY relation.entity_id;

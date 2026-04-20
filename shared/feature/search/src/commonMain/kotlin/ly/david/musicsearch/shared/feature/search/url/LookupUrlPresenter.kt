@@ -16,6 +16,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.error.ErrorType
@@ -38,7 +39,7 @@ internal class LookupUrlPresenter(
     override fun present(): LookupUrlUiState {
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
         var excludeParameters by rememberSaveable { mutableStateOf(false) }
-        var searchLocalOnly by rememberSaveable { mutableStateOf(false) }
+        var searchLocalDatabase by rememberSaveable { mutableStateOf(false) }
         var result: LookupUrlUiState.Result? by rememberRetained { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
@@ -53,8 +54,8 @@ internal class LookupUrlPresenter(
                     excludeParameters = !excludeParameters
                 }
 
-                LookupUrlUiEvent.ToggleLocalOnly -> {
-                    searchLocalOnly = !searchLocalOnly
+                is LookupUrlUiEvent.SetSearchLocalDatabase -> {
+                    searchLocalDatabase = event.searchLocalDatabase
                 }
 
                 LookupUrlUiEvent.LookupUrl -> {
@@ -68,18 +69,20 @@ internal class LookupUrlPresenter(
                         } else {
                             query
                         }
-                        try {
-                            result = LookupUrlUiState.Result.Loading
-                            result = LookupUrlUiState.Result.Success(
+                        result = LookupUrlUiState.Result.Loading
+                        result = try {
+                            LookupUrlUiState.Result.Success(
                                 listItemModels = lookupUrlRepository.getEntitiesLinkedToUrl(
                                     url = urlToLookup,
-                                    searchLocalOnly = searchLocalOnly,
+                                    searchLocalDatabase = searchLocalDatabase,
                                 ).toPersistentList(),
                             )
                         } catch (ex: HandledException) {
-                            result = when (ex.errorType) {
+                            when (ex.errorType) {
                                 ErrorType.BadRequest -> LookupUrlUiState.Result.Error.BadRequest(url = urlToLookup)
-                                ErrorType.NotFound -> LookupUrlUiState.Result.Error.NotFound(url = urlToLookup)
+                                ErrorType.NotFound -> LookupUrlUiState.Result.Success(
+                                    listItemModels = persistentListOf(),
+                                )
                                 else -> LookupUrlUiState.Result.Error.Other(ex.message.orEmpty())
                             }
                         }
@@ -107,7 +110,7 @@ internal class LookupUrlPresenter(
             urlToLookup = query,
             result = result,
             excludeParameters = excludeParameters,
-            searchLocalOnly = searchLocalOnly,
+            searchLocalDatabase = searchLocalDatabase,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
         )
@@ -119,7 +122,7 @@ internal data class LookupUrlUiState(
     val urlToLookup: String,
     val result: Result?,
     val excludeParameters: Boolean = false,
-    val searchLocalOnly: Boolean = false,
+    val searchLocalDatabase: Boolean = false,
     val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (LookupUrlUiEvent) -> Unit = {},
 ) : CircuitUiState {
@@ -129,7 +132,6 @@ internal data class LookupUrlUiState(
         data class Success(val listItemModels: ImmutableList<RelationListItemModel>) : Result
         sealed interface Error : Result {
             data object CannotBeEmpty : Error
-            data class NotFound(val url: String) : Error
             data class BadRequest(val url: String) : Error
             data class Other(val message: String) : Error
         }
@@ -139,7 +141,7 @@ internal data class LookupUrlUiState(
 internal sealed interface LookupUrlUiEvent : CircuitUiEvent {
     data class UpdateQuery(val query: String) : LookupUrlUiEvent
     data object ToggleExcludeParameters : LookupUrlUiEvent
-    data object ToggleLocalOnly : LookupUrlUiEvent
+    data class SetSearchLocalDatabase(val searchLocalDatabase: Boolean) : LookupUrlUiEvent
     data object LookupUrl : LookupUrlUiEvent
     data class ClickItem(
         val entityType: MusicBrainzEntityType,

@@ -1,10 +1,12 @@
 package ly.david.musicsearch.data.repository.url
 
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.UrlDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.url.EntityAdditionalInfo
 import ly.david.musicsearch.shared.domain.url.LookupUrlRepository
@@ -12,18 +14,25 @@ import ly.david.musicsearch.shared.domain.url.LookupUrlRepository
 internal class LookupUrlRepositoryImpl(
     private val lookupApi: LookupApi,
     private val urlDao: UrlDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : LookupUrlRepository {
     override suspend fun getEntitiesLinkedToUrl(
         url: String,
-        searchLocalOnly: Boolean,
+        searchLocalDatabase: Boolean,
     ): List<RelationListItemModel> {
-        return lookupApi
-            .lookupUrl(url = url)
-            .relations?.mapNotNull { relation ->
-                relation.toListItemModel(
-                    getAdditionalInfo = urlDao::getAdditionalInfoForEntity,
-                )
-            }.orEmpty()
+        return if (searchLocalDatabase) {
+            withContext(coroutineDispatchers.io) {
+                urlDao.getEntityInfoForUrl(url = url)
+            }
+        } else {
+            lookupApi
+                .lookupUrl(url = url)
+                .relations?.mapNotNull { relation ->
+                    relation.toListItemModel(
+                        getAdditionalInfo = urlDao::getAdditionalInfoForEntity,
+                    )
+                }.orEmpty()
+        }
     }
 }
 

@@ -20,6 +20,13 @@ class LookupUrlUiScreenshotTest : ScreenshotTest(isFullScreen = true) {
     }
 
     @Test
+    fun noResults() {
+        snapshot {
+            PreviewLookupUrlUiNoResults()
+        }
+    }
+
+    @Test
     fun singleResult() {
         snapshot {
             PreviewLookupUrlUiSingleResult()
@@ -37,13 +44,6 @@ class LookupUrlUiScreenshotTest : ScreenshotTest(isFullScreen = true) {
     fun cannotBeEmpty() {
         snapshot {
             PreviewLookupUrlUiCannotBeEmpty()
-        }
-    }
-
-    @Test
-    fun notFound() {
-        snapshot {
-            PreviewLookupUrlUiNotFound()
         }
     }
 

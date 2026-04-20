@@ -13,6 +13,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +30,7 @@ import ly.david.musicsearch.ui.common.text.LimitedLinesTextField
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.foundXResults
+import musicsearch.ui.common.generated.resources.local
 import musicsearch.ui.common.generated.resources.lookupUrl
 import musicsearch.ui.common.generated.resources.url
 import org.jetbrains.compose.resources.pluralStringResource
@@ -76,7 +80,7 @@ private fun LookupUrlUiContent(
         item {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Paste a URL to check whether it exists in MusicBrainz.",
+                text = "Paste a URL to check whether it exists in MusicBrainz or locally.",
             )
         }
 
@@ -101,7 +105,6 @@ private fun LookupUrlUiContent(
                         text = when (result) {
                             LookupUrlUiState.Result.Error.CannotBeEmpty -> "Query cannot be empty."
                             is LookupUrlUiState.Result.Error.BadRequest -> "The URL (${result.url}) is invalid."
-                            is LookupUrlUiState.Result.Error.NotFound -> "Nothing found with the URL (${result.url})."
                             is LookupUrlUiState.Result.Error.Other -> result.message
                         },
                         color = MaterialTheme.colorScheme.error,
@@ -125,16 +128,31 @@ private fun LookupUrlUiContent(
             )
         }
 
-        // TODO: add ability to search for a url in the local database
-        //  consider SingleChoiceSegmentedButtonRow instead with the options: MusicBrainz or local database
-//        item {
-//            CheckboxWithText(
-//                text = "Only search local database",
-//                modifier = Modifier.padding(top = 8.dp),
-//                checked = state.searchLocalOnly,
-//                onClick = { eventSink(LookupUrlUiEvent.ToggleLocalOnly) },
-//            )
-//        }
+        item {
+            SingleChoiceSegmentedButtonRow(
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 16.dp),
+            ) {
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = 0,
+                        count = 2,
+                    ),
+                    onClick = { eventSink(LookupUrlUiEvent.SetSearchLocalDatabase(false)) },
+                    selected = !state.searchLocalDatabase,
+                    label = { Text("MusicBrainz") },
+                )
+                SegmentedButton(
+                    shape = SegmentedButtonDefaults.itemShape(
+                        index = 1,
+                        count = 2,
+                    ),
+                    onClick = { eventSink(LookupUrlUiEvent.SetSearchLocalDatabase(true)) },
+                    selected = state.searchLocalDatabase,
+                    label = { Text(stringResource(Res.string.local)) },
+                )
+            }
+        }
 
         item {
             val loading = result is LookupUrlUiState.Result.Loading
@@ -167,34 +185,32 @@ private fun LookupUrlUiContent(
         when (result) {
             is LookupUrlUiState.Result.Success -> {
                 val listItemModels = result.listItemModels
-                if (listItemModels.isNotEmpty()) {
-                    item {
-                        Text(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            style = MaterialTheme.typography.bodyMedium,
-                            text = pluralStringResource(
-                                resource = Res.plurals.foundXResults,
-                                quantity = listItemModels.size,
-                                listItemModels.size,
-                            ),
-                        )
-                    }
-                    items(listItemModels) { listItemModel ->
-                        RelationListItem(
-                            relation = listItemModel,
-                            filterText = "",
-                            onItemClick = { entity, id ->
-                                eventSink(
-                                    LookupUrlUiEvent.ClickItem(
-                                        entityType = entity,
-                                        id = id,
-                                    ),
-                                )
-                            },
-                        )
-                    }
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        text = pluralStringResource(
+                            resource = Res.plurals.foundXResults,
+                            quantity = listItemModels.size,
+                            listItemModels.size,
+                        ),
+                    )
+                }
+                items(listItemModels) { listItemModel ->
+                    RelationListItem(
+                        relation = listItemModel,
+                        filterText = "",
+                        onItemClick = { entity, id ->
+                            eventSink(
+                                LookupUrlUiEvent.ClickItem(
+                                    entityType = entity,
+                                    id = id,
+                                ),
+                            )
+                        },
+                    )
                 }
             }
 

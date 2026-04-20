@@ -44,6 +44,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.androidx.paging.testing)
                 implementation(libs.turbine)
+                implementation(libs.mockk)
             }
         }
     }

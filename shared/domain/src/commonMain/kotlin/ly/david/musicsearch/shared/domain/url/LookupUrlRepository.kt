@@ -5,6 +5,6 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 interface LookupUrlRepository {
     suspend fun getEntitiesLinkedToUrl(
         url: String,
-        searchLocalOnly: Boolean,
+        searchLocalDatabase: Boolean,
     ): List<RelationListItemModel>
 }

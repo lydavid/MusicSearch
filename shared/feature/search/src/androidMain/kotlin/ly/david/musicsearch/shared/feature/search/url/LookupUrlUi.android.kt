@@ -52,6 +52,22 @@ internal fun PreviewLookupUrlUiLoading() {
 
 @PreviewLightDark
 @Composable
+internal fun PreviewLookupUrlUiNoResults() {
+    PreviewWithTransitionAndOverlays {
+        LookupUrlUi(
+            state = LookupUrlUiState(
+                urlToLookup = "https://something",
+                searchLocalDatabase = true,
+                result = LookupUrlUiState.Result.Success(
+                    listItemModels = persistentListOf(),
+                ),
+            ),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewLookupUrlUiSingleResult() {
     PreviewWithTransitionAndOverlays {
         LookupUrlUi(
@@ -120,21 +136,6 @@ internal fun PreviewLookupUrlUiCannotBeEmpty() {
             state = LookupUrlUiState(
                 urlToLookup = "",
                 result = LookupUrlUiState.Result.Error.CannotBeEmpty,
-            ),
-        )
-    }
-}
-
-@PreviewLightDark
-@Composable
-internal fun PreviewLookupUrlUiNotFound() {
-    PreviewTheme {
-        LookupUrlUi(
-            state = LookupUrlUiState(
-                urlToLookup = "https://newurl",
-                result = LookupUrlUiState.Result.Error.NotFound(
-                    url = "https://oldurl",
-                ),
             ),
         )
     }
