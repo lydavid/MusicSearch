@@ -1,0 +1,5 @@
+
+### Features
+
+* add buttons to switch between looking up URL in MusicBrainz or local database
+* add screen to Search screen's additional actions to lookup a URL in MusicBrainz and show list items if it exists
