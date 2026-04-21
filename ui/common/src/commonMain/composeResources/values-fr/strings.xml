@@ -321,4 +321,10 @@
     <string name="scrollToHideTopAppBar">Faites défiler pour masquer la barre d'applications supérieure</string>
     <string name="showingXOfY">Affichage de %1$d sur %2$d.</string>
     <string name="unknown">Inconnu</string>
+    <plurals name="foundXResults">
+        <item quantity="one">%1$d résultat trouvé.</item>
+        <item quantity="many">%1$d résultats trouvés.</item>
+        <item quantity="other">%1$d résultats trouvés.</item>
+    </plurals>
+    <string name="lookupUrl">URL de recherche</string>
 </resources>
