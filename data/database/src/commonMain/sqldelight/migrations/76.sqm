@@ -1,0 +1,104 @@
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus;
+
+DROP VIEW coalesced_entity;
+
+-- change status_id from UUID TEXT to an INTEGER mapped to its domain type
+CREATE TABLE "release_temp" (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  date TEXT NOT NULL,
+  barcode TEXT NOT NULL,
+  asin TEXT NOT NULL,
+  quality TEXT NOT NULL,
+  country_code TEXT NOT NULL,
+  status INTEGER AS ReleaseStatus NOT NULL,
+  packaging TEXT NOT NULL,
+  packaging_id TEXT NOT NULL,
+  script TEXT NOT NULL,
+  language TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO release_temp(
+  id,
+  name,
+  disambiguation,
+  date,
+  barcode,
+  asin,
+  quality,
+  country_code,
+  status,
+  packaging,
+  packaging_id,
+  script,
+  language
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  date,
+  barcode,
+  asin,
+  quality,
+  country_code,
+  CASE status_id
+    WHEN '4e304316-386d-3409-af2e-78857eec5cfe' THEN 0  -- OFFICIAL
+    WHEN '518ffc83-5cde-34df-8627-81bff5093d92' THEN 1  -- PROMOTION
+    WHEN '1156806e-d06a-38bd-83f0-cf2284a808b9' THEN 2  -- BOOTLEG
+    WHEN '41121bb9-3413-3818-8a9a-9742318349aa' THEN 3  -- PSEUDO_RELEASE
+    WHEN '6a3772de-4605-4132-993d-aa315cd19b4b' THEN 4  -- WITHDRAWN
+    WHEN 'cddc06b1-1afc-4bbb-83e6-0a902ffb4aba' THEN 5  -- EXPUNGED
+    WHEN '55005350-bc3f-441a-b0c7-27c565eae341' THEN 6  -- CANCELLED
+    ELSE 7 -- UNKNOWN
+  END,
+  packaging,
+  packaging_id,
+  script,
+  language
+FROM "release";
+
+DROP TABLE "release";
+
+ALTER TABLE "release_temp" RENAME TO "release";
+
+-- recreate view that references release
+CREATE VIEW coalesced_entity AS
+SELECT
+  id,
+  name,
+  sort_name,
+  disambiguation,
+  'artist' AS entity_type
+FROM artist
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'event' AS entity_type
+FROM event
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release' AS entity_type
+FROM `release`
+
+UNION ALL
+
+SELECT
+  id,
+  name,
+  NULL AS sort_name,
+  disambiguation,
+  'release-group' AS entity_type
+FROM release_group;

@@ -14,7 +14,7 @@ import musicsearch.ui.common.generated.resources.withdrawn
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ReleaseStatus?.getDisplayString(): String {
+fun ReleaseStatus.getDisplayString(): String {
     return stringResource(
         when (this) {
             ReleaseStatus.OFFICIAL -> Res.string.official
@@ -24,7 +24,7 @@ fun ReleaseStatus?.getDisplayString(): String {
             ReleaseStatus.WITHDRAWN -> Res.string.withdrawn
             ReleaseStatus.EXPUNGED -> Res.string.expunged
             ReleaseStatus.CANCELLED -> Res.string.cancelled
-            null -> Res.string.unknown
+            ReleaseStatus.UNKNOWN -> Res.string.unknown
         },
     )
 }

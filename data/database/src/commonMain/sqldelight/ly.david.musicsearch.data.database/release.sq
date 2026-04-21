@@ -1,3 +1,5 @@
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus;
+
 CREATE TABLE "release" (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
@@ -7,7 +9,7 @@ CREATE TABLE "release" (
   asin TEXT NOT NULL,
   quality TEXT NOT NULL,
   country_code TEXT NOT NULL,
-  status_id TEXT NOT NULL,
+  status INTEGER AS ReleaseStatus NOT NULL,
   packaging TEXT NOT NULL,
   packaging_id TEXT NOT NULL,
   script TEXT NOT NULL,
@@ -27,7 +29,7 @@ VALUES (
   :asin,
   :quality,
   :country_code,
-  :status_id,
+  :status,
   :packaging,
   :packaging_id,
   :script,
@@ -44,7 +46,7 @@ SET
   asin = :asin,
   quality = :quality,
   country_code = :country_code,
-  status_id = :status_id,
+  status = :status,
   packaging = :packaging,
   packaging_id = :packaging_id,
   script = :script,
@@ -61,7 +63,7 @@ VALUES (
   :asin,
   :quality,
   :country_code,
-  :status_id,
+  :status,
   :packaging,
   :packaging_id,
   :script,
@@ -709,25 +711,25 @@ LIMIT :limit OFFSET :offset;
 
 getCountOfEachStatus:
 SELECT
-  `release`.status_id,
-  COUNT(`release`.status_id)
+  `release`.status,
+  COUNT(`release`.status)
 FROM `release`
-GROUP BY `release`.status_id;
+GROUP BY `release`.status;
 
 getCountOfEachStatusByEntity:
 SELECT
-  `release`.status_id,
-  COUNT(`release`.status_id)
+  `release`.status,
+  COUNT(`release`.status)
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
 WHERE releases_by_entity.entity_id = :entityId
-GROUP BY `release`.status_id;
+GROUP BY `release`.status;
 
 getCountOfEachStatusByCollection:
 SELECT
-  `release`.status_id,
-  COUNT(`release`.status_id)
+  `release`.status,
+  COUNT(`release`.status)
 FROM `release`
 INNER JOIN collection_entity ON collection_entity.entity_id = `release`.id
 WHERE collection_entity.id = :collectionId
-GROUP BY `release`.status_id;
+GROUP BY `release`.status;

@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.adapter.ImmutableListStringColumnAdapt
 import ly.david.musicsearch.data.database.adapter.InstantLongColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
+import ly.david.musicsearch.data.database.adapter.ReleaseStatusIntColumnAdapter
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Browse_remote_metadata
@@ -21,6 +22,7 @@ import lydavidmusicsearchdatadatabase.Now_playing_history
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Relations_metadata
+import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Search_history
 import lydavidmusicsearchdatadatabase.Search_result_metadata
@@ -113,6 +115,9 @@ fun createDatabase(driver: SqlDriver): Database {
         listenAdapter = Listen.Adapter(
             spotify_artist_idsAdapter = ListStringColumnAdapter,
             spotify_album_artist_idsAdapter = ListStringColumnAdapter,
+        ),
+        releaseAdapter = Release.Adapter(
+            statusAdapter = ReleaseStatusIntColumnAdapter,
         ),
     )
 }

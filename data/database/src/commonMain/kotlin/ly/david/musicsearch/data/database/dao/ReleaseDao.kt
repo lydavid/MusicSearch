@@ -40,6 +40,19 @@ class ReleaseDao(
 ) : EntityDao {
     override val transacter = database.releaseQueries
 
+    private fun String?.idToReleaseStatus(): ReleaseStatus {
+        return when (this) {
+            "4e304316-386d-3409-af2e-78857eec5cfe" -> ReleaseStatus.OFFICIAL
+            "518ffc83-5cde-34df-8627-81bff5093d92" -> ReleaseStatus.PROMOTION
+            "1156806e-d06a-38bd-83f0-cf2284a808b9" -> ReleaseStatus.BOOTLEG
+            "41121bb9-3413-3818-8a9a-9742318349aa" -> ReleaseStatus.PSEUDO_RELEASE
+            "6a3772de-4605-4132-993d-aa315cd19b4b" -> ReleaseStatus.WITHDRAWN
+            "cddc06b1-1afc-4bbb-83e6-0a902ffb4aba" -> ReleaseStatus.EXPUNGED
+            "55005350-bc3f-441a-b0c7-27c565eae341" -> ReleaseStatus.CANCELLED
+            else -> ReleaseStatus.UNKNOWN
+        }
+    }
+
     fun upsert(
         oldId: String,
         release: ReleaseMusicBrainzNetworkModel,
@@ -54,7 +67,7 @@ class ReleaseDao(
                 disambiguation = disambiguation,
                 date = date.orEmpty(),
                 barcode = barcode.orEmpty(),
-                status_id = statusId.orEmpty(),
+                status = statusId.idToReleaseStatus(),
                 country_code = countryCode.orEmpty(),
                 packaging = packaging.orEmpty(),
                 packaging_id = packagingId.orEmpty(),
@@ -82,7 +95,7 @@ class ReleaseDao(
                 disambiguation = disambiguation,
                 date = date.orEmpty(),
                 barcode = barcode.orEmpty(),
-                status_id = statusId.orEmpty(),
+                status = statusId.idToReleaseStatus(),
                 country_code = countryCode.orEmpty(),
                 packaging = packaging.orEmpty(),
                 packaging_id = packagingId.orEmpty(),
@@ -167,7 +180,7 @@ class ReleaseDao(
         asin: String,
         quality: String,
         countryCode: String,
-        statusId: String,
+        status: ReleaseStatus,
         packaging: String,
         packagingId: String,
         script: String,
@@ -181,7 +194,7 @@ class ReleaseDao(
         disambiguation = disambiguation,
         date = date,
         barcode = barcode,
-        status = ReleaseStatus.fromId(statusId),
+        status = status,
         countryCode = countryCode,
         packaging = packaging,
         packagingId = packagingId,
@@ -499,11 +512,11 @@ class ReleaseDao(
     }
 
     private fun mapToReleaseStatusWithCount(
-        statusId: String,
+        status: ReleaseStatus,
         count: Long,
     ): ReleaseStatusCount {
         return ReleaseStatusCount(
-            status = ReleaseStatus.fromId(statusId),
+            status = status,
             count = count.toInt(),
         )
     }

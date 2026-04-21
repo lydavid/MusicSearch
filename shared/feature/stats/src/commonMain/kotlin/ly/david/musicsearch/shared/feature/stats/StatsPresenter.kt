@@ -113,7 +113,7 @@ internal class StatsPresenter(
                         totalCollected = collected,
                         lastUpdated = metadata?.lastUpdated,
                         statusCounts = statusCounts
-                            .sortedBy { it.status?.ordinal }
+                            .sortedBy { it.status.order }
                             .toImmutableList(),
                     )
                 }
