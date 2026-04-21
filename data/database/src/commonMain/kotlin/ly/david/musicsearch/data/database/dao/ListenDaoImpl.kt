@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 
 class ListenDaoImpl(
     database: Database,
@@ -118,15 +119,14 @@ class ListenDaoImpl(
         // We want this release to use the cover art release mbid.
         // The release mbid on the listen may not be the same as this, but when the user navigates to that release
         // for the first time, they will get its cover art if it has any.
-        val releaseName = entityMapping.releaseName
-        if (releaseName == null) return
+        val releaseName = entityMapping.releaseName ?: return
         releaseTransacter.insert(
             id = coverArtReleaseMbid,
             name = releaseName,
             disambiguation = "",
             date = "",
             barcode = "",
-            status_id = "",
+            status = ReleaseStatus.UNKNOWN,
             country_code = "",
             packaging = "",
             packaging_id = "",

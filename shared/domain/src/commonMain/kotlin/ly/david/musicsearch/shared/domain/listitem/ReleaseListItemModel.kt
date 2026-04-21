@@ -15,7 +15,7 @@ data class ReleaseListItemModel(
     override val disambiguation: String = "",
     override val date: String = "",
     override val barcode: String = "",
-    val status: ReleaseStatus? = null,
+    val status: ReleaseStatus = ReleaseStatus.UNKNOWN,
     override val countryCode: String = "",
     override val packaging: String = "",
     override val packagingId: String = "",

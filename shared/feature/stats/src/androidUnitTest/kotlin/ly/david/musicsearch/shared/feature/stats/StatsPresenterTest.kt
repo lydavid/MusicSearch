@@ -135,12 +135,12 @@ class StatsPresenterTest {
                     return flowOf(
                         listOf(
                             ReleaseStatusCount(
-                                status = null,
-                                count = 2,
-                            ),
-                            ReleaseStatusCount(
                                 status = ReleaseStatus.OFFICIAL,
                                 count = 1,
+                            ),
+                            ReleaseStatusCount(
+                                status = ReleaseStatus.UNKNOWN,
+                                count = 2,
                             ),
                         ),
                     )
@@ -232,12 +232,12 @@ class StatsPresenterTest {
                                     totalCollected = 1,
                                     statusCounts = persistentListOf(
                                         ReleaseStatusCount(
-                                            status = null,
-                                            count = 2,
-                                        ),
-                                        ReleaseStatusCount(
                                             status = ReleaseStatus.OFFICIAL,
                                             count = 1,
+                                        ),
+                                        ReleaseStatusCount(
+                                            status = ReleaseStatus.UNKNOWN,
+                                            count = 2,
                                         ),
                                     ),
                                     lastUpdated = lastUpdated,
