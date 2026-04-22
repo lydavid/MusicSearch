@@ -6,7 +6,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +14,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -28,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,26 +32,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.role
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.ui.common.button.TriStateCheckboxWithText
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -285,40 +276,18 @@ internal fun TopAppBarWithFilterInternal(
                     Row(
                         modifier = Modifier
                             .background(containerColor)
-                            .padding(2.dp)
                             .fillMaxWidth(),
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(28.dp))
-                                .clickable {
-                                    onSelectAllToggle()
-                                }
-                                .semantics(mergeDescendants = true) {
-                                    role = Role.Checkbox
-                                }
-                                .padding(horizontal = 14.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            val toggleableState = when (selectionState.selectAllState) {
-                                SelectAllState.None -> ToggleableState.Off
-                                SelectAllState.Some -> ToggleableState.Indeterminate
-                                SelectAllState.All -> ToggleableState.On
-                            }
-                            TriStateCheckbox(
-                                state = toggleableState,
-                                colors = CheckboxDefaults.colors(
-                                    checkedColor = MaterialTheme.colorScheme.primary,
-                                ),
-                                onClick = null,
-                            )
-                            Text(
-                                text = selectionState.checkboxText,
-                                modifier = Modifier.padding(start = 8.dp),
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.SemiBold,
-                            )
+                        val toggleableState = when (selectionState.selectAllState) {
+                            SelectAllState.None -> ToggleableState.Off
+                            SelectAllState.Some -> ToggleableState.Indeterminate
+                            SelectAllState.All -> ToggleableState.On
                         }
+                        TriStateCheckboxWithText(
+                            text = selectionState.checkboxText,
+                            toggleableState = toggleableState,
+                            onClick = onSelectAllToggle,
+                        )
                     }
                 }
                 additionalBar()

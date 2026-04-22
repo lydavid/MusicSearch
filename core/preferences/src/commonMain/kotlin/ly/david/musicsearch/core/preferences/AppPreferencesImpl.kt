@@ -25,6 +25,7 @@ import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 internal class AppPreferencesImpl(
@@ -132,6 +133,34 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[showMoreInfoInReleaseListItemPreference] = show
+            }
+        }
+    }
+
+    private val showReleaseStatusesPreference =
+        intPreferencesKey(AppPreferencesKey.SHOW_RELEASE_STATUSES.name)
+
+    private fun Set<ReleaseStatus>.toBitmask(): Int =
+        fold(0) { accumulator, status -> accumulator or status.bit }
+
+    private fun Int.toReleaseStatusSet(): Set<ReleaseStatus> =
+        ReleaseStatus.entries.filterTo(mutableSetOf()) { status -> (this and status.bit) != 0 }
+
+    private fun Preferences.getShownReleaseStatuses(): Set<ReleaseStatus> =
+        this[showReleaseStatusesPreference]?.toReleaseStatusSet() ?: ReleaseStatus.entries.toSet()
+
+    override val showReleaseStatuses: Flow<Set<ReleaseStatus>>
+        get() = preferencesDataStore.data
+            .map { it.getShownReleaseStatuses() }
+            .distinctUntilChanged()
+
+    override fun setShowReleaseStatus(status: ReleaseStatus) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                val current = it.getShownReleaseStatuses()
+                it[showReleaseStatusesPreference] = current
+                    .let { set -> if (status in set) set - status else set + status }
+                    .toBitmask()
             }
         }
     }

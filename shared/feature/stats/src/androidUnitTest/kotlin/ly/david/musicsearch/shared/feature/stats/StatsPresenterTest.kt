@@ -95,6 +95,7 @@ class StatsPresenterTest {
                     browseEntity: MusicBrainzEntityType,
                     browseMethod: BrowseMethod?,
                     query: String,
+                    showReleaseStatuses: Set<ReleaseStatus>,
                 ): Flow<Int> {
                     return flowOf(200)
                 }

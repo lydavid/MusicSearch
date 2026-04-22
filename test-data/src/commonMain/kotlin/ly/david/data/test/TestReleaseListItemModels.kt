@@ -19,6 +19,15 @@ val utaNoUtaReleaseListItemModel = ReleaseListItemModel(
     formattedArtistCredits = "Ado",
 )
 
+val utaNoUtaPseudoReleaseListItemModel = ReleaseListItemModel(
+    id = "c3f3a713-1693-42b6-92d9-bd0e287486b3",
+    name = "UTA’S SONGS ONE PIECE FILM RED",
+    quality = "normal",
+    status = ReleaseStatus.PSEUDO_RELEASE,
+    textRepresentation = TextRepresentationUiModel(script = "Latn"),
+    formattedArtistCredits = "Ado",
+)
+
 val weirdAlGreatestHitsReleaseListItemModel = ReleaseListItemModel(
     id = "9eef0b6f-9aa2-4573-8f3e-53d1a4826e3f",
     name = "“Weird Al” Yankovic’s Greatest Hits",

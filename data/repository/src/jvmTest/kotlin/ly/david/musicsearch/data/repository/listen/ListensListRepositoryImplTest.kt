@@ -41,6 +41,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
@@ -473,7 +474,9 @@ class ListensListRepositoryImplTest :
         )
         val releases = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters(
+                sortOption = SortOption.Release(),
+            ),
             now = testDateTimeInThePast,
         ).asSnapshot()
         Assert.assertEquals(

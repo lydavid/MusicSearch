@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 
 class ObserveLocalCountImpl(
     private val areaDao: AreaDao,
@@ -36,6 +37,7 @@ class ObserveLocalCountImpl(
         browseEntity: MusicBrainzEntityType,
         browseMethod: BrowseMethod?,
         query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): Flow<Int> {
         if (browseMethod == null) return flowOf(0)
         return when (browseEntity) {
@@ -82,6 +84,7 @@ class ObserveLocalCountImpl(
             MusicBrainzEntityType.RELEASE -> releaseDao.observeCountOfReleases(
                 browseMethod = browseMethod,
                 query = query,
+                showReleaseStatuses = showReleaseStatuses,
             )
 
             MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupDao.observeCountOfReleaseGroups(

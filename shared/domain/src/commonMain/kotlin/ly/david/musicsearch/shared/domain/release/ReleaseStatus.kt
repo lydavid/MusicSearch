@@ -10,4 +10,7 @@ enum class ReleaseStatus(val order: Int) {
     EXPUNGED(5),
     CANCELLED(6),
     UNKNOWN(7),
+    ;
+
+    val bit: Int = 1 shl order
 }

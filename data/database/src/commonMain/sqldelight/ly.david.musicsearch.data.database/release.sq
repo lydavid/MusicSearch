@@ -181,6 +181,7 @@ LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
 WHERE releases_by_entity.entity_id = :entityId
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -290,6 +291,7 @@ LEFT JOIN (
   GROUP BY release_alias.release_id
 ) AS aliases ON aliases.release_id = `release`.id
 WHERE releases_by_entity.entity_id = :entityId
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -333,6 +335,7 @@ LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
 WHERE collection_entity.id = :collectionId
 AND collection_entity.deleted = 0
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -425,6 +428,7 @@ LEFT JOIN (
 ) AS aliases ON aliases.release_id = `release`.id
 WHERE collection_entity.id = :collectionId
 AND collection_entity.deleted = 0
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -462,6 +466,7 @@ LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN release_alias ON `release`.id = release_alias.release_id AND release_alias.is_primary
 WHERE releases_by_entity.entity_id = :entityId
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -556,6 +561,7 @@ LEFT JOIN (
   GROUP BY release_alias.release_id
 ) AS aliases ON aliases.release_id = `release`.id
 WHERE releases_by_entity.entity_id = :entityId
+AND status IN :statuses
 AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
@@ -599,7 +605,8 @@ LEFT JOIN (
   WHERE release_alias.is_primary
   GROUP BY release_alias.release_id
 ) AS aliases ON aliases.release_id = `release`.id
-WHERE (
+WHERE status IN :statuses
+AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR
@@ -680,7 +687,8 @@ LEFT JOIN (
   WHERE release_alias.is_primary
   GROUP BY release_alias.release_id
 ) AS aliases ON aliases.release_id = `release`.id
-WHERE (
+WHERE status IN :statuses
+AND (
   `release`.name LIKE :query OR
   `release`.disambiguation LIKE :query OR
   `release`.date LIKE :query OR

@@ -13,6 +13,7 @@ import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -26,6 +27,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
@@ -43,19 +45,28 @@ abstract class BaseListPresenter(
         var query by rememberSaveable { mutableStateOf("") }
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
+
         val recordingSortOption
             by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.InsertedAscending)
+
         val releaseSortOption
             by appPreferences.releaseSortOption.collectAsRetainedState(ReleaseSortOption.InsertedAscending)
+        val showMoreInfoInReleaseListItem
+            by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+        val showReleaseStatuses by appPreferences.showReleaseStatuses.collectAsRetainedState(
+            ReleaseStatus.entries,
+        )
+
         val releaseGroupSortOption
             by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
-        val showMoreInfoInReleaseListItem by appPreferences.showMoreInfoInReleaseListItem.collectAsRetainedState(true)
+
         val sortOption: SortOption = when (getEntityType()) {
             MusicBrainzEntityType.RECORDING -> SortOption.Recording(recordingSortOption)
 
             MusicBrainzEntityType.RELEASE -> SortOption.Release(
                 option = releaseSortOption,
                 showMoreInfo = showMoreInfoInReleaseListItem,
+                showStatuses = showReleaseStatuses.toPersistentSet(),
             )
 
             MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(releaseGroupSortOption)
@@ -84,11 +95,13 @@ abstract class BaseListPresenter(
             browseEntity = getEntityType(),
             browseMethod = browseMethod,
             query = "",
+            showReleaseStatuses = ReleaseStatus.entries.toSet(),
         ).collectAsRetainedState(0)
         val filteredCount by observeLocalCount(
             browseEntity = getEntityType(),
             browseMethod = browseMethod,
             query = query,
+            showReleaseStatuses = showReleaseStatuses.toSet(),
         ).collectAsRetainedState(0)
 
         val lazyListState = rememberLazyListState()
@@ -137,6 +150,10 @@ abstract class BaseListPresenter(
                 is EntitiesListUiEvent.UpdateSortReleaseGroupListItem -> {
                     appPreferences.setReleaseGroupSortOption(event.sortOption)
                 }
+
+                is EntitiesListUiEvent.UpdateShowReleaseStatus -> {
+                    appPreferences.setShowReleaseStatus(event.status)
+                }
             }
         }
 
@@ -181,5 +198,9 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
 
     data class UpdateSortReleaseGroupListItem(
         val sortOption: ReleaseGroupSortOption,
+    ) : EntitiesListUiEvent
+
+    data class UpdateShowReleaseStatus(
+        val status: ReleaseStatus,
     ) : EntitiesListUiEvent
 }
