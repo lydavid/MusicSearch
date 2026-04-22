@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 open class NoOpAppPreferences : AppPreferences {
@@ -53,6 +54,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(true)
 
     override fun setShowMoreInfoInReleaseListItem(show: Boolean) {
+        // No-op.
+    }
+
+    override val showReleaseStatuses: Flow<Set<ReleaseStatus>>
+        get() = flowOf(ReleaseStatus.entries.toSet())
+
+    override fun setShowReleaseStatus(status: ReleaseStatus) {
         // No-op.
     }
 

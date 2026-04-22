@@ -215,6 +215,19 @@ val utaNoUtaReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
     ),
 )
 
+val utaNoUtaPseudoReleaseMusicBrainzModel = ReleaseMusicBrainzNetworkModel(
+    id = "c3f3a713-1693-42b6-92d9-bd0e287486b3",
+    name = "UTA’S SONGS ONE PIECE FILM RED",
+    quality = "normal",
+    statusId = "41121bb9-3413-3818-8a9a-9742318349aa",
+    textRepresentation = TextRepresentationMusicBrainzModel(
+        script = "Latn",
+    ),
+    artistCredits = listOf(
+        adoArtistCreditMusicBrainzModel,
+    ),
+)
+
 val releaseWith3CatalogNumbersWithSameLabel = utaNoUtaReleaseMusicBrainzModel.copy(
     labelInfoList = listOf(
         LabelInfo(

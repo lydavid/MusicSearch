@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import kotlin.time.Instant
 
@@ -67,6 +68,7 @@ class ReleasesListRepositoryImpl(
             query = listFilters.query,
             username = listFilters.username,
             sortOption = (listFilters.sortOption as? SortOption.Release)?.option ?: ReleaseSortOption.InsertedAscending,
+            showReleaseStatuses = (listFilters.sortOption as? SortOption.Release)?.showStatuses ?: emptySet(),
         )
     }
 
@@ -149,14 +151,26 @@ class ReleasesListRepositoryImpl(
     ): Int {
         return when (entity.type) {
             MusicBrainzEntityType.COLLECTION -> {
-                collectionEntityDao.getCountOfEntitiesByCollection(entity.id)
+                releaseDao.getCountOfReleasesByCollectionQuery(
+                    collectionId = entity.id,
+                    query = "",
+                    showReleaseStatuses = ReleaseStatus.entries.toSet(),
+                ).executeAsOne().toInt()
             }
 
             MusicBrainzEntityType.LABEL -> {
-                releaseDao.getCountOfReleasesByLabel(entity.id)
+                releaseDao.getCountOfReleasesByLabelQuery(
+                    labelId = entity.id,
+                    query = "",
+                    showReleaseStatuses = ReleaseStatus.entries.toSet(),
+                ).executeAsOne().toInt()
             }
 
-            else -> releaseDao.getCountOfReleasesByEntity(entity.id)
+            else -> releaseDao.getCountOfReleasesByEntityQuery(
+                entityId = entity.id,
+                query = "",
+                showReleaseStatuses = ReleaseStatus.entries.toSet(),
+            ).executeAsOne().toInt()
         }
     }
 }

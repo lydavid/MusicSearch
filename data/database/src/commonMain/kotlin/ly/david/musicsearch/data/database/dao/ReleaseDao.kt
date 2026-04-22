@@ -225,12 +225,14 @@ class ReleaseDao(
         query: String,
         username: String,
         sortOption: ReleaseSortOption,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): PagingSource<Int, ReleaseListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleases(
                 query = query,
                 username = username,
                 sortOption = sortOption,
+                showReleaseStatuses = showReleaseStatuses,
             )
         }
 
@@ -242,6 +244,7 @@ class ReleaseDao(
                         query = query,
                         username = username,
                         sortOption = sortOption,
+                        showReleaseStatuses = showReleaseStatuses,
                     )
                 }
 
@@ -251,6 +254,7 @@ class ReleaseDao(
                         query = query,
                         username = username,
                         sortOption = sortOption,
+                        showReleaseStatuses = showReleaseStatuses,
                     )
                 }
 
@@ -260,6 +264,7 @@ class ReleaseDao(
                         query = query,
                         username = username,
                         sortOption = sortOption,
+                        showReleaseStatuses = showReleaseStatuses,
                     )
                 }
             }
@@ -291,23 +296,27 @@ class ReleaseDao(
         }
     }
 
-    fun getCountOfReleasesByLabel(labelId: String): Int =
-        transacter.getNumberOfReleasesByLabel(
-            entityId = labelId,
-            query = "%%",
-        )
-            .executeAsOne()
-            .toInt()
+    fun getCountOfReleasesByLabelQuery(
+        labelId: String,
+        query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
+    ) = transacter.getNumberOfReleasesByLabel(
+        entityId = labelId,
+        query = "%$query%",
+        statuses = showReleaseStatuses,
+    )
 
     private fun getReleasesByLabel(
         labelId: String,
         query: String,
         username: String,
         sortOption: ReleaseSortOption,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
-        countQuery = transacter.getNumberOfReleasesByLabel(
-            entityId = labelId,
-            query = "%$query%",
+        countQuery = getCountOfReleasesByLabelQuery(
+            labelId = labelId,
+            query = query,
+            showReleaseStatuses = showReleaseStatuses,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -316,6 +325,7 @@ class ReleaseDao(
                 entityId = labelId,
                 query = "%$query%",
                 username = username,
+                statuses = showReleaseStatuses,
                 sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
@@ -352,31 +362,27 @@ class ReleaseDao(
         transacter.deleteReleaseLinksByEntity(entityId)
     }
 
-    private fun getCountOfReleasesByEntityQuery(
+    fun getCountOfReleasesByEntityQuery(
         entityId: String,
         query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ) = transacter.getNumberOfReleasesByEntity(
         entityId = entityId,
         query = "%$query%",
+        statuses = showReleaseStatuses,
     )
-
-    fun getCountOfReleasesByEntity(entityId: String): Int =
-        getCountOfReleasesByEntityQuery(
-            entityId = entityId,
-            query = "",
-        )
-            .executeAsOne()
-            .toInt()
 
     private fun getReleasesByEntity(
         entityId: String,
         query: String,
         username: String,
         sortOption: ReleaseSortOption,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleasesByEntityQuery(
             entityId = entityId,
             query = query,
+            showReleaseStatuses = showReleaseStatuses,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -385,6 +391,7 @@ class ReleaseDao(
                 entityId = entityId,
                 query = "%$query%",
                 username = username,
+                statuses = showReleaseStatuses,
                 sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
@@ -400,10 +407,12 @@ class ReleaseDao(
         query: String,
         username: String,
         sortOption: ReleaseSortOption,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleasesByCollectionQuery(
             collectionId = collectionId,
             query = query,
+            showReleaseStatuses = showReleaseStatuses,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -412,6 +421,7 @@ class ReleaseDao(
                 collectionId = collectionId,
                 query = "%$query%",
                 username = username,
+                statuses = showReleaseStatuses,
                 sortBy = sortOption.ordinal.toLong(),
                 limit = limit,
                 offset = offset,
@@ -420,17 +430,20 @@ class ReleaseDao(
         },
     )
 
-    private fun getCountOfReleasesByCollectionQuery(
+    fun getCountOfReleasesByCollectionQuery(
         collectionId: String,
         query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): Query<Long> = transacter.getNumberOfReleasesByCollection(
         collectionId = collectionId,
         query = "%$query%",
+        statuses = showReleaseStatuses,
     )
 
     fun observeCountOfReleases(
         browseMethod: BrowseMethod,
         query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): Flow<Int> =
         when (browseMethod) {
             is BrowseMethod.ByEntity -> {
@@ -438,36 +451,45 @@ class ReleaseDao(
                     getCountOfReleasesByCollectionQuery(
                         collectionId = browseMethod.entityId,
                         query = query,
+                        showReleaseStatuses = showReleaseStatuses,
                     )
                 } else {
                     getCountOfReleasesByEntityQuery(
                         entityId = browseMethod.entityId,
                         query = query,
+                        showReleaseStatuses = showReleaseStatuses,
                     )
                 }
             }
 
             BrowseMethod.All -> {
-                getCountOfAllReleases(query = query)
+                getCountOfAllReleasesQuery(
+                    query = query,
+                    showReleaseStatuses = showReleaseStatuses,
+                )
             }
         }
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
-    private fun getCountOfAllReleases(
+    private fun getCountOfAllReleasesQuery(
         query: String,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): Query<Long> = transacter.getCountOfAllReleases(
         query = "%$query%",
+        statuses = showReleaseStatuses,
     )
 
     private fun getAllReleases(
         query: String,
         username: String,
         sortOption: ReleaseSortOption,
+        showReleaseStatuses: Set<ReleaseStatus>,
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
-        countQuery = getCountOfAllReleases(
+        countQuery = getCountOfAllReleasesQuery(
             query = query,
+            showReleaseStatuses = showReleaseStatuses,
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
@@ -476,6 +498,7 @@ class ReleaseDao(
                 query = "%$query%",
                 sortBy = sortOption.ordinal.toLong(),
                 username = username,
+                statuses = showReleaseStatuses,
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseListItemModel,

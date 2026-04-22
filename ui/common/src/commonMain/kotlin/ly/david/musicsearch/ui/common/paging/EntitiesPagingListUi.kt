@@ -63,7 +63,7 @@ fun EntitiesPagingListUi(
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
     onLogin: () -> Unit = {},
 ) {
-    val header: @Composable (() -> Unit)? = if (filterText.isEmpty()) {
+    val header: @Composable (() -> Unit)? = if (uiState.filteredCount == uiState.totalCount) {
         null
     } else {
         {

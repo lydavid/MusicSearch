@@ -35,6 +35,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
+import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
@@ -226,6 +227,14 @@ internal fun ArtistUi(
                         }
 
                         is SortOption.Release -> {
+                            ShowStatusesMenuItem(
+                                selectedStatuses = sortOption.showStatuses,
+                                onClick = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateShowReleaseStatus(it),
+                                    )
+                                },
+                            )
                             SortMenuItem(
                                 sortOptions = ReleaseSortOption.entries,
                                 selectedSortOption = sortOption.option,
