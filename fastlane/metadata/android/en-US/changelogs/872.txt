@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* store release status as a 1 byte INTEGER rather than 36 bytes TEXT; migrate database version to 76
+
+
+### Features
+
+* support filtering releases by its status (e.g. official, promotion)
