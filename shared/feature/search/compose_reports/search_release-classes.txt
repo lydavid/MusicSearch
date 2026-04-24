@@ -56,8 +56,62 @@ stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.DeleteSear
 stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.DeleteAllEntitySearchHistory {
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.ClickItem {
+stable class ly.david.musicsearch.shared.feature.search.SearchUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlPresenter {
+  stable val screen: LookupUrlScreen
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  unstable val lookupUrlRepository: LookupUrlRepository
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState.Result.Loading {
+  <runtime stability> = Stable
+}
+runtime class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState.Result.Success {
+  runtime val listItemModels: ImmutableList<RelationListItemModel>
+  <runtime stability> = Runtime(RelationListItemModel)
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState.Result.Error.CannotBeEmpty {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState.Result.Error.BadRequest {
+  stable val url: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState.Result.Error.Other {
+  stable val message: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState {
+  stable val urlToLookup: String
+  runtime val result: Result?
+  stable val excludeParameters: Boolean
+  stable val searchLocalDatabase: Boolean
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<LookupUrlUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.ToggleExcludeParameters {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.SetSearchLocalDatabase {
+  stable val searchLocalDatabase: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.LookupUrl {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.ClickItem {
   stable val entityType: MusicBrainzEntityType
   stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.NavigateUp {
   <runtime stability> = Stable
 }

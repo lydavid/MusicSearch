@@ -102,7 +102,7 @@ stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPres
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
   unstable val listensListRepository: ListensListRepository
   unstable val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission
-  unstable val clock: Clock
+  stable val clock: Clock
   unstable val timeZone: TimeZone
   <runtime stability> = Stable
 }

@@ -84,6 +84,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithUnknownNumberOfListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentAll()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneDeselected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneSelected()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithType()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisited()
@@ -186,9 +189,21 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.CheckboxWithText(
+  stable text: String
+  stable checked: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.RetryButton(
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.TriStateCheckboxWithText(
+  stable text: String
+  stable toggleableState: ToggleableState
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.ClickableItem(
   stable title: String
@@ -545,8 +560,24 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
 fun ly.david.musicsearch.ui.common.release.getDisplayString(
-  stable <this>: ReleaseStatus?
+  stable <this>: ReleaseStatus
 ): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheet(
+  unstable selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus, Unit>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheetContent(
+  unstable selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem(
+  unused <this>: OverflowMenuScope
+  unstable selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem(
   releaseGroup: ReleaseGroupListItemModel
   stable filterText: String
@@ -619,6 +650,14 @@ fun ly.david.musicsearch.ui.common.text.buildStringWithSingleLink(
   stable url: String
 ): AnnotatedString
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
+  stable text: String
+  stable textLabel: String?
+  stable textHint: String?
+  stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.LimitedLinesTextField(
+  stable maxLines: Int
   stable text: String
   stable textLabel: String?
   stable textHint: String?

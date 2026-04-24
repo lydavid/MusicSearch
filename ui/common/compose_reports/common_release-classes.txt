@@ -1,7 +1,7 @@
 stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenterImpl {
   runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
   unstable val login: Login
-  unstable val clock: Clock
+  stable val clock: Clock
   <runtime stability> = Stable
 }
 stable class musicsearch.ui.common.generated.resources.Res.drawable {
@@ -127,6 +127,10 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortR
   stable val sortOption: ReleaseGroupSortOption
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowReleaseStatus {
+  stable val status: ReleaseStatus
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
   unstable val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
@@ -222,6 +226,11 @@ stable class ly.david.musicsearch.ui.common.screen.SearchScreen {
   stable val query: String?
   stable val entityType: MusicBrainzEntityType?
   runtime var CREATOR: Creator<SearchScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.LookupUrlScreen {
+  stable val query: String?
+  runtime var CREATOR: Creator<LookupUrlScreen>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen {

@@ -22,7 +22,7 @@ stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollection
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
   unstable val collectionRepository: CollectionRepository
-  unstable val clock: Clock
+  stable val clock: Clock
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState {

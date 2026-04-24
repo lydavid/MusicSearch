@@ -81,14 +81,14 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.DatePickerField(
   stable dateTimeEpochSeconds: Long
   unstable timeZone: TimeZone
-  unstable clock: Clock
+  stable clock: Clock
   stable modifier: Modifier? = @static <expression>
   stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.DatePickerDialog(
   stable dateTimeEpochSeconds: Long
   unstable timeZone: TimeZone
-  unstable clock: Clock
+  stable clock: Clock
   stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long, Unit>
   stable onDismiss: Function0<Unit>
 )
@@ -98,7 +98,7 @@ open fun ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPresente
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUi(
   stable state: SubmitListenUiState
   unstable timeZone: TimeZone
-  unstable clock: Clock
+  stable clock: Clock
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.TimePickerField(

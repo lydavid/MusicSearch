@@ -251,7 +251,7 @@ stable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val disambiguation: String
   stable val date: String
   stable val barcode: String
-  stable val status: ReleaseStatus?
+  stable val status: ReleaseStatus
   stable val countryCode: String
   stable val packaging: String
   stable val packagingId: String
@@ -482,7 +482,8 @@ stable class ly.david.musicsearch.shared.domain.list.SortOption.Recording {
 stable class ly.david.musicsearch.shared.domain.list.SortOption.Release {
   stable val option: ReleaseSortOption
   stable val showMoreInfo: Boolean
-  <runtime stability> = Stable
+  stable val showStatuses: ImmutableSet<ReleaseStatus>
+  <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.list.SortOption.ReleaseGroup {
   stable val option: ReleaseGroupSortOption
@@ -851,7 +852,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel {
   stable val disambiguation: String
   stable val date: String
   stable val barcode: String
-  stable val status: ReleaseStatus?
+  stable val status: ReleaseStatus
   stable val countryCode: String
   stable val packaging: String
   stable val packagingId: String
@@ -1007,7 +1008,7 @@ stable class ly.david.musicsearch.shared.domain.relation.RelationWithOrder {
 unstable class ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationshipsImpl {
   runtime val relationRepository: RelationRepository
   unstable val coroutineScope: CoroutineScope
-  unstable val clock: Clock
+  stable val clock: Clock
   <runtime stability> = Unstable
 }
 runtime class ly.david.musicsearch.shared.domain.relation.usecase.ObserveRelationStatsUseCaseImpl {
@@ -1020,7 +1021,7 @@ stable class ly.david.musicsearch.shared.domain.release.FormatTrackCount {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.release.ReleaseStatusCount {
-  stable val status: ReleaseStatus?
+  stable val status: ReleaseStatus
   stable val count: Int
   <runtime stability> = Stable
 }
@@ -1074,6 +1075,12 @@ unstable class ly.david.musicsearch.shared.domain.search.results.usecase.GetSear
   unstable val coroutineScope: CoroutineScope
   unstable val _searchQueries: MutableStateFlow<Pair<MusicBrainzEntityType, String>>
   <runtime stability> = Unstable
+}
+stable class ly.david.musicsearch.shared.domain.url.EntityAdditionalInfo {
+  runtime val imageMetadata: ImageMetadata?
+  stable val visited: Boolean
+  stable val aliases: ImmutableList<BasicAlias>
+  <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract {
   stable val extract: String
