@@ -1987,5 +1987,4 @@ class ReleasesListRepositoryImplTest :
             )
         }
     }
-    // TODO: test
 }

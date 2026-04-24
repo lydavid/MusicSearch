@@ -29,6 +29,7 @@ import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
@@ -368,6 +369,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 entityId = countryId,
                 entityType = MusicBrainzEntityType.AREA,
             ),
+            listFilters = ListFilters(),
         )
         val places = flow.asSnapshot()
         assertEquals(
