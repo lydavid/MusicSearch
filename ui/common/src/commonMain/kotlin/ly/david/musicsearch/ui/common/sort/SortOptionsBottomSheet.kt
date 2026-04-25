@@ -9,11 +9,11 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.list.ArtistSortOption
-import ly.david.musicsearch.shared.domain.list.RecordingSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.list.SortableOption
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SortableOption
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons

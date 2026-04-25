@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.list.SortableOption
+import ly.david.musicsearch.shared.domain.sort.SortableOption
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Sort
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope

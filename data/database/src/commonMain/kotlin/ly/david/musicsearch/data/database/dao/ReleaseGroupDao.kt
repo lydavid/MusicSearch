@@ -20,7 +20,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
-import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 import kotlin.time.Clock

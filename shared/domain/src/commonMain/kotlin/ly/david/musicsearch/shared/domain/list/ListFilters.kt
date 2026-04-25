@@ -3,6 +3,10 @@ package ly.david.musicsearch.shared.domain.list
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.toPersistentSet
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 
 sealed interface ListFilters {
     val query: String

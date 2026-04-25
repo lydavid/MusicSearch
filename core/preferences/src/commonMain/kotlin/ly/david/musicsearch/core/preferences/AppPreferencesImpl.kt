@@ -18,10 +18,10 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.list.ArtistSortOption
-import ly.david.musicsearch.shared.domain.list.RecordingSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
