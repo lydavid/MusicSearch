@@ -63,9 +63,10 @@ fun EntitiesPagingListUi(
     requestForMissingCoverArtUrl: suspend (id: String) -> Unit = { _ -> },
     onLogin: () -> Unit = {},
 ) {
-    val header: @Composable (() -> Unit)? = if (uiState.filteredCount == uiState.totalCount) {
-        null
-    } else {
+    val filteredCount = uiState.filteredCount
+    val totalCount = uiState.totalCount
+    val showHeader = filteredCount != 0 && filteredCount != totalCount
+    val header: @Composable (() -> Unit)? = if (showHeader) {
         {
             Text(
                 modifier = Modifier
@@ -74,11 +75,13 @@ fun EntitiesPagingListUi(
                 style = MaterialTheme.typography.bodyMedium,
                 text = stringResource(
                     Res.string.showingXOfY,
-                    uiState.filteredCount,
-                    uiState.totalCount,
+                    filteredCount,
+                    totalCount,
                 ),
             )
         }
+    } else {
+        null
     }
 
     ScreenWithPagingLoadingAndError(
