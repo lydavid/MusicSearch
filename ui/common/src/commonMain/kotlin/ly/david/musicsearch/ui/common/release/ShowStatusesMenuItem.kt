@@ -19,7 +19,7 @@ import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 @Composable
 fun OverflowMenuScope.ShowStatusesMenuItem(
     selectedStatuses: Set<ReleaseStatus>,
-    onClick: (ReleaseStatus) -> Unit,
+    onClick: (ReleaseStatus?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }

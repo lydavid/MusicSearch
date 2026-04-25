@@ -154,13 +154,17 @@ internal class AppPreferencesImpl(
             .map { it.getShownReleaseStatuses() }
             .distinctUntilChanged()
 
-    override fun setShowReleaseStatus(status: ReleaseStatus) {
+    override fun setShowReleaseStatus(status: ReleaseStatus?) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                val current = it.getShownReleaseStatuses()
-                it[showReleaseStatusesPreference] = current
-                    .let { set -> if (status in set) set - status else set + status }
-                    .toBitmask()
+                val newStatuses = if (status == null) {
+                    val current = it.getShownReleaseStatuses()
+                    if (current.size == ReleaseStatus.entries.size) emptySet() else ReleaseStatus.entries.toSet()
+                } else {
+                    val current = it.getShownReleaseStatuses()
+                    if (status in current) current - status else current + status
+                }
+                it[showReleaseStatusesPreference] = newStatuses.toBitmask()
             }
         }
     }

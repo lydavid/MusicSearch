@@ -44,3 +44,16 @@ internal fun PreviewReleaseStatusesBottomSheetContentWithOneSelected() {
         }
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseStatusesBottomSheetContentWithNoneSelected() {
+    PreviewTheme {
+        Surface {
+            ReleaseStatusesBottomSheetContent(
+                selectedStatuses = setOf(),
+                onClick = {},
+            )
+        }
+    }
+}

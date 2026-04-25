@@ -60,7 +60,7 @@ open class NoOpAppPreferences : AppPreferences {
     override val showReleaseStatuses: Flow<Set<ReleaseStatus>>
         get() = flowOf(ReleaseStatus.entries.toSet())
 
-    override fun setShowReleaseStatus(status: ReleaseStatus) {
+    override fun setShowReleaseStatus(status: ReleaseStatus?) {
         // No-op.
     }
 

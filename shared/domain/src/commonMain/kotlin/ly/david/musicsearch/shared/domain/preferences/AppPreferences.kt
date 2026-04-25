@@ -37,7 +37,7 @@ interface AppPreferences {
     fun setShowMoreInfoInReleaseListItem(show: Boolean)
 
     val showReleaseStatuses: Flow<Set<ReleaseStatus>>
-    fun setShowReleaseStatus(status: ReleaseStatus)
+    fun setShowReleaseStatus(status: ReleaseStatus?)
 
     val releaseGroupSortOption: Flow<ReleaseGroupSortOption>
     fun setReleaseGroupSortOption(sortOption: ReleaseGroupSortOption)

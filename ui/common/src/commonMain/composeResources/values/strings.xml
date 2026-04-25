@@ -325,4 +325,6 @@
         <item quantity="other">Found %1$d results.</item>
     </plurals>
     <string name="lookupUrl">Lookup URL</string>
+    <string name="selectAll">Select all</string>
+    <string name="deselectAll">Deselect all</string>
 </resources>

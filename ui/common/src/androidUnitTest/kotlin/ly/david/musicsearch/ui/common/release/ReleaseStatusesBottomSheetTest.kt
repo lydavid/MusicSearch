@@ -25,4 +25,11 @@ class ReleaseStatusesBottomSheetTest : ScreenshotTest() {
             PreviewReleaseStatusesBottomSheetContentWithOneSelected()
         }
     }
+
+    @Test
+    fun withNoneSelected() {
+        snapshot {
+            PreviewReleaseStatusesBottomSheetContentWithNoneSelected()
+        }
+    }
 }

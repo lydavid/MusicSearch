@@ -214,6 +214,6 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
     ) : EntitiesListUiEvent
 
     data class UpdateShowReleaseStatus(
-        val status: ReleaseStatus,
+        val status: ReleaseStatus?,
     ) : EntitiesListUiEvent
 }
