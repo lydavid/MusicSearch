@@ -317,4 +317,12 @@
         <item quantity="other">Leidsin %1$d tulemust.</item>
     </plurals>
     <string name="lookupUrl">Otsingute võrguaadress</string>
+    <string name="regionalIndicatorSymbol">Piirkonna tunnuslipp</string>
+    <string name="withdrawn">Tagasivõetud väljaanne</string>
+    <string name="expunged">Kustutatud väljalase</string>
+    <string name="character">Tegelaskuju</string>
+    <string name="facets">Tahud</string>
+    <string name="clearFacets">Eemalda tahud</string>
+    <string name="broadcast">Ringhääling ja voogedastus</string>
+    <string name="mixtapeStreet">Mixtape/Street</string>
 </resources>
