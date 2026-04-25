@@ -80,7 +80,7 @@ private fun LookupUrlUiContent(
         item {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Paste a URL to check whether it exists in MusicBrainz or locally.",
+                text = "Enter a URL to check whether it exists in MusicBrainz or in this app's local database.",
             )
         }
 
@@ -103,7 +103,7 @@ private fun LookupUrlUiContent(
                     Text(
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                         text = when (result) {
-                            LookupUrlUiState.Result.Error.CannotBeEmpty -> "Query cannot be empty."
+                            LookupUrlUiState.Result.Error.CannotBeEmpty -> "URL cannot be empty."
                             is LookupUrlUiState.Result.Error.BadRequest -> "The URL (${result.url}) is invalid."
                             is LookupUrlUiState.Result.Error.Other -> result.message
                         },
