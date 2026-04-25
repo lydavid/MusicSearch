@@ -327,4 +327,8 @@
         <item quantity="other">%1$d résultats trouvés.</item>
     </plurals>
     <string name="lookupUrl">URL de recherche</string>
+    <string name="selectAll">Tout sélectionner</string>
+    <string name="deselectAll">Tout désélectionner</string>
+    <string name="earliestBeginDate">Date de début la plus proche</string>
+    <string name="latestBeginDate">Date de début la plus récente</string>
 </resources>
