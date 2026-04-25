@@ -31,6 +31,8 @@ CREATE TABLE relation (
 
 CREATE INDEX idx_relation_linked_entity_id ON relation(linked_entity_id);
 
+-- TODO: create index on name, which should improve url lookup speed
+
 insert:
 INSERT OR IGNORE INTO relation (
   `entity_id`,

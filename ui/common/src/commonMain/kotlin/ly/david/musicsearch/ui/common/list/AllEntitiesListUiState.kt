@@ -2,7 +2,7 @@ package ly.david.musicsearch.ui.common.list
 
 import androidx.compose.runtime.Stable
 import com.slack.circuit.runtime.CircuitUiState
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.relation.RelationsUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -49,23 +49,23 @@ fun AllEntitiesListUiState.getTotalLocalCount(tab: Tab?): Int {
     }
 }
 
-fun AllEntitiesListUiState.getSortOption(entity: MusicBrainzEntityType?): SortOption {
+fun AllEntitiesListUiState.getListFilters(entity: MusicBrainzEntityType?): ListFilters {
     return when (entity) {
-        MusicBrainzEntityType.AREA -> areasListUiState.sortOption
-        MusicBrainzEntityType.ARTIST -> artistsListUiState.sortOption
-        MusicBrainzEntityType.EVENT -> eventsListUiState.sortOption
-        MusicBrainzEntityType.GENRE -> genresListUiState.sortOption
-        MusicBrainzEntityType.INSTRUMENT -> instrumentsListUiState.sortOption
-        MusicBrainzEntityType.LABEL -> labelsListUiState.sortOption
-        MusicBrainzEntityType.PLACE -> placesListUiState.sortOption
-        MusicBrainzEntityType.RECORDING -> recordingsListUiState.sortOption
-        MusicBrainzEntityType.RELEASE -> releasesListUiState.sortOption
-        MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListUiState.sortOption
-        MusicBrainzEntityType.SERIES -> seriesListUiState.sortOption
-        MusicBrainzEntityType.WORK -> worksListUiState.sortOption
+        MusicBrainzEntityType.AREA -> areasListUiState.listFilters
+        MusicBrainzEntityType.ARTIST -> artistsListUiState.listFilters
+        MusicBrainzEntityType.EVENT -> eventsListUiState.listFilters
+        MusicBrainzEntityType.GENRE -> genresListUiState.listFilters
+        MusicBrainzEntityType.INSTRUMENT -> instrumentsListUiState.listFilters
+        MusicBrainzEntityType.LABEL -> labelsListUiState.listFilters
+        MusicBrainzEntityType.PLACE -> placesListUiState.listFilters
+        MusicBrainzEntityType.RECORDING -> recordingsListUiState.listFilters
+        MusicBrainzEntityType.RELEASE -> releasesListUiState.listFilters
+        MusicBrainzEntityType.RELEASE_GROUP -> releaseGroupsListUiState.listFilters
+        MusicBrainzEntityType.SERIES -> seriesListUiState.listFilters
+        MusicBrainzEntityType.WORK -> worksListUiState.listFilters
         MusicBrainzEntityType.COLLECTION,
         MusicBrainzEntityType.URL,
         null,
-        -> SortOption.None
+        -> ListFilters.Base()
     }
 }

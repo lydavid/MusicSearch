@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 
 /**
@@ -18,6 +18,6 @@ data class EntitiesListUiState(
     val lazyListState: LazyListState = LazyListState(),
     val totalCount: Int = 0,
     val filteredCount: Int = 0,
-    val sortOption: SortOption = SortOption.None,
+    val listFilters: ListFilters = ListFilters.Base(),
     val eventSink: (EntitiesListUiEvent) -> Unit = {},
 ) : CircuitUiState

@@ -68,7 +68,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.data.repository.helpers.testListens
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
@@ -78,7 +78,6 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.RawImageMetadata
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -171,9 +170,8 @@ class ReleasesListRepositoryImplTest :
                     entityId = labelId,
                     entityType = MusicBrainzEntityType.LABEL,
                 ),
-                listFilters = ListFilters(
+                listFilters = ListFilters.Releases(
                     query = "ウタ",
-                    sortOption = SortOption.Release(),
                 ),
                 now = testDateTimeInThePast,
             ).asSnapshot().run {
@@ -216,9 +214,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = labelId,
                 entityType = MusicBrainzEntityType.LABEL,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -257,9 +253,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = labelId,
                 entityType = MusicBrainzEntityType.LABEL,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         )
         flow.asSnapshot().let { releases ->
@@ -329,10 +323,9 @@ class ReleasesListRepositoryImplTest :
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
                         isRemote = false,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -433,9 +426,8 @@ class ReleasesListRepositoryImplTest :
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -536,9 +528,8 @@ class ReleasesListRepositoryImplTest :
             pagingFlowProducer = { query ->
                 releasesListRepository.observeReleases(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -626,9 +617,8 @@ class ReleasesListRepositoryImplTest :
             pagingFlowProducer = { query ->
                 releasesListRepository.observeReleases(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -662,9 +652,7 @@ class ReleasesListRepositoryImplTest :
         )
         modifiedreleasesListRepository.observeReleases(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -694,9 +682,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = virginMusicLabelMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.LABEL,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -745,9 +731,8 @@ class ReleasesListRepositoryImplTest :
                         entityId = areaId,
                         entityType = MusicBrainzEntityType.AREA,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -783,9 +768,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = virginMusicLabelMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.LABEL,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -810,9 +793,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = areaId,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -835,9 +816,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = virginMusicLabelMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.LABEL,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -884,9 +863,8 @@ class ReleasesListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -964,9 +942,8 @@ class ReleasesListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -1044,9 +1021,8 @@ class ReleasesListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Releases(
                         query = query,
-                        sortOption = SortOption.Release(),
                     ),
                     now = testDateTimeInThePast,
                 )
@@ -1121,9 +1097,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = davidBowieArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -1146,9 +1120,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = japanAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1166,10 +1138,9 @@ class ReleasesListRepositoryImplTest :
                 entityId = japanAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(
-                    showStatuses = persistentSetOf(ReleaseStatus.PSEUDO_RELEASE),
-                ),
+            listFilters = ListFilters.Releases(
+                showStatuses = persistentSetOf(ReleaseStatus.PSEUDO_RELEASE),
+
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -1182,10 +1153,8 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(
-                    option = ReleaseSortOption.DateAscending,
-                ),
+            listFilters = ListFilters.Releases(
+                sortOption = ReleaseSortOption.DateAscending,
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -1206,10 +1175,8 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(
-                    option = ReleaseSortOption.InsertedAscending,
-                ),
+            listFilters = ListFilters.Releases(
+                sortOption = ReleaseSortOption.InsertedAscending,
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -1302,9 +1269,7 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1352,9 +1317,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = underPressureRecordingMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.RECORDING,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -1377,9 +1340,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = davidBowieArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1393,9 +1354,7 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1484,9 +1443,7 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1531,9 +1488,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = underPressureReleaseGroupMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.RELEASE_GROUP,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -1556,9 +1511,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = underPressureRecordingMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.RECORDING,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1572,9 +1525,7 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1663,9 +1614,7 @@ class ReleasesListRepositoryImplTest :
         }
         releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1733,9 +1682,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = entityId,
                 entityType = entityType,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -1961,9 +1908,7 @@ class ReleasesListRepositoryImplTest :
                 entityId = entityId,
                 entityType = entityType,
             ),
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(

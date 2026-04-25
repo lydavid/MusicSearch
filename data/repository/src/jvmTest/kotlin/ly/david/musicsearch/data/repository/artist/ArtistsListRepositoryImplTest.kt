@@ -29,13 +29,13 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -212,7 +212,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 2,
@@ -233,7 +233,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "a",
             ),
         ).asSnapshot().run {
@@ -267,7 +267,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 2,
@@ -283,7 +283,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         }
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "a",
             ),
         ).asSnapshot().run {
@@ -318,7 +318,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -332,7 +332,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         }
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "a",
             ),
         ).asSnapshot().run {
@@ -376,7 +376,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             pagingFlowProducer = { query ->
                 artistsListRepository.observeArtists(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(query = query),
+                    listFilters = ListFilters.Base(query = query),
                 )
             },
             testCases = listOf(
@@ -412,7 +412,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             pagingFlowProducer = { query ->
                 artistsListRepository.observeArtists(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(query = query),
+                    listFilters = ListFilters.Base(query = query),
                 )
             },
             testCases = listOf(
@@ -467,7 +467,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = japanAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -488,7 +488,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.RELEASE,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(

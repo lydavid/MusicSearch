@@ -37,13 +37,12 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -137,7 +136,7 @@ class ReleaseGroupsListRepositoryImplTest :
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.ReleaseGroups(
                         query = query,
                         isRemote = false,
                     ),
@@ -221,7 +220,7 @@ class ReleaseGroupsListRepositoryImplTest :
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.ReleaseGroups(
                         query = query,
                     ),
                     now = testDateTimeInThePast,
@@ -300,7 +299,7 @@ class ReleaseGroupsListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.ReleaseGroups(
                         query = query,
                     ),
                     now = testDateTimeInThePast,
@@ -368,7 +367,7 @@ class ReleaseGroupsListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.ReleaseGroups(
                         query = query,
                     ),
                     now = testDateTimeInThePast,
@@ -425,14 +424,14 @@ class ReleaseGroupsListRepositoryImplTest :
             pagingFlowProducer = { listFilters ->
                 releaseGroupsListRepository.observeReleaseGroups(
                     browseMethod = BrowseMethod.All,
-                    listFilters = listFilters,
+                    listFilters = listFilters as ListFilters.ReleaseGroups,
                     now = testDateTimeInThePast,
                 )
             },
             testCases = listOf(
                 FiltersTestCase(
                     description = "No filter",
-                    listFilters = ListFilters(),
+                    listFilters = ListFilters.ReleaseGroups(),
                     expectedResult = listOf(
                         nutcrackerReleaseGroupListItemModel,
                         tchaikovskyOverturesReleaseGroupListItemModel.copy(
@@ -445,10 +444,8 @@ class ReleaseGroupsListRepositoryImplTest :
                 ),
                 FiltersTestCase(
                     description = "Sort by types",
-                    listFilters = ListFilters(
-                        sortOption = SortOption.ReleaseGroup(
-                            option = ReleaseGroupSortOption.PrimaryTypeAscending,
-                        ),
+                    listFilters = ListFilters.ReleaseGroups(
+                        sortOption = ReleaseGroupSortOption.PrimaryTypeAscending,
                     ),
                     expectedResult = listOf(
                         ReleaseGroupListSeparator(
@@ -495,7 +492,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 entityId = berlinerPhilharmonikerArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.ReleaseGroups(),
             now = testDateTimeInThePast,
         ).asSnapshot {
             refresh()
@@ -522,7 +519,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 entityId = tchaikovskyArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.ReleaseGroups(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -541,7 +538,7 @@ class ReleaseGroupsListRepositoryImplTest :
                 entityId = collectionId,
                 entityType = MusicBrainzEntityType.COLLECTION,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.ReleaseGroups(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -559,7 +556,7 @@ class ReleaseGroupsListRepositoryImplTest :
         }
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.ReleaseGroups(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -657,7 +654,7 @@ class ReleaseGroupsListRepositoryImplTest :
 
         releaseGroupsListRepository.observeReleaseGroups(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.ReleaseGroups(),
             now = testDateTimeInThePast,
         ).asSnapshot().run {
             assertEquals(
@@ -714,7 +711,7 @@ class ReleaseGroupsListRepositoryImplTest :
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.ReleaseGroups(
                         query = query,
                     ),
                     now = testDateTimeInThePast,

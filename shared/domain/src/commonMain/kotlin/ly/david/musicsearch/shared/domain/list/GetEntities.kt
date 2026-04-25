@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.appendLastUpdatedFooter

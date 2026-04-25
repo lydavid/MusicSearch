@@ -17,11 +17,10 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -60,33 +59,42 @@ abstract class BaseListPresenter(
         val releaseGroupSortOption
             by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
 
-        val sortOption: SortOption = when (getEntityType()) {
-            MusicBrainzEntityType.RECORDING -> SortOption.Recording(recordingSortOption)
+        val listFilters = when (getEntityType()) {
+            MusicBrainzEntityType.RECORDING -> ListFilters.Recordings(
+                query = query,
+                isRemote = isRemote,
+                sortOption = recordingSortOption,
+            )
 
-            MusicBrainzEntityType.RELEASE -> SortOption.Release(
-                option = releaseSortOption,
+            MusicBrainzEntityType.RELEASE -> ListFilters.Releases(
+                query = query,
+                isRemote = isRemote,
+                sortOption = releaseSortOption,
                 showMoreInfo = showMoreInfoInReleaseListItem,
                 showStatuses = showReleaseStatuses.toPersistentSet(),
             )
 
-            MusicBrainzEntityType.RELEASE_GROUP -> SortOption.ReleaseGroup(releaseGroupSortOption)
+            MusicBrainzEntityType.RELEASE_GROUP -> ListFilters.ReleaseGroups(
+                query = query,
+                isRemote = isRemote,
+                sortOption = releaseGroupSortOption,
+            )
 
-            else -> SortOption.None
+            else -> ListFilters.Base(
+                query = query,
+                isRemote = isRemote,
+            )
         }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(
             query,
             browseMethod,
-            sortOption,
+            listFilters,
         ) {
             mutableStateOf(
                 getEntities(
                     entity = getEntityType(),
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
-                        query = query,
-                        isRemote = isRemote,
-                        sortOption = sortOption,
-                    ),
+                    listFilters = listFilters,
                 ),
             )
         }
@@ -162,7 +170,7 @@ abstract class BaseListPresenter(
             totalCount = totalCount,
             filteredCount = filteredCount,
             lazyListState = lazyListState,
-            sortOption = sortOption,
+            listFilters = listFilters,
             eventSink = { event ->
                 eventSink(event)
             },

@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity

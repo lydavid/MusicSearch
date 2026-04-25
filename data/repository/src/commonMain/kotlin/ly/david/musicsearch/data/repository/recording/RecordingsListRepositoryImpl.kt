@@ -14,13 +14,11 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.domain.recording.RecordingsListRepository
 
 class RecordingsListRepositoryImpl(
@@ -40,7 +38,7 @@ class RecordingsListRepositoryImpl(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeRecordings(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Recordings,
     ): Flow<PagingData<RecordingListItemModel>> {
         return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
             observeEntities(
@@ -59,9 +57,8 @@ class RecordingsListRepositoryImpl(
         return recordingDao.getRecordings(
             browseMethod = browseMethod,
             query = listFilters.query,
-            username = listFilters.username,
-            sortOption = (listFilters.sortOption as? SortOption.Recording)?.option
-                ?: RecordingSortOption.InsertedAscending,
+            username = (listFilters as ListFilters.Recordings).username,
+            sortOption = listFilters.sortOption,
         )
     }
 

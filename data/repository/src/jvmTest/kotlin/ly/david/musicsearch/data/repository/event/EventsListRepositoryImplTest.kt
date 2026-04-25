@@ -31,11 +31,11 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
@@ -116,7 +116,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -207,7 +207,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -252,7 +252,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -326,7 +326,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -400,7 +400,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -478,7 +478,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -534,7 +534,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = kitanomaruAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -556,7 +556,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = budokanPlaceMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.PLACE,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -572,7 +572,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         // both old and new version of event exists
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -593,7 +593,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = budokanPlaceMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.PLACE,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -612,7 +612,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
 
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(

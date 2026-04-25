@@ -17,13 +17,11 @@ import ly.david.musicsearch.data.musicbrainz.api.LABELS
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.ReleasesListRepository
 import kotlin.time.Instant
@@ -45,7 +43,7 @@ class ReleasesListRepositoryImpl(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeReleases(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Releases,
         now: Instant,
     ): Flow<PagingData<ReleaseListItemModel>> {
         return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
@@ -66,9 +64,9 @@ class ReleasesListRepositoryImpl(
         return releaseDao.getReleases(
             browseMethod = browseMethod,
             query = listFilters.query,
-            username = listFilters.username,
-            sortOption = (listFilters.sortOption as? SortOption.Release)?.option ?: ReleaseSortOption.InsertedAscending,
-            showReleaseStatuses = (listFilters.sortOption as? SortOption.Release)?.showStatuses ?: emptySet(),
+            username = (listFilters as ListFilters.Releases).username,
+            sortOption = listFilters.sortOption,
+            showReleaseStatuses = listFilters.showStatuses,
         )
     }
 

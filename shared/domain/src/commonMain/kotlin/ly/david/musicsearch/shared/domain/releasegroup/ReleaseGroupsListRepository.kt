@@ -3,14 +3,14 @@ package ly.david.musicsearch.shared.domain.releasegroup
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import kotlin.time.Instant
 
 interface ReleaseGroupsListRepository {
     fun observeReleaseGroups(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.ReleaseGroups,
         now: Instant,
     ): Flow<PagingData<ListItemModel>>
 }

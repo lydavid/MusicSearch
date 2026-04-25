@@ -7,13 +7,13 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -505,7 +505,7 @@ private val detailsUiState = DetailsUiState(
         ),
         releasesListUiState = EntitiesListUiState(
             pagingDataFlow = canadianReleases,
-            sortOption = SortOption.Release(
+            listFilters = ListFilters.Releases(
                 showMoreInfo = true,
             ),
         ),

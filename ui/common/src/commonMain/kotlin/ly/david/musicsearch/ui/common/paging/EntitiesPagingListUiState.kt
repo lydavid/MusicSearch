@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.paging
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.paging.compose.LazyPagingItems
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -98,8 +98,7 @@ fun AllEntitiesListUiState.toEntitiesPagingListUiState(
         EntitiesPagingListUiState(
             lazyPagingItems = entitiesLazyPagingItems.releasesLazyPagingItems,
             lazyListState = this.releasesListUiState.lazyListState,
-            showMoreInfo = (this.releasesListUiState.sortOption as? SortOption.Release)
-                ?.showMoreInfo == true,
+            showMoreInfo = (this.releasesListUiState.listFilters as ListFilters.Releases).showMoreInfo,
             totalCount = this.releasesListUiState.totalCount,
             filteredCount = this.releasesListUiState.filteredCount,
         )
@@ -109,7 +108,7 @@ fun AllEntitiesListUiState.toEntitiesPagingListUiState(
         EntitiesPagingListUiState(
             lazyPagingItems = entitiesLazyPagingItems.releaseGroupsLazyPagingItems,
             lazyListState = this.releaseGroupsListUiState.lazyListState,
-            showMoreInfo = this.releaseGroupsListUiState.sortOption.showTypes(),
+            showMoreInfo = this.releaseGroupsListUiState.listFilters.showTypes(),
             totalCount = this.releaseGroupsListUiState.totalCount,
             filteredCount = this.releaseGroupsListUiState.filteredCount,
         )

@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity

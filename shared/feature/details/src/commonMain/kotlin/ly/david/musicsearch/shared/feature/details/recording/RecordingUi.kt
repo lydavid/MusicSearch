@@ -14,7 +14,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
@@ -26,7 +26,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.list.getSortOption
+import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -213,20 +213,20 @@ internal fun RecordingUi(
                     CopyToClipboardMenuItem(entityId)
 
                     when (
-                        val sortOption =
-                            state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
+                        val listFilters =
+                            state.allEntitiesListUiState.getListFilters(selectedTab.toMusicBrainzEntityType())
                     ) {
-                        SortOption.None -> {
+                        is ListFilters.Base -> {
                             // nothing
                         }
 
-                        is SortOption.Recording -> {
+                        is ListFilters.Recordings -> {
                             // nothing
                         }
 
-                        is SortOption.Release -> {
+                        is ListFilters.Releases -> {
                             ShowStatusesMenuItem(
-                                selectedStatuses = sortOption.showStatuses,
+                                selectedStatuses = listFilters.showStatuses,
                                 onClick = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateShowReleaseStatus(it),
@@ -235,7 +235,7 @@ internal fun RecordingUi(
                             )
                             SortMenuItem(
                                 sortOptions = ReleaseSortOption.entries,
-                                selectedSortOption = sortOption.option,
+                                selectedSortOption = listFilters.sortOption,
                                 onSortOptionClick = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseListItem(it),
@@ -243,7 +243,7 @@ internal fun RecordingUi(
                                 },
                             )
                             MoreInfoToggleMenuItem(
-                                showMoreInfo = sortOption.showMoreInfo,
+                                showMoreInfo = listFilters.showMoreInfo,
                                 onToggle = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -252,7 +252,11 @@ internal fun RecordingUi(
                             )
                         }
 
-                        is SortOption.ReleaseGroup -> {
+                        is ListFilters.ReleaseGroups -> {
+                            // nothing
+                        }
+
+                        is ListFilters.Works -> {
                             // nothing
                         }
                     }

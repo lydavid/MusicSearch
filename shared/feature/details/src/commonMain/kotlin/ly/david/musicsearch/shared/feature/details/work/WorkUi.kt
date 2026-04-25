@@ -12,7 +12,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -20,7 +20,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.list.getSortOption
+import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -175,17 +175,17 @@ internal fun WorkUi(
                     )
                     CopyToClipboardMenuItem(entityId)
                     when (
-                        val sortOption =
-                            state.allEntitiesListUiState.getSortOption(selectedTab.toMusicBrainzEntityType())
+                        val listFilters =
+                            state.allEntitiesListUiState.getListFilters(selectedTab.toMusicBrainzEntityType())
                     ) {
-                        SortOption.None -> {
+                        is ListFilters.Base -> {
                             // nothing
                         }
 
-                        is SortOption.Recording -> {
+                        is ListFilters.Recordings -> {
                             SortMenuItem(
                                 sortOptions = RecordingSortOption.entries,
-                                selectedSortOption = sortOption.option,
+                                selectedSortOption = listFilters.sortOption,
                                 onSortOptionClick = {
                                     recordingsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortRecordingListItem(it),
@@ -194,11 +194,15 @@ internal fun WorkUi(
                             )
                         }
 
-                        is SortOption.Release -> {
+                        is ListFilters.Releases -> {
                             // nothing
                         }
 
-                        is SortOption.ReleaseGroup -> {
+                        is ListFilters.ReleaseGroups -> {
+                            // nothing
+                        }
+
+                        is ListFilters.Works -> {
                             // nothing
                         }
                     }

@@ -6,9 +6,9 @@ import androidx.paging.PagingData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -117,7 +117,7 @@ private val detailsUiState = DetailsUiState(
     allEntitiesListUiState = AllEntitiesListUiState(
         releasesListUiState = EntitiesListUiState(
             pagingDataFlow = releases,
-            sortOption = SortOption.Release(
+            listFilters = ListFilters.Releases(
                 showMoreInfo = true,
             ),
         ),

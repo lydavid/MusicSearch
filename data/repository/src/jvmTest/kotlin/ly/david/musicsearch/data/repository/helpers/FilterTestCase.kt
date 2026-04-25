@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.helpers
 
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 
 data class FilterTestCase<T>(
     val description: String,

@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType

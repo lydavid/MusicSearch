@@ -19,7 +19,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.Feedback
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -30,7 +30,7 @@ import ly.david.musicsearch.ui.common.collection.getMessage
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
-import ly.david.musicsearch.ui.common.list.getSortOption
+import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -232,15 +232,15 @@ internal fun CollectionUi(
                         )
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())
-                    when (val sortOption = state.allEntitiesListUiState.getSortOption(entity)) {
-                        SortOption.None -> {
+                    when (val listFilters = state.allEntitiesListUiState.getListFilters(entity)) {
+                        is ListFilters.Base -> {
                             // nothing
                         }
 
-                        is SortOption.Recording -> {
+                        is ListFilters.Recordings -> {
                             SortMenuItem(
                                 sortOptions = RecordingSortOption.entries,
-                                selectedSortOption = sortOption.option,
+                                selectedSortOption = listFilters.sortOption,
                                 onSortOptionClick = {
                                     recordingsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortRecordingListItem(it),
@@ -249,9 +249,9 @@ internal fun CollectionUi(
                             )
                         }
 
-                        is SortOption.Release -> {
+                        is ListFilters.Releases -> {
                             ShowStatusesMenuItem(
-                                selectedStatuses = sortOption.showStatuses,
+                                selectedStatuses = listFilters.showStatuses,
                                 onClick = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateShowReleaseStatus(it),
@@ -260,7 +260,7 @@ internal fun CollectionUi(
                             )
                             SortMenuItem(
                                 sortOptions = ReleaseSortOption.entries,
-                                selectedSortOption = sortOption.option,
+                                selectedSortOption = listFilters.sortOption,
                                 onSortOptionClick = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseListItem(it),
@@ -268,7 +268,7 @@ internal fun CollectionUi(
                                 },
                             )
                             MoreInfoToggleMenuItem(
-                                showMoreInfo = sortOption.showMoreInfo,
+                                showMoreInfo = listFilters.showMoreInfo,
                                 onToggle = {
                                     releasesByEntityEventSink(
                                         EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
@@ -277,16 +277,20 @@ internal fun CollectionUi(
                             )
                         }
 
-                        is SortOption.ReleaseGroup -> {
+                        is ListFilters.ReleaseGroups -> {
                             SortMenuItem(
                                 sortOptions = ReleaseGroupSortOption.entries,
-                                selectedSortOption = sortOption.option,
+                                selectedSortOption = listFilters.sortOption,
                                 onSortOptionClick = {
                                     releaseGroupsByEntityEventSink(
                                         EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
                                     )
                                 },
                             )
+                        }
+
+                        is ListFilters.Works -> {
+                            // nothing
                         }
                     }
                     AddAllToCollectionMenuItem(

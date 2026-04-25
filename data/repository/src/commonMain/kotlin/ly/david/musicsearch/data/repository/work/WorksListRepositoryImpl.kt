@@ -14,7 +14,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
@@ -38,7 +38,7 @@ class WorksListRepositoryImpl(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeWorks(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Works,
     ): Flow<PagingData<WorkListItemModel>> {
         return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
             observeEntities(
@@ -57,7 +57,7 @@ class WorksListRepositoryImpl(
         return workDao.getWorks(
             browseMethod = browseMethod,
             query = listFilters.query,
-            username = listFilters.username,
+            username = (listFilters as ListFilters.Works).username,
         )
     }
 

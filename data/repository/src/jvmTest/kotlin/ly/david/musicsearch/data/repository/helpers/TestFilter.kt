@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import org.junit.Assert
 
 fun <T : Any> testFilter(

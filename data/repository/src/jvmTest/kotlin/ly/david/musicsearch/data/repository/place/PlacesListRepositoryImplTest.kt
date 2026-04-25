@@ -30,10 +30,10 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -116,7 +116,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         placesListRepository.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -133,7 +133,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         placesListRepository.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "are",
             ),
         ).asSnapshot().run {
@@ -168,7 +168,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
         sut.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -179,7 +179,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }
         sut.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "b",
             ),
         ).asSnapshot().run {
@@ -205,7 +205,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         entityId = marunouchiAreaMusicBrainzModel.id,
                         entityType = MusicBrainzEntityType.AREA,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -247,7 +247,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         entityId = chiyodaAreaMusicBrainzModel.id,
                         entityType = MusicBrainzEntityType.AREA,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -294,7 +294,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
         sut.observePlaces(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -311,7 +311,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }
         sut.observePlaces(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "ve",
             ),
         ).asSnapshot().run {
@@ -348,7 +348,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 entityId = marunouchiAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -369,7 +369,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 entityId = chiyodaAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(

@@ -13,8 +13,8 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -126,7 +126,7 @@ class AreasListRepositoryImplTest : KoinTest {
 
         sut.observeAreas(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -174,7 +174,7 @@ class AreasListRepositoryImplTest : KoinTest {
 
         sut.observeAreas(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "di",
             ),
         ).asSnapshot().run {

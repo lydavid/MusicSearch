@@ -31,7 +31,7 @@ import ly.david.musicsearch.data.repository.helpers.track4ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track5ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track6ListenedAtMs
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
@@ -41,7 +41,6 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.list.SortOption
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
@@ -474,9 +473,7 @@ class ListensListRepositoryImplTest :
         )
         val releases = releasesListRepository.observeReleases(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(
-                sortOption = SortOption.Release(),
-            ),
+            listFilters = ListFilters.Releases(),
             now = testDateTimeInThePast,
         ).asSnapshot()
         Assert.assertEquals(

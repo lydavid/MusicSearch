@@ -23,12 +23,12 @@ import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -202,7 +202,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = "area-id",
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         )
         val artists: List<ArtistListItemModel> = flow.asSnapshot()
         assertEquals(

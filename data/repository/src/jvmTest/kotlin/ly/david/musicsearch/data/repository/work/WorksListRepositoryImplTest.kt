@@ -49,7 +49,7 @@ import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -146,7 +146,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Works(
                         query = query,
                     ),
                 )
@@ -232,7 +232,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Works(
                         query = query,
                     ),
                 )
@@ -299,7 +299,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                         entityId = entityId,
                         entityType = entity,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Works(
                         query = query,
                     ),
                 )
@@ -360,7 +360,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
             pagingFlowProducer = { query ->
                 worksListRepository.observeWorks(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Works(
                         query = query,
                     ),
                 )
@@ -426,7 +426,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 entityId = davidBowieArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -449,7 +449,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 entityId = queenArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -467,7 +467,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 entityId = collectionId,
                 entityType = MusicBrainzEntityType.COLLECTION,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -487,7 +487,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         }
         worksListRepository.observeWorks(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -659,7 +659,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         )
         worksListRepository.observeWorks(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -712,7 +712,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         )
         worksListRepository.observeWorks(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Works(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(

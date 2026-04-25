@@ -22,9 +22,9 @@ import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
+import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzListen
-import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
@@ -36,7 +36,7 @@ import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
@@ -102,7 +102,7 @@ class RecordingsListRepositoryImplTest :
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Recordings(
                         query = query,
                     ),
                 )
@@ -171,7 +171,7 @@ class RecordingsListRepositoryImplTest :
             pagingFlowProducer = { query ->
                 recordingsListRepository.observeRecordings(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Recordings(
                         query = query,
                     ),
                 )
@@ -216,7 +216,7 @@ class RecordingsListRepositoryImplTest :
             pagingFlowProducer = { query ->
                 recordingsListRepository.observeRecordings(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Recordings(
                         query = query,
                     ),
                 )
@@ -260,7 +260,7 @@ class RecordingsListRepositoryImplTest :
             pagingFlowProducer = { query ->
                 recordingsListRepository.observeRecordings(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Recordings(
                         query = query,
                     ),
                 )
@@ -315,7 +315,7 @@ class RecordingsListRepositoryImplTest :
                 entityId = itouKanakoArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -338,7 +338,7 @@ class RecordingsListRepositoryImplTest :
                 entityId = skycladObserverWorkMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.WORK,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -354,7 +354,7 @@ class RecordingsListRepositoryImplTest :
         // both old and new version of recording exists
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -375,7 +375,7 @@ class RecordingsListRepositoryImplTest :
                 entityId = skycladObserverWorkMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.WORK,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -395,7 +395,7 @@ class RecordingsListRepositoryImplTest :
         // both versions will continue to exist
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -486,7 +486,7 @@ class RecordingsListRepositoryImplTest :
         }
         recordingsListRepository.observeRecordings(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -524,7 +524,7 @@ class RecordingsListRepositoryImplTest :
                 entityId = itouKanakoArtistMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.ARTIST,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot {
             refresh()
         }.run {
@@ -544,7 +544,7 @@ class RecordingsListRepositoryImplTest :
                 entityId = collectionId,
                 entityType = MusicBrainzEntityType.COLLECTION,
             ),
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -639,7 +639,7 @@ class RecordingsListRepositoryImplTest :
 
         recordingsListRepository.observeRecordings(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Recordings(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -656,7 +656,7 @@ class RecordingsListRepositoryImplTest :
 
         recordingsListRepository.observeRecordings(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Recordings(
                 query = "observe",
             ),
         ).asSnapshot().run {

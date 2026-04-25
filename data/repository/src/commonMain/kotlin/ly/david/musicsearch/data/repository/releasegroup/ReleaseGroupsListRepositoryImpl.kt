@@ -15,8 +15,7 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
-import ly.david.musicsearch.shared.domain.list.SortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
@@ -41,7 +40,7 @@ class ReleaseGroupsListRepositoryImpl(
 
     override fun observeReleaseGroups(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.ReleaseGroups,
         now: Instant,
     ): Flow<PagingData<ListItemModel>> {
         return observeEntities(
@@ -56,7 +55,7 @@ class ReleaseGroupsListRepositoryImpl(
                     val showTypeDividers = setOf(
                         ReleaseGroupSortOption.PrimaryTypeAscending,
                         ReleaseGroupSortOption.PrimaryTypeDescending,
-                    ).contains((listFilters.sortOption as? SortOption.ReleaseGroup)?.option)
+                    ).contains(listFilters.sortOption)
                     when {
                         showTypeDividers && rg2 != null &&
                             (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
@@ -82,8 +81,7 @@ class ReleaseGroupsListRepositoryImpl(
         return releaseGroupDao.getReleaseGroups(
             browseMethod = browseMethod,
             query = listFilters.query,
-            sortOption = (listFilters.sortOption as? SortOption.ReleaseGroup)?.option
-                ?: ReleaseGroupSortOption.InsertedAscending,
+            sortOption = (listFilters as ListFilters.ReleaseGroups).sortOption,
         )
     }
 

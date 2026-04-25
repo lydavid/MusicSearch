@@ -23,8 +23,8 @@ import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetwork
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
@@ -104,7 +104,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -157,7 +157,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         )
         labelsListRepository.observeLabels(
             browseMethod = browseMethod,
-            listFilters = ListFilters(),
+            listFilters = ListFilters.Base(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -169,7 +169,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         }
         labelsListRepository.observeLabels(
             browseMethod = browseMethod,
-            listFilters = ListFilters(
+            listFilters = ListFilters.Base(
                 query = "do",
             ),
         ).asSnapshot().run {
@@ -199,7 +199,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
@@ -247,7 +247,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters(
+                    listFilters = ListFilters.Base(
                         query = query,
                     ),
                 )
