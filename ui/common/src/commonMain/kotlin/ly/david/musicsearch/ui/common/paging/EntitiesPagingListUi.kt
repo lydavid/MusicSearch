@@ -65,7 +65,7 @@ fun EntitiesPagingListUi(
 ) {
     val filteredCount = uiState.filteredCount
     val totalCount = uiState.totalCount
-    val showHeader = filteredCount != 0 && filteredCount != totalCount
+    val showHeader = filteredCount != 0 && totalCount != 0 && filteredCount != totalCount
     val header: @Composable (() -> Unit)? = if (showHeader) {
         {
             Text(
