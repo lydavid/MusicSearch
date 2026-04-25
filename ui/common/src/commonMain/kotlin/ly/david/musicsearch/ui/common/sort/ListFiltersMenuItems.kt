@@ -1,0 +1,93 @@
+package ly.david.musicsearch.ui.common.sort
+
+import androidx.compose.runtime.Composable
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
+import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
+import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
+import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
+import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
+
+@Composable
+fun OverflowMenuScope.ListFiltersMenuItems(
+    listFilters: ListFilters,
+    eventSink: (EntitiesListUiEvent) -> Unit,
+) {
+    when (listFilters) {
+        is ListFilters.Base -> {
+            // nothing
+        }
+
+        is ListFilters.Artists -> {
+            SortMenuItem(
+                sortOptions = ArtistSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    // TODO: consider moving to AllEntitiesListUiEvent
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Recordings -> {
+            SortMenuItem(
+                sortOptions = RecordingSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Releases -> {
+            ShowStatusesMenuItem(
+                selectedStatuses = listFilters.showStatuses,
+                onClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateShowReleaseStatus(it),
+                    )
+                },
+            )
+            SortMenuItem(
+                sortOptions = ReleaseSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                    )
+                },
+            )
+            MoreInfoToggleMenuItem(
+                showMoreInfo = listFilters.showMoreInfo,
+                onToggle = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.ReleaseGroups -> {
+            SortMenuItem(
+                sortOptions = ReleaseGroupSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Works -> {
+            // nothing
+        }
+    }
+}

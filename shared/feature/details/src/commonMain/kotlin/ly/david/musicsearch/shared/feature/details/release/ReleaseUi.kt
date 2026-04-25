@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -31,6 +32,7 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
+import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -43,6 +45,7 @@ import ly.david.musicsearch.ui.common.topappbar.TabsBar
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.getTitle
 import ly.david.musicsearch.ui.common.topappbar.showSubmitListenDialog
+import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityTypeWhereTracksAreRecordings
 
 @OptIn(
@@ -113,6 +116,7 @@ internal fun ReleaseUi(
     )
 
     val eventSink = state.eventSink
+    val entitiesListEventSink = state.allEntitiesListUiState.areasListUiState.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
 
     LaunchedEffect(key1 = pagerState.currentPage) {
@@ -217,6 +221,13 @@ internal fun ReleaseUi(
                     }
 
                     CopyToClipboardMenuItem(entityId)
+
+                    ListFiltersMenuItems(
+                        listFilters = state.allEntitiesListUiState.getListFilters(
+                            entity = selectedTab.toMusicBrainzEntityType(),
+                        ),
+                        eventSink = entitiesListEventSink,
+                    )
 
                     AddAllToCollectionMenuItem(
                         tab = selectedTab,

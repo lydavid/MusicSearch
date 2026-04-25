@@ -19,14 +19,9 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.error.Feedback
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.list.ArtistSortOption
-import ly.david.musicsearch.shared.domain.list.RecordingSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.collection.getMessage
 import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
@@ -39,15 +34,13 @@ import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState
-import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
-import ly.david.musicsearch.ui.common.sort.SortMenuItem
+import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem
-import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
@@ -77,7 +70,6 @@ internal fun CollectionUi(
 
     val eventSink = state.eventSink
     val loginEventSink = state.musicBrainzLoginUiState.eventSink
-    val recordingsByEntityEventSink = state.allEntitiesListUiState.recordingsListUiState.eventSink
     val releasesByEntityEventSink = state.allEntitiesListUiState.releasesListUiState.eventSink
     val releaseGroupsByEntityEventSink = state.allEntitiesListUiState.releaseGroupsListUiState.eventSink
 
@@ -233,79 +225,12 @@ internal fun CollectionUi(
                         )
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())
-                    when (val listFilters = state.allEntitiesListUiState.getListFilters(entity)) {
-                        is ListFilters.Base -> {
-                            // nothing
-                        }
-
-                        is ListFilters.Artists -> {
-                            SortMenuItem(
-                                sortOptions = ArtistSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    recordingsByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.Recordings -> {
-                            SortMenuItem(
-                                sortOptions = RecordingSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    recordingsByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortRecordingListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.Releases -> {
-                            ShowStatusesMenuItem(
-                                selectedStatuses = listFilters.showStatuses,
-                                onClick = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateShowReleaseStatus(it),
-                                    )
-                                },
-                            )
-                            SortMenuItem(
-                                sortOptions = ReleaseSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
-                                    )
-                                },
-                            )
-                            MoreInfoToggleMenuItem(
-                                showMoreInfo = listFilters.showMoreInfo,
-                                onToggle = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.ReleaseGroups -> {
-                            SortMenuItem(
-                                sortOptions = ReleaseGroupSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    releaseGroupsByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.Works -> {
-                            // nothing
-                        }
-                    }
+                    ListFiltersMenuItems(
+                        listFilters = state.allEntitiesListUiState.getListFilters(
+                            entity = entity,
+                        ),
+                        eventSink = releasesByEntityEventSink,
+                    )
                     AddAllToCollectionMenuItem(
                         tab = tab,
                         entityIds = state.selectionState.selectedIds,

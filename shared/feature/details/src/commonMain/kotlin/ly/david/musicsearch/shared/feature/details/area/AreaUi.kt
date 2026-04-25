@@ -12,9 +12,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
-import ly.david.musicsearch.shared.domain.list.ArtistSortOption
-import ly.david.musicsearch.shared.domain.list.ListFilters
-import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -26,14 +23,12 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
-import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
-import ly.david.musicsearch.ui.common.sort.SortMenuItem
+import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
@@ -174,66 +169,12 @@ internal fun AreaUi(
                         coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    when (
-                        val listFilters =
-                            state.allEntitiesListUiState.getListFilters(selectedTab.toMusicBrainzEntityType())
-                    ) {
-                        is ListFilters.Base -> {
-                            // nothing
-                        }
-
-                        is ListFilters.Artists -> {
-                            SortMenuItem(
-                                sortOptions = ArtistSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.Recordings -> {
-                            // nothing
-                        }
-
-                        is ListFilters.Releases -> {
-                            ShowStatusesMenuItem(
-                                selectedStatuses = listFilters.showStatuses,
-                                onClick = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateShowReleaseStatus(it),
-                                    )
-                                },
-                            )
-                            SortMenuItem(
-                                sortOptions = ReleaseSortOption.entries,
-                                selectedSortOption = listFilters.sortOption,
-                                onSortOptionClick = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
-                                    )
-                                },
-                            )
-                            MoreInfoToggleMenuItem(
-                                showMoreInfo = listFilters.showMoreInfo,
-                                onToggle = {
-                                    releasesByEntityEventSink(
-                                        EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem(it),
-                                    )
-                                },
-                            )
-                        }
-
-                        is ListFilters.ReleaseGroups -> {
-                            // nothing
-                        }
-
-                        is ListFilters.Works -> {
-                            // nothing
-                        }
-                    }
+                    ListFiltersMenuItems(
+                        listFilters = state.allEntitiesListUiState.getListFilters(
+                            entity = selectedTab.toMusicBrainzEntityType(),
+                        ),
+                        eventSink = releasesByEntityEventSink,
+                    )
                     AddAllToCollectionMenuItem(
                         tab = selectedTab,
                         entityIds = state.selectionState.selectedIds,
