@@ -162,6 +162,20 @@ AND (
   artist_alias.name LIKE :query
 )
 GROUP BY artist.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN ae.rowid
+    WHEN 2 THEN artist.name
+    WHEN 4 THEN artist.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN ae.rowid
+    WHEN 3 THEN artist.name
+    WHEN 5 THEN artist.`begin`
+  END DESC,
+  artist.`begin`,
+  artist.`end`,
+  artist.name
 LIMIT :limit OFFSET :offset;
 
 -- artists by collection
@@ -224,7 +238,20 @@ AND (
   artist_alias.name LIKE :query
 )
 GROUP BY artist.id
-ORDER BY artist.`begin`, artist.`end`, artist.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN artist.name
+    WHEN 4 THEN artist.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN artist.name
+    WHEN 5 THEN artist.`begin`
+  END DESC,
+  artist.`begin`,
+  artist.`end`,
+  artist.name
 LIMIT :limit OFFSET :offset;
 
 -- all artists
@@ -283,7 +310,20 @@ WHERE (
   artist_alias.name LIKE :query
 )
 GROUP BY artist.id
-ORDER BY artist.`begin`, artist.`end`, artist.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN artist.rowid
+    WHEN 2 THEN artist.name
+    WHEN 4 THEN artist.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN artist.rowid
+    WHEN 3 THEN artist.name
+    WHEN 5 THEN artist.`begin`
+  END DESC,
+  artist.`begin`,
+  artist.`end`,
+  artist.name
 LIMIT :limit OFFSET :offset;
 
 -- listens

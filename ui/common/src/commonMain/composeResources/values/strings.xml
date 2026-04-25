@@ -327,4 +327,6 @@
     <string name="lookupUrl">Lookup URL</string>
     <string name="selectAll">Select all</string>
     <string name="deselectAll">Deselect all</string>
+    <string name="earliestBeginDate">Earliest begin date</string>
+    <string name="latestBeginDate">Latest begin date</string>
 </resources>

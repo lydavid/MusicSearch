@@ -19,9 +19,9 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant

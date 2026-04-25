@@ -1,6 +1,4 @@
-package ly.david.musicsearch.shared.domain.release
-
-import ly.david.musicsearch.shared.domain.list.SortableOption
+package ly.david.musicsearch.shared.domain.list
 
 // order matters
 enum class ReleaseSortOption : SortableOption {

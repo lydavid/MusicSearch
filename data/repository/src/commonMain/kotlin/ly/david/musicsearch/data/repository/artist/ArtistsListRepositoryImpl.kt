@@ -12,8 +12,8 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -33,7 +33,7 @@ class ArtistsListRepositoryImpl(
 
     override fun observeArtists(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Artists,
     ): Flow<PagingData<ArtistListItemModel>> {
         return observeEntities(
             browseMethod = browseMethod,
@@ -48,6 +48,7 @@ class ArtistsListRepositoryImpl(
         return artistDao.getArtists(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Artists).sortOption,
         )
     }
 

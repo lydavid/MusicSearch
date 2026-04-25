@@ -1,6 +1,4 @@
-package ly.david.musicsearch.shared.domain.releasegroup
-
-import ly.david.musicsearch.shared.domain.list.SortableOption
+package ly.david.musicsearch.shared.domain.list
 
 enum class ReleaseGroupSortOption : SortableOption {
     InsertedAscending,

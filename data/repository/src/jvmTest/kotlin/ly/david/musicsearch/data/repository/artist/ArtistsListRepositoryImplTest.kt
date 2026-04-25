@@ -35,6 +35,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
@@ -212,7 +213,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(
+                sortOption = ArtistSortOption.DateAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 2,
@@ -233,8 +236,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
 
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Artists(
                 query = "a",
+                sortOption = ArtistSortOption.DateAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -267,12 +271,10 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(
+                sortOption = ArtistSortOption.InsertedAscending,
+            ),
         ).asSnapshot().run {
-            assertEquals(
-                2,
-                size,
-            )
             assertEquals(
                 listOf(
                     arcadeFireListItemModel,
@@ -283,18 +285,29 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         }
         sut.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Artists(
                 query = "a",
+                sortOption = ArtistSortOption.InsertedAscending,
             ),
         ).asSnapshot().run {
-            assertEquals(
-                2,
-                size,
-            )
             assertEquals(
                 listOf(
                     arcadeFireListItemModel,
                     theWeekndListItemModel,
+                ),
+                this,
+            )
+        }
+        sut.observeArtists(
+            browseMethod = browseMethod,
+            listFilters = ListFilters.Artists(
+                sortOption = ArtistSortOption.NameDescending,
+            ),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    theWeekndListItemModel,
+                    arcadeFireListItemModel,
                 ),
                 this,
             )
@@ -318,12 +331,14 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         )
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(
+                sortOption = ArtistSortOption.InsertedAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    bumpOfChickenListItemModel,
                     atarayoListItemModel,
+                    bumpOfChickenListItemModel,
                     roseliaArtistListItemModel,
                     itouKanakoArtistListItemModel,
                 ),
@@ -332,8 +347,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
         }
         artistsListRepository.observeArtists(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Artists(
                 query = "a",
+                sortOption = ArtistSortOption.InsertedAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -376,7 +392,10 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             pagingFlowProducer = { query ->
                 artistsListRepository.observeArtists(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(query = query),
+                    listFilters = ListFilters.Artists(
+                        query = query,
+                        sortOption = ArtistSortOption.InsertedAscending,
+                    ),
                 )
             },
             testCases = listOf(
@@ -412,7 +431,10 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             pagingFlowProducer = { query ->
                 artistsListRepository.observeArtists(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(query = query),
+                    listFilters = ListFilters.Artists(
+                        query = query,
+                        sortOption = ArtistSortOption.InsertedAscending,
+                    ),
                 )
             },
             testCases = listOf(
@@ -420,25 +442,25 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        variousArtistsArtistListItemModel,
-                        itouKanakoArtistListItemModel,
-                        theWeekndListItemModel,
-                        bumpOfChickenListItemModel,
                         arcadeFireListItemModel,
-                        roseliaArtistListItemModel,
+                        theWeekndListItemModel,
                         atarayoListItemModel,
+                        bumpOfChickenListItemModel,
+                        roseliaArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                        variousArtistsArtistListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by name",
                     query = "a",
                     expectedResult = listOf(
-                        variousArtistsArtistListItemModel,
-                        itouKanakoArtistListItemModel,
-                        theWeekndListItemModel,
                         arcadeFireListItemModel,
-                        roseliaArtistListItemModel,
+                        theWeekndListItemModel,
                         atarayoListItemModel,
+                        roseliaArtistListItemModel,
+                        itouKanakoArtistListItemModel,
+                        variousArtistsArtistListItemModel,
                     ),
                 ),
             ),
@@ -467,17 +489,17 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = japanAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(),
         ).asSnapshot {
             refresh()
         }.run {
             assertEquals(
                 listOf(
-                    bumpOfChickenListItemModel,
                     roseliaArtistListItemModel.copy(
                         disambiguation = "new changes will show up",
                     ),
                     itouKanakoArtistListItemModel,
+                    bumpOfChickenListItemModel,
                 ),
                 this,
             )
@@ -488,7 +510,7 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = bandoriCoverCollection8ReleaseMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.RELEASE,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(

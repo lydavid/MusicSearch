@@ -245,6 +245,20 @@ class AllEntitiesListPresenter(
             }
         }
 
+        fun eventSink(
+            event: AllEntitiesListUiEvent,
+        ) {
+            when (event) {
+                is AllEntitiesListUiEvent.Get -> {
+                    tab = event.tab
+                    browseMethod = event.browseMethod
+                    query = event.query
+                    isRemote = event.isRemote
+                    mostListenedTrackCount = event.mostListenedTrackCount
+                }
+            }
+        }
+
         return AllEntitiesListUiState(
             areasListUiState = areasByEntityUiState,
             artistsListUiState = artistsByEntityUiState,
@@ -261,35 +275,9 @@ class AllEntitiesListPresenter(
             relationsUiState = relationsUiState,
             tracksByReleaseUiState = tracksByReleaseUiState,
             eventSink = { event ->
-                handleEvent(
-                    event = event,
-                    onTabChanged = { tab = it },
-                    onBrowseMethodChanged = { browseMethod = it },
-                    onQueryChanged = { query = it },
-                    onIsRemoteChanged = { isRemote = it },
-                    onMostListenedTrackCountChanged = { mostListenedTrackCount = it },
-                )
+                eventSink(event = event)
             },
         )
-    }
-
-    private fun handleEvent(
-        event: AllEntitiesListUiEvent,
-        onTabChanged: (Tab?) -> Unit,
-        onBrowseMethodChanged: (BrowseMethod?) -> Unit,
-        onQueryChanged: (String) -> Unit,
-        onIsRemoteChanged: (Boolean) -> Unit,
-        onMostListenedTrackCountChanged: (Long) -> Unit,
-    ) {
-        when (event) {
-            is AllEntitiesListUiEvent.Get -> {
-                onTabChanged(event.tab)
-                onBrowseMethodChanged(event.browseMethod)
-                onQueryChanged(event.query)
-                onIsRemoteChanged(event.isRemote)
-                onMostListenedTrackCountChanged(event.mostListenedTrackCount)
-            }
-        }
     }
 }
 

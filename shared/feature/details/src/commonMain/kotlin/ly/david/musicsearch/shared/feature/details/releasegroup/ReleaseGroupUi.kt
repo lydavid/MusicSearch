@@ -14,9 +14,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -191,6 +192,18 @@ internal fun ReleaseGroupUi(
                     ) {
                         is ListFilters.Base -> {
                             // nothing
+                        }
+
+                        is ListFilters.Artists -> {
+                            SortMenuItem(
+                                sortOptions = ArtistSortOption.entries,
+                                selectedSortOption = listFilters.sortOption,
+                                onSortOptionClick = {
+                                    releasesByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
+                                    )
+                                },
+                            )
                         }
 
                         is ListFilters.Recordings -> {

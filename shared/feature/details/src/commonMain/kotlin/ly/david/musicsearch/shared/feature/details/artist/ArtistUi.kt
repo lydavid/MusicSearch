@@ -16,12 +16,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -212,6 +213,18 @@ internal fun ArtistUi(
                     ) {
                         is ListFilters.Base -> {
                             // nothing
+                        }
+
+                        is ListFilters.Artists -> {
+                            SortMenuItem(
+                                sortOptions = ArtistSortOption.entries,
+                                selectedSortOption = listFilters.sortOption,
+                                onSortOptionClick = {
+                                    recordingsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
+                                    )
+                                },
+                            )
                         }
 
                         is ListFilters.Recordings -> {

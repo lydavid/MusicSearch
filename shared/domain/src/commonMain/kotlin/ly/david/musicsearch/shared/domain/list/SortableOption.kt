@@ -1,3 +1,3 @@
 package ly.david.musicsearch.shared.domain.list
 
-interface SortableOption
+sealed interface SortableOption

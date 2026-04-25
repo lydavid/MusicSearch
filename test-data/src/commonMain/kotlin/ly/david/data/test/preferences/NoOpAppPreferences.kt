@@ -7,12 +7,13 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 open class NoOpAppPreferences : AppPreferences {
     override val theme: Flow<AppPreferences.Theme>
@@ -33,6 +34,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = error("Not implemented")
 
     override fun setSeedColor(seedColor: Int) {
+        // No-op.
+    }
+
+    override val artistSortOption: Flow<ArtistSortOption>
+        get() = flowOf(ArtistSortOption.InsertedAscending)
+
+    override fun setArtistSortOption(sort: ArtistSortOption) {
         // No-op.
     }
 

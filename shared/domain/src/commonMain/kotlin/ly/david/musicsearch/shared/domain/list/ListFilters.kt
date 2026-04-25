@@ -2,10 +2,7 @@ package ly.david.musicsearch.shared.domain.list
 
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.toPersistentSet
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 sealed interface ListFilters {
     val query: String
@@ -14,6 +11,12 @@ sealed interface ListFilters {
     data class Base(
         override val query: String = "",
         override val isRemote: Boolean = true,
+    ) : ListFilters
+
+    data class Artists(
+        override val query: String = "",
+        override val isRemote: Boolean = true,
+        val sortOption: ArtistSortOption = ArtistSortOption.InsertedAscending,
     ) : ListFilters
 
     data class Recordings(

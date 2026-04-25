@@ -18,15 +18,16 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -81,6 +82,25 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    // region Artist
+    private val artistSortOptionPreference = stringPreferencesKey(AppPreferencesKey.ARTIST_SORT_OPTION.name)
+
+    override val artistSortOption: Flow<ArtistSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                it[artistSortOptionPreference].toEnumOrDefault(ArtistSortOption.InsertedAscending)
+            }
+            .distinctUntilChanged()
+
+    override fun setArtistSortOption(sort: ArtistSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[artistSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
 
     // region Recording
     private val recordingSortOptionPreference = stringPreferencesKey(AppPreferencesKey.RECORDING_SORT_OPTION.name)

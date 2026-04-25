@@ -9,6 +9,6 @@ import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 interface ArtistsListRepository {
     fun observeArtists(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Artists,
     ): Flow<PagingData<ArtistListItemModel>>
 }

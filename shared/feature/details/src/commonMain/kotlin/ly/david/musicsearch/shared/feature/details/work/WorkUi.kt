@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -180,6 +181,18 @@ internal fun WorkUi(
                     ) {
                         is ListFilters.Base -> {
                             // nothing
+                        }
+
+                        is ListFilters.Artists -> {
+                            SortMenuItem(
+                                sortOptions = ArtistSortOption.entries,
+                                selectedSortOption = listFilters.sortOption,
+                                onSortOptionClick = {
+                                    recordingsByEntityEventSink(
+                                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
+                                    )
+                                },
+                            )
                         }
 
                         is ListFilters.Recordings -> {

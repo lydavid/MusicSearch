@@ -202,7 +202,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 entityId = "area-id",
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Artists(),
         )
         val artists: List<ArtistListItemModel> = flow.asSnapshot()
         assertEquals(

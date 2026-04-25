@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
 import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
@@ -203,10 +204,12 @@ class ArtistDao(
     fun getArtists(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: ArtistSortOption,
     ): PagingSource<Int, ArtistListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllArtists(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -215,11 +218,13 @@ class ArtistDao(
                 getArtistsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             } else {
                 getArtistsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -260,6 +265,7 @@ class ArtistDao(
 
     private fun getAllArtists(
         query: String,
+        sortOption: ArtistSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfAllArtists(
             query = query,
@@ -271,6 +277,7 @@ class ArtistDao(
                 query = "%$query%",
                 limit = limit,
                 offset = offset,
+                sortBy = sortOption.order.toLong(),
                 mapper = ::mapToArtistListItemModel,
             )
         },
@@ -279,6 +286,7 @@ class ArtistDao(
     private fun getArtistsByEntity(
         entityId: String,
         query: String,
+        sortOption: ArtistSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfArtistsByEntityQuery(
             entityId = entityId,
@@ -290,6 +298,7 @@ class ArtistDao(
             transacter.getArtistsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToArtistListItemModel,
@@ -300,6 +309,7 @@ class ArtistDao(
     private fun getArtistsByCollection(
         collectionId: String,
         query: String,
+        sortOption: ArtistSortOption,
     ): PagingSource<Int, ArtistListItemModel> = QueryPagingSource(
         countQuery = getCountOfArtistsByCollectionQuery(
             collectionId = collectionId,
@@ -311,6 +321,7 @@ class ArtistDao(
             transacter.getArtistsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToArtistListItemModel,

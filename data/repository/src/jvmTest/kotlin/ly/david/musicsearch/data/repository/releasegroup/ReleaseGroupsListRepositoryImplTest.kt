@@ -47,7 +47,7 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupsListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule

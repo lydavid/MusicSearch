@@ -9,18 +9,21 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.list.SortableOption
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.alphabetically
 import musicsearch.ui.common.generated.resources.alphabeticallyReverse
+import musicsearch.ui.common.generated.resources.earliestBeginDate
 import musicsearch.ui.common.generated.resources.earliestCached
 import musicsearch.ui.common.generated.resources.earliestReleaseDate
+import musicsearch.ui.common.generated.resources.latestBeginDate
 import musicsearch.ui.common.generated.resources.latestCached
 import musicsearch.ui.common.generated.resources.latestReleaseDate
 import musicsearch.ui.common.generated.resources.leastCompleteListened
@@ -74,10 +77,21 @@ internal fun <T> SortOptionsBottomSheetContent(
 
 private fun SortableOption.getLabel(): StringResource {
     return when (this) {
+        is ArtistSortOption -> getLabel()
         is RecordingSortOption -> getLabel()
         is ReleaseSortOption -> getLabel()
         is ReleaseGroupSortOption -> getLabel()
-        else -> error("Unsupported SortOption type: ${this::class.simpleName}")
+    }
+}
+
+private fun ArtistSortOption.getLabel(): StringResource {
+    return when (this) {
+        ArtistSortOption.InsertedAscending -> Res.string.earliestCached
+        ArtistSortOption.InsertedDescending -> Res.string.latestCached
+        ArtistSortOption.NameAscending -> Res.string.alphabetically
+        ArtistSortOption.NameDescending -> Res.string.alphabeticallyReverse
+        ArtistSortOption.DateAscending -> Res.string.earliestBeginDate
+        ArtistSortOption.DateDescending -> Res.string.latestBeginDate
     }
 }
 

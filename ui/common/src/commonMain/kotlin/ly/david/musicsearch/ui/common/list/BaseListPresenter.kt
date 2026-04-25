@@ -18,16 +18,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
+import ly.david.musicsearch.shared.domain.list.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
+import ly.david.musicsearch.shared.domain.list.RecordingSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.list.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.recording.RecordingSortOption
-import ly.david.musicsearch.shared.domain.release.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
-import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 abstract class BaseListPresenter(
@@ -45,6 +46,9 @@ abstract class BaseListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
 
+        val artistSortOption
+            by appPreferences.artistSortOption.collectAsRetainedState(ArtistSortOption.InsertedAscending)
+
         val recordingSortOption
             by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.InsertedAscending)
 
@@ -60,6 +64,12 @@ abstract class BaseListPresenter(
             by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
 
         val listFilters = when (getEntityType()) {
+            MusicBrainzEntityType.ARTIST -> ListFilters.Artists(
+                query = query,
+                isRemote = isRemote,
+                sortOption = artistSortOption,
+            )
+
             MusicBrainzEntityType.RECORDING -> ListFilters.Recordings(
                 query = query,
                 isRemote = isRemote,
@@ -148,6 +158,10 @@ abstract class BaseListPresenter(
                     }
                 }
 
+                is EntitiesListUiEvent.UpdateSortArtistListItem -> {
+                    appPreferences.setArtistSortOption(event.sortOption)
+                }
+
                 is EntitiesListUiEvent.UpdateSortRecordingListItem -> {
                     appPreferences.setRecordingSortOption(event.sortOption)
                 }
@@ -195,6 +209,10 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
 
     data class RequestForMissingCoverArtUrl(
         val entityId: String,
+    ) : EntitiesListUiEvent
+
+    data class UpdateSortArtistListItem(
+        val sortOption: ArtistSortOption,
     ) : EntitiesListUiEvent
 
     data class UpdateSortRecordingListItem(
