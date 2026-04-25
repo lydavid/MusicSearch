@@ -1,0 +1,4 @@
+
+### Bug Fixes
+
+* do not show Showing X of Y header when filtered count (X) is 0, which is an intermediate state that would shortly change
