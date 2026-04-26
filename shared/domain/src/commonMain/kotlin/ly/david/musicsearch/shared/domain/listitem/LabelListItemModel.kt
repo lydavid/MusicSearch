@@ -2,6 +2,7 @@ package ly.david.musicsearch.shared.domain.listitem
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.label.Label
@@ -12,6 +13,7 @@ data class LabelListItemModel(
     override val disambiguation: String = "",
     override val type: String = "",
     override val labelCode: Int? = null,
+    val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
 
     val catalogNumbers: String? = null,
     override val visited: Boolean = false,

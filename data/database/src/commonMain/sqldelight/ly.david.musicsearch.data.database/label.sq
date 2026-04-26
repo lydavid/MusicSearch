@@ -129,6 +129,8 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
+  label.`begin`,
+  label.`end`,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
@@ -193,6 +195,8 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
+  label.`begin`,
+  label.`end`,
   details_metadata.entity_id IS NOT NULL AS visited,
   collection_entity.id IS NOT NULL AS collected,
   GROUP_CONCAT(label_alias.name, CHAR(9)) AS alias_names,
@@ -283,6 +287,8 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
+  label.`begin`,
+  label.`end`,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id

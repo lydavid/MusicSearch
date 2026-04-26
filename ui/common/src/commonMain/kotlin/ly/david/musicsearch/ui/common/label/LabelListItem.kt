@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNull
-import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
@@ -82,13 +82,22 @@ fun LabelListItem(
                     )
                 }
 
-                label.catalogNumbers.ifNotNullOrEmpty {
+                val catalogNumbers = label.catalogNumbers
+                if (!catalogNumbers.isNullOrEmpty()) {
                     HighlightableText(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = it,
+                        text = catalogNumbers,
                         highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
+                } else {
+                    label.lifeSpan.getLifeSpanForDisplay().ifNotEmpty { lifeSpanText ->
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = lifeSpanText,
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
                 }
             }
         },

@@ -13,9 +13,16 @@ class LabelListItemTest : ScreenshotTest() {
     }
 
     @Test
-    fun allInfo() {
+    fun withCatalogNumber() {
         snapshot {
-            PreviewLabelListItemAllInfo()
+            PreviewLabelListItemWithCatalogNumberDoesNotShowDate()
+        }
+    }
+
+    @Test
+    fun withBeginDate() {
+        snapshot {
+            PreviewLabelListItemWithBeginDate()
         }
     }
 

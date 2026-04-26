@@ -185,6 +185,8 @@ SELECT
   label.disambiguation,
   label.type,
   label.label_code,
+  label.`begin`,
+  label.`end`,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = label.id
