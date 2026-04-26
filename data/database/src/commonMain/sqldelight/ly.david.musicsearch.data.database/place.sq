@@ -135,7 +135,21 @@ AND (
   place_alias.name LIKE :query
 )
 GROUP BY place.id
-ORDER BY place.name, place.address
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN ap.rowid
+    WHEN 2 THEN place.name
+    WHEN 4 THEN place.address
+    WHEN 6 THEN place.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN ap.rowid
+    WHEN 3 THEN place.name
+    WHEN 5 THEN place.address
+    WHEN 7 THEN place.`begin`
+  END DESC,
+  place.name,
+  place.address
 LIMIT :limit OFFSET :offset;
 
 -- places by collection
@@ -190,7 +204,21 @@ AND (
   place_alias.name LIKE :query
 )
 GROUP BY place.id
-ORDER BY place.name, place.address
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN place.name
+    WHEN 4 THEN place.address
+    WHEN 6 THEN place.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN place.name
+    WHEN 5 THEN place.address
+    WHEN 7 THEN place.`begin`
+  END DESC,
+  place.name,
+  place.address
 LIMIT :limit OFFSET :offset;
 
 -- all places
@@ -241,5 +269,19 @@ WHERE (
   place_alias.name LIKE :query
 )
 GROUP BY place.id
-ORDER BY place.name, place.address
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN place.rowid
+    WHEN 2 THEN place.name
+    WHEN 4 THEN place.address
+    WHEN 6 THEN place.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN place.rowid
+    WHEN 3 THEN place.name
+    WHEN 5 THEN place.address
+    WHEN 7 THEN place.`begin`
+  END DESC,
+  place.name,
+  place.address
 LIMIT :limit OFFSET :offset;

@@ -369,7 +369,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 entityId = countryId,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(),
         )
         val places = flow.asSnapshot()
         assertEquals(

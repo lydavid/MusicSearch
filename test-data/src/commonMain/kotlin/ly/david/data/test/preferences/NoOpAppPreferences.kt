@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
+import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -66,6 +67,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(LabelSortOption.InsertedAscending)
 
     override fun setLabelSortOption(sort: LabelSortOption) {
+        // No-op.
+    }
+
+    override val placeSortOption: Flow<PlaceSortOption>
+        get() = flowOf(PlaceSortOption.InsertedAscending)
+
+    override fun setPlaceSortOption(sort: PlaceSortOption) {
         // No-op.
     }
 

@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
+import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -43,6 +44,9 @@ interface AppPreferences {
 
     val labelSortOption: Flow<LabelSortOption>
     fun setLabelSortOption(sort: LabelSortOption)
+
+    val placeSortOption: Flow<PlaceSortOption>
+    fun setPlaceSortOption(sort: PlaceSortOption)
 
     val recordingSortOption: Flow<RecordingSortOption>
     fun setRecordingSortOption(sort: RecordingSortOption)

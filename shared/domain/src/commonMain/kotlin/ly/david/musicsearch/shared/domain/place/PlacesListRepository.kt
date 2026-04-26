@@ -9,6 +9,6 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 interface PlacesListRepository {
     fun observePlaces(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Places,
     ): Flow<PagingData<PlaceListItemModel>>
 }

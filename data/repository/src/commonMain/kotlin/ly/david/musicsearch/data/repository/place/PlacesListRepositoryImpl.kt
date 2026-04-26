@@ -33,7 +33,7 @@ class PlacesListRepositoryImpl(
 
     override fun observePlaces(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Places,
     ): Flow<PagingData<PlaceListItemModel>> {
         return observeEntities(
             browseMethod = browseMethod,
@@ -48,6 +48,7 @@ class PlacesListRepositoryImpl(
         return placeDao.getPlaces(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Places).sortOption,
         )
     }
 

@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import lydavidmusicsearchdatadatabase.Area_place
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -145,10 +146,12 @@ class PlaceDao(
     fun getPlaces(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: PlaceSortOption,
     ): PagingSource<Int, PlaceListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllPlaces(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -157,11 +160,13 @@ class PlaceDao(
                 getPlacesByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             } else {
                 getPlacesByArea(
                     areaId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -202,6 +207,7 @@ class PlaceDao(
 
     private fun getAllPlaces(
         query: String,
+        sortOption: PlaceSortOption,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllPlaces(
             query = query,
@@ -211,6 +217,7 @@ class PlaceDao(
         queryProvider = { limit, offset ->
             transacter.getAllPlaces(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToPlaceListItemModel,
@@ -221,6 +228,7 @@ class PlaceDao(
     private fun getPlacesByArea(
         areaId: String,
         query: String,
+        sortOption: PlaceSortOption,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = getPlacesByAreaCountQuery(areaId, query),
         transacter = transacter,
@@ -229,6 +237,7 @@ class PlaceDao(
             transacter.getPlacesByArea(
                 areaId = areaId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToPlaceListItemModel,
@@ -247,6 +256,7 @@ class PlaceDao(
     private fun getPlacesByCollection(
         collectionId: String,
         query: String,
+        sortOption: PlaceSortOption,
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = getCountOfPlacesByCollectionQuery(
             collectionId = collectionId,
@@ -258,6 +268,7 @@ class PlaceDao(
             transacter.getPlacesByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToPlaceListItemModel,

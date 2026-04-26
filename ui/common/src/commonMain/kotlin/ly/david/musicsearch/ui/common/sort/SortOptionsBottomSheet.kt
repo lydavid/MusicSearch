@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
+import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -22,16 +23,20 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.addressAlphabetically
+import musicsearch.ui.common.generated.resources.addressReverseAlphabetically
 import musicsearch.ui.common.generated.resources.alphabetically
 import musicsearch.ui.common.generated.resources.alphabeticallyReverse
 import musicsearch.ui.common.generated.resources.earliestBeginDate
 import musicsearch.ui.common.generated.resources.earliestCached
+import musicsearch.ui.common.generated.resources.earliestOpenDate
 import musicsearch.ui.common.generated.resources.earliestReleaseDate
 import musicsearch.ui.common.generated.resources.earliestStartDate
 import musicsearch.ui.common.generated.resources.labelCodeAscending
 import musicsearch.ui.common.generated.resources.labelCodeDescending
 import musicsearch.ui.common.generated.resources.latestBeginDate
 import musicsearch.ui.common.generated.resources.latestCached
+import musicsearch.ui.common.generated.resources.latestOpenDate
 import musicsearch.ui.common.generated.resources.latestReleaseDate
 import musicsearch.ui.common.generated.resources.latestStartDate
 import musicsearch.ui.common.generated.resources.leastCompleteListened
@@ -91,6 +96,7 @@ private fun SortableOption.getLabel(): String {
             is ArtistSortOption -> getLabelRes()
             is EventSortOption -> getLabelRes()
             is LabelSortOption -> getLabelRes()
+            is PlaceSortOption -> getLabelRes()
             is RecordingSortOption -> getLabelRes()
             is ReleaseSortOption -> getLabelRes()
             is ReleaseGroupSortOption -> getLabelRes()
@@ -151,6 +157,22 @@ private fun LabelSortOption.getLabelRes(): StringResource {
 
         LabelSortOption.CodeAscending -> Res.string.labelCodeAscending
         LabelSortOption.CodeDescending -> Res.string.labelCodeDescending
+    }
+}
+
+private fun PlaceSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        PlaceSortOption.InsertedAscending -> Res.string.earliestCached
+        PlaceSortOption.InsertedDescending -> Res.string.latestCached
+
+        PlaceSortOption.NameAscending -> Res.string.alphabetically
+        PlaceSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
+        PlaceSortOption.AddressAscending -> Res.string.addressAlphabetically
+        PlaceSortOption.AddressDescending -> Res.string.addressReverseAlphabetically
+
+        PlaceSortOption.DateAscending -> Res.string.earliestOpenDate
+        PlaceSortOption.DateDescending -> Res.string.latestOpenDate
     }
 }
 

@@ -78,6 +78,8 @@
     <string name="gender">Gender</string>
     <string name="opened">Opened</string>
     <string name="closed">Closed</string>
+    <string name="earliestOpenDate">Earliest open date</string>
+    <string name="latestOpenDate">Latest open date</string>
     <string name="created">Created</string>
     <string name="born">Born</string>
     <string name="died">Died</string>
@@ -92,6 +94,8 @@
     <string name="latestStartDate">Latest start date</string>
     <string name="time">Time</string>
     <string name="address">Address</string>
+    <string name="addressAlphabetically">Address alphabetically</string>
+    <string name="addressReverseAlphabetically">Address reverse alphabetically</string>
     <string name="packaging">Packaging</string>
     <string name="status">Status</string>
     <string name="language">Language</string>

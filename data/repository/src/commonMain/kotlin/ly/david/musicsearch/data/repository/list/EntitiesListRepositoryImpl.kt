@@ -76,7 +76,7 @@ class EntitiesListRepositoryImpl(
 
             MusicBrainzEntityType.PLACE -> placesListRepository.observePlaces(
                 browseMethod = browseMethod,
-                listFilters = listFilters,
+                listFilters = listFilters as ListFilters.Places,
             ) as Flow<PagingData<ListItemModel>>
 
             MusicBrainzEntityType.RECORDING -> recordingsListRepository.observeRecordings(

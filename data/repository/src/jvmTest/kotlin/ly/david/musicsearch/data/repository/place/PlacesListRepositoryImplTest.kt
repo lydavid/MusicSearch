@@ -39,6 +39,7 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
+import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -116,7 +117,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         placesListRepository.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(
+                sortOption = PlaceSortOption.NameAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -133,8 +136,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
 
         placesListRepository.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Places(
                 query = "are",
+                sortOption = PlaceSortOption.NameAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -168,7 +172,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
         sut.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(
+                sortOption = PlaceSortOption.NameAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -179,8 +185,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }
         sut.observePlaces(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Places(
                 query = "b",
+                sortOption = PlaceSortOption.NameAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -205,8 +212,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         entityId = marunouchiAreaMusicBrainzModel.id,
                         entityType = MusicBrainzEntityType.AREA,
                     ),
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Places(
                         query = query,
+                        sortOption = PlaceSortOption.NameAscending,
                     ),
                 )
             },
@@ -247,8 +255,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         entityId = chiyodaAreaMusicBrainzModel.id,
                         entityType = MusicBrainzEntityType.AREA,
                     ),
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Places(
                         query = query,
+                        sortOption = PlaceSortOption.NameAscending,
                     ),
                 )
             },
@@ -294,7 +303,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         )
         sut.observePlaces(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -311,14 +320,34 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
         }
         sut.observePlaces(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Places(
                 query = "ve",
+                sortOption = PlaceSortOption.NameAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
                     tokyoInternationForumPlaceListItemModel,
                     tokyoInternationForumHallAPlaceListItemModel.copy(
+                        collected = true,
+                    ),
+                ),
+                this,
+            )
+        }
+        sut.observePlaces(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters.Places(
+                sortOption = PlaceSortOption.NameDescending,
+            ),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    tokyoInternationForumHallAPlaceListItemModel.copy(
+                        collected = true,
+                    ),
+                    tokyoInternationForumPlaceListItemModel,
+                    budokanPlaceListItemModel.copy(
                         collected = true,
                     ),
                 ),
@@ -348,7 +377,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 entityId = marunouchiAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(
+                sortOption = PlaceSortOption.NameAscending,
+            ),
         ).asSnapshot {
             refresh()
         }.run {
@@ -369,7 +400,9 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 entityId = chiyodaAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Places(
+                sortOption = PlaceSortOption.NameAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
