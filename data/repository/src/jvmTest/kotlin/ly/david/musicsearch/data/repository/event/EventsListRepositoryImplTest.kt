@@ -550,11 +550,11 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         }.run {
             assertEquals(
                 listOf(
-                    aimerAtBudokanListItemModel.copy(
-                        disambiguation = "changes will show up",
-                    ),
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
+                    ),
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
                     ),
                 ),
                 this,
@@ -615,11 +615,11 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         }.run {
             assertEquals(
                 listOf(
-                    aimerAtBudokanListItemModel.copy(
-                        disambiguation = "changes will show up",
-                    ),
                     kissAtBudokanListItemModel.copy(
                         id = "new-id-is-considered-a-different-event",
+                    ),
+                    aimerAtBudokanListItemModel.copy(
+                        disambiguation = "changes will show up",
                     ),
                 ),
                 this,

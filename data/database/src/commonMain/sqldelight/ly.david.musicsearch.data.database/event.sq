@@ -139,12 +139,12 @@ AND (
 GROUP BY event.id
 ORDER BY
   CASE :sortBy
-    WHEN 0 THEN event.rowid
+    WHEN 0 THEN ee.rowid
     WHEN 2 THEN event.name
     WHEN 4 THEN event.`begin`
   END ASC,
   CASE :sortBy
-    WHEN 1 THEN event.rowid
+    WHEN 1 THEN ee.rowid
     WHEN 3 THEN event.name
     WHEN 5 THEN event.`begin`
   END DESC,
@@ -211,12 +211,12 @@ AND (
 GROUP BY event.id
 ORDER BY
   CASE :sortBy
-    WHEN 0 THEN event.rowid
+    WHEN 0 THEN collection_entity.rowid
     WHEN 2 THEN event.name
     WHEN 4 THEN event.`begin`
   END ASC,
   CASE :sortBy
-    WHEN 1 THEN event.rowid
+    WHEN 1 THEN collection_entity.rowid
     WHEN 3 THEN event.name
     WHEN 5 THEN event.`begin`
   END DESC,
