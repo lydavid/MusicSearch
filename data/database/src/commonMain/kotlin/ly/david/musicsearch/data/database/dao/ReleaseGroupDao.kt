@@ -20,8 +20,8 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
-import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import lydavidmusicsearchdatadatabase.Release_groups_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -309,7 +309,7 @@ class ReleaseGroupDaoImpl(
         queryProvider = { limit, offset ->
             transacter.getAllReleaseGroups(
                 query = "%$query%",
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,
@@ -332,7 +332,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByEntity(
                 entityId = entityId,
                 query = "%$query%",
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,
@@ -355,7 +355,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToReleaseGroupListItemModel,

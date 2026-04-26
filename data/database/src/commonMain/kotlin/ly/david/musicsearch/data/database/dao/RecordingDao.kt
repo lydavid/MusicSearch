@@ -19,9 +19,9 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
-import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import lydavidmusicsearchdatadatabase.Recordings_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -240,7 +240,7 @@ class RecordingDao(
             transacter.getAllRecordings(
                 query = "%$query%",
                 username = username,
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -262,7 +262,7 @@ class RecordingDao(
                 entityId = entityId,
                 query = "%$query%",
                 username = username,
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
@@ -295,7 +295,7 @@ class RecordingDao(
                 collectionId = collectionId,
                 query = "%$query%",
                 username = username,
-                sortBy = sortOption.ordinal.toLong(),
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToRecordingListItemModel,
