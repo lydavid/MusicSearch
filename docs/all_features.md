@@ -42,20 +42,20 @@ Given an entity, when you click on them from anywhere in the app, you will land 
 In separate tabs, you can see all related entities listed under browsing supported.
 e.g. On an artist's page, you can see their events, recordings, releases, release groups, and works.
 
-| Entity        | Browsing supported                                                                                       | Browsing not yet supported | Unsupported                        |
-|---------------|----------------------------------------------------------------------------------------------------------|----------------------------|------------------------------------|
-| area          | artists, events, labels, places, releases                                                                | collections                | recordings, works                  |
-| artist        | events, recordings, releases, release groups, works                                                      | collections                |
-| collection    | areas, artists, events, instruments, labels, places, recordings, releases, release groups, series, works |                            |
-| event         |                                                                                                          | collections                |
-| instrument    |                                                                                                          | collections                |
-| label         | releases                                                                                                 | collections                |
-| place         | events                                                                                                   | collections                |
-| recording     | releases                                                                                                 | collections                | artists                            |
-| release       | artists                                                                                                  | collections                | labels, recordings, release groups |
-| release group | releases                                                                                                 | collections                | artists                            |
-| series        |                                                                                                          | collections                |
-| work          | artists, recordings                                                                                      | collections                |
+| Entity        | Browsing supported                                                                                               | Browsing not yet supported | Unsupported                        |
+|---------------|------------------------------------------------------------------------------------------------------------------|----------------------------|------------------------------------|
+| area          | artists, events, labels, places, releases                                                                        | collections                | recordings, works                  |
+| artist        | events, recordings, releases, release groups, works                                                              | collections                |
+| collection    | areas, artists, events, genres, instruments, labels, places, recordings, releases, release groups, series, works |                            |
+| event         |                                                                                                                  | collections                |
+| instrument    |                                                                                                                  | collections                |
+| label         | releases                                                                                                         | collections                |
+| place         | events                                                                                                           | collections                |
+| recording     | releases                                                                                                         | collections                | artists                            |
+| release       | artists                                                                                                          | collections                | labels, recordings, release groups |
+| release group | releases                                                                                                         | collections                | artists                            |
+| series        |                                                                                                                  | collections                |
+| work          | artists, recordings                                                                                              | collections                |
 
 - There are no url details screen, clicking a url will just go to that url, either opening it in the browser, or deep linking to an app that supports it
 - labels by release have been excluded, as we fetch all labels in the initial lookup with `inc=labels`, displaying it in the Details tab
