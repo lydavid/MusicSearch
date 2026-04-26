@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import lydavidmusicsearchdatadatabase.WorkQueries
 import lydavidmusicsearchdatadatabase.Works_by_entity
 import kotlin.time.Clock
@@ -137,11 +138,13 @@ class WorkDao(
         browseMethod: BrowseMethod,
         query: String,
         username: String,
+        sortOption: WorkSortOption,
     ): PagingSource<Int, WorkListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllWorks(
                 query = query,
                 username = username,
+                sortOption = sortOption,
             )
         }
 
@@ -151,12 +154,14 @@ class WorkDao(
                     collectionId = browseMethod.entityId,
                     query = query,
                     username = username,
+                    sortOption = sortOption,
                 )
             } else {
                 getWorksByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
                     username = username,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -198,6 +203,7 @@ class WorkDao(
     private fun getAllWorks(
         query: String,
         username: String,
+        sortOption: WorkSortOption,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllWorks(
             query = query,
@@ -208,6 +214,7 @@ class WorkDao(
             transacter.getAllWorks(
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,
@@ -219,6 +226,7 @@ class WorkDao(
         entityId: String,
         query: String,
         username: String,
+        sortOption: WorkSortOption,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = getCountOfWorksByEntityQuery(entityId, query),
         transacter = transacter,
@@ -228,6 +236,7 @@ class WorkDao(
                 entityId = entityId,
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,
@@ -247,6 +256,7 @@ class WorkDao(
         collectionId: String,
         query: String,
         username: String,
+        sortOption: WorkSortOption,
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = getCountOfWorksByCollectionQuery(
             collectionId = collectionId,
@@ -259,6 +269,7 @@ class WorkDao(
                 collectionId = collectionId,
                 query = "%$query%",
                 username = username,
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToWorkListItemModel,

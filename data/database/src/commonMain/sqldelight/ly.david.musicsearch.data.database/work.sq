@@ -156,6 +156,17 @@ AND (
   aliases.alias_names LIKE :query
 )
 GROUP BY work.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN we.rowid
+    WHEN 2 THEN work.name
+    WHEN 4 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN we.rowid
+    WHEN 3 THEN work.name
+    WHEN 5 THEN listen_count
+  END DESC
 LIMIT :limit OFFSET :offset;
 
 -- works by collection
@@ -231,6 +242,17 @@ AND (
   aliases.alias_names LIKE :query
 )
 GROUP BY work.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN work.name
+    WHEN 4 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN work.name
+    WHEN 5 THEN listen_count
+  END DESC
 LIMIT :limit OFFSET :offset;
 
 -- all works
@@ -297,4 +319,15 @@ WHERE (
   aliases.alias_names LIKE :query
 )
 GROUP BY work.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN work.rowid
+    WHEN 2 THEN work.name
+    WHEN 4 THEN listen_count
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN work.rowid
+    WHEN 3 THEN work.name
+    WHEN 5 THEN listen_count
+  END DESC
 LIMIT :limit OFFSET :offset;

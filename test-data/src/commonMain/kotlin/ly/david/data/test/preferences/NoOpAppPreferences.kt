@@ -7,13 +7,14 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 open class NoOpAppPreferences : AppPreferences {
     override val theme: Flow<AppPreferences.Theme>
@@ -76,6 +77,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(ReleaseGroupSortOption.InsertedAscending)
 
     override fun setReleaseGroupSortOption(sortOption: ReleaseGroupSortOption) {
+        // No-op.
+    }
+
+    override val workSortOption: Flow<WorkSortOption>
+        get() = flowOf(WorkSortOption.InsertedAscending)
+
+    override fun setWorkSortOption(sort: WorkSortOption) {
         // No-op.
     }
 

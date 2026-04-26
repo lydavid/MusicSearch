@@ -58,6 +58,7 @@ class WorksListRepositoryImpl(
             browseMethod = browseMethod,
             query = listFilters.query,
             username = (listFilters as ListFilters.Works).username,
+            sortOption = listFilters.sortOption,
         )
     }
 

@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.SortableOption
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -65,7 +66,7 @@ internal fun <T> SortOptionsBottomSheetContent(
     Column(Modifier.verticalScroll(rememberScrollState())) {
         sortOptions.forEach { sortOption ->
             ClickableItem(
-                title = stringResource(sortOption.getLabel()),
+                title = sortOption.getLabel(),
                 endIcon = if (selectedSortOption == sortOption) CustomIcons.Check else null,
                 onClick = {
                     onSortOptionClick(sortOption)
@@ -75,27 +76,33 @@ internal fun <T> SortOptionsBottomSheetContent(
     }
 }
 
-private fun SortableOption.getLabel(): StringResource {
-    return when (this) {
-        is ArtistSortOption -> getLabel()
-        is RecordingSortOption -> getLabel()
-        is ReleaseSortOption -> getLabel()
-        is ReleaseGroupSortOption -> getLabel()
-    }
+@Composable
+private fun SortableOption.getLabel(): String {
+    return stringResource(
+        when (this) {
+            is ArtistSortOption -> getLabelRes()
+            is RecordingSortOption -> getLabelRes()
+            is ReleaseSortOption -> getLabelRes()
+            is ReleaseGroupSortOption -> getLabelRes()
+            is WorkSortOption -> getLabelRes()
+        },
+    )
 }
 
-private fun ArtistSortOption.getLabel(): StringResource {
+private fun ArtistSortOption.getLabelRes(): StringResource {
     return when (this) {
         ArtistSortOption.InsertedAscending -> Res.string.earliestCached
         ArtistSortOption.InsertedDescending -> Res.string.latestCached
+
         ArtistSortOption.NameAscending -> Res.string.alphabetically
         ArtistSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
         ArtistSortOption.DateAscending -> Res.string.earliestBeginDate
         ArtistSortOption.DateDescending -> Res.string.latestBeginDate
     }
 }
 
-private fun RecordingSortOption.getLabel(): StringResource {
+private fun RecordingSortOption.getLabelRes(): StringResource {
     return when (this) {
         RecordingSortOption.InsertedAscending -> Res.string.earliestCached
         RecordingSortOption.InsertedDescending -> Res.string.latestCached
@@ -111,7 +118,7 @@ private fun RecordingSortOption.getLabel(): StringResource {
     }
 }
 
-private fun ReleaseSortOption.getLabel(): StringResource {
+private fun ReleaseSortOption.getLabelRes(): StringResource {
     return when (this) {
         ReleaseSortOption.InsertedAscending -> Res.string.earliestCached
         ReleaseSortOption.InsertedDescending -> Res.string.latestCached
@@ -130,7 +137,7 @@ private fun ReleaseSortOption.getLabel(): StringResource {
     }
 }
 
-private fun ReleaseGroupSortOption.getLabel(): StringResource {
+private fun ReleaseGroupSortOption.getLabelRes(): StringResource {
     return when (this) {
         ReleaseGroupSortOption.InsertedAscending -> Res.string.earliestCached
         ReleaseGroupSortOption.InsertedDescending -> Res.string.latestCached
@@ -143,5 +150,18 @@ private fun ReleaseGroupSortOption.getLabel(): StringResource {
 
         ReleaseGroupSortOption.PrimaryTypeAscending -> Res.string.typeAlphabetically
         ReleaseGroupSortOption.PrimaryTypeDescending -> Res.string.typeReverseAlphabetically
+    }
+}
+
+private fun WorkSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        WorkSortOption.InsertedAscending -> Res.string.earliestCached
+        WorkSortOption.InsertedDescending -> Res.string.latestCached
+
+        WorkSortOption.NameAscending -> Res.string.alphabetically
+        WorkSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
+        WorkSortOption.ListensAscending -> Res.string.leastListened
+        WorkSortOption.ListensDescending -> Res.string.mostListened
     }
 }

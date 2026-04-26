@@ -18,17 +18,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.image.MusicBrainzImageMetadataRepository
-import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.list.ObserveLocalCount
-import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
-import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SortableOption
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
 abstract class BaseListPresenter(
@@ -63,6 +65,8 @@ abstract class BaseListPresenter(
         val releaseGroupSortOption
             by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
 
+        val workSortOption by appPreferences.workSortOption.collectAsRetainedState(WorkSortOption.InsertedAscending)
+
         val listFilters = when (getEntityType()) {
             MusicBrainzEntityType.ARTIST -> ListFilters.Artists(
                 query = query,
@@ -93,6 +97,7 @@ abstract class BaseListPresenter(
             MusicBrainzEntityType.WORK -> ListFilters.Works(
                 query = query,
                 isRemote = isRemote,
+                sortOption = workSortOption,
             )
 
             else -> ListFilters.Base(
@@ -158,24 +163,18 @@ abstract class BaseListPresenter(
                     }
                 }
 
-                is EntitiesListUiEvent.UpdateSortArtistListItem -> {
-                    appPreferences.setArtistSortOption(event.sortOption)
-                }
-
-                is EntitiesListUiEvent.UpdateSortRecordingListItem -> {
-                    appPreferences.setRecordingSortOption(event.sortOption)
-                }
-
-                is EntitiesListUiEvent.UpdateSortReleaseListItem -> {
-                    appPreferences.setReleaseSortOption(event.sortOption)
+                is EntitiesListUiEvent.UpdateSortOption -> {
+                    when (val sortOption = event.sortOption) {
+                        is ArtistSortOption -> appPreferences.setArtistSortOption(sortOption)
+                        is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)
+                        is ReleaseGroupSortOption -> appPreferences.setReleaseGroupSortOption(sortOption)
+                        is ReleaseSortOption -> appPreferences.setReleaseSortOption(sortOption)
+                        is WorkSortOption -> appPreferences.setWorkSortOption(sortOption)
+                    }
                 }
 
                 is EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
-                }
-
-                is EntitiesListUiEvent.UpdateSortReleaseGroupListItem -> {
-                    appPreferences.setReleaseGroupSortOption(event.sortOption)
                 }
 
                 is EntitiesListUiEvent.UpdateShowReleaseStatus -> {
@@ -211,24 +210,12 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
         val entityId: String,
     ) : EntitiesListUiEvent
 
-    data class UpdateSortArtistListItem(
-        val sortOption: ArtistSortOption,
-    ) : EntitiesListUiEvent
-
-    data class UpdateSortRecordingListItem(
-        val sortOption: RecordingSortOption,
-    ) : EntitiesListUiEvent
-
-    data class UpdateSortReleaseListItem(
-        val sortOption: ReleaseSortOption,
+    data class UpdateSortOption(
+        val sortOption: SortableOption,
     ) : EntitiesListUiEvent
 
     data class UpdateShowMoreInfoInReleaseListItem(
         val showMore: Boolean,
-    ) : EntitiesListUiEvent
-
-    data class UpdateSortReleaseGroupListItem(
-        val sortOption: ReleaseGroupSortOption,
     ) : EntitiesListUiEvent
 
     data class UpdateShowReleaseStatus(

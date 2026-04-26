@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.cruelAngelThesisWorkListItemModel
 import ly.david.data.test.cruelAngelThesisWorkMusicBrainzModel
@@ -29,9 +30,9 @@ import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
+import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzListen
-import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.MbidMapping
 import ly.david.musicsearch.data.listenbrainz.api.Payload
 import ly.david.musicsearch.data.listenbrainz.api.TrackMetadata
@@ -42,21 +43,21 @@ import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
-import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
 import ly.david.musicsearch.data.repository.helpers.TestListensListRepository
 import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.junit.Assert.assertEquals
@@ -148,6 +149,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     ),
                     listFilters = ListFilters.Works(
                         query = query,
+                        sortOption = WorkSortOption.NameAscending,
                     ),
                 )
             },
@@ -156,10 +158,10 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel.copy(
+                        hackingToTheGateWorkListItemModel.copy(
                             collected = true,
                         ),
-                        hackingToTheGateWorkListItemModel.copy(
+                        underPressureWorkListItemModel.copy(
                             collected = true,
                         ),
                         skycladObserverWorkListItemModel.copy(
@@ -180,10 +182,10 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     description = "filter by type",
                     query = "so",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel.copy(
+                        hackingToTheGateWorkListItemModel.copy(
                             collected = true,
                         ),
-                        hackingToTheGateWorkListItemModel.copy(
+                        underPressureWorkListItemModel.copy(
                             collected = true,
                         ),
                         skycladObserverWorkListItemModel.copy(
@@ -309,8 +311,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     description = "no filter",
                     query = "",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
                         dontStopMeNowWorkListItemModel,
+                        underPressureWorkListItemModel,
                     ),
                 ),
                 FilterTestCase(
@@ -324,16 +326,16 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     description = "filter by type",
                     query = "song",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
                         dontStopMeNowWorkListItemModel,
+                        underPressureWorkListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by language",
                     query = "eng",
                     expectedResult = listOf(
-                        underPressureWorkListItemModel,
                         dontStopMeNowWorkListItemModel,
+                        underPressureWorkListItemModel,
                     ),
                 ),
                 FilterTestCase(
@@ -362,6 +364,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     browseMethod = BrowseMethod.All,
                     listFilters = ListFilters.Works(
                         query = query,
+                        sortOption = WorkSortOption.NameDescending,
                     ),
                 )
             },
@@ -370,27 +373,27 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     description = "No filter",
                     query = "",
                     expectedResult = listOf(
-                        starmanWorkListItemModel,
-                        underPressureWorkListItemModel.copy(
-                            collected = true,
-                        ),
-                        dontStopMeNowWorkListItemModel,
-                        hackingToTheGateWorkListItemModel.copy(
-                            collected = true,
-                        ),
                         skycladObserverWorkListItemModel.copy(
                             collected = true,
                         ),
+                        underPressureWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        starmanWorkListItemModel,
+                        hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        dontStopMeNowWorkListItemModel,
                     ),
                 ),
                 FilterTestCase(
                     description = "filter by language",
                     query = "jpn",
                     expectedResult = listOf(
-                        hackingToTheGateWorkListItemModel.copy(
+                        skycladObserverWorkListItemModel.copy(
                             collected = true,
                         ),
-                        skycladObserverWorkListItemModel.copy(
+                        hackingToTheGateWorkListItemModel.copy(
                             collected = true,
                         ),
                     ),
@@ -432,12 +435,12 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         }.run {
             assertEquals(
                 listOf(
+                    starmanWorkListItemModel.copy(
+                        id = "new-id-is-considered-a-different-work",
+                    ),
                     underPressureWorkListItemModel.copy(
                         disambiguation = "changes will still show up",
                         collected = true,
-                    ),
-                    starmanWorkListItemModel.copy(
-                        id = "new-id-is-considered-a-different-work",
                     ),
                 ),
                 this,
@@ -453,11 +456,11 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         ).asSnapshot().run {
             assertEquals(
                 listOf(
+                    dontStopMeNowWorkListItemModel,
                     underPressureWorkListItemModel.copy(
                         disambiguation = "changes will still show up",
                         collected = true,
                     ),
-                    dontStopMeNowWorkListItemModel,
                 ),
                 this,
             )
@@ -471,11 +474,11 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         ).asSnapshot().run {
             assertEquals(
                 listOf(
-                    underPressureWorkListItemModel.copy(
-                        disambiguation = "changes will still show up",
+                    hackingToTheGateWorkListItemModel.copy(
                         collected = true,
                     ),
-                    hackingToTheGateWorkListItemModel.copy(
+                    underPressureWorkListItemModel.copy(
+                        disambiguation = "changes will still show up",
                         collected = true,
                     ),
                     skycladObserverWorkListItemModel.copy(

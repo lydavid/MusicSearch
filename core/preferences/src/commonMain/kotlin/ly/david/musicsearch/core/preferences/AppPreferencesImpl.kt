@@ -18,16 +18,17 @@ import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
-import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
-import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
-import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -204,6 +205,25 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[releaseGroupSortOptionPreference] = sortOption.name
+            }
+        }
+    }
+    // endregion
+
+    // region Works
+    private val workSortOptionPreference = stringPreferencesKey(AppPreferencesKey.WORK_SORT_OPTION.name)
+
+    override val workSortOption: Flow<WorkSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                it[workSortOptionPreference].toEnumOrDefault(WorkSortOption.InsertedAscending)
+            }
+            .distinctUntilChanged()
+
+    override fun setWorkSortOption(sort: WorkSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[workSortOptionPreference] = sort.name
             }
         }
     }

@@ -1,11 +1,12 @@
 package ly.david.musicsearch.ui.common.sort
 
 import androidx.compose.runtime.Composable
-import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.list.ListFilters
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
 import ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem
@@ -28,7 +29,7 @@ fun OverflowMenuScope.ListFiltersMenuItems(
                 onSortOptionClick = {
                     // TODO: consider moving to AllEntitiesListUiEvent
                     eventSink(
-                        EntitiesListUiEvent.UpdateSortArtistListItem(it),
+                        EntitiesListUiEvent.UpdateSortOption(it),
                     )
                 },
             )
@@ -40,7 +41,7 @@ fun OverflowMenuScope.ListFiltersMenuItems(
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     eventSink(
-                        EntitiesListUiEvent.UpdateSortRecordingListItem(it),
+                        EntitiesListUiEvent.UpdateSortOption(it),
                     )
                 },
             )
@@ -60,7 +61,7 @@ fun OverflowMenuScope.ListFiltersMenuItems(
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     eventSink(
-                        EntitiesListUiEvent.UpdateSortReleaseListItem(it),
+                        EntitiesListUiEvent.UpdateSortOption(it),
                     )
                 },
             )
@@ -80,14 +81,22 @@ fun OverflowMenuScope.ListFiltersMenuItems(
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     eventSink(
-                        EntitiesListUiEvent.UpdateSortReleaseGroupListItem(it),
+                        EntitiesListUiEvent.UpdateSortOption(it),
                     )
                 },
             )
         }
 
         is ListFilters.Works -> {
-            // nothing
+            SortMenuItem(
+                sortOptions = WorkSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortOption(it),
+                    )
+                },
+            )
         }
     }
 }
