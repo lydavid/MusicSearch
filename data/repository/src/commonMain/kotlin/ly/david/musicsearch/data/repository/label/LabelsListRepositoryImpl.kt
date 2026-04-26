@@ -12,8 +12,8 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -33,7 +33,7 @@ class LabelsListRepositoryImpl(
 
     override fun observeLabels(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Labels,
     ): Flow<PagingData<LabelListItemModel>> {
         return observeEntities(
             browseMethod = browseMethod,
@@ -48,6 +48,7 @@ class LabelsListRepositoryImpl(
         return labelDao.getLabels(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Labels).sortOption,
         )
     }
 

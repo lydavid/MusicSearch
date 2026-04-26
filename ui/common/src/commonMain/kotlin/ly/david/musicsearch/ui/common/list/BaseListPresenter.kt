@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -57,6 +58,9 @@ abstract class BaseListPresenter(
 
         val eventSortOption
             by appPreferences.eventSortOption.collectAsRetainedState(EventSortOption.InsertedAscending)
+
+        val labelSortOption
+            by appPreferences.labelSortOption.collectAsRetainedState(LabelSortOption.InsertedAscending)
 
         val recordingSortOption
             by appPreferences.recordingSortOption.collectAsRetainedState(RecordingSortOption.InsertedAscending)
@@ -91,6 +95,12 @@ abstract class BaseListPresenter(
                 query = query,
                 isRemote = isRemote,
                 sortOption = eventSortOption,
+            )
+
+            MusicBrainzEntityType.LABEL -> ListFilters.Labels(
+                query = query,
+                isRemote = isRemote,
+                sortOption = labelSortOption,
             )
 
             MusicBrainzEntityType.RECORDING -> ListFilters.Recordings(
@@ -187,6 +197,7 @@ abstract class BaseListPresenter(
                         is AreaSortOption -> appPreferences.setAreaSortOption(sortOption)
                         is ArtistSortOption -> appPreferences.setArtistSortOption(sortOption)
                         is EventSortOption -> appPreferences.setEventSortOption(sortOption)
+                        is LabelSortOption -> appPreferences.setLabelSortOption(sortOption)
                         is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)
                         is ReleaseGroupSortOption -> appPreferences.setReleaseGroupSortOption(sortOption)
                         is ReleaseSortOption -> appPreferences.setReleaseSortOption(sortOption)

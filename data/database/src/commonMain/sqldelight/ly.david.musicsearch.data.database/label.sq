@@ -148,6 +148,20 @@ AND (
   label_alias.name LIKE :query
 )
 GROUP BY label.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN le.rowid
+    WHEN 2 THEN label.name
+    WHEN 4 THEN label.`begin`
+    WHEN 6 THEN COALESCE(label.label_code, '')
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN le.rowid
+    WHEN 3 THEN label.name
+    WHEN 5 THEN label.`begin`
+    WHEN 7 THEN COALESCE(label.label_code, '')
+  END DESC,
+  label.name
 LIMIT :limit OFFSET :offset;
 
 -- labels by collection
@@ -197,6 +211,20 @@ AND (
   label_alias.name LIKE :query
 )
 GROUP BY label.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN label.name
+    WHEN 4 THEN label.`begin`
+    WHEN 6 THEN COALESCE(label.label_code, '')
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN label.name
+    WHEN 5 THEN label.`begin`
+    WHEN 7 THEN COALESCE(label.label_code, '')
+  END DESC,
+  label.name
 LIMIT :limit OFFSET :offset;
 
 -- labels by release
@@ -272,4 +300,18 @@ WHERE (
   label_alias.name LIKE :query
 )
 GROUP BY label.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN label.rowid
+    WHEN 2 THEN label.name
+    WHEN 4 THEN label.`begin`
+    WHEN 6 THEN COALESCE(label.label_code, '')
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN label.rowid
+    WHEN 3 THEN label.name
+    WHEN 5 THEN label.`begin`
+    WHEN 7 THEN COALESCE(label.label_code, '')
+  END DESC,
+  label.name
 LIMIT :limit OFFSET :offset;

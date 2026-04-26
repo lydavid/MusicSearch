@@ -21,12 +21,15 @@ import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.FiltersTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.label.LabelsListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -104,7 +107,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Labels(
                         query = query,
                     ),
                 )
@@ -157,7 +160,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         )
         labelsListRepository.observeLabels(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Labels(),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -169,7 +172,7 @@ class LabelsListRepositoryImplTest : KoinTest {
         }
         labelsListRepository.observeLabels(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Labels(
                 query = "do",
             ),
         ).asSnapshot().run {
@@ -195,29 +198,49 @@ class LabelsListRepositoryImplTest : KoinTest {
             entityId = entityId,
             entityType = entity,
         )
-        testFilter(
+        testFilters(
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
-                        query = query,
-                    ),
+                    listFilters = query as ListFilters.Labels,
                 )
             },
             testCases = listOf(
-                FilterTestCase(
+                FiltersTestCase(
                     description = "no filter",
-                    query = "",
+                    listFilters = ListFilters.Labels(),
                     expectedResult = listOf(
                         elektraLabelListItemModel,
                         elektraMusicGroupLabelListItemModel,
                     ),
                 ),
-                FilterTestCase(
+                FiltersTestCase(
                     description = "filter by type",
-                    query = "Hold",
+                    listFilters = ListFilters.Labels(
+                        query = "Hold",
+                    ),
                     expectedResult = listOf(
                         elektraMusicGroupLabelListItemModel,
+                    ),
+                ),
+                FiltersTestCase(
+                    description = "sort by label code ascending",
+                    listFilters = ListFilters.Labels(
+                        sortOption = LabelSortOption.CodeAscending,
+                    ),
+                    expectedResult = listOf(
+                        elektraLabelListItemModel,
+                        elektraMusicGroupLabelListItemModel,
+                    ),
+                ),
+                FiltersTestCase(
+                    description = "sort by label code descending",
+                    listFilters = ListFilters.Labels(
+                        sortOption = LabelSortOption.CodeDescending,
+                    ),
+                    expectedResult = listOf(
+                        elektraMusicGroupLabelListItemModel,
+                        elektraLabelListItemModel,
                     ),
                 ),
             ),
@@ -247,7 +270,7 @@ class LabelsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 labelsListRepository.observeLabels(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Labels(
                         query = query,
                     ),
                 )

@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Labels_by_entity
 import kotlin.time.Clock
@@ -175,10 +176,12 @@ class LabelDao(
     fun getLabels(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: LabelSortOption,
     ): PagingSource<Int, LabelListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllLabels(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -187,11 +190,14 @@ class LabelDao(
                 getLabelsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
+
                 )
             } else {
                 getLabelsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -232,6 +238,7 @@ class LabelDao(
 
     private fun getAllLabels(
         query: String,
+        sortOption: LabelSortOption,
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllLabels(
             query = query,
@@ -241,6 +248,7 @@ class LabelDao(
         queryProvider = { limit, offset ->
             transacter.getAllLabels(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToLabelListItemModel,
@@ -251,6 +259,7 @@ class LabelDao(
     private fun getLabelsByCollection(
         collectionId: String,
         query: String,
+        sortOption: LabelSortOption,
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
         countQuery = getCountOfLabelsByCollectionQuery(
             collectionId = collectionId,
@@ -262,6 +271,7 @@ class LabelDao(
             transacter.getLabelsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToLabelListItemModel,
@@ -280,6 +290,7 @@ class LabelDao(
     private fun getLabelsByEntity(
         entityId: String,
         query: String,
+        sortOption: LabelSortOption,
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
         countQuery = getCountOfLabelsByEntityQuery(entityId, query),
         transacter = transacter,
@@ -288,6 +299,7 @@ class LabelDao(
             transacter.getLabelsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToLabelListItemModel,

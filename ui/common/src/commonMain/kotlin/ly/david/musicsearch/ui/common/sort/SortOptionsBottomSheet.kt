@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -27,6 +28,8 @@ import musicsearch.ui.common.generated.resources.earliestBeginDate
 import musicsearch.ui.common.generated.resources.earliestCached
 import musicsearch.ui.common.generated.resources.earliestReleaseDate
 import musicsearch.ui.common.generated.resources.earliestStartDate
+import musicsearch.ui.common.generated.resources.labelCodeAscending
+import musicsearch.ui.common.generated.resources.labelCodeDescending
 import musicsearch.ui.common.generated.resources.latestBeginDate
 import musicsearch.ui.common.generated.resources.latestCached
 import musicsearch.ui.common.generated.resources.latestReleaseDate
@@ -87,6 +90,7 @@ private fun SortableOption.getLabel(): String {
             is AreaSortOption -> getLabelRes()
             is ArtistSortOption -> getLabelRes()
             is EventSortOption -> getLabelRes()
+            is LabelSortOption -> getLabelRes()
             is RecordingSortOption -> getLabelRes()
             is ReleaseSortOption -> getLabelRes()
             is ReleaseGroupSortOption -> getLabelRes()
@@ -131,6 +135,22 @@ private fun EventSortOption.getLabelRes(): StringResource {
 
         EventSortOption.DateAscending -> Res.string.earliestStartDate
         EventSortOption.DateDescending -> Res.string.latestStartDate
+    }
+}
+
+private fun LabelSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        LabelSortOption.InsertedAscending -> Res.string.earliestCached
+        LabelSortOption.InsertedDescending -> Res.string.latestCached
+
+        LabelSortOption.NameAscending -> Res.string.alphabetically
+        LabelSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
+        LabelSortOption.DateAscending -> Res.string.earliestBeginDate
+        LabelSortOption.DateDescending -> Res.string.latestBeginDate
+
+        LabelSortOption.CodeAscending -> Res.string.labelCodeAscending
+        LabelSortOption.CodeDescending -> Res.string.labelCodeDescending
     }
 }
 
