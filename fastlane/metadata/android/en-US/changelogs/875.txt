@@ -1,0 +1,13 @@
+
+### Bug Fixes
+
+* don't show filtered count header when total count is 0 because it's an intermediate state
+* get name from work type rather than type id because search does not give us its type id
+* map work types to localizable text
+
+
+### Features
+
+* add tri-state checkbox to (de)select all release statuses to filter
+* support sorting artists by cache order (new default), alphabetically, or begin date (previous default), ascending/descending
+* support sorting works by cached order, name, or listens, ascending/descending; default sort order is now cached order ascending; previous default was based on its GUID, which was nonsensical
