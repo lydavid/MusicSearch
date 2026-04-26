@@ -100,7 +100,13 @@ jobs:
         run: |
           release_notes=$(echo "${{ steps.get-next-version.outputs.new-release-notes }}" | \
             tail -n +3 | \
-            sed 's/ ([[][^]]*]([^)]*))//g')
+            sed 's/ ([[][^]]*]([^)]*))//g')       
+          
+          max_length=500
+          if [ ${#release_notes} -gt $max_length ]; then
+            release_notes="https://github.com/lydavid/MusicSearch/releases/tag/v${{ env.VERSION_NAME }}"
+          fi
+          
           echo "$release_notes" > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
           echo "$release_notes" > fastlane/metadata/ios/en-US/release_notes.txt
 
