@@ -86,6 +86,8 @@
     <string name="firstReleaseDate">First release date</string>
     <string name="startDate">Start Date</string>
     <string name="endDate">End Date</string>
+    <string name="earliestStartDate">Earliest start date</string>
+    <string name="latestStartDate">Latest start date</string>
     <string name="time">Time</string>
     <string name="address">Address</string>
     <string name="packaging">Packaging</string>

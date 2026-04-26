@@ -9,6 +9,6 @@ import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 interface EventsListRepository {
     fun observeEvents(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Events,
     ): Flow<PagingData<EventListItemModel>>
 }

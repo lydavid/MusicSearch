@@ -109,8 +109,8 @@ SELECT
   event.type,
   event.time,
   event.cancelled,
-  event.begin,
-  event.end,
+  event.`begin`,
+  event.`end`,
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -132,12 +132,25 @@ AND (
   event.disambiguation LIKE :query OR
   event.type LIKE :query OR
   event.time LIKE :query OR
-  event.begin LIKE :query OR
-  event.end LIKE :query OR
+  event.`begin` LIKE :query OR
+  event.`end` LIKE :query OR
   event_alias.name LIKE :query
 )
 GROUP BY event.id
-ORDER BY event.begin, event.end, event.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN event.rowid
+    WHEN 2 THEN event.name
+    WHEN 4 THEN event.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN event.rowid
+    WHEN 3 THEN event.name
+    WHEN 5 THEN event.`begin`
+  END DESC,
+  event.`begin`,
+  event.`end`,
+  event.name
 LIMIT :limit OFFSET :offset;
 
 -- events by collection
@@ -169,8 +182,8 @@ SELECT
   event.type,
   event.time,
   event.cancelled,
-  event.begin,
-  event.end,
+  event.`begin`,
+  event.`end`,
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -191,12 +204,25 @@ AND (
   event.disambiguation LIKE :query OR
   event.type LIKE :query OR
   event.time LIKE :query OR
-  event.begin LIKE :query OR
-  event.end LIKE :query OR
+  event.`begin` LIKE :query OR
+  event.`end` LIKE :query OR
   event_alias.name LIKE :query
 )
 GROUP BY event.id
-ORDER BY event.begin, event.end, event.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN event.rowid
+    WHEN 2 THEN event.name
+    WHEN 4 THEN event.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN event.rowid
+    WHEN 3 THEN event.name
+    WHEN 5 THEN event.`begin`
+  END DESC,
+  event.`begin`,
+  event.`end`,
+  event.name
 LIMIT :limit OFFSET :offset;
 
 -- all events
@@ -225,8 +251,8 @@ SELECT
   event.type,
   event.time,
   event.cancelled,
-  event.begin,
-  event.end,
+  event.`begin`,
+  event.`end`,
   event.ended,
   mi.thumbnail_url,
   mi.id AS imageId,
@@ -246,10 +272,23 @@ WHERE (
   event.disambiguation LIKE :query OR
   event.type LIKE :query OR
   event.time LIKE :query OR
-  event.begin LIKE :query OR
-  event.end LIKE :query OR
+  event.`begin` LIKE :query OR
+  event.`end` LIKE :query OR
   event_alias.name LIKE :query
 )
 GROUP BY event.id
-ORDER BY event.begin, event.end, event.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN event.rowid
+    WHEN 2 THEN event.name
+    WHEN 4 THEN event.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN event.rowid
+    WHEN 3 THEN event.name
+    WHEN 5 THEN event.`begin`
+  END DESC,
+  event.`begin`,
+  event.`end`,
+  event.name
 LIMIT :limit OFFSET :offset;

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.work
 
+// https://musicbrainz.org/statistics
 // search results doesn't include type_id, so we need to use its name
 enum class WorkType(val idFromName: String) {
     Aria("Aria"),

@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.sort
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -28,6 +29,18 @@ fun OverflowMenuScope.ListFiltersMenuItems(
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     // TODO: consider moving to AllEntitiesListUiEvent
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortOption(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Events -> {
+            SortMenuItem(
+                sortOptions = EventSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
                     eventSink(
                         EntitiesListUiEvent.UpdateSortOption(it),
                     )

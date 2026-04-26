@@ -38,12 +38,14 @@ import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
+@Suppress("LargeClass")
 class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
 
     @get:Rule(order = 0)
@@ -116,8 +118,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         entityId = collectionId,
                         entityType = MusicBrainzEntityType.COLLECTION,
                     ),
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -207,8 +210,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -252,8 +256,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -326,8 +331,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -400,8 +406,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -478,8 +485,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
             pagingFlowProducer = { query ->
                 eventsListRepository.observeEvents(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Events(
                         query = query,
+                        sortOption = EventSortOption.DateAscending,
                     ),
                 )
             },
@@ -534,17 +542,19 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = kitanomaruAreaMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.AREA,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Events(
+                sortOption = EventSortOption.InsertedAscending,
+            ),
         ).asSnapshot {
             refresh()
         }.run {
             assertEquals(
                 listOf(
-                    kissAtBudokanListItemModel.copy(
-                        id = "new-id-is-considered-a-different-event",
-                    ),
                     aimerAtBudokanListItemModel.copy(
                         disambiguation = "changes will show up",
+                    ),
+                    kissAtBudokanListItemModel.copy(
+                        id = "new-id-is-considered-a-different-event",
                     ),
                 ),
                 this,
@@ -556,7 +566,9 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = budokanPlaceMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.PLACE,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Events(
+                sortOption = EventSortOption.InsertedAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -572,16 +584,18 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
         // both old and new version of event exists
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Events(
+                sortOption = EventSortOption.InsertedAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
-                    kissAtBudokanListItemModel.copy(
-                        id = "new-id-is-considered-a-different-event",
-                    ),
                     aimerAtBudokanListItemModel.copy(
                         disambiguation = "changes will show up",
+                    ),
+                    kissAtBudokanListItemModel.copy(
+                        id = "new-id-is-considered-a-different-event",
                     ),
                 ),
                 this,
@@ -593,17 +607,19 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 entityId = budokanPlaceMusicBrainzModel.id,
                 entityType = MusicBrainzEntityType.PLACE,
             ),
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Events(
+                sortOption = EventSortOption.InsertedAscending,
+            ),
         ).asSnapshot {
             refresh()
         }.run {
             assertEquals(
                 listOf(
-                    kissAtBudokanListItemModel.copy(
-                        id = "new-id-is-considered-a-different-event",
-                    ),
                     aimerAtBudokanListItemModel.copy(
                         disambiguation = "changes will show up",
+                    ),
+                    kissAtBudokanListItemModel.copy(
+                        id = "new-id-is-considered-a-different-event",
                     ),
                 ),
                 this,
@@ -612,16 +628,18 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
 
         eventsListRepository.observeEvents(
             browseMethod = BrowseMethod.All,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Events(
+                sortOption = EventSortOption.InsertedAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
                     kissAtBudokanListItemModel,
-                    kissAtBudokanListItemModel.copy(
-                        id = "new-id-is-considered-a-different-event",
-                    ),
                     aimerAtBudokanListItemModel.copy(
                         disambiguation = "changes will show up",
+                    ),
+                    kissAtBudokanListItemModel.copy(
+                        id = "new-id-is-considered-a-different-event",
                     ),
                 ),
                 this,

@@ -56,7 +56,7 @@ class EntitiesListRepositoryImpl(
 
             MusicBrainzEntityType.EVENT -> eventsListRepository.observeEvents(
                 browseMethod = browseMethod,
-                listFilters = listFilters,
+                listFilters = listFilters as ListFilters.Events,
             ) as Flow<PagingData<ListItemModel>>
 
             MusicBrainzEntityType.GENRE -> genresListRepository.observeGenres(

@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import lydavidmusicsearchdatadatabase.Events_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -128,10 +129,12 @@ class EventDao(
     fun getEvents(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: EventSortOption,
     ): PagingSource<Int, EventListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllEvents(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -140,11 +143,13 @@ class EventDao(
                 getEventsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             } else {
                 getEventsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    sortOption = sortOption,
                 )
             }
         }
@@ -185,6 +190,7 @@ class EventDao(
 
     private fun getAllEvents(
         query: String,
+        sortOption: EventSortOption,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllEvents(
             query = query,
@@ -194,6 +200,7 @@ class EventDao(
         queryProvider = { limit, offset ->
             transacter.getAllEvents(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToEventListItemModel,
@@ -204,6 +211,7 @@ class EventDao(
     private fun getEventsByEntity(
         entityId: String,
         query: String,
+        sortOption: EventSortOption,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = getCountOfEventsByEntityQuery(
             entityId = entityId,
@@ -215,6 +223,7 @@ class EventDao(
             transacter.getEventsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToEventListItemModel,
@@ -233,6 +242,7 @@ class EventDao(
     private fun getEventsByCollection(
         collectionId: String,
         query: String,
+        sortOption: EventSortOption,
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = getCountOfEventsByCollectionQuery(
             collectionId = collectionId,
@@ -244,6 +254,7 @@ class EventDao(
             transacter.getEventsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToEventListItemModel,

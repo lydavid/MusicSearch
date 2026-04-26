@@ -10,6 +10,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
+import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
@@ -24,9 +25,11 @@ import musicsearch.ui.common.generated.resources.alphabeticallyReverse
 import musicsearch.ui.common.generated.resources.earliestBeginDate
 import musicsearch.ui.common.generated.resources.earliestCached
 import musicsearch.ui.common.generated.resources.earliestReleaseDate
+import musicsearch.ui.common.generated.resources.earliestStartDate
 import musicsearch.ui.common.generated.resources.latestBeginDate
 import musicsearch.ui.common.generated.resources.latestCached
 import musicsearch.ui.common.generated.resources.latestReleaseDate
+import musicsearch.ui.common.generated.resources.latestStartDate
 import musicsearch.ui.common.generated.resources.leastCompleteListened
 import musicsearch.ui.common.generated.resources.leastListened
 import musicsearch.ui.common.generated.resources.mostCompleteListened
@@ -81,6 +84,7 @@ private fun SortableOption.getLabel(): String {
     return stringResource(
         when (this) {
             is ArtistSortOption -> getLabelRes()
+            is EventSortOption -> getLabelRes()
             is RecordingSortOption -> getLabelRes()
             is ReleaseSortOption -> getLabelRes()
             is ReleaseGroupSortOption -> getLabelRes()
@@ -99,6 +103,19 @@ private fun ArtistSortOption.getLabelRes(): StringResource {
 
         ArtistSortOption.DateAscending -> Res.string.earliestBeginDate
         ArtistSortOption.DateDescending -> Res.string.latestBeginDate
+    }
+}
+
+private fun EventSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        EventSortOption.InsertedAscending -> Res.string.earliestCached
+        EventSortOption.InsertedDescending -> Res.string.latestCached
+
+        EventSortOption.NameAscending -> Res.string.alphabetically
+        EventSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
+        EventSortOption.DateAscending -> Res.string.earliestStartDate
+        EventSortOption.DateDescending -> Res.string.latestStartDate
     }
 }
 
