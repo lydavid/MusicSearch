@@ -3,12 +3,13 @@ package ly.david.musicsearch.data.database.mapper
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.data.database.UNKNOWN_LISTENS_FLAG
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.work.WorkType
 
 fun mapToWorkListItemModel(
     id: String,
     name: String,
     disambiguation: String,
-    type: String,
+    typeId: String,
     languages: List<String>,
     iswcs: List<String>,
     visited: Boolean?,
@@ -20,7 +21,7 @@ fun mapToWorkListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
-    type = type,
+    type = WorkType.fromId(typeId),
     languages = languages.toPersistentList(),
     iswcs = iswcs.toPersistentList(),
     visited = visited == true,

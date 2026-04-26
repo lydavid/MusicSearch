@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
+import ly.david.musicsearch.shared.domain.work.WorkType
 import lydavidmusicsearchdatadatabase.WorkQueries
 import lydavidmusicsearchdatadatabase.Works_by_entity
 import kotlin.time.Clock
@@ -85,7 +86,7 @@ class WorkDao(
         id: String,
         name: String,
         disambiguation: String,
-        type: String,
+        typeId: String,
         languages: List<String>,
         iswcs: List<String>,
         lastUpdated: Instant?,
@@ -94,7 +95,7 @@ class WorkDao(
         id = id,
         name = name,
         disambiguation = disambiguation,
-        type = type,
+        type = WorkType.fromId(typeId),
         languages = languages.toPersistentList(),
         iswcs = iswcs.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),

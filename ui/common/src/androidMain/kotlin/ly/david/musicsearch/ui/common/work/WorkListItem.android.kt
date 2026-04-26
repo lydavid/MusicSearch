@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
+import ly.david.musicsearch.shared.domain.work.WorkType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
@@ -32,7 +33,7 @@ internal fun PreviewWorkListItemAllInfo() {
                 id = "343dbbe6-d9ce-3853-8d8d-230734c0424f",
                 name = "残酷な天使のテーゼ",
                 disambiguation = "Neon Genesis Evangelion",
-                type = "Song",
+                type = WorkType.Song,
                 iswcs = persistentListOf("T-101.261.638-3"),
                 languages = persistentListOf("jpn"),
                 listenState = WorkListItemModel.ListenState.Known(listenCount = 3),
@@ -51,7 +52,7 @@ internal fun PreviewWorkListItemVisited() {
                 id = "c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3",
                 name = "イニシエノウタ",
                 disambiguation = "NieR",
-                type = "Song",
+                type = WorkType.Song,
                 languages = persistentListOf("qaa"),
                 visited = true,
                 listenState = WorkListItemModel.ListenState.Hide,
@@ -70,7 +71,7 @@ internal fun PreviewWorkListItemUnknownListens() {
                 id = "c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3",
                 name = "イニシエノウタ",
                 disambiguation = "NieR",
-                type = "Song",
+                type = WorkType.Song,
                 languages = persistentListOf("qaa"),
                 visited = true,
                 listenState = WorkListItemModel.ListenState.Unknown,

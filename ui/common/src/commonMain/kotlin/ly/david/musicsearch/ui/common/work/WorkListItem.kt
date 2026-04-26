@@ -53,7 +53,7 @@ fun WorkListItem(
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
-                    type.ifNotEmpty {
+                    type?.getDisplayString()?.let {
                         Text(
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),

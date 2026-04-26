@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.work.Work
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.shared.domain.work.WorkType
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -14,7 +15,7 @@ data class WorkDetailsModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
-    override val type: String = "",
+    val type: WorkType? = null,
     override val languages: ImmutableList<String> = persistentListOf(),
     override val iswcs: ImmutableList<String> = persistentListOf(),
     override val lastUpdated: Instant = Clock.System.now(),

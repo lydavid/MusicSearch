@@ -5,12 +5,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -19,6 +18,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
+import ly.david.musicsearch.ui.common.work.getDisplayString
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.attributesHeader
 import musicsearch.ui.common.generated.resources.iswc
@@ -48,7 +48,7 @@ internal fun WorkDetailsTabUi(
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         onCollapseExpandAliases = onCollapseExpandAliases,
         entityInfoSection = {
-            type.ifNotEmpty {
+            type?.getDisplayString()?.let {
                 TextWithHeading(
                     heading = stringResource(Res.string.type),
                     text = it,

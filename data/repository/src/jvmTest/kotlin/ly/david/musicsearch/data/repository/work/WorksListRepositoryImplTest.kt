@@ -15,6 +15,8 @@ import ly.david.data.test.dontStopMeNowWorkListItemModel
 import ly.david.data.test.dontStopMeNowWorkMusicBrainzModel
 import ly.david.data.test.hackingToTheGateWorkListItemModel
 import ly.david.data.test.hackingToTheGateWorkMusicBrainzModel
+import ly.david.data.test.newWorldSymphonyWorkListItemModel
+import ly.david.data.test.newWorldSymphonyWorkMusicBrainzModel
 import ly.david.data.test.queenArtistMusicBrainzModel
 import ly.david.data.test.skycladObserverWorkListItemModel
 import ly.david.data.test.skycladObserverWorkMusicBrainzModel
@@ -59,6 +61,7 @@ import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.shared.domain.work.WorkType
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -122,6 +125,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
             hackingToTheGateWorkMusicBrainzModel,
             underPressureWorkMusicBrainzModel,
             skycladObserverWorkMusicBrainzModel,
+            newWorldSymphonyWorkMusicBrainzModel,
         )
         val worksListRepository = createWorksListRepository(
             works = works,
@@ -159,6 +163,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     query = "",
                     expectedResult = listOf(
                         hackingToTheGateWorkListItemModel.copy(
+                            collected = true,
+                        ),
+                        newWorldSymphonyWorkListItemModel.copy(
                             collected = true,
                         ),
                         underPressureWorkListItemModel.copy(
@@ -379,6 +386,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                         underPressureWorkListItemModel.copy(
                             collected = true,
                         ),
+                        newWorldSymphonyWorkListItemModel.copy(
+                            collected = true,
+                        ),
                         starmanWorkListItemModel,
                         hackingToTheGateWorkListItemModel.copy(
                             collected = true,
@@ -484,6 +494,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     skycladObserverWorkListItemModel.copy(
                         collected = true,
                     ),
+                    newWorldSymphonyWorkListItemModel.copy(
+                        collected = true,
+                    ),
                 ),
                 this,
             )
@@ -504,6 +517,9 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                         collected = true,
                     ),
                     skycladObserverWorkListItemModel.copy(
+                        collected = true,
+                    ),
+                    newWorldSymphonyWorkListItemModel.copy(
                         collected = true,
                     ),
                     starmanWorkListItemModel.copy(
@@ -531,7 +547,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
                     name = "Under Pressure",
                     disambiguation = "some change",
-                    type = "Song",
+                    type = WorkType.Song,
                     languages = persistentListOf("eng"),
                     iswcs = persistentListOf(
                         "T-010.475.727-8",
@@ -564,7 +580,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                     id = "4e6a04c3-6897-391d-8e8c-1da7a6dce1ca",
                     disambiguation = "some change",
                     name = "Under Pressure",
-                    type = "Song",
+                    type = WorkType.Song,
                     languages = persistentListOf("eng"),
                     iswcs = persistentListOf(
                         "T-010.475.727-8",

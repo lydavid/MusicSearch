@@ -373,7 +373,7 @@ SELECT
   work.id,
   work.name,
   work.disambiguation,
-  work.type,
+  work.type_id,
   work.languages,
   work.iswcs,
   details_metadata.entity_id IS NOT NULL AS visited,

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.release
 
+// https://musicbrainz.org/doc/Release#Status
 @Suppress("MagicNumber")
 enum class ReleaseStatus(val order: Int) {
     OFFICIAL(0),

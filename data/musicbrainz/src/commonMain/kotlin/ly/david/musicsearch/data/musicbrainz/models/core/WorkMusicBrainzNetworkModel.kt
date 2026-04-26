@@ -12,7 +12,7 @@ data class WorkMusicBrainzNetworkModel(
     @SerialName("id") override val id: String,
     @SerialName("title") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String? = null,
-    @SerialName("type") override val type: String? = null,
+    @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("languages") override val languages: List<String>? = null,
     @SerialName("iswcs") override val iswcs: List<String>? = null,

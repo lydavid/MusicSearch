@@ -163,3 +163,21 @@ val cruelAngelThesisWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
         ),
     ),
 )
+
+val newWorldSymphonyWorkMusicBrainzModel = WorkMusicBrainzNetworkModel(
+    id = "aacb1ab0-c740-436a-a782-ed60026cf82b",
+    name = "Symfonie č. 9 e moll, op. 95 „Z Nového světa“",
+    type = "Symphony",
+    typeId = "174314aa-0aa4-30cf-96a6-50b281d8d208",
+    languages = listOf("zxx"),
+    iswcs = listOf(
+        "T-905.029.737-5",
+    ),
+    aliases = listOf(
+        AliasMusicBrainzNetworkModel(
+            name = "Symphony no. 9 in E minor, op. 95 “From the New World”",
+            isPrimary = true,
+            locale = "en",
+        ),
+    ),
+)

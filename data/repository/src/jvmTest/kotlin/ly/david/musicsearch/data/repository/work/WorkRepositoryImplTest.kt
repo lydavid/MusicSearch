@@ -37,6 +37,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.shared.domain.work.WorkType
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -449,7 +450,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
             WorkDetailsModel(
                 id = "717a6517-290e-3696-942a-aba233ffc398",
                 name = "君の知らない物語",
-                type = "Song",
+                type = WorkType.Song,
                 languages = persistentListOf("jpn"),
                 iswcs = persistentListOf("T-903.769.392-8"),
                 attributes = persistentListOf(
