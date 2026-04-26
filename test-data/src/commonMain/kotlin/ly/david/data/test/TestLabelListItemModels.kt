@@ -1,5 +1,6 @@
 package ly.david.data.test
 
+import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 
 val elektraMusicGroupLabelListItemModel = LabelListItemModel(
@@ -29,9 +30,9 @@ val flyingDogLabelListItemModel = LabelListItemModel(
     disambiguation = "Victor",
     type = "Original Production",
     labelCode = null,
-//    lifeSpan = LifeSpanMusicBrainzModel(
-//        begin = "2007-10-01",
-//        ended = false,
-//    ),
+    lifeSpan = LifeSpanUiModel(
+        begin = "2007-10-01",
+        ended = false,
+    ),
 //    area = japanAreaMusicBrainzModel,
 )
