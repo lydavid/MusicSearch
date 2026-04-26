@@ -4,6 +4,7 @@ enum class AppPreferencesKey {
     THEME,
     USE_MATERIAL_YOU,
     SEED_COLOR,
+    AREA_SORT_OPTION,
     ARTIST_SORT_OPTION,
     EVENT_SORT_OPTION,
     RECORDING_SORT_OPTION,

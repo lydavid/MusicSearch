@@ -106,8 +106,8 @@ SELECT
   area.sort_name,
   area.disambiguation,
   area.type,
-  area.begin,
-  area.end,
+  area.`begin`,
+  area.`end`,
   area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited,
@@ -129,7 +129,18 @@ AND (
   area_alias.name LIKE :query
 )
 GROUP BY area.id
-ORDER BY area.begin, area.end, area.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN area.rowid
+    WHEN 2 THEN area.name
+    WHEN 4 THEN area.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN area.rowid
+    WHEN 3 THEN area.name
+    WHEN 5 THEN area.`begin`
+  END DESC,
+  area.name
 LIMIT :limit OFFSET :offset;
 
 -- area by place
@@ -211,8 +222,8 @@ SELECT
   area.sort_name,
   area.disambiguation,
   area.type,
-  area.begin,
-  area.end,
+  area.`begin`,
+  area.`end`,
   area.ended,
   cc.code,
   details_metadata.entity_id IS NOT NULL AS visited,
@@ -233,5 +244,16 @@ WHERE (
   area_alias.name LIKE :query
 )
 GROUP BY area.id
-ORDER BY area.begin, area.end, area.name
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN area.rowid
+    WHEN 2 THEN area.name
+    WHEN 4 THEN area.`begin`
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN area.rowid
+    WHEN 3 THEN area.name
+    WHEN 5 THEN area.`begin`
+  END DESC,
+  area.name
 LIMIT :limit OFFSET :offset;

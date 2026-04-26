@@ -46,7 +46,7 @@ class EntitiesListRepositoryImpl(
         return when (entity) {
             MusicBrainzEntityType.AREA -> areasListRepository.observeAreas(
                 browseMethod = browseMethod,
-                listFilters = listFilters,
+                listFilters = listFilters as ListFilters.Areas,
             ) as Flow<PagingData<ListItemModel>>
 
             MusicBrainzEntityType.ARTIST -> artistsListRepository.observeArtists(

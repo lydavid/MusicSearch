@@ -9,6 +9,6 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 interface AreasListRepository {
     fun observeAreas(
         browseMethod: BrowseMethod,
-        listFilters: ListFilters,
+        listFilters: ListFilters.Areas,
     ): Flow<PagingData<AreaListItemModel>>
 }

@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.AreaQueries
 import lydavidmusicsearchdatadatabase.Areas_by_entity
@@ -38,6 +39,7 @@ interface AreaDao : EntityDao {
     fun getAreas(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: AreaSortOption,
     ): PagingSource<Int, AreaListItemModel>
 
     fun observeCountOfAreas(
@@ -174,10 +176,12 @@ class AreaDaoImpl(
     override fun getAreas(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: AreaSortOption,
     ): PagingSource<Int, AreaListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllAreas(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -185,6 +189,7 @@ class AreaDaoImpl(
             getAreasByCollection(
                 mbid = browseMethod.entityId,
                 query = query,
+                sortOption = sortOption,
             )
         }
     }
@@ -217,6 +222,7 @@ class AreaDaoImpl(
 
     private fun getAllAreas(
         query: String,
+        sortOption: AreaSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfAllAreas(
             query = query,
@@ -226,6 +232,7 @@ class AreaDaoImpl(
         queryProvider = { limit, offset ->
             transacter.getAllAreas(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToAreaListItemModel,
@@ -236,6 +243,7 @@ class AreaDaoImpl(
     private fun getAreasByCollection(
         mbid: String,
         query: String,
+        sortOption: AreaSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfAreasByCollectionQuery(
             collectionId = mbid,
@@ -247,6 +255,7 @@ class AreaDaoImpl(
             transacter.getAreasByCollection(
                 collectionId = mbid,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToAreaListItemModel,

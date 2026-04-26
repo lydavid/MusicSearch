@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -36,6 +37,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = error("Not implemented")
 
     override fun setSeedColor(seedColor: Int) {
+        // No-op.
+    }
+
+    override val areaSortOption: Flow<AreaSortOption>
+        get() = flowOf(AreaSortOption.InsertedAscending)
+
+    override fun setAreaSortOption(sort: AreaSortOption) {
         // No-op.
     }
 

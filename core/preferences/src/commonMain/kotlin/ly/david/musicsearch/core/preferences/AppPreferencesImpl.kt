@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -84,6 +85,25 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    // region Area
+    private val areaSortOptionPreference = stringPreferencesKey(AppPreferencesKey.AREA_SORT_OPTION.name)
+
+    override val areaSortOption: Flow<AreaSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                it[areaSortOptionPreference].toEnumOrDefault(AreaSortOption.InsertedAscending)
+            }
+            .distinctUntilChanged()
+
+    override fun setAreaSortOption(sort: AreaSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[areaSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
 
     // region Artist
     private val artistSortOptionPreference = stringPreferencesKey(AppPreferencesKey.ARTIST_SORT_OPTION.name)

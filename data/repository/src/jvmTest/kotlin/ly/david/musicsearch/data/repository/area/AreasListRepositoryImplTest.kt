@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -61,7 +62,7 @@ class AreasListRepositoryImplTest : KoinTest {
     }
 
     @Test
-    fun `areas by collection, filter by type`() = runTest {
+    fun `areas by collection`() = runTest {
         val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"
         val areas = listOf(
             AreaMusicBrainzNetworkModel(
@@ -126,7 +127,9 @@ class AreasListRepositoryImplTest : KoinTest {
 
         sut.observeAreas(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(),
+            listFilters = ListFilters.Areas(
+                sortOption = AreaSortOption.DateAscending,
+            ),
         ).asSnapshot().run {
             assertEquals(
                 listOf(
@@ -174,8 +177,9 @@ class AreasListRepositoryImplTest : KoinTest {
 
         sut.observeAreas(
             browseMethod = browseMethod,
-            listFilters = ListFilters.Base(
+            listFilters = ListFilters.Areas(
                 query = "di",
+                sortOption = AreaSortOption.DateAscending,
             ),
         ).asSnapshot().run {
             assertEquals(
@@ -190,6 +194,56 @@ class AreasListRepositoryImplTest : KoinTest {
                         id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
                         name = "County Galway",
                         type = "Subdivision",
+                        collected = true,
+                    ),
+                    AreaListItemModel(
+                        id = "08ead5f6-a425-4a72-ac98-8a925d2fbd0d",
+                        name = "Salthill",
+                        type = "District",
+                        collected = true,
+                    ),
+                ),
+                this,
+            )
+        }
+
+        sut.observeAreas(
+            browseMethod = browseMethod,
+            listFilters = ListFilters.Areas(
+                sortOption = AreaSortOption.InsertedAscending,
+            ),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    AreaListItemModel(
+                        id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
+                        name = "Ireland",
+                        type = "Island",
+                        collected = true,
+                    ),
+                    AreaListItemModel(
+                        id = "390b05d4-11ec-3bce-a343-703a366b34a5",
+                        name = "Ireland",
+                        countryCodes = persistentListOf("IE"),
+                        type = "Country",
+                        collected = true,
+                    ),
+                    AreaListItemModel(
+                        id = "99c3f001-64d3-4174-a302-fb14204117af",
+                        name = "Connaught",
+                        type = "Subdivision",
+                        collected = true,
+                    ),
+                    AreaListItemModel(
+                        id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
+                        name = "County Galway",
+                        type = "Subdivision",
+                        collected = true,
+                    ),
+                    AreaListItemModel(
+                        id = "db52f295-91e6-41b0-8491-a3356cc1f815",
+                        name = "Galway",
+                        type = "City",
                         collected = true,
                     ),
                     AreaListItemModel(

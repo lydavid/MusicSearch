@@ -25,6 +25,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -49,6 +50,8 @@ abstract class BaseListPresenter(
         var browseMethod: BrowseMethod? by rememberSaveable(saver = BrowseMethodSaver) { mutableStateOf(null) }
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
 
+        val areaSortOption by appPreferences.areaSortOption.collectAsRetainedState(AreaSortOption.InsertedAscending)
+
         val artistSortOption
             by appPreferences.artistSortOption.collectAsRetainedState(ArtistSortOption.InsertedAscending)
 
@@ -72,6 +75,12 @@ abstract class BaseListPresenter(
         val workSortOption by appPreferences.workSortOption.collectAsRetainedState(WorkSortOption.InsertedAscending)
 
         val listFilters = when (getEntityType()) {
+            MusicBrainzEntityType.AREA -> ListFilters.Areas(
+                query = query,
+                isRemote = isRemote,
+                sortOption = areaSortOption,
+            )
+
             MusicBrainzEntityType.ARTIST -> ListFilters.Artists(
                 query = query,
                 isRemote = isRemote,
@@ -175,6 +184,7 @@ abstract class BaseListPresenter(
 
                 is EntitiesListUiEvent.UpdateSortOption -> {
                     when (val sortOption = event.sortOption) {
+                        is AreaSortOption -> appPreferences.setAreaSortOption(sortOption)
                         is ArtistSortOption -> appPreferences.setArtistSortOption(sortOption)
                         is EventSortOption -> appPreferences.setEventSortOption(sortOption)
                         is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)

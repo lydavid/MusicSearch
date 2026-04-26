@@ -9,6 +9,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -83,6 +84,7 @@ internal fun <T> SortOptionsBottomSheetContent(
 private fun SortableOption.getLabel(): String {
     return stringResource(
         when (this) {
+            is AreaSortOption -> getLabelRes()
             is ArtistSortOption -> getLabelRes()
             is EventSortOption -> getLabelRes()
             is RecordingSortOption -> getLabelRes()
@@ -91,6 +93,19 @@ private fun SortableOption.getLabel(): String {
             is WorkSortOption -> getLabelRes()
         },
     )
+}
+
+private fun AreaSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        AreaSortOption.InsertedAscending -> Res.string.earliestCached
+        AreaSortOption.InsertedDescending -> Res.string.latestCached
+
+        AreaSortOption.NameAscending -> Res.string.alphabetically
+        AreaSortOption.NameDescending -> Res.string.alphabeticallyReverse
+
+        AreaSortOption.DateAscending -> Res.string.earliestBeginDate
+        AreaSortOption.DateDescending -> Res.string.latestBeginDate
+    }
 }
 
 private fun ArtistSortOption.getLabelRes(): StringResource {
