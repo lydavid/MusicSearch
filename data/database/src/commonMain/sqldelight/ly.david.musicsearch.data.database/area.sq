@@ -77,57 +77,6 @@ insertOrIgnoreAreasByEntity:
 INSERT OR IGNORE INTO areas_by_entity
 VALUES ?;
 
--- all areas
-
-getCountOfAllAreas:
-SELECT IFNULL(
-  (
-    SELECT COUNT(DISTINCT area.id)
-    FROM area
-    LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
-    WHERE (
-      area.name LIKE :query OR
-      area.disambiguation LIKE :query OR
-      area.sort_name LIKE :query OR
-      area.type LIKE :query OR
-      area_alias.name LIKE :query
-    )
-  ),
-  0
-) AS count;
-
-getAllAreas:
-SELECT
-  area.id,
-  area.name,
-  area.sort_name,
-  area.disambiguation,
-  area.type,
-  area.begin,
-  area.end,
-  area.ended,
-  cc.code,
-  details_metadata.entity_id IS NOT NULL AS visited,
-  EXISTS (
-    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
-  ) AS collected,
-  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
-FROM area
-LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
-LEFT JOIN country_code cc ON area.id = cc.area_id
-LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
-WHERE (
-  area.name LIKE :query OR
-  area.disambiguation LIKE :query OR
-  area.sort_name LIKE :query OR
-  area.type LIKE :query OR
-  area_alias.name LIKE :query
-)
-GROUP BY area.id
-ORDER BY area.begin, area.end, area.name
-LIMIT :limit OFFSET :offset;
-
 -- areas by collection
 
 getNumberOfAreasByCollection:
@@ -235,3 +184,54 @@ LEFT JOIN country_code cc ON cc.area_id = a.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = a.id
 WHERE ae.entity_id = :releaseId
 ORDER BY rc.date, a.name;
+
+-- all areas
+
+getCountOfAllAreas:
+SELECT IFNULL(
+  (
+    SELECT COUNT(DISTINCT area.id)
+    FROM area
+    LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
+    WHERE (
+      area.name LIKE :query OR
+      area.disambiguation LIKE :query OR
+      area.sort_name LIKE :query OR
+      area.type LIKE :query OR
+      area_alias.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAllAreas:
+SELECT
+  area.id,
+  area.name,
+  area.sort_name,
+  area.disambiguation,
+  area.type,
+  area.begin,
+  area.end,
+  area.ended,
+  cc.code,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  EXISTS (
+    SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = area.id
+  ) AS collected,
+  GROUP_CONCAT(area_alias.name, CHAR(9)) AS alias_names,
+  GROUP_CONCAT(area_alias.locale, CHAR(9)) AS alias_locales
+FROM area
+LEFT JOIN area_alias ON area.id = area_alias.area_id AND area_alias.is_primary
+LEFT JOIN country_code cc ON area.id = cc.area_id
+LEFT JOIN details_metadata ON details_metadata.entity_id = area.id
+WHERE (
+  area.name LIKE :query OR
+  area.disambiguation LIKE :query OR
+  area.sort_name LIKE :query OR
+  area.type LIKE :query OR
+  area_alias.name LIKE :query
+)
+GROUP BY area.id
+ORDER BY area.begin, area.end, area.name
+LIMIT :limit OFFSET :offset;
