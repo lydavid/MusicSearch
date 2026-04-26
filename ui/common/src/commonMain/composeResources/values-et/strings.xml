@@ -160,7 +160,7 @@
     <string name="wikipedia">Vikipeedia</string>
     <string name="readMore">Loe lisaks</string>
     <string name="numberOfImages">Piltide arv</string>
-    <string name="lastUpdatedFromMusicBrainz">Viimasti uuendatud MusicBrainzist %1$s (%2$s)</string>
+    <string name="lastUpdatedFromMusicBrainz">Viimati uuendatud MusicBrainzist %1$s (%2$s)</string>
     <string name="justNow">äsja</string>
     <string name="secondsAgo">sekundit tagasi</string>
     <string name="minuteAgo">minut tagasi</string>
@@ -357,4 +357,6 @@
     <string name="symphonic_poem">Sümfooniline poeem</string>
     <string name="symphony">Sümfoonia</string>
     <string name="zarzuela">Zarzuela</string>
+    <string name="earliestStartDate">Varaseim algusaeg</string>
+    <string name="latestStartDate">Hiliseim algusaeg</string>
 </resources>
