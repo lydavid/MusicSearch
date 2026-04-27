@@ -359,4 +359,12 @@
     <string name="zarzuela">Zarzuela</string>
     <string name="play">Lecture</string>
     <string name="song">Chanson</string>
+    <string name="labelCodeAscending">Code d'étiquette (du plus bas au plus élevé)</string>
+    <string name="labelCodeDescending">Code d'étiquette (du plus élevé au plus bas)</string>
+    <string name="earliestOpenDate">Date d'ouverture la plus proche</string>
+    <string name="latestOpenDate">Date d'ouverture la plus récente</string>
+    <string name="earliestStartDate">Date de début la plus proche</string>
+    <string name="latestStartDate">Date de début la plus tardive</string>
+    <string name="addressAlphabetically">Classement par ordre alphabétique</string>
+    <string name="addressReverseAlphabetically">Classement par ordre alphabétique décroissant</string>
 </resources>
