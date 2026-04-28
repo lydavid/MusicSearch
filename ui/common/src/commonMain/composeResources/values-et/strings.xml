@@ -359,4 +359,10 @@
     <string name="zarzuela">Zarzuela</string>
     <string name="earliestStartDate">Varaseim algusaeg</string>
     <string name="latestStartDate">Hiliseim algusaeg</string>
+    <string name="labelCodeAscending">Väljaandja kood (väiksemast suuremaks)</string>
+    <string name="labelCodeDescending">Väljaandja kood (suuremast väiksemaks)</string>
+    <string name="earliestOpenDate">Varaseim avamisaeg</string>
+    <string name="latestOpenDate">Hiliseim avamisaeg</string>
+    <string name="addressAlphabetically">Aadress tähestikuliselt kasvavalt</string>
+    <string name="addressReverseAlphabetically">Aadress tähestikuliselt kahanevalt</string>
 </resources>
