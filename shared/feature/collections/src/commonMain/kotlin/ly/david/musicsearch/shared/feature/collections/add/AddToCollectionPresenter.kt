@@ -48,11 +48,7 @@ internal class AddToCollectionPresenter(
                     entityType = screen.entityType,
                     showLocal = true,
                     showRemote = true,
-                    entityIdToCheckExists = if (screen.collectableIds.size == 1) {
-                        screen.collectableIds.first()
-                    } else {
-                        null
-                    },
+                    entityIdsToCheckExist = screen.collectableIds.toSet(),
                 ),
             )
         }
@@ -102,6 +98,7 @@ internal class AddToCollectionPresenter(
 
         return AddToCollectionUiState(
             defaultEntityType = screen.entityType,
+            numberOfItemsToAddToCollection = screen.collectableIds.size,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             feedback = intermediateFeedback,
             eventSink = ::eventSink,
@@ -112,6 +109,7 @@ internal class AddToCollectionPresenter(
 @Stable
 internal data class AddToCollectionUiState(
     val defaultEntityType: MusicBrainzEntityType,
+    val numberOfItemsToAddToCollection: Int,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val feedback: Feedback<EditACollectionFeedback>?,
     val eventSink: (AddToCollectionUiEvent) -> Unit,

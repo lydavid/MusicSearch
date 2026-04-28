@@ -25,7 +25,7 @@ class GetAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,
         sortOption: CollectionSortOption = CollectionSortOption.ALPHABETICALLY,
-        entityIdToCheckExists: String?,
+        entityIdsToCheckExist: Set<String>,
     ): Flow<PagingData<CollectionListItemModel>> {
         return musicBrainzAuthStore.username.flatMapLatest { username ->
             collectionRepository.observeAllCollections(
@@ -35,7 +35,7 @@ class GetAllCollections(
                 showLocal = showLocal,
                 showRemote = showRemote,
                 sortOption = sortOption,
-                entityIdToCheckExists = entityIdToCheckExists,
+                entityIdsToCheckExist = entityIdsToCheckExist,
             )
         }
             .distinctUntilChanged()

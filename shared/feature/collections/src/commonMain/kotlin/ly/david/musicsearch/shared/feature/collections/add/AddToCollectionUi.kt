@@ -43,6 +43,7 @@ internal fun AddToCollectionUi(
 
     CollectionBottomSheetContent(
         collections = state.lazyPagingItems,
+        numberOfItemsToAddToCollection = state.numberOfItemsToAddToCollection,
         modifier = modifier,
         feedback = state.feedback,
         onCreateCollectionClick = {

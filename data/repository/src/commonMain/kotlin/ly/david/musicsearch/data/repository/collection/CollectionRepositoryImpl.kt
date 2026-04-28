@@ -42,7 +42,7 @@ class CollectionRepositoryImpl(
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
-        entityIdToCheckExists: String?,
+        entityIdsToCheckExist: Set<String>,
     ): Flow<PagingData<CollectionListItemModel>> =
         Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -54,7 +54,7 @@ class CollectionRepositoryImpl(
                     showLocal = showLocal,
                     showRemote = showRemote,
                     sortOption = sortOption,
-                    entityIdToCheckExists = entityIdToCheckExists,
+                    entityIdsToCheckExist = entityIdsToCheckExist,
                 )
             },
         ).flow

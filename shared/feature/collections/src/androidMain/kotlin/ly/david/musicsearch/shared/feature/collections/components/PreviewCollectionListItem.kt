@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.collections.components
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.listitem.CollectionContainsEntities
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -12,7 +13,7 @@ import ly.david.musicsearch.ui.common.preview.PreviewTheme
 internal fun PreviewCollectionListItem(
     isRemote: Boolean = true,
     visited: Boolean = true,
-    collected: Boolean = true,
+    containsEntities: CollectionContainsEntities? = CollectionContainsEntities.All,
 ) {
     PreviewTheme {
         Surface {
@@ -25,7 +26,7 @@ internal fun PreviewCollectionListItem(
                     entity = MusicBrainzEntityType.RECORDING,
                     cachedEntityCount = 9999,
                     visited = visited,
-                    containsEntity = collected,
+                    containsEntities = containsEntities,
                 ),
             )
         }
@@ -47,7 +48,6 @@ internal fun PreviewCollectionListItemDisabled() {
                     cachedEntityCount = 9999,
                     remoteEntityCount = 9999,
                     visited = true,
-                    containsEntity = false,
                 ),
                 enabled = false,
             )
@@ -70,7 +70,6 @@ internal fun PreviewCollectionListItemHighlighted() {
                     cachedEntityCount = 9999,
                     remoteEntityCount = 9999,
                     visited = true,
-                    containsEntity = false,
                 ),
                 query = "Text ",
             )

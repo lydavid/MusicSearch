@@ -47,10 +47,10 @@ SELECT
   browse_remote_metadata.remote_count,
   details_metadata.entity_id IS NOT NULL AS visited,
   (
-    SELECT COUNT(*) > 0
+    SELECT COUNT(DISTINCT entity_id)
     FROM collection_entity
-    WHERE id = c.id AND entity_id = :entityIdToCheckExists
-  ) AS contains_entity
+    WHERE id = c.id AND entity_id IN :entityIdsToCheckExist
+  ) AS matching_count
 FROM collection_view c
 LEFT JOIN (
   SELECT id, COUNT(entity_id) AS entity_count

@@ -31,13 +31,14 @@ import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.addToCollection
+import musicsearch.ui.common.generated.resources.addXCountToCollection
 import musicsearch.ui.common.generated.resources.createCollection
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun CollectionBottomSheetContent(
     collections: LazyPagingItems<CollectionListItemModel>,
+    numberOfItemsToAddToCollection: Int,
     modifier: Modifier = Modifier,
     feedback: Feedback<EditACollectionFeedback>? = null,
     onCreateCollectionClick: () -> Unit = {},
@@ -61,7 +62,7 @@ internal fun CollectionBottomSheetContent(
             ) {
                 Column {
                     Text(
-                        text = stringResource(Res.string.addToCollection),
+                        text = stringResource(Res.string.addXCountToCollection, numberOfItemsToAddToCollection),
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     message?.let { message ->

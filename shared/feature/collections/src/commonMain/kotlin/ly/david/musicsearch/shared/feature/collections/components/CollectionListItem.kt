@@ -16,9 +16,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.UNKNOWN
+import ly.david.musicsearch.shared.domain.listitem.CollectionContainsEntities
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.icons.CheckCircle
+import ly.david.musicsearch.ui.common.icons.CheckIndeterminateCircle
+import ly.david.musicsearch.ui.common.icons.Circle
 import ly.david.musicsearch.ui.common.icons.Cloud
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -114,13 +117,37 @@ internal fun CollectionListItem(
                         contentDescription = null,
                     )
                 }
-                if (collection.containsEntity) {
-                    Icon(
-                        modifier = Modifier.padding(end = 4.dp),
-                        imageVector = CustomIcons.CheckCircle,
-                        tint = MaterialTheme.colorScheme.primary,
-                        contentDescription = null,
-                    )
+                when (collection.containsEntities) {
+                    null -> {
+                        // Nothing
+                    }
+
+                    CollectionContainsEntities.None -> {
+                        Icon(
+                            modifier = Modifier.padding(end = 4.dp),
+                            imageVector = CustomIcons.Circle,
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            contentDescription = null,
+                        )
+                    }
+
+                    CollectionContainsEntities.Some -> {
+                        Icon(
+                            modifier = Modifier.padding(end = 4.dp),
+                            imageVector = CustomIcons.CheckIndeterminateCircle,
+                            tint = MaterialTheme.colorScheme.primary,
+                            contentDescription = null,
+                        )
+                    }
+
+                    CollectionContainsEntities.All -> {
+                        Icon(
+                            modifier = Modifier.padding(end = 4.dp),
+                            imageVector = CustomIcons.CheckCircle,
+                            tint = MaterialTheme.colorScheme.primary,
+                            contentDescription = null,
+                        )
+                    }
                 }
             }
         },

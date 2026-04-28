@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.listitem.CollectionContainsEntities
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import lydavidmusicsearchdatadatabase.Collection
@@ -106,7 +107,7 @@ class CollectionDao(
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
-        entityIdToCheckExists: String?,
+        entityIdsToCheckExist: Set<String>,
     ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
         countQuery = getCountOfCollectionsQuery(
             showLocal = showLocal,
@@ -118,7 +119,7 @@ class CollectionDao(
         context = coroutineDispatchers.io,
         queryProvider = { limit, offset ->
             transacter.getAllCollections(
-                entityIdToCheckExists = entityIdToCheckExists.orEmpty(),
+                entityIdsToCheckExist = entityIdsToCheckExist,
                 entityType = entityType,
                 query = query,
                 showLocal = showLocal,
@@ -129,7 +130,19 @@ class CollectionDao(
                 leastEntities = sortOption == CollectionSortOption.LEAST_ENTITY_COUNT,
                 limit = limit,
                 offset = offset,
-                mapper = ::mapToCollectionListItem,
+                mapper = { id, isRemote, name, entity, entityCount, remoteCount, visited, matchingCount ->
+                    mapToCollectionListItem(
+                        id = id,
+                        isRemote = isRemote,
+                        name = name,
+                        entity = entity,
+                        entityCount = entityCount,
+                        remoteCount = remoteCount,
+                        visited = visited,
+                        matchingCount = matchingCount,
+                        entityIdsToCheckExistSize = entityIdsToCheckExist.size,
+                    )
+                },
             )
         },
     )
@@ -149,7 +162,6 @@ class CollectionDao(
         entityCount = entityCount,
         remoteCount = null,
         visited = visited,
-        containsEntity = null,
     )
 
     private fun mapToCollectionListItem(
@@ -160,7 +172,8 @@ class CollectionDao(
         entityCount: Long,
         remoteCount: Int?,
         visited: Boolean?,
-        containsEntity: Boolean?,
+        matchingCount: Long = 0,
+        entityIdsToCheckExistSize: Int = 0,
     ) = CollectionListItemModel(
         id = id,
         isRemote = isRemote,
@@ -169,7 +182,12 @@ class CollectionDao(
         cachedEntityCount = entityCount.toInt(),
         remoteEntityCount = remoteCount,
         visited = visited == true,
-        containsEntity = containsEntity == true,
+        containsEntities = when {
+            entityIdsToCheckExistSize == 0 -> null
+            matchingCount.toInt() == 0 -> CollectionContainsEntities.None
+            matchingCount.toInt() == entityIdsToCheckExistSize -> CollectionContainsEntities.All
+            else -> CollectionContainsEntities.Some
+        },
     )
 
     fun deleteMusicBrainzCollections() {

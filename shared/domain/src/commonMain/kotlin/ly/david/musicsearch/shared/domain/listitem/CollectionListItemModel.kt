@@ -16,5 +16,11 @@ data class CollectionListItemModel(
     val cachedEntityCount: Int = 0,
     val remoteEntityCount: Int? = null,
     override val visited: Boolean = false,
-    val containsEntity: Boolean = false,
+    val containsEntities: CollectionContainsEntities? = null,
 ) : ListItemModel, Visitable
+
+enum class CollectionContainsEntities {
+    None,
+    Some,
+    All,
+}

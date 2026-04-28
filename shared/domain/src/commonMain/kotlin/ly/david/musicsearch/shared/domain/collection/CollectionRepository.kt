@@ -17,7 +17,7 @@ interface CollectionRepository {
         showLocal: Boolean,
         showRemote: Boolean,
         sortOption: CollectionSortOption,
-        entityIdToCheckExists: String? = null,
+        entityIdsToCheckExist: Set<String> = setOf(),
     ): Flow<PagingData<CollectionListItemModel>>
 
     fun observeCountOfLocalCollections(): Flow<Int>
