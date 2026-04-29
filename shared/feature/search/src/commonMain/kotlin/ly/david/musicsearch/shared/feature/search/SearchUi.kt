@@ -25,7 +25,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.network.searchableEntities
 import ly.david.musicsearch.ui.common.ResourceDropdownPicker
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Link
@@ -171,7 +171,7 @@ private fun SearchUiContent(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
                 onEditCollectionClick = {
-                    showAddToCollectionSheet(
+                    showEditCollectionSheet(
                         coroutineScope = coroutineScope,
                         overlayHost = overlayHost,
                         entityType = selectedEntityType,

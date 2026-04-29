@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
@@ -273,7 +273,7 @@ internal fun RecordingUi(
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             filterText = state.topAppBarFilterState.filterText,
             onEditCollectionClick = {
-                showAddToCollectionSheet(
+                showEditCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,

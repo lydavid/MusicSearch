@@ -9,12 +9,12 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.showInBottomSheetForResult
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 
-fun showAddToCollectionSheet(
+fun showEditCollectionSheet(
     coroutineScope: CoroutineScope,
     overlayHost: OverlayHost,
     entityType: MusicBrainzEntityType,
@@ -24,7 +24,7 @@ fun showAddToCollectionSheet(
 ) {
     coroutineScope.launch {
         val result: SnackbarPopResultV2<Feedback<EditACollectionFeedback>> = overlayHost.showInBottomSheetForResult(
-            AddToCollectionScreen(
+            EditCollectionScreen(
                 entityType = entityType,
                 collectableIds = entityIds,
             ),

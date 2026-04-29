@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
@@ -297,7 +297,7 @@ internal fun ReleaseUi(
             onEditCollectionClick = {
                 val entityType =
                     selectedTab.toMusicBrainzEntityTypeWhereTracksAreRecordings() ?: return@DetailsHorizontalPager
-                showAddToCollectionSheet(
+                showEditCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = entityType,

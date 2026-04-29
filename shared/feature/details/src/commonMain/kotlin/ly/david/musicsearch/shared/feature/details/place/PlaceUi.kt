@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -206,7 +206,7 @@ internal fun PlaceUi(
             entitiesLazyPagingItems = entitiesLazyPagingItems,
             filterText = state.topAppBarFilterState.filterText,
             onEditCollectionClick = {
-                showAddToCollectionSheet(
+                showEditCollectionSheet(
                     coroutineScope = coroutineScope,
                     overlayHost = overlayHost,
                     entityType = state.selectedTab.toMusicBrainzEntityType() ?: return@DetailsHorizontalPager,

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.add
+package ly.david.musicsearch.shared.feature.collections.edit
 
 import ly.david.musicsearch.ui.test.screenshot.ScreenshotTest
 import org.junit.Test

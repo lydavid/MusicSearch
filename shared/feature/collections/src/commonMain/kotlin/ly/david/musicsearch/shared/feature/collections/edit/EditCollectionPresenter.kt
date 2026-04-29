@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.add
+package ly.david.musicsearch.shared.feature.collections.edit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -26,20 +26,20 @@ import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.screen.AddToCollectionScreen
+import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import kotlin.time.Clock
 
-internal class AddToCollectionPresenter(
-    private val screen: AddToCollectionScreen,
+internal class EditCollectionPresenter(
+    private val screen: EditCollectionScreen,
     private val navigator: Navigator,
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
     private val collectionRepository: CollectionRepository,
     private val clock: Clock,
-) : Presenter<AddToCollectionUiState> {
+) : Presenter<EditCollectionUiState> {
     @Composable
-    override fun present(): AddToCollectionUiState {
+    override fun present(): EditCollectionUiState {
         val scope = rememberCoroutineScope()
         var intermediateFeedback: Feedback<EditACollectionFeedback>? by remember { mutableStateOf(null) }
         val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
@@ -53,9 +53,9 @@ internal class AddToCollectionPresenter(
             )
         }
 
-        fun eventSink(event: AddToCollectionUiEvent) {
+        fun eventSink(event: EditCollectionUiEvent) {
             when (event) {
-                is AddToCollectionUiEvent.CreateNewCollection -> {
+                is EditCollectionUiEvent.CreateNewCollection -> {
                     val name = event.newCollection.name
                     val entity = event.newCollection.entity
                     createCollection(
@@ -66,7 +66,7 @@ internal class AddToCollectionPresenter(
                     )
                 }
 
-                is AddToCollectionUiEvent.AddToCollection -> {
+                is EditCollectionUiEvent.AddToCollection -> {
                     scope.launch {
                         collectionRepository.addToCollection(
                             collectionId = event.collectionId,
@@ -96,7 +96,7 @@ internal class AddToCollectionPresenter(
             }
         }
 
-        return AddToCollectionUiState(
+        return EditCollectionUiState(
             defaultEntityType = screen.entityType,
             numberOfItemsToAddToCollection = screen.collectableIds.size,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
@@ -107,17 +107,17 @@ internal class AddToCollectionPresenter(
 }
 
 @Stable
-internal data class AddToCollectionUiState(
+internal data class EditCollectionUiState(
     val defaultEntityType: MusicBrainzEntityType,
     val numberOfItemsToAddToCollection: Int,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val feedback: Feedback<EditACollectionFeedback>?,
-    val eventSink: (AddToCollectionUiEvent) -> Unit,
+    val eventSink: (EditCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 
-internal sealed interface AddToCollectionUiEvent : CircuitUiEvent {
-    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : AddToCollectionUiEvent
+internal sealed interface EditCollectionUiEvent : CircuitUiEvent {
+    data class CreateNewCollection(val newCollection: CreateNewCollectionResult.NewCollection) : EditCollectionUiEvent
     data class AddToCollection(
         val collectionId: String,
-    ) : AddToCollectionUiEvent
+    ) : EditCollectionUiEvent
 }

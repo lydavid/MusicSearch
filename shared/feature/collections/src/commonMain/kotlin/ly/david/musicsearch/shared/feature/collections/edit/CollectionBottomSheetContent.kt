@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.add
+package ly.david.musicsearch.shared.feature.collections.edit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -45,7 +45,7 @@ FROM collection_entity
 WHERE id = :collectionId
 AND deleted = 1;
 
-deleteFromCollection:
+deleteAllMarkedForDeletionFromCollection:
 DELETE FROM collection_entity
 WHERE id = :collectionId
 AND deleted = 1;

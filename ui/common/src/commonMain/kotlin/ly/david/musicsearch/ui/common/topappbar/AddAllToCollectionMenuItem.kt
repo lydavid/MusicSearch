@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.slack.circuit.overlay.OverlayHost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineScope
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PlaylistAdd
 import musicsearch.ui.common.generated.resources.Res
@@ -45,7 +45,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
             )
         },
         onClick = {
-            showAddToCollectionSheet(
+            showEditCollectionSheet(
                 coroutineScope = coroutineScope,
                 overlayHost = overlayHost,
                 entityType = entity,

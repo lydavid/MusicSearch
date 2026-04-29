@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.collections.add
+package ly.david.musicsearch.shared.feature.collections.edit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,8 +11,8 @@ import ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectio
 import ly.david.musicsearch.ui.common.dialog.BasicDialog
 
 @Composable
-internal fun AddToCollectionUi(
-    state: AddToCollectionUiState,
+internal fun EditCollectionUi(
+    state: EditCollectionUiState,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
@@ -29,7 +29,7 @@ internal fun AddToCollectionUi(
                 onDismiss = { showDialog = false },
                 onSubmit = { name, entity ->
                     eventSink(
-                        AddToCollectionUiEvent.CreateNewCollection(
+                        EditCollectionUiEvent.CreateNewCollection(
                             CreateNewCollectionResult.NewCollection(
                                 name = name,
                                 entity = entity,
@@ -50,7 +50,7 @@ internal fun AddToCollectionUi(
             showDialog = true
         },
         onAddToCollection = { collectionId ->
-            eventSink(AddToCollectionUiEvent.AddToCollection(collectionId))
+            eventSink(EditCollectionUiEvent.AddToCollection(collectionId))
         },
     )
 }

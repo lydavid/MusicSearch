@@ -37,7 +37,7 @@ interface CollectionRepository {
         collectionId: String,
     )
 
-    suspend fun deleteFromCollection(
+    suspend fun deleteAllMarkedForDeletionFromCollection(
         collection: CollectionListItemModel,
     ): Flow<Feedback<EditACollectionFeedback>>
 

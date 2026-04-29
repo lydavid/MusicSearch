@@ -23,7 +23,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.getMessage
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.fullscreen.FullScreenText
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.getListFilters
@@ -300,7 +300,7 @@ internal fun CollectionUi(
                     )
                 },
                 onEditCollectionClick = {
-                    showAddToCollectionSheet(
+                    showEditCollectionSheet(
                         coroutineScope = coroutineScope,
                         overlayHost = overlayHost,
                         entityType = entity,

@@ -73,10 +73,10 @@ class CollectionEntityDao(
             .toSet()
     }
 
-    fun deleteFromCollection(
+    fun deleteAllMarkedForDeletionFromCollection(
         collectionId: String,
     ) {
-        transacter.deleteFromCollection(
+        transacter.deleteAllMarkedForDeletionFromCollection(
             collectionId = collectionId,
         )
     }

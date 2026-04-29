@@ -147,7 +147,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
     }
 
-    override suspend fun deleteFromCollection(
+    override suspend fun deleteAllMarkedForDeletionFromCollection(
         collection: CollectionListItemModel,
     ): Flow<Feedback<EditACollectionFeedback>> = flow {
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
@@ -183,7 +183,7 @@ class CollectionRepositoryImpl(
             }
         }
 
-        collectionEntityDao.deleteFromCollection(collectionId = collection.id)
+        collectionEntityDao.deleteAllMarkedForDeletionFromCollection(collectionId = collection.id)
         emit(
             Feedback.Success(
                 data = EditACollectionFeedback.Deleted(

@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.ui.common.collection.showAddToCollectionSheet
+import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIcon
 
 @Composable
@@ -26,7 +26,7 @@ fun AddToCollectionActionToggle(
     IconButton(
         modifier = modifier,
         onClick = {
-            showAddToCollectionSheet(
+            showEditCollectionSheet(
                 coroutineScope = coroutineScope,
                 overlayHost = overlayHost,
                 entityType = entityType,

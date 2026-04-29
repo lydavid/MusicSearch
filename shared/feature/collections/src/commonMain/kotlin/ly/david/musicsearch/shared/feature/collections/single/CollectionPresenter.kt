@@ -162,7 +162,7 @@ internal class CollectionPresenter(
 
                 is CollectionUiEvent.DeleteItemsMarkedAsDeleted -> {
                     externalScope.launch {
-                        collectionRepository.deleteFromCollection(
+                        collectionRepository.deleteAllMarkedForDeletionFromCollection(
                             collection = collection ?: return@launch,
                         ).collect {
                             finalFeedback = it
