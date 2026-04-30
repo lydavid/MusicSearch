@@ -16,6 +16,7 @@ interface ListensListRepository {
         username: String,
         query: String,
         entityFacet: MusicBrainzEntity?,
+        maxDateTimeEpochMilliseconds: Long?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,

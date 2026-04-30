@@ -20,6 +20,20 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun withDateFilter() {
+        snapshot {
+            PreviewListensUiWithDateFilter()
+        }
+    }
+
+    @Test
+    fun withRecordingFacetAndDateFilter() {
+        snapshot {
+            PreviewListensUiWithRecordingFacetAndDateFilter()
+        }
+    }
+
+    @Test
     fun updated() {
         snapshot {
             PreviewListensUiUpdated()

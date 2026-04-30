@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
+import ly.david.musicsearch.shared.domain.SECONDS_IN_DAY
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
@@ -70,6 +72,7 @@ internal class ListensPresenter(
         )
         val facetQuery = facetFilterState.filterText
         var selectedTab by rememberSaveable { mutableStateOf(screen.entityFacet?.type?.toTab() ?: Tab.RECORDINGS) }
+        var selectedDateTimeEpochSeconds: Long? by rememberSaveable { mutableStateOf(null) }
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val listensQuery = topAppBarFilterState.filterText
@@ -79,12 +82,14 @@ internal class ListensPresenter(
             browseUsername,
             listensQuery,
             selectedEntityFacet,
+            selectedDateTimeEpochSeconds,
         ) {
             mutableStateOf(
                 listensListRepository.observeListens(
                     username = browseUsername,
                     query = listensQuery,
                     entityFacet = selectedEntityFacet,
+                    maxDateTimeEpochMilliseconds = selectedDateTimeEpochSeconds?.let { it * MS_IN_SECOND },
                     stopPrepending = hasReachedLatest,
                     stopAppending = hasReachedOldest,
                     onReachedLatest = { hasReachedLatest = it },
@@ -130,13 +135,21 @@ internal class ListensPresenter(
                     selectedTab = event.tab
                 }
 
-                is ListensUiEvent.ToggleFacet -> {
+                is ListensUiEvent.ToggleEntityFacet -> {
                     val newEntityFacet = event.entityFacet
                     selectedEntityFacet = if (selectedEntityFacet == newEntityFacet) {
                         null
                     } else {
                         newEntityFacet
                     }
+                }
+
+                is ListensUiEvent.SelectMaxDateAtMidnight -> {
+                    selectedDateTimeEpochSeconds = event.midnightDateTimeEpochSeconds?.let { it + SECONDS_IN_DAY - 1 }
+                }
+
+                is ListensUiEvent.SelectExactMaxDate -> {
+                    selectedDateTimeEpochSeconds = event.dateTimeEpochSeconds
                 }
 
                 is ListensUiEvent.SubmitMapping -> {
@@ -194,6 +207,7 @@ internal class ListensPresenter(
                     username = browseUsername,
                     query = facetQuery,
                 ),
+                selectedDateTimeEpochSeconds = selectedDateTimeEpochSeconds,
             ),
             lazyListState = lazyListState,
             listensPagingDataFlow = listens,
@@ -231,6 +245,7 @@ internal data class FacetsUiState(
     val selectedTab: Tab = Tab.RECORDINGS,
     val filterState: TopAppBarFilterState = TopAppBarFilterState(),
     val facetsPagingDataFlow: Flow<PagingData<FacetListItem>> = emptyFlow(),
+    val selectedDateTimeEpochSeconds: Long? = null,
 )
 
 internal sealed interface ListensUiEvent : CircuitUiEvent {
@@ -255,8 +270,16 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
         val tab: Tab,
     ) : ListensUiEvent
 
-    data class ToggleFacet(
-        val entityFacet: MusicBrainzEntity,
+    data class ToggleEntityFacet(
+        val entityFacet: MusicBrainzEntity?,
+    ) : ListensUiEvent
+
+    data class SelectMaxDateAtMidnight(
+        val midnightDateTimeEpochSeconds: Long?,
+    ) : ListensUiEvent
+
+    data class SelectExactMaxDate(
+        val dateTimeEpochSeconds: Long?,
     ) : ListensUiEvent
 
     data class SubmitMapping(

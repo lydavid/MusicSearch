@@ -90,11 +90,11 @@ class ListensListRepositoryImplTest :
                     username = TEST_USERNAME,
                     query = query,
                     entityFacet = null,
+                    maxDateTimeEpochMilliseconds = null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
-                    onReachedOldest = {},
-                )
+                ) {}
             },
             testCases = listOf(
                 FilterTestCase(
@@ -320,11 +320,11 @@ class ListensListRepositoryImplTest :
                         id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                         type = MusicBrainzEntityType.RECORDING,
                     ),
+                    maxDateTimeEpochMilliseconds = null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},
-                    onReachedOldest = {},
-                )
+                ) {}
             },
             testCases = listOf(
                 FilterTestCase(
@@ -366,6 +366,7 @@ class ListensListRepositoryImplTest :
                         id = "",
                         type = MusicBrainzEntityType.RECORDING,
                     ),
+                    null,
                     stopPrepending = false,
                     stopAppending = false,
                     onReachedLatest = {},

@@ -11,7 +11,6 @@ import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import kotlin.time.Clock
 
 val listensFeatureModule = module {
     single(named("ListensPresenter")) {
@@ -48,6 +47,8 @@ val listensFeatureModule = module {
                     ui<ListensUiState> { state, modifier ->
                         ListensUi(
                             state = state,
+                            timeZone = TimeZone.currentSystemDefault(),
+                            clock = get(),
                             modifier = modifier,
                         )
                     }
@@ -58,7 +59,7 @@ val listensFeatureModule = module {
                         SubmitListenUi(
                             state = state,
                             timeZone = TimeZone.currentSystemDefault(),
-                            clock = Clock.System,
+                            clock = get(),
                             modifier = modifier,
                         )
                     }

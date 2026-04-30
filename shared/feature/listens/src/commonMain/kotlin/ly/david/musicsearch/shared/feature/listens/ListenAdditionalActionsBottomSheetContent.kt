@@ -125,6 +125,8 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             )
         }
 
+        // TODO: Filter by ..., then clicking gives option to filter by song/release/work/artists
+        //  move the filter icon to start
         val recordingId = listen.recordingId
         val hasRecordingId = recordingId.isNotEmpty()
         ClickableItem(
@@ -156,6 +158,8 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 onDismiss()
             },
         )
+
+        // TODO: filter by date
 
         HorizontalDivider()
 

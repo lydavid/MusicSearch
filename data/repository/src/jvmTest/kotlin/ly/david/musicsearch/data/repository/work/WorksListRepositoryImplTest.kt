@@ -661,11 +661,11 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 username = TEST_USERNAME,
                 query = "",
                 entityFacet = null,
+                maxDateTimeEpochMilliseconds = null,
                 stopPrepending = false,
                 stopAppending = false,
                 onReachedLatest = {},
-                onReachedOldest = {},
-            )
+            ) {}
             .asSnapshot()
 
         val works = listOf(

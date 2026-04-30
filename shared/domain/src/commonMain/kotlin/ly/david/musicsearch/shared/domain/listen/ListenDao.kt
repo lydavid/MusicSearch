@@ -19,6 +19,7 @@ interface ListenDao {
         username: String,
         query: String,
         facetEntity: MusicBrainzEntity?,
+        maxDateTimeEpochMilliseconds: Long?,
     ): PagingSource<Int, ListenListItemModel>
 
     fun getFacetsByUser(

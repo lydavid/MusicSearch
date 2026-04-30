@@ -203,11 +203,11 @@ class RecordingRepositoryImplTest :
             username = TEST_USERNAME,
             query = "color",
             entityFacet = null,
+            maxDateTimeEpochMilliseconds = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},
-            onReachedOldest = {},
-        ).asSnapshot().run {
+        ) {}.asSnapshot().run {
             Assert.assertEquals(
                 listOf(
                     ListSeparator(
@@ -302,11 +302,11 @@ class RecordingRepositoryImplTest :
             username = TEST_USERNAME,
             query = "color",
             entityFacet = null,
+            maxDateTimeEpochMilliseconds = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},
-            onReachedOldest = {},
-        ).asSnapshot().run {
+        ) {}.asSnapshot().run {
             Assert.assertEquals(
                 listOf(
                     ListSeparator(

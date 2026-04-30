@@ -50,6 +50,7 @@ class ListensListRepositoryImpl(
         username: String,
         query: String,
         entityFacet: MusicBrainzEntity?,
+        maxDateTimeEpochMilliseconds: Long?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -62,6 +63,7 @@ class ListensListRepositoryImpl(
                 username = username,
                 query = query,
                 facetEntity = entityFacet,
+                maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
                 stopPrepending = stopPrepending,
                 stopAppending = stopAppending,
                 onReachedLatest = onReachedLatest,
@@ -77,6 +79,7 @@ class ListensListRepositoryImpl(
         username: String,
         query: String,
         facetEntity: MusicBrainzEntity?,
+        maxDateTimeEpochMilliseconds: Long?,
         stopPrepending: Boolean,
         stopAppending: Boolean,
         onReachedLatest: (Boolean) -> Unit,
@@ -94,12 +97,13 @@ class ListensListRepositoryImpl(
                 onReachedOldest = onReachedOldest,
             )
                 // Don't try to load remote data while the user is faceting
-                .takeIf { facetEntity == null },
+                .takeIf { facetEntity == null && maxDateTimeEpochMilliseconds == null },
             pagingSourceFactory = {
                 listenDao.getListensByUser(
                     username = username,
                     query = query,
                     facetEntity = facetEntity,
+                    maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
                 )
             },
         ).flow.map { pagingData ->

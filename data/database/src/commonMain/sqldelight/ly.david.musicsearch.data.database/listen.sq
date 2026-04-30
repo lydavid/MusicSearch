@@ -125,6 +125,10 @@ FROM (
     )
   )
   AND (
+    :maxDateTimeEpochMilliseconds IS NULL OR
+    listened_at_ms <= :maxDateTimeEpochMilliseconds
+  )
+  AND (
     recording.name LIKE :query OR
     recording.disambiguation LIKE :query OR
     recording_alias.name LIKE :query OR
@@ -200,6 +204,10 @@ AND (
     WHERE relation.linked_entity_id = listen.recording_musicbrainz_id
       AND relation.entity_id = :workId
   )
+)
+AND (
+  :maxDateTimeEpochMilliseconds IS NULL OR
+  listened_at_ms <= :maxDateTimeEpochMilliseconds
 )
 AND (
   recording.name LIKE :query OR

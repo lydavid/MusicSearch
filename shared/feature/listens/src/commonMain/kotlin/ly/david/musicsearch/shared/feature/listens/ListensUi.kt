@@ -1,9 +1,11 @@
 package ly.david.musicsearch.shared.feature.listens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
@@ -30,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.CancellationException
+import kotlinx.datetime.TimeZone
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.error.Feedback
@@ -38,7 +42,9 @@ import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.feature.listens.components.DatePickerDialog
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
+import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -52,10 +58,14 @@ import ly.david.musicsearch.ui.common.text.buildStringWithSingleLink
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.changeUsername
+import musicsearch.ui.common.generated.resources.clearAll
+import musicsearch.ui.common.generated.resources.clearDateFilter
 import musicsearch.ui.common.generated.resources.clearFacets
+import musicsearch.ui.common.generated.resources.date
 import musicsearch.ui.common.generated.resources.deletedListens
 import musicsearch.ui.common.generated.resources.enterUsername
 import musicsearch.ui.common.generated.resources.enterYourListenBrainzUsername
@@ -74,6 +84,7 @@ import musicsearch.ui.common.generated.resources.username
 import musicsearch.ui.common.generated.resources.xListens
 import musicsearch.ui.common.generated.resources.xSongs
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
 
 private const val ROTATE_DOWN = 90f
 
@@ -81,6 +92,8 @@ private const val ROTATE_DOWN = 90f
 @Composable
 internal fun ListensUi(
     state: ListensUiState,
+    timeZone: TimeZone = TimeZone.currentSystemDefault(),
+    clock: Clock = Clock.System,
     modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
@@ -100,28 +113,6 @@ internal fun ListensUi(
                 onSetUsername = {
                     eventSink(ListensUiEvent.SetUsername)
                     showDialog = false
-                },
-            )
-        }
-    }
-
-    var showFacetsBottomSheet: Boolean by remember { mutableStateOf(false) }
-    if (showFacetsBottomSheet) {
-        ModalBottomSheet(
-            onDismissRequest = {
-                showFacetsBottomSheet = false
-            },
-        ) {
-            FacetsBottomSheetContent(
-                state = state.facetsUiState,
-                onUpdateTab = {
-                    eventSink(ListensUiEvent.UpdateFacetTab(it))
-                },
-                onFacetClick = {
-                    eventSink(ListensUiEvent.ToggleFacet(it))
-                },
-                onDismiss = {
-                    showFacetsBottomSheet = false
                 },
             )
         }
@@ -157,56 +148,29 @@ internal fun ListensUi(
             )
         }
     }
-    val selectedEntityFacet = state.facetsUiState.selectedEntityFacet
+
     val additionalBar: @Composable (() -> Unit) = if (noUsernameSet) {
         {}
     } else {
         {
-            Row(
-                modifier = Modifier.padding(end = 16.dp),
-            ) {
-                val selectedFacet = selectedEntityFacet != null
-                if (selectedFacet) {
-                    IconButton(
-                        modifier = Modifier.padding(start = 4.dp),
-                        onClick = {
-                            eventSink(ListensUiEvent.ToggleFacet(selectedEntityFacet))
-                        },
-                    ) {
-                        Icon(
-                            imageVector = CustomIcons.Clear,
-                            contentDescription = stringResource(Res.string.clearFacets),
-                        )
-                    }
-                }
-                InputChip(
-                    modifier = Modifier.padding(
-                        start = if (selectedFacet) 4.dp else 16.dp,
-                    ),
-                    selected = selectedFacet,
-                    leadingIcon = {
-                        Icon(
-                            imageVector = CustomIcons.FilterAlt,
-                            contentDescription = null,
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = CustomIcons.ChevronRight,
-                            modifier = Modifier.rotate(ROTATE_DOWN),
-                            contentDescription = null,
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = stringResource(Res.string.facets),
-                        )
-                    },
-                    onClick = {
-                        showFacetsBottomSheet = true
-                    },
-                )
-            }
+            FacetsAdditionalBar(
+                state = state.facetsUiState,
+                timeZone = timeZone,
+                clock = clock,
+                onClearAll = {
+                    eventSink(ListensUiEvent.ToggleEntityFacet(null))
+                    eventSink(ListensUiEvent.SelectMaxDateAtMidnight(null))
+                },
+                onSelectEntityFacet = {
+                    eventSink(ListensUiEvent.ToggleEntityFacet(it))
+                },
+                onUpdateTab = {
+                    eventSink(ListensUiEvent.UpdateFacetTab(it))
+                },
+                onSelectDate = {
+                    eventSink(ListensUiEvent.SelectMaxDateAtMidnight(midnightDateTimeEpochSeconds = it))
+                },
+            )
         }
     }
 
@@ -275,10 +239,188 @@ internal fun ListensUi(
             state = state,
             filterText = state.topAppBarFilterState.filterText,
             eventSink = eventSink,
-            selectedEntityFacet = selectedEntityFacet,
+            selectedEntityFacet = state.facetsUiState.selectedEntityFacet,
             lazyPagingItems = lazyPagingItems,
         )
     }
+}
+
+@Composable
+private fun FacetsAdditionalBar(
+    state: FacetsUiState,
+    timeZone: TimeZone,
+    clock: Clock,
+    onClearAll: () -> Unit,
+    onSelectEntityFacet: (MusicBrainzEntity?) -> Unit,
+    onUpdateTab: (Tab) -> Unit,
+    onSelectDate: (dateSeconds: Long?) -> Unit,
+) {
+    val selectedEntityFacet = state.selectedEntityFacet
+    val selectedDateTimeEpochSeconds = state.selectedDateTimeEpochSeconds
+    Row(
+        modifier = Modifier.padding(end = 16.dp),
+    ) {
+        val selectedAnyFacet = selectedEntityFacet != null || selectedDateTimeEpochSeconds != null
+        if (selectedAnyFacet) {
+            IconButton(
+                modifier = Modifier.padding(start = 4.dp),
+                onClick = onClearAll,
+            ) {
+                Icon(
+                    imageVector = CustomIcons.Clear,
+                    contentDescription = stringResource(Res.string.clearAll),
+                )
+            }
+        }
+
+        FacetChip(
+            modifier = Modifier.padding(
+                start = if (selectedAnyFacet) 4.dp else 16.dp,
+            ),
+            facetsUiState = state,
+            selectedEntityFacet = selectedEntityFacet,
+            onSelectFacet = onSelectEntityFacet,
+            onUpdateTab = onUpdateTab,
+        )
+
+        DatePickerChip(
+            modifier = Modifier.padding(start = 8.dp),
+            dateTimeEpochSeconds = selectedDateTimeEpochSeconds,
+            timeZone = timeZone,
+            clock = clock,
+            onSelectDate = onSelectDate,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FacetChip(
+    facetsUiState: FacetsUiState,
+    selectedEntityFacet: MusicBrainzEntity?,
+    modifier: Modifier,
+    onSelectFacet: (MusicBrainzEntity?) -> Unit,
+    onUpdateTab: (Tab) -> Unit,
+) {
+    var showFacetsBottomSheet: Boolean by remember { mutableStateOf(false) }
+    if (showFacetsBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                showFacetsBottomSheet = false
+            },
+        ) {
+            FacetsBottomSheetContent(
+                state = facetsUiState,
+                onUpdateTab = {
+                    onUpdateTab(it)
+                },
+                onFacetClick = {
+                    onSelectFacet(it)
+                },
+                onDismiss = {
+                    showFacetsBottomSheet = false
+                },
+            )
+        }
+    }
+
+    val selectedFacet = selectedEntityFacet != null
+    InputChip(
+        modifier = modifier,
+        selected = selectedFacet,
+        leadingIcon = {
+            Icon(
+                imageVector = CustomIcons.FilterAlt,
+                contentDescription = null,
+            )
+        },
+        trailingIcon = {
+            if (selectedFacet) {
+                Icon(
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(28.dp))
+                        .clickable {
+                            onSelectFacet(null)
+                        },
+                    imageVector = CustomIcons.Clear,
+                    contentDescription = stringResource(Res.string.clearFacets),
+                )
+            } else {
+                Icon(
+                    imageVector = CustomIcons.ChevronRight,
+                    modifier = Modifier.rotate(ROTATE_DOWN),
+                    contentDescription = null,
+                )
+            }
+        },
+        label = {
+            Text(
+                text = stringResource(Res.string.facets),
+            )
+        },
+        onClick = {
+            showFacetsBottomSheet = true
+        },
+    )
+}
+
+@Composable
+private fun DatePickerChip(
+    dateTimeEpochSeconds: Long?,
+    timeZone: TimeZone,
+    clock: Clock,
+    modifier: Modifier,
+    onSelectDate: (dateSeconds: Long?) -> Unit,
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    if (showDialog) {
+        DatePickerDialog(
+            dateTimeEpochSeconds = dateTimeEpochSeconds,
+            timeZone = timeZone,
+            clock = clock,
+            onSelectDate = onSelectDate,
+            onDismiss = { showDialog = false },
+        )
+    }
+
+    val selectedDate = dateTimeEpochSeconds != null
+    InputChip(
+        modifier = modifier,
+        selected = selectedDate,
+        leadingIcon = {
+            Icon(
+                imageVector = CustomIcons.CalendarMonth,
+                contentDescription = null,
+            )
+        },
+        trailingIcon = {
+            if (selectedDate) {
+                Icon(
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(28.dp))
+                        .clickable {
+                            onSelectDate(null)
+                        },
+                    imageVector = CustomIcons.Clear,
+                    contentDescription = stringResource(Res.string.clearDateFilter),
+                )
+            } else {
+                Icon(
+                    imageVector = CustomIcons.ChevronRight,
+                    modifier = Modifier.rotate(ROTATE_DOWN),
+                    contentDescription = null,
+                )
+            }
+        },
+        label = {
+            Text(
+                text = stringResource(Res.string.date),
+            )
+        },
+        onClick = {
+            showDialog = true
+        },
+    )
 }
 
 @Composable
@@ -347,7 +489,7 @@ private fun ListensContent(
                     },
                     onFilterByRecordingClick = { id ->
                         eventSink(
-                            ListensUiEvent.ToggleFacet(
+                            ListensUiEvent.ToggleEntityFacet(
                                 MusicBrainzEntity(
                                     id = id,
                                     type = MusicBrainzEntityType.RECORDING,

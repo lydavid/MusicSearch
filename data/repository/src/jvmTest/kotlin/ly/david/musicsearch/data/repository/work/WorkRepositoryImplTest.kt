@@ -154,11 +154,11 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
             username = TEST_USERNAME,
             query = "観測",
             entityFacet = null,
+            maxDateTimeEpochMilliseconds = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},
-            onReachedOldest = {},
-        ).asSnapshot().run {
+        ) {}.asSnapshot().run {
             Assert.assertEquals(
                 listOf(
                     ListSeparator(

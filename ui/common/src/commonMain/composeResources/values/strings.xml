@@ -365,4 +365,6 @@
     <string name="symphonic_poem">Symphonic poem</string>
     <string name="symphony">Symphony</string>
     <string name="zarzuela">Zarzuela</string>
+    <string name="clearAll">Clear all</string>
+    <string name="clearDateFilter">Clear date filter</string>
 </resources>

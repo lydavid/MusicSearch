@@ -17,13 +17,25 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
 
+private val header = ListSeparator(
+    id = 1755655177000.toString(),
+    text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
+)
+
+private val colorYourNight = ListenListItemModel(
+    listenedAtMs = 1755645177000,
+    username = "user",
+    recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
+    name = "Color Your Night",
+    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+    durationMs = 227240,
+    visited = true,
+)
+
 private val listens = MutableStateFlow(
     PagingData.from(
         data = listOf(
-            ListSeparator(
-                id = 1755655177000.toString(),
-                text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
-            ),
+            header,
             ListenListItemModel(
                 listenedAtMs = 1755655177000,
                 username = "user",
@@ -32,15 +44,7 @@ private val listens = MutableStateFlow(
                 formattedArtistCredits = "ano feat. 幾田りら",
                 durationMs = null,
             ),
-            ListenListItemModel(
-                listenedAtMs = 1755645177000,
-                username = "user",
-                recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                name = "Color Your Night",
-                formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                durationMs = 227240,
-                visited = true,
-            ),
+            colorYourNight,
         ),
     ),
 )
@@ -70,19 +74,8 @@ internal fun PreviewListensUiWithRecordingFacet() {
             val listens = MutableStateFlow(
                 PagingData.from(
                     data = listOf(
-                        ListSeparator(
-                            id = 1755655177000.toString(),
-                            text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
-                        ),
-                        ListenListItemModel(
-                            listenedAtMs = 1755645177000,
-                            username = "user",
-                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                            name = "Color Your Night",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            durationMs = 227240,
-                            visited = true,
-                        ),
+                        header,
+                        colorYourNight,
                     ),
                 ),
             )
@@ -95,6 +88,62 @@ internal fun PreviewListensUiWithRecordingFacet() {
                             id = "2",
                             type = MusicBrainzEntityType.RECORDING,
                         ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiWithDateFilter() {
+    PreviewWithTransitionAndOverlays {
+        Surface {
+            val listens = MutableStateFlow(
+                PagingData.from(
+                    data = listOf(
+                        header,
+                        colorYourNight,
+                    ),
+                ),
+            )
+            ListensUi(
+                state = ListensUiState(
+                    username = "user",
+                    listensPagingDataFlow = listens,
+                    facetsUiState = FacetsUiState(
+                        selectedDateTimeEpochSeconds = 1755655177000,
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewListensUiWithRecordingFacetAndDateFilter() {
+    PreviewWithTransitionAndOverlays {
+        Surface {
+            val listens = MutableStateFlow(
+                PagingData.from(
+                    data = listOf(
+                        header,
+                        colorYourNight,
+                    ),
+                ),
+            )
+            ListensUi(
+                state = ListensUiState(
+                    username = "user",
+                    listensPagingDataFlow = listens,
+                    facetsUiState = FacetsUiState(
+                        selectedEntityFacet = MusicBrainzEntity(
+                            id = "2",
+                            type = MusicBrainzEntityType.RECORDING,
+                        ),
+                        selectedDateTimeEpochSeconds = 1755655177000,
                     ),
                 ),
             )

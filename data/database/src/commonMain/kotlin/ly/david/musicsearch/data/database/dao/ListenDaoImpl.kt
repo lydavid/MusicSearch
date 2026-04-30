@@ -174,6 +174,7 @@ class ListenDaoImpl(
         username: String,
         query: String,
         facetEntity: MusicBrainzEntity?,
+        maxDateTimeEpochMilliseconds: Long?,
     ): PagingSource<Int, ListenListItemModel> {
         val queryWithWildcards = "%$query%"
         val recordingId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RECORDING }?.id
@@ -188,6 +189,7 @@ class ListenDaoImpl(
                 releaseId = releaseId,
                 artistId = artistId,
                 workId = workId,
+                maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
             ),
             transacter = listenTransacter,
             context = coroutineDispatchers.io,
@@ -199,6 +201,7 @@ class ListenDaoImpl(
                     releaseId = releaseId,
                     artistId = artistId,
                     workId = workId,
+                    maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToListenListItemModel,

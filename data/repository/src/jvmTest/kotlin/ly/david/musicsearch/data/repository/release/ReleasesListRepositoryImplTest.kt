@@ -1642,11 +1642,11 @@ class ReleasesListRepositoryImplTest :
             username = TEST_USERNAME,
             query = "",
             entityFacet = null,
+            maxDateTimeEpochMilliseconds = null,
             stopPrepending = false,
             stopAppending = false,
             onReachedLatest = {},
-            onReachedOldest = {},
-        ).asSnapshot()
+        ) {}.asSnapshot()
 
         // Load releases
         val entityId = "37e85ee8-366a-4f17-a011-de94b6632408"
