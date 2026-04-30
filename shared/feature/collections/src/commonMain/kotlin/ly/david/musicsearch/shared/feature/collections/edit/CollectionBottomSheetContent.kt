@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
@@ -69,7 +70,13 @@ internal fun CollectionBottomSheetContent(
                         Row(
                             modifier = Modifier.padding(top = 4.dp),
                         ) {
-                            CircularProgressIndicator(modifier = Modifier.size(16.dp))
+                            // TODO: Any screenshot tests with animations such as CircularProgressIndicator may flake
+                            //  until https://github.com/cashapp/paparazzi/issues/678 or https://github.com/cashapp/paparazzi/issues/627 are resolved
+                            if (!LocalInspectionMode.current) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(16.dp),
+                                )
+                            }
                             Text(
                                 text = message,
                                 modifier = Modifier.padding(start = 4.dp),
