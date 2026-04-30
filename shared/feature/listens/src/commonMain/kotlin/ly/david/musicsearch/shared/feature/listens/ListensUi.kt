@@ -474,12 +474,11 @@ private fun ListensContent(
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheetForListen = null },
             ) {
+                val selectedDateTimeEpochSeconds = state.facetsUiState.selectedDateTimeEpochSeconds
                 ListenAdditionalActionsBottomSheetContent(
                     listen = listen,
                     filterText = filterText,
-                    filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
-                    allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
-                    onGoToReleaseClick = { releaseId ->
+                    onGoToRelease = { releaseId ->
                         eventSink(
                             ListensUiEvent.ClickItem(
                                 entityType = MusicBrainzEntityType.RELEASE,
@@ -487,7 +486,8 @@ private fun ListensContent(
                             ),
                         )
                     },
-                    onFilterByRecordingClick = { id ->
+                    filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
+                    onFilterByRecording = { id ->
                         eventSink(
                             ListensUiEvent.ToggleEntityFacet(
                                 MusicBrainzEntity(
@@ -497,6 +497,15 @@ private fun ListensContent(
                             ),
                         )
                     },
+                    filteringByThisDate = listen.listenedAtMs / MS_IN_SECOND == selectedDateTimeEpochSeconds,
+                    onFilterByDate = {
+                        eventSink(
+                            ListensUiEvent.SelectExactMaxDate(
+                                dateTimeEpochMilliseconds = it,
+                            ),
+                        )
+                    },
+                    allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
                     onSubmitMapping = { recordingMessyBrainzId, recordingId ->
                         eventSink(
                             ListensUiEvent.SubmitMapping(

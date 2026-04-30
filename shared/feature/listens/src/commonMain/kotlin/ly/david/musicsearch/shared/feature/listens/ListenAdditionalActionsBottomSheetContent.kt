@@ -27,6 +27,7 @@ import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
+import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
@@ -45,21 +46,25 @@ import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.addMapping
 import musicsearch.ui.common.generated.resources.delete
+import musicsearch.ui.common.generated.resources.filterFromListenDate
 import musicsearch.ui.common.generated.resources.goToAlbum
 import musicsearch.ui.common.generated.resources.linkListenWithMusicBrainz
 import musicsearch.ui.common.generated.resources.linkWithMusicBrainz
 import musicsearch.ui.common.generated.resources.openInBrowser
 import musicsearch.ui.common.generated.resources.refreshMapping
+import musicsearch.ui.common.generated.resources.stopFilteringFromThisDate
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
     filterText: String,
+    onGoToRelease: (releaseId: String) -> Unit = {},
     filteringByThisRecording: Boolean,
+    onFilterByRecording: (recordingId: String) -> Unit = {},
+    filteringByThisDate: Boolean,
+    onFilterByDate: (dateMilliseconds: Long) -> Unit = {},
     allowedToEdit: Boolean,
-    onGoToReleaseClick: (releaseId: String) -> Unit = {},
-    onFilterByRecordingClick: (recordingId: String) -> Unit = {},
     onSubmitMapping: (recordingMessyBrainzId: String, recordingId: String) -> Unit = { _, _ -> },
     onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
     onOpenInBrowser: (listenedAtMs: Long) -> Unit = {},
@@ -119,14 +124,14 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 endIcon = CustomIcons.ChevronRight,
                 fontWeight = release.fontWeight,
                 onClick = {
-                    onGoToReleaseClick(releaseId)
+                    onGoToRelease(releaseId)
                     onDismiss()
                 },
             )
+
+            HorizontalDivider(modifier = Modifier.padding())
         }
 
-        // TODO: Filter by ..., then clicking gives option to filter by song/release/work/artists
-        //  move the filter icon to start
         val recordingId = listen.recordingId
         val hasRecordingId = recordingId.isNotEmpty()
         ClickableItem(
@@ -136,7 +141,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 }
 
                 hasRecordingId -> {
-                    "Filter listens by this song"
+                    "Filter by this song"
                 }
 
                 filteringByThisRecording -> {
@@ -144,7 +149,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 }
 
                 else -> {
-                    "Filter listens by unlinked songs"
+                    "Filter by unlinked songs"
                 }
             },
             startIcon = CustomIcons.Mic,
@@ -154,12 +159,30 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 CustomIcons.FilterAlt
             },
             onClick = {
-                onFilterByRecordingClick(recordingId)
+                onFilterByRecording(recordingId)
                 onDismiss()
             },
         )
 
-        // TODO: filter by date
+        ClickableItem(
+            title = stringResource(
+                if (filteringByThisDate) {
+                    Res.string.stopFilteringFromThisDate
+                } else {
+                    Res.string.filterFromListenDate
+                },
+            ),
+            startIcon = CustomIcons.CalendarMonth,
+            endIcon = if (filteringByThisDate) {
+                CustomIcons.FilterAltOff
+            } else {
+                CustomIcons.FilterAlt
+            },
+            onClick = {
+                onFilterByDate(listen.listenedAtMs)
+                onDismiss()
+            },
+        )
 
         HorizontalDivider()
 

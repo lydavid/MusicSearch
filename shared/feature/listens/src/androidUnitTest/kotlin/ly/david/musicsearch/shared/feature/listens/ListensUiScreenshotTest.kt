@@ -83,6 +83,13 @@ class ListensUiScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun additionalActionsBottomSheetContentUnlinkedFilteringByDate() {
+        snapshot {
+            PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinkedFilteringByDate()
+        }
+    }
+
+    @Test
     fun recordingFacetBottomSheetContent() {
         snapshot {
             PreviewFacetsBottomSheetContentRecordings()

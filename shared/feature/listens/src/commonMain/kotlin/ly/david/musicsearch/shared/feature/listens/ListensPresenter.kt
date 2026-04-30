@@ -149,7 +149,13 @@ internal class ListensPresenter(
                 }
 
                 is ListensUiEvent.SelectExactMaxDate -> {
-                    selectedDateTimeEpochSeconds = event.dateTimeEpochSeconds
+                    val newSelectedDateTimeEpochSeconds = event.dateTimeEpochMilliseconds?.let { it / MS_IN_SECOND }
+                    selectedDateTimeEpochSeconds =
+                        if (selectedDateTimeEpochSeconds == newSelectedDateTimeEpochSeconds) {
+                            null
+                        } else {
+                            newSelectedDateTimeEpochSeconds
+                        }
                 }
 
                 is ListensUiEvent.SubmitMapping -> {
@@ -279,7 +285,7 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
     ) : ListensUiEvent
 
     data class SelectExactMaxDate(
-        val dateTimeEpochSeconds: Long?,
+        val dateTimeEpochMilliseconds: Long?,
     ) : ListensUiEvent
 
     data class SubmitMapping(
