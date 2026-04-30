@@ -139,7 +139,7 @@
     <string name="alphabeticallyReverse">Umgekehrt alphabetisch</string>
     <string name="recentlyVisited">Zuletzt besucht</string>
     <string name="leastRecentlyVisited">Letzte der zuletzt Besuchten</string>
-    <string name="mostVisited">Am meisten besucht</string>
+    <string name="mostVisited">Am häufigsten besucht</string>
     <string name="leastVisited">Am wenigsten besucht</string>
     <string name="recentlyAdded">Zuletzt hinzugefügt</string>
     <string name="leastRecentlyAdded">Zuletzt der kürzlich Hinzugefügten</string>
@@ -325,4 +325,14 @@
         <item quantity="other">%1$d Ergebnisse gefunden.</item>
     </plurals>
     <string name="lookupUrl">Such-URL</string>
+    <string name="labelCodeAscending">Label-Code (niedrig nach hoch)</string>
+    <string name="labelCodeDescending">Label-Code (hoch nach niedrig)</string>
+    <string name="earliestOpenDate">Frühester Eröffnungstermin</string>
+    <string name="latestOpenDate">Letzter Termin</string>
+    <string name="earliestStartDate">Frühester Starttermin</string>
+    <string name="latestStartDate">Spätester Starttermin</string>
+    <string name="addressAlphabetically">Adresse (alphabetisch)</string>
+    <string name="addressReverseAlphabetically">Adresse (umgekehrt alphabetisch)</string>
+    <string name="selectAll">Alles auswählen</string>
+    <string name="deselectAll">Alle abwählen</string>
 </resources>
