@@ -367,4 +367,8 @@
     <string name="latestStartDate">Date de début la plus tardive</string>
     <string name="addressAlphabetically">Classement par ordre alphabétique</string>
     <string name="addressReverseAlphabetically">Classement par ordre alphabétique décroissant</string>
+    <string name="clearAll">Tout effacer</string>
+    <string name="clearDateFilter">Effacer le filtre de date</string>
+    <string name="filterFromListenDate">Filtrer par date d'écoute</string>
+    <string name="stopFilteringFromThisDate">Ne plus filtrer à partir de cette date</string>
 </resources>
