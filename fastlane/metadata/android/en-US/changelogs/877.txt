@@ -1,0 +1,6 @@
+
+### Features
+
+* add date filter to listens screen which lets you jump to a date in the past
+* add icons next to collections in Add to collection sheet to represent that none/some of the selected items are in the collection already
+* from a listen item, add ability to filter starting from its listen date
