@@ -111,24 +111,16 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.RequestForM
   stable val entityId: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortRecordingListItem {
-  stable val sortOption: RecordingSortOption
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortReleaseListItem {
-  stable val sortOption: ReleaseSortOption
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortOption {
+  unstable val sortOption: SortableOption
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem {
   stable val showMore: Boolean
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortReleaseGroupListItem {
-  stable val sortOption: ReleaseGroupSortOption
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowReleaseStatus {
-  stable val status: ReleaseStatus
+  stable val status: ReleaseStatus?
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
@@ -136,7 +128,7 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
   stable val lazyListState: LazyListState
   stable val totalCount: Int
   stable val filteredCount: Int
-  unstable val sortOption: SortOption
+  unstable val listFilters: ListFilters
   stable val eventSink: Function1<EntitiesListUiEvent, Unit>
 }
 stable class ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey {
@@ -265,10 +257,10 @@ stable class ly.david.musicsearch.ui.common.screen.CollectionScreen {
   runtime var CREATOR: Creator<CollectionScreen>
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.ui.common.screen.AddToCollectionScreen {
+stable class ly.david.musicsearch.ui.common.screen.EditCollectionScreen {
   stable val entityType: MusicBrainzEntityType
   unstable val collectableIds: List<String>
-  runtime var CREATOR: Creator<AddToCollectionScreen>
+  runtime var CREATOR: Creator<EditCollectionScreen>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {

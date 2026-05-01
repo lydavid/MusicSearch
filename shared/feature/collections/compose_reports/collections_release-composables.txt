@@ -1,31 +1,17 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.PreviewCollectionBottomSheetContent()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.PreviewCollectionBottomSheetContentSyncing()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItem(
   stable isRemote: Boolean = @static true
   stable visited: Boolean = @static true
-  stable collected: Boolean = @static true
+  stable containsEntities: CollectionContainsEntities? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemDisabled()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemHighlighted()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContentDefaultEntity()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentSyncing()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelectedAll()
-open fun ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter.present(
-  stable <this>: AddToCollectionPresenter
-): AddToCollectionUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUi(
-  stable state: AddToCollectionUiState
-  stable modifier: Modifier? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.add.CollectionBottomSheetContent(
-  collections: LazyPagingItems<CollectionListItemModel>
-  stable modifier: Modifier? = @static <expression>
-  unstable feedback: Feedback<EditACollectionFeedback>? = @static null
-  stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
-  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.CollectionListItem(
   collection: CollectionListItemModel
   stable modifier: Modifier? = @static <expression>
@@ -40,6 +26,21 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable defaultEntity: MusicBrainzEntityType? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
   stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.CollectionBottomSheetContent(
+  collections: LazyPagingItems<CollectionListItemModel>
+  stable numberOfItemsToAddToCollection: Int
+  stable modifier: Modifier? = @static <expression>
+  unstable feedback: Feedback<EditACollectionFeedback>? = @static null
+  stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
+  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>
+)
+open fun ly.david.musicsearch.shared.feature.collections.edit.EditCollectionPresenter.present(
+  stable <this>: EditCollectionPresenter
+): EditCollectionUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUi(
+  stable state: EditCollectionUiState
+  stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.CollectionSortBottomSheet(
   stable sortOption: CollectionSortOption

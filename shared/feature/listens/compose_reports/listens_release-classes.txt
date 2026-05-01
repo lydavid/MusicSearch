@@ -46,6 +46,7 @@ unstable class ly.david.musicsearch.shared.feature.listens.FacetsUiState {
   stable val selectedTab: Tab
   stable val filterState: TopAppBarFilterState
   unstable val facetsPagingDataFlow: Flow<PagingData<FacetListItem>>
+  stable val selectedDateTimeEpochSeconds: Long?
   <runtime stability> = Unstable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.NavigateUp {
@@ -71,8 +72,16 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UpdateFa
   stable val tab: Tab
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleFacet {
-  runtime val entityFacet: MusicBrainzEntity
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleEntityFacet {
+  runtime val entityFacet: MusicBrainzEntity?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectMaxDateAtMidnight {
+  stable val midnightDateTimeEpochSeconds: Long?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectExactMaxDate {
+  stable val dateTimeEpochMilliseconds: Long?
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SubmitMapping {

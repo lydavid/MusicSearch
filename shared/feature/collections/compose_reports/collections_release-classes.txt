@@ -16,8 +16,8 @@ stable class musicsearch.shared.feature.collections.generated.resources.Res.font
 stable class musicsearch.shared.feature.collections.generated.resources.Res {
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionPresenter {
-  stable val screen: AddToCollectionScreen
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionPresenter {
+  stable val screen: EditCollectionScreen
   stable val navigator: Navigator
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
@@ -25,17 +25,18 @@ stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollection
   stable val clock: Clock
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiState {
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiState {
   stable val defaultEntityType: MusicBrainzEntityType
+  stable val numberOfItemsToAddToCollection: Int
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   unstable val feedback: Feedback<EditACollectionFeedback>?
-  stable val eventSink: Function1<AddToCollectionUiEvent, Unit>
+  stable val eventSink: Function1<EditCollectionUiEvent, Unit>
 }
-stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiEvent.CreateNewCollection {
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.CreateNewCollection {
   runtime val newCollection: NewCollection
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.collections.add.AddToCollectionUiEvent.AddToCollection {
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.AddToCollection {
   stable val collectionId: String
   <runtime stability> = Stable
 }

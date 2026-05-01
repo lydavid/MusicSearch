@@ -13,7 +13,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemAllInfoVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemSelected()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOff()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOn()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewRetryButton()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextOff()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextIndeterminate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextOn()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithSubtitle()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithEndIcon()
@@ -37,7 +42,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.PreviewInstrumentListItemModelAllInfo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.PreviewInstrumentListItemModelVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItem()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemWithCatalogNumberDoesNotShowDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemWithBeginDate()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderExpanded()
@@ -87,6 +93,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentAll()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneDeselected()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneSelected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithNoneSelected()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithType()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisited()
@@ -188,6 +195,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable text: String
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.CheckboxRowLayout(
+  stable text: String
+  stable isCheckedLike: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
+  stable checkbox: Function2<Composer, Int, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.CheckboxWithText(
   stable text: String
@@ -564,18 +578,18 @@ fun ly.david.musicsearch.ui.common.release.getDisplayString(
 ): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheet(
   unstable selectedStatuses: Set<ReleaseStatus>
-  stable onClick: Function1<ReleaseStatus, Unit>
+  stable onClick: Function1<ReleaseStatus?, Unit>
   stable bottomSheetState: SheetState? = @dynamic <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheetContent(
   unstable selectedStatuses: Set<ReleaseStatus>
-  stable onClick: Function1<ReleaseStatus, Unit>
+  stable onClick: Function1<ReleaseStatus?, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem(
   unused <this>: OverflowMenuScope
   unstable selectedStatuses: Set<ReleaseStatus>
-  stable onClick: Function1<ReleaseStatus, Unit>
+  stable onClick: Function1<ReleaseStatus?, Unit>
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem(
@@ -625,6 +639,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost(
   stable snackbarHostState: SnackbarHostState
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems(
+  <this>: OverflowMenuScope
+  unstable listFilters: ListFilters
+  stable eventSink: Function1<EntitiesListUiEvent, Unit>
+)
 restartable skippable fun ly.david.musicsearch.ui.common.sort.SortMenuItem(
   <this>: OverflowMenuScope
   unstable sortOptions: List<T>
@@ -644,6 +663,9 @@ restartable skippable fun ly.david.musicsearch.ui.common.sort.SortOptionsBottomS
   selectedSortOption: T
   stable onSortOptionClick: Function1<T, Unit>
 )
+fun ly.david.musicsearch.ui.common.sort.getLabel(
+  unstable <this>: SortableOption
+): String
 fun ly.david.musicsearch.ui.common.text.buildStringWithSingleLink(
   stable resourceWithPlaceholder: StringResource
   stable linkLabel: String
@@ -924,3 +946,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.work.getDisplayString(
+  stable <this>: WorkType
+): String

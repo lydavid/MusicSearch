@@ -31,13 +31,6 @@ stable class ly.david.musicsearch.shared.domain.LifeSpanUiModel {
   stable val ended: Boolean
   <runtime stability> = Stable
 }
-runtime class ly.david.musicsearch.shared.domain.ListFilters {
-  stable val query: String
-  stable val isRemote: Boolean
-  stable val username: String
-  runtime val sortOption: SortOption
-  <runtime stability> = Uncertain(SortOption)
-}
 runtime class ly.david.musicsearch.shared.domain.alias.BasicAlias {
   stable val name: String
   stable val locale: String
@@ -332,7 +325,7 @@ stable class ly.david.musicsearch.shared.domain.details.WorkDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: WorkType?
   stable val languages: ImmutableList<String>
   stable val iswcs: ImmutableList<String>
   stable val lastUpdated: Instant
@@ -504,21 +497,68 @@ unstable class ly.david.musicsearch.shared.domain.list.GetEntitiesImpl {
   unstable val coroutineScope: CoroutineScope
   <runtime stability> = Unstable
 }
-stable class ly.david.musicsearch.shared.domain.list.SortOption.None {
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Base {
+  stable val query: String
+  stable val isRemote: Boolean
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.list.SortOption.Recording {
-  stable val option: RecordingSortOption
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Areas {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: AreaSortOption
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.list.SortOption.Release {
-  stable val option: ReleaseSortOption
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Artists {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: ArtistSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Events {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: EventSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Labels {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: LabelSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Places {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: PlaceSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Recordings {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val username: String
+  stable val sortOption: RecordingSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Releases {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val username: String
+  stable val sortOption: ReleaseSortOption
   stable val showMoreInfo: Boolean
   stable val showStatuses: ImmutableSet<ReleaseStatus>
   <runtime stability> = 
 }
-stable class ly.david.musicsearch.shared.domain.list.SortOption.ReleaseGroup {
-  stable val option: ReleaseGroupSortOption
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.ReleaseGroups {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: ReleaseGroupSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Works {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val username: String
+  stable val sortOption: WorkSortOption
   <runtime stability> = Stable
 }
 unstable class ly.david.musicsearch.shared.domain.listen.Listen.EntityMapping {
@@ -743,7 +783,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
   stable val cachedEntityCount: Int
   stable val remoteEntityCount: Int?
   stable val visited: Boolean
-  stable val containsEntity: Boolean
+  stable val containsEntities: CollectionContainsEntities?
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.listitem.EventListItemModel {
@@ -794,6 +834,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.LabelListItemModel {
   stable val disambiguation: String
   stable val type: String
   stable val labelCode: Int?
+  stable val lifeSpan: LifeSpanUiModel
   stable val catalogNumbers: String?
   stable val visited: Boolean
   stable val collected: Boolean
@@ -995,7 +1036,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.WorkListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: WorkType?
   stable val languages: ImmutableList<String>
   stable val iswcs: ImmutableList<String>
   stable val attributes: ImmutableList<WorkAttributeUiModel>
