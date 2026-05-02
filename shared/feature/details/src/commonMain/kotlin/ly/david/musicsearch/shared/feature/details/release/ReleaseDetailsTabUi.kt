@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
@@ -208,7 +210,7 @@ internal fun ReleaseDetailsTabUi(
 }
 
 private fun LazyListScope.releaseLabelsSection(
-    labels: List<LabelListItemModel>,
+    labels: ImmutableList<LabelListItemModel>,
     filterText: String,
     onItemClick: MusicBrainzItemClickHandler,
 ) {
@@ -220,7 +222,7 @@ private fun LazyListScope.releaseLabelsSection(
             label.labelCode.toString(),
             label.catalogNumbers,
         ).any { it?.lowercase()?.contains(searchText) == true }
-    }
+    }.toPersistentList()
     labels.ifNotNullOrEmpty {
         item {
             val numberOfFilteredItems = getNumberOfFilteredItems(
@@ -248,7 +250,7 @@ private fun LazyListScope.releaseLabelsSection(
 
 private fun LazyListScope.releaseEventsSection(
     collapsed: Boolean,
-    areas: List<AreaListItemModel>,
+    areas: ImmutableList<AreaListItemModel>,
     filterText: String,
     onCollapseExpandReleaseEvents: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
@@ -259,7 +261,7 @@ private fun LazyListScope.releaseEventsSection(
             area.getNameWithDisambiguation(),
             area.date,
         ).any { it?.lowercase()?.contains(searchText) == true }
-    }
+    }.toPersistentList()
     areas.ifNotNullOrEmpty {
         stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
