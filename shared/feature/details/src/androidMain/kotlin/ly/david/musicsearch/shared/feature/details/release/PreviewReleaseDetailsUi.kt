@@ -146,3 +146,18 @@ internal fun PreviewReleaseDetailsUiWithListens() {
         )
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseDetailsUiWithFilter() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseDetailsTabUi(
+            release = release,
+            detailsTabUiState = DetailsTabUiState(
+                numberOfImages = 11,
+                now = Instant.parse("2025-06-05T19:42:20Z"),
+            ),
+            filterText = "202",
+        )
+    }
+}

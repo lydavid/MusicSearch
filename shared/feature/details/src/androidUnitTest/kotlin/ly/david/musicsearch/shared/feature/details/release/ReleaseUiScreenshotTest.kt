@@ -25,4 +25,11 @@ class ReleaseUiScreenshotTest : ScreenshotTest() {
             PreviewReleaseDetailsUiWithListens()
         }
     }
+
+    @Test
+    fun withFilter() {
+        snapshot {
+            PreviewReleaseDetailsUiWithFilter()
+        }
+    }
 }
