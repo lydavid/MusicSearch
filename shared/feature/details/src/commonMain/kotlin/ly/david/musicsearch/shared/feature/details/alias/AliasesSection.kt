@@ -45,15 +45,15 @@ internal fun LazyListScope.aliasesSection(
     }
 }
 
-private fun ImmutableList<AliasListItemModel>?.filterAliases(
+private fun ImmutableList<AliasListItemModel>.filterAliases(
     query: String,
     primaryLabel: String,
 ): ImmutableList<AliasListItemModel> {
     val searchText = query.lowercase()
-    return this?.filter { alias ->
+    return this.filter { alias ->
         listOf(
             alias.name,
             alias.getFormattedTypeAndLifeSpan(primaryLabel),
         ).any { it.lowercase().contains(searchText) }
-    }.orEmpty().toPersistentList()
+    }.toPersistentList()
 }

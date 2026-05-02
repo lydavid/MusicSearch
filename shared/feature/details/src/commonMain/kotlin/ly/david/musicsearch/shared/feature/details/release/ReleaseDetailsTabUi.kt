@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
@@ -222,7 +223,11 @@ private fun LazyListScope.releaseLabelsSection(
     }
     filteredLabels.ifNotNullOrEmpty {
         item {
-            ListSeparatorHeader(stringResource(Res.string.labels))
+            val numberOfFilteredItems = getNumberOfFilteredItems(
+                filteredCount = filteredLabels.size,
+                total = labels.size,
+            )
+            ListSeparatorHeader(stringResource(Res.string.labels) + " $numberOfFilteredItems")
         }
     }
     items(filteredLabels) { label ->
@@ -255,10 +260,14 @@ private fun LazyListScope.releaseEventsSection(
             area.date,
         ).any { it?.lowercase()?.contains(searchText) == true }
     }
-    stickyHeader {
-        filteredAreas.ifNotNullOrEmpty {
+    filteredAreas.ifNotNullOrEmpty {
+        stickyHeader {
+            val numberOfFilteredItems = getNumberOfFilteredItems(
+                filteredCount = filteredAreas.size,
+                total = areas.size,
+            )
             CollapsibleListSeparatorHeader(
-                text = stringResource(Res.string.releaseEvents),
+                text = stringResource(Res.string.releaseEvents) + " $numberOfFilteredItems",
                 collapsed = collapsed,
                 onClick = onCollapseExpandReleaseEvents,
             )
