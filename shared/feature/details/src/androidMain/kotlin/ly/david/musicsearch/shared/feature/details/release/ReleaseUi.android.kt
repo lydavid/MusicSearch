@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.release
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
@@ -16,7 +17,10 @@ import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import kotlin.time.Instant
 
 private val release = ReleaseDetailsModel(
@@ -78,16 +82,27 @@ private val release = ReleaseDetailsModel(
     ),
 )
 
+private val detailsUiState = DetailsUiState(
+    detailsModel = release,
+    detailsTabUiState = DetailsTabUiState(
+        numberOfImages = 11,
+        now = Instant.parse("2025-06-05T19:42:20Z"),
+    ),
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = release.id,
+        entityType = MusicBrainzEntityType.RELEASE,
+    ),
+    tabs = releaseTabs,
+    selectedTab = Tab.DETAILS,
+    scrollToHideTopAppBar = false,
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseDetailsUi() {
     PreviewWithTransitionAndOverlays {
-        ReleaseDetailsTabUi(
-            release = release,
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 11,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-            ),
+        ReleaseUi(
+            state = detailsUiState,
         )
     }
 }
@@ -96,13 +111,13 @@ internal fun PreviewReleaseDetailsUi() {
 @Composable
 internal fun PreviewReleaseDetailsUiCollapsed() {
     PreviewWithTransitionAndOverlays {
-        ReleaseDetailsTabUi(
-            release = release,
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 11,
-                isReleaseEventsCollapsed = true,
-                isExternalLinksCollapsed = true,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
+        ReleaseUi(
+            state = detailsUiState.copy(
+                detailsTabUiState = DetailsTabUiState(
+                    numberOfImages = 11,
+                    isReleaseEventsCollapsed = true,
+                    isExternalLinksCollapsed = true,
+                ),
             ),
         )
     }
@@ -112,36 +127,37 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
 @Composable
 internal fun PreviewReleaseDetailsUiWithListens() {
     PreviewWithTransitionAndOverlays {
-        ReleaseDetailsTabUi(
-            release = release.copy(
-                completeListenCount = 2,
-                listenCount = 35,
-                latestListens = persistentListOf(
-                    ListenWithTrack(
-                        mediumPosition = 1,
-                        trackNumber = "10",
-                        trackName = "世界のつづき",
-                        listenedMs = 1757116212000,
+        ReleaseUi(
+            state = detailsUiState.copy(
+                detailsModel = release.copy(
+                    completeListenCount = 2,
+                    listenCount = 35,
+                    latestListens = persistentListOf(
+                        ListenWithTrack(
+                            mediumPosition = 1,
+                            trackNumber = "10",
+                            trackName = "世界のつづき",
+                            listenedMs = 1757116212000,
+                        ),
+                        ListenWithTrack(
+                            mediumPosition = 1,
+                            trackNumber = "9",
+                            trackName = "風のゆくえ",
+                            listenedMs = 1757116212000 - 118706,
+                        ),
+                        ListenWithTrack(
+                            mediumPosition = 1,
+                            trackNumber = "8",
+                            trackName = "ビンクスの酒",
+                            listenedMs = 1757116212000 - 118706 - 100000,
+                        ),
                     ),
-                    ListenWithTrack(
-                        mediumPosition = 1,
-                        trackNumber = "9",
-                        trackName = "風のゆくえ",
-                        listenedMs = 1757116212000 - 118706,
-                    ),
-                    ListenWithTrack(
-                        mediumPosition = 1,
-                        trackNumber = "8",
-                        trackName = "ビンクスの酒",
-                        listenedMs = 1757116212000 - 118706 - 100000,
-                    ),
+                    listenBrainzUrl = "https://listenbrainz.org/album/22760f81-37ce-47ce-98b6-65f8a285f083",
                 ),
-                listenBrainzUrl = "https://listenbrainz.org/album/22760f81-37ce-47ce-98b6-65f8a285f083",
-            ),
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 11,
-                isReleaseEventsCollapsed = true,
-                now = Instant.fromEpochMilliseconds(1757116212000),
+                detailsTabUiState = DetailsTabUiState(
+                    numberOfImages = 11,
+                    isReleaseEventsCollapsed = true,
+                ),
             ),
         )
     }
@@ -149,15 +165,15 @@ internal fun PreviewReleaseDetailsUiWithListens() {
 
 @PreviewLightDark
 @Composable
-internal fun PreviewReleaseDetailsUiWithFilter() {
+internal fun PreviewReleaseUiWithFilter() {
     PreviewWithTransitionAndOverlays {
-        ReleaseDetailsTabUi(
-            release = release,
-            detailsTabUiState = DetailsTabUiState(
-                numberOfImages = 11,
-                now = Instant.parse("2025-06-05T19:42:20Z"),
+        val topAppBarFilterState = TopAppBarFilterState()
+        topAppBarFilterState.toggleFilterMode(true)
+        topAppBarFilterState.updateFilterText("202")
+        ReleaseUi(
+            state = detailsUiState.copy(
+                topAppBarFilterState = topAppBarFilterState,
             ),
-            filterText = "202",
         )
     }
 }

@@ -29,7 +29,7 @@ class ReleaseUiScreenshotTest : ScreenshotTest() {
     @Test
     fun withFilter() {
         snapshot {
-            PreviewReleaseDetailsUiWithFilter()
+            PreviewReleaseUiWithFilter()
         }
     }
 }
