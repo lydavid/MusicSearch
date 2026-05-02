@@ -221,7 +221,7 @@ private fun LazyListScope.releaseLabelsSection(
             label.catalogNumbers,
         ).any { it?.lowercase()?.contains(searchText) == true }
     }
-    filteredLabels.ifNotNullOrEmpty {
+    labels.ifNotNullOrEmpty {
         item {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredLabels.size,
@@ -260,7 +260,7 @@ private fun LazyListScope.releaseEventsSection(
             area.date,
         ).any { it?.lowercase()?.contains(searchText) == true }
     }
-    filteredAreas.ifNotNullOrEmpty {
+    areas.ifNotNullOrEmpty {
         stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredAreas.size,

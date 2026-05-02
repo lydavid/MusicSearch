@@ -22,7 +22,7 @@ internal fun LazyListScope.aliasesSection(
         query = filterText,
         primaryLabel = primaryLabel,
     )
-    filteredAliases.ifNotNullOrEmpty {
+    aliases.ifNotNullOrEmpty {
         stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredAliases.size,

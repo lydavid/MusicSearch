@@ -18,7 +18,7 @@ internal fun LazyListScope.urlsSection(
     onCollapseExpand: () -> Unit = {},
 ) {
     val filteredUrls = urls.filterUrlRelations(query = filterText)
-    filteredUrls.ifNotNullOrEmpty {
+    urls.ifNotNullOrEmpty {
         stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredUrls.size,
