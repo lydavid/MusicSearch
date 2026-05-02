@@ -26,7 +26,7 @@
             }
         },
         {
-            "uniqueId": "androidx.annotation:annotation",
+            "uniqueId": "androidx.annotation:annotation-jvm",
             "funding": [
                 
             ],
@@ -142,7 +142,7 @@
             ]
         },
         {
-            "uniqueId": "androidx.collection:collection",
+            "uniqueId": "androidx.collection:collection-jvm",
             "funding": [
                 
             ],
@@ -167,7 +167,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.animation:animation",
+            "uniqueId": "androidx.compose.animation:animation-android",
             "funding": [
                 
             ],
@@ -192,7 +192,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.foundation:foundation-layout",
+            "uniqueId": "androidx.compose.foundation:foundation-layout-android",
             "funding": [
                 
             ],
@@ -217,7 +217,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.material3:material3",
+            "uniqueId": "androidx.compose.material3:material3-android",
             "funding": [
                 
             ],
@@ -242,7 +242,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.material:material-ripple",
+            "uniqueId": "androidx.compose.material:material-ripple-android",
             "funding": [
                 
             ],
@@ -267,7 +267,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.runtime:runtime",
+            "uniqueId": "androidx.compose.runtime:runtime-android",
             "funding": [
                 
             ],
@@ -292,7 +292,7 @@
             }
         },
         {
-            "uniqueId": "androidx.compose.ui:ui",
+            "uniqueId": "androidx.compose.ui:ui-android",
             "funding": [
                 
             ],
@@ -408,7 +408,7 @@
             ]
         },
         {
-            "uniqueId": "androidx.datastore:datastore",
+            "uniqueId": "androidx.datastore:datastore-android",
             "funding": [
                 
             ],
@@ -596,7 +596,7 @@
             }
         },
         {
-            "uniqueId": "androidx.graphics:graphics-shapes",
+            "uniqueId": "androidx.graphics:graphics-shapes-android",
             "funding": [
                 
             ],
@@ -665,7 +665,7 @@
             ]
         },
         {
-            "uniqueId": "androidx.lifecycle:lifecycle-common",
+            "uniqueId": "androidx.lifecycle:lifecycle-common-jvm",
             "funding": [
                 
             ],
@@ -734,7 +734,7 @@
             ]
         },
         {
-            "uniqueId": "androidx.navigationevent:navigationevent",
+            "uniqueId": "androidx.navigationevent:navigationevent-android",
             "funding": [
                 
             ],
@@ -759,7 +759,7 @@
             }
         },
         {
-            "uniqueId": "androidx.paging:paging-common",
+            "uniqueId": "androidx.paging:paging-common-android",
             "funding": [
                 
             ],
@@ -853,7 +853,7 @@
             ]
         },
         {
-            "uniqueId": "androidx.savedstate:savedstate",
+            "uniqueId": "androidx.savedstate:savedstate-android",
             "funding": [
                 
             ],
@@ -878,7 +878,7 @@
             }
         },
         {
-            "uniqueId": "androidx.sqlite:sqlite",
+            "uniqueId": "androidx.sqlite:sqlite-android",
             "funding": [
                 
             ],
@@ -1089,7 +1089,7 @@
             ]
         },
         {
-            "uniqueId": "co.touchlab:stately-concurrency",
+            "uniqueId": "co.touchlab:stately-common-jvm",
             "funding": [
                 
             ],
@@ -1112,7 +1112,7 @@
             ]
         },
         {
-            "uniqueId": "com.github.ajalt.colormath:colormath",
+            "uniqueId": "com.github.ajalt.colormath:colormath-jvm",
             "funding": [
                 
             ],
@@ -1187,7 +1187,7 @@
             ]
         },
         {
-            "uniqueId": "com.github.skydoves:colorpicker-compose",
+            "uniqueId": "com.github.skydoves:colorpicker-compose-android",
             "funding": [
                 
             ],
@@ -1280,7 +1280,7 @@
             ]
         },
         {
-            "uniqueId": "com.materialkolor:material-kolor",
+            "uniqueId": "com.materialkolor:material-color-utilities-android",
             "funding": [
                 
             ],
@@ -1303,7 +1303,7 @@
             ]
         },
         {
-            "uniqueId": "com.mikepenz:aboutlibraries-core",
+            "uniqueId": "com.mikepenz:aboutlibraries-core-android",
             "funding": [
                 
             ],
@@ -1312,7 +1312,7 @@
                     "name": "Mike Penz"
                 }
             ],
-            "artifactVersion": "14.0.1",
+            "artifactVersion": "14.1.0",
             "description": "AboutLibraries automatically detects all dependencies of a project and collects their information including the license. Optionally visualising it via the provided ui components.",
             "scm": {
                 "connection": "scm:git@github.com:mikepenz/AboutLibraries.git",
@@ -1326,7 +1326,7 @@
             ]
         },
         {
-            "uniqueId": "com.slack.circuit:circuit-runtime-ui",
+            "uniqueId": "com.slack.circuit:circuit-runtime-ui-android",
             "funding": [
                 
             ],
@@ -1349,7 +1349,7 @@
             ]
         },
         {
-            "uniqueId": "com.squareup.okhttp3:okhttp",
+            "uniqueId": "com.squareup.okhttp3:okhttp-android",
             "funding": [
                 
             ],
@@ -1372,7 +1372,7 @@
             ]
         },
         {
-            "uniqueId": "com.squareup.okio:okio",
+            "uniqueId": "com.squareup.okio:okio-jvm",
             "funding": [
                 
             ],
@@ -1395,7 +1395,7 @@
             ]
         },
         {
-            "uniqueId": "dev.chrisbanes.material3:material3-window-size-class-multiplatform",
+            "uniqueId": "dev.chrisbanes.material3:material3-window-size-class-multiplatform-android",
             "funding": [
                 
             ],
@@ -1418,7 +1418,7 @@
             ]
         },
         {
-            "uniqueId": "dev.drewhamilton.poko:poko-annotations",
+            "uniqueId": "dev.drewhamilton.poko:poko-annotations-jvm",
             "funding": [
                 
             ],
@@ -1441,7 +1441,7 @@
             ]
         },
         {
-            "uniqueId": "io.coil-kt.coil3:coil",
+            "uniqueId": "io.coil-kt.coil3:coil-android",
             "funding": [
                 
             ],
@@ -1486,7 +1486,7 @@
             ]
         },
         {
-            "uniqueId": "io.ktor:ktor-io",
+            "uniqueId": "io.ktor:ktor-io-jvm",
             "funding": [
                 
             ],
@@ -1508,7 +1508,7 @@
             ]
         },
         {
-            "uniqueId": "net.engawapg.lib:zoomable",
+            "uniqueId": "net.engawapg.lib:zoomable-android",
             "funding": [
                 
             ],
@@ -1698,7 +1698,7 @@
             ]
         },
         {
-            "uniqueId": "org.jetbrains.compose.components:components-resources",
+            "uniqueId": "org.jetbrains.compose.components:components-resources-android",
             "funding": [
                 
             ],
@@ -1866,7 +1866,7 @@
             ]
         },
         {
-            "uniqueId": "org.jetbrains.kotlinx:atomicfu",
+            "uniqueId": "org.jetbrains.kotlinx:atomicfu-jvm",
             "funding": [
                 
             ],
