@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
@@ -22,6 +21,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
@@ -170,61 +170,27 @@ internal fun ReleaseDetailsTabUi(
         }
     }
     val bringYourOwnLabelsSection: LazyListScope.() -> Unit = {
-        release
-            .copy(
-                // TODO: move these filters to their sections
-                labels = release.labels.filter { label ->
-                    val searchText = filterText.lowercase()
-                    listOf(
-                        label.getNameWithDisambiguation(),
-                        label.type,
-                        label.labelCode.toString(),
-                        label.catalogNumbers,
-                    ).any { it?.lowercase()?.contains(searchText) == true }
-                }.toPersistentList(),
-                areas = release.areas.filter { area ->
-                    val searchText = filterText.lowercase()
-                    listOf(
-                        area.getNameWithDisambiguation(),
-                        area.date,
-                    ).any { it?.lowercase()?.contains(searchText) == true }
-                }.toPersistentList(),
+        release.run {
+            releaseLabelsSection(
+                labels = labels,
+                filterText = filterText,
+                onItemClick = onItemClick,
             )
-            .run {
-                labels.ifNotNullOrEmpty {
-                    item {
-                        ListSeparatorHeader(stringResource(Res.string.labels))
-                    }
-                }
-                items(labels) { label ->
-                    LabelListItem(
-                        label = label,
-                        filterText = filterText,
-                        onLabelClick = {
-                            onItemClick(
-                                MusicBrainzEntityType.LABEL,
-                                id,
-                            )
-                        },
-                        showIcon = false,
-                        showEditCollection = false,
-                    )
-                }
 
-                releaseEventsSection(
-                    collapsed = detailsTabUiState.isReleaseEventsCollapsed,
-                    areas = areas,
-                    filterText = filterText,
-                    onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
-                    onItemClick = onItemClick,
-                )
+            releaseEventsSection(
+                collapsed = detailsTabUiState.isReleaseEventsCollapsed,
+                areas = areas,
+                filterText = filterText,
+                onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
+                onItemClick = onItemClick,
+            )
 
-                listenSection(
-                    release = this@run,
-                    now = detailsTabUiState.now,
-                    onSeeAllListensClick = onSeeAllListensClick,
-                )
-            }
+            listenSection(
+                release = this@run,
+                now = detailsTabUiState.now,
+                onSeeAllListensClick = onSeeAllListensClick,
+            )
+        }
     }
     DetailsTabUi(
         detailsModel = release,
@@ -240,6 +206,41 @@ internal fun ReleaseDetailsTabUi(
     )
 }
 
+private fun LazyListScope.releaseLabelsSection(
+    labels: List<LabelListItemModel>,
+    filterText: String,
+    onItemClick: MusicBrainzItemClickHandler,
+) {
+    val filteredLabels = labels.filter { label ->
+        val searchText = filterText.lowercase()
+        listOf(
+            label.getNameWithDisambiguation(),
+            label.type,
+            label.labelCode.toString(),
+            label.catalogNumbers,
+        ).any { it?.lowercase()?.contains(searchText) == true }
+    }
+    filteredLabels.ifNotNullOrEmpty {
+        item {
+            ListSeparatorHeader(stringResource(Res.string.labels))
+        }
+    }
+    items(filteredLabels) { label ->
+        LabelListItem(
+            label = label,
+            filterText = filterText,
+            onLabelClick = {
+                onItemClick(
+                    MusicBrainzEntityType.LABEL,
+                    id,
+                )
+            },
+            showIcon = false,
+            showEditCollection = false,
+        )
+    }
+}
+
 private fun LazyListScope.releaseEventsSection(
     collapsed: Boolean,
     areas: List<AreaListItemModel>,
@@ -247,8 +248,15 @@ private fun LazyListScope.releaseEventsSection(
     onCollapseExpandReleaseEvents: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
 ) {
+    val filteredAreas = areas.filter { area ->
+        val searchText = filterText.lowercase()
+        listOf(
+            area.getNameWithDisambiguation(),
+            area.date,
+        ).any { it?.lowercase()?.contains(searchText) == true }
+    }
     stickyHeader {
-        areas.ifNotNullOrEmpty {
+        filteredAreas.ifNotNullOrEmpty {
             CollapsibleListSeparatorHeader(
                 text = stringResource(Res.string.releaseEvents),
                 collapsed = collapsed,
@@ -257,7 +265,7 @@ private fun LazyListScope.releaseEventsSection(
         }
     }
     if (!collapsed) {
-        items(areas) { area: AreaListItemModel ->
+        items(filteredAreas) { area: AreaListItemModel ->
             AreaListItem(
                 area = area,
                 filterText = filterText,
