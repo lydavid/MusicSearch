@@ -1,0 +1,9 @@
+
+### Bug Fixes
+
+* do not hide details section if it exists but is currently filtered out because showing (0 / X) is more meaningful
+
+
+### Features
+
+* count number of shown release labels and events (similar to external links and aliases)
