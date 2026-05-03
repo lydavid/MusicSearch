@@ -365,4 +365,8 @@
     <string name="latestOpenDate">Hiliseim avamisaeg</string>
     <string name="addressAlphabetically">Aadress tähestikuliselt kasvavalt</string>
     <string name="addressReverseAlphabetically">Aadress tähestikuliselt kahanevalt</string>
+    <string name="clearAll">Eemalda kõik</string>
+    <string name="clearDateFilter">Tühjenda kuupäevade filter</string>
+    <string name="filterFromListenDate">Filtreeri alates kuulamise kuupäevast</string>
+    <string name="stopFilteringFromThisDate">Lõpeta filtreerimine alates sellest kuupäevast</string>
 </resources>
