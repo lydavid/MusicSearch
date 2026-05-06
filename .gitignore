@@ -12,6 +12,7 @@ local.properties
 !.idea/codeStyles/
 !.idea/detekt.xml
 !.idea/icon.svg
+!.idea/codeInsightSettings.xml
 
 # App release keystore
 keystore.properties
