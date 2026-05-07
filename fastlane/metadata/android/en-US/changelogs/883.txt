@@ -1,0 +1,4 @@
+
+### Features
+
+* add toggle icon button to listen additional actions sheet to show/hide originally submitted data to help debug MusicBrainz mapping
