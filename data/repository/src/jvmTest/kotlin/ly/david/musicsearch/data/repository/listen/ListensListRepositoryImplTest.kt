@@ -1,6 +1,8 @@
 package ly.david.musicsearch.data.repository.listen
 
 import androidx.paging.testing.asSnapshot
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
@@ -12,6 +14,9 @@ import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
+import ly.david.musicsearch.data.listenbrainz.api.ManualMappingResponse
+import ly.david.musicsearch.data.listenbrainz.api.RecordingMetadata
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
@@ -31,19 +36,22 @@ import ly.david.musicsearch.data.repository.helpers.track4ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track5ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track6ListenedAtMs
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
+import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
@@ -54,7 +62,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-@Suppress("MaxLineLength")
+@Suppress("MaxLineLength", "LongMethod")
 class ListensListRepositoryImplTest :
     KoinTest,
     TestListensListRepository,
@@ -78,324 +86,280 @@ class ListensListRepositoryImplTest :
     override val artistCreditDao: ArtistCreditDao by inject()
     override val aliasDao: AliasDao by inject()
 
+    private val listen1 = ListenListItemModel(
+        listenedAtMs = track1ListenedAtMs,
+        username = "user",
+        recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
+        recordingName = "絶絶絶絶対聖域",
+        unmappedTrackName = "絶絶絶絶対聖域",
+        formattedArtistCredits = "ano feat. 幾田りら",
+        unmappedFormattedArtistCredits = "ano, Lilas",
+        recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
+        recordingDurationMs = 213868,
+        unmappedDurationMs = 213868,
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(1),
+            rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
+        ),
+        release = ListenRelease(
+            id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
+            unmappedName = "絶絶絶絶対聖域",
+        ),
+    )
+    private val listen2 = ListenListItemModel(
+        listenedAtMs = track2ListenedAtMs,
+        username = "user",
+        recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
+        recordingName = "Color Your Night",
+        unmappedTrackName = "Color Your Night",
+        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+        unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
+        recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+        recordingDurationMs = 227240,
+        unmappedDurationMs = 227240,
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(2),
+            rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+        ),
+        release = ListenRelease(
+            id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+            name = "Persona 3 Reload Original Soundtrack",
+            unmappedName = "Persona 3 Reload Original Soundtrack",
+        ),
+    )
+    private val listen3 = ListenListItemModel(
+        username = "user",
+        recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
+        recordingName = "Full Moon Full Life",
+        unmappedTrackName = "Full Moon Full Life",
+        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+        unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
+        listenedAtMs = track3ListenedAtMs,
+        recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
+        recordingDurationMs = 293493,
+        unmappedDurationMs = 293493,
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(2),
+            rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+        ),
+        release = ListenRelease(
+            id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
+            name = "Persona 3 Reload Original Soundtrack",
+            unmappedName = "Persona 3 Reload Original Soundtrack",
+        ),
+    )
+    private val listen4 = ListenListItemModel(
+        username = "user",
+        recordingMessybrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
+        unmappedTrackName = "Absolute zero",
+        unmappedFormattedArtistCredits = "Tsukuyomi",
+        release = ListenRelease(
+            unmappedName = "Absolute zero",
+        ),
+        listenedAtMs = track4ListenedAtMs,
+    )
+    private val listen5 = ListenListItemModel(
+        listenedAtMs = track5ListenedAtMs,
+        username = "user",
+        recordingMessybrainzId = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
+        recordingName = "スカイクラッドの観測者",
+        unmappedTrackName = "スカイクラッドの観測者",
+        disambiguation = "",
+        formattedArtistCredits = "いとうかなこ",
+        unmappedFormattedArtistCredits = "いとうかなこ",
+        recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
+        recordingDurationMs = 275640,
+        unmappedDurationMs = 275640,
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(value = 4),
+            rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
+        ),
+        visited = false,
+        release = ListenRelease(
+            name = "ChaosAttractor",
+            unmappedName = "ChaosAttractor",
+            id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+            visited = false,
+        ),
+    )
+    private val listen6 = ListenListItemModel(
+        listenedAtMs = track6ListenedAtMs,
+        username = "user",
+        recordingMessybrainzId = "77f971a8-6748-4314-9513-dffbc0969724",
+        recordingName = "スカイクラッドの観測者",
+        unmappedTrackName = "スカイクラッドの観測者",
+        disambiguation = "",
+        formattedArtistCredits = "Roselia×いとうかなこ",
+        unmappedFormattedArtistCredits = "Roselia, いとうかなこ",
+        recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
+        recordingDurationMs = 273866,
+        unmappedDurationMs = 273866,
+        imageMetadata = ImageMetadata.InternetArchive(
+            imageId = ImageId(value = 5),
+            rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
+        ),
+        visited = false,
+        release = ListenRelease(
+            name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+            unmappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+            id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
+            visited = false,
+        ),
+    )
+
+    private val listenBrainzApi: ListenBrainzApi = mockk()
+
+    private val listensListRepository: ListensListRepository
+        get() = createListensListRepository(
+            listenBrainzApi = listenBrainzApi,
+        )
+
     @Test
-    fun listensByUser() = runTest {
-        val listensListRepository = createListensListRepository(
-            response = testListens,
-        )
+    fun listensByUser() {
+        coEvery {
+            listenBrainzApi.getListensByUser(
+                username = any(),
+                minTimestamp = any(),
+                maxTimestamp = any(),
+                count = any(),
+            )
+        } returns testListens
+        runTest {
+            testFilter(
+                pagingFlowProducer = { query ->
+                    listensListRepository.observeListens(
+                        username = TEST_USERNAME,
+                        query = query,
+                        entityFacet = null,
+                        maxDateTimeEpochMilliseconds = null,
+                        stopPrepending = false,
+                        stopAppending = false,
+                        onReachedLatest = {},
+                    ) {}
+                },
+                testCases = listOf(
+                    FilterTestCase(
+                        description = "no filter",
+                        query = "",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track1ListenedAtMs.toString(),
+                                text = "Monday, August 25, 2025",
+                            ),
+                            listen1,
+                            ListSeparator(
+                                id = track2ListenedAtMs.toString(),
+                                text = "Wednesday, August 13, 2025",
+                            ),
+                            listen2,
+                            listen3,
+                            listen4,
+                            listen5,
+                            listen6,
+                        ),
+                    ),
+                    FilterTestCase(
+                        description = "filter by track name",
+                        query = "full",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track3ListenedAtMs.toString(),
+                                text = "Wednesday, August 13, 2025",
+                            ),
+                            listen3,
+                        ),
+                    ),
+                    FilterTestCase(
+                        description = "filter by artist",
+                        query = "feat",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track1ListenedAtMs.toString(),
+                                text = "Monday, August 25, 2025",
+                            ),
+                            listen1,
+                        ),
+                    ),
+                    FilterTestCase(
+                        description = "filter by release name",
+                        query = "persona",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track2ListenedAtMs.toString(),
+                                text = "Wednesday, August 13, 2025",
+                            ),
+                            listen2,
+                            listen3,
+                        ),
+                    ),
+                ),
+            )
 
-        testFilter(
-            pagingFlowProducer = { query ->
-                listensListRepository.observeListens(
-                    username = TEST_USERNAME,
-                    query = query,
-                    entityFacet = null,
-                    maxDateTimeEpochMilliseconds = null,
-                    stopPrepending = false,
-                    stopAppending = false,
-                    onReachedLatest = {},
-                ) {}
-            },
-            testCases = listOf(
-                FilterTestCase(
-                    description = "no filter",
-                    query = "",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track1ListenedAtMs.toString(),
-                            text = "Monday, August 25, 2025",
+            testFilter(
+                pagingFlowProducer = { query ->
+                    listensListRepository.observeListens(
+                        username = TEST_USERNAME,
+                        query = query,
+                        entityFacet = MusicBrainzEntity(
+                            id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+                            type = MusicBrainzEntityType.RECORDING,
                         ),
-                        ListenListItemModel(
-                            listenedAtMs = track1ListenedAtMs,
-                            username = "user",
-                            recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
-                            name = "絶絶絶絶対聖域",
-                            formattedArtistCredits = "ano feat. 幾田りら",
-                            recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
-                            durationMs = 213868,
-                            imageMetadata = ImageMetadata.InternetArchive(
+                        maxDateTimeEpochMilliseconds = null,
+                        stopPrepending = false,
+                        stopAppending = false,
+                        onReachedLatest = {},
+                    ) {}
+                },
+                testCases = listOf(
+                    FilterTestCase(
+                        description = "facet by recording",
+                        query = "",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track2ListenedAtMs.toString(),
+                                text = "Wednesday, August 13, 2025",
+                            ),
+                            listen2,
+                        ),
+                    ),
+                ),
+            )
 
-                                imageId = ImageId(1),
-                                rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                            ),
-                            release = ListenRelease(
-                                id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
-                                name = "絶絶絶絶対聖域",
-                            ),
+            testFilter(
+                pagingFlowProducer = { query ->
+                    listensListRepository.observeListens(
+                        username = TEST_USERNAME,
+                        query = query,
+                        entityFacet = MusicBrainzEntity(
+                            id = "",
+                            type = MusicBrainzEntityType.RECORDING,
                         ),
-                        ListSeparator(
-                            id = track2ListenedAtMs.toString(),
-                            text = "Wednesday, August 13, 2025",
-                        ),
-                        ListenListItemModel(
-                            listenedAtMs = track2ListenedAtMs,
-                            username = "user",
-                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                            name = "Color Your Night",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                            durationMs = 227240,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
+                        null,
+                        stopPrepending = false,
+                        stopAppending = false,
+                        onReachedLatest = {},
+                    ) {}
+                },
+                testCases = listOf(
+                    FilterTestCase(
+                        description = "facet by unlinked recording",
+                        query = "",
+                        expectedResult = listOf(
+                            ListSeparator(
+                                id = track4ListenedAtMs.toString(),
+                                text = "Wednesday, August 13, 2025",
                             ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
-                            name = "Full Moon Full Life",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAtMs = track3ListenedAtMs,
-                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            durationMs = 293493,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
-                            name = "Absolute zero",
-                            formattedArtistCredits = "Tsukuyomi",
-                            listenedAtMs = track4ListenedAtMs,
-                        ),
-                        ListenListItemModel(
-                            listenedAtMs = track5ListenedAtMs,
-                            username = "user",
-                            recordingMessybrainzId = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
-                            name = "スカイクラッドの観測者",
-                            disambiguation = "",
-                            formattedArtistCredits = "いとうかなこ",
-                            recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
-                            durationMs = 275640,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(value = 4),
-                                rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
-                            ),
-                            visited = false,
-                            release = ListenRelease(
-                                name = "ChaosAttractor",
-                                id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
-                                visited = false,
-                            ),
-                        ),
-                        ListenListItemModel(
-                            listenedAtMs = track6ListenedAtMs,
-                            username = "user",
-                            recordingMessybrainzId = "77f971a8-6748-4314-9513-dffbc0969724",
-                            name = "スカイクラッドの観測者",
-                            disambiguation = "",
-                            formattedArtistCredits = "Roselia×いとうかなこ",
-                            recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
-                            durationMs = 273866,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(value = 5),
-                                rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
-                            ),
-                            visited = false,
-                            release = ListenRelease(
-                                name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
-                                id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
-                                visited = false,
-                            ),
+                            listen4,
                         ),
                     ),
                 ),
-                FilterTestCase(
-                    description = "filter by track name",
-                    query = "full",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track3ListenedAtMs.toString(),
-                            text = "Wednesday, August 13, 2025",
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
-                            name = "Full Moon Full Life",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAtMs = track3ListenedAtMs,
-                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            durationMs = 293493,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                    ),
-                ),
-                FilterTestCase(
-                    description = "filter by artist",
-                    query = "feat",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track1ListenedAtMs.toString(),
-                            text = "Monday, August 25, 2025",
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
-                            name = "絶絶絶絶対聖域",
-                            formattedArtistCredits = "ano feat. 幾田りら",
-                            listenedAtMs = track1ListenedAtMs,
-                            recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
-                            durationMs = 213868,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(1),
-                                rawThumbnailUrl = "coverartarchive.org/release/71c9f176-e6e3-4610-807d-b8a11b870df3/42143556739-250",
-                            ),
-                            release = ListenRelease(
-                                id = "837e8abc-01e9-4ef9-9a69-4a4e9d3455fa",
-                                name = "絶絶絶絶対聖域",
-                            ),
-                        ),
-                    ),
-                ),
-                FilterTestCase(
-                    description = "filter by release name",
-                    query = "persona",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track2ListenedAtMs.toString(),
-                            text = "Wednesday, August 13, 2025",
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                            name = "Color Your Night",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAtMs = track2ListenedAtMs,
-                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                            durationMs = 227240,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
-                            name = "Full Moon Full Life",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAtMs = track3ListenedAtMs,
-                            recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
-                            durationMs = 293493,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        )
+            )
 
-        testFilter(
-            pagingFlowProducer = { query ->
-                listensListRepository.observeListens(
-                    username = TEST_USERNAME,
-                    query = query,
-                    entityFacet = MusicBrainzEntity(
-                        id = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                        type = MusicBrainzEntityType.RECORDING,
-                    ),
-                    maxDateTimeEpochMilliseconds = null,
-                    stopPrepending = false,
-                    stopAppending = false,
-                    onReachedLatest = {},
-                ) {}
-            },
-            testCases = listOf(
-                FilterTestCase(
-                    description = "facet by recording",
-                    query = "",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track2ListenedAtMs.toString(),
-                            text = "Wednesday, August 13, 2025",
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                            name = "Color Your Night",
-                            formattedArtistCredits = "Lotus Juice & 高橋あず美",
-                            listenedAtMs = track2ListenedAtMs,
-                            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                            durationMs = 227240,
-                            imageMetadata = ImageMetadata.InternetArchive(
-                                imageId = ImageId(2),
-                                rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
-                            ),
-                            release = ListenRelease(
-                                id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                                name = "Persona 3 Reload Original Soundtrack",
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        )
-
-        testFilter(
-            pagingFlowProducer = { query ->
-                listensListRepository.observeListens(
-                    username = TEST_USERNAME,
-                    query = query,
-                    entityFacet = MusicBrainzEntity(
-                        id = "",
-                        type = MusicBrainzEntityType.RECORDING,
-                    ),
-                    null,
-                    stopPrepending = false,
-                    stopAppending = false,
-                    onReachedLatest = {},
-                ) {}
-            },
-            testCases = listOf(
-                FilterTestCase(
-                    description = "facet by unlinked recording",
-                    query = "",
-                    expectedResult = listOf(
-                        ListSeparator(
-                            id = track4ListenedAtMs.toString(),
-                            text = "Wednesday, August 13, 2025",
-                        ),
-                        ListenListItemModel(
-                            username = "user",
-                            recordingMessybrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2",
-                            name = "Absolute zero",
-                            formattedArtistCredits = "Tsukuyomi",
-                            listenedAtMs = track4ListenedAtMs,
-                        ),
-                    ),
-                ),
-            ),
-        )
-
-        testImageExists()
-        testReleaseStubExists()
-        testRecordingShowsListens()
+            testImageExists()
+            testReleaseStubExists()
+            testRecordingShowsListens()
+            testManualMapping()
+        }
     }
 
     private suspend fun testImageExists() {
@@ -577,6 +541,99 @@ class ListensListRepositoryImplTest :
                 latestListensTimestampsMs = persistentListOf(1755100633000),
             ),
             recordingDetailsModel,
+        )
+    }
+
+    private suspend fun testManualMapping() {
+        val recordingMessyBrainzId = "e46e0ad5-6b2d-4ab1-aa68-acd29dd204f2"
+        val recordingMbid = "6489abdb-6169-4a62-977a-8d7775f10a54"
+        coEvery {
+            listenBrainzApi.submitManualMapping(
+                recordingMessyBrainzId = recordingMessyBrainzId,
+                recordingMusicBrainzId = recordingMbid,
+            )
+        } returns Unit
+        coEvery {
+            listenBrainzApi.getManualMapping(recordingMessyBrainzId = recordingMessyBrainzId)
+        } returns ManualMappingResponse(
+            mapping = ManualMappingResponse.Mapping(
+                recordingMbid = recordingMbid,
+                recordingMsid = recordingMessyBrainzId,
+            ),
+        )
+        coEvery {
+            listenBrainzApi.getRecordingMetadata(recordingMusicBrainzId = recordingMbid)
+        } returns RecordingMetadata(
+            artistCredit = RecordingMetadata.ArtistCredit(
+                name = "月詠み",
+                artists = listOf(
+                    RecordingMetadata.ArtistCredit.Artist(
+                        artistMbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
+                        name = "月詠み",
+                        joinPhrase = "",
+                    ),
+                ),
+            ),
+            recording = RecordingMetadata.Recording(
+                name = "絶対零度",
+                length = 222000,
+            ),
+            release = RecordingMetadata.Release(
+                name = "絶対零度",
+                caaId = 42428705569,
+                caaReleaseMbid = "ac3e8592-b411-4b69-937d-9f58f8e4935f",
+                mbid = "ac3e8592-b411-4b69-937d-9f58f8e4935f",
+            ),
+        )
+
+        val feedback: Feedback<ListensListFeedback> = listensListRepository.submitManualMapping(
+            recordingMessyBrainzId = recordingMessyBrainzId,
+            rawRecordingMusicBrainzId = recordingMbid,
+        )
+        Assert.assertEquals(
+            ListensListFeedback.Updated,
+            feedback.data,
+        )
+
+        testFilter(
+            pagingFlowProducer = { query ->
+                listensListRepository.observeListens(
+                    username = TEST_USERNAME,
+                    query = query,
+                    entityFacet = null,
+                    maxDateTimeEpochMilliseconds = null,
+                    stopPrepending = false,
+                    stopAppending = false,
+                    onReachedLatest = {},
+                ) {}
+            },
+            testCases = listOf(
+                FilterTestCase(
+                    description = "tsukuyomi",
+                    query = "tsukuyomi",
+                    expectedResult = listOf(
+                        ListSeparator(
+                            id = track4ListenedAtMs.toString(),
+                            text = "Wednesday, August 13, 2025",
+                        ),
+                        listen4.copy(
+                            recordingId = "6489abdb-6169-4a62-977a-8d7775f10a54",
+                            recordingName = "絶対零度",
+                            formattedArtistCredits = "月詠み",
+                            recordingDurationMs = 222000,
+                            imageMetadata = ImageMetadata.InternetArchive(
+                                imageId = ImageId(value = 46),
+                                rawThumbnailUrl = "coverartarchive.org/release/ac3e8592-b411-4b69-937d-9f58f8e4935f/42428705569-250",
+                            ),
+                            release = ListenRelease(
+                                id = "ac3e8592-b411-4b69-937d-9f58f8e4935f",
+                                name = "絶対零度",
+                                unmappedName = "Absolute zero",
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         )
     }
 }

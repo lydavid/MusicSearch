@@ -17,56 +17,59 @@ interface TestListensListRepository {
     val listenDao: ListenDao
     val coroutineDispatchers: CoroutineDispatchers
 
+    class FakeListenBrainzApi(private val response: GetListensResponse,) : ListenBrainzApi {
+        override suspend fun validateToken(token: String): TokenValidationResponse {
+            return TokenValidationResponse(valid = false)
+        }
+
+        override suspend fun getListensByUser(
+            username: String,
+            minTimestamp: Long?,
+            maxTimestamp: Long?,
+            count: Int,
+        ): GetListensResponse {
+            return response
+        }
+
+        override suspend fun submitManualMapping(
+            recordingMessyBrainzId: String,
+            recordingMusicBrainzId: String,
+        ) {
+            // no-op
+        }
+
+        override suspend fun getManualMapping(recordingMessyBrainzId: String): ManualMappingResponse {
+            return ManualMappingResponse(
+                mapping = ManualMappingResponse.Mapping(
+                    recordingMsid = recordingMessyBrainzId,
+                    recordingMbid = "",
+                ),
+            )
+        }
+
+        override suspend fun getRecordingMetadata(recordingMusicBrainzId: String): RecordingMetadata? {
+            return null
+        }
+
+        override suspend fun deleteListen(
+            listenedAtMs: Long,
+            recordingMessyBrainzId: String,
+        ) {
+            // no-op
+        }
+
+        override suspend fun submitListens(listenSubmissions: List<ListenSubmission>) {
+            // no-op
+        }
+    }
+
     fun createListensListRepository(
-        response: GetListensResponse,
+//        response: GetListensResponse,
+        listenBrainzApi: ListenBrainzApi,
     ): ListensListRepository {
         return ListensListRepositoryImpl(
             listenDao = listenDao,
-            listenBrainzApi = object : ListenBrainzApi {
-                override suspend fun validateToken(token: String): TokenValidationResponse {
-                    return TokenValidationResponse(valid = false)
-                }
-
-                override suspend fun getListensByUser(
-                    username: String,
-                    minTimestamp: Long?,
-                    maxTimestamp: Long?,
-                    count: Int,
-                ): GetListensResponse {
-                    return response
-                }
-
-                override suspend fun submitManualMapping(
-                    recordingMessyBrainzId: String,
-                    recordingMusicBrainzId: String,
-                ) {
-                    // no-op
-                }
-
-                override suspend fun getManualMapping(recordingMessyBrainzId: String): ManualMappingResponse {
-                    return ManualMappingResponse(
-                        mapping = ManualMappingResponse.Mapping(
-                            recordingMsid = recordingMessyBrainzId,
-                            recordingMbid = "",
-                        ),
-                    )
-                }
-
-                override suspend fun getRecordingMetadata(recordingMusicBrainzId: String): RecordingMetadata? {
-                    return null
-                }
-
-                override suspend fun deleteListen(
-                    listenedAtMs: Long,
-                    recordingMessyBrainzId: String,
-                ) {
-                    // no-op
-                }
-
-                override suspend fun submitListens(listenSubmissions: List<ListenSubmission>) {
-                    // no-op
-                }
-            },
+            listenBrainzApi = listenBrainzApi,
             coroutineScope = TestScope(coroutineDispatchers.io),
         )
     }

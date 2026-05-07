@@ -150,13 +150,13 @@ class ListenDaoImpl(
             // Do not update track name or artist name because they are guaranteed fields uploaded by the submission client
             // that can be useful fallbacks when filtering, especially when the recording is in a different language
             // without aliases.
+            // In general, do not replace values submitted to ListenBrainz. If there are mapped entities,
+            // we can find their values by joining.
             listenTransacter.updateMetadata(
                 recording_musicbrainz_id = entityMapping.recordingMusicbrainzId.orEmpty(),
                 release_mbid = entityMapping.releaseMbid,
                 caa_id = entityMapping.caaId,
                 caa_release_mbid = entityMapping.caaReleaseMbid,
-                release_name = entityMapping.releaseName,
-                duration_ms = entityMapping.durationMs,
                 recording_messybrainz_id = recordingMessyBrainzId,
             )
             insertLinkedEntities(entityMapping = entityMapping)
@@ -355,11 +355,13 @@ private fun mapToListenListItemModel(
     recordingMusicbrainzId: String,
     recordingName: String?,
     recordingDisambiguation: String?,
-    fallbackName: String,
-    durationMs: Long?,
+    unmappedTrackName: String,
+    recordingDurationMs: Int?,
+    unmappedDurationMs: Long?,
     artistCreditNames: String?,
-    fallbackArtistCreditNames: String,
+    unmappedArtistCreditNames: String,
     releaseName: String?,
+    unmappedReleaseName: String?,
     releaseId: String?,
     thumbnailUrl: String?,
     imageId: Long?,
@@ -378,14 +380,17 @@ private fun mapToListenListItemModel(
     aliasNames: String?,
     aliasLocales: String?,
 ) = ListenListItemModel(
-    name = recordingName ?: fallbackName,
+    recordingName = recordingName,
+    unmappedTrackName = unmappedTrackName,
     username = username,
     recordingMessybrainzId = recordingMessybrainzId,
     disambiguation = recordingDisambiguation.orEmpty(),
-    formattedArtistCredits = artistCreditNames ?: fallbackArtistCreditNames,
+    formattedArtistCredits = artistCreditNames,
+    unmappedFormattedArtistCredits = unmappedArtistCreditNames,
     listenedAtMs = listenedAtMs,
     recordingId = recordingMusicbrainzId,
-    durationMs = durationMs?.toInt(),
+    recordingDurationMs = recordingDurationMs,
+    unmappedDurationMs = unmappedDurationMs?.toInt(),
     imageMetadata = mapToImageMetadata(
         id = imageId,
         thumbnailUrl = thumbnailUrl,
@@ -394,6 +399,7 @@ private fun mapToListenListItemModel(
     visited = visitedRecording,
     release = ListenRelease(
         name = releaseName,
+        unmappedName = unmappedReleaseName,
         id = releaseId,
         visited = visitedRelease,
     ),

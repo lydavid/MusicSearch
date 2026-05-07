@@ -36,6 +36,7 @@ fun ListenListItem(
     onClick: (id: String) -> Unit = {},
     onClickMoreActions: ListenListItemModel.() -> Unit = {},
 ) {
+    val artistCredits = listen.artistCredits
     ListItem(
         headlineContent = {
             HighlightableText(
@@ -64,7 +65,7 @@ fun ListenListItem(
         supportingContent = {
             Column {
                 HighlightableText(
-                    text = listen.formattedArtistCredits,
+                    text = artistCredits,
                     highlightedText = filterText,
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
@@ -93,7 +94,7 @@ fun ListenListItem(
                     contentDescription = stringResource(
                         Res.string.moreActionsForXByY,
                         listen.name,
-                        listen.formattedArtistCredits,
+                        artistCredits,
                     ),
                 )
             }

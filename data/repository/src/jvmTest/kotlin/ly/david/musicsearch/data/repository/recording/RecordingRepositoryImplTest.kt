@@ -197,7 +197,7 @@ class RecordingRepositoryImplTest :
     @Test
     fun `when id changes, listens are updated`() = runTest {
         val listensListRepository = createListensListRepository(
-            response = testListens,
+            listenBrainzApi = TestListensListRepository.FakeListenBrainzApi(response = testListens),
         )
         listensListRepository.observeListens(
             username = TEST_USERNAME,
@@ -218,10 +218,13 @@ class RecordingRepositoryImplTest :
                         listenedAtMs = track2ListenedAtMs,
                         username = "user",
                         recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                        name = "Color Your Night",
+                        recordingName = "Color Your Night",
+                        unmappedTrackName = "Color Your Night",
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                        unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
-                        durationMs = 227240,
+                        recordingDurationMs = 227240,
+                        unmappedDurationMs = 227240,
                         imageMetadata = ImageMetadata.InternetArchive(
                             imageId = ImageId(2),
                             rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -229,6 +232,7 @@ class RecordingRepositoryImplTest :
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             name = "Persona 3 Reload Original Soundtrack",
+                            unmappedName = "Persona 3 Reload Original Soundtrack",
                         ),
                     ),
                 ),
@@ -317,10 +321,13 @@ class RecordingRepositoryImplTest :
                         listenedAtMs = track2ListenedAtMs,
                         username = "user",
                         recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-                        name = "Color Your Night",
+                        recordingName = "Color Your Night",
+                        unmappedTrackName = "Color Your Night",
                         formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                        unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda2",
-                        durationMs = 227240,
+                        recordingDurationMs = 227240,
+                        unmappedDurationMs = 227240,
                         imageMetadata = ImageMetadata.InternetArchive(
                             imageId = ImageId(2),
                             rawThumbnailUrl = "coverartarchive.org/release/0d516a93-061e-4a27-9cf7-f36e3a96f888/40524230813-250",
@@ -328,6 +335,7 @@ class RecordingRepositoryImplTest :
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
                             name = "Persona 3 Reload Original Soundtrack",
+                            unmappedName = "Persona 3 Reload Original Soundtrack",
                         ),
                         visited = true,
                     ),

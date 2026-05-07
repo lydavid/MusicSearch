@@ -170,7 +170,7 @@ val testListens = GetListensResponse(
                     ),
                 ),
             ),
-            // minimum without mapping
+            // without mapping
             ListenBrainzListen(
                 insertedAtS = 1755101240L,
                 listenedAtS = track4ListenedAtS,
@@ -179,6 +179,7 @@ val testListens = GetListensResponse(
                 track_metadata = TrackMetadata(
                     artist_name = "Tsukuyomi",
                     track_name = "Absolute zero",
+                    release_name = "Absolute zero",
                 ),
             ),
             ListenBrainzListen(

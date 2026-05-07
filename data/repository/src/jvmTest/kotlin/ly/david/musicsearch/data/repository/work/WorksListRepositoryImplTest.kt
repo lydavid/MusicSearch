@@ -624,32 +624,34 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
         )
 
         createListensListRepository(
-            response = GetListensResponse(
-                payload = Payload(
-                    latest_listen_ts = 1755101240L,
-                    oldest_listen_ts = 1755101240L,
-                    listens = listOf(
-                        ListenBrainzListen(
-                            insertedAtS = 1755101240L,
-                            listenedAtS = 1755101240L,
-                            recording_msid = "9021ba8c-a831-42c9-8052-f017bf3e6795",
-                            user_name = TEST_USERNAME,
-                            track_metadata = TrackMetadata(
-                                artist_name = "Yoko Takahashi",
-                                track_name = "残酷な天使のテーゼ",
-                                release_name = "残酷な天使のテーゼ / 魂のルフラン",
-                                mbid_mapping = MbidMapping(
-                                    recording_mbid = "99b455ec-7f1e-49b2-bcbc-b8ee3302dbb1",
-                                    recording_name = "残酷な天使のテーゼ",
-                                    artists = listOf(
-                                        ListenBrainzArtist(
-                                            artist_credit_name = "高橋洋子",
-                                            artist_mbid = "7004bc31-23ee-4216-8d74-0d230e88079f",
-                                            join_phrase = "",
+            listenBrainzApi = TestListensListRepository.FakeListenBrainzApi(
+                response = GetListensResponse(
+                    payload = Payload(
+                        latest_listen_ts = 1755101240L,
+                        oldest_listen_ts = 1755101240L,
+                        listens = listOf(
+                            ListenBrainzListen(
+                                insertedAtS = 1755101240L,
+                                listenedAtS = 1755101240L,
+                                recording_msid = "9021ba8c-a831-42c9-8052-f017bf3e6795",
+                                user_name = TEST_USERNAME,
+                                track_metadata = TrackMetadata(
+                                    artist_name = "Yoko Takahashi",
+                                    track_name = "残酷な天使のテーゼ",
+                                    release_name = "残酷な天使のテーゼ / 魂のルフラン",
+                                    mbid_mapping = MbidMapping(
+                                        recording_mbid = "99b455ec-7f1e-49b2-bcbc-b8ee3302dbb1",
+                                        recording_name = "残酷な天使のテーゼ",
+                                        artists = listOf(
+                                            ListenBrainzArtist(
+                                                artist_credit_name = "高橋洋子",
+                                                artist_mbid = "7004bc31-23ee-4216-8d74-0d230e88079f",
+                                                join_phrase = "",
+                                            ),
                                         ),
+                                        caa_id = 20686427578,
+                                        caa_release_mbid = "0cc76aef-e050-4175-a83c-3ebc69058367",
                                     ),
-                                    caa_id = 20686427578,
-                                    caa_release_mbid = "0cc76aef-e050-4175-a83c-3ebc69058367",
                                 ),
                             ),
                         ),
@@ -721,7 +723,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                             length = 267653,
                         ),
                     ),
-                )
+                ),
             ),
             fakeBrowseUsername = TEST_USERNAME,
         ).lookupWork(

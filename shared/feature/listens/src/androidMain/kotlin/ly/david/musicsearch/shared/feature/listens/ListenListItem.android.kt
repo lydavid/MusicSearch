@@ -19,9 +19,9 @@ internal fun PreviewListenListItem() {
                     listenedAtMs = 1755655177000,
                     recordingMessybrainzId = "bf2c5a43-19d8-46f7-8131-df986ed24845",
                     username = "user",
-                    name = "絶絶絶絶対聖域",
-                    formattedArtistCredits = "ano feat. 幾田りら",
-                    durationMs = 213868,
+                    unmappedTrackName = "絶絶絶絶対聖域",
+                    unmappedFormattedArtistCredits = "ano feat. 幾田りら",
+                    unmappedDurationMs = 213868,
                     aliases = persistentListOf(
                         BasicAlias(
                             name = "ZeZeZeZettai Seiiki",

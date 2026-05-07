@@ -148,7 +148,9 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
         }
 
         val listensListRepository = createListensListRepository(
-            response = testListens,
+            listenBrainzApi = TestListensListRepository.FakeListenBrainzApi(
+                response = testListens,
+            ),
         )
         listensListRepository.observeListens(
             username = TEST_USERNAME,
@@ -169,11 +171,14 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         listenedAtMs = track5ListenedAtMs,
                         username = "user",
                         recordingMessybrainzId = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
-                        name = "スカイクラッドの観測者",
+                        recordingName = "スカイクラッドの観測者",
+                        unmappedTrackName = "スカイクラッドの観測者",
                         disambiguation = "",
                         formattedArtistCredits = "いとうかなこ",
+                        unmappedFormattedArtistCredits = "いとうかなこ",
                         recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
-                        durationMs = 275640,
+                        recordingDurationMs = 275640,
+                        unmappedDurationMs = 275640,
                         imageMetadata = ImageMetadata.InternetArchive(
                             imageId = ImageId(value = 4),
                             rawThumbnailUrl = "coverartarchive.org/release/2387c59b-62c4-4752-b1fa-64f126ed0c8c/12397242767-250",
@@ -181,6 +186,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         visited = false,
                         release = ListenRelease(
                             name = "ChaosAttractor",
+                            unmappedName = "ChaosAttractor",
                             id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
                             visited = false,
                         ),
@@ -189,11 +195,14 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         listenedAtMs = track6ListenedAtMs,
                         username = "user",
                         recordingMessybrainzId = "77f971a8-6748-4314-9513-dffbc0969724",
-                        name = "スカイクラッドの観測者",
+                        recordingName = "スカイクラッドの観測者",
+                        unmappedTrackName = "スカイクラッドの観測者",
                         disambiguation = "",
                         formattedArtistCredits = "Roselia×いとうかなこ",
+                        unmappedFormattedArtistCredits = "Roselia, いとうかなこ",
                         recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
-                        durationMs = 273866,
+                        recordingDurationMs = 273866,
+                        unmappedDurationMs = 273866,
                         imageMetadata = ImageMetadata.InternetArchive(
                             imageId = ImageId(value = 5),
                             rawThumbnailUrl = "coverartarchive.org/release/06fecdc4-dbfa-484f-a03b-5da975fadf0e/36678276363-250",
@@ -201,6 +210,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         visited = false,
                         release = ListenRelease(
                             name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                            unmappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
                             id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
                             visited = false,
                         ),

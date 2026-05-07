@@ -99,6 +99,8 @@ internal class ListensPresenter(
 
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
 
+        var showUnmappedData by rememberSaveable { mutableStateOf(false) }
+
         topAppBarFilterState.show(browseUsername.isNotEmpty())
 
         fun eventSink(event: ListensUiEvent) {
@@ -156,6 +158,10 @@ internal class ListensPresenter(
                         } else {
                             newSelectedDateTimeEpochSeconds
                         }
+                }
+
+                is ListensUiEvent.ToggleShowUnmappedData -> {
+                    showUnmappedData = !showUnmappedData
                 }
 
                 is ListensUiEvent.SubmitMapping -> {
@@ -219,6 +225,7 @@ internal class ListensPresenter(
             listensPagingDataFlow = listens,
             browsingUserIsSameAsLoggedInUser = loggedInUsername.isNotBlank() && browseUsername == loggedInUsername,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            showUnmappedData = showUnmappedData,
             eventSink = ::eventSink,
         )
     }
@@ -238,6 +245,7 @@ internal data class ListensUiState(
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val browsingUserIsSameAsLoggedInUser: Boolean = false,
     val scrollToHideTopAppBar: Boolean = false,
+    val showUnmappedData: Boolean = false,
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
     val noUsernameSet: Boolean
@@ -287,6 +295,8 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
     data class SelectExactMaxDate(
         val dateTimeEpochMilliseconds: Long?,
     ) : ListensUiEvent
+
+    data object ToggleShowUnmappedData : ListensUiEvent
 
     data class SubmitMapping(
         val recordingMessyBrainzId: String,

@@ -1,13 +1,17 @@
 package ly.david.musicsearch.shared.feature.listens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,8 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -29,8 +35,10 @@ import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.ChevronRight
+import ly.david.musicsearch.ui.common.icons.CollapseAll
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.DeleteOutline
+import ly.david.musicsearch.ui.common.icons.ExpandAll
 import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
@@ -42,6 +50,7 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.fontWeight
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import ly.david.musicsearch.ui.common.theme.getSubTextColor
 import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.addMapping
@@ -59,6 +68,8 @@ import org.jetbrains.compose.resources.stringResource
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
     filterText: String,
+    showUnmappedData: Boolean,
+    toggleShowUnmappedData: () -> Unit = {},
     onGoToRelease: (releaseId: String) -> Unit = {},
     filteringByThisRecording: Boolean,
     onFilterByRecording: (recordingId: String) -> Unit = {},
@@ -75,46 +86,14 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     Column(
         modifier = Modifier.verticalScroll(state = rememberScrollState()),
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            ThumbnailImage(
-                imageMetadata = listen.imageMetadata,
-                placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
-                enableSharedTransition = false,
-            )
+        PreviewSection(
+            modifier = Modifier.padding(start = 16.dp),
+            listen = listen,
+            filterText = filterText,
+            showUnmappedData = showUnmappedData,
+            toggleShowUnmappedData = toggleShowUnmappedData,
+        )
 
-            SelectionContainer {
-                Column(
-                    modifier = Modifier.padding(start = 16.dp),
-                ) {
-                    HighlightableText(
-                        text = listen.getAnnotatedName(),
-                        highlightedText = filterText,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
-                    HighlightableText(
-                        text = listen.formattedArtistCredits,
-                        highlightedText = filterText,
-                        modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                    )
-                    release.name?.let { releaseName ->
-                        HighlightableText(
-                            text = buildAnnotatedString {
-                                withStyle(style = SpanStyle(fontWeight = release.fontWeight)) {
-                                    append(releaseName)
-                                }
-                            },
-                            highlightedText = filterText,
-                            modifier = Modifier.padding(top = 4.dp),
-                            style = TextStyles.getCardBodySubTextStyle(),
-                        )
-                    }
-                }
-            }
-        }
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
         release.id?.let { releaseId ->
@@ -232,6 +211,155 @@ internal fun ListenAdditionalActionsBottomSheetContent(
         }
 
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
+    }
+}
+
+@Composable
+private fun PreviewSection(
+    modifier: Modifier,
+    listen: ListenListItemModel,
+    filterText: String,
+    showUnmappedData: Boolean,
+    toggleShowUnmappedData: () -> Unit = {},
+) {
+    val release = listen.release
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        ThumbnailImage(
+            imageMetadata = listen.imageMetadata,
+            placeholderIcon = MusicBrainzEntityType.RECORDING.getIcon(),
+            enableSharedTransition = false,
+        )
+
+        SelectionContainer {
+            Column(
+                modifier = Modifier.padding(start = 16.dp),
+            ) {
+                HighlightableText(
+                    modifier = Modifier.padding(end = 4.dp),
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontSize = TextStyles.getCardBodyTextStyle().fontSize,
+                            ),
+                        ) {
+                            append(listen.getAnnotatedName())
+                        }
+                        withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
+                            append(" ${listen.durationMs.toDisplayTime()}")
+                        }
+                    },
+                    highlightedText = filterText,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+                if (showUnmappedData) {
+                    HighlightableText(
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontSize = TextStyles.getCardBodyTextStyle().fontSize,
+                                    fontStyle = FontStyle.Italic,
+                                    color = getSubTextColor(),
+                                ),
+                            ) {
+                                append(listen.unmappedTrackName)
+                            }
+                            // Could possibly show the recording duration here, but that may be confusing
+                            // as the submitted data is the unmapped data.
+                            // We're already showing the submitted duration above.
+                        },
+                        highlightedText = filterText,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .fillMaxWidth()
+                            .padding(end = 48.dp),
+                    ) {
+                        HighlightableText(
+                            text = listen.artistCredits,
+                            highlightedText = filterText,
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                        if (showUnmappedData) {
+                            HighlightableText(
+                                text = buildAnnotatedString {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontStyle = FontStyle.Italic,
+                                            color = getSubTextColor(),
+                                        ),
+                                    ) {
+                                        append(listen.unmappedFormattedArtistCredits)
+                                    }
+                                },
+                                highlightedText = filterText,
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
+
+                        val releaseName = release.name ?: release.unmappedName
+                        releaseName?.let { releaseName ->
+                            HighlightableText(
+                                text = buildAnnotatedString {
+                                    withStyle(style = SpanStyle(fontWeight = release.fontWeight)) {
+                                        append(releaseName)
+                                    }
+                                },
+                                highlightedText = filterText,
+                                modifier = Modifier.padding(top = 4.dp),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                            if (showUnmappedData) {
+                                release.unmappedName?.let { submittedReleaseName ->
+                                    HighlightableText(
+                                        text = buildAnnotatedString {
+                                            withStyle(
+                                                style = SpanStyle(
+                                                    fontStyle = FontStyle.Italic,
+                                                    color = getSubTextColor(),
+                                                ),
+                                            ) {
+                                                append(submittedReleaseName)
+                                            }
+                                        },
+                                        highlightedText = filterText,
+                                        style = TextStyles.getCardBodySubTextStyle(),
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    IconButton(
+                        modifier = Modifier
+                            .padding(end = 4.dp)
+                            .align(Alignment.CenterEnd),
+                        onClick = toggleShowUnmappedData,
+                    ) {
+                        Icon(
+                            imageVector = if (showUnmappedData) CustomIcons.CollapseAll else CustomIcons.ExpandAll,
+                            contentDescription = if (showUnmappedData) {
+                                "Hide originally submitted data"
+                            } else {
+                                "Show originally submitted data"
+                            },
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

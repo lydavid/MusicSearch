@@ -478,6 +478,10 @@ private fun ListensContent(
                 ListenAdditionalActionsBottomSheetContent(
                     listen = listen,
                     filterText = filterText,
+                    showUnmappedData = state.showUnmappedData,
+                    toggleShowUnmappedData = {
+                        eventSink(ListensUiEvent.ToggleShowUnmappedData)
+                    },
                     onGoToRelease = { releaseId ->
                         eventSink(
                             ListensUiEvent.ClickItem(

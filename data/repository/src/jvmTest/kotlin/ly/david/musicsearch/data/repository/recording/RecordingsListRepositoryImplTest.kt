@@ -36,11 +36,11 @@ import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -579,47 +579,49 @@ class RecordingsListRepositoryImplTest :
         )
 
         val listensListRepository = createListensListRepository(
-            response = GetListensResponse(
-                payload = Payload(
-                    latest_listen_ts = 1755101240L,
-                    oldest_listen_ts = 1755101240L,
-                    listens = listOf(
-                        ListenBrainzListen(
-                            insertedAtS = 1755101240L,
-                            listenedAtS = 1755101240L,
-                            recording_msid = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
-                            user_name = TEST_USERNAME,
-                            track_metadata = TrackMetadata(
-                                artist_name = "いとうかなこ",
-                                track_name = "スカイクラッドの観測者",
-                                release_name = "ChaosAttractor",
-                                additional_info = AdditionalInfo(
-                                    duration_ms = 275640L,
-                                    submission_client = "listenbrainz",
-                                    music_service = "spotify.com",
-                                    origin_url = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
-                                    spotify_album_artist_ids = listOf(
-                                        "https://open.spotify.com/artist/2d12dVIZQZk9CKhEsezaoN",
-                                    ),
-                                    spotify_album_id = "https://open.spotify.com/album/0yHtsepi9vEUIxuHq5ohz7",
-                                    spotify_artist_ids = listOf(
-                                        "https://open.spotify.com/artist/7Il739Q5W4yJUYC3hfnX6z",
-                                        "https://open.spotify.com/artist/1qM11R4ylJyQiPJ0DffE9z",
-                                    ),
-                                    spotify_id = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
-                                ),
-                                mbid_mapping = MbidMapping(
-                                    recording_mbid = "6a8fc477-9b12-4001-9387-f5d936b05503",
-                                    recording_name = "絶絶絶絶対聖域",
-                                    artists = listOf(
-                                        ListenBrainzArtist(
-                                            artist_credit_name = "いとうかなこ",
-                                            artist_mbid = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
-                                            join_phrase = "",
+            listenBrainzApi = TestListensListRepository.FakeListenBrainzApi(
+                response = GetListensResponse(
+                    payload = Payload(
+                        latest_listen_ts = 1755101240L,
+                        oldest_listen_ts = 1755101240L,
+                        listens = listOf(
+                            ListenBrainzListen(
+                                insertedAtS = 1755101240L,
+                                listenedAtS = 1755101240L,
+                                recording_msid = "10821143-ab67-4cfa-9ceb-c837bf8b4bdf",
+                                user_name = TEST_USERNAME,
+                                track_metadata = TrackMetadata(
+                                    artist_name = "いとうかなこ",
+                                    track_name = "スカイクラッドの観測者",
+                                    release_name = "ChaosAttractor",
+                                    additional_info = AdditionalInfo(
+                                        duration_ms = 275640L,
+                                        submission_client = "listenbrainz",
+                                        music_service = "spotify.com",
+                                        origin_url = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
+                                        spotify_album_artist_ids = listOf(
+                                            "https://open.spotify.com/artist/2d12dVIZQZk9CKhEsezaoN",
                                         ),
+                                        spotify_album_id = "https://open.spotify.com/album/0yHtsepi9vEUIxuHq5ohz7",
+                                        spotify_artist_ids = listOf(
+                                            "https://open.spotify.com/artist/7Il739Q5W4yJUYC3hfnX6z",
+                                            "https://open.spotify.com/artist/1qM11R4ylJyQiPJ0DffE9z",
+                                        ),
+                                        spotify_id = "https://open.spotify.com/track/3Y0W7Lxg1X4cbyvtmdCHzL",
                                     ),
-                                    caa_id = 12397242767,
-                                    caa_release_mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                                    mbid_mapping = MbidMapping(
+                                        recording_mbid = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                                        recording_name = "絶絶絶絶対聖域",
+                                        artists = listOf(
+                                            ListenBrainzArtist(
+                                                artist_credit_name = "いとうかなこ",
+                                                artist_mbid = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                                                join_phrase = "",
+                                            ),
+                                        ),
+                                        caa_id = 12397242767,
+                                        caa_release_mbid = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
+                                    ),
                                 ),
                             ),
                         ),

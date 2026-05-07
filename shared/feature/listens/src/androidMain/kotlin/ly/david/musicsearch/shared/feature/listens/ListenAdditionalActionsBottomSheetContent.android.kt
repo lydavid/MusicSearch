@@ -11,18 +11,28 @@ private val listen = ListenListItemModel(
     listenedAtMs = 1755645177000,
     username = "user",
     recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
-    name = "Color Your Night",
-    formattedArtistCredits = "Lotus Juice & 高橋あず美",
     recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+    recordingName = "Color Your Night",
+    recordingDurationMs = 227240,
+    unmappedDurationMs = 228240,
+    unmappedTrackName = "COLOR YOUR NIGHT",
+    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+    unmappedFormattedArtistCredits = "Lotus Juice, 高橋あず美, アトラスサウンドチーム, ATLUS GAME MUSIC",
     release = ListenRelease(
         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
+        unmappedName = "Persona 3 Reload Original Soundtrack",
     ),
 )
 
 private val unlinkedListen = listen.copy(
     recordingId = "",
-    release = ListenRelease(),
+    recordingName = null,
+    recordingDurationMs = null,
+    formattedArtistCredits = null,
+    release = ListenRelease(
+        unmappedName = "Persona 3 Reload Original Soundtrack",
+    ),
 )
 
 @PreviewLightDark
@@ -33,6 +43,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
             ListenAdditionalActionsBottomSheetContent(
                 listen = listen,
                 filterText = "",
+                showUnmappedData = false,
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = false,
@@ -49,6 +60,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
             ListenAdditionalActionsBottomSheetContent(
                 listen = listen,
                 filterText = "sound",
+                showUnmappedData = true,
                 allowedToEdit = true,
                 filteringByThisRecording = true,
                 filteringByThisDate = false,
@@ -65,6 +77,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
             ListenAdditionalActionsBottomSheetContent(
                 listen = unlinkedListen,
                 filterText = "",
+                showUnmappedData = false,
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = false,
@@ -81,6 +94,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
             ListenAdditionalActionsBottomSheetContent(
                 listen = unlinkedListen,
                 filterText = "",
+                showUnmappedData = false,
                 allowedToEdit = false,
                 filteringByThisRecording = true,
                 filteringByThisDate = false,
@@ -97,6 +111,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinkedFi
             ListenAdditionalActionsBottomSheetContent(
                 listen = unlinkedListen,
                 filterText = "",
+                showUnmappedData = false,
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = true,
