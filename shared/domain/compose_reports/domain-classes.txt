@@ -563,21 +563,28 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenListItemModel {
   stable val listenedAtMs: Long
   stable val username: String
   stable val recordingMessybrainzId: String
-  stable val name: String
+  stable val recordingName: String?
+  stable val unmappedTrackName: String
   stable val disambiguation: String
-  stable val formattedArtistCredits: String
+  stable val formattedArtistCredits: String?
+  stable val unmappedFormattedArtistCredits: String
   stable val recordingId: String
-  stable val durationMs: Int?
+  stable val recordingDurationMs: Int?
+  stable val unmappedDurationMs: Int?
   runtime val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   stable val release: ListenRelease
   stable val aliases: ImmutableList<BasicAlias>
   stable val id: String
+  stable val name: String
+  stable val durationMs: Int?
+  stable val artistCredits: String
   stable val listenedAt: Instant
   <runtime stability> = 
 }
 stable class ly.david.musicsearch.shared.domain.listen.ListenRelease {
   stable val name: String?
+  stable val unmappedName: String?
   stable val id: String?
   stable val visited: Boolean
   <runtime stability> = Stable

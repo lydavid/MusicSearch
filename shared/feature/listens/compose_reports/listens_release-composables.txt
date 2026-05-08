@@ -34,6 +34,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
   listen: ListenListItemModel
   stable filterText: String
+  stable showUnmappedData: Boolean
+  stable toggleShowUnmappedData: Function0<Unit>? = @static <expression>
   stable onGoToRelease: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
   stable filteringByThisRecording: Boolean
   stable onFilterByRecording: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
@@ -45,6 +47,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onOpenInBrowser: Function1<@[ParameterName(name = 'listenedAtMs')] Long, Unit>? = @static <expression>
   stable onDelete: Function3<@[ParameterName(name = 'listenedAtMs')] Long, @[ParameterName(name = 'username')] String, @[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewSection(
+  stable modifier: Modifier
+  listen: ListenListItemModel
+  stable filterText: String
+  stable showUnmappedData: Boolean
+  stable toggleShowUnmappedData: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.LinkWithMusicBrainzItem(
   stable onSubmitMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>

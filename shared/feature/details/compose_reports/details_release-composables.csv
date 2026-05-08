@@ -35,6 +35,7 @@ ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiRelation
 ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUi,PreviewReleaseDetailsUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiCollapsed,PreviewReleaseDetailsUiCollapsed,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.release.PreviewReleaseDetailsUiWithListens,PreviewReleaseDetailsUiWithListens,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.details.release.PreviewReleaseUiWithFilter,PreviewReleaseUiWithFilter,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.release.PreviewTrackAdditionalActionsBottomSheetContentLong,PreviewTrackAdditionalActionsBottomSheetContentLong,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.release.PreviewTrackAdditionalActionsBottomSheetContent,PreviewTrackAdditionalActionsBottomSheetContent,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.release.PreviewTracksByReleaseUi,PreviewTracksByReleaseUi,1,1,1,0,0,0,0,0,1,1,

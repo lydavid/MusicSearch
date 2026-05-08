@@ -39,6 +39,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   unstable val listensPagingDataFlow: Flow<PagingData<Identifiable>>
   stable val browsingUserIsSameAsLoggedInUser: Boolean
   stable val scrollToHideTopAppBar: Boolean
+  stable val showUnmappedData: Boolean
   stable val eventSink: Function1<ListensUiEvent, Unit>
 }
 unstable class ly.david.musicsearch.shared.feature.listens.FacetsUiState {
@@ -82,6 +83,9 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectMa
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectExactMaxDate {
   stable val dateTimeEpochMilliseconds: Long?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleShowUnmappedData {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SubmitMapping {
