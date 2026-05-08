@@ -19,7 +19,7 @@ private fun getDateFormatter(timeZone: TimeZone): NSDateFormatter {
 
 actual fun Instant.getDateTimeFormatted(
     format: DateTimeFormat,
-    timeZone: TimeZone
+    timeZone: TimeZone,
 ): String {
     val dateFormatter = getDateFormatter(timeZone)
     when (format) {
