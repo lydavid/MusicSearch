@@ -6,7 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -23,7 +24,8 @@ internal fun PreviewNowPlayingHistoryUi() {
                     listOf(
                         ListSeparator(
                             id = "separator1",
-                            text = Instant.parse("2024-05-01T02:29:38.973Z").getFullDateFormatted(),
+                            text = Instant.parse("2024-05-01T02:29:38.973Z")
+                                .getDateTimeFormatted(format = DateTimeFormat.FullDate),
                         ),
                         SpotifyHistoryListItemModel(
                             id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-05-01T02:29:38.973Z")}",
@@ -44,7 +46,8 @@ internal fun PreviewNowPlayingHistoryUi() {
                         ),
                         ListSeparator(
                             id = "separator2",
-                            text = Instant.parse("2024-04-30T02:29:38.973Z").getFullDateFormatted(),
+                            text = Instant.parse("2024-04-30T02:29:38.973Z")
+                                .getDateTimeFormatted(format = DateTimeFormat.FullDate),
                         ),
                         SpotifyHistoryListItemModel(
                             id = "spotify:track:2ritsV4U3jq2LduJpovZ1A${Instant.parse("2024-04-30T02:29:38.973Z")}",

@@ -13,7 +13,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -71,7 +72,7 @@ fun ListenListItem(
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
                 Text(
-                    text = listen.listenedAt.getTimeFormatted(),
+                    text = listen.listenedAt.getDateTimeFormatted(format = DateTimeFormat.Time),
                     modifier = Modifier.padding(top = 4.dp),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )

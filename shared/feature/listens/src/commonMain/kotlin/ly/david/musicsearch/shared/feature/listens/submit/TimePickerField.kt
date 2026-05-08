@@ -31,7 +31,8 @@ import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.SECONDS_IN_DAY
 import ly.david.musicsearch.shared.domain.SECONDS_IN_HOUR
 import ly.david.musicsearch.shared.domain.SECONDS_IN_MINUTE
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toEpochSeconds
 import ly.david.musicsearch.ui.common.dialog.BasicDialog
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -55,7 +56,10 @@ internal fun TimePickerField(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val formattedTime = Instant.fromEpochSeconds(dateTimeEpochSeconds).getTimeFormatted(timeZone = timeZone)
+    val formattedTime = Instant.fromEpochSeconds(dateTimeEpochSeconds).getDateTimeFormatted(
+        format = DateTimeFormat.Time,
+        timeZone = timeZone,
+    )
     OutlinedTextField(
         value = formattedTime,
         onValueChange = { },

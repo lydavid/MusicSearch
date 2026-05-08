@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
@@ -363,7 +364,7 @@ private fun LastListenedListItem(
 ) {
     val instant = Instant.fromEpochMilliseconds(listen.listenedMs)
     val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
-    val formattedDateTime = instant.getDateTimeFormatted()
+    val formattedDateTime = instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
 
     val text = buildString {
         append(formattedDateTimePeriod)

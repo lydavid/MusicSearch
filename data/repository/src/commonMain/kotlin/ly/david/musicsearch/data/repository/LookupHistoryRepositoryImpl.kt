@@ -6,7 +6,8 @@ import androidx.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
-import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.history.LookupHistory
 import ly.david.musicsearch.shared.domain.history.LookupHistoryRepository
@@ -70,8 +71,8 @@ class LookupHistoryRepositoryImpl(
             return null
         }
 
-        val beforeDate = before?.lastAccessed?.getFullDateFormatted()
-        val afterDate = after?.lastAccessed?.getFullDateFormatted()
+        val beforeDate = before?.lastAccessed?.getDateTimeFormatted(format = DateTimeFormat.FullDate)
+        val afterDate = after?.lastAccessed?.getDateTimeFormatted(format = DateTimeFormat.FullDate)
         if (beforeDate == afterDate || afterDate == null) {
             return null
         }

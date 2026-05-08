@@ -19,7 +19,8 @@ import ly.david.musicsearch.data.listenbrainz.api.asListOfListens
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
-import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toUUID
 import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
@@ -125,8 +126,8 @@ class ListensListRepositoryImpl(
     ): ListSeparator? {
         if (after == null) return null
 
-        val beforeDate = before?.listenedAt?.getFullDateFormatted()
-        val afterDate = after.listenedAt.getFullDateFormatted()
+        val beforeDate = before?.listenedAt?.getDateTimeFormatted(format = DateTimeFormat.FullDate)
+        val afterDate = after.listenedAt.getDateTimeFormatted(format = DateTimeFormat.FullDate)
 
         if (beforeDate == afterDate) return null
 

@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.ui.common.listitem.formatPeriod
@@ -20,7 +21,7 @@ internal fun LastListenedListItem(
 ) {
     val instant = Instant.fromEpochMilliseconds(lastListenedMs)
     val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
-    val formattedDateTime = instant.getDateTimeFormatted()
+    val formattedDateTime = instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
     Text(
         text = "$formattedDateTimePeriod ($formattedDateTime)",
         modifier = Modifier.padding(horizontal = 16.dp),

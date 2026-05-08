@@ -7,7 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
@@ -60,7 +61,7 @@ internal fun HistoryListItem(
                 trailingContent = {
                     Column(horizontalAlignment = Alignment.End) {
                         Text(
-                            text = lookupHistory.lastAccessed.getTimeFormatted(),
+                            text = lookupHistory.lastAccessed.getDateTimeFormatted(format = DateTimeFormat.Time),
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                         Text(

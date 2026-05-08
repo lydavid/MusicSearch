@@ -5,7 +5,8 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -34,7 +35,7 @@ internal fun NowPlayingHistoryListItem(
         },
         trailingContent = {
             Text(
-                text = nowPlayingHistory.lastPlayed.getTimeFormatted(),
+                text = nowPlayingHistory.lastPlayed.getDateTimeFormatted(format = DateTimeFormat.Time),
                 style = TextStyles.getCardBodySubTextStyle(),
             )
         },

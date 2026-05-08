@@ -4,14 +4,15 @@ import androidx.paging.Pager
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
+import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.history.NowPlayingHistory
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toNowPlayingHistoryListItemModel
-import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
-import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 
 class NowPlayingHistoryRepositoryImpl(
     private val nowPlayingHistoryDao: NowPlayingHistoryDao,
@@ -38,8 +39,8 @@ class NowPlayingHistoryRepositoryImpl(
         before: NowPlayingHistoryListItemModel?,
         after: NowPlayingHistoryListItemModel?,
     ): ListSeparator? {
-        val beforeDate = before?.lastPlayed?.getFullDateFormatted()
-        val afterDate = after?.lastPlayed?.getFullDateFormatted()
+        val beforeDate = before?.lastPlayed?.getDateTimeFormatted(format = DateTimeFormat.FullDate)
+        val afterDate = after?.lastPlayed?.getDateTimeFormatted(format = DateTimeFormat.FullDate)
         return if (beforeDate != afterDate && afterDate != null) {
             ListSeparator(
                 id = afterDate,

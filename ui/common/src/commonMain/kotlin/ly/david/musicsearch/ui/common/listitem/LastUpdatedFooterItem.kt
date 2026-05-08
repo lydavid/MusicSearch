@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.DateTimePeriod
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -69,7 +70,7 @@ fun LastUpdatedText(
 ) {
     SelectionContainer(modifier = modifier) {
         val formattedDateTimePeriod = formatPeriod(lastUpdated.getDateTimePeriod(now = now))
-        val formattedDateTime = lastUpdated.getDateTimeFormatted()
+        val formattedDateTime = lastUpdated.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
         Text(
             text = stringResource(
                 Res.string.lastUpdatedFromMusicBrainz,

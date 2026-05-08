@@ -6,7 +6,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.Identifiable
-import ly.david.musicsearch.shared.domain.common.getFullDateFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
@@ -19,7 +20,7 @@ import kotlin.time.Instant
 
 private val header = ListSeparator(
     id = 1755655177000.toString(),
-    text = Instant.fromEpochMilliseconds(1755655177000).getFullDateFormatted(),
+    text = Instant.fromEpochMilliseconds(1755655177000).getDateTimeFormatted(format = DateTimeFormat.FullDate),
 )
 
 private val colorYourNight = ListenListItemModel(

@@ -16,7 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlinx.datetime.TimeZone
-import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.feature.listens.components.DatePickerDialog
 import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -41,7 +42,10 @@ internal fun DatePickerField(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val formattedDate = Instant.fromEpochSeconds(dateTimeEpochSeconds).getShortDateFormatted(timeZone = timeZone)
+    val formattedDate = Instant.fromEpochSeconds(dateTimeEpochSeconds).getDateTimeFormatted(
+        format = DateTimeFormat.MediumDate,
+        timeZone = timeZone,
+    )
     OutlinedTextField(
         value = formattedDate,
         onValueChange = { },

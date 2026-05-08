@@ -7,7 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemModel
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -45,7 +46,7 @@ internal fun SpotifyHistoryListItem(
         trailingContent = {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    text = spotifyHistory.lastListened.getTimeFormatted(),
+                    text = spotifyHistory.lastListened.getDateTimeFormatted(format = DateTimeFormat.Time),
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
                 Text(

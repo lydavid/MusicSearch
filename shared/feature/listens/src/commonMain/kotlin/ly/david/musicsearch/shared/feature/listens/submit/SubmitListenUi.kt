@@ -21,10 +21,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.datetime.TimeZone
-import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.artist.getDisplayNames
-import ly.david.musicsearch.shared.domain.common.getShortDateFormatted
-import ly.david.musicsearch.shared.domain.common.getTimeFormatted
+import ly.david.musicsearch.shared.domain.common.DateTimeFormat
+import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
@@ -138,11 +137,13 @@ internal fun SubmitListenUi(
         }
 
         val instant = Instant.fromEpochSeconds(listenedAtDateTimeEpochSeconds)
-        val time = instant.getTimeFormatted(timeZone = timeZone)
-        val shortDate = instant.getShortDateFormatted(timeZone = timeZone)
+        val dateTime = instant.getDateTimeFormatted(
+            format = DateTimeFormat.MediumDateTime,
+            timeZone = timeZone,
+        )
 
         Text(
-            text = stringResource(Res.string.startedAt, "$shortDate$DOT_SEPARATOR$time"),
+            text = stringResource(Res.string.startedAt, dateTime),
             modifier = Modifier.padding(top = 4.dp),
             style = TextStyles.getCardBodySubTextStyle(),
         )
