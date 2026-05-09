@@ -24,6 +24,11 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.unknownListens
+import musicsearch.ui.common.generated.resources.xListens
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun WorkListItem(
@@ -85,6 +90,16 @@ fun WorkListItem(
                                 imageVector = CustomIcons.Headphones,
                                 iconSize = TINY_ICON_SIZE,
                                 text = if (hasListens) state.listenCount.toString() else UNKNOWN,
+                                contentDescription = if (hasListens) {
+                                    val listenCount = state.listenCount
+                                    pluralStringResource(
+                                        Res.plurals.xListens,
+                                        listenCount.toInt(),
+                                        listenCount,
+                                    )
+                                } else {
+                                    stringResource(Res.string.unknownListens)
+                                },
                                 textStyle = TextStyles.getCardBodySubTextStyle(),
                             )
                         }

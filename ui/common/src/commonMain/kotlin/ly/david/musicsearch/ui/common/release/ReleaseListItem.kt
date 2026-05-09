@@ -35,9 +35,11 @@ import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.unknownListens
 import musicsearch.ui.common.generated.resources.xCompleteListens
 import musicsearch.ui.common.generated.resources.xListens
 import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ReleaseListItem(
@@ -156,10 +158,12 @@ fun ReleaseListItem(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 val hasListens = state is ReleaseListItemModel.ListenState.Known
+
                                 TextWithIcon(
                                     imageVector = CustomIcons.Headphones,
                                     iconSize = TINY_ICON_SIZE,
-                                    text = if (hasListens) {
+                                    text = if (hasListens) state.listenCount.toString() else UNKNOWN,
+                                    contentDescription = if (hasListens) {
                                         val listenCount = state.listenCount
                                         pluralStringResource(
                                             Res.plurals.xListens,
@@ -167,7 +171,7 @@ fun ReleaseListItem(
                                             listenCount,
                                         )
                                     } else {
-                                        UNKNOWN
+                                        stringResource(Res.string.unknownListens)
                                     },
                                     textStyle = TextStyles.getCardBodySubTextStyle(),
                                 )
