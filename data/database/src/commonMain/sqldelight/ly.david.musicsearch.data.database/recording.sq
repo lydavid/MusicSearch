@@ -113,6 +113,7 @@ SELECT IFNULL(
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
+      recording.isrcs LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -128,6 +129,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
+  recording.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -161,6 +163,7 @@ AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
+  recording.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )
@@ -199,6 +202,7 @@ SELECT IFNULL(
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
+      recording.isrcs LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -214,6 +218,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
+  recording.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   collection_entity.id IS NOT NULL AS collected,
@@ -246,6 +251,7 @@ AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
+  recording.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )
@@ -281,6 +287,7 @@ SELECT IFNULL(
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
+      recording.isrcs LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -296,6 +303,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
+  recording.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -322,6 +330,7 @@ WHERE (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
+  recording.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )

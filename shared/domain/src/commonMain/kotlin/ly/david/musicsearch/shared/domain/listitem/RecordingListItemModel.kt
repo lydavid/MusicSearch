@@ -14,6 +14,7 @@ data class RecordingListItemModel(
     override val length: Int? = null,
     override val video: Boolean = false,
     val formattedArtistCredits: String? = null,
+    val isrcs: ImmutableList<String> = persistentListOf(),
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),

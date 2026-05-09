@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
@@ -64,7 +65,7 @@ fun RecordingListItem(
         supportingContent = {
             Column {
                 Row(
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = 2.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     // TODO: highlight date when filtering for recording list item
@@ -92,9 +93,18 @@ fun RecordingListItem(
 
                 recording.formattedArtistCredits.ifNotNullOrEmpty {
                     HighlightableText(
+                        modifier = Modifier.padding(top = 2.dp),
                         text = it,
                         highlightedText = filterText,
-                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+
+                recording.isrcs.ifNotEmpty {
+                    HighlightableText(
+                        modifier = Modifier.padding(top = 2.dp),
+                        text = it.joinToString(", "),
+                        highlightedText = filterText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

@@ -241,6 +241,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
+  recording.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (

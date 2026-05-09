@@ -53,6 +53,7 @@ fun WorkListItem(
                 work.run {
                     iswcs.ifNotEmpty {
                         HighlightableText(
+                            modifier = Modifier.padding(top = 2.dp),
                             text = it.joinToString(", "),
                             highlightedText = filterText,
                             style = TextStyles.getCardBodySubTextStyle(),
@@ -60,12 +61,14 @@ fun WorkListItem(
                     }
                     type?.getDisplayString()?.let {
                         Text(
+                            modifier = Modifier.padding(top = 2.dp),
                             text = it,
                             style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
                     languages.ifNotEmpty {
                         Text(
+                            modifier = Modifier.padding(top = 2.dp),
                             text = it.mapNotNull { language ->
                                 language.getDisplayLanguage()
                             }.joinToString(", "),

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 
 internal fun mapToRecordingListItemModel(
@@ -9,6 +10,7 @@ internal fun mapToRecordingListItemModel(
     firstReleaseDate: String,
     length: Int?,
     video: Boolean,
+    isrcs: List<String>,
     formattedArtistCreditNames: String,
     visited: Boolean?,
     collected: Boolean?,
@@ -23,6 +25,7 @@ internal fun mapToRecordingListItemModel(
     length = length,
     video = video,
     formattedArtistCredits = formattedArtistCreditNames,
+    isrcs = isrcs.toPersistentList(),
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),

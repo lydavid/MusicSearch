@@ -10,6 +10,16 @@ val underPressureRecordingListItemModel = RecordingListItemModel(
     firstReleaseDate = "1981-10",
     length = 241000,
     formattedArtistCredits = "Queen & David Bowie",
+    isrcs = persistentListOf(
+        "CBCEG8100001",
+        "GBCEE0900136",
+        "GBCEG0100041",
+        "GBCEG8100001",
+        "GBCEG9400046",
+        "GBUM71029622",
+        "GBUM71106916",
+        "GBUM71404523",
+    ),
 )
 
 val skycladObserverRecordingListItemModel = RecordingListItemModel(
@@ -30,6 +40,10 @@ val skycladObserverRecordingListItemModel = RecordingListItemModel(
             isPrimary = true,
         ),
     ),
+    isrcs = persistentListOf(
+        "JPK630905801",
+        "JPR501002358",
+    ),
 )
 
 val skycladObserverCoverRecordingListItemModel = RecordingListItemModel(
@@ -38,4 +52,7 @@ val skycladObserverCoverRecordingListItemModel = RecordingListItemModel(
     firstReleaseDate = "2023-09-06",
     length = 273826,
     formattedArtistCredits = "Roselia×いとうかなこ",
+    isrcs = persistentListOf(
+        "JPR562300374",
+    ),
 )
