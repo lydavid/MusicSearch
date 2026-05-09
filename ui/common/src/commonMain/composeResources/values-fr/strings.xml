@@ -194,7 +194,7 @@
     <string name="brandName">Nom de marque</string>
     <string name="primary">Primaire</string>
     <string name="listens">Écoute</string>
-    <string name="xListens">Écoutes de %1$s</string>
+    <string name="userListens">Écoutes de %1$s</string>
     <string name="username">Nom d'utilisateur</string>
     <string name="enterUsername">Entrez votre nom d'utilisateur</string>
     <string name="changeUsername">Modifier le nom d'utilisateur</string>

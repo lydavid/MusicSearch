@@ -85,8 +85,8 @@ import musicsearch.ui.common.generated.resources.noRecordingWithIdFound
 import musicsearch.ui.common.generated.resources.setAction
 import musicsearch.ui.common.generated.resources.settings
 import musicsearch.ui.common.generated.resources.updated
+import musicsearch.ui.common.generated.resources.userListens
 import musicsearch.ui.common.generated.resources.username
-import musicsearch.ui.common.generated.resources.xListens
 import musicsearch.ui.common.generated.resources.xSongs
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Clock
@@ -127,7 +127,7 @@ internal fun ListensUi(
     val title = if (state.noUsernameSet) {
         stringResource(Res.string.listens)
     } else {
-        stringResource(Res.string.xListens, state.username)
+        stringResource(Res.string.userListens, state.username)
     }
     val lazyPagingItems = state.listensPagingDataFlow.collectAsLazyPagingItems()
     val overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = if (noUsernameSet) {

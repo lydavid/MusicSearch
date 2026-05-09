@@ -190,7 +190,7 @@
     <string name="brandName">Kaubamärgi nimi</string>
     <string name="primary">Esmane</string>
     <string name="listens">Lugude kuulamine</string>
-    <string name="xListens">%1$s's on kuulamas</string>
+    <string name="userListens">%1$s's on kuulamas</string>
     <string name="setAction">Seadista</string>
     <string name="youAreLoggedIn">Sa oled loginud sisse</string>
     <string name="youAreLoggedOut">Sa oled loginud välja</string>

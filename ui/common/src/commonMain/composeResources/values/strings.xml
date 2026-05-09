@@ -203,7 +203,7 @@
     <string name="brandName">Brand name</string>
     <string name="primary">Primary</string>
     <string name="listens">Listens</string>
-    <string name="xListens">%1$s's Listens</string>
+    <string name="userListens">%1$s's Listens</string>
     <string name="username">Username</string>
     <string name="enterUsername">Enter username</string>
     <string name="changeUsername">Change username</string>

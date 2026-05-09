@@ -195,7 +195,7 @@
     <string name="brandName">Markenname</string>
     <string name="primary">Primär</string>
     <string name="listens">Gehörte</string>
-    <string name="xListens">%1$s's Gehörte</string>
+    <string name="userListens">%1$s's Gehörte</string>
     <string name="username">Benutzername</string>
     <string name="enterUsername">Benutzername eingeben</string>
     <string name="changeUsername">Benutzername ändern</string>
