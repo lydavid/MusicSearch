@@ -79,7 +79,7 @@ internal fun PreviewWorkDetailsUiWithListens() {
                         1740055177000,
                         1600055177000,
                     ),
-                )
+                ),
             ),
         )
     }
