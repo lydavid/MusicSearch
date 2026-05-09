@@ -35,7 +35,7 @@ fun ListenListItem(
     filterText: String,
     modifier: Modifier = Modifier,
     onClick: (id: String) -> Unit = {},
-    onClickMoreActions: ListenListItemModel.() -> Unit = {},
+    onMoreActionsClick: ListenListItemModel.() -> Unit = {},
 ) {
     val artistCredits = listen.artistCredits
     ListItem(
@@ -87,7 +87,7 @@ fun ListenListItem(
         trailingContent = {
             IconButton(
                 onClick = {
-                    onClickMoreActions(listen)
+                    onMoreActionsClick(listen)
                 },
             ) {
                 Icon(

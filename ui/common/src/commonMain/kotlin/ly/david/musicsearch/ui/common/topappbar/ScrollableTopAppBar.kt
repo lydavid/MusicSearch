@@ -2,7 +2,6 @@ package ly.david.musicsearch.ui.common.topappbar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -37,12 +36,11 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.EntityIcon
+import ly.david.musicsearch.ui.common.button.OverflowMenu
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.icons.MoreVert
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.back
-import musicsearch.ui.common.generated.resources.moreActions
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -243,42 +241,5 @@ private fun SubtitleWithOverflow(
                     testTag = "TopBarSubtitle"
                 },
         )
-    }
-}
-
-@Composable
-private fun OverflowMenu(
-    overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null,
-) {
-    var showMenu by rememberSaveable { mutableStateOf(false) }
-
-    val scope = remember {
-        object : OverflowMenuScope {
-            override fun closeMenu() {
-                showMenu = false
-            }
-        }
-    }
-
-    if (overflowDropdownMenuItems != null) {
-        Box {
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(
-                    imageVector = CustomIcons.MoreVert,
-                    contentDescription = stringResource(Res.string.moreActions),
-                )
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false },
-                content = {
-                    // We lose out on the ability to control these items within a Column,
-                    // but now each item can close itself.
-                    Column {
-                        overflowDropdownMenuItems.invoke(scope)
-                    }
-                },
-            )
-        }
     }
 }

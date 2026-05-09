@@ -12,8 +12,12 @@ import ly.david.musicsearch.shared.feature.settings.internal.appearance.Appearan
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiState
+import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsPresenter
+import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUi
+import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiState
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
+import ly.david.musicsearch.ui.common.screen.ListensSettingsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -41,6 +45,11 @@ val settingsFeatureModule = module {
                 )
 
                 is ImagesSettingsScreen -> ImagesSettingsPresenter(
+                    navigator = navigator,
+                    appPreferences = get(),
+                )
+
+                is ListensSettingsScreen -> ListensSettingsPresenter(
                     navigator = navigator,
                     appPreferences = get(),
                 )
@@ -73,6 +82,15 @@ val settingsFeatureModule = module {
                 is ImagesSettingsScreen -> {
                     ui<ImagesSettingsUiState> { state, modifier ->
                         ImagesSettingsUi(
+                            state = state,
+                            modifier = modifier,
+                        )
+                    }
+                }
+
+                is ListensSettingsScreen -> {
+                    ui<ListensSettingsUiState> { state, modifier ->
+                        ListensSettingsUi(
                             state = state,
                             modifier = modifier,
                         )

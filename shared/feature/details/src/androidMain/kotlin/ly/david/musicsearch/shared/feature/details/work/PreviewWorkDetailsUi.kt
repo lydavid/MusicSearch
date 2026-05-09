@@ -3,15 +3,18 @@ package ly.david.musicsearch.shared.feature.details.work
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import ly.david.musicsearch.ui.common.topappbar.Tab
 import kotlin.time.Instant
 
-private val work = WorkDetailsModel(
+private val workDetailsModel = WorkDetailsModel(
     id = "ea44224b-bf88-4f35-b10a-fe53a6c44ffc",
     name = "KEMURIKUSA",
     languages = persistentListOf("jpn", "eng"),
@@ -40,15 +43,25 @@ private val work = WorkDetailsModel(
     lastUpdated = Instant.parse("2025-06-03T19:42:20Z"),
 )
 
+private val detailsUiState = DetailsUiState(
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = "ea44224b-bf88-4f35-b10a-fe53a6c44ffc",
+        entityType = MusicBrainzEntityType.WORK,
+    ),
+    tabs = workTabs,
+    selectedTab = Tab.DETAILS,
+    detailsModel = workDetailsModel,
+    detailsTabUiState = DetailsTabUiState(
+        now = Instant.parse("2025-09-06T18:42:20Z"),
+    ),
+)
+
 @PreviewLightDark
 @Composable
 internal fun PreviewWorkDetailsUi() {
     PreviewWithTransitionAndOverlays {
-        WorkDetailsTabUi(
-            work = work,
-            detailsTabUiState = DetailsTabUiState(
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-            ),
+        WorkUi(
+            state = detailsUiState,
         )
     }
 }
@@ -57,17 +70,16 @@ internal fun PreviewWorkDetailsUi() {
 @Composable
 internal fun PreviewWorkDetailsUiWithListens() {
     PreviewWithTransitionAndOverlays {
-        WorkDetailsTabUi(
-            work = work.copy(
-                listenCount = 5,
-                latestListensTimestampsMs = persistentListOf(
-                    1757116212000,
-                    1740055177000,
-                    1600055177000,
-                ),
-            ),
-            detailsTabUiState = DetailsTabUiState(
-                now = Instant.parse("2025-06-05T19:42:20Z"),
+        WorkUi(
+            state = detailsUiState.copy(
+                detailsModel = workDetailsModel.copy(
+                    listenCount = 5,
+                    latestListensTimestampsMs = persistentListOf(
+                        1757116212000,
+                        1740055177000,
+                        1600055177000,
+                    ),
+                )
             ),
         )
     }

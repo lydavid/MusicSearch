@@ -43,61 +43,66 @@ fun UrlListItem(
     val haptics = LocalHapticFeedback.current
     val uriHandler = LocalUriHandler.current
 
-    ListItem(
-        headlineContent = {
-            Column {
-                HighlightableText(
-                    text = "${relation.type}:",
-                    highlightedText = filterText,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
+    val show = relation.name.contains(filterText, ignoreCase = true) ||
+        relation.type.contains(filterText, ignoreCase = true)
 
-                Row(
-                    modifier = Modifier.padding(top = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    val imageVectorAndTint = when (relation.type) {
-                        stringResource(Res.string.readMore),
-                        stringResource(Res.string.wikipedia),
-                        -> {
-                            CustomIcons.Wikipedia to LocalContentColor.current
-                        }
-
-                        "Wikidata" -> {
-                            CustomIcons.Wikidata to Color.Unspecified
-                        }
-
-                        else -> {
-                            CustomIcons.Link to LocalContentColor.current
-                        }
-                    }
-                    Icon(
-                        imageVector = imageVectorAndTint.first,
-                        contentDescription = null,
-                        tint = imageVectorAndTint.second,
-                        modifier = Modifier
-                            .padding(end = 8.dp)
-                            .size(24.dp),
-                    )
-
+    if (show) {
+        ListItem(
+            headlineContent = {
+                Column {
                     HighlightableText(
-                        text = relation.name,
+                        text = "${relation.type}:",
                         highlightedText = filterText,
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
-                }
-            }
-        },
-        modifier = modifier
-            .combinedClickable(
-                onClick = {
-                    uriHandler.openUri(relation.name)
-                },
-                onLongClick = {
-                    coroutineScope.launch {
-                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                        clipboard.setClipEntry(clipEntryWith(relation.name))
+
+                    Row(
+                        modifier = Modifier.padding(top = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        val imageVectorAndTint = when (relation.type) {
+                            stringResource(Res.string.readMore),
+                            stringResource(Res.string.wikipedia),
+                            -> {
+                                CustomIcons.Wikipedia to LocalContentColor.current
+                            }
+
+                            "Wikidata" -> {
+                                CustomIcons.Wikidata to Color.Unspecified
+                            }
+
+                            else -> {
+                                CustomIcons.Link to LocalContentColor.current
+                            }
+                        }
+                        Icon(
+                            imageVector = imageVectorAndTint.first,
+                            contentDescription = null,
+                            tint = imageVectorAndTint.second,
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .size(24.dp),
+                        )
+
+                        HighlightableText(
+                            text = relation.name,
+                            highlightedText = filterText,
+                        )
                     }
-                },
-            ),
-    )
+                }
+            },
+            modifier = modifier
+                .combinedClickable(
+                    onClick = {
+                        uriHandler.openUri(relation.name)
+                    },
+                    onLongClick = {
+                        coroutineScope.launch {
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                            clipboard.setClipEntry(clipEntryWith(relation.name))
+                        }
+                    },
+                ),
+        )
+    }
 }

@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import kotlin.time.Instant
 
@@ -26,6 +27,7 @@ class ArtistRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val appPreferences: AppPreferences,
 ) : ArtistRepository {
 
     override suspend fun lookupArtist(
@@ -56,9 +58,11 @@ class ArtistRepositoryImpl(
         if (!relationRepository.visited(artistId)) return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
+        val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val artist = artistDao.getArtistForDetails(
             artistId = artistId,
             listenBrainzUsername = username,
+            numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
         val urlRelations = relationRepository.getRelationshipsByType(artistId)

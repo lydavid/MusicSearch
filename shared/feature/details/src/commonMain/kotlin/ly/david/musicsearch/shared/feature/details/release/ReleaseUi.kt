@@ -341,6 +341,9 @@ internal fun ReleaseUi(
                     onCollapseExpandReleaseEvents = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandReleaseEvents)
                     },
+                    onCollapseExpandListens = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandListens)
+                    },
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
@@ -364,6 +367,15 @@ internal fun ReleaseUi(
                             DetailsUiEvent.ClickItem(
                                 entityType = entity,
                                 id = id,
+                            ),
+                        )
+                    },
+                    onGoToListenAtEpochSeconds = { seconds ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    dateTimeEpochSeconds = seconds,
+                                ),
                             ),
                         )
                     },

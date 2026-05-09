@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -483,6 +484,25 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[scrollToHideTopAppBarPreference] = enable
+            }
+        }
+    }
+
+    private val numberOfListensInDetailsPreference =
+        longPreferencesKey(AppPreferencesKey.NUMBER_OF_LISTENS_IN_DETAILS.name)
+    override val observeNumberOfListensInDetails: Flow<Long>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[numberOfListensInDetailsPreference] ?: 10L // DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setNumberOfListensInDetails(number: Long) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[numberOfListensInDetailsPreference] = number
             }
         }
     }

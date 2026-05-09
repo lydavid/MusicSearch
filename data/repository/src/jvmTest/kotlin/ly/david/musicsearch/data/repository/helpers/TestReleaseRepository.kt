@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -83,6 +84,7 @@ interface TestReleaseRepository {
                 }
             },
             coroutineDispatchers = coroutineDispatchers,
+            appPreferences = NoOpAppPreferences(),
         )
     }
 }

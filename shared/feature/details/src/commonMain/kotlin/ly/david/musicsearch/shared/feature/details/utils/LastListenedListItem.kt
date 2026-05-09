@@ -1,16 +1,15 @@
 package ly.david.musicsearch.shared.feature.details.utils
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
+import ly.david.musicsearch.ui.common.component.ClickableItem
+import ly.david.musicsearch.ui.common.icons.ChevronRight
+import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.formatPeriod
-import ly.david.musicsearch.ui.common.theme.TextStyles
 import kotlin.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,13 +17,18 @@ import kotlin.time.Instant
 internal fun LastListenedListItem(
     lastListenedMs: Long,
     now: Instant,
+    filterText: String,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
     val instant = Instant.fromEpochMilliseconds(lastListenedMs)
     val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
     val formattedDateTime = instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
-    Text(
-        text = "$formattedDateTimePeriod ($formattedDateTime)",
-        modifier = Modifier.padding(horizontal = 16.dp),
-        style = TextStyles.getCardBodyTextStyle(),
+    ClickableItem(
+        title = "$formattedDateTimePeriod ($formattedDateTime)",
+        filterText = filterText,
+        endIcon = CustomIcons.ChevronRight,
+        onClick = {
+            onGoToListenAtEpochSeconds(lastListenedMs / MS_IN_SECOND)
+        },
     )
 }

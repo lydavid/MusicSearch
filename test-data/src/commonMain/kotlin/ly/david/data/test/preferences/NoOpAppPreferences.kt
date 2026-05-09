@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
@@ -194,6 +195,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf()
 
     override fun setScrollToHideTopAppBar(enable: Boolean) {
+        // No-op.
+    }
+
+    override val observeNumberOfListensInDetails: Flow<Long>
+        get() = flowOf(DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW)
+
+    override fun setNumberOfListensInDetails(number: Long) {
         // No-op.
     }
 }

@@ -246,11 +246,23 @@ internal fun WorkUi(
                             ),
                         )
                     },
+                    onCollapseExpandListens = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandListens)
+                    },
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
                     onCollapseExpandAliases = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                    },
+                    onGoToListenAtEpochSeconds = { seconds ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    dateTimeEpochSeconds = seconds,
+                                ),
+                            ),
+                        )
                     },
                 )
             },

@@ -14,16 +14,15 @@ import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
-import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
-import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import lydavidmusicsearchdatadatabase.Artists_by_entity
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -75,6 +74,7 @@ class ArtistDao(
     fun getArtistForDetails(
         artistId: String,
         listenBrainzUsername: String,
+        numberOfListensToShow: Long,
     ): ArtistDetailsModel? {
         val artist = transacter.getArtistForDetails(
             artistId,
@@ -94,7 +94,7 @@ class ArtistDao(
             transacter.getLatestListensByArtist(
                 artistId = artistId,
                 username = listenBrainzUsername,
-                limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
+                limit = numberOfListensToShow,
                 mapper = { id, name, disambiguation, listenedAtMs ->
                     ListenWithRecording(
                         id = id,

@@ -369,4 +369,12 @@
     <string name="clearDateFilter">Clear date filter</string>
     <string name="filterFromListenDate">Filter from listen date</string>
     <string name="stopFilteringFromThisDate">Stop filtering from this date</string>
+    <plurals name="xListens">
+        <item quantity="one">%1$d listen</item>
+        <item quantity="other">%1$d listens</item>
+    </plurals>
+    <plurals name="xCompleteListens">
+        <item quantity="one">%1$d complete listen</item>
+        <item quantity="other">%1$d complete listens</item>
+    </plurals>
 </resources>

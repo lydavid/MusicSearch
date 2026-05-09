@@ -129,6 +129,7 @@ internal fun PreviewReleaseDetailsUiWithListens() {
     PreviewWithTransitionAndOverlays {
         ReleaseUi(
             state = detailsUiState.copy(
+                topAppBarFilterState = TopAppBarFilterState(initialFilterText = "8"),
                 detailsModel = release.copy(
                     completeListenCount = 2,
                     listenCount = 35,
@@ -137,18 +138,21 @@ internal fun PreviewReleaseDetailsUiWithListens() {
                             mediumPosition = 1,
                             trackNumber = "10",
                             trackName = "世界のつづき",
+                            recordingId = "a",
                             listenedMs = 1757116212000,
                         ),
                         ListenWithTrack(
                             mediumPosition = 1,
                             trackNumber = "9",
                             trackName = "風のゆくえ",
+                            recordingId = "b",
                             listenedMs = 1757116212000 - 118706,
                         ),
                         ListenWithTrack(
                             mediumPosition = 1,
                             trackNumber = "8",
                             trackName = "ビンクスの酒",
+                            recordingId = "c",
                             listenedMs = 1757116212000 - 118706 - 100000,
                         ),
                     ),

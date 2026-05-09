@@ -108,6 +108,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
         var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
+        var isListensCollapsed by rememberSaveable { mutableStateOf(false) }
         var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
         var isAliasesCollapsed by rememberSaveable { mutableStateOf(false) }
         val collected by collectionRepository.observeEntityIsInACollection(
@@ -284,6 +285,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     isReleaseEventsCollapsed = !isReleaseEventsCollapsed
                 }
 
+                DetailsUiEvent.ToggleCollapseExpandListens -> {
+                    isListensCollapsed = !isListensCollapsed
+                }
+
                 DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
                     isExternalLinksCollapsed = !isExternalLinksCollapsed
                 }
@@ -314,6 +319,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
                 isReleaseEventsCollapsed = isReleaseEventsCollapsed,
+                isListensCollapsed = isListensCollapsed,
                 isExternalLinksCollapsed = isExternalLinksCollapsed,
                 isAliasesCollapsed = isAliasesCollapsed,
             ),
@@ -340,7 +346,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
-    val scrollToHideTopAppBar: Boolean,
+    val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState
 
@@ -352,6 +358,7 @@ internal data class DetailsTabUiState(
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val lazyListState: LazyListState = LazyListState(),
     val isReleaseEventsCollapsed: Boolean = false,
+    val isListensCollapsed: Boolean = false,
     val isExternalLinksCollapsed: Boolean = false,
     val isAliasesCollapsed: Boolean = false,
     val now: Instant = Clock.System.now(),
@@ -391,6 +398,8 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
 
     data object ToggleCollapseExpandReleaseEvents : DetailsUiEvent
+
+    data object ToggleCollapseExpandListens : DetailsUiEvent
 
     data object ToggleCollapseExpandAliases : DetailsUiEvent
 }

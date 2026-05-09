@@ -4,5 +4,6 @@ data class ListenWithTrack(
     val mediumPosition: Int,
     val trackNumber: String,
     val trackName: String,
+    val recordingId: String,
     val listenedMs: Long,
 )

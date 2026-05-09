@@ -109,7 +109,7 @@ internal fun TracksByReleaseUi(
                         onRecordingClick = onRecordingClick,
                         isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
                         onSelect = onSelect,
-                        onClickMoreActions = { showBottomSheetForTrack = listItemModel },
+                        onMoreActionsClick = { showBottomSheetForTrack = listItemModel },
                     )
                 }
             }

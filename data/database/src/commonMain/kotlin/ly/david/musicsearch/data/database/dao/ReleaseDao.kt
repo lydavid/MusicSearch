@@ -14,7 +14,6 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getFormatsForDisplay
@@ -126,6 +125,7 @@ class ReleaseDao(
     fun getReleaseForDetails(
         releaseId: String,
         listenBrainzUsername: String,
+        numberOfListensToShow: Long,
     ): ReleaseDetailsModel? {
         val release = transacter.getReleaseForDetails(
             releaseId = releaseId,
@@ -138,12 +138,13 @@ class ReleaseDao(
             transacter.getLatestListensByRelease(
                 releaseId = releaseId,
                 username = listenBrainzUsername,
-                limit = NUMBER_OF_LATEST_LISTENS_TO_SHOW,
-                mapper = { position, number, title, listenedAtMs ->
+                limit = numberOfListensToShow,
+                mapper = { position, number, title, recordingId, listenedAtMs ->
                     ListenWithTrack(
                         mediumPosition = position ?: 1,
                         trackNumber = number,
                         trackName = title,
+                        recordingId = recordingId,
                         listenedMs = listenedAtMs,
                     )
                 },

@@ -4,14 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
@@ -66,6 +67,7 @@ interface TestRecordingRepository {
                 }
             },
             coroutineDispatchers = coroutineDispatchers,
+            appPreferences = NoOpAppPreferences(),
         )
     }
 }

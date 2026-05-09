@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.button
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ internal fun CheckboxRowLayout(
     Row(
         modifier = modifier
             .padding(2.dp)
-            .clip(shape = RoundedCornerShape(28.dp))
+            .clip(CircleShape)
             .clickable { onClick() }
             .semantics(mergeDescendants = true) { role = Role.Checkbox }
             .padding(horizontal = 14.dp, vertical = 6.dp),

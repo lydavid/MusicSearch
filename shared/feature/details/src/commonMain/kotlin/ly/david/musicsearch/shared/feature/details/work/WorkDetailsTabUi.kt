@@ -14,6 +14,7 @@ import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -36,9 +37,11 @@ internal fun WorkDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onSeeAllListensClick: () -> Unit = {},
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onSeeAllListensClick: () -> Unit,
+    onCollapseExpandListens: () -> Unit,
+    onCollapseExpandExternalLinks: () -> Unit,
+    onCollapseExpandAliases: () -> Unit,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = work,
@@ -93,7 +96,11 @@ internal fun WorkDetailsTabUi(
 
             listenSection(
                 work = work,
+                filterText = filterText,
                 now = detailsTabUiState.now,
+                collapsed = detailsTabUiState.isListensCollapsed,
+                onCollapseExpand = onCollapseExpandListens,
+                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                 onSeeAllListensClick = onSeeAllListensClick,
             )
         },
@@ -102,35 +109,48 @@ internal fun WorkDetailsTabUi(
 
 private fun LazyListScope.listenSection(
     work: WorkDetailsModel,
+    filterText: String,
     now: Instant,
-    onSeeAllListensClick: () -> Unit = {},
+    collapsed: Boolean,
+    onCollapseExpand: () -> Unit,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
+    onSeeAllListensClick: () -> Unit,
 ) {
     if (work.listenCount != null) {
-        item {
-            ListSeparatorHeader(stringResource(Res.string.listens))
-        }
-        item {
-            ListItem(
-                headlineContent = {
-                    TextWithIcon(
-                        imageVector = CustomIcons.Headphones,
-                        text = work.listenCount.toString(),
-                    )
-                },
+        stickyHeader {
+            CollapsibleListSeparatorHeader(
+                text = stringResource(Res.string.listens),
+                collapsed = collapsed,
+                onClick = onCollapseExpand,
             )
         }
-        items(work.latestListensTimestampsMs) {
-            LastListenedListItem(
-                lastListenedMs = it,
-                now = now,
-            )
-        }
-        item {
-            ClickableItem(
-                title = stringResource(Res.string.seeAllListens),
-                endIcon = CustomIcons.ChevronRight,
-                onClick = onSeeAllListensClick,
-            )
+        if (!collapsed) {
+            item {
+                ListItem(
+                    headlineContent = {
+                        TextWithIcon(
+                            imageVector = CustomIcons.Headphones,
+                            text = work.listenCount.toString(),
+                        )
+                    },
+                )
+            }
+            items(work.latestListensTimestampsMs) {
+                LastListenedListItem(
+                    lastListenedMs = it,
+                    now = now,
+                    filterText = filterText,
+                    onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
+                )
+            }
+            item {
+                ClickableItem(
+                    title = stringResource(Res.string.seeAllListens),
+                    filterText = filterText,
+                    endIcon = CustomIcons.ChevronRight,
+                    onClick = onSeeAllListensClick,
+                )
+            }
         }
     }
 }

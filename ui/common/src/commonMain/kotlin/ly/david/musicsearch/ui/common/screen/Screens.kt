@@ -101,6 +101,9 @@ data object AppearanceSettingsScreen : Screen
 data object ImagesSettingsScreen : Screen
 
 @Parcelize
+data object ListensSettingsScreen : Screen
+
+@Parcelize
 data object LicensesScreen : Screen
 
 @Parcelize
@@ -112,6 +115,7 @@ data object SpotifyHistoryScreen : Screen
 @Parcelize
 data class ListensScreen(
     val entityFacet: MusicBrainzEntity? = null,
+    val dateTimeEpochSeconds: Long? = null,
 ) : Screen
 
 @Parcelize

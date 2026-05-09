@@ -1,36 +1,28 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistType
-import ly.david.musicsearch.shared.domain.common.DateTimeFormat
-import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
-import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
 import ly.david.musicsearch.ui.common.artist.getDisplayString
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
@@ -57,11 +49,13 @@ internal fun ArtistDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onImageClick: () -> Unit = {},
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
-    onSeeAllListensClick: () -> Unit = {},
+    onImageClick: () -> Unit,
+    onCollapseExpandListens: () -> Unit,
+    onCollapseExpandExternalLinks: () -> Unit,
+    onCollapseExpandAliases: () -> Unit,
+    onSeeAllListensClick: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = artist,
@@ -89,7 +83,12 @@ internal fun ArtistDetailsTabUi(
 
                 listenSection(
                     artist = this@run,
+                    filterText = filterText,
                     now = detailsTabUiState.now,
+                    collapsed = detailsTabUiState.isListensCollapsed,
+                    onCollapseExpand = onCollapseExpandListens,
+                    onItemClick = onItemClick,
+                    onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                     onSeeAllListensClick = onSeeAllListensClick,
                 )
             }
@@ -158,69 +157,87 @@ private fun ArtistDetailsModel.ArtistInformationSection(
 
 private fun LazyListScope.listenSection(
     artist: ArtistDetailsModel,
+    filterText: String,
     now: Instant,
+    collapsed: Boolean,
+    onCollapseExpand: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
     onSeeAllListensClick: () -> Unit,
 ) {
     if (artist.listenCount != null) {
-        item {
-            ListSeparatorHeader(stringResource(Res.string.listens))
-        }
-        item {
-            ListItem(
-                headlineContent = {
-                    TextWithIcon(
-                        imageVector = CustomIcons.Headphones,
-                        text = artist.listenCount.toString(),
-                    )
-                },
+        stickyHeader {
+            CollapsibleListSeparatorHeader(
+                text = stringResource(Res.string.listens),
+                collapsed = collapsed,
+                onClick = onCollapseExpand,
             )
         }
-        items(artist.latestListens) {
-            LastListenedListItem(
-                listen = it,
+        if (!collapsed) {
+            listensSectionContent(
+                artist = artist,
+                filterText = filterText,
                 now = now,
-            )
-        }
-        item {
-            ClickableItem(
-                title = stringResource(Res.string.seeAllListens),
-                endIcon = CustomIcons.ChevronRight,
-                onClick = onSeeAllListensClick,
-            )
-        }
-        item {
-            UrlListItem(
-                relation = RelationListItemModel(
-                    id = "listenbrainz_url",
-                    type = "ListenBrainz",
-                    linkedEntity = MusicBrainzEntityType.URL,
-                    name = artist.listenBrainzUrl,
-                    linkedEntityId = "listenbrainz_url",
-                ),
-                filterText = "",
+                onSeeAllListensClick = onSeeAllListensClick,
+                onItemClick = onItemClick,
+                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LastListenedListItem(
-    listen: ListenWithRecording,
+private fun LazyListScope.listensSectionContent(
+    artist: ArtistDetailsModel,
+    filterText: String,
     now: Instant,
+    onSeeAllListensClick: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
-    val instant = Instant.fromEpochMilliseconds(listen.listenedMs)
-    val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
-    val formattedDateTime = instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
-
-    val text = buildString {
-        append(formattedDateTimePeriod)
-        append(" ($formattedDateTime)")
-        append(" - ")
-        append(listen.getNameWithDisambiguation())
+    item {
+        ListItem(
+            headlineContent = {
+                TextWithIcon(
+                    imageVector = CustomIcons.Headphones,
+                    text = artist.listenCount.toString(),
+                )
+            },
+        )
     }
-    Text(
-        text = text,
-        modifier = Modifier.padding(horizontal = 16.dp),
-    )
+    items(artist.latestListens) { listen ->
+        LastListenedListItemWithMoreActions(
+            listenedMs = listen.listenedMs,
+            recordingId = listen.id,
+            title = listen.getNameWithDisambiguation(),
+            filterText = filterText,
+            now = now,
+            onClick = { recordingId ->
+                onItemClick(
+                    MusicBrainzEntityType.RECORDING,
+                    recordingId,
+                )
+            },
+            onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
+        )
+    }
+    item {
+        ClickableItem(
+            title = stringResource(Res.string.seeAllListens),
+            filterText = filterText,
+            endIcon = CustomIcons.ChevronRight,
+            onClick = onSeeAllListensClick,
+        )
+    }
+    item {
+        UrlListItem(
+            relation = RelationListItemModel(
+                id = "listenbrainz_url",
+                type = "ListenBrainz",
+                linkedEntity = MusicBrainzEntityType.URL,
+                name = artist.listenBrainzUrl,
+                linkedEntityId = "listenbrainz_url",
+            ),
+            filterText = filterText,
+        )
+    }
 }

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,50 +74,59 @@ fun ClickableItem(
     foregroundColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit = {},
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(16.dp),
-    ) {
-        startIcon?.invoke(this)
+    val show = title.contains(filterText, ignoreCase = true) ||
+        subtitle?.contains(filterText, ignoreCase = true) == true
 
-        Column(
-            modifier = Modifier
+    if (show) {
+        Box(
+            modifier = modifier
                 .fillMaxWidth()
-                .padding(
-                    start = if (startIcon == null) 0.dp else 32.dp,
-                    end = if (endIcon == null) 0.dp else 32.dp,
-                ),
+                .clickable { onClick() }
+                .padding(16.dp),
         ) {
-            HighlightableText(
-                text = buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = fontWeight)) {
-                        append(title)
-                    }
-                },
-                highlightedText = filterText,
-                style = TextStyles.getCardBodyTextStyle(),
-                foregroundColor = foregroundColor,
-            )
+            startIcon?.invoke(this)
 
-            subtitle?.let {
-                Text(
-                    text = subtitle,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                    fontWeight = fontWeight,
-                    color = foregroundColor,
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = if (startIcon == null) 0.dp else 32.dp,
+                        end = if (endIcon == null) 0.dp else 32.dp,
+                    ),
+            ) {
+                HighlightableText(
+                    text = buildAnnotatedString {
+                        withStyle(style = SpanStyle(fontWeight = fontWeight)) {
+                            append(title)
+                        }
+                    },
+                    highlightedText = filterText,
+                    style = TextStyles.getCardBodyTextStyle(),
+                    foregroundColor = foregroundColor,
+                )
+
+                subtitle?.let {
+                    HighlightableText(
+                        text = buildAnnotatedString {
+                            withStyle(style = SpanStyle(fontWeight = fontWeight)) {
+                                append(subtitle)
+                            }
+                        },
+                        highlightedText = filterText,
+                        style = TextStyles.getCardBodySubTextStyle(),
+                        foregroundColor = foregroundColor,
+                    )
+                }
+            }
+
+            endIcon?.let {
+                Icon(
+                    imageVector = endIcon,
+                    contentDescription = null,
+                    modifier = iconModifier.align(Alignment.CenterEnd),
+                    tint = foregroundColor,
                 )
             }
-        }
-
-        endIcon?.let {
-            Icon(
-                imageVector = endIcon,
-                contentDescription = null,
-                modifier = iconModifier.align(Alignment.CenterEnd),
-                tint = foregroundColor,
-            )
         }
     }
 }

@@ -34,6 +34,10 @@ import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.theme.TINY_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.xCompleteListens
+import musicsearch.ui.common.generated.resources.xListens
+import org.jetbrains.compose.resources.pluralStringResource
 
 @Composable
 fun ReleaseListItem(
@@ -155,19 +159,32 @@ fun ReleaseListItem(
                                 TextWithIcon(
                                     imageVector = CustomIcons.Headphones,
                                     iconSize = TINY_ICON_SIZE,
-                                    text = if (hasListens) state.listenCount.toString() else UNKNOWN,
+                                    text = if (hasListens) {
+                                        val listenCount = state.listenCount
+                                        pluralStringResource(
+                                            Res.plurals.xListens,
+                                            listenCount.toInt(),
+                                            listenCount,
+                                        )
+                                    } else {
+                                        UNKNOWN
+                                    },
                                     textStyle = TextStyles.getCardBodySubTextStyle(),
                                 )
                                 if (hasListens && state.completeListenCount > 0) {
-                                    val completeListenCount = state.completeListenCount.toString()
+                                    val completeListenCount = state.completeListenCount
                                     TextWithIcon(
                                         modifier = Modifier.padding(start = 4.dp),
                                         imageVector = CustomIcons.StarFilled,
                                         iconSize = TINY_ICON_SIZE,
                                         iconTint = MaterialTheme.colorScheme.primary,
-                                        text = completeListenCount,
+                                        text = completeListenCount.toString(),
                                         textStyle = TextStyles.getCardBodySubTextStyle(),
-                                        contentDescription = "$completeListenCount complete listens",
+                                        contentDescription = pluralStringResource(
+                                            Res.plurals.xCompleteListens,
+                                            completeListenCount.toInt(),
+                                            completeListenCount,
+                                        ),
                                     )
                                 }
                             }

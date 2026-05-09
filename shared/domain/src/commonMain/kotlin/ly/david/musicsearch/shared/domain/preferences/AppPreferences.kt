@@ -99,4 +99,7 @@ interface AppPreferences {
 
     val scrollToHideTopAppBar: Flow<Boolean>
     fun setScrollToHideTopAppBar(enable: Boolean)
+
+    val observeNumberOfListensInDetails: Flow<Long>
+    fun setNumberOfListensInDetails(number: Long)
 }

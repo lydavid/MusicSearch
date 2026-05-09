@@ -17,6 +17,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -34,7 +35,6 @@ import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
-import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -72,7 +72,7 @@ internal class ListensPresenter(
         )
         val facetQuery = facetFilterState.filterText
         var selectedTab by rememberSaveable { mutableStateOf(screen.entityFacet?.type?.toTab() ?: Tab.RECORDINGS) }
-        var selectedDateTimeEpochSeconds: Long? by rememberSaveable { mutableStateOf(null) }
+        var selectedDateTimeEpochSeconds: Long? by rememberSaveable { mutableStateOf(screen.dateTimeEpochSeconds) }
 
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val listensQuery = topAppBarFilterState.filterText
@@ -120,12 +120,9 @@ internal class ListensPresenter(
                     }
                 }
 
-                is ListensUiEvent.ClickItem -> {
+                is ListensUiEvent.GoToScreen -> {
                     navigator.goTo(
-                        DetailsScreen(
-                            entityType = event.entityType,
-                            id = event.id,
-                        ),
+                        screen = event.screen,
                     )
                 }
 
@@ -271,9 +268,8 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
 
     data object SetUsername : ListensUiEvent
 
-    data class ClickItem(
-        val entityType: MusicBrainzEntityType,
-        val id: String,
+    data class GoToScreen(
+        val screen: Screen,
     ) : ListensUiEvent
 
     data class UpdateFacetQuery(

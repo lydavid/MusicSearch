@@ -78,46 +78,40 @@ internal fun DatabaseUi(
             .verticalScroll(state = scrollState),
     ) {
         stringResource(Res.string.history).run {
-            if (this.contains(filterText, ignoreCase = true)) {
-                ClickableItem(
-                    title = this,
-                    filterText = filterText,
-                    startIcon = CustomIcons.History,
-                    endIcon = CustomIcons.ChevronRight,
-                    onClick = { onDestinationClick(HistoryScreen) },
-                )
-            }
+            ClickableItem(
+                title = this,
+                filterText = filterText,
+                startIcon = CustomIcons.History,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = { onDestinationClick(HistoryScreen) },
+            )
         }
 
         stringResource(Res.string.images).run {
-            if (this.contains(filterText, ignoreCase = true)) {
-                ClickableItem(
-                    title = this,
-                    filterText = filterText,
-                    subtitle = (state.countOfAllImages ?: UNKNOWN).toString(),
-                    startIcon = CustomIcons.Image,
-                    endIcon = CustomIcons.ChevronRight,
-                    onClick = {
-                        onDestinationClick(CoverArtsScreen())
-                    },
-                )
-            }
+            ClickableItem(
+                title = this,
+                filterText = filterText,
+                subtitle = (state.countOfAllImages ?: UNKNOWN).toString(),
+                startIcon = CustomIcons.Image,
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    onDestinationClick(CoverArtsScreen())
+                },
+            )
         }
 
         MusicBrainzEntityType.entries
             .filterNot { it == MusicBrainzEntityType.COLLECTION || it == MusicBrainzEntityType.URL }
             .forEach { entity ->
                 val title = stringResource(entity.getNamePlural())
-                if (title.contains(filterText, ignoreCase = true)) {
-                    ClickableItem(
-                        title = title,
-                        filterText = filterText,
-                        subtitle = (state.entitiesCount[entity] ?: UNKNOWN).toString(),
-                        startIcon = entity.getIcon(),
-                        endIcon = CustomIcons.ChevronRight,
-                        onClick = { onDestinationClick(AllEntitiesScreen(entityType = entity)) },
-                    )
-                }
+                ClickableItem(
+                    title = title,
+                    filterText = filterText,
+                    subtitle = (state.entitiesCount[entity] ?: UNKNOWN).toString(),
+                    startIcon = entity.getIcon(),
+                    endIcon = CustomIcons.ChevronRight,
+                    onClick = { onDestinationClick(AllEntitiesScreen(entityType = entity)) },
+                )
             }
     }
 }

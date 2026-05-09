@@ -59,7 +59,7 @@ fun TrackListItem(
     onRecordingClick: (recordingId: String) -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (SelectableId) -> Unit = {},
-    onClickMoreActions: TrackListItemModel.() -> Unit = {},
+    onMoreActionsClick: TrackListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -92,7 +92,7 @@ fun TrackListItem(
         trailingContent = {
             IconButton(
                 onClick = {
-                    onClickMoreActions(track)
+                    onMoreActionsClick(track)
                 },
             ) {
                 Icon(

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,12 +49,16 @@ import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.Clear
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
+import ly.david.musicsearch.ui.common.icons.Settings
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.ListensSettingsScreen
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.buildStringWithSingleLink
+import ly.david.musicsearch.ui.common.topappbar.GoToScreenMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -79,6 +83,7 @@ import musicsearch.ui.common.generated.resources.needToLoginToListenBrainzToDo
 import musicsearch.ui.common.generated.resources.noManualMapping
 import musicsearch.ui.common.generated.resources.noRecordingWithIdFound
 import musicsearch.ui.common.generated.resources.setAction
+import musicsearch.ui.common.generated.resources.settings
 import musicsearch.ui.common.generated.resources.updated
 import musicsearch.ui.common.generated.resources.username
 import musicsearch.ui.common.generated.resources.xListens
@@ -144,6 +149,17 @@ internal fun ListensUi(
                 onClick = {
                     showDialog = true
                     closeMenu()
+                },
+            )
+            GoToScreenMenuItem(
+                text = stringResource(Res.string.settings),
+                leadingIconImageVector = CustomIcons.Settings,
+                onClick = {
+                    eventSink(
+                        ListensUiEvent.GoToScreen(
+                            screen = ListensSettingsScreen,
+                        ),
+                    )
                 },
             )
         }
@@ -338,7 +354,7 @@ private fun FacetChip(
             if (selectedFacet) {
                 Icon(
                     modifier = Modifier
-                        .clip(shape = RoundedCornerShape(28.dp))
+                        .clip(CircleShape)
                         .clickable {
                             onSelectFacet(null)
                         },
@@ -397,7 +413,7 @@ private fun DatePickerChip(
             if (selectedDate) {
                 Icon(
                     modifier = Modifier
-                        .clip(shape = RoundedCornerShape(28.dp))
+                        .clip(CircleShape)
                         .clickable {
                             onSelectDate(null)
                         },
@@ -484,9 +500,11 @@ private fun ListensContent(
                     },
                     onGoToRelease = { releaseId ->
                         eventSink(
-                            ListensUiEvent.ClickItem(
-                                entityType = MusicBrainzEntityType.RELEASE,
-                                id = releaseId,
+                            ListensUiEvent.GoToScreen(
+                                DetailsScreen(
+                                    entityType = MusicBrainzEntityType.RELEASE,
+                                    id = releaseId,
+                                ),
                             ),
                         )
                     },
@@ -552,13 +570,15 @@ private fun ListensContent(
                     filterText = filterText,
                     onClick = { id ->
                         eventSink(
-                            ListensUiEvent.ClickItem(
-                                entityType = MusicBrainzEntityType.RECORDING,
-                                id = id,
+                            ListensUiEvent.GoToScreen(
+                                DetailsScreen(
+                                    entityType = MusicBrainzEntityType.RECORDING,
+                                    id = id,
+                                ),
                             ),
                         )
                     },
-                    onClickMoreActions = {
+                    onMoreActionsClick = {
                         showBottomSheetForListen = listItemModel
                     },
                 )

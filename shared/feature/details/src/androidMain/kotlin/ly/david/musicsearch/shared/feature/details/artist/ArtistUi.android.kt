@@ -230,28 +230,36 @@ internal fun PreviewArtistDetailsUiError() {
 @Composable
 internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
     PreviewWithTransitionAndOverlays {
-        ArtistDetailsTabUi(
-            artist = ArtistDetailsModel(
-                id = "89ad4ac3-39f7-470e-963a-56509c546377",
-                name = "Various Artists",
-                type = ArtistType.OTHER,
-                sortName = "Various Artists",
-                lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
-                urls = persistentListOf(
-                    RelationListItemModel(
-                        id = "1",
-                        type = "Wikidata",
-                        name = "https://www.wikidata.org/wiki/Q3108914",
-                        linkedEntity = MusicBrainzEntityType.URL,
-                        linkedEntityId = "1",
+        ArtistUi(
+            state = DetailsUiState(
+                detailsModel = ArtistDetailsModel(
+                    id = "89ad4ac3-39f7-470e-963a-56509c546377",
+                    name = "Various Artists",
+                    type = ArtistType.OTHER,
+                    sortName = "Various Artists",
+                    lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
+                    urls = persistentListOf(
+                        RelationListItemModel(
+                            id = "1",
+                            type = "Wikidata",
+                            name = "https://www.wikidata.org/wiki/Q3108914",
+                            linkedEntity = MusicBrainzEntityType.URL,
+                            linkedEntityId = "1",
+                        ),
                     ),
                 ),
-            ),
-            detailsTabUiState = DetailsTabUiState(
-                now = Instant.parse("2025-06-05T19:42:20Z"),
-                wikipediaExtract = WikipediaExtract(
-                    wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
+                detailsTabUiState = DetailsTabUiState(
+                    now = Instant.parse("2025-06-05T19:42:20Z"),
+                    wikipediaExtract = WikipediaExtract(
+                        wikipediaUrl = "https://en.wikipedia.org/wiki/Various_artists",
+                    ),
                 ),
+                browseMethod = BrowseMethod.ByEntity(
+                    entityId = "89ad4ac3-39f7-470e-963a-56509c546377",
+                    entityType = MusicBrainzEntityType.ARTIST,
+                ),
+                tabs = artistTabs,
+                selectedTab = Tab.DETAILS,
             ),
         )
     }

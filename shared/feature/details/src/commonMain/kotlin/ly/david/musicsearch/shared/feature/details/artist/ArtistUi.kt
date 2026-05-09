@@ -279,6 +279,9 @@ internal fun ArtistUi(
                     onImageClick = {
                         eventSink(DetailsUiEvent.ClickImage)
                     },
+                    onCollapseExpandListens = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandListens)
+                    },
                     onCollapseExpandExternalLinks = {
                         eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
                     },
@@ -302,6 +305,15 @@ internal fun ArtistUi(
                             DetailsUiEvent.ClickItem(
                                 entityType = entity,
                                 id = id,
+                            ),
+                        )
+                    },
+                    onGoToListenAtEpochSeconds = { seconds ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    dateTimeEpochSeconds = seconds,
+                                ),
                             ),
                         )
                     },

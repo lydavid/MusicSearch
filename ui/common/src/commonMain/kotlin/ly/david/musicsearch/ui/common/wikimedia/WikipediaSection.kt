@@ -76,21 +76,19 @@ fun WikipediaSection(
                 )
             }
 
-            if (showUrl) {
-                UrlListItem(
-                    relation = RelationListItemModel(
-                        id = "wikipedia_section",
-                        type = stringResource(Res.string.readMore),
-                        linkedEntity = MusicBrainzEntityType.URL,
-                        // TODO: eventually, migrate the stored url to be decoded
-                        //  so that we can search with utf-8
-                        //  at that point, decode the url before storing
-                        name = extract.wikipediaUrl.decodeUrl(),
-                        linkedEntityId = "wikipedia_section",
-                    ),
-                    filterText = filterText,
-                )
-            }
+            UrlListItem(
+                relation = RelationListItemModel(
+                    id = "wikipedia_section",
+                    type = stringResource(Res.string.readMore),
+                    linkedEntity = MusicBrainzEntityType.URL,
+                    // TODO: eventually, migrate the stored url to be decoded
+                    //  so that we can search with utf-8
+                    //  at that point, decode the url before storing
+                    name = extract.wikipediaUrl.decodeUrl(),
+                    linkedEntityId = "wikipedia_section",
+                ),
+                filterText = filterText,
+            )
         }
     }
 }

@@ -4,25 +4,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.UNKNOWN_TIME
-import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
-import ly.david.musicsearch.shared.domain.common.getDateTimePeriod
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
-import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -30,6 +24,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
 import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -40,7 +35,6 @@ import ly.david.musicsearch.ui.common.icons.StarFilled
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.formatPeriod
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
@@ -65,6 +59,9 @@ import musicsearch.ui.common.generated.resources.seeAllListens
 import musicsearch.ui.common.generated.resources.status
 import musicsearch.ui.common.generated.resources.tracks
 import musicsearch.ui.common.generated.resources.type
+import musicsearch.ui.common.generated.resources.xCompleteListens
+import musicsearch.ui.common.generated.resources.xListens
+import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.time.Instant
 
@@ -74,12 +71,14 @@ internal fun ReleaseDetailsTabUi(
     detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    onImageClick: () -> Unit = {},
-    onCollapseExpandReleaseEvents: () -> Unit = {},
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
-    onSeeAllListensClick: () -> Unit = {},
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    onImageClick: () -> Unit,
+    onCollapseExpandReleaseEvents: () -> Unit,
+    onCollapseExpandListens: () -> Unit,
+    onCollapseExpandExternalLinks: () -> Unit,
+    onCollapseExpandAliases: () -> Unit,
+    onSeeAllListensClick: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
     val entityInfoSection: @Composable ReleaseDetailsModel.() -> Unit = {
         barcode.ifNotEmpty {
@@ -191,8 +190,13 @@ internal fun ReleaseDetailsTabUi(
 
             listenSection(
                 release = this@run,
+                filterText = filterText,
+                collapsed = detailsTabUiState.isListensCollapsed,
+                onCollapseExpand = onCollapseExpandListens,
                 now = detailsTabUiState.now,
                 onSeeAllListensClick = onSeeAllListensClick,
+                onItemClick = onItemClick,
+                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
             )
         }
     }
@@ -297,87 +301,110 @@ private fun LazyListScope.releaseEventsSection(
 
 private fun LazyListScope.listenSection(
     release: ReleaseDetailsModel,
+    filterText: String,
+    collapsed: Boolean,
     now: Instant,
+    onCollapseExpand: () -> Unit,
     onSeeAllListensClick: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
     if (release.listenCount != null) {
-        item {
-            ListSeparatorHeader(stringResource(Res.string.listens))
-        }
-        item {
-            ListItem(
-                headlineContent = {
-                    Row {
-                        val listenCount = release.listenCount.toString()
-                        TextWithIcon(
-                            imageVector = CustomIcons.Headphones,
-                            text = listenCount,
-                            contentDescription = "$listenCount ${stringResource(Res.string.listens)}",
-                        )
-                        if (release.completeListenCount > 0) {
-                            val completeListenCount = release.completeListenCount.toString()
-                            TextWithIcon(
-                                imageVector = CustomIcons.StarFilled,
-                                text = completeListenCount,
-                                contentDescription = "$completeListenCount complete listens",
-                                iconTint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(start = 8.dp),
-                            )
-                        }
-                    }
-                },
+        stickyHeader {
+            CollapsibleListSeparatorHeader(
+                text = stringResource(Res.string.listens),
+                collapsed = collapsed,
+                onClick = onCollapseExpand,
             )
         }
-        items(release.latestListens) {
-            LastListenedListItem(
-                listen = it,
+        if (!collapsed) {
+            listensSectionContent(
+                release = release,
+                filterText = filterText,
                 now = now,
-            )
-        }
-        item {
-            ClickableItem(
-                title = stringResource(Res.string.seeAllListens),
-                endIcon = CustomIcons.ChevronRight,
-                onClick = onSeeAllListensClick,
-            )
-        }
-        item {
-            UrlListItem(
-                relation = RelationListItemModel(
-                    id = "listenbrainz_url",
-                    type = "ListenBrainz",
-                    linkedEntity = MusicBrainzEntityType.URL,
-                    name = release.listenBrainzUrl,
-                    linkedEntityId = "listenbrainz_url",
-                ),
-                filterText = "",
+                onSeeAllListensClick = onSeeAllListensClick,
+                onItemClick = onItemClick,
+                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LastListenedListItem(
-    listen: ListenWithTrack,
+@Suppress("LongMethod")
+private fun LazyListScope.listensSectionContent(
+    release: ReleaseDetailsModel,
+    filterText: String,
     now: Instant,
+    onSeeAllListensClick: () -> Unit,
+    onItemClick: MusicBrainzItemClickHandler,
+    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
-    val instant = Instant.fromEpochMilliseconds(listen.listenedMs)
-    val formattedDateTimePeriod = formatPeriod(instant.getDateTimePeriod(now = now))
-    val formattedDateTime = instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime)
-
-    val text = buildString {
-        append(formattedDateTimePeriod)
-        append(" ($formattedDateTime)")
-        append(" - ")
-        append(listen.mediumPosition)
-        append(".")
-        append(listen.trackNumber)
-        append(". ")
-        append(listen.trackName)
+    item {
+        ListItem(
+            headlineContent = {
+                Row {
+                    val listenCount = release.listenCount
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = listenCount.toString(),
+                        contentDescription = pluralStringResource(
+                            Res.plurals.xListens,
+                            listenCount?.toInt() ?: 0,
+                            listenCount ?: 0,
+                        ),
+                    )
+                    if (release.completeListenCount > 0) {
+                        val completeListenCount = release.completeListenCount
+                        TextWithIcon(
+                            imageVector = CustomIcons.StarFilled,
+                            text = completeListenCount.toString(),
+                            contentDescription = pluralStringResource(
+                                Res.plurals.xCompleteListens,
+                                completeListenCount.toInt(),
+                                completeListenCount,
+                            ),
+                            iconTint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(start = 8.dp),
+                        )
+                    }
+                }
+            },
+        )
     }
-    Text(
-        text = text,
-        modifier = Modifier.padding(horizontal = 16.dp),
-    )
+    items(release.latestListens) { listen ->
+        LastListenedListItemWithMoreActions(
+            listenedMs = listen.listenedMs,
+            recordingId = listen.recordingId,
+            title = "${listen.mediumPosition}.${listen.trackNumber} ${listen.trackName}",
+            filterText = filterText,
+            now = now,
+            onClick = { recordingId ->
+                onItemClick(
+                    MusicBrainzEntityType.RECORDING,
+                    recordingId,
+                )
+            },
+            onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
+        )
+    }
+    item {
+        ClickableItem(
+            title = stringResource(Res.string.seeAllListens),
+            filterText = filterText,
+            endIcon = CustomIcons.ChevronRight,
+            onClick = onSeeAllListensClick,
+        )
+    }
+    item {
+        UrlListItem(
+            relation = RelationListItemModel(
+                id = "listenbrainz_url",
+                type = "ListenBrainz",
+                linkedEntity = MusicBrainzEntityType.URL,
+                name = release.listenBrainzUrl,
+                linkedEntityId = "listenbrainz_url",
+            ),
+            filterText = filterText,
+        )
+    }
 }

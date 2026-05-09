@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import kotlin.time.Instant
@@ -25,6 +26,7 @@ class WorkRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val appPreferences: AppPreferences,
 ) : WorkRepository {
 
     override suspend fun lookupWork(
@@ -55,9 +57,11 @@ class WorkRepositoryImpl(
         if (!relationRepository.visited(workId)) return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
+        val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val work = workDao.getWorkForDetails(
             workId = workId,
             listenBrainzUsername = username,
+            numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)

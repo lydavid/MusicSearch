@@ -40,6 +40,7 @@ import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.listitem.toAreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
 import kotlin.time.Instant
@@ -59,6 +60,7 @@ class ReleaseRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val appPreferences: AppPreferences,
 ) : ReleaseRepository {
 
     override suspend fun lookupRelease(
@@ -90,9 +92,11 @@ class ReleaseRepositoryImpl(
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId) ?: return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
+        val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val release = releaseDao.getReleaseForDetails(
             releaseId = releaseId,
             listenBrainzUsername = username,
+            numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
