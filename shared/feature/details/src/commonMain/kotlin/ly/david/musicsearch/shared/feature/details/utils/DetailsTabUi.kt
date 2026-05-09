@@ -115,7 +115,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
             urlsSection(
                 urls = urls,
                 filterText = filterText,
-                collapsed = detailsTabUiState.isExternalLinksCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ExternalLinks),
                 onCollapseExpand = onCollapseExpandExternalLinks,
             )
 
@@ -123,7 +123,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 aliases = aliases,
                 primaryLabel = primaryLabel,
                 filterText = filterText,
-                collapsed = detailsTabUiState.isAliasesCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Aliases),
                 onCollapseExpand = onCollapseExpandAliases,
             )
 

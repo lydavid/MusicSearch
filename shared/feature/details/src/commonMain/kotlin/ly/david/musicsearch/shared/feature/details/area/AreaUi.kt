@@ -12,6 +12,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -240,10 +241,10 @@ internal fun AreaUi(
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     onCollapseExpandExternalLinks = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ExternalLinks))
                     },
                     onCollapseExpandAliases = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Aliases))
                     },
                 )
             },

@@ -3,11 +3,13 @@ package ly.david.musicsearch.shared.feature.details.releasegroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import kotlin.time.Instant
@@ -75,7 +77,10 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
         ReleaseGroupDetailsTabUi(
             releaseGroup = releaseGroup,
             detailsTabUiState = detailsTabUiState.copy(
-                isExternalLinksCollapsed = true,
+                isSectionCollapsed = persistentSetOf(
+                    CollapsibleSection.ExternalLinks,
+                    CollapsibleSection.Aliases,
+                ),
             ),
         )
     }

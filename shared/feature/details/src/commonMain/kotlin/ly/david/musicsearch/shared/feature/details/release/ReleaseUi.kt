@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -339,16 +340,16 @@ internal fun ReleaseUi(
                         eventSink(DetailsUiEvent.ClickImage)
                     },
                     onCollapseExpandReleaseEvents = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandReleaseEvents)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ReleaseEvents))
                     },
                     onCollapseExpandListens = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandListens)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
                     },
                     onCollapseExpandExternalLinks = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandExternalLinks)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ExternalLinks))
                     },
                     onCollapseExpandAliases = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandAliases)
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Aliases))
                     },
                     onSeeAllListensClick = {
                         eventSink(

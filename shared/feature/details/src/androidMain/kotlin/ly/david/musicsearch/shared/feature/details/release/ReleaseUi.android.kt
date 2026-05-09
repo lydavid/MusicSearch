@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.release
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
@@ -16,6 +17,7 @@ import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -115,8 +117,10 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
             state = detailsUiState.copy(
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
-                    isReleaseEventsCollapsed = true,
-                    isExternalLinksCollapsed = true,
+                    isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.ReleaseEvents,
+                        CollapsibleSection.ExternalLinks,
+                    ),
                 ),
             ),
         )
@@ -160,7 +164,9 @@ internal fun PreviewReleaseDetailsUiWithListens() {
                 ),
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
-                    isReleaseEventsCollapsed = true,
+                    isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.ReleaseEvents,
+                    ),
                 ),
             ),
         )

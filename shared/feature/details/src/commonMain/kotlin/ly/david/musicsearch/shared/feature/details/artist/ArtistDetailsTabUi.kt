@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
@@ -85,7 +86,7 @@ internal fun ArtistDetailsTabUi(
                     artist = this@run,
                     filterText = filterText,
                     now = detailsTabUiState.now,
-                    collapsed = detailsTabUiState.isListensCollapsed,
+                    collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
                     onCollapseExpand = onCollapseExpandListens,
                     onItemClick = onItemClick,
                     onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,

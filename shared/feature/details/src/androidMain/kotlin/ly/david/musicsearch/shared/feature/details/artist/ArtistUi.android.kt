@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.slack.circuit.overlay.ContentWithOverlays
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistType
@@ -15,6 +16,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.artist.artistTabs
@@ -144,7 +146,10 @@ internal fun PreviewArtistDetailsUiCollapsed() {
                 detailsTabUiState = detailsUiState.detailsTabUiState.copy(
                     now = Instant.parse("2025-09-06T18:42:20Z"),
                     wikipediaExtract = wikipediaExtract,
-                    isExternalLinksCollapsed = true,
+                    isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.ExternalLinks,
+                        CollapsibleSection.Aliases,
+                    ),
                 ),
             ),
         )

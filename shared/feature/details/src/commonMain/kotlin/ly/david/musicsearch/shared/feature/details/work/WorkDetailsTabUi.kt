@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
@@ -98,7 +99,7 @@ internal fun WorkDetailsTabUi(
                 work = work,
                 filterText = filterText,
                 now = detailsTabUiState.now,
-                collapsed = detailsTabUiState.isListensCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
                 onCollapseExpand = onCollapseExpandListens,
                 onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                 onSeeAllListensClick = onSeeAllListensClick,

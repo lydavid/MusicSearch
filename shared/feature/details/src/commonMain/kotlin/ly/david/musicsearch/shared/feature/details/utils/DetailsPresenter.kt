@@ -20,6 +20,9 @@ import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
@@ -107,10 +110,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         var forceRefreshDetails by remember { mutableStateOf(false) }
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
-        var isReleaseEventsCollapsed by rememberSaveable { mutableStateOf(false) }
-        var isListensCollapsed by rememberSaveable { mutableStateOf(false) }
-        var isExternalLinksCollapsed by rememberSaveable { mutableStateOf(false) }
-        var isAliasesCollapsed by rememberSaveable { mutableStateOf(false) }
+        var isSectionCollapsed by rememberRetained { mutableStateOf(persistentSetOf<CollapsibleSection>()) }
         val collected by collectionRepository.observeEntityIsInACollection(
             entityId = screen.id,
         ).collectAsRetainedState(false)
@@ -281,20 +281,13 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                DetailsUiEvent.ToggleCollapseExpandReleaseEvents -> {
-                    isReleaseEventsCollapsed = !isReleaseEventsCollapsed
-                }
-
-                DetailsUiEvent.ToggleCollapseExpandListens -> {
-                    isListensCollapsed = !isListensCollapsed
-                }
-
-                DetailsUiEvent.ToggleCollapseExpandExternalLinks -> {
-                    isExternalLinksCollapsed = !isExternalLinksCollapsed
-                }
-
-                DetailsUiEvent.ToggleCollapseExpandAliases -> {
-                    isAliasesCollapsed = !isAliasesCollapsed
+                is DetailsUiEvent.ToggleCollapseExpandSection -> {
+                    val section = event.section
+                    isSectionCollapsed = if (isSectionCollapsed.contains(section)) {
+                        isSectionCollapsed - section
+                    } else {
+                        isSectionCollapsed + section
+                    }.toPersistentSet()
                 }
             }
         }
@@ -318,10 +311,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 numberOfImages = numberOfImages,
                 wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
-                isReleaseEventsCollapsed = isReleaseEventsCollapsed,
-                isListensCollapsed = isListensCollapsed,
-                isExternalLinksCollapsed = isExternalLinksCollapsed,
-                isAliasesCollapsed = isAliasesCollapsed,
+                isSectionCollapsed = isSectionCollapsed,
             ),
             allEntitiesListUiState = entitiesListUiState,
             musicBrainzLoginUiState = loginUiState,
@@ -357,12 +347,16 @@ internal data class DetailsTabUiState(
     val numberOfImages: Int? = null,
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val lazyListState: LazyListState = LazyListState(),
-    val isReleaseEventsCollapsed: Boolean = false,
-    val isListensCollapsed: Boolean = false,
-    val isExternalLinksCollapsed: Boolean = false,
-    val isAliasesCollapsed: Boolean = false,
+    val isSectionCollapsed: ImmutableSet<CollapsibleSection> = persistentSetOf(),
     val now: Instant = Clock.System.now(),
 )
+
+internal enum class CollapsibleSection {
+    ReleaseEvents,
+    Listens,
+    ExternalLinks,
+    Aliases,
+}
 
 internal sealed interface DetailsUiEvent : CircuitUiEvent {
     data object NavigateUp : DetailsUiEvent
@@ -395,11 +389,7 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
 
     data object NavigateToCollaboratorsGraph : DetailsUiEvent
 
-    data object ToggleCollapseExpandExternalLinks : DetailsUiEvent
-
-    data object ToggleCollapseExpandReleaseEvents : DetailsUiEvent
-
-    data object ToggleCollapseExpandListens : DetailsUiEvent
-
-    data object ToggleCollapseExpandAliases : DetailsUiEvent
+    data class ToggleCollapseExpandSection(
+        val section: CollapsibleSection,
+    ) : DetailsUiEvent
 }

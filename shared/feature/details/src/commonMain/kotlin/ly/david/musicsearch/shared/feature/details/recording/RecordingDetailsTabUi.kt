@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
@@ -93,7 +94,7 @@ internal fun RecordingDetailsTabUi(
                 recording = recording,
                 filterText = filterText,
                 now = detailsTabUiState.now,
-                collapsed = detailsTabUiState.isListensCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
                 onCollapseExpand = onCollapseExpandListens,
                 onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                 onSeeAllListensClick = onSeeAllListensClick,

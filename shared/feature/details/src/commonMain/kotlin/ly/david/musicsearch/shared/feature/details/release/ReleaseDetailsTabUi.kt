@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
@@ -181,7 +182,7 @@ internal fun ReleaseDetailsTabUi(
             )
 
             releaseEventsSection(
-                collapsed = detailsTabUiState.isReleaseEventsCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ReleaseEvents),
                 areas = areas,
                 filterText = filterText,
                 onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
@@ -191,7 +192,7 @@ internal fun ReleaseDetailsTabUi(
             listenSection(
                 release = this@run,
                 filterText = filterText,
-                collapsed = detailsTabUiState.isListensCollapsed,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
                 onCollapseExpand = onCollapseExpandListens,
                 now = detailsTabUiState.now,
                 onSeeAllListensClick = onSeeAllListensClick,
