@@ -381,4 +381,5 @@
         <item quantity="many">%1$d écoutes complètes</item>
         <item quantity="other">%1$d écoutes complètes</item>
     </plurals>
+    <string name="unknownListens">Nombre d'écoutes inconnu</string>
 </resources>
