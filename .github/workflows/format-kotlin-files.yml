@@ -24,13 +24,25 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - name: Detekt non-KMP code smells
-        if: always()
-        run: ./gradlew detekt
+      - name: Detekt code smells in commonMain
+        if: ${{ !cancelled() }}
+        run: ./gradlew detektMetadataCommonMain
 
-      - name: Detekt KMP code smells
-        if: always()
-        run: ./gradlew detektMetadataMain
+      - name: Detekt code smells in iosMain
+        if: ${{ !cancelled() }}
+        run: ./gradlew detektMetadataIosMain
+
+      - name: Detekt code smells in jvmMain
+        if: ${{ !cancelled() }}
+        run: ./gradlew detektJvmMain
+
+      - name: Detekt code smells in android
+        if: ${{ !cancelled() }}
+        run: ./gradlew detektAndroidDebug detektAndroidRelease
+
+      - name: Detekt code smells in android tests
+        if: ${{ !cancelled() }}
+        run: ./gradlew detektAndroidDebugUnitTest
 
       - name: Commit
         if: always()
