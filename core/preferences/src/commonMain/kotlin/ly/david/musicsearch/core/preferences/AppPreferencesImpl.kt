@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.core.logging.crash.CrashReporterSettings
 import ly.david.musicsearch.shared.domain.DEFAULT_IMAGES_GRID_PADDING_DP
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
+import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
@@ -494,7 +495,7 @@ internal class AppPreferencesImpl(
         get() {
             return preferencesDataStore.data
                 .map {
-                    it[numberOfListensInDetailsPreference] ?: 10L // DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
+                    it[numberOfListensInDetailsPreference] ?: DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
                 }
                 .distinctUntilChanged()
         }
