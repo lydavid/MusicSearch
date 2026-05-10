@@ -24,7 +24,6 @@ import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.additionalDetails
 import musicsearch.ui.common.generated.resources.area
 import musicsearch.ui.common.generated.resources.artist
 import musicsearch.ui.common.generated.resources.event
@@ -66,7 +65,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     entityInfoSection: @Composable T.() -> Unit = {},
-    additionalDetailsSection: @Composable (T.() -> Unit)? = null,
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
     onImageClick: () -> Unit = {},
     onCollapseExpandExternalLinks: () -> Unit = {},
@@ -94,13 +92,6 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 )
 
                 entityInfoSection()
-            }
-
-            additionalDetailsSection?.run {
-                item {
-                    ListSeparatorHeader(stringResource(Res.string.additionalDetails))
-                    invoke(detailsModel)
-                }
             }
 
             item {

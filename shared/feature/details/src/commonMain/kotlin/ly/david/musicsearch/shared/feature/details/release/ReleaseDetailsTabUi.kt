@@ -123,8 +123,6 @@ internal fun ReleaseDetailsTabUi(
                 filterText = filterText,
             )
         }
-    }
-    val additionalDetailsSection: @Composable ReleaseDetailsModel.() -> Unit = {
         releaseGroup?.let {
             TextWithHeading(
                 heading = stringResource(Res.string.type),
@@ -209,7 +207,6 @@ internal fun ReleaseDetailsTabUi(
         onImageClick = onImageClick,
         onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
         entityInfoSection = entityInfoSection,
-        additionalDetailsSection = additionalDetailsSection,
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
         onCollapseExpandAliases = onCollapseExpandAliases,
     )
