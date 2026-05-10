@@ -2,10 +2,11 @@ package ly.david.musicsearch.data.musicbrainz.di
 
 import MusicSearch.data.musicbrainz.BuildConfig
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthStoreImpl
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthStoreImpl
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -18,7 +19,7 @@ val musicBrainzDataModule = module {
             authorizationEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/authorize",
             tokenEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/token",
             endSessionEndpoint = "$MUSIC_BRAINZ_BASE_URL/oauth2/revoke",
-            scope = "collection profile",
+            scope = MUSIC_BRAINZ_OAUTH_SCOPE,
         )
     }
     singleOf(::MusicBrainzAuthStoreImpl) bind MusicBrainzAuthStore::class

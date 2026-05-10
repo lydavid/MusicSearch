@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
 import io.ktor.http.Url
+import io.ktor.http.encodeURLPath
 import kotlinx.coroutines.suspendCancellableCoroutine
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
@@ -28,7 +29,7 @@ internal class LoginImpl(
                 "?response_type=code" +
                 "&client_id=${musicBrainzOAuthInfo.clientId}" +
                 "&redirect_uri=$APPLICATION_ID://oauth2/redirect" +
-                "&scope=$MUSIC_BRAINZ_OAUTH_SCOPE",
+                "&scope=${MUSIC_BRAINZ_OAUTH_SCOPE.encodeURLPath()}",
         ) ?: run {
             error(IllegalStateException("Bad authorization url"))
         }

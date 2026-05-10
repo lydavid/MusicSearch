@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.musicbrainz.di
 
+import io.ktor.http.encodeURLPath
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
 import ly.david.musicsearch.data.musicbrainz.auth.LoginImpl
@@ -18,7 +19,7 @@ actual val musicBrainzAuthPlatformModule = module {
                 "?response_type=code" +
                 "&client_id=${musicBrainzOAuthInfo.clientId}" +
                 "&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob" +
-                "&scope=$MUSIC_BRAINZ_OAUTH_SCOPE",
+                "&scope=${MUSIC_BRAINZ_OAUTH_SCOPE.encodeURLPath()}",
         )
     }
     singleOf(::LoginImpl) bind Login::class
