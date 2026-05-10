@@ -100,7 +100,7 @@ jobs:
         run: |
           echo "${{ steps.get-next-version.outputs.new-release-notes }}" > /tmp/raw_notes.txt
           
-          release_notes=$(tail -n +3 /tmp/raw_notes.txt | \
+          release_notes=$(tail -n +5 /tmp/raw_notes.txt | \
             sed 's/ ([[][^]]*]([^)]*))//g')
           
           max_length=500
