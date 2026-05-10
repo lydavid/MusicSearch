@@ -98,12 +98,13 @@ jobs:
       - name: Save release notes
         if: steps.get-next-version.outputs.new-release-published == 'true'
         run: |
-          release_notes=$(echo "${{ steps.get-next-version.outputs.new-release-notes }}" | \
-            tail -n +3 | \
-            sed 's/ ([[][^]]*]([^)]*))//g')       
+          echo "${{ steps.get-next-version.outputs.new-release-notes }}" > /tmp/raw_notes.txt
+          
+          release_notes=$(tail -n +3 /tmp/raw_notes.txt | \
+            sed 's/ ([[][^]]*]([^)]*))//g')
           
           max_length=500
-          if [ ${#release_notes} -gt $max_length ]; then
+          if [ "${#release_notes}" -gt "$max_length" ]; then
             release_notes="https://github.com/lydavid/MusicSearch/releases/tag/v${{ env.VERSION_NAME }}"
           fi
           
