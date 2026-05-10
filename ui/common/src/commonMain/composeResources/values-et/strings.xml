@@ -369,4 +369,13 @@
     <string name="clearDateFilter">Tühjenda kuupäevade filter</string>
     <string name="filterFromListenDate">Filtreeri alates kuulamise kuupäevast</string>
     <string name="stopFilteringFromThisDate">Lõpeta filtreerimine alates sellest kuupäevast</string>
+    <plurals name="xListens">
+        <item quantity="one">%1$d on kuulamas</item>
+        <item quantity="other">%1$d on kuulamas</item>
+    </plurals>
+    <plurals name="xCompleteListens">
+        <item quantity="one">%1$d lõpuni kuulamine</item>
+        <item quantity="other">%1$d lõpuni kuulamist</item>
+    </plurals>
+    <string name="unknownListens">Kuuljate arv pole teada</string>
 </resources>
