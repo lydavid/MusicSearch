@@ -1,8 +1,7 @@
 package ly.david.musicsearch.shared.feature.settings.internal.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
@@ -25,7 +24,7 @@ internal fun SettingSwitch(
     subtitle: String = "",
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    Row(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .toggleable(
@@ -37,9 +36,13 @@ internal fun SettingSwitch(
                 horizontal = 16.dp,
                 vertical = 8.dp,
             ),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .fillMaxWidth()
+                .padding(end = 64.dp),
+        ) {
             Text(
                 text = header,
                 style = TextStyles.getCardBodyTextStyle(),
@@ -52,12 +55,12 @@ internal fun SettingSwitch(
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
         Switch(
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clearAndSetSemantics {},
             checked = checked,
             onCheckedChange = onCheckedChange,
-            modifier = Modifier.clearAndSetSemantics {},
         )
     }
 }

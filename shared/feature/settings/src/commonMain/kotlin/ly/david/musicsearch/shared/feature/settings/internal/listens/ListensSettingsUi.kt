@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
+import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.listens
@@ -42,10 +43,11 @@ internal fun ListensSettingsUi(
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp),
+                .padding(innerPadding),
         ) {
-            Column {
+            Column(
+                modifier = Modifier.padding(horizontal = 16.dp),
+            ) {
                 Text(text = "Number of listens in details: ${state.numberOfListensInDetails}")
                 Slider(
                     value = state.numberOfListensInDetails.toFloat(),
@@ -54,6 +56,14 @@ internal fun ListensSettingsUi(
                     valueRange = 1f..100f,
                 )
             }
+
+            SettingSwitch(
+                header = "Include client and version when submitting listens",
+                checked = state.submitClientAndVersionWithListen,
+                onCheckedChange = {
+                    eventSink(ListensSettingsUiEvent.ToggleIncludeClientAndVersion)
+                },
+            )
 
             TextButton(
                 onClick = {

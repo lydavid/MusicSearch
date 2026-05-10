@@ -16,6 +16,7 @@ import io.ktor.http.auth.HttpAuthHeader
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
@@ -57,6 +58,7 @@ interface ListenBrainzApi {
 
     suspend fun submitListens(
         listenSubmissions: List<ListenSubmission>,
+        appInfo: AppInfo?,
     )
 
     companion object {
@@ -211,6 +213,7 @@ class ListenBrainzApiImpl(
 
     override suspend fun submitListens(
         listenSubmissions: List<ListenSubmission>,
+        appInfo: AppInfo?,
     ) {
         httpClient.post {
             url {
@@ -219,7 +222,9 @@ class ListenBrainzApiImpl(
                 setBody(
                     SubmitListensBody(
                         listenType = "import",
-                        listenSubmissions = listenSubmissions.map { it.toListenBrainzListenSubmission() },
+                        listenSubmissions = listenSubmissions.map {
+                            it.toListenBrainzListenSubmission(appInfo = appInfo)
+                        },
                     ),
                 )
             }

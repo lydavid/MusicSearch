@@ -102,4 +102,7 @@ interface AppPreferences {
 
     val observeNumberOfListensInDetails: Flow<Long>
     fun setNumberOfListensInDetails(number: Long)
+
+    val submitClientAndVersionWithListen: Flow<Boolean>
+    fun setSubmitClientAndVersionWithListen(enable: Boolean)
 }

@@ -18,9 +18,9 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.listen.GetTracksByReleaseForListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
-import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.listen.SubmitListens
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
@@ -66,7 +66,7 @@ class SubmitListenPresenterTest {
 
     private val now = Instant.parse("1970-01-02T05:00:00Z")
 
-    private val listensListRepository = mockk<ListensListRepository>()
+    private val submitListens = mockk<SubmitListens>()
 
     private fun createSubmitListenPresenter(
         screen: SubmitListenScreen,
@@ -76,7 +76,7 @@ class SubmitListenPresenterTest {
         screen = screen,
         navigator = navigator,
         listenBrainzAuthStore = NoOpListenBrainzAuthStore(),
-        listensListRepository = listensListRepository,
+        submitListens = submitListens,
         getTracksByReleaseForListenSubmission = object : GetTracksByReleaseForListenSubmission {
             override fun invoke(releaseId: String): List<TrackInfo> {
                 return allTrackInfo
@@ -99,7 +99,7 @@ class SubmitListenPresenterTest {
             navigator = navigator,
         )
         val fixedClockEpochSeconds = 104400L
-        coEvery { listensListRepository.submitListens(any(), any()) } answers {
+        coEvery { submitListens(any(), any()) } answers {
             Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {
@@ -278,7 +278,7 @@ class SubmitListenPresenterTest {
             screen = screen,
             navigator = navigator,
         )
-        coEvery { listensListRepository.submitListens(any(), any()) } answers {
+        coEvery { submitListens(any(), any()) } answers {
             Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {
@@ -342,7 +342,7 @@ class SubmitListenPresenterTest {
             allTrackInfo = allTrackInfo,
         )
         val fixedClockEpochSeconds = 104400L
-        coEvery { listensListRepository.submitListens(any(), any()) } answers {
+        coEvery { submitListens(any(), any()) } answers {
             Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {
@@ -580,7 +580,7 @@ class SubmitListenPresenterTest {
         )
         val fixedClockEpochSeconds = 104400L
         val slot = slot<List<ListenSubmission>>()
-        coEvery { listensListRepository.submitListens(any(), capture(slot)) } answers {
+        coEvery { submitListens(any(), capture(slot)) } answers {
             Feedback.Success(SubmitListenFeedback.SubmittedListens)
         }
         presenterTestOf({ submitListenPresenter.present() }) {

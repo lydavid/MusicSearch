@@ -204,4 +204,11 @@ open class NoOpAppPreferences : AppPreferences {
     override fun setNumberOfListensInDetails(number: Long) {
         // No-op.
     }
+
+    override val submitClientAndVersionWithListen: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun setSubmitClientAndVersionWithListen(enable: Boolean) {
+        // No-op.
+    }
 }

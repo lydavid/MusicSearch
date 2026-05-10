@@ -28,9 +28,9 @@ import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listen.GetTracksByReleaseForListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
-import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.listen.SubmitListens
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
@@ -41,7 +41,7 @@ internal class SubmitListenPresenter(
     private val screen: SubmitListenScreen,
     private val navigator: Navigator,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
-    private val listensListRepository: ListensListRepository,
+    private val submitListens: SubmitListens,
     private val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission,
     private val clock: Clock,
     private val timeZone: TimeZone,
@@ -147,7 +147,7 @@ internal class SubmitListenPresenter(
                         }
 
                         // TODO: emit flow, so that we can show more feedback, don't pop until final feedback
-                        val feedback = listensListRepository.submitListens(
+                        val feedback = submitListens(
                             username = loggedInUsername,
                             listenSubmissions = submissions,
                         )

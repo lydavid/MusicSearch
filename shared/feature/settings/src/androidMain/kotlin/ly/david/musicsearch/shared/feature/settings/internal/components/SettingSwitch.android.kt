@@ -37,7 +37,7 @@ internal fun PreviewSettingSwitchWithSubtitle() {
     PreviewTheme {
         Surface {
             SettingSwitch(
-                header = "A setting",
+                header = "A setting that is very verbose and may wrap",
                 subtitle = "With some subtitle",
                 checked = true,
             )

@@ -507,4 +507,23 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val submitClientAndVersionWithListenPreference =
+        booleanPreferencesKey(AppPreferencesKey.SUBMIT_CLIENT_AND_VERSION_WITH_LISTEN.name)
+    override val submitClientAndVersionWithListen: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[submitClientAndVersionWithListenPreference] == true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setSubmitClientAndVersionWithListen(enable: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[submitClientAndVersionWithListenPreference] = enable
+            }
+        }
+    }
 }

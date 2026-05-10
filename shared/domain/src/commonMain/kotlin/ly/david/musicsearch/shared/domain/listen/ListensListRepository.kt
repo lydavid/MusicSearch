@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.domain.listen
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.Identifiable
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
@@ -54,6 +55,7 @@ interface ListensListRepository {
     suspend fun submitListens(
         username: String,
         listenSubmissions: List<ListenSubmission>,
+        appInfo: AppInfo?,
     ): Feedback<SubmitListenFeedback>
 }
 

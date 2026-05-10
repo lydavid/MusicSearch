@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.listenbrainz.api.MAX_GET_POST_LISTENS_COUNT
 import ly.david.musicsearch.data.listenbrainz.api.asListOfListens
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.MS_IN_SECOND
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
@@ -193,6 +194,7 @@ class ListensListRepositoryImpl(
     override suspend fun submitListens(
         username: String,
         listenSubmissions: List<ListenSubmission>,
+        appInfo: AppInfo?,
     ): Feedback<SubmitListenFeedback> {
         return try {
             val clampedTotalCount = listenSubmissions.size.coerceIn(
@@ -204,6 +206,7 @@ class ListensListRepositoryImpl(
                 submitListensInChunksThenFetch(
                     chunkedListens = chunkedListens,
                     username = username,
+                    appInfo = appInfo,
                 )
             }
 
@@ -227,9 +230,11 @@ class ListensListRepositoryImpl(
     private suspend fun submitListensInChunksThenFetch(
         chunkedListens: List<ListenSubmission>,
         username: String,
+        appInfo: AppInfo?,
     ) {
         listenBrainzApi.submitListens(
             listenSubmissions = chunkedListens,
+            appInfo = appInfo,
         )
 
         // Need to wait a bit for the server to process the listens.

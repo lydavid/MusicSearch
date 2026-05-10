@@ -20,6 +20,10 @@ internal class ListensSettingsPresenter(
             initial = DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW,
         )
 
+        val submitClientAndVersionWithListen by appPreferences.submitClientAndVersionWithListen.collectAsState(
+            initial = false,
+        )
+
         fun eventSink(event: ListensSettingsUiEvent) {
             when (event) {
                 ListensSettingsUiEvent.NavigateUp -> navigator.pop()
@@ -27,11 +31,16 @@ internal class ListensSettingsPresenter(
                 is ListensSettingsUiEvent.UpdateNumberOfListensInDetails -> {
                     appPreferences.setNumberOfListensInDetails(event.number)
                 }
+
+                ListensSettingsUiEvent.ToggleIncludeClientAndVersion -> {
+                    appPreferences.setSubmitClientAndVersionWithListen(!submitClientAndVersionWithListen)
+                }
             }
         }
 
         return ListensSettingsUiState(
             numberOfListensInDetails = numberOfListensInDetails,
+            submitClientAndVersionWithListen = submitClientAndVersionWithListen,
             eventSink = ::eventSink,
         )
     }
@@ -39,10 +48,12 @@ internal class ListensSettingsPresenter(
 
 internal data class ListensSettingsUiState(
     val numberOfListensInDetails: Long,
+    val submitClientAndVersionWithListen: Boolean,
     val eventSink: (ListensSettingsUiEvent) -> Unit = {},
 ) : CircuitUiState
 
 internal sealed interface ListensSettingsUiEvent : CircuitUiEvent {
     data object NavigateUp : ListensSettingsUiEvent
     data class UpdateNumberOfListensInDetails(val number: Long) : ListensSettingsUiEvent
+    data object ToggleIncludeClientAndVersion : ListensSettingsUiEvent
 }

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.shared.feature.settings.internal
 
-import MusicSearch.shared.feature.settings.BuildConfig
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -80,8 +79,6 @@ internal fun SettingsUi(
     showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
     isNotificationListenerEnabled: Boolean = false,
-    versionName: String = BuildConfig.VERSION_NAME,
-    versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
 ) {
     val eventSink = state.eventSink
@@ -134,8 +131,6 @@ internal fun SettingsUi(
             showAndroidSettings = showAndroidSettings,
             isNotificationListenerEnabled = isNotificationListenerEnabled,
             onGoToNotificationListenerSettings = onGoToNotificationListenerSettings,
-            versionName = versionName,
-            versionCode = versionCode,
             eventSink = eventSink,
             loginEventSink = loginEventSink,
         )
@@ -150,8 +145,6 @@ internal fun SettingsUi(
     showAndroidSettings: Boolean,
     modifier: Modifier = Modifier,
     isNotificationListenerEnabled: Boolean = false,
-    versionName: String = BuildConfig.VERSION_NAME,
-    versionCode: Int = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
     onGoToNotificationListenerSettings: () -> Unit = {},
     eventSink: (SettingsUiEvent) -> Unit = {},
     loginEventSink: (MusicBrainzLoginUiEvent) -> Unit = {},
@@ -264,7 +257,7 @@ internal fun SettingsUi(
                 },
             )
 
-            val appVersionText = "${stringResource(Res.string.appVersion)}: $versionName ($versionCode)"
+            val appVersionText = "${stringResource(Res.string.appVersion)}: ${state.versionNameAndCode}"
             val databaseVersionText = "${stringResource(Res.string.databaseVersion)}: ${state.appDatabaseVersion}"
             ClickableItem(
                 title = appVersionText,

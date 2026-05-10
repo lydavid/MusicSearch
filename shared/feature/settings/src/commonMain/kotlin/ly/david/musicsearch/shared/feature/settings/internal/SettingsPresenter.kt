@@ -16,6 +16,7 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.ExportDatabase
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.auth.usecase.MusicBrainzLogout
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -38,6 +39,7 @@ internal class SettingsPresenter(
     private val updateListenBrainzToken: UpdateListenBrainzToken,
     private val exportDatabase: ExportDatabase,
     private val metadataRepository: MetadataRepository,
+    private val appInfo: AppInfo,
 ) : Presenter<SettingsUiState> {
     @Composable
     override fun present(): SettingsUiState {
@@ -122,6 +124,7 @@ internal class SettingsPresenter(
             snackbarMessage = snackbarMessage,
             appDatabaseVersion = metadataRepository.getAppDatabaseVersion(),
             sqliteVersion = metadataRepository.getSQLiteVersion(),
+            versionNameAndCode = appInfo.versionNameAndCode,
             isDeveloperMode = isDeveloperMode,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
             eventSink = ::eventSink,
@@ -143,6 +146,7 @@ internal data class SettingsUiState(
     val snackbarMessage: String? = null,
     val appDatabaseVersion: String = "",
     val sqliteVersion: String = "",
+    val versionNameAndCode: String = "",
     val isDeveloperMode: Boolean = false,
     val scrollToHideTopAppBar: Boolean = false,
     val eventSink: (SettingsUiEvent) -> Unit = {},

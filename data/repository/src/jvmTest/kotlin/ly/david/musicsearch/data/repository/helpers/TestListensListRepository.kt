@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.listenbrainz.api.ManualMappingResponse
 import ly.david.musicsearch.data.listenbrainz.api.RecordingMetadata
 import ly.david.musicsearch.data.listenbrainz.api.TokenValidationResponse
 import ly.david.musicsearch.data.repository.listen.ListensListRepositoryImpl
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
@@ -17,7 +18,7 @@ interface TestListensListRepository {
     val listenDao: ListenDao
     val coroutineDispatchers: CoroutineDispatchers
 
-    class FakeListenBrainzApi(private val response: GetListensResponse,) : ListenBrainzApi {
+    class FakeListenBrainzApi(private val response: GetListensResponse) : ListenBrainzApi {
         override suspend fun validateToken(token: String): TokenValidationResponse {
             return TokenValidationResponse(valid = false)
         }
@@ -58,7 +59,10 @@ interface TestListensListRepository {
             // no-op
         }
 
-        override suspend fun submitListens(listenSubmissions: List<ListenSubmission>) {
+        override suspend fun submitListens(
+            listenSubmissions: List<ListenSubmission>,
+            appInfo: AppInfo?,
+        ) {
             // no-op
         }
     }

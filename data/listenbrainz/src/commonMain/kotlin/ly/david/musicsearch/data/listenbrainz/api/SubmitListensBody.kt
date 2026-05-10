@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.listenbrainz.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
 
 /**
@@ -51,7 +52,9 @@ data class SubmitListensBody(
     }
 }
 
-internal fun ListenSubmission.toListenBrainzListenSubmission() = SubmitListensBody.ListenBrainzListenSubmission(
+internal fun ListenSubmission.toListenBrainzListenSubmission(
+    appInfo: AppInfo?,
+) = SubmitListensBody.ListenBrainzListenSubmission(
     listenedAtS = listenedAtS,
     trackMetadata = SubmitListensBody.ListenBrainzListenSubmission.TrackMetadata(
         artistName = artistName,
@@ -62,7 +65,8 @@ internal fun ListenSubmission.toListenBrainzListenSubmission() = SubmitListensBo
             artistMbids = artistMbids,
             recordingMbid = recordingMbid,
             durationMs = durationMs,
-            // TODO: submit submission client/version if user opts into this option
+            submissionClient = "MusicSearch".takeIf { appInfo != null },
+            submissionClientVersion = appInfo?.versionNameAndCode,
         ),
     ),
 )

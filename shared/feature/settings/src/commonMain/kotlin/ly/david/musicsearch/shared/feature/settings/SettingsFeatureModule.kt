@@ -1,8 +1,10 @@
 package ly.david.musicsearch.shared.feature.settings
 
+import MusicSearch.shared.feature.settings.BuildConfig
 import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
@@ -23,6 +25,13 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val settingsFeatureModule = module {
+    single {
+        AppInfo(
+            versionName = BuildConfig.VERSION_NAME,
+            versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
+        )
+    }
+
     single(named("SettingsScreen")) {
         Presenter.Factory { screen, navigator, _ ->
             when (screen) {
@@ -37,6 +46,7 @@ val settingsFeatureModule = module {
                     updateListenBrainzToken = get(),
                     exportDatabase = get(),
                     metadataRepository = get(),
+                    appInfo = get(),
                 )
 
                 is AppearanceSettingsScreen -> AppearanceSettingsPresenter(

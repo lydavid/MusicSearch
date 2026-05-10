@@ -42,12 +42,11 @@ internal fun PreviewSettingsScreenAndroid() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = true,
                 isNotificationListenerEnabled = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -60,12 +59,11 @@ internal fun PreviewSettingsScreenNotificationListenerEnable() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = true,
                 isNotificationListenerEnabled = true,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -78,12 +76,11 @@ internal fun PreviewSettingsScreenAndroidWithCrashReporting() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                     showCrashReporterSettings = true,
                 ),
                 showAndroidSettings = true,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -96,11 +93,10 @@ internal fun PreviewSettingsScreenNonAndroid() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                 ),
                 showAndroidSettings = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -113,6 +109,7 @@ internal fun PreviewSettingsScreenLoggedIn() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                     musicBrainzUsername = "david",
                     musicBrainzAccessToken = "token",
@@ -121,8 +118,6 @@ internal fun PreviewSettingsScreenLoggedIn() {
                     listenBrainzLoginState = ListenBrainzLoginState.LoggedIn,
                 ),
                 showAndroidSettings = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -135,14 +130,13 @@ internal fun PreviewSettingsScreenLoggedOut() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                     musicBrainzUsername = "david",
                     musicBrainzAccessToken = "token",
                     listenBrainzLoginState = ListenBrainzLoginState.LoggedOut,
                 ),
                 showAndroidSettings = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -155,14 +149,13 @@ internal fun PreviewSettingsScreenInvalidToken() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                     musicBrainzUsername = "david",
                     musicBrainzAccessToken = "token",
                     listenBrainzLoginState = ListenBrainzLoginState.InvalidToken,
                 ),
                 showAndroidSettings = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }
@@ -175,14 +168,13 @@ internal fun PreviewSettingsScreenOtherError() {
         Surface {
             SettingsUi(
                 state = SettingsUiState(
+                    versionNameAndCode = "1.2.3 (123)",
                     appDatabaseVersion = "1",
                     musicBrainzUsername = "david",
                     musicBrainzAccessToken = "token",
                     listenBrainzLoginState = ListenBrainzLoginState.OtherError("error"),
                 ),
                 showAndroidSettings = false,
-                versionName = "1.2.3",
-                versionCode = 123,
             )
         }
     }

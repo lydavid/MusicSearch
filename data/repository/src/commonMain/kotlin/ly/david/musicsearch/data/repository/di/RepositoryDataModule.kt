@@ -27,6 +27,7 @@ import ly.david.musicsearch.data.repository.list.ObserveTrackCountImpl
 import ly.david.musicsearch.data.repository.list.ObserveVisitedCountImpl
 import ly.david.musicsearch.data.repository.listen.GetTracksByReleaseForListenSubmissionImpl
 import ly.david.musicsearch.data.repository.listen.ListensListRepositoryImpl
+import ly.david.musicsearch.data.repository.listen.SubmitListensImpl
 import ly.david.musicsearch.data.repository.metadata.MetadataRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesListRepositoryImpl
@@ -75,6 +76,7 @@ import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.list.ObserveVisitedCount
 import ly.david.musicsearch.shared.domain.listen.GetTracksByReleaseForListenSubmission
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
+import ly.david.musicsearch.shared.domain.listen.SubmitListens
 import ly.david.musicsearch.shared.domain.metadata.MetadataRepository
 import ly.david.musicsearch.shared.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.shared.domain.place.PlaceRepository
@@ -152,4 +154,5 @@ val repositoryDataModule = module {
     singleOf(::ObserveCountOfRelationshipsByEntityImpl) bind ObserveCountOfRelationshipsByEntity::class
     singleOf(::ObserveCountOfEachStatusImpl) bind ObserveCountOfEachStatus::class
     singleOf(::LookupUrlRepositoryImpl) bind LookupUrlRepository::class
+    singleOf(::SubmitListensImpl) bind SubmitListens::class
 }
