@@ -110,6 +110,18 @@ jobs:
           
           echo "$release_notes" > "fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt"
           echo "$release_notes" > fastlane/metadata/ios/en-US/release_notes.txt
+          
+          # Prepend new release notes to CHANGELOG.md
+          new_entry=$(tail -n +2 /tmp/raw_notes.txt | \
+            sed 's/^# \([^#]\)/## \1/')
+          if [ -f CHANGELOG.md ]; then
+            head -n 2 CHANGELOG.md > /tmp/changelog_new.txt
+            printf '%s\n\n' "$new_entry" >> /tmp/changelog_new.txt
+            tail -n +3 CHANGELOG.md >> /tmp/changelog_new.txt
+            mv /tmp/changelog_new.txt CHANGELOG.md
+          else
+            printf '# Changelog\n\n%s\n\n' "$new_entry" > CHANGELOG.md
+          fi
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
@@ -206,7 +218,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add gradle.properties ios-app/musicsearch.xcodeproj/project.pbxproj
-          git add fastlane/metadata/android/en-US/changelogs/
+          git add fastlane/metadata/android/en-US/changelogs/ fastlane/metadata/ios/en-US/release_notes.txt CHANGELOG.md
           git commit -m "chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]"
           git push
 
