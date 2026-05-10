@@ -11,16 +11,19 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 ## Releases
 
-| Platform | Links                                                                                                                                                                                                                                                                                                                                                                                                      |
-|---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Android | <a href="https://f-droid.org/packages/io.github.lydavid.musicsearch"><img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png" /></a> <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch"><img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" /></a> |
-| iOS/macOS | <a href="https://apps.apple.com/us/app/musicsearch-music-database/id6745536099"><img alt="Get it on Apple App Store" height="80" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"/></a>                                                                                                                                                                              |
+| Source      | Links                                                                                                                                                                                                                                   |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| F-Droid     | <a href="https://f-droid.org/packages/io.github.lydavid.musicsearch"><img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png" /></a>                                                                      |
+| Google Play | <a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch"><img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" /></a> |
+| iOS/macOS   | <a href="https://apps.apple.com/us/app/musicsearch-music-database/id6745536099"><img alt="Get it on Apple App Store" height="55" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"/></a>           |
 
 
 Or you can download its APK from the top of [all GitHub Releases](https://github.com/lydavid/MusicSearch/releases/).
 
 Desktop releases are packaged by [Conveyor](https://www.hydraulic.dev/) and available from this [download page](https://lydavid.github.io/MusicSearch/download.html).
 They are currently self-signed.
+
+See [CHANGELOG](CHANGELOG.md) for the full release history.
 
 ## Features
 
