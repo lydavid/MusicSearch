@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.feature.settings.internal.components.SettingSwitch
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
@@ -68,9 +67,7 @@ internal fun ListensSettingsUi(
             TextButton(
                 onClick = {
                     eventSink(
-                        ListensSettingsUiEvent.UpdateNumberOfListensInDetails(
-                            DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW,
-                        ),
+                        ListensSettingsUiEvent.Reset,
                     )
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally),

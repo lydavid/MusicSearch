@@ -35,6 +35,11 @@ internal class ListensSettingsPresenter(
                 ListensSettingsUiEvent.ToggleIncludeClientAndVersion -> {
                     appPreferences.setSubmitClientAndVersionWithListen(!submitClientAndVersionWithListen)
                 }
+
+                ListensSettingsUiEvent.Reset -> {
+                    appPreferences.setNumberOfListensInDetails(DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW)
+                    appPreferences.setSubmitClientAndVersionWithListen(false)
+                }
             }
         }
 
@@ -56,4 +61,5 @@ internal sealed interface ListensSettingsUiEvent : CircuitUiEvent {
     data object NavigateUp : ListensSettingsUiEvent
     data class UpdateNumberOfListensInDetails(val number: Long) : ListensSettingsUiEvent
     data object ToggleIncludeClientAndVersion : ListensSettingsUiEvent
+    data object Reset : ListensSettingsUiEvent
 }
