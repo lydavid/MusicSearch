@@ -369,4 +369,13 @@
     <string name="clearDateFilter">Datumsfilter löschen</string>
     <string name="filterFromListenDate">Nach Hördatum filtern</string>
     <string name="stopFilteringFromThisDate">Ab diesem Datum nicht mehr filtern</string>
+    <plurals name="xListens">
+        <item quantity="one">%1$d Gehörtes</item>
+        <item quantity="other">%1$d Gehörte</item>
+    </plurals>
+    <plurals name="xCompleteListens">
+        <item quantity="one">%1$d vollständig Gehörtes</item>
+        <item quantity="other">%1$d vollständig Gehörte</item>
+    </plurals>
+    <string name="unknownListens">Unbekannte Anzahl an Gehörte</string>
 </resources>
