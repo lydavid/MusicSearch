@@ -5,6 +5,8 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import ly.david.musicsearch.ui.common.theme.DISABLED_ALPHA
+import ly.david.musicsearch.ui.common.theme.SELECTED_ALPHA
 
 @Composable
 fun listItemColors(
@@ -13,7 +15,7 @@ fun listItemColors(
 ): ListItemColors {
     return ListItemDefaults.colors(
         containerColor = if (isSelected) {
-            MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+            MaterialTheme.colorScheme.primary.copy(alpha = SELECTED_ALPHA)
         } else {
             Color.Transparent
         },
@@ -28,5 +30,5 @@ private fun getEnabledColor(enabled: Boolean) =
     if (enabled) {
         Color.Unspecified
     } else {
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+        MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLED_ALPHA)
     }

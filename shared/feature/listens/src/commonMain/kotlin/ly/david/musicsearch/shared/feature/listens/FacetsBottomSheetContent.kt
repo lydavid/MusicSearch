@@ -31,6 +31,7 @@ import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
+import ly.david.musicsearch.ui.common.theme.SELECTED_ALPHA
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TabsBar
@@ -100,7 +101,7 @@ internal fun FacetsBottomSheetContent(
                             modifier = Modifier
                                 .background(
                                     if (selected) {
-                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                                        MaterialTheme.colorScheme.primary.copy(alpha = SELECTED_ALPHA)
                                     } else {
                                         Color.Unspecified
                                     },

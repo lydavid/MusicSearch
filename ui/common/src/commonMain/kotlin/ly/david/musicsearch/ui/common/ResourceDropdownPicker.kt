@@ -26,6 +26,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
+import ly.david.musicsearch.ui.common.theme.SELECTED_ALPHA
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.resource
 import org.jetbrains.compose.resources.stringResource
@@ -74,7 +75,7 @@ fun ResourceDropdownPicker(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = if (selectedOption == option) {
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        MaterialTheme.colorScheme.primary.copy(alpha = SELECTED_ALPHA)
                     } else {
                         MaterialTheme.colorScheme.background
                     },

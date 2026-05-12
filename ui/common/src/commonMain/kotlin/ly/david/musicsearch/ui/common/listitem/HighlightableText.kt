@@ -12,6 +12,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import ly.david.musicsearch.ui.common.theme.HIGHLIGHTED_ALPHA
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -69,7 +70,7 @@ fun HighlightableText(
 
             withStyle(
                 style = SpanStyle(
-                    background = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    background = MaterialTheme.colorScheme.primary.copy(alpha = HIGHLIGHTED_ALPHA),
                 ),
             ) {
                 append(text.subSequence(index, index + highlightedText.length))

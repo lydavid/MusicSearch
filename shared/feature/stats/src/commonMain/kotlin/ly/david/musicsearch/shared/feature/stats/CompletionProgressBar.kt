@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.UNKNOWN
+import ly.david.musicsearch.ui.common.theme.PROGRESS_TRACK_ALPHA
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -42,7 +43,7 @@ internal fun CompletionProgressBar(
                         .height(8.dp)
                         .fillMaxWidth(),
                     color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = PROGRESS_TRACK_ALPHA),
                 )
             }
         }
