@@ -20,6 +20,7 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.toMusicBrainzEntityType
 
@@ -66,9 +67,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     filterText = state.topAppBarFilterState.filterText,
                     onRecordingClick = { id ->
                         eventSink(
-                            DetailsUiEvent.ClickItem(
-                                entityType = MusicBrainzEntityType.RECORDING,
-                                id = id,
+                            DetailsUiEvent.GoToScreen(
+                                screen = DetailsScreen(
+                                    entityType = MusicBrainzEntityType.RECORDING,
+                                    id = id,
+                                ),
                             ),
                         )
                     },
@@ -96,9 +99,11 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     now = state.detailsTabUiState.now,
                     onItemClick = { entity, id ->
                         eventSink(
-                            DetailsUiEvent.ClickItem(
-                                entityType = entity,
-                                id = id,
+                            DetailsUiEvent.GoToScreen(
+                                screen = DetailsScreen(
+                                    entityType = entity,
+                                    id = id,
+                                ),
                             ),
                         )
                     },

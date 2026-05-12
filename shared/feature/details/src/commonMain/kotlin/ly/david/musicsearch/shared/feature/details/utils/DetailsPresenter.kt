@@ -238,17 +238,6 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     selectionState.toggleSelectAll(event.collectableIds)
                 }
 
-                is DetailsUiEvent.ClickItem -> {
-                    navigator.onNavEvent(
-                        NavEvent.GoTo(
-                            DetailsScreen(
-                                entityType = event.entityType,
-                                id = event.id,
-                            ),
-                        ),
-                    )
-                }
-
                 is DetailsUiEvent.GoToScreen -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
@@ -352,6 +341,8 @@ internal data class DetailsTabUiState(
 )
 
 internal enum class CollapsibleSection {
+    Genres,
+    Tags,
     ReleaseEvents,
     Listens,
     ExternalLinks,
@@ -374,11 +365,6 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
 
     data class ToggleSelectAllItems(
         val collectableIds: List<SelectableId>,
-    ) : DetailsUiEvent
-
-    data class ClickItem(
-        val entityType: MusicBrainzEntityType,
-        val id: String,
     ) : DetailsUiEvent
 
     data class GoToScreen(

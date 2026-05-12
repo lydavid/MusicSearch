@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -20,6 +21,7 @@ class ReleaseGroupRepositoryImpl(
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseGroupRepository {
@@ -57,12 +59,16 @@ class ReleaseGroupRepositoryImpl(
             entityType = MusicBrainzEntityType.RELEASE_GROUP,
             mbid = releaseGroupId,
         )
+        val genres = tagDao.getGenres(entityId = releaseGroupId)
+        val tags = tagDao.getTags(entityId = releaseGroupId)
 
         return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
             releaseGroup.copy(
                 artistCredits = artistCredits.toPersistentList(),
                 urls = urlRelations,
                 aliases = aliases,
+                genres = genres,
+                tags = tags,
             )
         } else {
             null
@@ -73,6 +79,7 @@ class ReleaseGroupRepositoryImpl(
         releaseGroupDao.deleteReleaseGroup(id)
         relationRepository.deleteRelationshipsByType(id)
         artistCreditDao.deleteArtistCreditsForEntity(id)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     private fun cache(
@@ -92,6 +99,12 @@ class ReleaseGroupRepositoryImpl(
             entityId = releaseGroup.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = releaseGroup.id,
+            genres = releaseGroup.genres,
+            tags = releaseGroup.tags,
         )
     }
 }

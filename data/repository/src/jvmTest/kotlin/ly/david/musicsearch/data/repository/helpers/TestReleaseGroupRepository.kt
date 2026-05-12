@@ -6,6 +6,7 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
@@ -20,6 +21,7 @@ interface TestReleaseGroupRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createReleaseGroupRepository(
@@ -43,6 +45,7 @@ interface TestReleaseGroupRepository {
             artistCreditDao = artistCreditDao,
             relationRepository = relationRepository,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupReleaseGroup(
                     releaseGroupId: String,

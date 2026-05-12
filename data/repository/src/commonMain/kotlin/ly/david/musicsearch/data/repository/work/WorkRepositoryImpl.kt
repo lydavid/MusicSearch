@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -23,6 +24,7 @@ class WorkRepositoryImpl(
     private val workAttributeDao: WorkAttributeDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
@@ -70,11 +72,15 @@ class WorkRepositoryImpl(
             entityType = MusicBrainzEntityType.WORK,
             mbid = workId,
         )
+        val genres = tagDao.getGenres(entityId = workId)
+        val tags = tagDao.getTags(entityId = workId)
 
         return work.copy(
             attributes = workAttributes.toPersistentList(),
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
             listenCount = work.listenCount.takeIf { username.isNotEmpty() },
         )
     }
@@ -83,6 +89,7 @@ class WorkRepositoryImpl(
         workDao.delete(id)
         relationRepository.deleteRelationshipsByType(entityId = id, entity = MusicBrainzEntityType.URL)
         relationRepository.deleteRelationshipsByType(entityId = id, entity = MusicBrainzEntityType.RECORDING)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     private fun cache(
@@ -106,6 +113,12 @@ class WorkRepositoryImpl(
             entityId = work.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = work.id,
+            genres = work.genres,
+            tags = work.tags,
         )
     }
 }

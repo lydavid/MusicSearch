@@ -73,13 +73,12 @@ internal fun ReleaseDetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit,
-    onCollapseExpandReleaseEvents: () -> Unit,
-    onCollapseExpandListens: () -> Unit,
-    onCollapseExpandExternalLinks: () -> Unit,
-    onCollapseExpandAliases: () -> Unit,
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onSeeAllListensClick: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     val entityInfoSection: @Composable ReleaseDetailsModel.() -> Unit = {
         barcode.ifNotEmpty {
@@ -183,7 +182,7 @@ internal fun ReleaseDetailsTabUi(
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ReleaseEvents),
                 areas = areas,
                 filterText = filterText,
-                onCollapseExpandReleaseEvents = onCollapseExpandReleaseEvents,
+                onCollapseExpandReleaseEvents = { onCollapseExpandSection(CollapsibleSection.ReleaseEvents) },
                 onItemClick = onItemClick,
             )
 
@@ -191,7 +190,7 @@ internal fun ReleaseDetailsTabUi(
                 release = this@run,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = onCollapseExpandListens,
+                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
                 now = detailsTabUiState.now,
                 onSeeAllListensClick = onSeeAllListensClick,
                 onItemClick = onItemClick,
@@ -205,10 +204,11 @@ internal fun ReleaseDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onImageClick = onImageClick,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = entityInfoSection,
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
     )
 }
 

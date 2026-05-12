@@ -5,6 +5,8 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import ly.david.musicsearch.shared.domain.work.Work
 import ly.david.musicsearch.shared.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.shared.domain.work.WorkType
@@ -21,6 +23,8 @@ data class WorkDetailsModel(
     override val lastUpdated: Instant = Clock.System.now(),
     val attributes: ImmutableList<WorkAttributeUiModel> = persistentListOf(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
+    override val genres: ImmutableList<GenreChip> = persistentListOf(),
+    override val tags: ImmutableList<TagChip> = persistentListOf(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenCount: Long? = null,

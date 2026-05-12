@@ -23,7 +23,10 @@ import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.network.resourceUri
 
 private const val RECORDING_REL = "recording-rels"
-const val URL_REL = "url-rels"
+private const val URL_REL = "url-rels"
+private const val TAGS = "tags"
+private const val GENRES = "genres"
+private const val LOOKUP_INCLUDES = "$URL_REL+$ALIASES+$TAGS+$GENRES"
 
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
@@ -36,7 +39,7 @@ interface LookupApi {
     suspend fun lookupArea(
         areaId: String,
 
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
@@ -48,62 +51,61 @@ interface LookupApi {
 
     suspend fun lookupArtist(
         artistId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
     ): ArtistMusicBrainzNetworkModel
 
     suspend fun lookupEvent(
         eventId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
     ): EventMusicBrainzNetworkModel
 
     suspend fun lookupGenre(
         genreId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
     ): GenreMusicBrainzNetworkModel
 
     suspend fun lookupInstrument(
         instrumentId: String,
-        include: String = "$URL_REL+$ALIASES",
+        include: String = LOOKUP_INCLUDES,
     ): InstrumentMusicBrainzNetworkModel
 
     suspend fun lookupLabel(
         labelId: String,
-        include: String = "$URL_REL+$ALIASES",
+        include: String = LOOKUP_INCLUDES,
     ): LabelMusicBrainzNetworkModel
 
     suspend fun lookupPlace(
         placeId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
     ): PlaceMusicBrainzNetworkModel
 
     suspend fun lookupRecording(
         recordingId: String,
-        include: String = "$ARTIST_CREDITS+$ALIASES+$ISRCS+$URL_REL",
+        include: String = "$LOOKUP_INCLUDES+$ARTIST_CREDITS+$ISRCS",
     ): RecordingMusicBrainzNetworkModel
 
     suspend fun lookupRelease(
         releaseId: String,
-        include: String = "artist-credits" +
+        include: String = LOOKUP_INCLUDES +
+            "+artist-credits" +
             "+labels" + // gives us labels (alternatively, we can get them from rels)
             "+recordings" + // gives us tracks
-            "+release-groups" + // gives us types
-            "+$URL_REL" +
-            "+$ALIASES",
+            "+release-groups", // gives us types
     ): ReleaseMusicBrainzNetworkModel
 
     suspend fun lookupReleaseGroup(
         releaseGroupId: String,
-        include: String = "artists+$URL_REL+$ALIASES", // "releases+artists+media"
+        include: String = "$LOOKUP_INCLUDES+artists", // "releases+media"
     ): ReleaseGroupMusicBrainzNetworkModel
 
     suspend fun lookupSeries(
         seriesId: String,
-        include: String? = "$URL_REL+$ALIASES",
+        include: String? = LOOKUP_INCLUDES,
     ): SeriesMusicBrainzNetworkModel
 
     suspend fun lookupWork(
         workId: String,
-        include: String? = "$URL_REL+$ALIASES+$RECORDING_REL",
+        include: String? = "$LOOKUP_INCLUDES+$RECORDING_REL",
     ): WorkMusicBrainzNetworkModel
 
     suspend fun lookupUrl(

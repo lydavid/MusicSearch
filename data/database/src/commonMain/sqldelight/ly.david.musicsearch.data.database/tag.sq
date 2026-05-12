@@ -1,0 +1,58 @@
+CREATE TABLE mbid_tag (
+  mbid TEXT NOT NULL,
+  tag TEXT NOT NULL,
+  count INTEGER NOT NULL,
+
+  PRIMARY KEY (mbid, tag)
+);
+
+CREATE TABLE mbid_genre (
+  mbid TEXT NOT NULL,
+  genre_id TEXT NOT NULL REFERENCES genre(id) ON DELETE CASCADE,
+  count INTEGER NOT NULL,
+
+  PRIMARY KEY (mbid, genre_id)
+);
+
+insertTag:
+INSERT OR IGNORE INTO mbid_tag
+VALUES (
+  :mbid,
+  :tag,
+  :count
+);
+
+insertGenreLink:
+INSERT OR IGNORE INTO mbid_genre
+VALUES (
+  :mbid,
+  :genre_id,
+  :count
+);
+
+deleteByEntity {
+DELETE FROM mbid_tag
+WHERE mbid = :entityId;
+
+DELETE FROM mbid_genre
+WHERE mbid = :entityId;
+}
+
+getTagsByEntity:
+SELECT
+  tag AS name,
+  count
+FROM mbid_tag
+WHERE mbid = :entityId
+ORDER BY count DESC, name ASC;
+
+getGenresByEntity:
+SELECT
+  genre.id,
+  genre.name,
+  genre.disambiguation,
+  mbid_genre.count
+FROM mbid_genre
+JOIN genre ON genre.id = mbid_genre.genre_id
+WHERE mbid_genre.mbid = :entityId
+ORDER BY count DESC, name ASC;

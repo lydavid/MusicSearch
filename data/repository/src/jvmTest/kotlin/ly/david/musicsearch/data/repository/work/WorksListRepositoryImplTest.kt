@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
@@ -80,6 +81,7 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     private val collectionDao: CollectionDao by inject()
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()

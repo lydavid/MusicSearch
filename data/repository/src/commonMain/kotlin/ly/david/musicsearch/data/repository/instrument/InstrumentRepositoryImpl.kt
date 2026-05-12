@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.instrument
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -17,6 +18,7 @@ class InstrumentRepositoryImpl(
     private val instrumentDao: InstrumentDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : InstrumentRepository {
@@ -54,16 +56,21 @@ class InstrumentRepositoryImpl(
             entityType = MusicBrainzEntityType.INSTRUMENT,
             mbid = instrumentId,
         )
+        val genres = tagDao.getGenres(entityId = instrumentId)
+        val tags = tagDao.getTags(entityId = instrumentId)
 
         return instrument.copy(
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
         )
     }
 
     private fun delete(id: String) {
         instrumentDao.delete(id)
         relationRepository.deleteRelationshipsByType(id)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     private fun cache(
@@ -83,6 +90,12 @@ class InstrumentRepositoryImpl(
             entityId = instrument.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = instrument.id,
+            genres = instrument.genres,
+            tags = instrument.tags,
         )
     }
 }

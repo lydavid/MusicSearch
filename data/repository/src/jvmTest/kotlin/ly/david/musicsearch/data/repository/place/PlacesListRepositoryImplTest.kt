@@ -22,6 +22,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
@@ -58,6 +59,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     private val collectionDao: CollectionDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 

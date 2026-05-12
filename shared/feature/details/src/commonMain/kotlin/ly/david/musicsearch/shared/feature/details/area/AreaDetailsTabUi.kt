@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
@@ -25,8 +26,9 @@ internal fun AreaDetailsTabUi(
     detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     val entityInfoSection: @Composable AreaDetailsModel.() -> Unit = {
         type.ifNotEmpty {
@@ -64,8 +66,9 @@ internal fun AreaDetailsTabUi(
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = entityInfoSection,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
     )
 }

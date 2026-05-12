@@ -12,6 +12,8 @@ import ly.david.musicsearch.shared.domain.release.Release
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -30,6 +32,8 @@ data class ReleaseDetailsModel(
 
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
+    override val genres: ImmutableList<GenreChip> = persistentListOf(),
+    override val tags: ImmutableList<TagChip> = persistentListOf(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 

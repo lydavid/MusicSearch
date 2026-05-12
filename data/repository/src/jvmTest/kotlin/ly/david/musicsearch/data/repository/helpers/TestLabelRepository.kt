@@ -5,9 +5,10 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.label.LabelRepository
@@ -19,6 +20,7 @@ interface TestLabelRepository {
     val relationDao: RelationDao
     val labelDao: LabelDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createLabelRepository(
@@ -41,6 +43,7 @@ interface TestLabelRepository {
             labelDao = labelDao,
             relationRepository = relationRepository,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupLabel(
                     labelId: String,

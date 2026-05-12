@@ -9,6 +9,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -25,15 +26,18 @@ internal fun InstrumentDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = instrument,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
@@ -62,6 +66,5 @@ internal fun InstrumentDetailsTabUi(
                 }
             }
         },
-        onCollapseExpandAliases = onCollapseExpandAliases,
     )
 }

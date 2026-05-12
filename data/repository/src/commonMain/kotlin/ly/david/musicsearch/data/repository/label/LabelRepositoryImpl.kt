@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.label
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -17,6 +18,7 @@ class LabelRepositoryImpl(
     private val labelDao: LabelDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : LabelRepository {
@@ -54,16 +56,21 @@ class LabelRepositoryImpl(
             entityType = MusicBrainzEntityType.LABEL,
             mbid = labelId,
         )
+        val genres = tagDao.getGenres(entityId = labelId)
+        val tags = tagDao.getTags(entityId = labelId)
 
         return label.copy(
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
         )
     }
 
     private fun delete(id: String) {
         labelDao.delete(id)
         relationRepository.deleteRelationshipsByType(id)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     private fun cache(
@@ -83,6 +90,12 @@ class LabelRepositoryImpl(
             entityId = label.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = label.id,
+            genres = label.genres,
+            tags = label.tags,
         )
     }
 }

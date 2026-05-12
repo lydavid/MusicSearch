@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
@@ -27,6 +28,7 @@ interface TestArtistRepository {
     val areaDao: AreaDao
     val browseRemoteMetadataDao: BrowseRemoteMetadataDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createArtistRepository(
@@ -51,6 +53,7 @@ interface TestArtistRepository {
             relationRepository = relationRepository,
             areaDao = areaDao,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
                 override val browseUsername: Flow<String>
                     get() = flowOf(fakeBrowseUsername)

@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -31,6 +32,7 @@ class RecordingRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
+    private val tagDao: TagDao,
     private val coroutineDispatchers: CoroutineDispatchers,
     private val appPreferences: AppPreferences,
 ) : RecordingRepository {
@@ -76,11 +78,15 @@ class RecordingRepositoryImpl(
             entityType = MusicBrainzEntityType.RECORDING,
             mbid = recordingId,
         )
+        val genres = tagDao.getGenres(entityId = recordingId)
+        val tags = tagDao.getTags(entityId = recordingId)
 
         return recording.copy(
             artistCredits = artistCredits.toPersistentList(),
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
             listenCount = recording.listenCount.takeIf { username.isNotEmpty() },
             listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/track/$recordingId",
         )
@@ -90,6 +96,7 @@ class RecordingRepositoryImpl(
         recordingDao.delete(id)
         relationRepository.deleteRelationshipsByType(id)
         artistCreditDao.deleteArtistCreditsForEntity(id)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     context(_: TransactionWithoutReturn)
@@ -110,6 +117,12 @@ class RecordingRepositoryImpl(
             entityId = recording.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = recording.id,
+            genres = recording.genres,
+            tags = recording.tags,
         )
     }
 }

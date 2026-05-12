@@ -8,13 +8,14 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -38,6 +39,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     private val relationDao: RelationDao by inject()
     private val instrumentDao: InstrumentDao by inject()
     private val aliasDao: AliasDao by inject()
+    private val tagDao: TagDao by inject()
     private val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createRepository(
@@ -60,6 +62,7 @@ class InstrumentRepositoryImplTest : KoinTest {
             instrumentDao = instrumentDao,
             relationRepository = relationRepository,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupInstrument(
                     instrumentId: String,

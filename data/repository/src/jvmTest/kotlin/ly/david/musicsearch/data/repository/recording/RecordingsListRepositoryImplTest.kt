@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.listenbrainz.api.AdditionalInfo
 import ly.david.musicsearch.data.listenbrainz.api.GetListensResponse
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzArtist
@@ -68,6 +69,7 @@ class RecordingsListRepositoryImplTest :
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     override val listenDao: ListenDao by inject()
     private val collectionId = "950cea33-433e-497f-93bb-a05a393a2c02"

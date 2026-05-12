@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -27,17 +28,19 @@ internal fun LabelDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = label,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

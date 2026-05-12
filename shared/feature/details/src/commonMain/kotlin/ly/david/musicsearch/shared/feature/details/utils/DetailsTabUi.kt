@@ -2,7 +2,13 @@ package ly.david.musicsearch.shared.feature.details.utils
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -17,6 +23,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
 import ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel
 import ly.david.musicsearch.ui.common.image.LargeImage
@@ -58,6 +65,7 @@ private fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(): String {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     detailsModel: T,
@@ -67,11 +75,28 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     entityInfoSection: @Composable T.() -> Unit = {},
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
     onImageClick: () -> Unit = {},
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     val primaryLabel = stringResource(Res.string.primary)
     val aliases = detailsModel.aliases.map { it.toAliasListItemModel() }.toPersistentList()
+
+    var showBottomSheetForGenreOrTag: GenreOrTag? by remember { mutableStateOf(null) }
+    showBottomSheetForGenreOrTag?.let { genreOrTag ->
+        ModalBottomSheet(
+            onDismissRequest = {
+                showBottomSheetForGenreOrTag = null
+            },
+        ) {
+            TagBottomSheetContent(
+                genreOrTag = genreOrTag,
+                onSearchGenreOrTag = onSearchGenreOrTag,
+                onGoToGenre = onGoToGenre,
+                onDismiss = { showBottomSheetForGenreOrTag = null },
+            )
+        }
+    }
 
     LazyColumn(
         modifier = modifier,
@@ -94,6 +119,16 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 entityInfoSection()
             }
 
+            genresAndTagsSection(
+                genres = genres,
+                tags = tags,
+                filterText = filterText,
+                isGenresCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Genres),
+                isTagsCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Tags),
+                onCollapseExpand = onCollapseExpandSection,
+                onChipClick = { showBottomSheetForGenreOrTag = it },
+            )
+
             item {
                 WikipediaSection(
                     extract = detailsTabUiState.wikipediaExtract,
@@ -107,7 +142,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 urls = urls,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ExternalLinks),
-                onCollapseExpand = onCollapseExpandExternalLinks,
+                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.ExternalLinks) },
             )
 
             aliasesSection(
@@ -115,7 +150,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 primaryLabel = primaryLabel,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Aliases),
-                onCollapseExpand = onCollapseExpandAliases,
+                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Aliases) },
             )
 
             item {

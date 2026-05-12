@@ -39,18 +39,19 @@ internal fun WorkDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onSeeAllListensClick: () -> Unit,
-    onCollapseExpandListens: () -> Unit,
-    onCollapseExpandExternalLinks: () -> Unit,
-    onCollapseExpandAliases: () -> Unit,
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = work,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             type?.getDisplayString()?.let {
                 TextWithHeading(
@@ -100,7 +101,7 @@ internal fun WorkDetailsTabUi(
                 filterText = filterText,
                 now = detailsTabUiState.now,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = onCollapseExpandListens,
+                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
                 onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                 onSeeAllListensClick = onSeeAllListensClick,
             )

@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
@@ -56,6 +57,7 @@ class ReleaseRepositoryImpl(
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
@@ -107,6 +109,8 @@ class ReleaseRepositoryImpl(
             entityType = MusicBrainzEntityType.RELEASE,
             mbid = releaseId,
         )
+        val genres = tagDao.getGenres(entityId = releaseId)
+        val tags = tagDao.getTags(entityId = releaseId)
 
         // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
         // releases must have artist credits and a release group.
@@ -117,19 +121,20 @@ class ReleaseRepositoryImpl(
             areas = releaseEvents.map { it.toAreaListItemModel() }.toPersistentList(),
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
             listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/album/${releaseGroup.id}",
         )
     }
 
     private fun delete(releaseId: String) {
-        releaseDao.withTransaction {
-            releaseDao.delete(releaseId = releaseId)
-            releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
-            labelDao.deleteReleaseLabelLinks(releaseId = releaseId)
-            areaDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
-            relationRepository.deleteRelationshipsByType(entityId = releaseId)
-            artistCreditDao.deleteArtistCreditsForEntity(entityId = releaseId)
-        }
+        releaseDao.delete(releaseId = releaseId)
+        releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
+        labelDao.deleteReleaseLabelLinks(releaseId = releaseId)
+        areaDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
+        relationRepository.deleteRelationshipsByType(entityId = releaseId)
+        artistCreditDao.deleteArtistCreditsForEntity(entityId = releaseId)
+        tagDao.deleteByEntity(entityId = releaseId)
     }
 
     private fun cache(
@@ -186,6 +191,12 @@ class ReleaseRepositoryImpl(
             entityId = release.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = release.id,
+            genres = release.genres,
+            tags = release.tags,
         )
     }
 

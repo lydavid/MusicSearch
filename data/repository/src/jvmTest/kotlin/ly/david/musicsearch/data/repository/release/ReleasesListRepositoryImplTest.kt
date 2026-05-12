@@ -46,6 +46,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
@@ -126,6 +127,7 @@ class ReleasesListRepositoryImplTest :
     override val recordingDao: RecordingDao by inject()
     override val areaDao: AreaDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     override val listenDao: ListenDao by inject()
     private val imageUrlDao: ImageUrlDao by inject()

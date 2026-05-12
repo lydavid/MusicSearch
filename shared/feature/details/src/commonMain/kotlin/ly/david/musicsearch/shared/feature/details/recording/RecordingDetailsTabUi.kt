@@ -44,18 +44,19 @@ internal fun RecordingDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onSeeAllListensClick: () -> Unit,
-    onCollapseExpandListens: () -> Unit,
-    onCollapseExpandExternalLinks: () -> Unit,
-    onCollapseExpandAliases: () -> Unit,
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = recording,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             if (video) {
                 TextWithIcon(
@@ -95,7 +96,7 @@ internal fun RecordingDetailsTabUi(
                 filterText = filterText,
                 now = detailsTabUiState.now,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = onCollapseExpandListens,
+                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
                 onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                 onSeeAllListensClick = onSeeAllListensClick,
             )

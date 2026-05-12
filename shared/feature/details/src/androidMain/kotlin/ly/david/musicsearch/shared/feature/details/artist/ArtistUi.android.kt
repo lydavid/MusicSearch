@@ -15,6 +15,8 @@ import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -43,6 +45,47 @@ private val detailsModel = ArtistDetailsModel(
         countryCodes = persistentListOf("GB"),
     ),
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
+    genres = persistentListOf(
+        GenreChip(
+            id = "a",
+            name = "rock",
+            count = 46,
+        ),
+        GenreChip(
+            id = "b",
+            name = "pop",
+            count = 28,
+        ),
+        GenreChip(
+            id = "c",
+            name = "pop rock",
+            count = 23,
+        ),
+        GenreChip(
+            id = "d",
+            name = "psychedelic pop",
+            count = 16,
+        ),
+        GenreChip(
+            id = "e",
+            name = "merseybeat",
+            count = 15,
+        ),
+    ),
+    tags = persistentListOf(
+        TagChip(
+            name = "british",
+            count = 22,
+        ),
+        TagChip(
+            name = "british invasion",
+            count = 9,
+        ),
+        TagChip(
+            name = "60s",
+            count = 6,
+        ),
+    ),
     urls = persistentListOf(
         RelationListItemModel(
             id = "1",
@@ -147,6 +190,8 @@ internal fun PreviewArtistDetailsUiCollapsed() {
                     now = Instant.parse("2025-09-06T18:42:20Z"),
                     wikipediaExtract = wikipediaExtract,
                     isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.Genres,
+                        CollapsibleSection.Tags,
                         CollapsibleSection.ExternalLinks,
                         CollapsibleSection.Aliases,
                     ),
@@ -162,7 +207,7 @@ internal fun PreviewArtistDetailsUiWithFilter() {
     PreviewWithTransitionAndOverlays {
         val topAppBarFilterState = TopAppBarFilterState()
         topAppBarFilterState.toggleFilterMode(true)
-        topAppBarFilterState.updateFilterText("https")
+        topAppBarFilterState.updateFilterText("b")
         ArtistUi(
             state = detailsUiState.copy(
                 detailsTabUiState = detailsUiState.detailsTabUiState,

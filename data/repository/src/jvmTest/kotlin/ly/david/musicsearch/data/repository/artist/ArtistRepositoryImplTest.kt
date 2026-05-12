@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeBrowseApi
+import ly.david.data.test.davidBowieArtistMusicBrainzModel
 import ly.david.data.test.unitedKingdomAreaMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
@@ -15,6 +16,7 @@ import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -32,6 +34,8 @@ import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -51,6 +55,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     override val areaDao: AreaDao by inject()
     override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val collectionEntityDao: CollectionEntityDao by inject()
 
@@ -105,17 +110,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     @Test
     fun `lookup artist - area without iso-3166-1 code`() = runTest {
         val artistRepositoryImpl = createArtistRepository(
-            artistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
-                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
-                name = "David Bowie",
-                type = "Person",
-                typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
-                gender = "Male",
-                lifeSpan = LifeSpanMusicBrainzModel(
-                    begin = "1947-01-08",
-                    end = "2016-01-10",
-                    ended = true,
-                ),
+            artistMusicBrainzModel = davidBowieArtistMusicBrainzModel.copy(
                 sortName = "Bowie, David",
                 area = AreaMusicBrainzNetworkModel(
                     id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
@@ -124,6 +119,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
                 ipis = listOf("00003960406", "00015471209"),
                 isnis = listOf("0000000114448576", "0000000458257298"),
+                relations = null,
             ),
         )
 
@@ -153,6 +149,28 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
                 isnis = persistentListOf("0000000114448576", "0000000458257298"),
                 lastUpdated = testDateTimeInThePast,
                 listenBrainzUrl = "/artist/5441c29d-3602-4898-b1a1-b77fa23b8e50",
+                genres = persistentListOf(
+                    GenreChip(
+                        id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                        name = "art rock",
+                        count = 22,
+                    ),
+                    GenreChip(
+                        id = "54d89e62-5bfb-42bc-a321-9230e6fdcd75",
+                        name = "glam rock",
+                        count = 22,
+                    ),
+                ),
+                tags = persistentListOf(
+                    TagChip(
+                        name = "british",
+                        count = 6,
+                    ),
+                    TagChip(
+                        name = "uk",
+                        count = 6,
+                    ),
+                ),
             ),
             artistDetailsModel,
         )
