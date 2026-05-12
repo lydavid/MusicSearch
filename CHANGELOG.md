@@ -1,5 +1,11 @@
 # Changelog
 
+
+
+### Bug Fixes
+
+* remove dedicated Additional Details section for releases and put its details under Release information ([c6d40e5](https://github.com/lydavid/MusicSearch/commit/c6d40e5aa9e17965a8eb9afba38046d70808f567))
+
 ## [1.112.0](https://github.com/lydavid/MusicSearch/compare/v1.111.0...v1.112.0) (2026-05-10)
 
 
