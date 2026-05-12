@@ -1,5 +1,6 @@
 # Changelog
 
+## [1.112.1](https://github.com/lydavid/MusicSearch/compare/v1.112.0...v1.112.1) (2026-05-12)
 
 
 ### Bug Fixes

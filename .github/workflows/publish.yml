@@ -100,7 +100,7 @@ jobs:
         run: |
           echo "${{ steps.get-next-version.outputs.new-release-notes }}" > /tmp/raw_notes.txt
           
-          release_notes=$(tail -n +5 /tmp/raw_notes.txt | \
+          release_notes=$(tail -n +4 /tmp/raw_notes.txt | \
             sed 's/ ([[][^]]*]([^)]*))//g')
           
           max_length=500
@@ -112,7 +112,7 @@ jobs:
           echo "$release_notes" > fastlane/metadata/ios/en-US/release_notes.txt
           
           # Prepend new release notes to CHANGELOG.md
-          new_entry=$(tail -n +2 /tmp/raw_notes.txt | \
+          new_entry=$(tail -n +1 /tmp/raw_notes.txt | \
             sed 's/^# \([^#]\)/## \1/')
           if [ -f CHANGELOG.md ]; then
             head -n 2 CHANGELOG.md > /tmp/changelog_new.txt
