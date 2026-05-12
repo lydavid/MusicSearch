@@ -8,7 +8,7 @@ CREATE TABLE mbid_tag (
 
 CREATE TABLE mbid_genre (
   mbid TEXT NOT NULL,
-  genre_id TEXT NOT NULL REFERENCES genre(id) ON DELETE CASCADE,
+  genre_id TEXT NOT NULL,
   count INTEGER NOT NULL,
 
   PRIMARY KEY (mbid, genre_id)
