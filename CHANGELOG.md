@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.0](https://github.com/lydavid/MusicSearch/compare/v1.112.1...v1.113.0) (2026-05-13)
+
+
+### Features
+
+* show genres/tags in details screens (cached screens will require refreshing to see these); click a tag to quickly search for it, or go to the genre's screen  ([#2198](https://github.com/lydavid/MusicSearch/issues/2198)) ([c9d7609](https://github.com/lydavid/MusicSearch/commit/c9d7609714430a2e3c2fc77e21a9e496dfa920c4)), closes [#2046](https://github.com/lydavid/MusicSearch/issues/2046)
+
 ## [1.112.1](https://github.com/lydavid/MusicSearch/compare/v1.112.0...v1.112.1) (2026-05-12)
 
 
