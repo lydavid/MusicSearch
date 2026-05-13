@@ -22,7 +22,7 @@ import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.listen.SubmitListens
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -254,7 +254,7 @@ class SubmitListenPresenterTest {
             assertEquals(
                 FakeNavigator.PopEvent(
                     poppedScreen = null,
-                    result = SnackbarPopResultV2(
+                    result = SnackbarPopResult(
                         Feedback.Success(
                             data = SubmitListenFeedback.SubmittedListens,
                             time = now,
@@ -288,7 +288,7 @@ class SubmitListenPresenterTest {
                 SubmitListenUiEvent.Dismiss,
             )
             assertEquals(
-                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResultV2(feedback = null)),
+                FakeNavigator.PopEvent(poppedScreen = null, result = SnackbarPopResult(feedback = null)),
                 navigator.awaitPop(),
             )
         }
@@ -504,7 +504,7 @@ class SubmitListenPresenterTest {
             assertEquals(
                 FakeNavigator.PopEvent(
                     poppedScreen = null,
-                    result = SnackbarPopResultV2(
+                    result = SnackbarPopResult(
                         Feedback.Success(
                             data = SubmitListenFeedback.SubmittedListens,
                             time = now,
@@ -629,7 +629,7 @@ class SubmitListenPresenterTest {
             assertEquals(
                 FakeNavigator.PopEvent(
                     poppedScreen = null,
-                    result = SnackbarPopResultV2(
+                    result = SnackbarPopResult(
                         Feedback.Success(
                             data = SubmitListenFeedback.SubmittedListens,
                             time = now,

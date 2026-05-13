@@ -61,15 +61,8 @@ data class EditCollectionScreen(
 @Parcelize
 data object PopWithoutResult : PopResult
 
-// replace with v2, then rename
 @Parcelize
-data class SnackbarPopResult(
-    val message: String = "",
-    val actionLabel: String? = null,
-) : PopResult
-
-@Parcelize
-data class SnackbarPopResultV2<T : CommonParcelable>(
+data class SnackbarPopResult<T : CommonParcelable>(
     val feedback: T?,
 ) : PopResult
 

@@ -10,7 +10,7 @@ import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.showInBottomSheetForResult
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 
@@ -23,7 +23,7 @@ fun showEditCollectionSheet(
     onLoginClick: () -> Unit,
 ) {
     coroutineScope.launch {
-        val result: SnackbarPopResultV2<Feedback<EditACollectionFeedback>> = overlayHost.showInBottomSheetForResult(
+        val result: SnackbarPopResult<Feedback<EditACollectionFeedback>> = overlayHost.showInBottomSheetForResult(
             EditCollectionScreen(
                 entityType = entityType,
                 collectableIds = entityIds,

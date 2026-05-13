@@ -12,20 +12,20 @@ import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 @Suppress("UNCHECKED_CAST")
 suspend fun <T : CommonParcelable> OverlayHost.showInDialogForResult(
     screen: Screen,
-): SnackbarPopResultV2<T> = show(
+): SnackbarPopResult<T> = show(
     @OptIn(ExperimentalMaterial3Api::class)
     BasicDialogOverlay(
         model = Unit,
         properties = DialogProperties(
             usePlatformDefaultWidth = true,
         ),
-        onDismissRequest = { SnackbarPopResultV2(feedback = null) },
+        onDismissRequest = { SnackbarPopResult(feedback = null) },
     ) { _, overlayNavigator ->
         CircuitContent(
             screen = screen,
             onNavEvent = { event ->
                 when (event) {
-                    is NavEvent.Pop -> overlayNavigator.finish(event.result as SnackbarPopResultV2<T>)
+                    is NavEvent.Pop -> overlayNavigator.finish(event.result as SnackbarPopResult<T>)
                     else -> {}
                 }
             },

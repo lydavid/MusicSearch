@@ -32,7 +32,7 @@ import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.listen.SubmitListens
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -152,7 +152,7 @@ internal class SubmitListenPresenter(
                             listenSubmissions = submissions,
                         )
                         navigator.pop(
-                            result = SnackbarPopResultV2(
+                            result = SnackbarPopResult(
                                 feedback = feedback.withTime(clock.now()),
                             ),
                         )
@@ -160,7 +160,7 @@ internal class SubmitListenPresenter(
                 }
 
                 is SubmitListenUiEvent.Dismiss -> {
-                    navigator.pop(result = SnackbarPopResultV2<Feedback.Success<SubmitListenFeedback>>(feedback = null))
+                    navigator.pop(result = SnackbarPopResult<Feedback.Success<SubmitListenFeedback>>(feedback = null))
                 }
             }
         }

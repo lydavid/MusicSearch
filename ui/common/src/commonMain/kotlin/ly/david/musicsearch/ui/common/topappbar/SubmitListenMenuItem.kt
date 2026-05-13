@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.listen.SubmitListenFeedback
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.HeadphonesAdd
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.SubmitListenScreen
 import ly.david.musicsearch.ui.common.screen.showInDialogForResult
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
@@ -68,7 +68,7 @@ fun showSubmitListenDialog(
     onSuccess: () -> Unit,
 ) {
     coroutineScope.launch {
-        val result: SnackbarPopResultV2<Feedback<SubmitListenFeedback>> = overlayHost.showInDialogForResult(
+        val result: SnackbarPopResult<Feedback<SubmitListenFeedback>> = overlayHost.showInDialogForResult(
             screen = SubmitListenScreen(
                 submitListenType = submitListenType,
             ),

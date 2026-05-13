@@ -27,7 +27,7 @@ import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
-import ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import kotlin.time.Clock
 
 internal class EditCollectionPresenter(
@@ -84,7 +84,7 @@ internal class EditCollectionPresenter(
                                 is Feedback.Success<*>,
                                 -> {
                                     navigator.pop(
-                                        SnackbarPopResultV2(
+                                        SnackbarPopResult(
                                             feedback = feedback.withTime(clock.now()),
                                         ),
                                     )
