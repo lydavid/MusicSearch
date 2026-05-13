@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
@@ -20,10 +21,10 @@ import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
 import ly.david.musicsearch.data.repository.helpers.TestRecordingsListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.artist.CollaboratingArtistAndEntity
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -49,6 +50,7 @@ class ArtistCollaborationRepositoryImplTest :
     override val collectionEntityDao: CollectionEntityDao by inject()
     override val recordingDao: RecordingDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test

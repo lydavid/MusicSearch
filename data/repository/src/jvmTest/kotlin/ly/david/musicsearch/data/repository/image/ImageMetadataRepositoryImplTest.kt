@@ -21,6 +21,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -79,6 +80,7 @@ class ImageMetadataRepositoryImplTest :
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
 
     @Test
     fun empty() = runTest {

@@ -9,6 +9,7 @@ import ly.david.data.test.skycladObserverWorkMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -56,6 +57,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
     override val workDao: WorkDao by inject()
     override val workAttributeDao: WorkAttributeDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val listenDao: ListenDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 

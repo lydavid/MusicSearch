@@ -1,0 +1,15 @@
+CREATE TABLE mbid_tag (
+  mbid TEXT NOT NULL,
+  tag TEXT NOT NULL,
+  count INTEGER NOT NULL,
+
+  PRIMARY KEY (mbid, tag)
+);
+
+CREATE TABLE mbid_genre (
+  mbid TEXT NOT NULL,
+  genre_id TEXT NOT NULL,
+  count INTEGER NOT NULL,
+
+  PRIMARY KEY (mbid, genre_id)
+);

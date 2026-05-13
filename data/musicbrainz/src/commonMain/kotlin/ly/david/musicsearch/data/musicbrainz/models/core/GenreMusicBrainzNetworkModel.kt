@@ -11,4 +11,5 @@ data class GenreMusicBrainzNetworkModel(
     @SerialName("name") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+    @SerialName("count") val count: Int? = null,
 ) : MusicBrainzNetworkModel, Genre

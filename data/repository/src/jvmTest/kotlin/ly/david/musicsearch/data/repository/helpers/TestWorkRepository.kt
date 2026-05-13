@@ -8,6 +8,7 @@ import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
@@ -24,6 +25,7 @@ interface TestWorkRepository {
     val workDao: WorkDao
     val workAttributeDao: WorkAttributeDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createWorkRepository(
@@ -48,6 +50,7 @@ interface TestWorkRepository {
             workAttributeDao = workAttributeDao,
             relationRepository = relationRepository,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupWork(
                     workId: String,

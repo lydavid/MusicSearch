@@ -23,6 +23,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
@@ -78,6 +79,7 @@ class LookupHistoryRepositoryImplTest :
     override val seriesDao: SeriesDao by inject()
     override val workDao: WorkDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val lookupHistoryDao: LookupHistoryDao by inject()
 

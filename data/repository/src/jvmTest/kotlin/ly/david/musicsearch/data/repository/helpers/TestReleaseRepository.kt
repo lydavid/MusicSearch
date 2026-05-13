@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
@@ -38,6 +39,7 @@ interface TestReleaseRepository {
     val detailsMetadataDao: DetailsMetadataDao
     val relationDao: RelationDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createReleaseRepository(
@@ -68,6 +70,7 @@ interface TestReleaseRepository {
             mediumDao = mediumDao,
             trackDao = trackDao,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             listenBrainzRepository = object : ListenBrainzRepository {
                 override fun getBaseUrl(): String = ""
             },

@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.UrlDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -46,6 +47,7 @@ class LookupUrlRepositoryImplTest : KoinTest, TestArtistRepository {
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
 
     private val lookupApi: LookupApi = mockk()
     private val urlDao: UrlDao by inject()

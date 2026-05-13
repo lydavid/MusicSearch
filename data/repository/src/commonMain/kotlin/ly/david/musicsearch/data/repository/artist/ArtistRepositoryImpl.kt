@@ -5,6 +5,7 @@ import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -23,6 +24,7 @@ class ArtistRepositoryImpl(
     private val relationRepository: RelationRepository,
     private val areaDao: AreaDao,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
@@ -70,11 +72,15 @@ class ArtistRepositoryImpl(
             entityType = MusicBrainzEntityType.ARTIST,
             mbid = artistId,
         )
+        val genres = tagDao.getGenres(entityId = artistId)
+        val tags = tagDao.getTags(entityId = artistId)
 
         return artist.copy(
             urls = urlRelations,
             aliases = aliases,
             listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/artist/${artist.id}",
+            genres = genres,
+            tags = tags,
         )
     }
 
@@ -84,6 +90,7 @@ class ArtistRepositoryImpl(
             entityId = artistId,
             entity = MusicBrainzEntityType.URL,
         )
+        tagDao.deleteByEntity(entityId = artistId)
     }
 
     private fun cache(
@@ -107,6 +114,12 @@ class ArtistRepositoryImpl(
             entityId = artist.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = artist.id,
+            genres = artist.genres,
+            tags = artist.tags,
         )
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
@@ -20,8 +21,9 @@ internal fun ReleaseGroupDetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     onImageClick: () -> Unit = {},
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = releaseGroup,
@@ -29,8 +31,9 @@ internal fun ReleaseGroupDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onImageClick = onImageClick,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             TextWithHeading(
                 heading = stringResource(Res.string.type),

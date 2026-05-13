@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.event
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -17,6 +18,7 @@ class EventRepositoryImpl(
     private val eventDao: EventDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : EventRepository {
@@ -54,16 +56,21 @@ class EventRepositoryImpl(
             entityType = MusicBrainzEntityType.EVENT,
             mbid = eventId,
         )
+        val genres = tagDao.getGenres(entityId = eventId)
+        val tags = tagDao.getTags(entityId = eventId)
 
         return event.copy(
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
         )
     }
 
-    private fun delete(id: String) {
-        eventDao.delete(id)
-        relationRepository.deleteRelationshipsByType(entityId = id)
+    private fun delete(entityId: String) {
+        eventDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId = entityId)
+        tagDao.deleteByEntity(entityId = entityId)
     }
 
     private fun cache(
@@ -83,6 +90,12 @@ class EventRepositoryImpl(
             entityId = event.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = event.id,
+            genres = event.genres,
+            tags = event.tags,
         )
     }
 }

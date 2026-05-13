@@ -378,4 +378,8 @@
         <item quantity="other">%1$d complete listens</item>
     </plurals>
     <string name="unknownListens">Unknown number of listens</string>
+    <string name="tags">Tags</string>
+    <string name="searchGenre">Search genre</string>
+    <string name="searchTag">Search tag</string>
+    <string name="goToGenre">Go to genre</string>
 </resources>

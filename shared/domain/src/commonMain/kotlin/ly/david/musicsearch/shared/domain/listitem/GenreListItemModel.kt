@@ -8,4 +8,5 @@ data class GenreListItemModel(
     override val disambiguation: String = "",
     override val visited: Boolean = false,
     override val collected: Boolean = false,
+    val count: Int? = null,
 ) : EntityListItemModel, Genre

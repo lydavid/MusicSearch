@@ -6,11 +6,15 @@ import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import kotlin.time.Instant
 
 sealed interface MusicBrainzDetailsModel : MusicBrainzModel, NameWithDisambiguationAndAliases {
     val lastUpdated: Instant
     val artistCredits: ImmutableList<ArtistCreditUiModel>
+    val genres: ImmutableList<GenreChip>
+    val tags: ImmutableList<TagChip>
     val urls: ImmutableList<RelationListItemModel>
     override val aliases: ImmutableList<BasicAlias>
 

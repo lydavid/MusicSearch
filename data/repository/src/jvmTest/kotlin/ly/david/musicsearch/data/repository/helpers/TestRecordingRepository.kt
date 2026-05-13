@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
@@ -25,6 +26,7 @@ interface TestRecordingRepository {
     val recordingDao: RecordingDao
     val artistCreditDao: ArtistCreditDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     fun createRecordingRepository(
@@ -49,6 +51,7 @@ interface TestRecordingRepository {
             relationRepository = relationRepository,
             artistCreditDao = artistCreditDao,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupRecording(
                     recordingId: String,

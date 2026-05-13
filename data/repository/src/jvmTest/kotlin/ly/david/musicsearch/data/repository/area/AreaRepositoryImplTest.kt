@@ -6,6 +6,7 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
@@ -30,6 +31,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
     override val relationDao: RelationDao by inject()
     override val areaDao: AreaDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test

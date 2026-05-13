@@ -6,6 +6,8 @@ import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.series.Series
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -16,6 +18,8 @@ data class SeriesDetailsModel(
     override val type: String = "",
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
+    override val genres: ImmutableList<GenreChip> = persistentListOf(),
+    override val tags: ImmutableList<TagChip> = persistentListOf(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
 ) : Series, MusicBrainzDetailsModel {

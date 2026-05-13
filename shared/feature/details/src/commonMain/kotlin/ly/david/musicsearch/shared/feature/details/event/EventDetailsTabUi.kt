@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
@@ -32,8 +33,9 @@ internal fun EventDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onImageClick: () -> Unit = {},
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     val entityInfoSection: @Composable EventDetailsModel.() -> Unit = {
         type.ifNotEmpty {
@@ -80,8 +82,9 @@ internal fun EventDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onImageClick = onImageClick,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = entityInfoSection,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
     )
 }

@@ -5,9 +5,10 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
+import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -18,6 +19,7 @@ interface TestAreaRepository {
     val relationDao: RelationDao
     val areaDao: AreaDao
     val aliasDao: AliasDao
+    val tagDao: TagDao
     val coroutineDispatchers: CoroutineDispatchers
 
     /**
@@ -44,6 +46,7 @@ interface TestAreaRepository {
             areaDao = areaDao,
             relationRepository = relationRepository,
             aliasDao = aliasDao,
+            tagDao = tagDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
                     areaId: String,

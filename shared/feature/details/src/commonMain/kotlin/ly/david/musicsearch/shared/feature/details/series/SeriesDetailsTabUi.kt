@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -17,16 +18,18 @@ internal fun SeriesDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = series,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

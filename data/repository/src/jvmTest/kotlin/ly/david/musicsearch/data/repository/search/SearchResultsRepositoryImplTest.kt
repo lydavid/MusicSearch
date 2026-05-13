@@ -25,6 +25,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SearchResultDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.SearchAreasResponse
@@ -78,6 +79,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
     override val seriesDao: SeriesDao by inject()
     override val workDao: WorkDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test

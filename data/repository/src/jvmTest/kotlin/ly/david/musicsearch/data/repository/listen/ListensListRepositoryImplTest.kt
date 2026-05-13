@@ -14,6 +14,7 @@ import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.listenbrainz.api.ListenBrainzApi
 import ly.david.musicsearch.data.listenbrainz.api.ManualMappingResponse
 import ly.david.musicsearch.data.listenbrainz.api.RecordingMetadata
@@ -85,6 +86,7 @@ class ListensListRepositoryImplTest :
     override val recordingDao: RecordingDao by inject()
     override val artistCreditDao: ArtistCreditDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
 
     private val listen1 = ListenListItemModel(
         listenedAtMs = track1ListenedAtMs,

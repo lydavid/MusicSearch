@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -27,16 +28,18 @@ internal fun PlaceDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
-    onCollapseExpandExternalLinks: () -> Unit = {},
-    onCollapseExpandAliases: () -> Unit = {},
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = place,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onCollapseExpandSection = onCollapseExpandSection,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

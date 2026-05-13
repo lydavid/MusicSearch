@@ -5,6 +5,8 @@ import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrai
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.TagMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -38,11 +40,34 @@ val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
     name = "David Bowie",
     type = "Person",
+    typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
     gender = "Male",
     lifeSpan = LifeSpanMusicBrainzModel(
         begin = "1947-01-08",
         end = "2016-01-10",
         ended = true,
+    ),
+    genres = listOf(
+        GenreMusicBrainzNetworkModel(
+            id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+            name = "art rock",
+            count = 22,
+        ),
+        GenreMusicBrainzNetworkModel(
+            id = "54d89e62-5bfb-42bc-a321-9230e6fdcd75",
+            name = "glam rock",
+            count = 22,
+        ),
+    ),
+    tags = listOf(
+        TagMusicBrainzNetworkModel(
+            name = "british",
+            count = 6,
+        ),
+        TagMusicBrainzNetworkModel(
+            name = "uk",
+            count = 6,
+        ),
     ),
     relations = listOf(
         RelationMusicBrainzModel(

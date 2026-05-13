@@ -51,12 +51,12 @@ internal fun ArtistDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     onImageClick: () -> Unit,
-    onCollapseExpandListens: () -> Unit,
-    onCollapseExpandExternalLinks: () -> Unit,
-    onCollapseExpandAliases: () -> Unit,
+    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onSeeAllListensClick: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
+    onSearchGenreOrTag: (String) -> Unit,
+    onGoToGenre: (id: String) -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = artist,
@@ -64,7 +64,7 @@ internal fun ArtistDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onImageClick = onImageClick,
-        onCollapseExpandExternalLinks = onCollapseExpandExternalLinks,
+        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = {
             ArtistInformationSection(
                 filterText = filterText,
@@ -87,14 +87,15 @@ internal fun ArtistDetailsTabUi(
                     filterText = filterText,
                     now = detailsTabUiState.now,
                     collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                    onCollapseExpand = onCollapseExpandListens,
+                    onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
                     onItemClick = onItemClick,
                     onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
                     onSeeAllListensClick = onSeeAllListensClick,
                 )
             }
         },
-        onCollapseExpandAliases = onCollapseExpandAliases,
+        onSearchGenreOrTag = onSearchGenreOrTag,
+        onGoToGenre = onGoToGenre,
     )
 }
 

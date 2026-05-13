@@ -4,6 +4,7 @@ import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
@@ -19,6 +20,7 @@ class PlaceRepositoryImpl(
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
+    private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     private val coroutineDispatchers: CoroutineDispatchers,
 ) : PlaceRepository {
@@ -57,11 +59,15 @@ class PlaceRepositoryImpl(
             entityType = MusicBrainzEntityType.PLACE,
             mbid = placeId,
         )
+        val genres = tagDao.getGenres(entityId = placeId)
+        val tags = tagDao.getTags(entityId = placeId)
 
         return place.copy(
             area = area,
             urls = urlRelations,
             aliases = aliases,
+            genres = genres,
+            tags = tags,
         )
     }
 
@@ -69,6 +75,7 @@ class PlaceRepositoryImpl(
         placeDao.delete(id)
         areaDao.deleteAreaPlaceLink(id)
         relationRepository.deleteRelationshipsByType(id)
+        tagDao.deleteByEntity(entityId = id)
     }
 
     private fun cache(
@@ -96,6 +103,12 @@ class PlaceRepositoryImpl(
             entityId = place.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
+        )
+
+        tagDao.insertAll(
+            entityId = place.id,
+            genres = place.genres,
+            tags = place.tags,
         )
     }
 }

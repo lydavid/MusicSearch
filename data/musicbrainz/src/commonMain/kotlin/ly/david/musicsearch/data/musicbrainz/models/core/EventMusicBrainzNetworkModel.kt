@@ -21,4 +21,6 @@ data class EventMusicBrainzNetworkModel(
     // search API returns relations without target-type
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+    @SerialName("genres") val genres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("tags") val tags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Event

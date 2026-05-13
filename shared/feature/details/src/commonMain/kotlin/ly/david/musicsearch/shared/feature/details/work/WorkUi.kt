@@ -13,7 +13,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
-import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -25,7 +25,9 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
+import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -247,20 +249,34 @@ internal fun WorkUi(
                             ),
                         )
                     },
-                    onCollapseExpandListens = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
-                    },
-                    onCollapseExpandExternalLinks = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ExternalLinks))
-                    },
-                    onCollapseExpandAliases = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Aliases))
+                    onCollapseExpandSection = {
+                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
                     },
                     onGoToListenAtEpochSeconds = { seconds ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
                                 screen = ListensScreen(
                                     dateTimeEpochSeconds = seconds,
+                                ),
+                            ),
+                        )
+                    },
+                    onSearchGenreOrTag = { tagQuery ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = SearchScreen(
+                                    query = tagQuery,
+                                    entityType = entityType,
+                                ),
+                            ),
+                        )
+                    },
+                    onGoToGenre = { id ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = DetailsScreen(
+                                    id = id,
+                                    entityType = MusicBrainzEntityType.GENRE,
                                 ),
                             ),
                         )

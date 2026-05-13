@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
+import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
@@ -40,6 +41,7 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
     override val relationDao: RelationDao by inject()
     override val eventDao: EventDao by inject()
     override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
