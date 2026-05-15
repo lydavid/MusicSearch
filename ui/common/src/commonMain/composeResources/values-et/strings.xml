@@ -378,4 +378,8 @@
         <item quantity="other">%1$d lõpuni kuulamist</item>
     </plurals>
     <string name="unknownListens">Kuuljate arv pole teada</string>
+    <string name="tags">Sildid</string>
+    <string name="searchGenre">Otsi žanrit</string>
+    <string name="searchTag">Otsi silti</string>
+    <string name="goToGenre">Suundu žanri juurde</string>
 </resources>

@@ -382,4 +382,8 @@
         <item quantity="other">%1$d écoutes complètes</item>
     </plurals>
     <string name="unknownListens">Nombre d'écoutes inconnu</string>
+    <string name="tags">Mots-clés</string>
+    <string name="searchGenre">Rechercher par genre</string>
+    <string name="searchTag">Rechercher par mots-clés</string>
+    <string name="goToGenre">Aller à la rubrique « Genre »</string>
 </resources>

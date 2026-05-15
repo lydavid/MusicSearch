@@ -378,4 +378,8 @@
         <item quantity="other">%1$d vollständig Gehörte</item>
     </plurals>
     <string name="unknownListens">Unbekannte Anzahl an Gehörte</string>
+    <string name="tags">Tags</string>
+    <string name="searchGenre">Genre suchen</string>
+    <string name="searchTag">Tag suchen</string>
+    <string name="goToGenre">Zu Genre</string>
 </resources>
