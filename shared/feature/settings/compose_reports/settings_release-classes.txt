@@ -32,6 +32,7 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsPrese
   unstable val updateListenBrainzToken: UpdateListenBrainzToken
   unstable val exportDatabase: ExportDatabase
   unstable val metadataRepository: MetadataRepository
+  runtime val appInfo: AppInfo
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState {
@@ -48,6 +49,7 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiSta
   stable val snackbarMessage: String?
   stable val appDatabaseVersion: String
   stable val sqliteVersion: String
+  stable val versionNameAndCode: String
   stable val isDeveloperMode: Boolean
   stable val scrollToHideTopAppBar: Boolean
   stable val eventSink: Function1<SettingsUiEvent, Unit>
@@ -136,5 +138,29 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.images.Images
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiEvent.UpdateImagesGridPaddingDp {
   stable val imagesGridPaddingDp: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsPresenter {
+  stable val navigator: Navigator
+  unstable val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiState {
+  stable val numberOfListensInDetails: Long
+  stable val submitClientAndVersionWithListen: Boolean
+  stable val eventSink: Function1<ListensSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.UpdateNumberOfListensInDetails {
+  stable val number: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.ToggleIncludeClientAndVersion {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.Reset {
   <runtime stability> = Stable
 }

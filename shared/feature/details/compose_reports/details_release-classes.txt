@@ -140,9 +140,7 @@ unstable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiSta
   stable val numberOfImages: Int?
   runtime val wikipediaExtract: WikipediaExtract
   stable val lazyListState: LazyListState
-  stable val isReleaseEventsCollapsed: Boolean
-  stable val isExternalLinksCollapsed: Boolean
-  stable val isAliasesCollapsed: Boolean
+  stable val isSectionCollapsed: ImmutableSet<CollapsibleSection>
   stable val now: Instant
   <runtime stability> = Unstable
 }
@@ -168,11 +166,6 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.To
   unstable val collectableIds: List<SelectableId>
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ClickItem {
-  stable val entityType: MusicBrainzEntityType
-  stable val id: String
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.GoToScreen {
   stable val screen: Screen
   <runtime stability> = Stable
@@ -183,13 +176,8 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.Cl
 stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateToCollaboratorsGraph {
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleCollapseExpandExternalLinks {
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleCollapseExpandReleaseEvents {
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleCollapseExpandAliases {
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleCollapseExpandSection {
+  stable val section: CollapsibleSection
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.work.WorkPresenter {

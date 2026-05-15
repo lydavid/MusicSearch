@@ -60,9 +60,8 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.EditText
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SetUsername {
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ClickItem {
-  stable val entityType: MusicBrainzEntityType
-  stable val id: String
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.GoToScreen {
+  stable val screen: Screen
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.UpdateFacetQuery {
@@ -113,7 +112,7 @@ stable class ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPres
   stable val screen: SubmitListenScreen
   stable val navigator: Navigator
   unstable val listenBrainzAuthStore: ListenBrainzAuthStore
-  unstable val listensListRepository: ListensListRepository
+  unstable val submitListens: SubmitListens
   unstable val getTracksByReleaseForListenSubmission: GetTracksByReleaseForListenSubmission
   stable val clock: Clock
   unstable val timeZone: TimeZone

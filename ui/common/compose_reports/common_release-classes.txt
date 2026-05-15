@@ -268,14 +268,8 @@ stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResult {
-  stable val message: String
-  stable val actionLabel: String?
-  runtime var CREATOR: Creator<SnackbarPopResult>
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResultV2 {
   runtime val feedback: T?
-  runtime var CREATOR: Creator<SnackbarPopResultV2<*>>
+  runtime var CREATOR: Creator<SnackbarPopResult<*>>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.DetailsScreen {
@@ -308,6 +302,10 @@ stable class ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen {
   runtime var CREATOR: Creator<ImagesSettingsScreen>
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.ListensSettingsScreen {
+  runtime var CREATOR: Creator<ListensSettingsScreen>
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.LicensesScreen {
   runtime var CREATOR: Creator<LicensesScreen>
   <runtime stability> = Stable
@@ -322,6 +320,7 @@ stable class ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen {
 }
 stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
   runtime val entityFacet: MusicBrainzEntity?
+  stable val dateTimeEpochSeconds: Long?
   runtime var CREATOR: Creator<ListensScreen>
   <runtime stability> = Stable
 }

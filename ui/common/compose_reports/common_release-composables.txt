@@ -209,6 +209,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.OverflowMenu(
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable contentDescription: String? = @dynamic <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.RetryButton(
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
@@ -773,6 +777,12 @@ fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing.animateAlphaWithDelay(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing(
   stable modifier: Modifier? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.GoToScreenMenuItem(
+  <this>: OverflowMenuScope
+  stable text: String
+  stable leadingIconImageVector: ImageVector
+  stable onClick: Function0<Unit>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem(
   <this>: OverflowMenuScope
   stable showMoreInfo: Boolean
@@ -828,9 +838,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.SubtitleWithOverflow(
   stable subtitle: String? = @static ""
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.OverflowMenu(
-  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
 )
 fun ly.david.musicsearch.ui.common.topappbar.rememberSelectionState(
   stable totalCount: Int = @static 0
@@ -914,7 +921,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
   stable onSelect: Function1<SelectableId, Unit>? = @static <expression>
-  stable onClickMoreActions: @[ExtensionFunctionType] Function1<TrackListItemModel, Unit>? = @static <expression>
+  stable onMoreActionsClick: @[ExtensionFunctionType] Function1<TrackListItemModel, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackTitleWithLength(
   track: TrackListItemModel

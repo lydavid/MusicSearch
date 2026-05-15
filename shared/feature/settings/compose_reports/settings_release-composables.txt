@@ -17,14 +17,15 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiCustomColors()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiSystemColors()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiNonAndroid12Plus()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchChecked()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchUnchecked()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchWithSubtitle()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedOut()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedIn()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedInWaitingForUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchChecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchUnchecked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingSwitchWithSubtitle()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingWithDialogChoices()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.images.PreviewImagesSettingsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.listens.PreviewListensSettingsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.DevSettingsSection(
   stable isDeveloperMode: Boolean
   stable onDeveloperModeChange: Function1<Boolean, Unit>
@@ -37,8 +38,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.111.0"
-  stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.SettingsUi(
@@ -46,8 +45,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable showAndroidSettings: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isNotificationListenerEnabled: Boolean = @static false
-  stable versionName: String? = @static "1.111.0"
-  stable versionCode: Int = @dynamic <expression>
   stable onGoToNotificationListenerSettings: Function0<Unit>? = @static <expression>
   stable eventSink: Function1<SettingsUiEvent, Unit>? = @static <expression>
   stable loginEventSink: Function1<MusicBrainzLoginUiEvent, Unit>? = @static <expression>
@@ -110,5 +107,12 @@ open fun ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSett
 ): ImagesSettingsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUi(
   stable state: ImagesSettingsUiState
+  stable modifier: Modifier? = @static <expression>
+)
+open fun ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsPresenter.present(
+  stable <this>: ListensSettingsPresenter
+): ListensSettingsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUi(
+  stable state: ListensSettingsUiState
   stable modifier: Modifier? = @static <expression>
 )

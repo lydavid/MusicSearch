@@ -63,7 +63,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
-  stable onClickMoreActions: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
+  stable onMoreActionsClick: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
 )
 open fun ly.david.musicsearch.shared.feature.listens.ListensPresenter.present(
   stable <this>: ListensPresenter
