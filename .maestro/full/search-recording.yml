@@ -14,6 +14,8 @@ appId: io.github.lydavid.musicsearch.debug
 - assertVisible: "Recording by Queen & David Bowie"
 - assertVisible: "Recording information"
 - assertVisible: "First release date: 1981-10"
+- tapOn: "Genres .*"
+- tapOn: "Tags .*"
 - assertVisible: "https://open.spotify.com/track/2fuCquhmrzHpu5xcA1ci9x"
 - tapOn: "Releases"
 
