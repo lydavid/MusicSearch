@@ -18,4 +18,11 @@ class CollapsibleListSeparatorHeaderTest : ScreenshotTest() {
             PreviewCollapsibleListSeparatorHeaderCollapsed()
         }
     }
+
+    @Test
+    fun withEndContent() {
+        snapshot {
+            PreviewCollapsibleListSeparatorHeaderWithEndContent()
+        }
+    }
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
@@ -34,8 +36,10 @@ internal fun EventDetailsTabUi(
     filterText: String = "",
     onImageClick: () -> Unit = {},
     onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     val entityInfoSection: @Composable EventDetailsModel.() -> Unit = {
         type.ifNotEmpty {
@@ -84,7 +88,9 @@ internal fun EventDetailsTabUi(
         onImageClick = onImageClick,
         onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = entityInfoSection,
-        onSearchGenreOrTag = onSearchGenreOrTag,
-        onGoToGenre = onGoToGenre,
+        snackbarHostState = snackbarHostState,
+        onGoToScreen = onGoToScreen,
+        onRefreshLocal = onRefreshLocal,
+        onLoginClick = onLoginClick,
     )
 }

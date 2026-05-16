@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.musicbrainz.auth
 
-import kotlin.time.Clock
 import ly.david.musicsearch.data.musicbrainz.auth.api.MusicBrainzOAuthApi
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
+import kotlin.time.Clock
 
 private const val REFRESH_TOKEN = "refresh_token"
 
@@ -11,7 +11,6 @@ class MusicBrainzAuthRepository(
     private val musicBrainzOAuthApi: MusicBrainzOAuthApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) {
-
     suspend fun getAccessToken(): String? {
         val accessToken = musicBrainzAuthStore.getAccessToken()
         val refreshToken = musicBrainzAuthStore.getRefreshToken()

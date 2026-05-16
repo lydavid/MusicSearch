@@ -48,6 +48,8 @@ kotlin {
                 implementation(libs.junit)
                 implementation(libs.koin.test)
                 implementation(libs.circuit.test)
+                implementation(libs.robolectric)
+                implementation(libs.mockk)
             }
         }
         val androidInstrumentedTest by getting {

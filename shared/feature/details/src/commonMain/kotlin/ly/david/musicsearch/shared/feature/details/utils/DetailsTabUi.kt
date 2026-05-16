@@ -3,14 +3,15 @@ package ly.david.musicsearch.shared.feature.details.utils
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
@@ -23,12 +24,22 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
-import ly.david.musicsearch.shared.domain.tag.GenreOrTag
+import ly.david.musicsearch.shared.domain.details.asEntity
+import ly.david.musicsearch.shared.domain.error.Feedback
+import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
+import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
 import ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel
+import ly.david.musicsearch.shared.feature.details.tag.genresAndTagsSection
+import ly.david.musicsearch.shared.feature.details.tag.getMessage
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
+import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
+import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
+import ly.david.musicsearch.ui.common.screen.showInBottomSheetForResult
+import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.area
@@ -65,6 +76,7 @@ private fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(): String {
     )
 }
 
+// TODO: consider passing event sink to this layer, and invoking here, instead of reimplementing 10 times
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
@@ -76,27 +88,15 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
     onImageClick: () -> Unit = {},
     onCollapseExpandSection: (CollapsibleSection) -> Unit,
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     val primaryLabel = stringResource(Res.string.primary)
     val aliases = detailsModel.aliases.map { it.toAliasListItemModel() }.toPersistentList()
-
-    var showBottomSheetForGenreOrTag: GenreOrTag? by remember { mutableStateOf(null) }
-    showBottomSheetForGenreOrTag?.let { genreOrTag ->
-        ModalBottomSheet(
-            onDismissRequest = {
-                showBottomSheetForGenreOrTag = null
-            },
-        ) {
-            TagBottomSheetContent(
-                genreOrTag = genreOrTag,
-                onSearchGenreOrTag = onSearchGenreOrTag,
-                onGoToGenre = onGoToGenre,
-                onDismiss = { showBottomSheetForGenreOrTag = null },
-            )
-        }
-    }
+    val overlayHost = LocalOverlayHost.current
+    val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(
         modifier = modifier,
@@ -126,7 +126,55 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 isGenresCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Genres),
                 isTagsCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Tags),
                 onCollapseExpand = onCollapseExpandSection,
-                onChipClick = { showBottomSheetForGenreOrTag = it },
+                onChipClick = {
+                    coroutineScope.launch {
+                        val result: SnackbarPopResult<CommonParcelable> =
+                            overlayHost.showInBottomSheetForResult(
+                                screen = TagDetailsScreen(
+                                    entity = detailsModel.asEntity(),
+                                    genreOrTag = it,
+                                ),
+                            )
+                        result.feedback?.let { feedback ->
+                            when (feedback) {
+                                is NavigatableFromOverlayResult -> onGoToScreen(feedback)
+                                is Feedback<*> -> {
+                                    val tagFeedback = feedback as? Feedback<TagRepository.TagFeedback> ?: return@let
+
+                                    if (tagFeedback.data is TagRepository.TagFeedback.Voted) {
+                                        onRefreshLocal()
+                                    }
+
+                                    val message = (tagFeedback).getMessage()
+                                    val snackbarResult = snackbarHostState.showSnackbar(
+                                        visuals = FeedbackSnackbarVisuals(
+                                            message = message,
+                                            actionLabel = (tagFeedback as? Feedback.Error)?.action?.name,
+                                            duration = when (tagFeedback) {
+                                                is Feedback.Loading -> SnackbarDuration.Indefinite
+                                                is Feedback.Success,
+                                                is Feedback.Error,
+                                                is Feedback.Actionable,
+                                                -> SnackbarDuration.Short
+                                            },
+                                            withDismissAction = false,
+                                            feedback = tagFeedback,
+                                        ),
+                                    )
+                                    when (snackbarResult) {
+                                        SnackbarResult.ActionPerformed -> {
+                                            onLoginClick()
+                                        }
+
+                                        SnackbarResult.Dismissed -> {
+                                            // Do nothing.
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
             )
 
             item {

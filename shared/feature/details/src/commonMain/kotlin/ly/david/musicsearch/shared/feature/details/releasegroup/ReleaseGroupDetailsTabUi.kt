@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.releasegroup
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -8,6 +9,7 @@ import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.firstReleaseDate
@@ -22,8 +24,10 @@ internal fun ReleaseGroupDetailsTabUi(
     filterText: String = "",
     onImageClick: () -> Unit = {},
     onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = releaseGroup,
@@ -32,8 +36,10 @@ internal fun ReleaseGroupDetailsTabUi(
         filterText = filterText,
         onImageClick = onImageClick,
         onCollapseExpandSection = onCollapseExpandSection,
-        onSearchGenreOrTag = onSearchGenreOrTag,
-        onGoToGenre = onGoToGenre,
+        snackbarHostState = snackbarHostState,
+        onGoToScreen = onGoToScreen,
+        onRefreshLocal = onRefreshLocal,
+        onLoginClick = onLoginClick,
         entityInfoSection = {
             TextWithHeading(
                 heading = stringResource(Res.string.type),

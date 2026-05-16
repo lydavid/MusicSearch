@@ -8,7 +8,6 @@ open class FakeCollectionApi : CollectionApi {
         collectionId: String,
         resourceUriPlural: String,
         mbids: List<String>,
-        client: String,
     ) {
         // No-op.
     }
@@ -17,7 +16,6 @@ open class FakeCollectionApi : CollectionApi {
         collectionId: String,
         resourceUriPlural: String,
         mbids: Set<String>,
-        client: String,
     ) {
         // No-op.
     }

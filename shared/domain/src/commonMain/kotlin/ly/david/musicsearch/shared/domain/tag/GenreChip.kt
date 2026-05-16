@@ -8,6 +8,7 @@ data class GenreChip(
     override val name: String,
     override val disambiguation: String = "",
     override val count: Int,
+    override val voteType: VoteType = VoteType.Withdraw,
 ) : Genre, GenreOrTag {
     override val fullName: String
         get() = getNameWithDisambiguation()

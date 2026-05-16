@@ -337,6 +337,7 @@ internal data class DetailsTabUiState(
     val wikipediaExtract: WikipediaExtract = WikipediaExtract(),
     val lazyListState: LazyListState = LazyListState(),
     val isSectionCollapsed: ImmutableSet<CollapsibleSection> = persistentSetOf(),
+    val showDownvotedTags: Boolean = false,
     val now: Instant = Clock.System.now(),
 )
 

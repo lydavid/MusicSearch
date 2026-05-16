@@ -61,6 +61,10 @@ val davidBowieArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     ),
     tags = listOf(
         TagMusicBrainzNetworkModel(
+            name = "some spam tag",
+            count = 99,
+        ),
+        TagMusicBrainzNetworkModel(
             name = "british",
             count = 6,
         ),

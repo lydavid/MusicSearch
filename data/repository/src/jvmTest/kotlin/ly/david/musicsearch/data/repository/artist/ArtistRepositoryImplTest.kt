@@ -123,57 +123,64 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
 
-        val artistDetailsModel = artistRepositoryImpl.lookupArtist(
+        val detailsModel = ArtistDetailsModel(
+            id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+            name = "David Bowie",
+            type = ArtistType.PERSON,
+            gender = ArtistGender.MALE,
+            lifeSpan = LifeSpanUiModel(
+                begin = "1947-01-08",
+                end = "2016-01-10",
+                ended = true,
+            ),
+            sortName = "Bowie, David",
+            areaListItemModel = AreaListItemModel(
+                id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
+                name = "England",
+                countryCodes = persistentListOf(),
+            ),
+            ipis = persistentListOf("00003960406", "00015471209"),
+            isnis = persistentListOf("0000000114448576", "0000000458257298"),
+            lastUpdated = testDateTimeInThePast,
+            listenBrainzUrl = "/artist/5441c29d-3602-4898-b1a1-b77fa23b8e50",
+            genres = persistentListOf(
+                GenreChip(
+                    id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                    name = "art rock",
+                    count = 22,
+                ),
+                GenreChip(
+                    id = "54d89e62-5bfb-42bc-a321-9230e6fdcd75",
+                    name = "glam rock",
+                    count = 22,
+                ),
+            ),
+            tags = persistentListOf(
+                TagChip(
+                    name = "some spam tag",
+                    count = 99,
+                ),
+                TagChip(
+                    name = "british",
+                    count = 6,
+                ),
+                TagChip(
+                    name = "uk",
+                    count = 6,
+                ),
+            ),
+        )
+
+        artistRepositoryImpl.lookupArtist(
             artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
-        )
-        assertEquals(
-            ArtistDetailsModel(
-                id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
-                name = "David Bowie",
-                type = ArtistType.PERSON,
-                gender = ArtistGender.MALE,
-                lifeSpan = LifeSpanUiModel(
-                    begin = "1947-01-08",
-                    end = "2016-01-10",
-                    ended = true,
-                ),
-                sortName = "Bowie, David",
-                areaListItemModel = AreaListItemModel(
-                    id = "9d5dd675-3cf4-4296-9e39-67865ebee758",
-                    name = "England",
-                    countryCodes = persistentListOf(),
-                ),
-                ipis = persistentListOf("00003960406", "00015471209"),
-                isnis = persistentListOf("0000000114448576", "0000000458257298"),
-                lastUpdated = testDateTimeInThePast,
-                listenBrainzUrl = "/artist/5441c29d-3602-4898-b1a1-b77fa23b8e50",
-                genres = persistentListOf(
-                    GenreChip(
-                        id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
-                        name = "art rock",
-                        count = 22,
-                    ),
-                    GenreChip(
-                        id = "54d89e62-5bfb-42bc-a321-9230e6fdcd75",
-                        name = "glam rock",
-                        count = 22,
-                    ),
-                ),
-                tags = persistentListOf(
-                    TagChip(
-                        name = "british",
-                        count = 6,
-                    ),
-                    TagChip(
-                        name = "uk",
-                        count = 6,
-                    ),
-                ),
-            ),
-            artistDetailsModel,
-        )
+        ).run {
+            assertEquals(
+                detailsModel,
+                this,
+            )
+        }
     }
 
     @Test

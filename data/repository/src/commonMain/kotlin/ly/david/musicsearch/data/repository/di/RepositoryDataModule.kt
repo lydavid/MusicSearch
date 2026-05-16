@@ -46,6 +46,7 @@ import ly.david.musicsearch.data.repository.search.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.search.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesListRepositoryImpl
 import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
+import ly.david.musicsearch.data.repository.tag.TagRepositoryImpl
 import ly.david.musicsearch.data.repository.url.LookupUrlRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorksListRepositoryImpl
@@ -97,6 +98,7 @@ import ly.david.musicsearch.shared.domain.search.results.SearchResultsRepository
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import ly.david.musicsearch.shared.domain.spotify.SpotifyHistoryRepository
+import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.domain.url.LookupUrlRepository
 import ly.david.musicsearch.shared.domain.work.WorkRepository
 import ly.david.musicsearch.shared.domain.work.WorksListRepository
@@ -155,4 +157,5 @@ val repositoryDataModule = module {
     singleOf(::ObserveCountOfEachStatusImpl) bind ObserveCountOfEachStatus::class
     singleOf(::LookupUrlRepositoryImpl) bind LookupUrlRepository::class
     singleOf(::SubmitListensImpl) bind SubmitListens::class
+    singleOf(::TagRepositoryImpl) bind TagRepository::class
 }

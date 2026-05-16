@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.utils
+package ly.david.musicsearch.shared.feature.details.tag
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding

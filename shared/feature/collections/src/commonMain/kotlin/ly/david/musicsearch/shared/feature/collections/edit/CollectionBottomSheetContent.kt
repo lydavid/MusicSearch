@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
@@ -30,6 +27,7 @@ import ly.david.musicsearch.shared.feature.collections.components.CollectionList
 import ly.david.musicsearch.ui.common.collection.getMessage
 import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.text.SyncingText
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.addXCountToCollection
@@ -46,7 +44,6 @@ internal fun CollectionBottomSheetContent(
     onAddToCollection: (collectionId: String) -> Unit = {},
 ) {
     var message: String? by remember { mutableStateOf(null) }
-
     feedback?.let { feedback ->
         LaunchedEffect(feedback) {
             message = feedback.getMessage()
@@ -67,22 +64,10 @@ internal fun CollectionBottomSheetContent(
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                     message?.let { message ->
-                        Row(
+                        SyncingText(
+                            message = message,
                             modifier = Modifier.padding(top = 4.dp),
-                        ) {
-                            // TODO: Any screenshot tests with animations such as CircularProgressIndicator may flake
-                            //  until https://github.com/cashapp/paparazzi/issues/678 or https://github.com/cashapp/paparazzi/issues/627 are resolved
-                            if (!LocalInspectionMode.current) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(16.dp),
-                                )
-                            }
-                            Text(
-                                text = message,
-                                modifier = Modifier.padding(start = 4.dp),
-                                style = TextStyles.getCardBodySubTextStyle(),
-                            )
-                        }
+                        )
                     }
                 }
 
