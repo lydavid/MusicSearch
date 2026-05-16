@@ -8,7 +8,7 @@ import io.ktor.client.plugins.defaultRequest
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.musicsearch.shared.domain.network.RESOURCE_COLLECTION
 
-interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi {
+interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi, TagApi {
     companion object {
         fun create(
             httpClient: HttpClient,
@@ -34,6 +34,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                         sendWithoutRequest { request ->
                             request.url.parameters[RESOURCE_COLLECTION] != null ||
                                 request.url.pathSegments.contains(RESOURCE_COLLECTION) ||
+                                request.url.pathSegments.contains(TAG) ||
                                 request.url.pathSegments.contains(USER_INFO)
                         }
                     }
@@ -49,4 +50,4 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
 
 class MusicBrainzApiImpl(
     override val httpClient: HttpClient,
-) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzUserApiImpl, MusicBrainzApi
+) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzUserApiImpl, TagApiImpl, MusicBrainzApi

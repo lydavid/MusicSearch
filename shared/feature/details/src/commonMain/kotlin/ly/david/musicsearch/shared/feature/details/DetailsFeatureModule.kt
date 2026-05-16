@@ -38,10 +38,14 @@ import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPres
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.shared.feature.details.series.SeriesPresenter
 import ly.david.musicsearch.shared.feature.details.series.SeriesUi
+import ly.david.musicsearch.shared.feature.details.tag.TagDetailsBottomSheetContent
+import ly.david.musicsearch.shared.feature.details.tag.TagDetailsPresenter
+import ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -264,6 +268,16 @@ val detailsFeatureModule = module {
                     }
                 }
 
+                is TagDetailsScreen -> {
+                    TagDetailsPresenter(
+                        screen = screen,
+                        navigator = navigator,
+                        tagRepository = get(),
+                        coroutineScope = get(),
+                        clock = get(),
+                    )
+                }
+
                 else -> null
             }
         }
@@ -271,6 +285,14 @@ val detailsFeatureModule = module {
     single(named("DetailsScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
+                is TagDetailsScreen -> {
+                    ui<TagDetailsUiState> { state, _ ->
+                        TagDetailsBottomSheetContent(
+                            state = state,
+                        )
+                    }
+                }
+
                 is DetailsScreen -> {
                     when (screen.entityType) {
                         MusicBrainzEntityType.AREA -> {

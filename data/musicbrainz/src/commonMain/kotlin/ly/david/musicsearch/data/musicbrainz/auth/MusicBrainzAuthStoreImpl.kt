@@ -18,6 +18,7 @@ private val accessTokenPreference = stringPreferencesKey(AppPreferencesKey.MUSIC
 private val refreshTokenPreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_REFRESH_TOKEN.name)
 private val expiryTimePreference = longPreferencesKey(AppPreferencesKey.MUSICBRAINZ_EXPIRY_TIME.name)
 private val usernamePreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_USERNAME.name)
+private val scopePreference = stringPreferencesKey(AppPreferencesKey.MUSICBRAINZ_SCOPE.name)
 
 class MusicBrainzAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -48,11 +49,15 @@ class MusicBrainzAuthStoreImpl(
     override suspend fun saveTokens(
         accessToken: String,
         refreshToken: String,
+        scope: String?,
     ) {
-        preferencesDataStore.edit {
-            it[accessTokenPreference] = accessToken
-            it[refreshTokenPreference] = refreshToken
-            it[expiryTimePreference] = Clock.System.now().plus(1.hours).epochSeconds
+        preferencesDataStore.edit { preferences ->
+            preferences[accessTokenPreference] = accessToken
+            preferences[refreshTokenPreference] = refreshToken
+            preferences[expiryTimePreference] = Clock.System.now().plus(1.hours).epochSeconds
+            scope?.let {
+                preferences[scopePreference] = scope
+            }
         }
     }
 

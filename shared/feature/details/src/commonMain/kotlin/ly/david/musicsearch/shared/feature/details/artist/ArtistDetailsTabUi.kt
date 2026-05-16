@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.artist
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.artist.ArtistType
@@ -25,6 +26,7 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.relation.UrlListItem
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import musicsearch.ui.common.generated.resources.Res
@@ -55,8 +57,10 @@ internal fun ArtistDetailsTabUi(
     onSeeAllListensClick: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = artist,
@@ -94,8 +98,10 @@ internal fun ArtistDetailsTabUi(
                 )
             }
         },
-        onSearchGenreOrTag = onSearchGenreOrTag,
-        onGoToGenre = onGoToGenre,
+        snackbarHostState = snackbarHostState,
+        onGoToScreen = onGoToScreen,
+        onRefreshLocal = onRefreshLocal,
+        onLoginClick = onLoginClick,
     )
 }
 

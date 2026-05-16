@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain
 
+const val APP_NAME = "MusicSearch"
+
 /**
  * This is modified by the publish workflow to remove the debug suffix for the production app.
  * It must also be updated in fdroiddata.

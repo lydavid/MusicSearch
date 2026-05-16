@@ -1,0 +1,36 @@
+import kotlin.Boolean;
+
+-- rename column tag to name to be consistent with genre
+
+CREATE TABLE mbid_tag_temp (
+  mbid TEXT NOT NULL,
+  name TEXT NOT NULL,
+  count INTEGER NOT NULL,
+
+  PRIMARY KEY (mbid, name)
+);
+
+INSERT OR IGNORE INTO mbid_tag_temp(
+  mbid,
+  name,
+  count
+)
+SELECT
+  mbid,
+  tag,
+  count
+FROM mbid_tag;
+
+DROP TABLE mbid_tag;
+
+ALTER TABLE mbid_tag_temp RENAME TO mbid_tag;
+
+-- new
+
+CREATE TABLE vote (
+  mbid TEXT NOT NULL,
+  name TEXT NOT NULL,
+  is_upvote INTEGER AS Boolean NOT NULL,
+
+  PRIMARY KEY (mbid, name)
+);

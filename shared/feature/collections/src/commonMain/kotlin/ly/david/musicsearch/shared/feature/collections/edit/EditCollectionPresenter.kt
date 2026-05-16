@@ -40,7 +40,7 @@ internal class EditCollectionPresenter(
 ) : Presenter<EditCollectionUiState> {
     @Composable
     override fun present(): EditCollectionUiState {
-        val scope = rememberCoroutineScope()
+        val coroutineScope = rememberCoroutineScope()
         var intermediateFeedback: Feedback<EditACollectionFeedback>? by remember { mutableStateOf(null) }
         val listItems: Flow<PagingData<CollectionListItemModel>> by rememberRetained {
             mutableStateOf(
@@ -67,7 +67,7 @@ internal class EditCollectionPresenter(
                 }
 
                 is EditCollectionUiEvent.AddToCollection -> {
-                    scope.launch {
+                    coroutineScope.launch {
                         collectionRepository.addToCollection(
                             collectionId = event.collectionId,
                             entityType = screen.entityType,

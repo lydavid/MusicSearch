@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain.image
 
+import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
@@ -8,6 +9,8 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 private const val WIKIMEDIA_IMAGE_BASE_URL = "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/"
 private const val WIKIMEDIA_LINK_BASE_URL = "https://commons.wikimedia.org/wiki/File:"
 
+// each of its implementations are stable
+@Stable
 sealed interface ImageMetadata {
     val imageId: ImageId
 

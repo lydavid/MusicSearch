@@ -34,7 +34,6 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
-import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -315,25 +314,19 @@ internal fun ArtistUi(
                             ),
                         )
                     },
-                    onSearchGenreOrTag = { tagQuery ->
+                    snackbarHostState = snackbarHostState,
+                    onGoToScreen = {
                         eventSink(
                             DetailsUiEvent.GoToScreen(
-                                screen = SearchScreen(
-                                    query = tagQuery,
-                                    entityType = entityType,
-                                ),
+                                screen = it,
                             ),
                         )
                     },
-                    onGoToGenre = { id ->
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = DetailsScreen(
-                                    id = id,
-                                    entityType = MusicBrainzEntityType.GENRE,
-                                ),
-                            ),
-                        )
+                    onRefreshLocal = {
+                        eventSink(DetailsUiEvent.RefreshLocalDetails)
+                    },
+                    onLoginClick = {
+                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },
                 )
             },

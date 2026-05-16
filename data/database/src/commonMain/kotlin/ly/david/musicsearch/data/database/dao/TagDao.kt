@@ -6,7 +6,10 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TagMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.domain.tag.TagChip
+import ly.david.musicsearch.shared.domain.tag.VoteType
+import ly.david.musicsearch.shared.domain.tag.getNewVoteCount
 
 class TagDao(
     database: Database,
@@ -61,15 +64,64 @@ class TagDao(
         transacter.deleteByEntity(entityId = entityId)
     }
 
+    fun voteOnTagForEntity(
+        genreOrTag: GenreOrTag,
+        entityId: String,
+        newVoteType: VoteType,
+    ) {
+        withTransaction {
+            val newVoteCount = genreOrTag.getNewVoteCount(newVoteType = newVoteType).toLong()
+            when (genreOrTag) {
+                is GenreChip -> {
+                    transacter.updateGenreVoteCount(
+                        newCount = newVoteCount,
+                        entityId = entityId,
+                        genreId = genreOrTag.id,
+                    )
+                }
+
+                is TagChip -> {
+                    transacter.updateTagVoteCount(
+                        newCount = newVoteCount,
+                        entityId = entityId,
+                        tagName = genreOrTag.name,
+                    )
+                }
+            }
+
+            when (newVoteType) {
+                VoteType.Withdraw -> {
+                    transacter.deleteVote(
+                        entityId = entityId,
+                        tagName = genreOrTag.name,
+                    )
+                }
+
+                else -> {
+                    transacter.upsertVote(
+                        entityId = entityId,
+                        tagName = genreOrTag.name,
+                        isUpvote = newVoteType == VoteType.Upvote,
+                    )
+                }
+            }
+        }
+    }
+
     fun getTags(
         entityId: String,
     ): ImmutableList<TagChip> {
         return transacter.getTagsByEntity(
             entityId = entityId,
-            mapper = { name, count ->
+            mapper = { name, count, isUpvote ->
                 TagChip(
                     name = name,
                     count = count.toInt(),
+                    voteType = when (isUpvote) {
+                        true -> VoteType.Upvote
+                        false -> VoteType.Downvote
+                        null -> VoteType.Withdraw
+                    },
                 )
             },
         ).executeAsList().toPersistentList()
@@ -80,12 +132,17 @@ class TagDao(
     ): ImmutableList<GenreChip> {
         return transacter.getGenresByEntity(
             entityId = entityId,
-            mapper = { id, name, disambiguation, count ->
+            mapper = { id, name, disambiguation, count, isUpvote ->
                 GenreChip(
                     id = id,
                     name = name,
                     disambiguation = disambiguation,
                     count = count.toInt(),
+                    voteType = when (isUpvote) {
+                        true -> VoteType.Upvote
+                        false -> VoteType.Downvote
+                        null -> VoteType.Withdraw
+                    },
                 )
             },
         ).executeAsList().toPersistentList()

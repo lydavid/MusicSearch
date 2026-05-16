@@ -1,10 +1,13 @@
+import kotlin.Boolean;
+
 CREATE TABLE mbid_tag (
   mbid TEXT NOT NULL,
-  tag TEXT NOT NULL,
+  name TEXT NOT NULL,
   count INTEGER NOT NULL,
 
-  PRIMARY KEY (mbid, tag)
+  PRIMARY KEY (mbid, name)
 );
+-- TODO: index on tag for surfacing tags while user types
 
 CREATE TABLE mbid_genre (
   mbid TEXT NOT NULL,
@@ -13,6 +16,17 @@ CREATE TABLE mbid_genre (
 
   PRIMARY KEY (mbid, genre_id)
 );
+
+-- An entry means this user has upvoted/downvoted the tag/genre with `name` on entity with id `mbid`
+CREATE TABLE vote (
+  mbid TEXT NOT NULL,
+  name TEXT NOT NULL,
+  is_upvote INTEGER AS Boolean NOT NULL,
+
+  PRIMARY KEY (mbid, name)
+);
+
+-- queries
 
 insertTag:
 INSERT OR IGNORE INTO mbid_tag
@@ -38,21 +52,60 @@ DELETE FROM mbid_genre
 WHERE mbid = :entityId;
 }
 
+upsertVote {
+UPDATE vote
+SET is_upvote = :isUpvote
+WHERE mbid = :entityId AND name = :tagName;
+
+INSERT OR IGNORE INTO vote
+VALUES (
+  :entityId,
+  :tagName,
+  :isUpvote
+);
+}
+
+deleteVote:
+DELETE FROM vote
+WHERE mbid = :entityId AND name = :tagName;
+
+updateTagVoteCount:
+UPDATE mbid_tag
+SET count = :newCount
+WHERE mbid = :entityId AND name = :tagName;
+
+updateGenreVoteCount:
+UPDATE mbid_genre
+SET count = :newCount
+WHERE mbid = :entityId AND genre_id = :genreId;
+
 getTagsByEntity:
 SELECT
-  tag AS name,
-  count
+  mbid_tag.name AS name,
+  mbid_tag.count,
+  vote.is_upvote
 FROM mbid_tag
-WHERE mbid = :entityId
-ORDER BY count DESC, name ASC;
+LEFT JOIN vote ON mbid_tag.mbid = vote.mbid AND mbid_tag.name = vote.name
+WHERE mbid_tag.mbid = :entityId
+ORDER BY
+  CASE WHEN vote.is_upvote = 0 THEN 0
+  ELSE 1 END DESC,
+  mbid_tag.count DESC,
+  mbid_tag.name ASC;
 
 getGenresByEntity:
 SELECT
   genre.id,
   genre.name,
   genre.disambiguation,
-  mbid_genre.count
+  mbid_genre.count,
+  vote.is_upvote
 FROM mbid_genre
 JOIN genre ON genre.id = mbid_genre.genre_id
+LEFT JOIN vote ON mbid_genre.mbid = vote.mbid AND genre.name = vote.name
 WHERE mbid_genre.mbid = :entityId
-ORDER BY count DESC, name ASC;
+ORDER BY
+  CASE WHEN vote.is_upvote = 0 THEN 0
+  ELSE 1 END DESC,
+  mbid_genre.count DESC,
+  genre.name ASC;

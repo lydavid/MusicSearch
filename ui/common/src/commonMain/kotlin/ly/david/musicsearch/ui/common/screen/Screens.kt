@@ -9,13 +9,14 @@ import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 import ly.david.musicsearch.shared.domain.parcelize.Parcelize
+import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
 @Parcelize
 data class SearchScreen(
     val query: String? = null,
     val entityType: MusicBrainzEntityType? = null,
-) : Screen
+) : Screen, NavigatableFromOverlayResult
 
 @Parcelize
 data class LookupUrlScreen(
@@ -59,8 +60,18 @@ data class EditCollectionScreen(
 ) : Screen
 
 @Parcelize
+data class TagDetailsScreen(
+    val entity: MusicBrainzEntity,
+    val genreOrTag: GenreOrTag,
+) : Screen
+
+@Parcelize
+sealed interface NavigatableFromOverlayResult : Screen, CommonParcelable
+
+@Parcelize
 data object PopWithoutResult : PopResult
 
+// TODO: rename to OverlayPopResult: isn't just for snackbars
 @Parcelize
 data class SnackbarPopResult<T : CommonParcelable>(
     val feedback: T?,
@@ -70,7 +81,7 @@ data class SnackbarPopResult<T : CommonParcelable>(
 data class DetailsScreen(
     val entityType: MusicBrainzEntityType,
     val id: String,
-) : Screen
+) : Screen, NavigatableFromOverlayResult
 
 @Parcelize
 data class CoverArtsScreen(

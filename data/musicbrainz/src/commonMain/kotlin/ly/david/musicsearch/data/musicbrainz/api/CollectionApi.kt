@@ -8,6 +8,7 @@ import io.ktor.client.request.parameter
 import io.ktor.client.request.put
 import io.ktor.http.appendPathSegments
 import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
+import ly.david.musicsearch.shared.domain.APP_NAME
 
 interface CollectionApi {
 
@@ -24,14 +25,12 @@ interface CollectionApi {
         collectionId: String,
         resourceUriPlural: String,
         mbids: List<String>,
-        client: String = "MusicSearch",
     )
 
     suspend fun deleteFromCollection(
         collectionId: String,
         resourceUriPlural: String,
         mbids: Set<String>,
-        client: String = "MusicSearch",
     )
 
     suspend fun browseCollectionsByUser(
@@ -49,7 +48,6 @@ interface CollectionApiImpl : CollectionApi {
         collectionId: String,
         resourceUriPlural: String,
         mbids: List<String>,
-        client: String,
     ) {
         httpClient.put {
             url {
@@ -59,7 +57,7 @@ interface CollectionApiImpl : CollectionApi {
                     resourceUriPlural,
                     mbids.joinToString(";"),
                 )
-                parameter("client", client)
+                parameter("client", APP_NAME)
             }
         }
     }
@@ -68,7 +66,6 @@ interface CollectionApiImpl : CollectionApi {
         collectionId: String,
         resourceUriPlural: String,
         mbids: Set<String>,
-        client: String,
     ) {
         httpClient.delete {
             url {
@@ -78,7 +75,7 @@ interface CollectionApiImpl : CollectionApi {
                     resourceUriPlural,
                     mbids.joinToString(";"),
                 )
-                parameter("client", client)
+                parameter("client", APP_NAME)
             }
         }
     }

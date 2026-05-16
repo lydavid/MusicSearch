@@ -15,6 +15,7 @@ import musicsearch.ui.common.generated.resources.enterAuthorizationCode
 import musicsearch.ui.common.generated.resources.login
 import org.jetbrains.compose.resources.stringResource
 
+// TODO: need this in details UI to show dialog for desktop login
 @Composable
 fun MusicBrainzLoginUi(
     state: MusicBrainzLoginUiState,

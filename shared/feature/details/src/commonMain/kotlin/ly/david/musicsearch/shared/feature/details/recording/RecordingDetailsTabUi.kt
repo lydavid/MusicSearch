@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,7 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import musicsearch.ui.common.generated.resources.Res
@@ -46,8 +48,10 @@ internal fun RecordingDetailsTabUi(
     onSeeAllListensClick: () -> Unit,
     onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = recording,
@@ -55,8 +59,10 @@ internal fun RecordingDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandSection = onCollapseExpandSection,
-        onSearchGenreOrTag = onSearchGenreOrTag,
-        onGoToGenre = onGoToGenre,
+        snackbarHostState = snackbarHostState,
+        onGoToScreen = onGoToScreen,
+        onRefreshLocal = onRefreshLocal,
+        onLoginClick = onLoginClick,
         entityInfoSection = {
             if (video) {
                 TextWithIcon(

@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.details.work
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
@@ -17,6 +18,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
@@ -41,8 +43,10 @@ internal fun WorkDetailsTabUi(
     onSeeAllListensClick: () -> Unit,
     onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
-    onSearchGenreOrTag: (String) -> Unit,
-    onGoToGenre: (id: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
+    onRefreshLocal: () -> Unit,
+    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = work,
@@ -50,8 +54,10 @@ internal fun WorkDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         onCollapseExpandSection = onCollapseExpandSection,
-        onSearchGenreOrTag = onSearchGenreOrTag,
-        onGoToGenre = onGoToGenre,
+        snackbarHostState = snackbarHostState,
+        onGoToScreen = onGoToScreen,
+        onRefreshLocal = onRefreshLocal,
+        onLoginClick = onLoginClick,
         entityInfoSection = {
             type?.getDisplayString()?.let {
                 TextWithHeading(

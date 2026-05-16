@@ -29,6 +29,7 @@ internal class MusicBrainzLogoutImpl(
             musicBrainzAuthStore.saveTokens(
                 accessToken = "",
                 refreshToken = "",
+                scope = "",
             )
             musicBrainzAuthStore.setUsername("")
         }

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.shared.feature.details.utils
+package ly.david.musicsearch.shared.feature.details.tag
 
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +11,8 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.domain.tag.TagChip
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
+import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.genres
@@ -67,6 +69,18 @@ private fun LazyListScope.genresOrTagsSection(
                 text = "$label $numberOfFilteredItems",
                 collapsed = isCollapsed,
                 onClick = { onCollapseExpand() },
+                // TODO: hide downvoted tags, with option to show them again
+//                endContent = {
+//                    Icon(
+//                        imageVector = CustomIcons.MoreVert,
+//                        modifier = Modifier
+//                            .clip(CircleShape)
+//                            .clickable {
+//
+//                            },
+//                        contentDescription = stringResource(Res.string.moreActions),
+//                    )
+//                },
             )
         }
         if (!isCollapsed) {
