@@ -233,20 +233,7 @@ internal fun PlaceUi(
                             ),
                         )
                     },
-                    onCollapseExpandSection = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
-                    },
                     snackbarHostState = snackbarHostState,
-                    onGoToScreen = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = it,
-                            ),
-                        )
-                    },
-                    onRefreshLocal = {
-                        eventSink(DetailsUiEvent.RefreshLocalDetails)
-                    },
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },

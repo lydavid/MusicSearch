@@ -76,7 +76,6 @@ private fun <T : MusicBrainzDetailsModel> T.getCapitalizedName(): String {
     )
 }
 
-// TODO: consider passing event sink to this layer, and invoking here, instead of reimplementing 10 times
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
@@ -86,17 +85,14 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     filterText: String = "",
     entityInfoSection: @Composable T.() -> Unit = {},
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
-    onImageClick: () -> Unit = {},
-    onCollapseExpandSection: (CollapsibleSection) -> Unit,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
     val primaryLabel = stringResource(Res.string.primary)
     val aliases = detailsModel.aliases.map { it.toAliasListItemModel() }.toPersistentList()
     val overlayHost = LocalOverlayHost.current
     val coroutineScope = rememberCoroutineScope()
+    val eventSink = detailsTabUiState.eventSink
 
     LazyColumn(
         modifier = modifier,
@@ -107,7 +103,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 if (filterText.isBlank()) {
                     LargeImage(
                         imageMetadata = detailsTabUiState.imageMetadata,
-                        onClick = onImageClick,
+                        onClick = {
+                            eventSink(DetailsTabUiEvent.ClickImage)
+                        },
                     )
                 }
 
@@ -125,7 +123,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 filterText = filterText,
                 isGenresCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Genres),
                 isTagsCollapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Tags),
-                onCollapseExpand = onCollapseExpandSection,
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(it))
+                },
                 onChipClick = {
                     coroutineScope.launch {
                         val result: SnackbarPopResult<CommonParcelable> =
@@ -137,12 +137,14 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                             )
                         result.feedback?.let { feedback ->
                             when (feedback) {
-                                is NavigatableFromOverlayResult -> onGoToScreen(feedback)
+                                is NavigatableFromOverlayResult -> {
+                                    eventSink(DetailsTabUiEvent.GoToScreen(screen = feedback))
+                                }
                                 is Feedback<*> -> {
                                     val tagFeedback = feedback as? Feedback<TagRepository.TagFeedback> ?: return@let
 
                                     if (tagFeedback.data is TagRepository.TagFeedback.Voted) {
-                                        onRefreshLocal()
+                                        eventSink(DetailsTabUiEvent.RefreshLocalDetails)
                                     }
 
                                     val message = (tagFeedback).getMessage()
@@ -190,7 +192,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 urls = urls,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ExternalLinks),
-                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.ExternalLinks) },
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ExternalLinks))
+                },
             )
 
             aliasesSection(
@@ -198,7 +202,9 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 primaryLabel = primaryLabel,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Aliases),
-                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Aliases) },
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Aliases))
+                },
             )
 
             item {

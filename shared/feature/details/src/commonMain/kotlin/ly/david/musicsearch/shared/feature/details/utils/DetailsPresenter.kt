@@ -246,7 +246,22 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                DetailsUiEvent.ClickImage -> {
+                DetailsUiEvent.NavigateToCollaboratorsGraph -> {
+                    navigator.onNavEvent(
+                        NavEvent.GoTo(
+                            ArtistCollaborationScreen(
+                                id = screen.id,
+                                name = detailsModel?.getNameWithDisambiguation().orEmpty(),
+                            ),
+                        ),
+                    )
+                }
+            }
+        }
+
+        fun detailsTabEventSink(event: DetailsTabUiEvent) {
+            when (event) {
+                DetailsTabUiEvent.ClickImage -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
                             CoverArtsScreen(
@@ -259,18 +274,19 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                     )
                 }
 
-                DetailsUiEvent.NavigateToCollaboratorsGraph -> {
+                is DetailsTabUiEvent.GoToScreen -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            ArtistCollaborationScreen(
-                                id = screen.id,
-                                name = detailsModel?.getNameWithDisambiguation().orEmpty(),
-                            ),
+                            event.screen,
                         ),
                     )
                 }
 
-                is DetailsUiEvent.ToggleCollapseExpandSection -> {
+                DetailsTabUiEvent.RefreshLocalDetails -> {
+                    detailsRequestKey++
+                }
+
+                is DetailsTabUiEvent.ToggleCollapseExpandSection -> {
                     val section = event.section
                     isSectionCollapsed = if (isSectionCollapsed.contains(section)) {
                         isSectionCollapsed - section
@@ -301,6 +317,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
                 isSectionCollapsed = isSectionCollapsed,
+                eventSink = ::detailsTabEventSink,
             ),
             allEntitiesListUiState = entitiesListUiState,
             musicBrainzLoginUiState = loginUiState,
@@ -339,6 +356,7 @@ internal data class DetailsTabUiState(
     val isSectionCollapsed: ImmutableSet<CollapsibleSection> = persistentSetOf(),
     val showDownvotedTags: Boolean = false,
     val now: Instant = Clock.System.now(),
+    val eventSink: (DetailsTabUiEvent) -> Unit = {},
 )
 
 internal enum class CollapsibleSection {
@@ -372,11 +390,19 @@ internal sealed interface DetailsUiEvent : CircuitUiEvent {
         val screen: Screen,
     ) : DetailsUiEvent
 
-    data object ClickImage : DetailsUiEvent
-
     data object NavigateToCollaboratorsGraph : DetailsUiEvent
+}
+
+internal sealed interface DetailsTabUiEvent : CircuitUiEvent {
+    data object RefreshLocalDetails : DetailsTabUiEvent
+
+    data class GoToScreen(
+        val screen: Screen,
+    ) : DetailsTabUiEvent
+
+    data object ClickImage : DetailsTabUiEvent
 
     data class ToggleCollapseExpandSection(
         val section: CollapsibleSection,
-    ) : DetailsUiEvent
+    ) : DetailsTabUiEvent
 }

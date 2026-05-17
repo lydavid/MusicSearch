@@ -236,9 +236,6 @@ internal fun LabelUi(
                     label = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
-                    onCollapseExpandSection = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
-                    },
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
@@ -250,16 +247,6 @@ internal fun LabelUi(
                         )
                     },
                     snackbarHostState = snackbarHostState,
-                    onGoToScreen = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = it,
-                            ),
-                        )
-                    },
-                    onRefreshLocal = {
-                        eventSink(DetailsUiEvent.RefreshLocalDetails)
-                    },
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },

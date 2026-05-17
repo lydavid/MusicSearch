@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.details.asEntity
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -25,6 +26,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
 import ly.david.musicsearch.shared.feature.details.utils.getNumberOfFilteredItems
@@ -40,7 +42,7 @@ import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
@@ -74,16 +76,12 @@ internal fun ReleaseDetailsTabUi(
     detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    onImageClick: () -> Unit,
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onSeeAllListensClick: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
-    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     val entityInfoSection: @Composable ReleaseDetailsModel.() -> Unit = {
         barcode.ifNotEmpty {
             TextWithHeading(
@@ -186,7 +184,9 @@ internal fun ReleaseDetailsTabUi(
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ReleaseEvents),
                 areas = areas,
                 filterText = filterText,
-                onCollapseExpandReleaseEvents = { onCollapseExpandSection(CollapsibleSection.ReleaseEvents) },
+                onCollapseExpandReleaseEvents = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ReleaseEvents))
+                },
                 onItemClick = onItemClick,
             )
 
@@ -194,11 +194,29 @@ internal fun ReleaseDetailsTabUi(
                 release = this@run,
                 filterText = filterText,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
+                },
                 now = detailsTabUiState.now,
-                onSeeAllListensClick = onSeeAllListensClick,
+                onSeeAllListensClick = {
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                entityFacet = release.asEntity(),
+                            ),
+                        ),
+                    )
+                },
                 onItemClick = onItemClick,
-                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
+                onGoToListenAtEpochSeconds = { seconds ->
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                dateTimeEpochSeconds = seconds,
+                            ),
+                        ),
+                    )
+                },
             )
         }
     }
@@ -207,13 +225,9 @@ internal fun ReleaseDetailsTabUi(
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onImageClick = onImageClick,
-        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = entityInfoSection,
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
     )
 }
