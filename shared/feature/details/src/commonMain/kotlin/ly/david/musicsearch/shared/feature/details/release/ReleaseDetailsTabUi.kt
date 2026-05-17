@@ -78,7 +78,6 @@ internal fun ReleaseDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler,
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val eventSink = detailsTabUiState.eventSink
 
@@ -228,7 +227,6 @@ internal fun ReleaseDetailsTabUi(
         entityInfoSection = entityInfoSection,
         bringYourOwnLabelsSection = bringYourOwnLabelsSection,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
     )
 }
 

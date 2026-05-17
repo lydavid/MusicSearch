@@ -27,7 +27,6 @@ internal fun AreaDetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val entityInfoSection: @Composable AreaDetailsModel.() -> Unit = {
         type.ifNotEmpty {
@@ -67,6 +66,5 @@ internal fun AreaDetailsTabUi(
         filterText = filterText,
         entityInfoSection = entityInfoSection,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
     )
 }

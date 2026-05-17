@@ -30,7 +30,6 @@ internal fun LabelDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = label,
@@ -38,7 +37,6 @@ internal fun LabelDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

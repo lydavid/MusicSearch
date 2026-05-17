@@ -228,9 +228,6 @@ internal fun EventUi(
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     snackbarHostState = snackbarHostState,
-                    onLoginClick = {
-                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                    },
                 )
             },
         )

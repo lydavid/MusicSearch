@@ -247,9 +247,6 @@ internal fun LabelUi(
                         )
                     },
                     snackbarHostState = snackbarHostState,
-                    onLoginClick = {
-                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                    },
                 )
             },
         )

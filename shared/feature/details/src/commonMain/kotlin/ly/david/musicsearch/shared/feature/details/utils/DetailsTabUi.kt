@@ -35,6 +35,8 @@ import ly.david.musicsearch.shared.feature.details.tag.getMessage
 import ly.david.musicsearch.ui.common.image.LargeImage
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
+import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
@@ -86,13 +88,17 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
     entityInfoSection: @Composable T.() -> Unit = {},
     bringYourOwnLabelsSection: LazyListScope.() -> Unit = {},
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    onLoginClick: () -> Unit,
 ) {
     val primaryLabel = stringResource(Res.string.primary)
     val aliases = detailsModel.aliases.map { it.toAliasListItemModel() }.toPersistentList()
     val overlayHost = LocalOverlayHost.current
     val coroutineScope = rememberCoroutineScope()
     val eventSink = detailsTabUiState.eventSink
+    val loginEventSink = detailsTabUiState.musicBrainzLoginUiState.eventSink
+
+    MusicBrainzLoginUi(
+        state = detailsTabUiState.musicBrainzLoginUiState,
+    )
 
     LazyColumn(
         modifier = modifier,
@@ -140,6 +146,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                                 is NavigatableFromOverlayResult -> {
                                     eventSink(DetailsTabUiEvent.GoToScreen(screen = feedback))
                                 }
+
                                 is Feedback<*> -> {
                                     val tagFeedback = feedback as? Feedback<TagRepository.TagFeedback> ?: return@let
 
@@ -165,7 +172,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                                     )
                                     when (snackbarResult) {
                                         SnackbarResult.ActionPerformed -> {
-                                            onLoginClick()
+                                            loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                                         }
 
                                         SnackbarResult.Dismissed -> {

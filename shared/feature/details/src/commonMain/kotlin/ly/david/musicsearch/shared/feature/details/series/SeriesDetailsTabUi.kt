@@ -19,7 +19,6 @@ internal fun SeriesDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = series,
@@ -27,7 +26,6 @@ internal fun SeriesDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

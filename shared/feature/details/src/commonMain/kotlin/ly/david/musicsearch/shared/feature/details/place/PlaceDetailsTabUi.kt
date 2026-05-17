@@ -29,7 +29,6 @@ internal fun PlaceDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = place,
@@ -37,7 +36,6 @@ internal fun PlaceDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(
