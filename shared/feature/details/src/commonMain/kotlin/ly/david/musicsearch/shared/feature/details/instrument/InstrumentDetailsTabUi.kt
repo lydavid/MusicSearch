@@ -10,12 +10,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
-import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.description
@@ -28,10 +26,7 @@ internal fun InstrumentDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
@@ -39,10 +34,7 @@ internal fun InstrumentDetailsTabUi(
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandSection = onCollapseExpandSection,
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
         entityInfoSection = {
             type.ifNotEmpty {

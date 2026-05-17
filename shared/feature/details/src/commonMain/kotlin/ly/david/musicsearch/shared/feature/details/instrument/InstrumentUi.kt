@@ -212,20 +212,7 @@ internal fun InstrumentUi(
                     instrument = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
-                    onCollapseExpandSection = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
-                    },
                     snackbarHostState = snackbarHostState,
-                    onGoToScreen = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = it,
-                            ),
-                        )
-                    },
-                    onRefreshLocal = {
-                        eventSink(DetailsUiEvent.RefreshLocalDetails)
-                    },
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },

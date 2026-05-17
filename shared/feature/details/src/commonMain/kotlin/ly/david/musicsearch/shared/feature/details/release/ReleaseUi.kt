@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
-import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
@@ -31,7 +30,6 @@ import ly.david.musicsearch.ui.common.paging.getLazyPagingItemsForTab
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
-import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
@@ -340,24 +338,6 @@ internal fun ReleaseUi(
                     release = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
-                    onImageClick = {
-                        eventSink(DetailsUiEvent.ClickImage)
-                    },
-                    onCollapseExpandSection = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
-                    },
-                    onSeeAllListensClick = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = ListensScreen(
-                                    entityFacet = MusicBrainzEntity(
-                                        id = entityId,
-                                        type = entityType,
-                                    ),
-                                ),
-                            ),
-                        )
-                    },
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
@@ -368,26 +348,7 @@ internal fun ReleaseUi(
                             ),
                         )
                     },
-                    onGoToListenAtEpochSeconds = { seconds ->
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = ListensScreen(
-                                    dateTimeEpochSeconds = seconds,
-                                ),
-                            ),
-                        )
-                    },
                     snackbarHostState = snackbarHostState,
-                    onGoToScreen = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = it,
-                            ),
-                        )
-                    },
-                    onRefreshLocal = {
-                        eventSink(DetailsUiEvent.RefreshLocalDetails)
-                    },
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },

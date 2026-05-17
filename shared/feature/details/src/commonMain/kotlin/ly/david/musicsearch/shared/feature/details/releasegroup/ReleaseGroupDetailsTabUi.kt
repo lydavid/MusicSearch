@@ -5,11 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
-import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.firstReleaseDate
@@ -22,11 +20,7 @@ internal fun ReleaseGroupDetailsTabUi(
     detailsTabUiState: DetailsTabUiState,
     modifier: Modifier = Modifier,
     filterText: String = "",
-    onImageClick: () -> Unit = {},
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
@@ -34,11 +28,7 @@ internal fun ReleaseGroupDetailsTabUi(
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onImageClick = onImageClick,
-        onCollapseExpandSection = onCollapseExpandSection,
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
         entityInfoSection = {
             TextWithHeading(

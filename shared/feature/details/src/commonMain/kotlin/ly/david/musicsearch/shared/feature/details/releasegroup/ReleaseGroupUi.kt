@@ -269,23 +269,7 @@ internal fun ReleaseGroupUi(
                     releaseGroup = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
-                    onImageClick = {
-                        eventSink(DetailsUiEvent.ClickImage)
-                    },
-                    onCollapseExpandSection = {
-                        eventSink(DetailsUiEvent.ToggleCollapseExpandSection(it))
-                    },
                     snackbarHostState = snackbarHostState,
-                    onGoToScreen = {
-                        eventSink(
-                            DetailsUiEvent.GoToScreen(
-                                screen = it,
-                            ),
-                        )
-                    },
-                    onRefreshLocal = {
-                        eventSink(DetailsUiEvent.RefreshLocalDetails)
-                    },
                     onLoginClick = {
                         loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                     },

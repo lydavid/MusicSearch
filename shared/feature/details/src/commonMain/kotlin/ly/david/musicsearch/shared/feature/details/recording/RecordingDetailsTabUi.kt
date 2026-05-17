@@ -13,10 +13,12 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.details.asEntity
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -26,7 +28,7 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import musicsearch.ui.common.generated.resources.Res
@@ -45,23 +47,17 @@ internal fun RecordingDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onSeeAllListensClick: () -> Unit,
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     DetailsTabUi(
         detailsModel = recording,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandSection = onCollapseExpandSection,
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
         entityInfoSection = {
             if (video) {
@@ -102,9 +98,27 @@ internal fun RecordingDetailsTabUi(
                 filterText = filterText,
                 now = detailsTabUiState.now,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
-                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
-                onSeeAllListensClick = onSeeAllListensClick,
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
+                },
+                onGoToListenAtEpochSeconds = { seconds ->
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                dateTimeEpochSeconds = seconds,
+                            ),
+                        ),
+                    )
+                },
+                onSeeAllListensClick = {
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                entityFacet = recording.asEntity(),
+                            ),
+                        ),
+                    )
+                },
             )
         },
     )

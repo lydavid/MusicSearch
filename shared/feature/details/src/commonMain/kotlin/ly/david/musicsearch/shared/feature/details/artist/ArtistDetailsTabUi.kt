@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
+import ly.david.musicsearch.shared.domain.details.asEntity
 import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -16,6 +17,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
 import ly.david.musicsearch.ui.common.artist.getDisplayString
@@ -26,7 +28,7 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.relation.UrlListItem
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import musicsearch.ui.common.generated.resources.Res
@@ -52,23 +54,17 @@ internal fun ArtistDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onImageClick: () -> Unit,
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onSeeAllListensClick: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
-    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     DetailsTabUi(
         detailsModel = artist,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onImageClick = onImageClick,
-        onCollapseExpandSection = onCollapseExpandSection,
         entityInfoSection = {
             ArtistInformationSection(
                 filterText = filterText,
@@ -91,16 +87,32 @@ internal fun ArtistDetailsTabUi(
                     filterText = filterText,
                     now = detailsTabUiState.now,
                     collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                    onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
+                    onCollapseExpand = {
+                        eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
+                    },
                     onItemClick = onItemClick,
-                    onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
-                    onSeeAllListensClick = onSeeAllListensClick,
+                    onGoToListenAtEpochSeconds = { seconds ->
+                        eventSink(
+                            DetailsTabUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    dateTimeEpochSeconds = seconds,
+                                ),
+                            ),
+                        )
+                    },
+                    onSeeAllListensClick = {
+                        eventSink(
+                            DetailsTabUiEvent.GoToScreen(
+                                screen = ListensScreen(
+                                    entityFacet = artist.asEntity(),
+                                ),
+                            ),
+                        )
+                    },
                 )
             }
         },
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
     )
 }

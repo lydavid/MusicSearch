@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
+import ly.david.musicsearch.shared.domain.details.asEntity
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -18,7 +20,7 @@ import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
+import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.work.getDisplayLanguage
@@ -40,23 +42,17 @@ internal fun WorkDetailsTabUi(
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
-    onSeeAllListensClick: () -> Unit,
-    onCollapseExpandSection: (CollapsibleSection) -> Unit = {},
-    onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
     snackbarHostState: SnackbarHostState,
-    onGoToScreen: (screen: NavigatableFromOverlayResult) -> Unit,
-    onRefreshLocal: () -> Unit,
     onLoginClick: () -> Unit,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     DetailsTabUi(
         detailsModel = work,
         detailsTabUiState = detailsTabUiState,
         modifier = modifier,
         filterText = filterText,
-        onCollapseExpandSection = onCollapseExpandSection,
         snackbarHostState = snackbarHostState,
-        onGoToScreen = onGoToScreen,
-        onRefreshLocal = onRefreshLocal,
         onLoginClick = onLoginClick,
         entityInfoSection = {
             type?.getDisplayString()?.let {
@@ -107,9 +103,27 @@ internal fun WorkDetailsTabUi(
                 filterText = filterText,
                 now = detailsTabUiState.now,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Listens),
-                onCollapseExpand = { onCollapseExpandSection(CollapsibleSection.Listens) },
-                onGoToListenAtEpochSeconds = onGoToListenAtEpochSeconds,
-                onSeeAllListensClick = onSeeAllListensClick,
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Listens))
+                },
+                onGoToListenAtEpochSeconds = { seconds ->
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                dateTimeEpochSeconds = seconds,
+                            ),
+                        ),
+                    )
+                },
+                onSeeAllListensClick = {
+                    eventSink(
+                        DetailsTabUiEvent.GoToScreen(
+                            screen = ListensScreen(
+                                entityFacet = work.asEntity(),
+                            ),
+                        ),
+                    )
+                },
             )
         },
     )
