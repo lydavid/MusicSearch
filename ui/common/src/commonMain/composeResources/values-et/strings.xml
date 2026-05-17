@@ -382,4 +382,11 @@
     <string name="searchGenre">Otsi žanrit</string>
     <string name="searchTag">Otsi silti</string>
     <string name="goToGenre">Suundu žanri juurde</string>
+    <string name="upvotedX">Pooldav hääl: %1$s.</string>
+    <string name="withdrawnVoteForX">Tagasivõetud hääl: %1$s.</string>
+    <string name="failedToVoteForX">Hääletamine ei õnnestunud: %1$s.</string>
+    <string name="downvotedX">Andsid vastuhääle: %1$s. Ta on nüüd peidetud. Uuesti vaatamiseks, klõpsa %2$s.</string>
+    <string name="showDownvotedGenresTags">Näita vastuhäälega žanre ja silte</string>
+    <string name="hideDownvotedGenresTags">Peida vastuhäälega žanrid ja sildid</string>
+    <string name="loginAgainForTags">Oma siltide muutmiseks vajalike õiguste lubamiseks pead uuesti sisse logima.</string>
 </resources>
