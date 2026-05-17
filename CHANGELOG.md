@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.114.0](https://github.com/lydavid/MusicSearch/compare/v1.113.0...v1.114.0) (2026-05-17)
+
+
+### Bug Fixes
+
+* **desktop:** login from snackbar from details will show a dialog for you to input auth token ([bd5d64b](https://github.com/lydavid/MusicSearch/commit/bd5d64b452b714de0bf3d968a43548a768b41747))
+
+
+### Features
+
+* hide downvoted genres/tags; add more actions menu to genres/tags headers to show/hide downvoted genres/tags ([834e9e5](https://github.com/lydavid/MusicSearch/commit/834e9e59698c765a810e717a8284609a593895ba))
+* support voting on tags (requires re-authenticating with MusicBrainz for tag permissions); update database version to 79 ([5fa1a3a](https://github.com/lydavid/MusicSearch/commit/5fa1a3aaf39574a56fd4b2511e7891bf1061bb5a))
+
 ## [1.113.0](https://github.com/lydavid/MusicSearch/compare/v1.112.1...v1.113.0) (2026-05-13)
 
 
