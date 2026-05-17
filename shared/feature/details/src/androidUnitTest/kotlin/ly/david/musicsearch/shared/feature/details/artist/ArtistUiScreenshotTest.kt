@@ -53,4 +53,11 @@ class ArtistUiScreenshotTest : ScreenshotTest() {
             PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
         }
     }
+
+    @Test
+    fun showDownvotedTags() {
+        snapshot {
+            PreviewArtistDetailsUiShowDownvotedTags()
+        }
+    }
 }

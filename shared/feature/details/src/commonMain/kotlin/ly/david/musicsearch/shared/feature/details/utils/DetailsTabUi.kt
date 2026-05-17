@@ -132,6 +132,10 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 onCollapseExpand = {
                     eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(it))
                 },
+                showDownvotedTags = detailsTabUiState.showDownvotedTags,
+                onToggleShowDownvotedTag = {
+                    eventSink(DetailsTabUiEvent.ToggleShowDownvotedTags)
+                },
                 onChipClick = {
                     coroutineScope.launch {
                         val result: SnackbarPopResult<CommonParcelable> =

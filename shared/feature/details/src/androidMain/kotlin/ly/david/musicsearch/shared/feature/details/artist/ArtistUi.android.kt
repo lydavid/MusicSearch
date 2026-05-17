@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
+import ly.david.musicsearch.shared.domain.tag.VoteType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -84,6 +85,11 @@ private val detailsModel = ArtistDetailsModel(
         TagChip(
             name = "60s",
             count = 6,
+        ),
+        TagChip(
+            name = "some spam tag",
+            count = 1,
+            voteType = VoteType.Downvote,
         ),
     ),
     urls = persistentListOf(
@@ -312,5 +318,21 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                 selectedTab = Tab.DETAILS,
             ),
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistDetailsUiShowDownvotedTags() {
+    PreviewWithTransitionAndOverlays {
+        ContentWithOverlays {
+            ArtistUi(
+                state = detailsUiState.copy(
+                    detailsTabUiState = detailsUiState.detailsTabUiState.copy(
+                        showDownvotedTags = true,
+                    ),
+                ),
+            )
+        }
     }
 }
