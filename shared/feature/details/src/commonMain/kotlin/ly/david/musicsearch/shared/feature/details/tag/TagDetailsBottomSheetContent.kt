@@ -43,6 +43,7 @@ import musicsearch.ui.common.generated.resources.goToGenre
 import musicsearch.ui.common.generated.resources.loginAgainForTags
 import musicsearch.ui.common.generated.resources.searchGenre
 import musicsearch.ui.common.generated.resources.searchTag
+import musicsearch.ui.common.generated.resources.showDownvotedGenresTags
 import musicsearch.ui.common.generated.resources.syncingWithMusicBrainz
 import musicsearch.ui.common.generated.resources.upvotedX
 import musicsearch.ui.common.generated.resources.withdrawnVoteForX
@@ -181,7 +182,13 @@ internal suspend fun Feedback<TagRepository.TagFeedback>.getMessage(): String {
             val tagName = data.name
             when (data.voteType) {
                 VoteType.Upvote -> getString(Res.string.upvotedX, tagName)
-                VoteType.Downvote -> getString(Res.string.downvotedX, tagName)
+
+                VoteType.Downvote -> getString(
+                    Res.string.downvotedX,
+                    tagName,
+                    getString(Res.string.showDownvotedGenresTags),
+                )
+
                 VoteType.Withdraw -> getString(Res.string.withdrawnVoteForX, tagName)
             }
         }

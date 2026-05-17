@@ -383,8 +383,10 @@
     <string name="searchTag">Search tag</string>
     <string name="goToGenre">Go to genre</string>
     <string name="upvotedX">Upvoted %1$s.</string>
-    <string name="downvotedX">Downvoted %1$s. It is now hidden. To view again, toggle "Show all genres/tags".</string>
     <string name="withdrawnVoteForX">Withdrawn vote for %1$s.</string>
     <string name="failedToVoteForX">Failed to vote for %1$s.</string>
     <string name="loginAgainForTags">You need to log in again to grant the app permission to modify your tags.</string>
+    <string name="downvotedX">Downvoted %1$s. It is now hidden. To view again, toggle "%2$s".</string>
+    <string name="showDownvotedGenresTags">Show downvoted genres/tags</string>
+    <string name="hideDownvotedGenresTags">Hide downvoted genres/tags</string>
 </resources>

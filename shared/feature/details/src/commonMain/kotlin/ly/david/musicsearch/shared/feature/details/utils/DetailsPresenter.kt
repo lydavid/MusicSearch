@@ -111,6 +111,8 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         val detailsLazyListState = rememberLazyListState()
         var snackbarMessage: String? by rememberSaveable { mutableStateOf(null) }
         var isSectionCollapsed by rememberRetained { mutableStateOf(persistentSetOf<CollapsibleSection>()) }
+        var showDownvotedTags by rememberSaveable { mutableStateOf(false) }
+
         val collected by collectionRepository.observeEntityIsInACollection(
             entityId = screen.id,
         ).collectAsRetainedState(false)
@@ -294,6 +296,10 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                         isSectionCollapsed + section
                     }.toPersistentSet()
                 }
+
+                DetailsTabUiEvent.ToggleShowDownvotedTags -> {
+                    showDownvotedTags = !showDownvotedTags
+                }
             }
         }
 
@@ -317,6 +323,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
                 isSectionCollapsed = isSectionCollapsed,
+                showDownvotedTags = showDownvotedTags,
                 musicBrainzLoginUiState = loginUiState,
                 eventSink = ::detailsTabEventSink,
             ),
@@ -407,4 +414,6 @@ internal sealed interface DetailsTabUiEvent : CircuitUiEvent {
     data class ToggleCollapseExpandSection(
         val section: CollapsibleSection,
     ) : DetailsTabUiEvent
+
+    data object ToggleShowDownvotedTags : DetailsTabUiEvent
 }
