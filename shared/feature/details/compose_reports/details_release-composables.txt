@@ -20,6 +20,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiLoading()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiError()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiShowDownvotedTags()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.PreviewEventDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.PreviewGenreUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.PreviewInstrumentDetailsUi()
@@ -41,9 +42,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUiCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.PreviewSeriesDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewTagBottomSheetContentGenre()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewTagBottomSheetContentTag()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewTagBottomSheetContentLongTag()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentGenre()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentTag()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentLongTag()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentGenreUpvote()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentGenreDownvote()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentTagSyncing()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.PreviewUrlsSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.PreviewWorkDetailsUiWithListens()
@@ -60,12 +64,10 @@ fun ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel(
 ): AliasListItemModel
 restartable skippable fun ly.david.musicsearch.shared.feature.details.area.AreaDetailsTabUi(
   area: AreaDetailsModel
-  unstable detailsTabUiState: DetailsTabUiState
+  detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.area.AreaSection(
   areaListItemModel: AreaListItemModel?
@@ -79,15 +81,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi(
   artist: ArtistDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSeeAllListensClick: Function0<Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>
-  stable onGoToListenAtEpochSeconds: Function1<@[ParameterName(name = 'listenMs')] Long, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistInformationSection(
   <this>: ArtistDetailsModel
@@ -100,12 +97,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable fun ly.david.musicsearch.shared.feature.details.event.EventDetailsTabUi(
   event: EventDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static <expression>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.EventUi(
   stable state: DetailsUiState<EventDetailsModel>
@@ -121,11 +115,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi(
   instrument: InstrumentDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi(
   stable state: DetailsUiState<InstrumentDetailsModel>
@@ -134,12 +126,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi(
   label: LabelDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelUi(
   stable state: DetailsUiState<LabelDetailsModel>
@@ -148,12 +138,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi(
   place: PlaceDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceUi(
   stable state: DetailsUiState<PlaceDetailsModel>
@@ -162,13 +150,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingDetailsTabUi(
   recording: RecordingDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onSeeAllListensClick: Function0<Unit>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onGoToListenAtEpochSeconds: Function1<@[ParameterName(name = 'listenMs')] Long, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.recording.RecordingUi(
   stable state: DetailsUiState<RecordingDetailsModel>
@@ -176,16 +160,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable fun ly.david.musicsearch.shared.feature.details.release.ReleaseDetailsTabUi(
   release: ReleaseDetailsModel
-  unstable detailsTabUiState: DetailsTabUiState
+  detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSeeAllListensClick: Function0<Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>
-  stable onGoToListenAtEpochSeconds: Function1<@[ParameterName(name = 'listenMs')] Long, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.ReleaseUi(
   stable state: DetailsUiState<ReleaseDetailsModel>
@@ -224,13 +203,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupDetailsTabUi(
   releaseGroup: ReleaseGroupDetailsModel
-  unstable detailsTabUiState: DetailsTabUiState
+  detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
-  stable onImageClick: Function0<Unit>? = @static <expression>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi(
   stable state: DetailsUiState<ReleaseGroupDetailsModel>
@@ -239,16 +215,31 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.SeriesDetailsTabUi(
   series: SeriesDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.SeriesUi(
   stable state: DetailsUiState<SeriesDetailsModel>
   stable modifier: Modifier? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.GenreOrTagChip(
+  unstable genreOrTag: GenreOrTag
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function1<GenreOrTag, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.MoreActionsOverflowMenu(
+  stable showDownvotedTags: Boolean
+  stable onToggleShowDownvotedTag: Function0<Unit>
+  stable label: String
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.TagDetailsBottomSheetContent(
+  stable state: TagDetailsUiState
+)
+open fun ly.david.musicsearch.shared.feature.details.tag.TagDetailsPresenter.present(
+  stable <this>: TagDetailsPresenter
+): TagDetailsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager(
   stable pagerState: PagerState
   stable state: DetailsUiState<T>
@@ -269,21 +260,12 @@ fun ly.david.musicsearch.shared.feature.details.utils.getCapitalizedName(
 ): String
 restartable skippable fun ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi(
   detailsModel: T
-  unstable detailsTabUiState: DetailsTabUiState
+  detailsTabUiState: DetailsTabUiState
   stable modifier: Modifier? = @static <expression>
   stable filterText: String? = @static ""
   stable entityInfoSection: @[ExtensionFunctionType] Function3<T, Composer, Int, Unit>? = @static <expression>
   stable bringYourOwnLabelsSection: @[ExtensionFunctionType] Function1<LazyListScope, Unit>? = @static <expression>
-  stable onImageClick: Function0<Unit>? = @static <expression>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.GenreOrTagChip(
-  unstable genreOrTag: GenreOrTag
-  stable filterText: String
-  stable modifier: Modifier? = @static <expression>
-  stable onClick: Function1<GenreOrTag, Unit>? = @static null
+  stable snackbarHostState: SnackbarHostState? = @dynamic <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.LastListenedListItem(
   stable lastListenedMs: Long
@@ -300,22 +282,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>
   stable onGoToListenAtEpochSeconds: Function1<@[ParameterName(name = 'listenMs')] Long, Unit>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.utils.TagBottomSheetContent(
-  unstable genreOrTag: GenreOrTag
-  stable onSearchGenreOrTag: Function1<String, Unit>? = @static <expression>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
-  stable onDismiss: Function0<Unit>? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkDetailsTabUi(
   work: WorkDetailsModel
   stable modifier: Modifier? = @static <expression>
-  unstable detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
+  detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
-  stable onSeeAllListensClick: Function0<Unit>
-  stable onCollapseExpandSection: Function1<CollapsibleSection, Unit>? = @static <expression>
-  stable onGoToListenAtEpochSeconds: Function1<@[ParameterName(name = 'listenMs')] Long, Unit>
-  stable onSearchGenreOrTag: Function1<String, Unit>
-  stable onGoToGenre: Function1<@[ParameterName(name = 'id')] String, Unit>
+  stable snackbarHostState: SnackbarHostState
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.work.WorkUi(
   stable state: DetailsUiState<WorkDetailsModel>

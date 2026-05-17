@@ -263,6 +263,12 @@ stable class ly.david.musicsearch.ui.common.screen.EditCollectionScreen {
   runtime var CREATOR: Creator<EditCollectionScreen>
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.TagDetailsScreen {
+  runtime val entity: MusicBrainzEntity
+  unstable val genreOrTag: GenreOrTag
+  runtime var CREATOR: Creator<TagDetailsScreen>
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {
   runtime var CREATOR: Creator<PopWithoutResult>
   <runtime stability> = Stable

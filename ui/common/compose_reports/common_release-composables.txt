@@ -47,6 +47,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderExpanded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderWithEndContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedFooterItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedText()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextDifferentBeginAndEnd()
@@ -212,6 +213,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.OverflowMenu(
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable contentDescription: String? = @dynamic <expression>
+  stable useIconButton: Boolean = @static true
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.RetryButton(
   stable modifier: Modifier? = @static <expression>
@@ -349,7 +351,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable fun ly.david.musicsearch.ui.common.image.InitializeImageLoader()
 restartable skippable fun ly.david.musicsearch.ui.common.image.LargeImage(
-  unstable imageMetadata: ImageMetadata?
+  stable imageMetadata: ImageMetadata?
   stable modifier: Modifier? = @static <expression>
   stable isCompact: Boolean = @static true
   stable zoomEnabled: Boolean = @static false
@@ -360,7 +362,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable placeholderIcon: ImageVector? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.image.ThumbnailImage(
-  unstable imageMetadata: ImageMetadata?
+  stable imageMetadata: ImageMetadata?
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static <expression>
   stable clipCircle: Boolean = @static false
@@ -394,11 +396,12 @@ open scheme("[presenter]") fun ly.david.musicsearch.ui.common.list.AllEntitiesLi
 open fun ly.david.musicsearch.ui.common.list.BaseListPresenter.present(
   stable <this>: BaseListPresenter
 ): EntitiesListUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
   stable text: String
   stable collapsed: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
+  stable endContent: Function2<Composer, Int, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.HighlightableText(
   stable text: String
@@ -688,6 +691,10 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable textLabel: String?
   stable textHint: String?
   stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SyncingText(
+  stable message: String
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextInput(

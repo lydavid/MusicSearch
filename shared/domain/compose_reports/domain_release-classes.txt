@@ -174,8 +174,8 @@ stable class ly.david.musicsearch.shared.domain.details.AreaDetailsModel {
   stable val countryCode: String
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -193,8 +193,8 @@ stable class ly.david.musicsearch.shared.domain.details.ArtistDetailsModel {
   runtime val areaListItemModel: AreaListItemModel?
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
@@ -212,8 +212,8 @@ stable class ly.david.musicsearch.shared.domain.details.EventDetailsModel {
   stable val lifeSpan: LifeSpanUiModel
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -226,8 +226,8 @@ stable class ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel {
   stable val type: String
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -244,8 +244,8 @@ stable class ly.david.musicsearch.shared.domain.details.LabelDetailsModel {
   runtime val area: AreaListItemModel?
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -261,8 +261,8 @@ stable class ly.david.musicsearch.shared.domain.details.PlaceDetailsModel {
   runtime val area: AreaListItemModel?
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -277,8 +277,8 @@ stable class ly.david.musicsearch.shared.domain.details.RecordingDetailsModel {
   stable val isrcs: ImmutableList<String>
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
@@ -300,8 +300,8 @@ stable class ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel {
   stable val quality: String
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   stable val textRepresentation: TextRepresentationUiModel
@@ -328,8 +328,8 @@ stable class ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
   stable val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType>
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -341,8 +341,8 @@ stable class ly.david.musicsearch.shared.domain.details.SeriesDetailsModel {
   stable val type: String
   stable val lastUpdated: Instant
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
@@ -357,8 +357,8 @@ stable class ly.david.musicsearch.shared.domain.details.WorkDetailsModel {
   stable val lastUpdated: Instant
   stable val attributes: ImmutableList<WorkAttributeUiModel>
   runtime val artistCredits: ImmutableList<ArtistCreditUiModel>
-  stable val genres: ImmutableList<GenreChip>
-  stable val tags: ImmutableList<TagChip>
+  runtime val genres: ImmutableList<GenreChip>
+  runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
@@ -465,7 +465,7 @@ stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.InternetArch
   stable val thumbnailImageUrl: String
   stable val largeImageUrl: String
   stable val linkUrl: String
-  <runtime stability> = 
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.Spotify {
   stable val imageId: ImageId
@@ -490,17 +490,17 @@ stable class ly.david.musicsearch.shared.domain.image.ImageMetadataRepositoryImp
   runtime val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
   <runtime stability> = 
 }
-runtime class ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount {
-  runtime val imageMetadata: ImageMetadata
+stable class ly.david.musicsearch.shared.domain.image.ImageMetadataWithCount {
+  stable val imageMetadata: ImageMetadata
   stable val count: Int
-  <runtime stability> = Uncertain(ImageMetadata)
+  <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity {
-  runtime val imageMetadata: ImageMetadata
+runtime class ly.david.musicsearch.shared.domain.image.ImageMetadataWithEntity {
+  stable val imageMetadata: ImageMetadata
   runtime val musicBrainzEntity: MusicBrainzEntity?
   stable val name: String?
   stable val disambiguation: String?
-  <runtime stability> = 
+  <runtime stability> = Uncertain(Creator)
 }
 stable class ly.david.musicsearch.shared.domain.image.RawImageMetadata {
   stable val thumbnailUrl: String
@@ -631,7 +631,7 @@ stable class ly.david.musicsearch.shared.domain.listen.ListenListItemModel {
   stable val recordingId: String
   stable val recordingDurationMs: Int?
   stable val unmappedDurationMs: Int?
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   stable val release: ListenRelease
   runtime val aliases: ImmutableList<BasicAlias>
@@ -804,7 +804,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel {
   stable val gender: ArtistGender?
   stable val countryCode: String
   stable val lifeSpan: LifeSpanUiModel
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   stable val collected: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
@@ -830,7 +830,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.EventListItemModel {
   stable val time: String
   stable val cancelled: Boolean
   stable val lifeSpan: LifeSpanUiModel
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   stable val collected: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
@@ -888,14 +888,14 @@ stable class ly.david.musicsearch.shared.domain.listitem.ListSeparator {
   stable val text: String
   <runtime stability> = Stable
 }
-runtime class ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel {
+stable class ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel {
   stable val id: String
   stable val title: String
   stable val entity: MusicBrainzEntityType
   stable val numberOfVisits: Int
   stable val lastAccessed: Instant
-  runtime val imageMetadata: ImageMetadata?
-  <runtime stability> = Uncertain(ImageMetadata)
+  stable val imageMetadata: ImageMetadata?
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.listitem.NowPlayingHistoryListItemModel {
   stable val id: String
@@ -944,7 +944,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.RelationListItemModel {
   stable val isForwardDirection: Boolean?
   runtime val aliases: ImmutableList<BasicAlias>
   stable val lifeSpan: LifeSpanUiModel
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val lastUpdated: Instant?
   <runtime stability> = 
 }
@@ -956,7 +956,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemMod
   stable val primaryType: ReleaseGroupPrimaryType?
   stable val secondaryTypes: ImmutableList<ReleaseGroupSecondaryType>
   stable val formattedArtistCredits: String?
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   stable val collected: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
@@ -992,7 +992,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel {
   stable val quality: String
   stable val catalogNumbers: String?
   stable val textRepresentation: TextRepresentationUiModel?
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val formattedFormats: String?
   stable val formattedTracks: String?
   stable val formattedArtistCredits: String?
@@ -1210,20 +1210,50 @@ unstable class ly.david.musicsearch.shared.domain.search.results.usecase.GetSear
   unstable val _searchQueries: MutableStateFlow<Pair<MusicBrainzEntityType, String>>
   <runtime stability> = Unstable
 }
-stable class ly.david.musicsearch.shared.domain.tag.GenreChip {
+runtime class ly.david.musicsearch.shared.domain.tag.GenreChip {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
   stable val count: Int
-  <runtime stability> = Stable
+  stable val voteType: VoteType
+  runtime var CREATOR: Creator<GenreChip>
+  <runtime stability> = Uncertain(Creator)
 }
-stable class ly.david.musicsearch.shared.domain.tag.TagChip {
+runtime class ly.david.musicsearch.shared.domain.tag.TagChip {
   stable val name: String
   stable val count: Int
+  stable val voteType: VoteType
+  runtime var CREATOR: Creator<TagChip>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.tag.TagRepository.TagFeedback.Syncing {
+  runtime var CREATOR: Creator<Syncing>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.tag.TagRepository.TagFeedback.AuthMissingTagScope {
+  stable val name: String
+  runtime var CREATOR: Creator<AuthMissingTagScope>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.tag.TagRepository.TagFeedback.FailedToVote {
+  stable val name: String
+  stable val errorMessage: String
+  runtime var CREATOR: Creator<FailedToVote>
+  <runtime stability> = Uncertain(Creator)
+}
+runtime class ly.david.musicsearch.shared.domain.tag.TagRepository.TagFeedback.Voted {
+  stable val name: String
+  stable val voteType: VoteType
+  runtime var CREATOR: Creator<Voted>
+  <runtime stability> = Uncertain(Creator)
+}
+stable class ly.david.musicsearch.shared.domain.tag.TagVote {
+  stable val name: String
+  stable val voteType: VoteType
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.url.EntityAdditionalInfo {
-  runtime val imageMetadata: ImageMetadata?
+  stable val imageMetadata: ImageMetadata?
   stable val visited: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
   <runtime stability> = 
