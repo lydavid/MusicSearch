@@ -386,4 +386,11 @@
     <string name="searchGenre">Rechercher par genre</string>
     <string name="searchTag">Rechercher par mots-clés</string>
     <string name="goToGenre">Aller à la rubrique « Genre »</string>
+    <string name="upvotedX">%1$s a reçu des votes positifs.</string>
+    <string name="withdrawnVoteForX">Retrait du vote pour %1$s.</string>
+    <string name="failedToVoteForX">Impossible de voter pour %1$s.</string>
+    <string name="loginAgainForTags">Vous devez vous reconnecter pour autoriser l'application à modifier vos balises.</string>
+    <string name="downvotedX">%1$s a été signalé. Il est désormais masqué. Pour le voir à nouveau, activez %2$s.</string>
+    <string name="showDownvotedGenresTags">Afficher les genres/balises ayant reçu des votes négatifs</string>
+    <string name="hideDownvotedGenresTags">Masquer les genres/balises ayant reçu des votes négatifs</string>
 </resources>
