@@ -56,7 +56,6 @@ internal fun ArtistDetailsTabUi(
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler,
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val eventSink = detailsTabUiState.eventSink
 
@@ -113,7 +112,6 @@ internal fun ArtistDetailsTabUi(
             }
         },
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
     )
 }
 

@@ -21,7 +21,6 @@ internal fun ReleaseGroupDetailsTabUi(
     modifier: Modifier = Modifier,
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = releaseGroup,
@@ -29,7 +28,6 @@ internal fun ReleaseGroupDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             TextWithHeading(
                 heading = stringResource(Res.string.type),

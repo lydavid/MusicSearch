@@ -48,7 +48,6 @@ internal fun RecordingDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val eventSink = detailsTabUiState.eventSink
 
@@ -58,7 +57,6 @@ internal fun RecordingDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             if (video) {
                 TextWithIcon(

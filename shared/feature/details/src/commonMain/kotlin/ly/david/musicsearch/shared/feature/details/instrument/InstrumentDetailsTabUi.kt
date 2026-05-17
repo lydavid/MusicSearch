@@ -27,7 +27,6 @@ internal fun InstrumentDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     DetailsTabUi(
         detailsModel = instrument,
@@ -35,7 +34,6 @@ internal fun InstrumentDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             type.ifNotEmpty {
                 TextWithHeading(

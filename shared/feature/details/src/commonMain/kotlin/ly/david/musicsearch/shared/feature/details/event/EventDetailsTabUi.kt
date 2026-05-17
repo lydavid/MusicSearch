@@ -33,7 +33,6 @@ internal fun EventDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val entityInfoSection: @Composable EventDetailsModel.() -> Unit = {
         type.ifNotEmpty {
@@ -81,6 +80,5 @@ internal fun EventDetailsTabUi(
         filterText = filterText,
         entityInfoSection = entityInfoSection,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
     )
 }

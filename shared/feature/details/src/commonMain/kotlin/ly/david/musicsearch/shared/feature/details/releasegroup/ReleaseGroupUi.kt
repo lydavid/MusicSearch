@@ -270,9 +270,6 @@ internal fun ReleaseGroupUi(
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     snackbarHostState = snackbarHostState,
-                    onLoginClick = {
-                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                    },
                 )
             },
         )

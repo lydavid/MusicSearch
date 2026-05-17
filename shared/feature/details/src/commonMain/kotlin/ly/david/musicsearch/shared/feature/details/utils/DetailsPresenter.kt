@@ -317,6 +317,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
                 wikipediaExtract = wikipediaExtract,
                 lazyListState = detailsLazyListState,
                 isSectionCollapsed = isSectionCollapsed,
+                musicBrainzLoginUiState = loginUiState,
                 eventSink = ::detailsTabEventSink,
             ),
             allEntitiesListUiState = entitiesListUiState,
@@ -356,6 +357,7 @@ internal data class DetailsTabUiState(
     val isSectionCollapsed: ImmutableSet<CollapsibleSection> = persistentSetOf(),
     val showDownvotedTags: Boolean = false,
     val now: Instant = Clock.System.now(),
+    val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val eventSink: (DetailsTabUiEvent) -> Unit = {},
 )
 

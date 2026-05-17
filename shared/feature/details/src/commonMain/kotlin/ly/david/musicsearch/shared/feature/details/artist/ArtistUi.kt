@@ -286,9 +286,6 @@ internal fun ArtistUi(
                         )
                     },
                     snackbarHostState = snackbarHostState,
-                    onLoginClick = {
-                        loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
-                    },
                 )
             },
         )

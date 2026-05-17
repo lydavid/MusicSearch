@@ -43,7 +43,6 @@ internal fun WorkDetailsTabUi(
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
     snackbarHostState: SnackbarHostState,
-    onLoginClick: () -> Unit,
 ) {
     val eventSink = detailsTabUiState.eventSink
 
@@ -53,7 +52,6 @@ internal fun WorkDetailsTabUi(
         modifier = modifier,
         filterText = filterText,
         snackbarHostState = snackbarHostState,
-        onLoginClick = onLoginClick,
         entityInfoSection = {
             type?.getDisplayString()?.let {
                 TextWithHeading(
