@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.instrument.Instrument
+import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
@@ -16,7 +17,7 @@ data class InstrumentDetailsModel(
     override val name: String,
     override val disambiguation: String = "",
     override val description: String = "",
-    override val type: String = "",
+    val type: InstrumentType? = null,
     override val lastUpdated: Instant = Clock.System.now(),
     override val artistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     override val genres: ImmutableList<GenreChip> = persistentListOf(),

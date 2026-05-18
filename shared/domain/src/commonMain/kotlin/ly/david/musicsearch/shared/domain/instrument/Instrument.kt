@@ -7,5 +7,4 @@ interface Instrument : NameWithDisambiguation {
     override val name: String
     override val disambiguation: String?
     val description: String?
-    val type: String?
 }

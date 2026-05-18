@@ -406,4 +406,23 @@
     <string name="stagePerformance">Stage performance</string>
     <string name="awardCeremony">Award ceremony</string>
     <string name="competition">Competition</string>
+    <string name="windInstrument">Wind instrument</string>
+    <string name="stringInstrument">String instrument</string>
+    <string name="percussionInstrument">Percussion instrument</string>
+    <string name="electronicInstrument">Electronic instrument</string>
+    <string name="otherInstrument">Other instrument</string>
+    <string name="ensemble">Ensemble</string>
+    <string name="instrumentFamily">Family</string>
+    <string name="bootlegProduction">Bootleg Production</string>
+    <string name="broadcaster">Broadcaster</string>
+    <string name="creativeAgency">Creative Agency</string>
+    <string name="distributor">Distributor</string>
+    <string name="holding">Holding</string>
+    <string name="imprint">Imprint</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="originalProduction">Original Production</string>
+    <string name="production">Production</string>
+    <string name="publisher">Publisher</string>
+    <string name="reissueProduction">Reissue Production</string>
+    <string name="rightsSociety">Rights Society</string>
 </resources>

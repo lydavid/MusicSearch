@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
+import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Assert.assertEquals
@@ -172,7 +173,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 name = "classical guitar",
                 description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",
                 disambiguation = "Modern acoustic gut/nylon string guitar",
-                type = "String instrument",
+                type = InstrumentType.StringInstrument,
                 lastUpdated = testDateTimeInThePast.plus(2.seconds),
                 urls = persistentListOf(
                     RelationListItemModel(

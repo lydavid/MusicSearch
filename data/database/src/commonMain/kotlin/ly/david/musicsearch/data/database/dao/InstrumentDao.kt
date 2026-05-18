@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNe
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -72,7 +73,7 @@ class InstrumentDao(
         name = name,
         disambiguation = disambiguation,
         description = description,
-        type = type,
+        type = InstrumentType.fromName(type),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

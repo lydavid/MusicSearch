@@ -12,6 +12,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.instrument.getDisplayString
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -35,7 +36,7 @@ internal fun InstrumentDetailsTabUi(
         filterText = filterText,
         snackbarHostState = snackbarHostState,
         entityInfoSection = {
-            type.ifNotEmpty {
+            type?.getDisplayString()?.let {
                 TextWithHeading(
                     heading = stringResource(Res.string.type),
                     text = it,

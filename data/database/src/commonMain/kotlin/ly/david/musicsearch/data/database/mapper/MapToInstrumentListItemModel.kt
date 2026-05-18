@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
+import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 
 fun mapToInstrumentListItemModel(
@@ -17,7 +18,7 @@ fun mapToInstrumentListItemModel(
     name = name,
     disambiguation = disambiguation,
     description = description,
-    type = type,
+    type = InstrumentType.fromName(type),
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),

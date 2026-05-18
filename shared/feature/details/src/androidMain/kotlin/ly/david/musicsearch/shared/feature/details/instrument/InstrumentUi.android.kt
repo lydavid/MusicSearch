@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
+import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
@@ -25,7 +26,7 @@ private val detailsUiState = DetailsUiState(
         id = "i1",
         name = "baroque guitar",
         disambiguation = "Baroque gut string guitar",
-        type = "String instrument",
+        type = InstrumentType.StringInstrument,
         description = "Predecessor of the modern classical guitar, " +
             "it had gut strings and even gut frets. " +
             "First described in 1555, it surpassed the Renaissance lute's popularity.",
