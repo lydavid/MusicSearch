@@ -13,7 +13,7 @@ data class AreaMusicBrainzNetworkModel(
     @SerialName("name") override val name: String,
     @SerialName("sort-name") override val sortName: String = "",
     @SerialName("disambiguation") override val disambiguation: String? = null,
-    @SerialName("type") override val type: String? = null,
+    @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("life-span") override val lifeSpan: LifeSpanMusicBrainzModel? = null,
 

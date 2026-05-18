@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -50,7 +50,7 @@ private val release = ReleaseDetailsModel(
         AreaListItemModel(
             id = "2db42837-c832-3c27-b4a3-08198f75693c",
             name = "Japan",
-            type = COUNTRY,
+            type = AreaType.Country,
             countryCodes = persistentListOf("JP"),
             date = "2022-08-10",
         ),

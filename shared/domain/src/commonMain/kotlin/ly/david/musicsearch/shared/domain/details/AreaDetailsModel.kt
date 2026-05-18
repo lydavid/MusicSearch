@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.area.Area
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.tag.GenreChip
@@ -17,7 +18,7 @@ data class AreaDetailsModel(
     override val name: String,
     override val sortName: String = "",
     override val disambiguation: String = "",
-    override val type: String = "",
+    val type: AreaType? = null,
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val countryCode: String = "",
     override val lastUpdated: Instant = Clock.System.now(),

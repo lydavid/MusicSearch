@@ -176,7 +176,8 @@ class ReleaseRepositoryImpl(
                     }
 
                     area.copy(
-                        type = if (isCountry) AreaType.COUNTRY else null,
+                        type = AreaType.Country.name.takeIf { isCountry },
+                        typeId = AreaType.Country.id.takeIf { isCountry },
                     )
                 }
             }.orEmpty(),

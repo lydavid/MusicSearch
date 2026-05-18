@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
@@ -333,6 +334,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = countryId,
                 name = "Japan",
                 type = "Country",
+                typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
                 countryCodes = listOf("JP"),
             ),
         )
@@ -462,6 +464,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 name = "Kitanomaru Kōen",
                 sortName = "Kitanomaru Kōen",
                 type = "District",
+                typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
             ),
         )
         val district = districtAreaRepository.lookupArea(
@@ -474,7 +477,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = districtId,
                 name = "Kitanomaru Kōen",
                 sortName = "",
-                type = "District",
+                type = AreaType.District,
                 lastUpdated = testDateTimeInThePast,
             ),
             district,
@@ -504,7 +507,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                     id = districtId,
                     name = "Kitanomaru Kōen",
                     sortName = "Kitanomaru Kōen",
-                    type = "District",
+                    type = AreaType.District,
                     visited = true,
                 ),
                 lastUpdated = testDateTimeInThePast,
@@ -534,7 +537,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                     id = districtId,
                     name = "Kitanomaru Kōen",
                     sortName = "Kitanomaru Kōen",
-                    type = "District",
+                    type = AreaType.District,
                     visited = true,
                 ),
                 lastUpdated = testDateTimeInThePast,

@@ -82,11 +82,11 @@ fun AreaListItem(
         ),
         supportingContent = {
             Column {
-                val type = area.type
-                if (showType && type.isNotEmpty()) {
+                val typeText = area.type?.getDisplayString()
+                if (showType && typeText != null) {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = type,
+                        text = typeText,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

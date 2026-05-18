@@ -3,12 +3,12 @@ package ly.david.musicsearch.shared.feature.details.area
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.area.getDisplayString
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
@@ -29,7 +29,7 @@ internal fun AreaDetailsTabUi(
     snackbarHostState: SnackbarHostState,
 ) {
     val entityInfoSection: @Composable AreaDetailsModel.() -> Unit = {
-        type.ifNotEmpty {
+        type?.getDisplayString()?.let {
             TextWithHeading(
                 heading = stringResource(Res.string.type),
                 text = it,

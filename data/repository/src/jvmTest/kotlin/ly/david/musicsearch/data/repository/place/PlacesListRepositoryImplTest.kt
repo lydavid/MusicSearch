@@ -444,7 +444,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                             latitude = 35.676925,
                         ),
                         area = marunouchiAreaListItemModel.copy(
-                            type = "",
+                            type = null,
                         ),
                         lastUpdated = testDateTimeInThePast,
                     ),
@@ -472,7 +472,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                             latitude = 35.676925,
                         ),
                         area = marunouchiAreaListItemModel.copy(
-                            type = "",
+                            type = null,
                         ),
                         lastUpdated = testDateTimeInThePast,
                     ),
@@ -507,7 +507,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                             latitude = 35.676925,
                         ),
                         area = marunouchiAreaListItemModel.copy(
-                            type = "",
+                            type = null,
                         ),
                         lastUpdated = testDateTimeInThePast,
                     ),
@@ -535,7 +535,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                             latitude = 35.676925,
                         ),
                         area = marunouchiAreaListItemModel.copy(
-                            type = "",
+                            type = null,
                         ),
                         lastUpdated = testDateTimeInThePast,
                     ),

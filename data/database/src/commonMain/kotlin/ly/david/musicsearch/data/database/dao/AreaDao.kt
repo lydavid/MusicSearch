@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -126,7 +127,7 @@ class AreaDaoImpl(
         id: String,
         name: String,
         disambiguation: String,
-        type: String,
+        typeId: String,
         begin: String,
         end: String,
         ended: Boolean,
@@ -136,7 +137,7 @@ class AreaDaoImpl(
         id = id,
         name = name,
         disambiguation = disambiguation,
-        type = type,
+        type = AreaType.fromId(typeId),
         lifeSpan = LifeSpanUiModel(
             begin = begin,
             end = end,
@@ -279,21 +280,12 @@ class AreaDaoImpl(
         ).executeAsList().findByTypePriority()
 
     // TODO: may be inaccurate if an area is contained within another area but has the same type
-    private fun List<AreaListItemModel>.findByTypePriority(
-        typePriorities: List<String> = listOf(
-            "", // The area part of a place lookup has a null type
-            "District",
-            "City",
-            "Municipality",
-            "County",
-            "Subdivision",
-            "Country",
-        ),
-    ): AreaListItemModel? {
-        for (type in typePriorities) {
-            firstOrNull { it.type == type }?.let { return it }
-        }
-        return null
+    private fun List<AreaListItemModel>.findByTypePriority(): AreaListItemModel? {
+        // when looking up a place, it's immediate area is returned with a null type, so we want to prefer this
+        return firstOrNull { it.type == null }
+            ?: AreaType.entries.reversed().firstNotNullOfOrNull { type ->
+                firstOrNull { it.type == type }
+            }
     }
 
     override fun deleteAreaPlaceLink(placeId: String) {

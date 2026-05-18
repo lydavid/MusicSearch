@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestAreaRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
-import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -60,7 +60,8 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
             musicBrainzModel = AreaMusicBrainzNetworkModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = "Country",
+                typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
                 countryCodes = listOf("GS"),
             ),
         )
@@ -86,7 +87,7 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
             AreaDetailsModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = AreaType.Country,
                 countryCode = "GS",
                 lastUpdated = testDateTimeInThePast.plus(2.minutes),
             ),

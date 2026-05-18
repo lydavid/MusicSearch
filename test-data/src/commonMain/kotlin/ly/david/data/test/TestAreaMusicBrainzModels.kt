@@ -4,14 +4,14 @@ import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkM
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
-import ly.david.musicsearch.shared.domain.area.AreaType
 
 val canadaAreaMusicBrainzModel = AreaMusicBrainzNetworkModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
     name = "Canada",
     sortName = "Canada",
     disambiguation = "",
-    type = AreaType.COUNTRY,
+    type = "Country",
+    typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
     countryCodes = listOf("CA"),
 )
 
@@ -49,7 +49,8 @@ val japanAreaMusicBrainzModel = AreaMusicBrainzNetworkModel(
     sortName = "Japan",
     disambiguation = "",
     countryCodes = listOf("JP"),
-    type = AreaType.COUNTRY,
+    type = "Country",
+    typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
 )
 
 val kitanomaruAreaMusicBrainzModel = AreaMusicBrainzNetworkModel(
@@ -81,5 +82,6 @@ val unitedKingdomAreaMusicBrainzModel = AreaMusicBrainzNetworkModel(
     sortName = "United Kingdom",
     disambiguation = "",
     countryCodes = listOf("GB"),
-    type = AreaType.COUNTRY,
+    type = "Country",
+    typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
 )

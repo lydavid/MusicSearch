@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.area.Area
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.ReleaseEvent
 
 data class AreaListItemModel(
@@ -13,7 +14,7 @@ data class AreaListItemModel(
     override val name: String,
     override val sortName: String = "",
     override val disambiguation: String = "",
-    override val type: String = "",
+    val type: AreaType? = null,
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val countryCodes: ImmutableList<String> = persistentListOf(),
     val date: String? = "",

@@ -8,14 +8,9 @@ interface Area : NameWithDisambiguation {
     override val name: String
     val sortName: String
     override val disambiguation: String?
-    val type: String?
     val lifeSpan: LifeSpan?
 
     // val isoCodes: List<String>?
-}
-
-object AreaType {
-    const val COUNTRY = "Country"
 }
 
 enum class NonCountryAreaWithCode(val code: String) {

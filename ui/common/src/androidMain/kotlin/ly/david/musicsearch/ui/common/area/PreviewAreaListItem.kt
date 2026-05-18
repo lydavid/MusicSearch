@@ -3,7 +3,7 @@ package ly.david.musicsearch.ui.common.area
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.shared.domain.area.AreaType.COUNTRY
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
@@ -46,7 +46,7 @@ internal fun PreviewAreaListItemCountry() {
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = AreaType.Country,
                 countryCodes = persistentListOf("GS"),
             ),
             filterText = "south",
@@ -77,7 +77,7 @@ internal fun PreviewReleaseEvent() {
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = AreaType.Country,
                 countryCodes = persistentListOf("GS"),
                 date = "2006-03-21",
             ),
@@ -113,7 +113,7 @@ internal fun PreviewAreaListItemVisited() {
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = AreaType.Country,
                 countryCodes = persistentListOf("GS"),
                 visited = true,
             ),
@@ -130,7 +130,7 @@ internal fun PreviewReleaseEventVisited() {
             area = AreaListItemModel(
                 id = "38ce2215-162b-3f3c-af41-34800017e1d8",
                 name = "South Georgia and the South Sandwich Islands",
-                type = COUNTRY,
+                type = AreaType.Country,
                 countryCodes = persistentListOf("GS"),
                 date = "2006-03-21",
                 visited = true,

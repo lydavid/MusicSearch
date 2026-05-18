@@ -39,6 +39,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetwo
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
 import ly.david.musicsearch.data.repository.helpers.TestSearchResultsRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -341,7 +342,7 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
                         name = "Italy",
                         sortName = "Italy",
                         countryCodes = persistentListOf("IT"),
-                        type = "Country",
+                        type = AreaType.Country,
                         visited = false,
                     ),
                     Footer(),

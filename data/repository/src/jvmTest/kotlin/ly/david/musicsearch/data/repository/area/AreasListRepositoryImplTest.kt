@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.AreasListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
@@ -69,7 +70,7 @@ class AreasListRepositoryImplTest : KoinTest {
                 id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
                 name = "Ireland",
                 type = "Island",
-                typeId = "06dd0ae4-8c74-30bb-b43d-95dcedf961de",
+                typeId = "3f8e7b66-058b-369b-9834-ffa5fcba5641",
             ),
             AreaMusicBrainzNetworkModel(
                 id = "390b05d4-11ec-3bce-a343-703a366b34a5",
@@ -136,38 +137,38 @@ class AreasListRepositoryImplTest : KoinTest {
                     AreaListItemModel(
                         id = "99c3f001-64d3-4174-a302-fb14204117af",
                         name = "Connaught",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
                         name = "County Galway",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "db52f295-91e6-41b0-8491-a3356cc1f815",
                         name = "Galway",
-                        type = "City",
+                        type = AreaType.City,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
                         name = "Ireland",
-                        type = "Island",
+                        type = AreaType.Island,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                         name = "Ireland",
                         countryCodes = persistentListOf("IE"),
-                        type = "Country",
+                        type = AreaType.Country,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "08ead5f6-a425-4a72-ac98-8a925d2fbd0d",
                         name = "Salthill",
-                        type = "District",
+                        type = AreaType.District,
                         collected = true,
                     ),
                 ),
@@ -187,19 +188,19 @@ class AreasListRepositoryImplTest : KoinTest {
                     AreaListItemModel(
                         id = "99c3f001-64d3-4174-a302-fb14204117af",
                         name = "Connaught",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
                         name = "County Galway",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "08ead5f6-a425-4a72-ac98-8a925d2fbd0d",
                         name = "Salthill",
-                        type = "District",
+                        type = AreaType.District,
                         collected = true,
                     ),
                 ),
@@ -218,38 +219,38 @@ class AreasListRepositoryImplTest : KoinTest {
                     AreaListItemModel(
                         id = "01428650-fbe2-4aab-aca2-a1d562a93caf",
                         name = "Ireland",
-                        type = "Island",
+                        type = AreaType.Island,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "390b05d4-11ec-3bce-a343-703a366b34a5",
                         name = "Ireland",
                         countryCodes = persistentListOf("IE"),
-                        type = "Country",
+                        type = AreaType.Country,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "99c3f001-64d3-4174-a302-fb14204117af",
                         name = "Connaught",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "3fca5006-e6c6-4935-b1f5-baa80df5a95c",
                         name = "County Galway",
-                        type = "Subdivision",
+                        type = AreaType.Subdivision,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "db52f295-91e6-41b0-8491-a3356cc1f815",
                         name = "Galway",
-                        type = "City",
+                        type = AreaType.City,
                         collected = true,
                     ),
                     AreaListItemModel(
                         id = "08ead5f6-a425-4a72-ac98-8a925d2fbd0d",
                         name = "Salthill",
-                        type = "District",
+                        type = AreaType.District,
                         collected = true,
                     ),
                 ),

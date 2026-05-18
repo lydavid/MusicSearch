@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -436,7 +437,7 @@ private val canadianRelations: MutableStateFlow<PagingData<ListItemModel>> = Mut
 private val country = AreaDetailsModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
     name = "Canada",
-    type = "Country",
+    type = AreaType.Country,
     countryCode = "CA",
     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
     urls = persistentListOf(

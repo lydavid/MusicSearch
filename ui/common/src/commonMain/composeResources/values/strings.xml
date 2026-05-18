@@ -389,4 +389,13 @@
     <string name="downvotedX">Downvoted %1$s. It is now hidden. To view again, toggle "%2$s".</string>
     <string name="showDownvotedGenresTags">Show downvoted genres/tags</string>
     <string name="hideDownvotedGenresTags">Hide downvoted genres/tags</string>
+    <string name="country">Country</string>
+    <string name="subdivision">Subdivision</string>
+    <string name="county">County</string>
+    <string name="municipality">Municipality</string>
+    <string name="city">City</string>
+    <string name="district">District</string>
+    <string name="island">Island</string>
+    <string name="militaryBase">Military Base</string>
+    <string name="indigenousTerritory">Indigenous territory / reserve</string>
 </resources>

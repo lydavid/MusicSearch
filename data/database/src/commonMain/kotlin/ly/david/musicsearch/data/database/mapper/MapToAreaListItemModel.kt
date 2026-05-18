@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database.mapper
 
 import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 
 internal fun mapToAreaListItemModel(
@@ -9,7 +10,7 @@ internal fun mapToAreaListItemModel(
     name: String,
     sortName: String,
     disambiguation: String,
-    type: String,
+    typeId: String,
     begin: String,
     end: String,
     ended: Boolean,
@@ -23,7 +24,7 @@ internal fun mapToAreaListItemModel(
     name = name,
     sortName = sortName,
     disambiguation = disambiguation,
-    type = type,
+    type = AreaType.fromId(typeId),
     lifeSpan = LifeSpanUiModel(
         begin = begin,
         end = end,
