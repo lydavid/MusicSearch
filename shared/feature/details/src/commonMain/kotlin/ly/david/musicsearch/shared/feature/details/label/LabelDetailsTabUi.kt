@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.label.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.defunct
@@ -38,7 +39,7 @@ internal fun LabelDetailsTabUi(
         filterText = filterText,
         snackbarHostState = snackbarHostState,
         entityInfoSection = {
-            type.ifNotEmpty {
+            type?.getDisplayString()?.let {
                 TextWithHeading(
                     heading = stringResource(Res.string.type),
                     text = it,

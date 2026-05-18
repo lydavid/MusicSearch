@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -111,7 +112,7 @@ class LabelDao(
         id = id,
         name = name,
         disambiguation = disambiguation,
-        type = type,
+        type = LabelType.fromName(type),
         labelCode = labelCode,
         ipis = ipis.toPersistentList(),
         isnis = isnis.toPersistentList(),

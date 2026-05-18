@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -23,7 +24,7 @@ private val detailsUiState = DetailsUiState(
         id = "f3b662ac-d029-4c87-a9bd-2f2f65b21e4f",
         name = "EMI Classics",
         disambiguation = "absorbed into Warner Classics since 2013-07-19",
-        type = "Production",
+        type = LabelType.Production,
         labelCode = 6646,
         lifeSpan = LifeSpanUiModel(
             begin = "1990",

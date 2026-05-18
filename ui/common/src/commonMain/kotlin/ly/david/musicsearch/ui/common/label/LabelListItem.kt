@@ -64,7 +64,7 @@ fun LabelListItem(
                     style = TextStyles.getCardBodyTextStyle(),
                 )
 
-                label.type.ifNotEmpty {
+                label.type?.getDisplayString()?.let {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,

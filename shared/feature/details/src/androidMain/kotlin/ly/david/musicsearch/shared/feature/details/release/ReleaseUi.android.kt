@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listen.ListenWithTrack
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
@@ -60,7 +61,7 @@ private val release = ReleaseDetailsModel(
             id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
             name = "Virgin Music " +
                 "(a division of Universal Music Japan created in 2014 that replaces EMI R)",
-            type = "Original Production",
+            type = LabelType.OriginalProduction,
             catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
         ),
     ),

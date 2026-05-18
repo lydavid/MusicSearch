@@ -239,7 +239,7 @@ private fun LazyListScope.releaseLabelsSection(
         val searchText = filterText.lowercase()
         listOf(
             label.getNameWithDisambiguation(),
-            label.type,
+            label.type?.displayName,
             label.labelCode.toString(),
             label.catalogNumbers,
         ).any { it?.lowercase()?.contains(searchText) == true }

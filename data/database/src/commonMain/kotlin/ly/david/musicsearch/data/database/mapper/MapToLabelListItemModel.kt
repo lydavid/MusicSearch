@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 
 fun mapToLabelListItemModel(
@@ -19,7 +20,7 @@ fun mapToLabelListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
-    type = type,
+    type = LabelType.fromName(type),
     labelCode = labelCode,
     lifeSpan = LifeSpanUiModel(
         begin = begin,
@@ -45,7 +46,7 @@ fun mapToLabelListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
-    type = type,
+    type = LabelType.fromName(type),
     labelCode = labelCode,
     catalogNumbers = catalogNumbers,
     visited = visited == true,

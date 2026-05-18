@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.event.EventType
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -220,17 +221,17 @@ internal val labels = MutableStateFlow(
             LabelListItemModel(
                 id = "banyan",
                 name = "Banyan",
-                type = "Distributor",
+                type = LabelType.Distributor,
             ),
             LabelListItemModel(
                 id = "aporia_records",
                 name = "Aporia Records",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
             ),
             LabelListItemModel(
                 id = "aquarius_2000",
                 name = "Aquarius 2000",
-                type = "Holding",
+                type = LabelType.Holding,
             ),
             LabelListItemModel(
                 id = "bassdrop_ca",
@@ -244,12 +245,12 @@ internal val labels = MutableStateFlow(
                 id = "artisti",
                 name = "Artisti",
                 disambiguation = "Canadian rights society",
-                type = "Rights Society",
+                type = LabelType.RightsSociety,
             ),
             LabelListItemModel(
                 id = "audio_research_records",
                 name = "Audio Research Records",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
             ),
             LastUpdatedFooter(
                 lastUpdated = Instant.parse("2025-04-26T06:42:20Z"),

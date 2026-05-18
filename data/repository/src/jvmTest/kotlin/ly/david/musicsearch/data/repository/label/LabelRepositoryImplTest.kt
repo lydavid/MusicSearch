@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -162,7 +163,7 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                 id = "7aaa37fe-2def-3476-b359-80245850062d",
                 name = "UNIVERSAL J",
                 disambiguation = "Japanese label division, 2002–2022",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
                 lifeSpan = LifeSpanUiModel(
                     begin = "2002-06",
                     end = "2023-02",

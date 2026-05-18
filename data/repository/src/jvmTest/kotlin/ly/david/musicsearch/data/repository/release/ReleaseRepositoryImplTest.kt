@@ -41,6 +41,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -753,7 +754,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                         id = "dee62e1a-cfd1-466f-b578-846a0fdf435a",
                         name = "Sony Records",
                         disambiguation = "Japanese imprint",
-                        type = "Imprint",
+                        type = LabelType.Imprint,
                         labelCode = null,
                         catalogNumbers = "SRCL-7486, SRCL-7487",
                     ),
@@ -1333,7 +1334,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 LabelListItemModel(
                     id = "7689c51f-e09e-4e85-80d0-b95a9e23d216",
                     name = "Virgin Music",
-                    type = "Original Production",
+                    type = LabelType.OriginalProduction,
                     labelCode = null,
                     disambiguation = "a division of Universal Music Japan created in 2014 that replaces EMI R",
                     catalogNumbers = "TYBX-10260, TYCT-69245, TYCX-60187",
@@ -1447,7 +1448,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 LabelListItemModel(
                     id = "1a917e6f-54f5-4964-bebf-5d4e2442ceb4",
                     name = "Big Machine Records",
-                    type = "Production",
+                    type = LabelType.Production,
                     labelCode = null,
                     disambiguation = "",
                     catalogNumbers = "3717453",
@@ -1455,7 +1456,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 LabelListItemModel(
                     id = "995428e7-81b6-41dd-bd38-5a7a0ece8ad6",
                     name = "Mercury Records",
-                    type = "Imprint",
+                    type = LabelType.Imprint,
                     labelCode = 268,
                     disambiguation = "or just “Mercury.” A UMG imprint, do not use it for ©/℗ credits",
                     catalogNumbers = "3717453",

@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.label
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
@@ -29,7 +30,7 @@ internal fun PreviewLabelListItemWithCatalogNumberDoesNotShowDate() {
                 id = "5",
                 name = "Sony Music",
                 disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
                 labelCode = 10746,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1991-01-01",
@@ -50,7 +51,7 @@ internal fun PreviewLabelListItemWithBeginDate() {
                 id = "5",
                 name = "Sony Music",
                 disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
                 labelCode = 10746,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1991-01-01",
@@ -70,7 +71,7 @@ internal fun PreviewLabelListItemVisited() {
                 id = "5",
                 name = "Sony Music",
                 disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
-                type = "Original Production",
+                type = LabelType.OriginalProduction,
                 labelCode = 10746,
                 catalogNumbers = "CAT-123",
                 visited = true,
