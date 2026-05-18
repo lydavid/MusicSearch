@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.series.SeriesType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -22,7 +23,7 @@ private val detailsUiState = DetailsUiState(
         id = "96b6d0d4-0ca2-408f-9c5f-cb4d6dc5de8e",
         name = "Classic 100",
         disambiguation = "series of series",
-        type = "Series series",
+        type = SeriesType.SeriesSeries,
         lastUpdated = Instant.parse("2025-06-05T20:42:20Z"),
     ),
     detailsTabUiState = DetailsTabUiState(

@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.series.SeriesType
 
 fun mapToSeriesListItemModel(
     id: String,
@@ -15,7 +16,7 @@ fun mapToSeriesListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
-    type = type,
+    type = SeriesType.fromName(type),
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),

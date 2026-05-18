@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.series.SeriesType
 import lydavidmusicsearchdatadatabase.SeriesQueries
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -70,7 +71,7 @@ class SeriesDao(
         id = id,
         name = name,
         disambiguation = disambiguation,
-        type = type,
+        type = SeriesType.fromName(type),
         lastUpdated = lastUpdated ?: Clock.System.now(),
     )
 

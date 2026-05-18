@@ -3,10 +3,10 @@ package ly.david.musicsearch.shared.feature.details.series
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.series.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.type
@@ -27,7 +27,7 @@ internal fun SeriesDetailsTabUi(
         filterText = filterText,
         snackbarHostState = snackbarHostState,
         entityInfoSection = {
-            type.ifNotEmpty {
+            type?.getDisplayString()?.let {
                 TextWithHeading(
                     heading = stringResource(Res.string.type),
                     text = it,

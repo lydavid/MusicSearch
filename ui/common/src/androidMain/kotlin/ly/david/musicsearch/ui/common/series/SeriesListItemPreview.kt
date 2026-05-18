@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.series
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.shared.domain.series.SeriesType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
@@ -28,7 +29,7 @@ internal fun PreviewSeriesListItemAllInfo() {
                 id = "1",
                 name = "series name",
                 disambiguation = "that one",
-                type = "Tour",
+                type = SeriesType.Tour,
             ),
             filterText = "se",
         )
@@ -44,7 +45,7 @@ internal fun PreviewSeriesListItemVisited() {
                 id = "1",
                 name = "series name",
                 disambiguation = "that one",
-                type = "Tour",
+                type = SeriesType.Tour,
                 visited = true,
             ),
             filterText = "",

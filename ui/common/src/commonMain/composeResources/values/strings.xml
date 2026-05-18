@@ -437,4 +437,21 @@
     <string name="stadium">Stadium</string>
     <string name="studio">Studio</string>
     <string name="venue">Venue</string>
+    <string name="artistAward">Artist award</string>
+    <string name="artistSeries">Artist series</string>
+    <string name="catalogue">Catalogue</string>
+    <string name="eventSeries">Event series</string>
+    <string name="podcast">Podcast</string>
+    <string name="recordingAward">Recording award</string>
+    <string name="recordingSeries">Recording series</string>
+    <string name="releaseGroupAward">Release group award</string>
+    <string name="releaseGroupSeries">Release group series</string>
+    <string name="releaseSeries">Release series</string>
+    <string name="residency">Residency</string>
+    <string name="run">Run</string>
+    <string name="seriesAward">Series award</string>
+    <string name="seriesSeries">Series series</string>
+    <string name="tour">Tour</string>
+    <string name="workAward">Work award</string>
+    <string name="workSeries">Work series</string>
 </resources>

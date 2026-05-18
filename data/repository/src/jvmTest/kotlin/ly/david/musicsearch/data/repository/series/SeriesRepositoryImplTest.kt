@@ -23,6 +23,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.series.SeriesRepository
+import ly.david.musicsearch.shared.domain.series.SeriesType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -155,7 +156,7 @@ class SeriesRepositoryImplTest : KoinTest {
             SeriesDetailsModel(
                 id = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
-                type = "Release group series",
+                type = SeriesType.ReleaseGroupSeries,
                 lastUpdated = testDateTimeInThePast,
                 urls = persistentListOf(
                     RelationListItemModel(
