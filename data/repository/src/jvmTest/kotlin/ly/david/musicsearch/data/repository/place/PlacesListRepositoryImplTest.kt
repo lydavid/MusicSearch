@@ -39,6 +39,7 @@ import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.shared.domain.place.PlacesListRepository
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import org.junit.Assert.assertEquals
@@ -434,7 +435,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "東京国際フォーラム",
                         disambiguation = "complex; use ONLY if no more specific venue info is available!",
                         address = "some newer address",
-                        type = "Other",
+                        type = PlaceType.Other,
                         lifeSpan = LifeSpanUiModel(
                             begin = "1997-01-10",
                             ended = false,
@@ -462,7 +463,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "東京国際フォーラム",
                         disambiguation = "complex; use ONLY if no more specific venue info is available!",
                         address = "some newer address",
-                        type = "Other",
+                        type = PlaceType.Other,
                         lifeSpan = LifeSpanUiModel(
                             begin = "1997-01-10",
                             ended = false,
@@ -497,7 +498,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "東京国際フォーラム",
                         disambiguation = "complex; use ONLY if no more specific venue info is available!",
                         address = "some newer address",
-                        type = "Other",
+                        type = PlaceType.Other,
                         lifeSpan = LifeSpanUiModel(
                             begin = "1997-01-10",
                             ended = false,
@@ -525,7 +526,7 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                         name = "東京国際フォーラム",
                         disambiguation = "complex; use ONLY if no more specific venue info is available!",
                         address = "newest address",
-                        type = "Other",
+                        type = PlaceType.Other,
                         lifeSpan = LifeSpanUiModel(
                             begin = "1997-01-10",
                             ended = false,

@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -24,7 +25,7 @@ private val detailsUiState = DetailsUiState(
     detailsModel = PlaceDetailsModel(
         id = "p1",
         name = "Some Place",
-        type = "Venue",
+        type = PlaceType.Venue,
         address = "123 Fake St",
         coordinates = CoordinatesUiModel(
             -123.4567,

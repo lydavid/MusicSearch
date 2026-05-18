@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import lydavidmusicsearchdatadatabase.Area_place
 import kotlin.time.Clock
@@ -87,7 +88,7 @@ class PlaceDao(
         name = name,
         disambiguation = disambiguation,
         address = address,
-        type = type,
+        type = PlaceType.fromName(type),
         coordinates = CoordinatesUiModel(
             longitude = longitude,
             latitude = latitude,

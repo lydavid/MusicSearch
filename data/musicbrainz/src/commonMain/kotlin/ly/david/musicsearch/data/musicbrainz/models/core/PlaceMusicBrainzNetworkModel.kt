@@ -14,7 +14,7 @@ data class PlaceMusicBrainzNetworkModel(
     @SerialName("name") override val name: String,
     @SerialName("disambiguation") override val disambiguation: String? = null,
     @SerialName("address") override val address: String = "",
-    @SerialName("type") override val type: String? = null,
+    @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("coordinates") override val coordinates: CoordinatesMusicBrainzModel? = null,
     @SerialName("life-span") override val lifeSpan: LifeSpanMusicBrainzModel? = null,

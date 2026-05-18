@@ -425,4 +425,16 @@
     <string name="publisher">Publisher</string>
     <string name="reissueProduction">Reissue Production</string>
     <string name="rightsSociety">Rights Society</string>
+    <string name="amphitheatre">Amphitheatre</string>
+    <string name="club">Club</string>
+    <string name="concertHallTheatre">Concert hall / Theatre</string>
+    <string name="educationalInstitution">Educational institution</string>
+    <string name="festivalStage">Festival stage</string>
+    <string name="indoorArena">Indoor arena</string>
+    <string name="park">Park</string>
+    <string name="pressingPlant">Pressing plant</string>
+    <string name="religiousBuilding">Religious building</string>
+    <string name="stadium">Stadium</string>
+    <string name="studio">Studio</string>
+    <string name="venue">Venue</string>
 </resources>

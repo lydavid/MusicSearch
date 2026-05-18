@@ -7,14 +7,14 @@ import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.Place
+import ly.david.musicsearch.shared.domain.place.PlaceType
 
 data class PlaceListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
     override val address: String,
-    override val type: String = "",
-//    override val typeId: String?,
+    val type: PlaceType? = null,
     override val coordinates: CoordinatesUiModel? = null,
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     override val visited: Boolean = false,

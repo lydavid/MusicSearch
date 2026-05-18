@@ -41,6 +41,7 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -213,7 +214,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
+                type = PlaceType.IndoorArena,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
                 ),
@@ -382,7 +383,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                     id = placeId,
                     name = "日本武道館",
                     address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                    type = "Indoor arena",
+                    type = PlaceType.IndoorArena,
                     lifeSpan = LifeSpanUiModel(
                         begin = "1964-10-03",
                         ended = false,
@@ -410,7 +411,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = placeId,
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
+                type = PlaceType.IndoorArena,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
                     ended = false,
@@ -438,7 +439,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = placeId,
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
+                type = PlaceType.IndoorArena,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
                     ended = false,
@@ -494,7 +495,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = placeId,
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
+                type = PlaceType.IndoorArena,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
                     ended = false,
@@ -524,7 +525,7 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 id = placeId,
                 name = "日本武道館",
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
-                type = "Indoor arena",
+                type = PlaceType.IndoorArena,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1964-10-03",
                     ended = false,

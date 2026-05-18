@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.shared.domain.place.Place
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
 import kotlin.time.Clock
@@ -19,7 +20,7 @@ data class PlaceDetailsModel(
     override val name: String,
     override val disambiguation: String = "",
     override val address: String,
-    override val type: String = "",
+    val type: PlaceType? = null,
     override val coordinates: CoordinatesUiModel = CoordinatesUiModel(),
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),
     val area: AreaListItemModel? = null,

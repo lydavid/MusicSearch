@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 @PreviewLightDark
@@ -30,7 +31,7 @@ internal fun PreviewPlaceListItemAllInfo() {
                 id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
                 name = "Sony Music Studios",
                 disambiguation = "NYC, closed 2007",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1993",
@@ -52,7 +53,7 @@ internal fun PreviewPlaceListItemVisited() {
                 id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
                 name = "Sony Music Studios",
                 disambiguation = "NYC, closed 2007",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
                 lifeSpan = LifeSpanUiModel(
                     begin = "1993",

@@ -27,6 +27,7 @@ import ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.place.PlaceType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
@@ -265,7 +266,7 @@ internal val places = MutableStateFlow(
             PlaceListItemModel(
                 id = "101_5_whistler_fm",
                 name = "101.5 Whistler FM",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "102 - 1080 Millar Creek Road. V8E 0S7",
             ),
             PlaceListItemModel(
@@ -276,20 +277,20 @@ internal val places = MutableStateFlow(
             PlaceListItemModel(
                 id = "299_queen_street_west",
                 name = "299 Queen Street West",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "299 Queen Street West, Toronto, ON",
                 lifeSpan = LifeSpanUiModel(begin = "1913"),
             ),
             PlaceListItemModel(
                 id = "4_walls",
                 name = "4 Walls",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "",
             ),
             PlaceListItemModel(
                 id = "6_nassau",
                 name = "6 Nassau",
-                type = "Studio",
+                type = PlaceType.Studio,
                 address = "6 Nassau St, Kensington Market, Toronto, ON, Canada M5T 1M2",
                 lifeSpan = LifeSpanUiModel(
                     begin = "2009-02",
@@ -300,7 +301,7 @@ internal val places = MutableStateFlow(
                 id = "86th_st_music_hall",
                 name = "86th St. Music Hall",
                 disambiguation = "Post Expo86 venue",
-                type = "Venue",
+                type = PlaceType.Venue,
                 address = "750 Pacific Blvd.",
                 lifeSpan = LifeSpanUiModel(begin = "1986"),
             ),
