@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
@@ -23,7 +24,7 @@ private val detailsUiState = DetailsUiState(
     detailsModel = EventDetailsModel(
         id = "e1",
         name = "Some Event",
-        type = "Festival",
+        type = EventType.Festival,
         time = "13:00",
         cancelled = true,
         lifeSpan = LifeSpanUiModel(

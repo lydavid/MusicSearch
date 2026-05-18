@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
@@ -83,7 +84,7 @@ class EventDao(
         id = id,
         name = name,
         disambiguation = disambiguation,
-        type = type,
+        type = EventType.fromName(type),
         time = time,
         cancelled = cancelled,
         lifeSpan = LifeSpanUiModel(

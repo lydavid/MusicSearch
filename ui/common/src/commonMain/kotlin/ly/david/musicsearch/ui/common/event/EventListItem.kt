@@ -47,7 +47,7 @@ fun EventListItem(
                         style = TextStyles.getCardBodyTextStyle(),
                     )
 
-                    type.ifNotEmpty {
+                    type?.getDisplayString()?.let {
                         Text(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),

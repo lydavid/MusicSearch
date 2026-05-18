@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.event
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -18,7 +19,7 @@ internal fun PreviewEventListItem() {
                 id = "e1",
                 name = "event name",
                 disambiguation = "that one",
-                type = "Concert",
+                type = EventType.Concert,
             ),
             filterText = "one",
         )
@@ -76,7 +77,7 @@ internal fun PreviewEventListItemMultiDay() {
             event = EventListItemModel(
                 id = "0806a112-098e-49b5-a51c-34edf60c25d8",
                 name = "Aimer 10th Anniversary Live in SAITAMA SUPER ARENA \"night world\"",
-                type = "Stage performance",
+                type = EventType.StagePerformance,
                 time = "17:00",
                 cancelled = false,
                 lifeSpan = LifeSpanUiModel(
@@ -98,7 +99,7 @@ internal fun PreviewEventListItemCancelled() {
             event = EventListItemModel(
                 id = "b7c3f330-4fa8-4355-95de-af6e7c5d20b9",
                 name = "1973-03-06: Vancouver Gardens, Vancouver, BC, Canada",
-                type = "Concert",
+                type = EventType.Concert,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1973-03-06",
                 ),
@@ -118,7 +119,7 @@ internal fun PreviewEventListItemWithCoverArt() {
             event = EventListItemModel(
                 id = "76a88474-912b-4a6e-b9e2-a98fd75ae51f",
                 name = "コミックマーケット105",
-                type = "Convention/Expo",
+                type = EventType.ConventionExpo,
                 lifeSpan = LifeSpanUiModel(
                     begin = "2024-12-29",
                     end = "2024-12-30",

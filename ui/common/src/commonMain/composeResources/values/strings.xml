@@ -398,4 +398,12 @@
     <string name="island">Island</string>
     <string name="militaryBase">Military Base</string>
     <string name="indigenousTerritory">Indigenous territory / reserve</string>
+    <string name="concert">Concert</string>
+    <string name="festival">Festival</string>
+    <string name="launchEvent">Launch event</string>
+    <string name="conventionExpo">Convention/Expo</string>
+    <string name="masterclassClinic">Masterclass/Clinic</string>
+    <string name="stagePerformance">Stage performance</string>
+    <string name="awardCeremony">Award ceremony</string>
+    <string name="competition">Competition</string>
 </resources>

@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.event.Event
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
@@ -16,7 +17,7 @@ data class EventDetailsModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
-    override val type: String = "",
+    val type: EventType? = null,
     override val time: String = "",
     override val cancelled: Boolean = false,
     override val lifeSpan: LifeSpanUiModel = LifeSpanUiModel(),

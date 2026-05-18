@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
 
@@ -25,7 +26,7 @@ fun mapToEventListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
-    type = type,
+    type = EventType.fromName(type),
     time = time,
     cancelled = cancelled,
     lifeSpan = LifeSpanUiModel(

@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.EventListItemModel
@@ -150,7 +151,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "stratford_1956",
                 name = "Stratford Shakespearean Festival 1956",
-                type = "Festival",
+                type = EventType.Festival,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1956",
                 ),
@@ -158,7 +159,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "expo_67",
                 name = "Expo 67",
-                type = "Convention/Expo",
+                type = EventType.ConventionExpo,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1967-04-27",
                     end = "1967-10-29",
@@ -167,7 +168,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "toronto_rock_revival_1969",
                 name = "Toronto Rock and Roll Revival",
-                type = "Festival",
+                type = EventType.Festival,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1969-09-13",
                 ),
@@ -175,7 +176,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "transcontinental_pop_festival_1970",
                 name = "Transcontinental Pop Festival 1970",
-                type = "Festival",
+                type = EventType.Festival,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1970-06-28",
                     end = "1970-07-05",
@@ -184,7 +185,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "alice_cooper_montreal_1972",
                 name = "Alice Cooper at Centre sportif de l'Université de Montréal",
-                type = "Concert",
+                type = EventType.Concert,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1972-01-13",
                 ),
@@ -192,7 +193,7 @@ internal val events = MutableStateFlow(
             EventListItemModel(
                 id = "world_saxophone_congress_1972",
                 name = "3rd World Saxophone Congress",
-                type = "Festival",
+                type = EventType.Festival,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1972-08",
                 ),

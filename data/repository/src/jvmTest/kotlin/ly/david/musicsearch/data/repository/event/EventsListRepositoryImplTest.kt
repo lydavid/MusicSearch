@@ -34,6 +34,7 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
+import ly.david.musicsearch.shared.domain.event.EventType
 import ly.david.musicsearch.shared.domain.event.EventsListRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.list.ListFilters
@@ -664,7 +665,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
                         name = "Aimer Live in 武道館 ”blanc et noir\"",
                         disambiguation = "new changes",
-                        type = "Concert",
+                        type = EventType.Concert,
                         lifeSpan = LifeSpanUiModel(
                             begin = "2017-08-29",
                             end = "2017-08-29",
@@ -687,7 +688,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
                         name = "Aimer Live in 武道館 ”blanc et noir\"",
                         disambiguation = "new changes",
-                        type = "Concert",
+                        type = EventType.Concert,
                         lifeSpan = LifeSpanUiModel(
                             begin = "2017-08-29",
                             end = "2017-08-29",
@@ -717,7 +718,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
                         name = "Aimer Live in 武道館 ”blanc et noir\"",
                         disambiguation = "new changes",
-                        type = "Concert",
+                        type = EventType.Concert,
                         lifeSpan = LifeSpanUiModel(
                             begin = "2017-08-29",
                             end = "2017-08-29",
@@ -740,7 +741,7 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                         id = "34f8a930-beb2-441b-b0d7-03c84f92f1ea",
                         name = "Aimer Live in 武道館 ”blanc et noir\"",
                         disambiguation = "newer changes",
-                        type = "Concert",
+                        type = EventType.Concert,
                         lifeSpan = LifeSpanUiModel(
                             begin = "2017-08-29",
                             end = "2017-08-29",

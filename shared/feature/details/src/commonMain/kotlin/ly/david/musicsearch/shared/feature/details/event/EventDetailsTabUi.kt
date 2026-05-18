@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.ui.common.event.getDisplayString
 import ly.david.musicsearch.ui.common.listitem.LifeSpanText
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import ly.david.musicsearch.ui.common.theme.TextStyles
@@ -35,7 +36,7 @@ internal fun EventDetailsTabUi(
     snackbarHostState: SnackbarHostState,
 ) {
     val entityInfoSection: @Composable EventDetailsModel.() -> Unit = {
-        type.ifNotEmpty {
+        type?.getDisplayString()?.let {
             TextWithHeading(
                 heading = stringResource(Res.string.type),
                 text = it,
