@@ -87,7 +87,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = ArtistType.GROUP,
+                type = ArtistType.Group,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -126,7 +126,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
         val detailsModel = ArtistDetailsModel(
             id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
             name = "David Bowie",
-            type = ArtistType.PERSON,
+            type = ArtistType.Person,
             gender = ArtistGender.MALE,
             lifeSpan = LifeSpanUiModel(
                 begin = "1947-01-08",
@@ -239,7 +239,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistListItemModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = ArtistType.GROUP,
+                type = ArtistType.Group,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -276,7 +276,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = ArtistType.GROUP,
+                type = ArtistType.Group,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",
@@ -358,7 +358,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
             ArtistDetailsModel(
                 id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                 name = "The Beatles",
-                type = ArtistType.GROUP,
+                type = ArtistType.Group,
                 lifeSpan = LifeSpanUiModel(
                     begin = "1960",
                     end = "1970-04-10",

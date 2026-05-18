@@ -15,12 +15,12 @@ import org.jetbrains.compose.resources.stringResource
 fun ArtistType.getDisplayString(): String {
     return stringResource(
         when (this) {
-            ArtistType.CHARACTER -> Res.string.character
-            ArtistType.CHOIR -> Res.string.choir
-            ArtistType.GROUP -> Res.string.group
-            ArtistType.ORCHESTRA -> Res.string.orchestra
-            ArtistType.OTHER -> Res.string.other
-            ArtistType.PERSON -> Res.string.person
+            ArtistType.Character -> Res.string.character
+            ArtistType.Choir -> Res.string.choir
+            ArtistType.Group -> Res.string.group
+            ArtistType.Orchestra -> Res.string.orchestra
+            ArtistType.Other -> Res.string.other
+            ArtistType.Person -> Res.string.person
         },
     )
 }

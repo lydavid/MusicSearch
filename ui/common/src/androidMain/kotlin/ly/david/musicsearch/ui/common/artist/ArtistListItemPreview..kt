@@ -46,7 +46,7 @@ internal fun PreviewArtistListItemAllInfoUnvisited() {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
-                type = ArtistType.ORCHESTRA,
+                type = ArtistType.Orchestra,
                 name = "wow, this artist name is so long it will wrap around the screen",
                 sortName = "sort name should not be seen",
                 disambiguation = "blah, blah, blah, some really long text that forces wrapping",
@@ -68,7 +68,7 @@ internal fun PreviewArtistListItemAllInfoVisited() {
         ArtistListItem(
             artist = ArtistListItemModel(
                 id = "2",
-                type = ArtistType.ORCHESTRA,
+                type = ArtistType.Orchestra,
                 name = "wow, this artist name is so long it will wrap around the screen",
                 sortName = "sort name should not be seen",
                 disambiguation = "blah, blah, blah, some really long text that forces wrapping",

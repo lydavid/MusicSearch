@@ -144,12 +144,12 @@ private fun ArtistDetailsModel.ArtistInformationSection(
         lifeSpan = lifeSpan,
         heading = stringResource(Res.string.date),
         beginHeading = when (type) {
-            ArtistType.PERSON -> stringResource(Res.string.born)
-            ArtistType.CHARACTER -> stringResource(Res.string.created)
+            ArtistType.Person -> stringResource(Res.string.born)
+            ArtistType.Character -> stringResource(Res.string.created)
             else -> stringResource(Res.string.founded)
         },
         endHeading = when (type) {
-            ArtistType.PERSON -> stringResource(Res.string.died)
+            ArtistType.Person -> stringResource(Res.string.died)
             // Characters do not "die": https://musicbrainz.org/doc/Artist
             else -> stringResource(Res.string.dissolved)
         },

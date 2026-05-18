@@ -32,7 +32,7 @@ private val detailsModel = ArtistDetailsModel(
     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
     name = "The Beatles",
     disambiguation = "UK rock band, “The Fab Four”",
-    type = ArtistType.GROUP,
+    type = ArtistType.Group,
     lifeSpan = LifeSpanUiModel(
         begin = "1960",
         end = "1970-04-10",
@@ -291,7 +291,7 @@ internal fun PreviewArtistDetailsUiWithWikipediaUrlButNoExtract() {
                 detailsModel = ArtistDetailsModel(
                     id = "89ad4ac3-39f7-470e-963a-56509c546377",
                     name = "Various Artists",
-                    type = ArtistType.OTHER,
+                    type = ArtistType.Other,
                     sortName = "Various Artists",
                     lastUpdated = Instant.parse("2024-06-05T19:42:20Z"),
                     urls = persistentListOf(

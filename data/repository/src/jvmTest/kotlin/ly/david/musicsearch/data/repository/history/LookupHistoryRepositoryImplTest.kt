@@ -280,7 +280,7 @@ class LookupHistoryRepositoryImplTest :
                         name = "ずっと真夜中でいいのに",
                         disambiguation = "Japanese pop band",
                         sortName = "Zutto Mayonaka de Iinoni.",
-                        type = ArtistType.GROUP,
+                        type = ArtistType.Group,
                         aliases = persistentListOf(
                             BasicAlias(
                                 name = "ZUTOMAYO",
@@ -315,7 +315,7 @@ class LookupHistoryRepositoryImplTest :
                     id = "14d2a235-30e2-489f-b490-f9dc7d2c0861",
                     name = "ずっと真夜中でいいのに",
                     disambiguation = "Japanese pop band",
-                    type = ArtistType.GROUP,
+                    type = ArtistType.Group,
                     sortName = "Zutto Mayonaka de Iinoni.",
                     lastUpdated = currentTime,
                     aliases = persistentListOf(

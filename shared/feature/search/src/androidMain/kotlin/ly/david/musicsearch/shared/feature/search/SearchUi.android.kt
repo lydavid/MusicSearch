@@ -31,7 +31,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Aimer",
                         sortName = "Aimer",
                         disambiguation = "Japanese pop singer",
-                        type = ArtistType.PERSON,
+                        type = ArtistType.Person,
                         gender = ArtistGender.FEMALE,
                         countryCode = "JP",
                         lifeSpan = LifeSpanUiModel(
@@ -44,7 +44,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "AIMER",
                         sortName = "AIMER",
                         disambiguation = "dubstep artist from Brisbane",
-                        type = ArtistType.PERSON,
+                        type = ArtistType.Person,
                         gender = ArtistGender.FEMALE,
                         countryCode = "AU",
                         lifeSpan = LifeSpanUiModel(
@@ -56,7 +56,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Aimer",
                         sortName = "Aimer",
                         disambiguation = "Italian guitarist",
-                        type = ArtistType.PERSON,
+                        type = ArtistType.Person,
                         gender = ArtistGender.MALE,
                         countryCode = "IT",
                         lifeSpan = LifeSpanUiModel(
@@ -67,7 +67,7 @@ internal fun PreviewSearchUiSearchResults() {
                         id = "1303b976-b862-4f04-94fd-a8d444e06714",
                         name = "The Proclaimers",
                         sortName = "Proclaimers, The",
-                        type = ArtistType.GROUP,
+                        type = ArtistType.Group,
                         countryCode = "",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1983",
@@ -79,7 +79,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "Paul Hofhaimer",
                         sortName = "Hofhaimer, Paul",
                         disambiguation = "composer",
-                        type = ArtistType.PERSON,
+                        type = ArtistType.Person,
                         gender = ArtistGender.MALE,
                         countryCode = "AT",
                         lifeSpan = LifeSpanUiModel(
@@ -92,7 +92,7 @@ internal fun PreviewSearchUiSearchResults() {
                         id = "cc86a0b3-e216-4807-b351-cf63c69f42dc",
                         name = "Shimon Craimer",
                         sortName = "Craimer, Shimon",
-                        type = ArtistType.PERSON,
+                        type = ArtistType.Person,
                         countryCode = "GB",
                         lifeSpan = LifeSpanUiModel(
                             begin = "1978",
@@ -104,7 +104,7 @@ internal fun PreviewSearchUiSearchResults() {
                         name = "AIMERS",
                         sortName = "AIMERS",
                         disambiguation = "South Korean boy band",
-                        type = ArtistType.GROUP,
+                        type = ArtistType.Group,
                         countryCode = "KR",
                         lifeSpan = LifeSpanUiModel(
                             ended = false,
