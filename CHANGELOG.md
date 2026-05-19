@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.114.1](https://github.com/lydavid/MusicSearch/compare/v1.114.0...v1.114.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* handle more relationship types properly (including members vs members of) ([b16da1f](https://github.com/lydavid/MusicSearch/commit/b16da1f4a1e9b4558aa9d7fa90fef397f89f241f))
+* map area type to localized text ([75b069b](https://github.com/lydavid/MusicSearch/commit/75b069b32f5b07fd26fe6f81c6f2e3d8136fc978))
+* map event type to localized text ([34a0fc3](https://github.com/lydavid/MusicSearch/commit/34a0fc335cf3facd4fc410e4e0eee317374c4197))
+* map instrument type to localized text ([e7b0311](https://github.com/lydavid/MusicSearch/commit/e7b031197f50c3cce22958a2ecf61b2cfa7c3dcf))
+* map label type to localized text ([fc86fd2](https://github.com/lydavid/MusicSearch/commit/fc86fd295ae4c8038ce3a2b46483e775619bc101))
+* map place type to localized text ([87dd70b](https://github.com/lydavid/MusicSearch/commit/87dd70b20898d6778694ab0c341591d8d8eff020))
+* map series type to localized text ([a6a014a](https://github.com/lydavid/MusicSearch/commit/a6a014a7b795b0ff179dd5fd98d2431c08f53f92))
+
 ## [1.114.0](https://github.com/lydavid/MusicSearch/compare/v1.113.0...v1.114.0) (2026-05-17)
 
 
