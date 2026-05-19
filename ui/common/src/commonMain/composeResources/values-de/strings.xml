@@ -382,4 +382,10 @@
     <string name="searchGenre">Genre suchen</string>
     <string name="searchTag">Tag suchen</string>
     <string name="goToGenre">Zu Genre</string>
+    <string name="upvotedX">Positiv bewertet %1$s.</string>
+    <string name="withdrawnVoteForX">Bewertung für %1$s zurückziehen.</string>
+    <string name="failedToVoteForX">Bewertung für %1$s fehlgeschlagen.</string>
+    <string name="loginAgainForTags">Du musst dich erneut anmelden, um die App-Berechtigung zu gewähren, um deine Tags zu ändern.</string>
+    <string name="downvotedX">Negativ bewertet %1$s. Es ist nun verborgen. Um es wieder zu sehen, %2$s umschalten.</string>
+    <string name="showDownvotedGenresTags">Negativ bewertete Genres/Tags anzeigen</string>
 </resources>
