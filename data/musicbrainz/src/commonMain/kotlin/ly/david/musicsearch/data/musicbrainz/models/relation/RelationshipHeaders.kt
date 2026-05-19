@@ -18,24 +18,30 @@ internal val relationshipHeaders = hashMapOf(
 
     // https://musicbrainz.org/relationships/artist-artist
     "92859e2a-f2e5-45fa-a680-3f62ba0beccc" to ("musical relationship" to "musical relationship"),
-    // "5be4c609-9afa-4ea0-910b-12ffb71e3821" to ("{additional} {original} {eponymous} member of" to "{additional} {original} {eponymous} members"),
+    // "{additional} {original} {eponymous}"
+    "5be4c609-9afa-4ea0-910b-12ffb71e3821" to ("member of" to "members"),
     "7802f96b-d995-4ce9-8f70-6366faad758e" to ("subgroup of" to "subgroups"),
     "9752bfdf-13ca-441a-a8bc-18928c600c73" to ("renamed into" to "renamed from"),
     "ab666dde-bd85-4ac2-a209-165eaf4146a0" to ("artistic director for" to "artistic director"),
-    // "cac01ac7-4159-42fd-9f2b-c5a7a5624079" to ("{assistant} {principal} {guest} conductor {emeritus} for" to "{assistant} {principal} {guest} conductor {emeritus}"),
+    // "{assistant} {principal} {guest} conductor {emeritus} for" to "{assistant} {principal} {guest} conductor {emeritus}"
+    "cac01ac7-4159-42fd-9f2b-c5a7a5624079" to ("conductor for" to "conductor"),
     "6ed4bfc4-0a0d-44c0-b025-b7fc4d900b67" to ("founded" to "founded by"),
     "88562a60-2550-48f0-8e8e-f54d95c7369a" to ("supporting artist for" to "supporting artists"),
     // "610d39a4-3fa0-4848-a8c9-f46d7b5cc02e" to ("{vocal:%|vocals} support for" to "{vocal:%|vocals} support by"),
+    // something like this makes less sense when presented like "supporting for" with "({instrument})" on its own
     // "ed6a7891-ce70-4e08-9839-1f2f62270497" to ("supporting {instrument} for" to "supporting {instrument} by"),
     "a6f62641-2f58-470e-b02b-88d7b984dc9f" to ("tribute to" to "tribute artists"),
     "e259a3f5-ce8e-45c1-9ef7-90ff7d0c7589" to ("voice of" to "voiced by"),
-    // "75c09861-6857-4ec0-9729-84eefde7fc86" to ("{additional} {minor} collaborator on" to "{additional} {minor} collaborators"),
-    "dd9886f2-1dfe-4270-97db-283f6839a666" to ("performs as" to "legal name"),
+    // "{additional} {minor} collaborator on" to "{additional} {minor} collaborators"
+    "75c09861-6857-4ec0-9729-84eefde7fc86" to ("collaborator on" to "collaborators"),
+    "dd9886f2-1dfe-4270-97db-283f6839a666" to ("performs as" to "performance name of"),
     "249fc24f-d573-4290-9d74-0547712d1f1e" to ("students" to "teachers"),
     "094b1ddf-3df3-4fb9-8b01-cfd28e45da80" to ("composer-in-residence at" to "composers-in-residence"),
     "e794f8ff-b77b-4dfe-86ca-83197146ef10" to ("personal relationship" to "personal relationship"),
-    // "9421ca84-934f-49fe-9e66-dea242430406" to ("{step}children" to "{step}parents"),
-    // "b42b7966-b904-449e-b8f9-8c7297b863d0" to ("{half:half-}{step}siblings" to "{half:half-}{step}siblings"),
+    // {step}
+    "9421ca84-934f-49fe-9e66-dea242430406" to ("children" to "parents"),
+    // "{half:half-}{step}siblings"
+    "b42b7966-b904-449e-b8f9-8c7297b863d0" to ("siblings" to "siblings"),
     "b2bf7a5d-2da6-4742-baf4-e38d8a7ad029" to ("married" to "married"),
     "fd3927ba-fd51-4fa9-bcc2-e83637896fe8" to ("romantically involved with" to "romantically involved with"),
     "1af24726-5b1f-4b07-826e-5351723f504b" to ("named after" to "inspired the name of"),
@@ -52,9 +58,21 @@ internal val relationshipHeaders = hashMapOf(
     "92873f0d-12a7-4fb3-9eac-ff06c38c6a60" to ("conductor at" to "conductors"),
     "e5e6a204-8f81-4b17-9b54-a73a1a6db2bb" to ("taught at" to "teachers"),
     "2c5c92da-259c-42fc-ac1f-53d9dda2d6d0" to ("supporting DJ at" to "supporting DJ"),
+    "fb71a94c-9b20-4377-a78c-46dfe6d095ef" to ("VJ at" to "VJ"),
+    "74c225de-aaf5-41c0-bfc5-05a8f56bab5d" to ("participant at" to "participants"),
     "9da4b1cc-cdfa-425d-b5bc-83222046c805" to ("non-performing relationships" to "non-performing relationships"),
+    // {additional:additionally} {assistant} {associate} {co:co-}{executive:executive }
     "19d9339e-04d7-4d59-8a16-9fea1263bbd7" to ("engineered" to "engineers"),
+    // {additional}
+    "a66ea135-5dd0-4dc2-8ecb-59e3026d1ecc" to ("artwork" to "artwork"),
+    // {additional} {assistant}
+    "c49495bf-71d0-4d5f-9121-c775cc33e940" to ("design" to "design"),
+    // {additional}
+    "d3e1717b-6ab9-4fdb-bd77-0dba3f082a74" to ("graphic design" to "graphic design"),
+    // {additional}
+    "f10e1176-4644-4689-910f-16356946ff32" to ("illustration" to "illustration"),
     "4ef86173-7f40-486d-bf8d-c38b1097e77f" to ("tribute events" to "tribute to"),
+    "5193f001-643f-44a1-9fad-0f6816e84a3d" to ("jury member at" to "jury members"),
 
     // https://musicbrainz.org/relationships/event-event
     "65742183-b25c-469e-b094-ff6739e6699c" to ("parts" to "part of"),
@@ -64,13 +82,15 @@ internal val relationshipHeaders = hashMapOf(
     "25ed73f8-a864-42cf-8b9c-68db198dbe0e" to ("genres" to "from"),
 
     // https://musicbrainz.org/relationships/artist-genre
-    // No relationships.
+    "cac1064d-1605-4d41-ac6d-040915480eb5" to ("inspired the name of genre" to "named after artist"),
 
     // https://musicbrainz.org/relationships/event-genre
     // No relationships.
 
     // https://musicbrainz.org/relationships/genre-genre
-    // No relationships.
+    "9d61bc67-fa39-4719-8025-ea056a5bd7e6" to ("subgenres" to "subgenre of"),
+    "59117855-52db-4371-8dd3-87a16f285499" to ("influenced by" to "influenced genres"),
+    "723732ec-762c-4cb3-a2d0-e7e797c51915" to ("fusion of" to "has fusion genres"),
 
     // https://musicbrainz.org/relationships/area-instrument
     "0b67183b-9f36-4b09-b561-0fa531508f91" to ("instruments" to "from"),
@@ -93,13 +113,14 @@ internal val relationshipHeaders = hashMapOf(
     "40b2bd3f-1457-3ceb-810d-57f87f0f74f0" to ("subtypes" to "type of"),
 
     // https://musicbrainz.org/relationships/area-label
-    // No relationships.
+    "c28aa691-74de-4c4c-acc3-348611d7e857" to ("houses headquarters for" to "headquartered in"),
 
     // https://musicbrainz.org/relationships/artist-label
-    "e74a40e7-0f27-4e05-bdbd-eb10f5309472" to ("contract" to "contract"),
+    "e74a40e7-0f27-4e05-bdbd-eb10f5309472" to ("employed by" to "employees"),
     "46981330-d73c-4ba5-845f-47f467072cf8" to ("producer position" to "producers"),
     "5f9374d2-a0fa-4958-8a6f-80ca67e4aaa5" to ("engineer position" to "engineers"),
     "85d1947c-1986-42f0-947c-80aab72a548f" to ("creative position" to "creative persons"),
+    "e375b657-ed87-4ea3-97ef-2c6b7a5ff226" to ("executive position" to "executives"),
     "8f60b62e-5755-4842-866a-269d1255a235" to ("artists and repertoire position" to "artists and repertoire persons"),
     "b336d682-592f-4486-9f45-3d5d59895bdc" to ("signed by" to "signed"),
     "c351514d-076b-45f9-9bc3-24200e5f90ba" to ("ownership" to "ownership"),
@@ -107,9 +128,11 @@ internal val relationshipHeaders = hashMapOf(
     "610fa594-eeaa-407b-a9f1-49f509ab5559" to ("owns" to "owner"),
     "fe16f2bd-d324-435a-8076-bcf43b805bd9" to ("has personal label" to "personal label for"),
     "8fecc8a7-0df7-4637-9152-f12a07f0e9cd" to ("has personal publisher" to "personal publisher for"),
+    "41633e45-9143-43db-b6a7-b0e107f8b514" to ("inspired the name of label" to "named after artist"),
+    "e0e0bc8a-4f8c-40b3-8d16-b7ff98fb1f62" to ("named after label" to "inspired the name of artist"),
 
     // https://musicbrainz.org/relationships/event-label
-    // No relationships.
+    "09bd2cba-6160-408b-b191-afef7480ce54" to ("presented by" to "presented"),
 
     // https://musicbrainz.org/relationships/genre-label
     // No relationships.
@@ -137,7 +160,8 @@ internal val relationshipHeaders = hashMapOf(
     "54fcf574-eb3a-40da-839f-986d46997b97" to ("founded" to "founders"),
     "6f238bfb-0108-45ad-a1da-960c919a7066" to ("owns" to "owner"),
     "7f7d829b-6ba8-4f86-be90-c9372ef9a679" to ("composer-in-residence at" to "composers-in-residence"),
-    // "cad0dbab-c711-442a-a91c-05359f0228ce" to ("{assistant} organist at" to "{assistant} organists"),
+    // {assistant}
+    "cad0dbab-c711-442a-a91c-05359f0228ce" to ("organist at" to "organists"),
     "72854c7e-ebf8-4b73-9b2c-ee08e83b9480" to ("educational institution connection" to "connected with"),
     "24fce292-8a25-4039-b313-611a3678a42a" to ("associated with" to "associated groups"),
     "58e18f90-fb7d-41d8-a70d-8d750fb73617" to ("studied at" to "students"),
@@ -162,13 +186,20 @@ internal val relationshipHeaders = hashMapOf(
 
     // https://musicbrainz.org/relationships/area-recording
     "4f4aa317-c3c4-4001-ac23-fb8cf0bc543c" to ("arranging location for" to "arranged in"),
-    // "aede7c5e-8bd3-4f07-bad2-c3d159e8c1c5" to ("{additional} engineering location for" to "{additional:additionally} engineered in"),
-    // "37ef3a0c-cac3-4172-b09b-4ca98d2857fc" to ("{additional} recording location for" to "{additional:additionally} recorded in"),
-    // "eef56d04-852a-4ce6-bfc9-678c19392a16" to ("{additional} mixing location for" to "{additional:additionally} mixed in"),
-    // "e24482da-f568-46ba-a428-9fa56615c7b2" to ("{additional} editing location for" to "{additional:additionally} edited in"),
-    // "582f6452-ff89-4f3b-9e78-eff5b842e208" to ("{additional} remixing location for" to "{additional:additionally} remixed in"),
-    // "93078fc7-6585-40a7-ab7f-6acb9da65b84" to ("{additional} producing location for" to "{additional:additionally} produced in"),
-    // "d92ee325-0d37-4d1c-aea1-436f36e13565" to ("{additional} shooting location for" to "{additional:additionally} shot in"),
+    // "{additional} engineering location for" to "{additional:additionally} engineered in"
+    "aede7c5e-8bd3-4f07-bad2-c3d159e8c1c5" to ("engineering location for" to "engineered in"),
+    // "{additional} recording location for" to "{additional:additionally} recorded in"
+    "37ef3a0c-cac3-4172-b09b-4ca98d2857fc" to ("recording location for" to "recorded in"),
+    // "{additional} mixing location for" to "{additional:additionally} mixed in"
+    "eef56d04-852a-4ce6-bfc9-678c19392a16" to ("mixing location for" to "mixed in"),
+    // "{additional} editing location for" to "{additional:additionally} edited in"
+    "e24482da-f568-46ba-a428-9fa56615c7b2" to ("editing location for" to "edited in"),
+    // "{additional} remixing location for" to "{additional:additionally} remixed in"
+    "582f6452-ff89-4f3b-9e78-eff5b842e208" to ("remixing location for" to "remixed in"),
+    // "{additional} producing location for" to "{additional:additionally} produced in"
+    "93078fc7-6585-40a7-ab7f-6acb9da65b84" to ("producing location for" to "produced in"),
+    // "{additional} shooting location for" to "{additional:additionally} shot in"
+    "d92ee325-0d37-4d1c-aea1-436f36e13565" to ("shooting location for" to "shot in"),
 
     // https://musicbrainz.org/relationships/artist-recording
     "f8673e29-02a5-47b7-af61-dd4519328dd0" to ("performance" to "performance"),
@@ -218,7 +249,8 @@ internal val relationshipHeaders = hashMapOf(
 
     // https://musicbrainz.org/relationships/event-recording
     "b06e6732-2603-47d3-8a49-9f589b430483" to ("recording location for" to "recorded at"),
-    // "0c050cf9-885b-49fe-9a12-5ca04e2db8da" to ("{additional:additionally} shot for" to "{additional:additionally} shot at"),
+    // "{additional:additionally} shot for" to "{additional:additionally} shot at"
+    "0c050cf9-885b-49fe-9a12-5ca04e2db8da" to ("shot for" to "shot at"),
 
     // https://musicbrainz.org/relationships/genre-recording
     // No relationships.
@@ -233,6 +265,7 @@ internal val relationshipHeaders = hashMapOf(
     "1a26bf37-1f34-4c9a-97d5-b96bc49e9153" to ("contracted arrangement for" to "arranged for"),
     "e43d91b4-23d8-4a20-848f-1e1a392e23f0" to ("contracted mixing for" to "mixed for"),
     // "ce1529b0-2fd9-4dcc-82d2-4036a044b5b9" to ("contracted {co:co-}{executive:executive }production for" to "{co:co-}{executive:executive }produced for"),
+    "ce1529b0-2fd9-4dcc-82d2-4036a044b5b9" to ("contracted production for" to "produced for"),
     "57935ae5-9f21-47bc-9854-0fa5d1a56696" to ("miscellaneous roles" to "miscellaneous support"),
 
     // https://musicbrainz.org/relationships/place-recording
@@ -247,7 +280,9 @@ internal val relationshipHeaders = hashMapOf(
 
     // https://musicbrainz.org/relationships/recording-recording
     "6a76ad99-cc5d-4ebc-a6e4-b2eb2eb3ad98" to ("other versions" to "other versions"),
-//    "Few relationships (0)" to ("karaoke versions" to "karaoke version of"),
+    "39a08d0e-26e4-44fb-ae19-906f5fe9435d" to ("a cappella versions" to "a cappella versions of"),
+    "9fc01a58-7801-4bd2-b07d-61cc7ffacf90" to ("instrumental versions" to "instrumental versions of"),
+    "cb5fdd9f-00a1-4996-8c26-833cac6d5523" to ("karaoke versions" to "karaoke version of"),
     "ce01b3ac-dd47-4702-9302-085344f96e84" to ("edit of" to "edits"),
     "ce3de655-7451-44d1-9224-87eb948c205d" to ("music videos" to "music video for"),
     "f5f41b82-ecc7-488e-adf3-12356885d724" to ("later releases" to "earliest release"),
@@ -256,8 +291,10 @@ internal val relationshipHeaders = hashMapOf(
     "1b6311e8-5f81-43b7-8c55-4bbae71ec00c" to ("compilation of" to "compiled in"),
     "451076df-61cf-46ab-9921-555cab2f050d" to ("DJ-mix of" to "DJ-mixes"),
     "bfbdb55a-b857-473a-8f2e-a9c09e45c3f5" to ("remix of" to "has remixes"),
-    // "9efd9ce9-e702-448b-8e76-641515e8fe62" to ("{additional} samples" to "{additional:additionally} sampled by"),
+    // "{additional} samples" to "{additional:additionally} sampled by"
+    "9efd9ce9-e702-448b-8e76-641515e8fe62" to ("samples" to "sampled by"),
     "579d0b4c-bf77-479d-aa59-a8af1f518958" to ("mash-up of" to "mash-ups"),
+    "420fa5d6-8dbb-458f-8b5c-4e786c9e4de0" to ("commentary" to "commentary for"),
 
     // https://musicbrainz.org/relationships/area-release
     "d59c5121-7d6c-4965-9fa8-ab47b7d59012" to ("arranging location for" to "arranged in"),
