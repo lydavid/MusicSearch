@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.115.0](https://github.com/lydavid/MusicSearch/compare/v1.114.1...v1.115.0) (2026-05-20)
+
+
+### Bug Fixes
+
+* show all relationship attributes deduplicated ([7f3d530](https://github.com/lydavid/MusicSearch/commit/7f3d5305d71fa6c1a6ce404e264a70d85237499f))
+
+
+### Features
+
+* persist options in Lookup URL screen ([1a4c1b9](https://github.com/lydavid/MusicSearch/commit/1a4c1b9022a42db775969d1bfd9c5151b4b72e23))
+
 ## [1.114.1](https://github.com/lydavid/MusicSearch/compare/v1.114.0...v1.114.1) (2026-05-19)
 
 
