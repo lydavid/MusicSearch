@@ -163,7 +163,7 @@ class RelationDao(
         type = label,
         name = name,
         disambiguation = disambiguation,
-        attributes = attributes,
+        attributes = attributes.deduplicateAttributes(),
         visited = visited == true,
         isForwardDirection = isForwardDirection,
         lifeSpan = LifeSpanUiModel(
@@ -182,6 +182,12 @@ class RelationDao(
         ),
         lastUpdated = lastUpdated,
     )
+
+    private fun String?.deduplicateAttributes(): String? {
+        return this?.split(", ")
+            ?.distinct()
+            ?.joinToString(", ")
+    }
 
     fun observeCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
         transacter.countOfEachRelationshipType(

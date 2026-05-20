@@ -89,7 +89,7 @@ SELECT
   GROUP_CONCAT(type, ', '),
   relation.`name`,
   `disambiguation`,
-  `attributes`,
+  GROUP_CONCAT(`attributes`, ', '),
   details_metadata.entity_id IS NOT NULL AS visited,
   `is_forward_direction`,
   `begin`,
