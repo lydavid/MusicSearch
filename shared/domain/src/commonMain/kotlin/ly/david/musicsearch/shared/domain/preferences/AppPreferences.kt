@@ -105,4 +105,10 @@ interface AppPreferences {
 
     val submitClientAndVersionWithListen: Flow<Boolean>
     fun setSubmitClientAndVersionWithListen(enable: Boolean)
+
+    val excludeParametersInUrlLookup: Flow<Boolean>
+    fun setExcludeParametersInUrlLookup(exclude: Boolean)
+
+    val searchLocalDatabaseInUrlLookup: Flow<Boolean>
+    fun setSearchLocalDatabaseInUrlLookup(searchLocal: Boolean)
 }

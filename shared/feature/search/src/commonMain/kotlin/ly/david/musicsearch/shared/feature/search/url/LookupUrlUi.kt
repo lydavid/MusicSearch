@@ -80,7 +80,7 @@ private fun LookupUrlUiContent(
         item {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Enter a URL to check whether it exists in MusicBrainz or in this app's local database.",
+                text = "Enter a URL to check whether it exists in MusicBrainz or in the app's local database.",
             )
         }
 
@@ -118,7 +118,6 @@ private fun LookupUrlUiContent(
             }
         }
 
-        // TODO: Persist options in Lookup URL screen
         item {
             CheckboxWithText(
                 text = "Exclude parameters",

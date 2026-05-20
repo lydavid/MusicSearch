@@ -211,4 +211,18 @@ open class NoOpAppPreferences : AppPreferences {
     override fun setSubmitClientAndVersionWithListen(enable: Boolean) {
         // No-op.
     }
+
+    override val excludeParametersInUrlLookup: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun setExcludeParametersInUrlLookup(exclude: Boolean) {
+        // No-op.
+    }
+
+    override val searchLocalDatabaseInUrlLookup: Flow<Boolean>
+        get() = flowOf(false)
+
+    override fun setSearchLocalDatabaseInUrlLookup(searchLocal: Boolean) {
+        // No-op.
+    }
 }

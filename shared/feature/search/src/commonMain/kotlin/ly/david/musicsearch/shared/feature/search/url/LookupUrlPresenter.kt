@@ -38,8 +38,8 @@ internal class LookupUrlPresenter(
     @Composable
     override fun present(): LookupUrlUiState {
         var query by rememberSaveable { mutableStateOf(screen.query.orEmpty()) }
-        var excludeParameters by rememberSaveable { mutableStateOf(false) }
-        var searchLocalDatabase by rememberSaveable { mutableStateOf(false) }
+        val excludeParameters by appPreferences.excludeParametersInUrlLookup.collectAsRetainedState(false)
+        val searchLocalDatabase by appPreferences.searchLocalDatabaseInUrlLookup.collectAsRetainedState(false)
         var result: LookupUrlUiState.Result? by rememberRetained { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
@@ -51,11 +51,11 @@ internal class LookupUrlPresenter(
                 }
 
                 LookupUrlUiEvent.ToggleExcludeParameters -> {
-                    excludeParameters = !excludeParameters
+                    appPreferences.setExcludeParametersInUrlLookup(!excludeParameters)
                 }
 
                 is LookupUrlUiEvent.SetSearchLocalDatabase -> {
-                    searchLocalDatabase = event.searchLocalDatabase
+                    appPreferences.setSearchLocalDatabaseInUrlLookup(event.searchLocalDatabase)
                 }
 
                 LookupUrlUiEvent.LookupUrl -> {
@@ -83,6 +83,7 @@ internal class LookupUrlPresenter(
                                 ErrorType.NotFound -> LookupUrlUiState.Result.Success(
                                     listItemModels = persistentListOf(),
                                 )
+
                                 else -> LookupUrlUiState.Result.Error.Other(ex.message.orEmpty())
                             }
                         }

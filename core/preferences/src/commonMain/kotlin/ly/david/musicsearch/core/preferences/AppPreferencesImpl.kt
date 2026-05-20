@@ -526,4 +526,42 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val excludeParametersInUrlLookupPreference =
+        booleanPreferencesKey(AppPreferencesKey.EXCLUDE_PARAMETERS_IN_URL_LOOKUP.name)
+    override val excludeParametersInUrlLookup: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[excludeParametersInUrlLookupPreference] == true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setExcludeParametersInUrlLookup(exclude: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[excludeParametersInUrlLookupPreference] = exclude
+            }
+        }
+    }
+
+    private val searchLocalDatabaseInUrlLookupPreference =
+        booleanPreferencesKey(AppPreferencesKey.SEARCH_LOCAL_DATABASE_IN_URL_LOOKUP.name)
+    override val searchLocalDatabaseInUrlLookup: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[searchLocalDatabaseInUrlLookupPreference] == true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setSearchLocalDatabaseInUrlLookup(searchLocal: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[searchLocalDatabaseInUrlLookupPreference] = searchLocal
+            }
+        }
+    }
 }
