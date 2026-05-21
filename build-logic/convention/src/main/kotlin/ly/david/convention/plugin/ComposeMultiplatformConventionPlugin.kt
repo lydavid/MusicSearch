@@ -13,26 +13,13 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.compose")
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
-            if (pluginManager.hasPlugin("ly.david.android.library")) {
-//                configureAndroid()
-//                android {
-//                    buildFeatures {
-//                        compose = true
-//                    }
-//                }
-            }
+
             composeCompiler {
                 stabilityConfigurationFiles.add(rootProject.layout.projectDirectory.file("stability_config.conf"))
             }
         }
     }
 }
-
-//private fun Project.android(configure: LibraryExtension.() -> Unit) =
-//    extensions.configure(
-//        LibraryExtension::class,
-//        configure,
-//    )
 
 fun Project.composeCompiler(block: ComposeCompilerGradlePluginExtension.() -> Unit) {
     extensions.configure<ComposeCompilerGradlePluginExtension>(block)

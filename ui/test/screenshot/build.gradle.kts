@@ -4,8 +4,6 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
 }
 
-
-
 kotlin {
     android {
         namespace = "ly.david.musicsearch.ui.test.screenshot"

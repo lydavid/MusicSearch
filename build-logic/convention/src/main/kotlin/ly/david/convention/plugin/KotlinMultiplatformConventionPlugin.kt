@@ -21,24 +21,20 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 applyDefaultHierarchyTemplate()
 
                 jvm()
-//                if (pluginManager.hasPlugin("ly.david.android.library")) {
-//                    androidTarget()
-//                    configureAndroid()
-                    configure<KotlinMultiplatformAndroidLibraryTarget> {
-                        compileSdk = COMPILE_SDK_VERSION
-                        withHostTest {
-                            isIncludeAndroidResources = true
-                        }
-                        // Not required at the moment.
-                        // A module that needs this should enable it for itself.
-                        // https://developer.android.com/kotlin/multiplatform/plugin#configure-tests
+                configure<KotlinMultiplatformAndroidLibraryTarget> {
+                    compileSdk = COMPILE_SDK_VERSION
+                    withHostTest {
+                        isIncludeAndroidResources = true
+                    }
+                    // Not required at the moment.
+                    // A module that needs this should enable it for itself.
+                    // https://developer.android.com/kotlin/multiplatform/plugin#configure-tests
 //                        withDeviceTest {
 //                            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 //                            execution = "HOST"
 //                        }
-                        androidResources.enable = true
-                    }
-//                }
+                    androidResources.enable = true
+                }
                 iosArm64()
                 iosSimulatorArm64()
             }

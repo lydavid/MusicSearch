@@ -7,28 +7,23 @@ import org.gradle.kotlin.dsl.configure
 
 const val COMPILE_SDK_VERSION = 36
 private const val MIN_SDK_VERSION = 24
-private const val TARGET_SDK_VERSION = COMPILE_SDK_VERSION
 
 fun Project.configureAndroid() {
     android {
         compileSdk = COMPILE_SDK_VERSION
-//            compileSdkVersion(COMPILE_SDK_VERSION)
 
-            defaultConfig {
-//                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        defaultConfig {
+            minSdk = MIN_SDK_VERSION
 
-        minSdk = MIN_SDK_VERSION
-//            targetSdk = TARGET_SDK_VERSION
+            manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
+        }
 
-//                manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
-            }
-
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_21
-                targetCompatibility = JavaVersion.VERSION_21
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
 //                isCoreLibraryDesugaringEnabled = true
-            }
-//
+        }
+
 //            dependencies {
 //                add("coreLibraryDesugaring", libs.findLibrary("desugarjdklibs").get())
 //            }
