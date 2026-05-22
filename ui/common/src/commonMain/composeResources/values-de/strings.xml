@@ -388,4 +388,13 @@
     <string name="loginAgainForTags">Du musst dich erneut anmelden, um die App-Berechtigung zu gewähren, um deine Tags zu ändern.</string>
     <string name="downvotedX">Negativ bewertet %1$s. Es ist nun verborgen. Um es wieder zu sehen, %2$s umschalten.</string>
     <string name="showDownvotedGenresTags">Negativ bewertete Genres/Tags anzeigen</string>
+    <string name="hideDownvotedGenresTags">Negativ bewertete Genres/Tags verstecken</string>
+    <string name="country">Land</string>
+    <string name="subdivision">Unterteilung</string>
+    <string name="county">Land</string>
+    <string name="municipality">Stadtbezirk</string>
+    <string name="city">Stadt</string>
+    <string name="district">Bezirk</string>
+    <string name="island">Insel</string>
+    <string name="militaryBase">Militärische Basis</string>
 </resources>
