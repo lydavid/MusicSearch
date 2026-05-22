@@ -3,7 +3,6 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.application")
-//    id("ly.david.musicsearch.compose.multiplatform")
 //    alias(libs.plugins.baselineprofile)
     alias(libs.plugins.aboutlibraries)
 }

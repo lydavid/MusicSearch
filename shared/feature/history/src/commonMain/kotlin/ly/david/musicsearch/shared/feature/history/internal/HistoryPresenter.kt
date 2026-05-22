@@ -112,7 +112,9 @@ internal class HistoryPresenter(
             sortOption = sortOption,
             pagingDataFlow = pagingDataFlow,
             lazyListState = lazyListState,
-            eventSink = ::eventSink,
+            eventSink = { event ->
+                eventSink(event)
+            },
         )
     }
 }

@@ -38,11 +38,11 @@ jobs:
 
       - name: Detekt code smells in android
         if: ${{ !cancelled() }}
-        run: ./gradlew detektAndroidDebug detektAndroidRelease
+        run: ./gradlew detektAndroidMain
 
       - name: Detekt code smells in android tests
         if: ${{ !cancelled() }}
-        run: ./gradlew detektAndroidDebugUnitTest
+        run: ./gradlew detektAndroidHostTest
 
       - name: Commit
         if: always()

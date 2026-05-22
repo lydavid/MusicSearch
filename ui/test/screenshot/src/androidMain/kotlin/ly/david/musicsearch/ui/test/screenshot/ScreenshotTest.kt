@@ -29,9 +29,10 @@ private const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(TestParameterInjector::class)
-abstract class ScreenshotTest(
+open class ScreenshotTest(
     private val isFullScreen: Boolean = false,
 ) {
+    @Suppress("VarCouldBeVal")
     @TestParameter
     private lateinit var nightMode: NightMode
 

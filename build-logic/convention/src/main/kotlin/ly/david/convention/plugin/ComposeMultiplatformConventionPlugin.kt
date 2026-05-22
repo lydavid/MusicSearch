@@ -21,6 +21,6 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
     }
 }
 
-fun Project.composeCompiler(block: ComposeCompilerGradlePluginExtension.() -> Unit) {
+private fun Project.composeCompiler(block: ComposeCompilerGradlePluginExtension.() -> Unit) {
     extensions.configure<ComposeCompilerGradlePluginExtension>(block)
 }
