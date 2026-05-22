@@ -35,7 +35,7 @@ kotlin {
                 implementation(libs.paging.common)
             }
         }
-        val commonTest by getting {
+        val jvmTest by getting {
             dependencies {
                 implementation(projects.testData)
                 implementation(libs.kotlin.test)
