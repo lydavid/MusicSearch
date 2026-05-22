@@ -65,7 +65,4 @@ sqldelight {
 
 android {
     namespace = "ly.david.musicsearch.data.database"
-    buildFeatures {
-        buildConfig = true
-    }
 }
