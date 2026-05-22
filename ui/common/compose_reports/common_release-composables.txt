@@ -176,6 +176,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.area.getDisplayString(
+  stable <this>: AreaType
+): String
 fun ly.david.musicsearch.ui.common.artist.getDisplayString(
   stable <this>: ArtistGender
 ): String
@@ -300,6 +303,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.event.getDisplayString(
+  stable <this>: EventType
+): String
 restartable skippable fun ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling(
   detailsModel: T?
   stable onRefresh: Function0<Unit>
@@ -379,6 +385,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.instrument.getDisplayString(
+  stable <this>: InstrumentType
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.LabelListItem(
   label: LabelListItemModel
   stable filterText: String
@@ -390,6 +399,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.label.getDisplayString(
+  stable <this>: LabelType
+): String
 open scheme("[presenter]") fun ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter.present(
   stable <this>: AllEntitiesListPresenter
 ): AllEntitiesListUiState
@@ -536,6 +548,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable isSelected: Boolean = @static false
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.place.getDisplayString(
+  stable <this>: PlaceType
+): String
 restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.preview.PreviewTheme(
   stable darkTheme: Boolean = @dynamic <expression>
   stable content: Function2<Composer, Int, Unit>
@@ -643,6 +658,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+fun ly.david.musicsearch.ui.common.series.getDisplayString(
+  stable <this>: SeriesType
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost(
   stable snackbarHostState: SnackbarHostState
 )

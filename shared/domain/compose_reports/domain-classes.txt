@@ -31,10 +31,6 @@ stable class ly.david.musicsearch.shared.domain.app.AppInfo {
   stable val versionNameAndCode: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.area.AreaType {
-  stable val COUNTRY: String
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.shared.domain.area.ReleaseEvent {
   stable val id: String
   stable val name: String
@@ -141,7 +137,7 @@ stable class ly.david.musicsearch.shared.domain.details.AreaDetailsModel {
   stable val name: String
   stable val sortName: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: AreaType?
   stable val lifeSpan: LifeSpanUiModel
   stable val countryCode: String
   stable val lastUpdated: Instant
@@ -178,7 +174,7 @@ stable class ly.david.musicsearch.shared.domain.details.EventDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: EventType?
   stable val time: String
   stable val cancelled: Boolean
   stable val lifeSpan: LifeSpanUiModel
@@ -195,7 +191,7 @@ stable class ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel {
   stable val name: String
   stable val disambiguation: String
   stable val description: String
-  stable val type: String
+  stable val type: InstrumentType?
   stable val lastUpdated: Instant
   stable val artistCredits: ImmutableList<ArtistCreditUiModel>
   stable val genres: ImmutableList<GenreChip>
@@ -208,7 +204,7 @@ stable class ly.david.musicsearch.shared.domain.details.LabelDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: LabelType?
   stable val labelCode: Int?
   stable val ipis: ImmutableList<String>
   stable val isnis: ImmutableList<String>
@@ -227,7 +223,7 @@ stable class ly.david.musicsearch.shared.domain.details.PlaceDetailsModel {
   stable val name: String
   stable val disambiguation: String
   stable val address: String
-  stable val type: String
+  stable val type: PlaceType?
   stable val coordinates: CoordinatesUiModel
   stable val lifeSpan: LifeSpanUiModel
   stable val area: AreaListItemModel?
@@ -310,7 +306,7 @@ stable class ly.david.musicsearch.shared.domain.details.SeriesDetailsModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: SeriesType?
   stable val lastUpdated: Instant
   stable val artistCredits: ImmutableList<ArtistCreditUiModel>
   stable val genres: ImmutableList<GenreChip>
@@ -733,7 +729,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.AreaListItemModel {
   stable val name: String
   stable val sortName: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: AreaType?
   stable val lifeSpan: LifeSpanUiModel
   stable val countryCodes: ImmutableList<String>
   stable val date: String?
@@ -773,7 +769,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.EventListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: EventType?
   stable val time: String
   stable val cancelled: Boolean
   stable val lifeSpan: LifeSpanUiModel
@@ -806,7 +802,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
   stable val name: String
   stable val disambiguation: String
   stable val description: String
-  stable val type: String
+  stable val type: InstrumentType?
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
@@ -816,7 +812,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.LabelListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String
-  stable val type: String
+  stable val type: LabelType?
   stable val labelCode: Int?
   stable val lifeSpan: LifeSpanUiModel
   stable val catalogNumbers: String?
@@ -856,7 +852,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.PlaceListItemModel {
   stable val name: String
   stable val disambiguation: String
   stable val address: String
-  stable val type: String
+  stable val type: PlaceType?
   stable val coordinates: CoordinatesUiModel?
   stable val lifeSpan: LifeSpanUiModel
   stable val visited: Boolean
@@ -970,7 +966,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel {
   stable val id: String
   stable val name: String
   stable val disambiguation: String?
-  stable val type: String
+  stable val type: SeriesType?
   stable val visited: Boolean
   stable val collected: Boolean
   stable val aliases: ImmutableList<BasicAlias>
