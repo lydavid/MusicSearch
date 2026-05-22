@@ -1,3 +1,4 @@
+
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -7,9 +8,9 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.AppRoot
 import ly.david.musicsearch.shared.di.sharedModule
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.useDarkTheme
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.theme.BaseTheme
