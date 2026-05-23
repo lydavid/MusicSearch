@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.details.tag
 
+import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
@@ -25,8 +26,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import kotlin.intArrayOf
 import kotlin.time.Instant
 
+@Config(sdk = [VANILLA_ICE_CREAM])
 @RunWith(RobolectricTestRunner::class)
 class TagDetailsPresenterTest {
     private val now = Instant.parse("1970-01-02T05:00:00Z")

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.stats
 
+import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
@@ -30,8 +31,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import kotlin.intArrayOf
 import kotlin.time.Instant
 
+@Config(sdk = [VANILLA_ICE_CREAM])
 @RunWith(RobolectricTestRunner::class)
 class StatsPresenterTest {
 
