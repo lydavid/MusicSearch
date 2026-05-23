@@ -1,6 +1,5 @@
 package ly.david.convention.plugin
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -15,11 +14,12 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
             if (pluginManager.hasPlugin("ly.david.android.library")) {
-                android {
-                    buildFeatures {
-                        compose = true
-                    }
-                }
+//                configureAndroid()
+//                android {
+//                    buildFeatures {
+//                        compose = true
+//                    }
+//                }
             }
             composeCompiler {
                 stabilityConfigurationFiles.add(rootProject.layout.projectDirectory.file("stability_config.conf"))
@@ -28,11 +28,11 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
     }
 }
 
-private fun Project.android(configure: CommonExtension<*, *, *, *, *, *>.() -> Unit) =
-    extensions.configure(
-        CommonExtension::class,
-        configure,
-    )
+//private fun Project.android(configure: LibraryExtension.() -> Unit) =
+//    extensions.configure(
+//        LibraryExtension::class,
+//        configure,
+//    )
 
 fun Project.composeCompiler(block: ComposeCompilerGradlePluginExtension.() -> Unit) {
     extensions.configure<ComposeCompilerGradlePluginExtension>(block)

@@ -1,16 +1,22 @@
+import com.android.build.api.dsl.androidLibrary
+
 plugins {
-    id("ly.david.android.library")
-    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
+    id("ly.david.musicsearch.compose.multiplatform")
 }
 
-android {
-    namespace = "ly.david.musicsearch.konsist"
-}
+
 
 kotlin {
+    androidLibrary {
+        namespace = "ly.david.musicsearch.konsist"
+    }
     sourceSets {
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+
+            }
+        }
     }
 }
 

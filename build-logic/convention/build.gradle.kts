@@ -17,10 +17,6 @@ gradlePlugin {
             id = "ly.david.android.application"
             implementationClass = "ly.david.convention.plugin.AndroidApplicationConventionPlugin"
         }
-        register("androidLibrary") {
-            id = "ly.david.android.library"
-            implementationClass = "ly.david.convention.plugin.AndroidLibraryConventionPlugin"
-        }
         register("androidTest") {
             id = "ly.david.android.test"
             implementationClass = "ly.david.convention.plugin.AndroidTestConventionPlugin"
@@ -36,6 +32,10 @@ gradlePlugin {
         register("kotlinMultiplatform") {
             id = "ly.david.musicsearch.kotlin.multiplatform"
             implementationClass = "ly.david.convention.plugin.KotlinMultiplatformConventionPlugin"
+        }
+        register("parcelize") {
+            id = "ly.david.parcelize"
+            implementationClass = "ly.david.convention.plugin.ParcelizeConventionPlugin"
         }
     }
 }

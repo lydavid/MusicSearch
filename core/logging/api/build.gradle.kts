@@ -3,6 +3,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.core.logging.api"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

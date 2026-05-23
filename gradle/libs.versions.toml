@@ -1,7 +1,7 @@
 [versions]
 aboutlibraries = "14.2.1"
-androidGradlePlugin = "8.13.2"
-baselineprofile = "1.4.1"
+androidGradlePlugin = "9.2.1"
+baselineprofile = "1.5.0-alpha06"
 benchmarkMacroJunit4 = "1.4.1"
 chucker = "4.3.1"
 circuit = "0.33.1"
@@ -24,7 +24,7 @@ mockk = "1.14.11"
 multiplatformPaths = "0.2.2"
 okio = "3.17.0"
 paging = "3.5.0"
-paparazzi = "2.0.0-alpha02"
+paparazzi = "2.0.0-alpha05"
 profileinstaller = "1.4.1"
 requery = "3.49.0"
 sqldelight = "2.3.2"
@@ -164,7 +164,6 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = "com.google.firebase.crashlytics:3.0.7"
 google-services = "com.google.gms.google-services:4.4.4"
 gradle-versions = "com.github.ben-manes.versions:0.54.0"
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
