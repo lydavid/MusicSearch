@@ -31,7 +31,7 @@ sqldelight = "2.3.2"
 stately = "2.1.0"
 turbine = "1.2.1"
 uiautomator = "2.3.0"
-zoomable = "2.11.1"
+zoomable = "2.12.0"
 
 [libraries]
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlibraries" }
