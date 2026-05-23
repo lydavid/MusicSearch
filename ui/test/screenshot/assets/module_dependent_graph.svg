@@ -14,7 +14,7 @@
 <!-- :ui:test:screenshot -->
 <g id="node1" class="node">
 <title>:ui:test:screenshot</title>
-<polygon fill="#9affb5" stroke="black" points="149,-360 0,-360 0,-324 149,-324 149,-360"/>
+<polygon fill="#b59aff" stroke="black" points="149,-360 0,-360 0,-324 149,-324 149,-360"/>
 <text text-anchor="middle" x="74.5" y="-338.3" font-family="Times,serif" font-size="14.00">:ui:test:screenshot</text>
 </g>
 <!-- :ui:common -->
