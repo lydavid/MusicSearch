@@ -73,8 +73,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 address = "〒102-8321 東京都千代田区北の丸公園2-3",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupPlace(
-            placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -190,8 +190,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupPlace(
-            placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -204,8 +204,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupPlace(
-            placeId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )
@@ -339,8 +339,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 countryCodes = listOf("JP"),
             ),
         )
-        countryAreaRepository.lookupArea(
-            areaId = countryId,
+        countryAreaRepository.lookupEntity(
+            entityId = countryId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -401,8 +401,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
         val placeRepository = createPlaceRepository(
             musicBrainzModel = budokanPlaceMusicBrainzModel,
         )
-        var placeDetailsModel = placeRepository.lookupPlace(
-            placeId = placeId,
+        var placeDetailsModel = placeRepository.lookupEntity(
+            entityId = placeId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -429,8 +429,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
             ),
             placeDetailsModel,
         )
-        placeDetailsModel = placeRepository.lookupPlace(
-            placeId = placeId,
+        placeDetailsModel = placeRepository.lookupEntity(
+            entityId = placeId,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )
@@ -468,8 +468,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                 typeId = "84039871-5e47-38ca-a66a-45e512c8290f",
             ),
         )
-        val district = districtAreaRepository.lookupArea(
-            areaId = districtId,
+        val district = districtAreaRepository.lookupEntity(
+            entityId = districtId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -485,8 +485,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
         )
 
         // Return back to the place
-        placeDetailsModel = placeRepository.lookupPlace(
-            placeId = placeId,
+        placeDetailsModel = placeRepository.lookupEntity(
+            entityId = placeId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -515,8 +515,8 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
             ),
             placeDetailsModel,
         )
-        placeDetailsModel = placeRepository.lookupPlace(
-            placeId = placeId,
+        placeDetailsModel = placeRepository.lookupEntity(
+            entityId = placeId,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )

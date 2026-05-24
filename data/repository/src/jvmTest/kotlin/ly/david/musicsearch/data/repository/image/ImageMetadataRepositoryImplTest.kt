@@ -123,8 +123,8 @@ class ImageMetadataRepositoryImplTest :
                 name = eventName,
                 disambiguation = eventDisambiguation,
             ),
-        ).lookupEvent(
-            eventId = eventId,
+        ).lookupEntity(
+            entityId = eventId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -211,8 +211,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                 ),
             ),
-        ).lookupRelease(
-            releaseId = releaseId,
+        ).lookupEntity(
+            entityId = releaseId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -385,8 +385,8 @@ class ImageMetadataRepositoryImplTest :
                     ),
                 ),
             ),
-        ).lookupReleaseGroup(
-            releaseGroupId = releaseGroupId,
+        ).lookupEntity(
+            entityId = releaseGroupId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

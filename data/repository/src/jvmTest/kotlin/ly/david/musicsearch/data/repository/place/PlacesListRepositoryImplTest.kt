@@ -424,8 +424,8 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 address = "some newer address",
             ),
         ).let { placeRepository ->
-            placeRepository.lookupPlace(
-                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            placeRepository.lookupEntity(
+                entityId = tokyoInternationForumPlaceMusicBrainzModel.id,
                 forceRefresh = false,
                 lastUpdated = testDateTimeInThePast,
             ).run {
@@ -452,8 +452,8 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                     this,
                 )
             }
-            placeRepository.lookupPlace(
-                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            placeRepository.lookupEntity(
+                entityId = tokyoInternationForumPlaceMusicBrainzModel.id,
                 forceRefresh = true,
                 lastUpdated = testDateTimeInThePast,
             ).run {
@@ -487,8 +487,8 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                 address = "newest address",
             ),
         ).let { placeRepository ->
-            placeRepository.lookupPlace(
-                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            placeRepository.lookupEntity(
+                entityId = tokyoInternationForumPlaceMusicBrainzModel.id,
                 forceRefresh = false,
                 lastUpdated = testDateTimeInThePast,
             ).run {
@@ -515,8 +515,8 @@ class PlacesListRepositoryImplTest : KoinTest, TestPlaceRepository {
                     this,
                 )
             }
-            placeRepository.lookupPlace(
-                placeId = tokyoInternationForumPlaceMusicBrainzModel.id,
+            placeRepository.lookupEntity(
+                entityId = tokyoInternationForumPlaceMusicBrainzModel.id,
                 forceRefresh = true,
                 lastUpdated = testDateTimeInThePast,
             ).run {

@@ -66,8 +66,8 @@ internal class AreaPresenter(
         id: String,
         forceRefresh: Boolean,
     ): AreaDetailsModel {
-        return repository.lookupArea(
-            areaId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

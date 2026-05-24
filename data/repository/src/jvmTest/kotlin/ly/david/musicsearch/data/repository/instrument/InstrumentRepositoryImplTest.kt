@@ -84,8 +84,8 @@ class InstrumentRepositoryImplTest : KoinTest {
                 name = "classical guitar",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupInstrument(
-            instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -149,8 +149,8 @@ class InstrumentRepositoryImplTest : KoinTest {
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupInstrument(
-            instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(1.seconds),
         )
@@ -162,8 +162,8 @@ class InstrumentRepositoryImplTest : KoinTest {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupInstrument(
-            instrumentId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(2.seconds),
         )

@@ -1,18 +1,15 @@
-// https://github.com/detekt/detekt/issues/8140
-@file:Suppress("SpacingAroundColon", "NoUnusedImports", "Wrapping")
-
 package ly.david.musicsearch.data.repository.recording
 
 import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
@@ -33,53 +30,34 @@ class RecordingRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val tagDao: TagDao,
-    private val coroutineDispatchers: CoroutineDispatchers,
+    coroutineDispatchers: CoroutineDispatchers,
     private val appPreferences: AppPreferences,
-) : RecordingRepository {
-
-    override suspend fun lookupRecording(
-        recordingId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): RecordingDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(recordingId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val recordingMusicBrainzModel = lookupApi.lookupRecording(recordingId)
-            recordingDao.withTransaction {
-                if (forceRefresh) {
-                    delete(recordingId)
-                }
-                cache(
-                    oldId = recordingId,
-                    recording = recordingMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(recordingMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+) : RecordingRepository, LookupEntityRepository<RecordingDetailsModel, RecordingMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        recordingDao.withTransaction(block)
     }
 
-    private suspend fun getCachedData(recordingId: String): RecordingDetailsModel? {
-        if (!relationRepository.visited(recordingId)) return null
+    override suspend fun getCachedData(entityId: String): RecordingDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
         val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val recording = recordingDao.getRecordingForDetails(
-            recordingId = recordingId,
+            recordingId = entityId,
             listenBrainzUsername = username,
             numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
-        val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
-        val urlRelations = relationRepository.getRelationshipsByType(recordingId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RECORDING,
-            mbid = recordingId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = recordingId)
-        val tags = tagDao.getTags(entityId = recordingId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return recording.copy(
             artistCredits = artistCredits.toPersistentList(),
@@ -88,41 +66,45 @@ class RecordingRepositoryImpl(
             genres = genres,
             tags = tags,
             listenCount = recording.listenCount.takeIf { username.isNotEmpty() },
-            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/track/$recordingId",
+            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/track/$entityId",
         )
     }
 
-    private fun delete(id: String) {
-        recordingDao.delete(id)
-        relationRepository.deleteRelationshipsByType(id)
-        artistCreditDao.deleteArtistCreditsForEntity(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): RecordingMusicBrainzNetworkModel {
+        return lookupApi.lookupRecording(recordingId = entityId)
     }
 
-    context(_: TransactionWithoutReturn)
-    private fun cache(
+    override fun delete(entityId: String) {
+        recordingDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        artistCreditDao.deleteArtistCreditsForEntity(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        recording: RecordingMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: RecordingMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         recordingDao.upsert(
             oldId = oldId,
-            recording = recording,
+            recording = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(recording))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = recording.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = recording.id,
-            genres = recording.genres,
-            tags = recording.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

@@ -189,8 +189,8 @@ class LookupUrlRepositoryImplTest : KoinTest, TestArtistRepository {
                 ),
             ),
         )
-        artistRepository.lookupArtist(
-            artistId = artistId,
+        artistRepository.lookupEntity(
+            entityId = artistId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

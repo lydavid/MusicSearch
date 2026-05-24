@@ -91,8 +91,8 @@ class SeriesRepositoryImplTest : KoinTest {
                 name = "Rolling Stone: 500 Greatest Albums of All Time: 2023 edition",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupSeries(
-            seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -134,8 +134,8 @@ class SeriesRepositoryImplTest : KoinTest {
                 ),
             ),
         )
-        var allDataDetailsModel = allDataRepository.lookupSeries(
-            seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
+        var allDataDetailsModel = allDataRepository.lookupEntity(
+            entityId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -147,8 +147,8 @@ class SeriesRepositoryImplTest : KoinTest {
             ),
             allDataDetailsModel,
         )
-        allDataDetailsModel = allDataRepository.lookupSeries(
-            seriesId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
+        allDataDetailsModel = allDataRepository.lookupEntity(
+            entityId = "bb3d9d84-75b8-4e67-8ad7-dcc38f764bf3",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )

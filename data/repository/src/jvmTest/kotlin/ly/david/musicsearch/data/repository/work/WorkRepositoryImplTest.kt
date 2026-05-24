@@ -129,8 +129,8 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
             ),
         )
 
-        repository.lookupWork(
-            workId = skycladObserverWorkMusicBrainzModel.id,
+        repository.lookupEntity(
+            entityId = skycladObserverWorkMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -222,8 +222,8 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
             )
         }
 
-        repository.lookupWork(
-            workId = skycladObserverWorkMusicBrainzModel.id,
+        repository.lookupEntity(
+            entityId = skycladObserverWorkMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -252,8 +252,8 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                 name = "君の知らない物語",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupWork(
-            workId = "717a6517-290e-3696-942a-aba233ffc398",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -440,8 +440,8 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupWork(
-            workId = "717a6517-290e-3696-942a-aba233ffc398",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -453,8 +453,8 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupWork(
-            workId = "717a6517-290e-3696-942a-aba233ffc398",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "717a6517-290e-3696-942a-aba233ffc398",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )

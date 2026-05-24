@@ -68,8 +68,8 @@ internal class ReleasePresenter(
         id: String,
         forceRefresh: Boolean,
     ): ReleaseDetailsModel {
-        return repository.lookupRelease(
-            releaseId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

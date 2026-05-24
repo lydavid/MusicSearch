@@ -62,8 +62,8 @@ internal class LabelPresenter(
         id: String,
         forceRefresh: Boolean,
     ): LabelDetailsModel {
-        return repository.lookupLabel(
-            labelId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

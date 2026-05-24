@@ -61,8 +61,8 @@ internal class InstrumentPresenter(
         id: String,
         forceRefresh: Boolean,
     ): InstrumentDetailsModel {
-        return repository.lookupInstrument(
-            instrumentId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

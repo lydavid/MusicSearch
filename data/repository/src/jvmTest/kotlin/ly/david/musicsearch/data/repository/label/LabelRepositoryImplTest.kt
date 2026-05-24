@@ -53,8 +53,8 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                 name = "UNIVERSAL J",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupLabel(
-            labelId = "7aaa37fe-2def-3476-b359-80245850062d",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
 
@@ -140,8 +140,8 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupLabel(
-            labelId = "7aaa37fe-2def-3476-b359-80245850062d",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(1.milliseconds),
         )
@@ -153,8 +153,8 @@ class LabelRepositoryImplTest : KoinTest, TestLabelRepository {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupLabel(
-            labelId = "7aaa37fe-2def-3476-b359-80245850062d",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "7aaa37fe-2def-3476-b359-80245850062d",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(2.milliseconds),
         )

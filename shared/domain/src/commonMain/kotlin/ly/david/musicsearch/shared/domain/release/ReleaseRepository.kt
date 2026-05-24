@@ -7,8 +7,8 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import kotlin.time.Instant
 
 interface ReleaseRepository {
-    suspend fun lookupRelease(
-        releaseId: String,
+    suspend fun lookupEntity(
+        entityId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): ReleaseDetailsModel

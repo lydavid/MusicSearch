@@ -42,8 +42,8 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
                 name = "South Georgia and the South Sandwich Islands",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupArea(
-            areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -65,8 +65,8 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
                 countryCodes = listOf("GS"),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupArea(
-            areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(1.minutes),
         )
@@ -78,8 +78,8 @@ class AreaRepositoryImplTest : KoinTest, TestAreaRepository {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupArea(
-            areaId = "38ce2215-162b-3f3c-af41-34800017e1d8",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "38ce2215-162b-3f3c-af41-34800017e1d8",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(2.minutes),
         )

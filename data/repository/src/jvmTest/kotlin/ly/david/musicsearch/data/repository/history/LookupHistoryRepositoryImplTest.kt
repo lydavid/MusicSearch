@@ -305,8 +305,8 @@ class LookupHistoryRepositoryImplTest :
             artistMusicBrainzModel = zutomayoArtistMusicBrainzNetworkModel.copy(
                 aliases = aliases,
             ),
-        ).lookupArtist(
-            artistId = zutomayoArtistMusicBrainzNetworkModel.id,
+        ).lookupEntity(
+            entityId = zutomayoArtistMusicBrainzNetworkModel.id,
             forceRefresh = false,
             lastUpdated = currentTime,
         ).run {

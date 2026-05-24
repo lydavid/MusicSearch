@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.label
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
@@ -20,44 +21,25 @@ class LabelRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : LabelRepository {
-
-    override suspend fun lookupLabel(
-        labelId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): LabelDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(labelId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val labelMusicBrainzModel = lookupApi.lookupLabel(labelId)
-            labelDao.withTransaction {
-                if (forceRefresh) {
-                    delete(labelId)
-                }
-                cache(
-                    oldId = labelId,
-                    label = labelMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(labelMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : LabelRepository, LookupEntityRepository<LabelDetailsModel, LabelMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        labelDao.withTransaction(block)
     }
 
-    private fun getCachedData(labelId: String): LabelDetailsModel? {
-        if (!relationRepository.visited(labelId)) return null
-        val label = labelDao.getLabelForDetails(labelId) ?: return null
+    override suspend fun getCachedData(entityId: String): LabelDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val label = labelDao.getLabelForDetails(entityId) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(labelId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.LABEL,
-            mbid = labelId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = labelId)
-        val tags = tagDao.getTags(entityId = labelId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return label.copy(
             urls = urlRelations,
@@ -67,35 +49,40 @@ class LabelRepositoryImpl(
         )
     }
 
-    private fun delete(id: String) {
-        labelDao.delete(id)
-        relationRepository.deleteRelationshipsByType(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): LabelMusicBrainzNetworkModel {
+        return lookupApi.lookupLabel(labelId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        labelDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        label: LabelMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: LabelMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         labelDao.upsert(
             oldId = oldId,
-            label = label,
+            label = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(label))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = label.relations.toRelationWithOrderList(label.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = label.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = label.id,
-            genres = label.genres,
-            tags = label.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

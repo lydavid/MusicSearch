@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.series
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
@@ -20,44 +21,25 @@ class SeriesRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : SeriesRepository {
-
-    override suspend fun lookupSeries(
-        seriesId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): SeriesDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(seriesId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val seriesMusicBrainzModel = lookupApi.lookupSeries(seriesId)
-            seriesDao.withTransaction {
-                if (forceRefresh) {
-                    delete(seriesId)
-                }
-                cache(
-                    oldId = seriesId,
-                    series = seriesMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(seriesMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : SeriesRepository, LookupEntityRepository<SeriesDetailsModel, SeriesMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        seriesDao.withTransaction(block)
     }
 
-    private fun getCachedData(seriesId: String): SeriesDetailsModel? {
-        if (!relationRepository.visited(seriesId)) return null
-        val series = seriesDao.getSeriesForDetails(seriesId) ?: return null
+    override suspend fun getCachedData(entityId: String): SeriesDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val series = seriesDao.getSeriesForDetails(entityId) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(seriesId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.SERIES,
-            mbid = seriesId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = seriesId)
-        val tags = tagDao.getTags(entityId = seriesId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return series.copy(
             urls = urlRelations,
@@ -67,35 +49,40 @@ class SeriesRepositoryImpl(
         )
     }
 
-    private fun delete(id: String) {
-        seriesDao.delete(id)
-        relationRepository.deleteRelationshipsByType(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): SeriesMusicBrainzNetworkModel {
+        return lookupApi.lookupSeries(seriesId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        seriesDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        series: SeriesMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: SeriesMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         seriesDao.upsert(
             oldId = oldId,
-            series = series,
+            series = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(series))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = series.relations.toRelationWithOrderList(series.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = series.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = series.id,
-            genres = series.genres,
-            tags = series.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

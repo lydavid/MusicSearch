@@ -533,8 +533,8 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
             ),
         )
         // the first lookup will replace existing data
-        artistRepository.lookupArtist(
-            artistId = roseliaArtistMusicBrainzModel.id,
+        artistRepository.lookupEntity(
+            entityId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -554,8 +554,8 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 this,
             )
         }
-        artistRepository.lookupArtist(
-            artistId = roseliaArtistMusicBrainzModel.id,
+        artistRepository.lookupEntity(
+            entityId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -581,8 +581,8 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 disambiguation = "more changes won't show up until refresh",
             ),
         )
-        newerArtistRepository.lookupArtist(
-            artistId = roseliaArtistMusicBrainzModel.id,
+        newerArtistRepository.lookupEntity(
+            entityId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -602,8 +602,8 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 this,
             )
         }
-        newerArtistRepository.lookupArtist(
-            artistId = roseliaArtistMusicBrainzModel.id,
+        newerArtistRepository.lookupEntity(
+            entityId = roseliaArtistMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).run {

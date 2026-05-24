@@ -68,8 +68,8 @@ internal class ReleaseGroupPresenter(
         id: String,
         forceRefresh: Boolean,
     ): ReleaseGroupDetailsModel {
-        return repository.lookupReleaseGroup(
-            releaseGroupId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

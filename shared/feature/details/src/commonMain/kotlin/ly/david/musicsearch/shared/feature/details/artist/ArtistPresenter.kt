@@ -61,8 +61,8 @@ internal class ArtistPresenter(
         id: String,
         forceRefresh: Boolean,
     ): ArtistDetailsModel {
-        return repository.lookupArtist(
-            artistId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

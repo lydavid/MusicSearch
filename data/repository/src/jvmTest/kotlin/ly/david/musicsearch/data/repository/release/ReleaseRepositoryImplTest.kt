@@ -110,8 +110,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupRelease(
-            releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -677,8 +677,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupRelease(
-            releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -704,8 +704,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupRelease(
-            releaseId = "8516ca87-f9c4-3854-a727-6d328cf44837",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "8516ca87-f9c4-3854-a727-6d328cf44837",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )
@@ -924,8 +924,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ),
             fakeBrowseUsername = "",
         )
-        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
-            releaseId = releaseId,
+        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupEntity(
+            entityId = releaseId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -1145,8 +1145,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             ),
             fakeBrowseUsername = "",
         )
-        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupRelease(
-            releaseId = releaseId,
+        val artistDetailsModelBeforeEdit = releaseRepositoryBeforeEdit.lookupEntity(
+            entityId = releaseId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -1343,8 +1343,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             lastUpdated = testDateTimeInThePast,
         )
 
-        releaseRepository.lookupRelease(
-            releaseId = releaseWith3CatalogNumbersWithSameLabel.id,
+        releaseRepository.lookupEntity(
+            entityId = releaseWith3CatalogNumbersWithSameLabel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -1354,8 +1354,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             )
         }
 
-        releaseRepository.lookupRelease(
-            releaseId = releaseWith3CatalogNumbersWithSameLabel.id,
+        releaseRepository.lookupEntity(
+            entityId = releaseWith3CatalogNumbersWithSameLabel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -1466,8 +1466,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             listenBrainzUrl = "/album/a73cecde-0923-40ad-aad1-e8c24ba6c3d2",
         )
 
-        releaseRepository.lookupRelease(
-            releaseId = releaseWithSameCatalogNumberWithDifferentLabels.id,
+        releaseRepository.lookupEntity(
+            entityId = releaseWithSameCatalogNumberWithDifferentLabels.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -1477,8 +1477,8 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             )
         }
 
-        releaseRepository.lookupRelease(
-            releaseId = releaseWithSameCatalogNumberWithDifferentLabels.id,
+        releaseRepository.lookupEntity(
+            entityId = releaseWithSameCatalogNumberWithDifferentLabels.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).run {

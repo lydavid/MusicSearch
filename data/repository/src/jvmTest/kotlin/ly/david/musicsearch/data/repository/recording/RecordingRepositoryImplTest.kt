@@ -81,8 +81,8 @@ class RecordingRepositoryImplTest :
                 ),
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupRecording(
-            recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -137,8 +137,8 @@ class RecordingRepositoryImplTest :
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupRecording(
-            recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(2.days),
         )
@@ -158,8 +158,8 @@ class RecordingRepositoryImplTest :
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupRecording(
-            recordingId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "7e52152f-c71a-49b1-b98d-f95e04c44445",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(3.days),
         )
@@ -270,9 +270,9 @@ class RecordingRepositoryImplTest :
             ),
             fakeBrowseUsername = TEST_USERNAME,
         )
-        recordingRepository.lookupRecording(
+        recordingRepository.lookupEntity(
             // the id we lookup is different from the id returned
-            recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
+            entityId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {

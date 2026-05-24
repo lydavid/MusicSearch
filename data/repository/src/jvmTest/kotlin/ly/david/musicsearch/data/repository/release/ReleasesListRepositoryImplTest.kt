@@ -139,8 +139,8 @@ class ReleasesListRepositoryImplTest :
                 musicBrainzModel = virginMusicLabelMusicBrainzModel,
             )
             val labelId = virginMusicLabelMusicBrainzModel.id
-            labelRepository.lookupLabel(
-                labelId = labelId,
+            labelRepository.lookupEntity(
+                entityId = labelId,
                 forceRefresh = false,
                 lastUpdated = testDateTimeInThePast,
             )
@@ -199,8 +199,8 @@ class ReleasesListRepositoryImplTest :
             musicBrainzModel = mercuryRecordsLabelMusicBrainzModel,
         )
         val labelId = mercuryRecordsLabelMusicBrainzModel.id
-        labelRepository.lookupLabel(
-            labelId = labelId,
+        labelRepository.lookupEntity(
+            entityId = labelId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -236,8 +236,8 @@ class ReleasesListRepositoryImplTest :
             musicBrainzModel = virginMusicLabelMusicBrainzModel,
         )
         val labelId = virginMusicLabelMusicBrainzModel.id
-        labelRepository.lookupLabel(
-            labelId = labelId,
+        labelRepository.lookupEntity(
+            entityId = labelId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -505,8 +505,8 @@ class ReleasesListRepositoryImplTest :
         val areaRepository = createAreaRepository(
             musicBrainzModel = japanAreaMusicBrainzModel,
         )
-        areaRepository.lookupArea(
-            areaId = entityId,
+        areaRepository.lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -595,8 +595,8 @@ class ReleasesListRepositoryImplTest :
         val areaRepository = createAreaRepository(
             musicBrainzModel = japanAreaMusicBrainzModel,
         )
-        areaRepository.lookupArea(
-            areaId = areaId,
+        areaRepository.lookupEntity(
+            entityId = areaId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -712,8 +712,8 @@ class ReleasesListRepositoryImplTest :
         val areaRepository = createAreaRepository(
             musicBrainzModel = japanAreaMusicBrainzModel,
         )
-        areaRepository.lookupArea(
-            areaId = areaId,
+        areaRepository.lookupEntity(
+            entityId = areaId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -844,8 +844,8 @@ class ReleasesListRepositoryImplTest :
         val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             davidBowieArtistMusicBrainzModel,
-        ).lookupArtist(
-            artistId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -923,8 +923,8 @@ class ReleasesListRepositoryImplTest :
         val entity = MusicBrainzEntityType.RECORDING
         createRecordingRepository(
             underPressureRecordingMusicBrainzModel,
-        ).lookupRecording(
-            recordingId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -1002,8 +1002,8 @@ class ReleasesListRepositoryImplTest :
         val entity = MusicBrainzEntityType.RELEASE_GROUP
         createReleaseGroupRepository(
             underPressureReleaseGroupMusicBrainzModel,
-        ).lookupReleaseGroup(
-            releaseGroupId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -1247,8 +1247,8 @@ class ReleasesListRepositoryImplTest :
             ),
             lastUpdated = testDateTimeInThePast,
         )
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1257,8 +1257,8 @@ class ReleasesListRepositoryImplTest :
                 releaseDetailsModel,
             )
         }
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1421,8 +1421,8 @@ class ReleasesListRepositoryImplTest :
             ),
             lastUpdated = testDateTimeInThePast,
         )
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1431,8 +1431,8 @@ class ReleasesListRepositoryImplTest :
                 releaseDetailsModel,
             )
         }
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1592,8 +1592,8 @@ class ReleasesListRepositoryImplTest :
             ),
             lastUpdated = testDateTimeInThePast,
         )
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1602,8 +1602,8 @@ class ReleasesListRepositoryImplTest :
                 releaseDetailsModel,
             )
         }
-        releaseRepository.lookupRelease(
-            releaseId = underPressureJapanReleaseMusicBrainzModel.id,
+        releaseRepository.lookupEntity(
+            entityId = underPressureJapanReleaseMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->
@@ -1668,8 +1668,8 @@ class ReleasesListRepositoryImplTest :
                     ),
                 ),
             ),
-        ).lookupArtist(
-            artistId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -1871,8 +1871,8 @@ class ReleasesListRepositoryImplTest :
                     ),
                 ),
             ),
-        ).lookupRelease(
-            releaseId = persona3ReloadSoundtrackAigisReleaseMusicBrainzModel.id,
+        ).lookupEntity(
+            entityId = persona3ReloadSoundtrackAigisReleaseMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseDetailsModel ->

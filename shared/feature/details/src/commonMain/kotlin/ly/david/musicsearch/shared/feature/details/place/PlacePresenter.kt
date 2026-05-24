@@ -64,8 +64,8 @@ internal class PlacePresenter(
         id: String,
         forceRefresh: Boolean,
     ): PlaceDetailsModel {
-        return repository.lookupPlace(
-            placeId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

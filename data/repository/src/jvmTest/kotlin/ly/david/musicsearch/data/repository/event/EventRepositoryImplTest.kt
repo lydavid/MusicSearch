@@ -52,8 +52,8 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                 name = "The Eras Tour: Toronto (night 1)",
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupEvent(
-            eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -88,8 +88,8 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupEvent(
-            eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(1.days),
         )
@@ -101,8 +101,8 @@ class EventRepositoryImplTest : KoinTest, IEventRepositoryImplTest, TestEventRep
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupEvent(
-            eventId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "c1fd93a7-d48d-49e1-b87e-55d4e81e9f86",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(2.days),
         )

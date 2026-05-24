@@ -61,8 +61,8 @@ internal class SeriesPresenter(
         id: String,
         forceRefresh: Boolean,
     ): SeriesDetailsModel {
-        return repository.lookupSeries(
-            seriesId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

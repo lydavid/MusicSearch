@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.event
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
@@ -20,44 +21,25 @@ class EventRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : EventRepository {
-
-    override suspend fun lookupEvent(
-        eventId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): EventDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(eventId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val eventMusicBrainzModel = lookupApi.lookupEvent(eventId)
-            eventDao.withTransaction {
-                if (forceRefresh) {
-                    delete(eventId)
-                }
-                cache(
-                    oldId = eventId,
-                    event = eventMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(eventMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : EventRepository, LookupEntityRepository<EventDetailsModel, EventMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        eventDao.withTransaction(block)
     }
 
-    private fun getCachedData(eventId: String): EventDetailsModel? {
-        if (!relationRepository.visited(eventId)) return null
-        val event = eventDao.getEventForDetails(eventId) ?: return null
+    override suspend fun getCachedData(entityId: String): EventDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val event = eventDao.getEventForDetails(entityId) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(eventId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.EVENT,
-            mbid = eventId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = eventId)
-        val tags = tagDao.getTags(entityId = eventId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return event.copy(
             urls = urlRelations,
@@ -67,35 +49,40 @@ class EventRepositoryImpl(
         )
     }
 
-    private fun delete(entityId: String) {
+    override suspend fun getRemoteData(entityId: String): EventMusicBrainzNetworkModel {
+        return lookupApi.lookupEvent(eventId = entityId)
+    }
+
+    override fun delete(entityId: String) {
         eventDao.delete(entityId)
         relationRepository.deleteRelationshipsByType(entityId = entityId)
         tagDao.deleteByEntity(entityId = entityId)
     }
 
-    private fun cache(
+    override fun cache(
         oldId: String,
-        event: EventMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: EventMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         eventDao.upsert(
             oldId = oldId,
-            event = event,
+            event = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(event))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = event.relations.toRelationWithOrderList(event.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = event.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = event.id,
-            genres = event.genres,
-            tags = event.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

@@ -63,8 +63,8 @@ internal class WorkPresenter(
         id: String,
         forceRefresh: Boolean,
     ): WorkDetailsModel {
-        return repository.lookupWork(
-            workId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

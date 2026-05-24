@@ -4,8 +4,8 @@ import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 
 interface AreaRepository {
-    suspend fun lookupArea(
-        areaId: String,
+    suspend fun lookupEntity(
+        entityId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): AreaDetailsModel

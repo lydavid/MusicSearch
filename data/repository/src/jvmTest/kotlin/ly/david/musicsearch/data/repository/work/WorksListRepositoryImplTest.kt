@@ -539,8 +539,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
             ),
         )
         // because we have never visited this page, the first visit will load from network
-        workRepository.lookupWork(
-            workId = underPressureWorkMusicBrainzModel.id,
+        workRepository.lookupEntity(
+            entityId = underPressureWorkMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { workDetailsModel ->
@@ -572,8 +572,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 workDetailsModel,
             )
         }
-        workRepository.lookupWork(
-            workId = underPressureWorkMusicBrainzModel.id,
+        workRepository.lookupEntity(
+            entityId = underPressureWorkMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { workDetailsModel ->
@@ -728,8 +728,8 @@ class WorksListRepositoryImplTest : KoinTest, TestWorkRepository, TestListensLis
                 ),
             ),
             fakeBrowseUsername = TEST_USERNAME,
-        ).lookupWork(
-            workId = cruelAngelThesisWorkMusicBrainzModel.id,
+        ).lookupEntity(
+            entityId = cruelAngelThesisWorkMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

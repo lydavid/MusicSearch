@@ -301,8 +301,8 @@ class SearchResultsRepositoryImplTest : KoinTest, TestSearchResultsRepository, T
                     primaryType = "Album",
                 ),
             ),
-        ).lookupRelease(
-            releaseId = redReleaseMusicBrainzModel.id,
+        ).lookupEntity(
+            entityId = redReleaseMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

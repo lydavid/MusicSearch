@@ -67,8 +67,8 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 ),
             ),
         )
-        val sparseDetailsModel = sparseRepository.lookupReleaseGroup(
-            releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
+        val sparseDetailsModel = sparseRepository.lookupEntity(
+            entityId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -143,8 +143,8 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                 ),
             ),
         )
-        var allDataArtistDetailsModel = allDataRepository.lookupReleaseGroup(
-            releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
+        var allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -163,8 +163,8 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
             ),
             allDataArtistDetailsModel,
         )
-        allDataArtistDetailsModel = allDataRepository.lookupReleaseGroup(
-            releaseGroupId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
+        allDataArtistDetailsModel = allDataRepository.lookupEntity(
+            entityId = "93bb79c2-2995-4607-af5e-061a25a4e06f",
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         )

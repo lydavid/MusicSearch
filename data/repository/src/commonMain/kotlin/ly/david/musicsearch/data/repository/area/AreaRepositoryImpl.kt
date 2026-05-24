@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.area
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
@@ -20,45 +21,26 @@ class AreaRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : AreaRepository {
-
-    override suspend fun lookupArea(
-        areaId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): AreaDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(areaId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val areaMusicBrainzModel = lookupApi.lookupArea(areaId)
-            areaDao.withTransaction {
-                if (forceRefresh) {
-                    delete(areaId)
-                }
-                cache(
-                    oldId = areaId,
-                    area = areaMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(areaMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : AreaRepository, LookupEntityRepository<AreaDetailsModel, AreaMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        areaDao.withTransaction(block)
     }
 
-    private fun getCachedData(areaId: String): AreaDetailsModel? {
-        if (!relationRepository.visited(areaId)) return null
+    override suspend fun getCachedData(entityId: String): AreaDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
 
-        val area = areaDao.getAreaForDetails(areaId) ?: return null
+        val area = areaDao.getAreaForDetails(entityId) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(areaId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.AREA,
-            mbid = areaId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = areaId)
-        val tags = tagDao.getTags(entityId = areaId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return area.copy(
             urls = urlRelations,
@@ -68,35 +50,40 @@ class AreaRepositoryImpl(
         )
     }
 
-    private fun delete(areaId: String) {
-        areaDao.delete(areaId)
-        relationRepository.deleteRelationshipsByType(entityId = areaId)
-        tagDao.deleteByEntity(entityId = areaId)
+    override suspend fun getRemoteData(entityId: String): AreaMusicBrainzNetworkModel {
+        return lookupApi.lookupArea(areaId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        areaDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId = entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        area: AreaMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: AreaMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         areaDao.upsert(
             oldAreaId = oldId,
-            area = area,
+            area = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(area))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = area.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = area.id,
-            genres = area.genres,
-            tags = area.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

@@ -67,8 +67,8 @@ internal class RecordingPresenter(
         id: String,
         forceRefresh: Boolean,
     ): RecordingDetailsModel {
-        return repository.lookupRecording(
-            recordingId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

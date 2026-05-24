@@ -1,13 +1,14 @@
 package ly.david.musicsearch.data.repository.artist
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
@@ -28,52 +29,33 @@ class ArtistRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
+    coroutineDispatchers: CoroutineDispatchers,
     private val appPreferences: AppPreferences,
-) : ArtistRepository {
-
-    override suspend fun lookupArtist(
-        artistId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): ArtistDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(artistId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val artistMusicBrainzModel = lookupApi.lookupArtist(artistId)
-            artistDao.withTransaction {
-                if (forceRefresh) {
-                    delete(artistId)
-                }
-                cache(
-                    oldId = artistId,
-                    artist = artistMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(artistMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+) : ArtistRepository, LookupEntityRepository<ArtistDetailsModel, ArtistMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        artistDao.withTransaction(block)
     }
 
-    private suspend fun getCachedData(artistId: String): ArtistDetailsModel? {
-        if (!relationRepository.visited(artistId)) return null
+    override suspend fun getCachedData(entityId: String): ArtistDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
         val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val artist = artistDao.getArtistForDetails(
-            artistId = artistId,
+            artistId = entityId,
             listenBrainzUsername = username,
             numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(artistId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.ARTIST,
-            mbid = artistId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = artistId)
-        val tags = tagDao.getTags(entityId = artistId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return artist.copy(
             urls = urlRelations,
@@ -84,42 +66,47 @@ class ArtistRepositoryImpl(
         )
     }
 
-    private fun delete(artistId: String) {
-        artistDao.delete(artistId = artistId)
-        relationRepository.deleteRelationshipsByType(
-            entityId = artistId,
-            entity = MusicBrainzEntityType.URL,
-        )
-        tagDao.deleteByEntity(entityId = artistId)
+    override suspend fun getRemoteData(entityId: String): ArtistMusicBrainzNetworkModel {
+        return lookupApi.lookupArtist(artistId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        artistDao.delete(artistId = entityId)
+        relationRepository.deleteRelationshipsByType(
+            entityId = entityId,
+            entity = MusicBrainzEntityType.URL,
+        )
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        artist: ArtistMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: ArtistMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         artistDao.upsert(
             oldId = oldId,
-            artist = artist,
+            artist = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(artist))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        artist.area?.let { area ->
+        musicBrainzNetworkModel.area?.let { area ->
             areaDao.insert(area)
         }
 
-        val relationWithOrderList = artist.relations.toRelationWithOrderList(artist.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(entityId = musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = artist.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = artist.id,
-            genres = artist.genres,
-            tags = artist.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

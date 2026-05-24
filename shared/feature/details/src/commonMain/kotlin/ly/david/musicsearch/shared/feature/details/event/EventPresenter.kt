@@ -62,8 +62,8 @@ internal class EventPresenter(
         id: String,
         forceRefresh: Boolean,
     ): EventDetailsModel {
-        return repository.lookupEvent(
-            eventId = id,
+        return repository.lookupEntity(
+            entityId = id,
             forceRefresh = forceRefresh,
             lastUpdated = Clock.System.now(),
         )

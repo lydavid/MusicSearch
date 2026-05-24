@@ -513,8 +513,8 @@ class ListensListRepositoryImplTest :
             ),
             fakeBrowseUsername = TEST_USERNAME,
         )
-        val recordingDetailsModel = recordingRepository.lookupRecording(
-            recordingId = id,
+        val recordingDetailsModel = recordingRepository.lookupEntity(
+            entityId = id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

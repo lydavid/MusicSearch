@@ -655,8 +655,8 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 disambiguation = "new changes",
             ),
         ).let { eventRepository ->
-            eventRepository.lookupEvent(
-                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+            eventRepository.lookupEntity(
+                entityId = aimerAtBudokanEventMusicBrainzModel.id,
                 forceRefresh = false,
                 lastUpdated = testDateTimeInThePast,
             ).let { eventDetailsModel ->
@@ -678,8 +678,8 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     eventDetailsModel,
                 )
             }
-            eventRepository.lookupEvent(
-                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+            eventRepository.lookupEntity(
+                entityId = aimerAtBudokanEventMusicBrainzModel.id,
                 forceRefresh = true,
                 lastUpdated = testDateTimeInThePast,
             ).let { eventDetailsModel ->
@@ -708,8 +708,8 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                 disambiguation = "newer changes",
             ),
         ).let { eventRepository ->
-            eventRepository.lookupEvent(
-                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+            eventRepository.lookupEntity(
+                entityId = aimerAtBudokanEventMusicBrainzModel.id,
                 forceRefresh = false,
                 lastUpdated = testDateTimeInThePast,
             ).let { eventDetailsModel ->
@@ -731,8 +731,8 @@ class EventsListRepositoryImplTest : KoinTest, TestEventRepository {
                     eventDetailsModel,
                 )
             }
-            eventRepository.lookupEvent(
-                eventId = aimerAtBudokanEventMusicBrainzModel.id,
+            eventRepository.lookupEntity(
+                entityId = aimerAtBudokanEventMusicBrainzModel.id,
                 forceRefresh = true,
                 lastUpdated = testDateTimeInThePast,
             ).let { eventDetailsModel ->

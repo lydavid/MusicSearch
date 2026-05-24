@@ -1,12 +1,13 @@
 package ly.david.musicsearch.data.repository.place
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
@@ -22,45 +23,26 @@ class PlaceRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : PlaceRepository {
-
-    override suspend fun lookupPlace(
-        placeId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): PlaceDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(placeId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val placeMusicBrainzModel = lookupApi.lookupPlace(placeId)
-            placeDao.withTransaction {
-                if (forceRefresh) {
-                    delete(placeId)
-                }
-                cache(
-                    oldId = placeId,
-                    place = placeMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(placeMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : PlaceRepository, LookupEntityRepository<PlaceDetailsModel, PlaceMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        placeDao.withTransaction(block)
     }
 
-    private fun getCachedData(placeId: String): PlaceDetailsModel? {
-        if (!relationRepository.visited(placeId)) return null
-        val place = placeDao.getPlaceForDetails(placeId) ?: return null
+    override suspend fun getCachedData(entityId: String): PlaceDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val place = placeDao.getPlaceForDetails(entityId) ?: return null
 
-        val area = areaDao.getAreaByPlace(placeId)
-        val urlRelations = relationRepository.getRelationshipsByType(placeId)
+        val area = areaDao.getAreaByPlace(entityId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.PLACE,
-            mbid = placeId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = placeId)
-        val tags = tagDao.getTags(entityId = placeId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return place.copy(
             area = area,
@@ -71,44 +53,49 @@ class PlaceRepositoryImpl(
         )
     }
 
-    private fun delete(id: String) {
-        placeDao.delete(id)
-        areaDao.deleteAreaPlaceLink(id)
-        relationRepository.deleteRelationshipsByType(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): PlaceMusicBrainzNetworkModel {
+        return lookupApi.lookupPlace(placeId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        placeDao.delete(entityId)
+        areaDao.deleteAreaPlaceLink(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        place: PlaceMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: PlaceMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         placeDao.upsert(
             oldId = oldId,
-            place = place,
+            place = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(place))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        place.area?.let { areaMusicBrainzModel ->
+        musicBrainzNetworkModel.area?.let { areaMusicBrainzModel ->
             areaDao.insert(areaMusicBrainzModel)
             placeDao.insertPlaceByArea(
                 entityId = areaMusicBrainzModel.id,
-                placeId = place.id,
+                placeId = musicBrainzNetworkModel.id,
             )
         }
 
-        val relationWithOrderList = place.relations.toRelationWithOrderList(place.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = place.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = place.id,
-            genres = place.genres,
-            tags = place.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

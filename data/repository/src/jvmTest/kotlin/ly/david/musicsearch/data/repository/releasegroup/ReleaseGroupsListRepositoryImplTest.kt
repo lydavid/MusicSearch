@@ -281,8 +281,8 @@ class ReleaseGroupsListRepositoryImplTest :
         val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             tchaikovskyArtistMusicBrainzModel,
-        ).lookupArtist(
-            artistId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -348,8 +348,8 @@ class ReleaseGroupsListRepositoryImplTest :
         val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             berlinerPhilharmonikerArtistMusicBrainzModel,
-        ).lookupArtist(
-            artistId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
@@ -585,8 +585,8 @@ class ReleaseGroupsListRepositoryImplTest :
                 disambiguation = "new changes",
             ),
         )
-        releaseGroupRepository.lookupReleaseGroup(
-            releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
+        releaseGroupRepository.lookupEntity(
+            entityId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseGroupDetailsModel ->
@@ -619,8 +619,8 @@ class ReleaseGroupsListRepositoryImplTest :
                 releaseGroupDetailsModel,
             )
         }
-        releaseGroupRepository.lookupReleaseGroup(
-            releaseGroupId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
+        releaseGroupRepository.lookupEntity(
+            entityId = tchaikovskyOverturesReleaseGroupMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { releaseGroupDetailsModel ->
@@ -685,8 +685,8 @@ class ReleaseGroupsListRepositoryImplTest :
         val entity = MusicBrainzEntityType.ARTIST
         createArtistRepository(
             adoArtistMusicBrainzModel,
-        ).lookupArtist(
-            artistId = entityId,
+        ).lookupEntity(
+            entityId = entityId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

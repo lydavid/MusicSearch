@@ -129,8 +129,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `try to vote - not logged in`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -185,8 +185,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -214,8 +214,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `try to vote - logged in but without tag scope`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -269,8 +269,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -298,8 +298,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `try to vote - other error`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -352,8 +352,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -381,8 +381,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `downvote, then withdraw`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -431,8 +431,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -489,8 +489,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -518,8 +518,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `upvote, then withdraw`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -569,8 +569,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -626,8 +626,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -653,8 +653,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `downvote, then upvote`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -704,8 +704,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -761,8 +761,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -789,8 +789,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `upvote, then downvote`() = runTest {
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = now,
         ).run {
@@ -840,8 +840,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {
@@ -897,8 +897,8 @@ class TagRepositoryImplTest : KoinTest, TestArtistRepository {
             )
             awaitComplete()
         }
-        artistRepositoryImpl.lookupArtist(
-            artistId = davidBowieArtistMusicBrainzModel.id,
+        artistRepositoryImpl.lookupEntity(
+            entityId = davidBowieArtistMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).run {

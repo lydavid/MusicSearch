@@ -1,13 +1,14 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
@@ -23,44 +24,25 @@ class ReleaseGroupRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : ReleaseGroupRepository {
-
-    override suspend fun lookupReleaseGroup(
-        releaseGroupId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): ReleaseGroupDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(releaseGroupId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val releaseGroupMusicBrainzModel = lookupApi.lookupReleaseGroup(releaseGroupId)
-            releaseGroupDao.withTransaction {
-                if (forceRefresh) {
-                    delete(releaseGroupId)
-                }
-                cache(
-                    oldId = releaseGroupId,
-                    releaseGroup = releaseGroupMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(releaseGroupId) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : ReleaseGroupRepository, LookupEntityRepository<ReleaseGroupDetailsModel, ReleaseGroupMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        releaseGroupDao.withTransaction(block)
     }
 
-    private fun getCachedData(releaseGroupId: String): ReleaseGroupDetailsModel? {
-        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
-        val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
-        val urlRelations = relationRepository.getRelationshipsByType(releaseGroupId)
-        val visited = relationRepository.visited(releaseGroupId)
+    override suspend fun getCachedData(entityId: String): ReleaseGroupDetailsModel? {
+        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(entityId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
+        val visited = relationRepository.visited(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RELEASE_GROUP,
-            mbid = releaseGroupId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = releaseGroupId)
-        val tags = tagDao.getTags(entityId = releaseGroupId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
             releaseGroup.copy(
@@ -75,36 +57,41 @@ class ReleaseGroupRepositoryImpl(
         }
     }
 
-    private fun delete(id: String) {
-        releaseGroupDao.deleteReleaseGroup(id)
-        relationRepository.deleteRelationshipsByType(id)
-        artistCreditDao.deleteArtistCreditsForEntity(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): ReleaseGroupMusicBrainzNetworkModel {
+        return lookupApi.lookupReleaseGroup(releaseGroupId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        releaseGroupDao.deleteReleaseGroup(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        artistCreditDao.deleteArtistCreditsForEntity(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        releaseGroup: ReleaseGroupMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: ReleaseGroupMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         releaseGroupDao.upsertReleaseGroup(
             oldId = oldId,
-            releaseGroup = releaseGroup,
+            releaseGroup = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(releaseGroup))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = releaseGroup.relations.toRelationWithOrderList(releaseGroup.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = releaseGroup.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = releaseGroup.id,
-            genres = releaseGroup.genres,
-            tags = releaseGroup.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

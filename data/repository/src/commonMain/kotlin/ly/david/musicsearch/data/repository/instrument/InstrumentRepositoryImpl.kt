@@ -1,11 +1,12 @@
 package ly.david.musicsearch.data.repository.instrument
 
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.TransactionWithoutReturn
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
@@ -20,44 +21,25 @@ class InstrumentRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
-) : InstrumentRepository {
-
-    override suspend fun lookupInstrument(
-        instrumentId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): InstrumentDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(instrumentId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val instrumentMusicBrainzModel = lookupApi.lookupInstrument(instrumentId)
-            instrumentDao.withTransaction {
-                if (forceRefresh) {
-                    delete(instrumentId)
-                }
-                cache(
-                    oldId = instrumentId,
-                    instrument = instrumentMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(instrumentMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : InstrumentRepository, LookupEntityRepository<InstrumentDetailsModel, InstrumentMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        instrumentDao.withTransaction(block)
     }
 
-    private fun getCachedData(instrumentId: String): InstrumentDetailsModel? {
-        if (!relationRepository.visited(instrumentId)) return null
-        val instrument = instrumentDao.getInstrumentForDetails(instrumentId) ?: return null
+    override suspend fun getCachedData(entityId: String): InstrumentDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val instrument = instrumentDao.getInstrumentForDetails(entityId) ?: return null
 
-        val urlRelations = relationRepository.getRelationshipsByType(instrumentId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.INSTRUMENT,
-            mbid = instrumentId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = instrumentId)
-        val tags = tagDao.getTags(entityId = instrumentId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         return instrument.copy(
             urls = urlRelations,
@@ -67,35 +49,40 @@ class InstrumentRepositoryImpl(
         )
     }
 
-    private fun delete(id: String) {
-        instrumentDao.delete(id)
-        relationRepository.deleteRelationshipsByType(id)
-        tagDao.deleteByEntity(entityId = id)
+    override suspend fun getRemoteData(entityId: String): InstrumentMusicBrainzNetworkModel {
+        return lookupApi.lookupInstrument(instrumentId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        instrumentDao.delete(entityId)
+        relationRepository.deleteRelationshipsByType(entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        instrument: InstrumentMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: InstrumentMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
         instrumentDao.upsert(
             oldId = oldId,
-            instrument = instrument,
+            instrument = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(instrument))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
-        val relationWithOrderList = instrument.relations.toRelationWithOrderList(instrument.id)
+        val relationWithOrderList =
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
         relationRepository.insertRelations(
-            entityId = instrument.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = instrument.id,
-            genres = instrument.genres,
-            tags = instrument.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 }

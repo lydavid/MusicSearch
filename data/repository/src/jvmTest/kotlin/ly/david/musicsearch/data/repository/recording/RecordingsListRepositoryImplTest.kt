@@ -420,8 +420,8 @@ class RecordingsListRepositoryImplTest :
             ),
         )
         // because we have never visited this, we upsert it, so any changes will show up right away
-        recordingRepository.lookupRecording(
-            recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
+        recordingRepository.lookupEntity(
+            entityId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->
@@ -453,8 +453,8 @@ class RecordingsListRepositoryImplTest :
                 recordingDetailsModel,
             )
         }
-        recordingRepository.lookupRecording(
-            recordingId = skycladObserverCoverRecordingMusicBrainzModel.id,
+        recordingRepository.lookupEntity(
+            entityId = skycladObserverCoverRecordingMusicBrainzModel.id,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast,
         ).let { recordingDetailsModel ->

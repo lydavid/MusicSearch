@@ -509,8 +509,8 @@ class RelationRepositoryImplTest :
                     ),
                 ),
             ),
-        ).lookupRelease(
-            releaseId = releaseId,
+        ).lookupEntity(
+            entityId = releaseId,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )

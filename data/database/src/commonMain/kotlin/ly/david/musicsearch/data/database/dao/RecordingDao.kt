@@ -1,11 +1,7 @@
-// https://github.com/detekt/detekt/issues/8140
-@file:Suppress("SpacingAroundColon", "NoUnusedImports", "Wrapping")
-
 package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.Query
-import app.cash.sqldelight.TransactionWithoutReturn
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
@@ -32,7 +28,6 @@ class RecordingDao(
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
-    context(_: TransactionWithoutReturn)
     fun upsert(
         oldId: String,
         recording: RecordingMusicBrainzNetworkModel,

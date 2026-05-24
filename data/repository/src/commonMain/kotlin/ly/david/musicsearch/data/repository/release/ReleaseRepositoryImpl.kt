@@ -6,13 +6,13 @@ import androidx.paging.PagingData
 import androidx.paging.TerminalSeparatorType
 import androidx.paging.insertSeparators
 import androidx.paging.map
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -26,6 +26,7 @@ import ly.david.musicsearch.data.database.dao.TrackAndMedium
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
+import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
@@ -61,56 +62,37 @@ class ReleaseRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
-    private val coroutineDispatchers: CoroutineDispatchers,
     private val appPreferences: AppPreferences,
-) : ReleaseRepository {
-
-    override suspend fun lookupRelease(
-        releaseId: String,
-        forceRefresh: Boolean,
-        lastUpdated: Instant,
-    ): ReleaseDetailsModel = withContext(coroutineDispatchers.io) {
-        val cachedData = getCachedData(releaseId)
-        return@withContext if (cachedData != null && !forceRefresh) {
-            cachedData
-        } else {
-            val releaseMusicBrainzModel = lookupApi.lookupRelease(releaseId)
-            releaseDao.withTransaction {
-                if (forceRefresh) {
-                    delete(releaseId)
-                }
-                cache(
-                    oldId = releaseId,
-                    release = releaseMusicBrainzModel,
-                    lastUpdated = lastUpdated,
-                )
-            }
-            getCachedData(releaseMusicBrainzModel.id) ?: error("Failed to get cached data")
-        }
+    coroutineDispatchers: CoroutineDispatchers,
+) : ReleaseRepository, LookupEntityRepository<ReleaseDetailsModel, ReleaseMusicBrainzNetworkModel>(
+    coroutineDispatchers = coroutineDispatchers,
+) {
+    override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
+        releaseDao.withTransaction(block)
     }
 
-    private suspend fun getCachedData(releaseId: String): ReleaseDetailsModel? {
-        if (!relationRepository.visited(releaseId)) return null
-        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId) ?: return null
+    override suspend fun getCachedData(entityId: String): ReleaseDetailsModel? {
+        if (!relationRepository.visited(entityId)) return null
+        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(entityId) ?: return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
         val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
         val release = releaseDao.getReleaseForDetails(
-            releaseId = releaseId,
+            releaseId = entityId,
             listenBrainzUsername = username,
             numberOfListensToShow = numberOfListensToShow,
         ) ?: return null
 
-        val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
-        val labels = labelDao.getLabelsByRelease(releaseId)
-        val releaseEvents = areaDao.getCountriesByRelease(releaseId)
-        val urlRelations = relationRepository.getRelationshipsByType(releaseId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
+        val labels = labelDao.getLabelsByRelease(entityId)
+        val releaseEvents = areaDao.getCountriesByRelease(entityId)
+        val urlRelations = relationRepository.getRelationshipsByType(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RELEASE,
-            mbid = releaseId,
+            mbid = entityId,
         )
-        val genres = tagDao.getGenres(entityId = releaseId)
-        val tags = tagDao.getTags(entityId = releaseId)
+        val genres = tagDao.getGenres(entityId = entityId)
+        val tags = tagDao.getTags(entityId = entityId)
 
         // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
         // releases must have artist credits and a release group.
@@ -127,49 +109,53 @@ class ReleaseRepositoryImpl(
         )
     }
 
-    private fun delete(releaseId: String) {
-        releaseDao.delete(releaseId = releaseId)
-        releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = releaseId)
-        labelDao.deleteReleaseLabelLinks(releaseId = releaseId)
-        areaDao.deleteCountriesByReleaseLinks(releaseId = releaseId)
-        relationRepository.deleteRelationshipsByType(entityId = releaseId)
-        artistCreditDao.deleteArtistCreditsForEntity(entityId = releaseId)
-        tagDao.deleteByEntity(entityId = releaseId)
+    override suspend fun getRemoteData(entityId: String): ReleaseMusicBrainzNetworkModel {
+        return lookupApi.lookupRelease(releaseId = entityId)
     }
 
-    private fun cache(
+    override fun delete(entityId: String) {
+        releaseDao.delete(releaseId = entityId)
+        releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = entityId)
+        labelDao.deleteReleaseLabelLinks(releaseId = entityId)
+        areaDao.deleteCountriesByReleaseLinks(releaseId = entityId)
+        relationRepository.deleteRelationshipsByType(entityId = entityId)
+        artistCreditDao.deleteArtistCreditsForEntity(entityId = entityId)
+        tagDao.deleteByEntity(entityId = entityId)
+    }
+
+    override fun cache(
         oldId: String,
-        release: ReleaseMusicBrainzNetworkModel,
+        musicBrainzNetworkModel: ReleaseMusicBrainzNetworkModel,
         lastUpdated: Instant,
     ) {
-        release.releaseGroup?.let { releaseGroup ->
+        musicBrainzNetworkModel.releaseGroup?.let { releaseGroup ->
             releaseGroupDao.upsertReleaseGroup(
                 oldId = releaseGroup.id,
                 releaseGroup = releaseGroup,
             )
             releaseReleaseGroupDao.insert(
-                releaseId = release.id,
+                releaseId = musicBrainzNetworkModel.id,
                 releaseGroupId = releaseGroup.id,
             )
         }
         releaseDao.upsert(
             oldId = oldId,
-            release = release,
+            release = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(release))
+        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
 
         // This serves as a replacement for browsing labels by release.
         // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
         // Lifespan is not included, so do not upsert.
-        labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
+        labelDao.insertAll(musicBrainzNetworkModel.labelInfoList?.mapNotNull { it.label })
         labelDao.insertLabelsByRelease(
-            releaseId = release.id,
-            labelInfoList = release.labelInfoList,
+            releaseId = musicBrainzNetworkModel.id,
+            labelInfoList = musicBrainzNetworkModel.labelInfoList,
         )
 
         areaDao.insertAll(
-            release.releaseEvents?.mapNotNull { event ->
+            musicBrainzNetworkModel.releaseEvents?.mapNotNull { event ->
                 event.area?.let { area ->
                     val isCountry = !NonCountryAreaWithCode.entries.any {
                         it.code == area.countryCodes?.firstOrNull().orEmpty()
@@ -183,21 +169,23 @@ class ReleaseRepositoryImpl(
             }.orEmpty(),
         )
         areaDao.linkCountriesByRelease(
-            releaseId = release.id,
-            releaseEvents = release.releaseEvents,
+            releaseId = musicBrainzNetworkModel.id,
+            releaseEvents = musicBrainzNetworkModel.releaseEvents,
         )
 
-        val relationWithOrderList = release.relations.toRelationWithOrderList(release.id)
+        val relationWithOrderList = musicBrainzNetworkModel.relations.toRelationWithOrderList(
+            entityId = musicBrainzNetworkModel.id,
+        )
         relationRepository.insertRelations(
-            entityId = release.id,
+            entityId = musicBrainzNetworkModel.id,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
         tagDao.insertAll(
-            entityId = release.id,
-            genres = release.genres,
-            tags = release.tags,
+            entityId = musicBrainzNetworkModel.id,
+            genres = musicBrainzNetworkModel.genres,
+            tags = musicBrainzNetworkModel.tags,
         )
     }
 
@@ -231,8 +219,8 @@ class ReleaseRepositoryImpl(
                 // The initial release lookup will store all tracks.
                 hasEntityBeenStored = { true },
                 lookupEntity = {
-                    lookupRelease(
-                        releaseId = releaseId,
+                    lookupEntity(
+                        entityId = releaseId,
                         forceRefresh = false,
                         lastUpdated = lastUpdated,
                     )

@@ -1,11 +1,11 @@
 package ly.david.musicsearch.shared.domain.instrument
 
-import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
+import kotlin.time.Instant
 
 interface InstrumentRepository {
-    suspend fun lookupInstrument(
-        instrumentId: String,
+    suspend fun lookupEntity(
+        entityId: String,
         forceRefresh: Boolean,
         lastUpdated: Instant,
     ): InstrumentDetailsModel
