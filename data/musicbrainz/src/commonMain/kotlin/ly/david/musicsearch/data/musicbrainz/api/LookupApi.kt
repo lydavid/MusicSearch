@@ -22,11 +22,15 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.network.resourceUri
 
-private const val RECORDING_REL = "recording-rels"
+const val INCLUDE = "inc"
+const val RECORDING_REL = "recording-rels"
 private const val URL_REL = "url-rels"
 private const val TAGS = "tags"
+const val USER_TAGS = "user-tags"
 private const val GENRES = "genres"
-private const val LOOKUP_INCLUDES = "$URL_REL+$ALIASES+$TAGS+$GENRES"
+private const val USER_GENRES = "user-genres"
+const val GENERAL_LOOKUP_INCLUDES = "$URL_REL+$ALIASES+$TAGS+$GENRES"
+const val USER_LOOKUP_INCLUDES = "$USER_TAGS+$USER_GENRES"
 
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
@@ -38,8 +42,7 @@ interface LookupApi {
 
     suspend fun lookupArea(
         areaId: String,
-
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
@@ -51,61 +54,57 @@ interface LookupApi {
 
     suspend fun lookupArtist(
         artistId: String,
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
     ): ArtistMusicBrainzNetworkModel
 
     suspend fun lookupEvent(
         eventId: String,
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
     ): EventMusicBrainzNetworkModel
 
     suspend fun lookupGenre(
         genreId: String,
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
     ): GenreMusicBrainzNetworkModel
 
     suspend fun lookupInstrument(
         instrumentId: String,
-        include: String = LOOKUP_INCLUDES,
+        include: String,
     ): InstrumentMusicBrainzNetworkModel
 
     suspend fun lookupLabel(
         labelId: String,
-        include: String = LOOKUP_INCLUDES,
+        include: String,
     ): LabelMusicBrainzNetworkModel
 
     suspend fun lookupPlace(
         placeId: String,
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
     ): PlaceMusicBrainzNetworkModel
 
     suspend fun lookupRecording(
         recordingId: String,
-        include: String = "$LOOKUP_INCLUDES+$ARTIST_CREDITS+$ISRCS",
+        include: String,
     ): RecordingMusicBrainzNetworkModel
 
     suspend fun lookupRelease(
         releaseId: String,
-        include: String = LOOKUP_INCLUDES +
-            "+artist-credits" +
-            "+labels" + // gives us labels (alternatively, we can get them from rels)
-            "+recordings" + // gives us tracks
-            "+release-groups", // gives us types
+        include: String,
     ): ReleaseMusicBrainzNetworkModel
 
     suspend fun lookupReleaseGroup(
         releaseGroupId: String,
-        include: String = "$LOOKUP_INCLUDES+artists", // "releases+media"
+        include: String,
     ): ReleaseGroupMusicBrainzNetworkModel
 
     suspend fun lookupSeries(
         seriesId: String,
-        include: String? = LOOKUP_INCLUDES,
+        include: String?,
     ): SeriesMusicBrainzNetworkModel
 
     suspend fun lookupWork(
         workId: String,
-        include: String? = "$LOOKUP_INCLUDES+$RECORDING_REL",
+        include: String?,
     ): WorkMusicBrainzNetworkModel
 
     suspend fun lookupUrl(
@@ -123,7 +122,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("area", areaId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -135,7 +134,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("artist", artistId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
                 parameter("fmt", "json")
             }
         }.body()
@@ -148,7 +147,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("event", eventId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -160,7 +159,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("genre", genreId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -172,7 +171,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("instrument", instrumentId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -184,7 +183,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("label", labelId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -196,7 +195,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("place", placeId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -208,7 +207,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("recording", recordingId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -220,7 +219,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("release", releaseId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -232,7 +231,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("release-group", releaseGroupId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -244,7 +243,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("series", seriesId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -256,7 +255,7 @@ interface LookupApiImpl : LookupApi {
         return httpClient.get {
             url {
                 appendPathSegments("work", workId)
-                parameter("inc", include)
+                parameter(INCLUDE, include)
             }
         }.body()
     }
@@ -271,7 +270,7 @@ interface LookupApiImpl : LookupApi {
                 appendPathSegments("url")
                 parameter("limit", 1)
                 parameter(
-                    key = "inc",
+                    key = INCLUDE,
                     value = relatableEntities
                         .minus(MusicBrainzEntityType.URL)
                         .asRelationshipParameters,

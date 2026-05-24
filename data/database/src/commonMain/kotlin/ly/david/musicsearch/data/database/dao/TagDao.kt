@@ -39,22 +39,41 @@ class TagDao(
         )
     }
 
+    /**
+     * [userGenres] and [userTags] are the genres/tags the user has upvoted.
+     * Downvotes are not returned through the WS API.
+     */
     fun insertAll(
         entityId: String,
         genres: List<GenreMusicBrainzNetworkModel>?,
+        userGenres: List<GenreMusicBrainzNetworkModel>?,
         tags: List<TagMusicBrainzNetworkModel>?,
+        userTags: List<TagMusicBrainzNetworkModel>?,
     ) {
+        val genreNames = genres?.map { it.name }.orEmpty().toSet()
+        val isNotGenre: (TagMusicBrainzNetworkModel) -> Boolean = { it.name !in genreNames }
+
         transacter.transaction {
             genres?.forEach { genre ->
                 genreDao.insert(genre)
                 insertGenreLink(entityId = entityId, genre = genre)
             }
-            val genreNames = genres?.map { it.name }
+
             tags
-                ?.filter { genreNames?.contains(it.name) == false }
+                ?.filter(isNotGenre)
                 ?.forEach { tag ->
                     insertTag(entityId = entityId, tag = tag)
                 }
+
+            val namesToUpvote = userGenres?.map { it.name }.orEmpty() +
+                userTags?.filter(isNotGenre)?.map { it.name }.orEmpty()
+            namesToUpvote.forEach { name ->
+                transacter.upsertVote(
+                    entityId = entityId,
+                    tagName = name,
+                    isUpvote = true,
+                )
+            }
         }
     }
 

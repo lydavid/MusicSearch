@@ -1,16 +1,23 @@
 package ly.david.musicsearch.data.repository.instrument
 
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.preferences.NoOpMusicBrainzAuthStore
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.TagDao
+import ly.david.musicsearch.data.musicbrainz.api.GENERAL_LOOKUP_INCLUDES
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.USER_LOOKUP_INCLUDES
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.core.TagMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
@@ -23,12 +30,17 @@ import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.tag.GenreChip
+import ly.david.musicsearch.shared.domain.tag.TagChip
+import ly.david.musicsearch.shared.domain.tag.VoteType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Duration.Companion.seconds
+
+private const val ID = "43f378cf-b099-46da-8ec3-a39b6f5e5258"
 
 class InstrumentRepositoryImplTest : KoinTest {
 
@@ -43,18 +55,18 @@ class InstrumentRepositoryImplTest : KoinTest {
     private val tagDao: TagDao by inject()
     private val coroutineDispatchers: CoroutineDispatchers by inject()
 
+    private val lookupApi: LookupApi = mockk()
+
+    private val musicBrainzModel = InstrumentMusicBrainzNetworkModel(
+        id = ID,
+        name = "classical guitar",
+    )
+
     private fun createRepository(
-        musicBrainzModel: InstrumentMusicBrainzNetworkModel,
+        musicBrainzAuthStore: NoOpMusicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
     ): InstrumentRepository {
         val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupInstrument(
-                    instrumentId: String,
-                    include: String,
-                ): InstrumentMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
+            lookupApi = lookupApi,
             relationsMetadataDao = relationsMetadataDao,
             detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
@@ -64,112 +76,209 @@ class InstrumentRepositoryImplTest : KoinTest {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupInstrument(
-                    instrumentId: String,
-                    include: String,
-                ): InstrumentMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
+            lookupApi = lookupApi,
             coroutineDispatchers = coroutineDispatchers,
+            musicBrainzAuthStore = musicBrainzAuthStore,
         )
     }
 
     @Test
-    fun `lookup is cached, and force refresh invalidates cache`() = runTest {
-        val sparseRepository = createRepository(
-            musicBrainzModel = InstrumentMusicBrainzNetworkModel(
-                id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
-                name = "classical guitar",
+    fun `include user lookup includes only if user has all auth scopes`() = runTest {
+        coEvery {
+            lookupApi.lookupInstrument(
+                instrumentId = any(),
+                include = GENERAL_LOOKUP_INCLUDES,
+            )
+        } returns musicBrainzModel
+        coEvery {
+            lookupApi.lookupInstrument(
+                instrumentId = any(),
+                include = "$GENERAL_LOOKUP_INCLUDES+$USER_LOOKUP_INCLUDES",
+            )
+        } returns musicBrainzModel.copy(
+            genres = listOf(
+                GenreMusicBrainzNetworkModel(
+                    id = "6ed4e4d1-9a97-4e2c-b8df-083754f154f4",
+                    name = "classical",
+                    count = 10,
+                ),
+            ),
+            userGenres = listOf(
+                GenreMusicBrainzNetworkModel(
+                    id = "6ed4e4d1-9a97-4e2c-b8df-083754f154f4",
+                    name = "classical",
+                ),
+            ),
+            tags = listOf(
+                TagMusicBrainzNetworkModel(
+                    name = "classical",
+                    count = 10,
+                ),
+                TagMusicBrainzNetworkModel(
+                    name = "guitar",
+                    count = 1,
+                ),
+                TagMusicBrainzNetworkModel(
+                    name = "strings",
+                    count = 1,
+                ),
+            ),
+            userTags = listOf(
+                TagMusicBrainzNetworkModel(
+                    name = "classical",
+                ),
+                TagMusicBrainzNetworkModel(
+                    name = "strings",
+                ),
             ),
         )
+        val repositoryWithoutAllScopes = createRepository(
+            musicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
+        )
+        repositoryWithoutAllScopes.lookupEntity(
+            entityId = ID,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                InstrumentDetailsModel(
+                    id = ID,
+                    name = "classical guitar",
+                    lastUpdated = testDateTimeInThePast,
+                ),
+                this,
+            )
+        }
+
+        val repositoryWithAllScopes = createRepository(
+            musicBrainzAuthStore = object : NoOpMusicBrainzAuthStore() {
+                override suspend fun userHasAllAuthScopes(): Boolean {
+                    return true
+                }
+            },
+        )
+        repositoryWithAllScopes.lookupEntity(
+            entityId = ID,
+            forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                InstrumentDetailsModel(
+                    id = ID,
+                    name = "classical guitar",
+                    lastUpdated = testDateTimeInThePast,
+                    genres = persistentListOf(
+                        GenreChip(
+                            id = "6ed4e4d1-9a97-4e2c-b8df-083754f154f4",
+                            name = "classical",
+                            count = 10,
+                            voteType = VoteType.Upvote,
+                        ),
+                    ),
+                    tags = persistentListOf(
+                        TagChip(
+                            name = "guitar",
+                            count = 1,
+                        ),
+                        TagChip(
+                            name = "strings",
+                            count = 1,
+                            voteType = VoteType.Upvote,
+                        ),
+                    ),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `lookup is cached, and force refresh invalidates cache`() = runTest {
+        coEvery { lookupApi.lookupInstrument(any(), any()) } returns musicBrainzModel
+        val sparseRepository = createRepository()
         val sparseDetailsModel = sparseRepository.lookupEntity(
-            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+            entityId = ID,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast,
         )
         assertEquals(
             InstrumentDetailsModel(
-                id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+                id = ID,
                 name = "classical guitar",
                 lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
         )
 
-        val allDataRepository = createRepository(
-            musicBrainzModel = InstrumentMusicBrainzNetworkModel(
-                id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
-                name = "classical guitar",
-                description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",
-                disambiguation = "Modern acoustic gut/nylon string guitar",
-                type = "String instrument",
-                relations = listOf(
-                    RelationMusicBrainzModel(
-                        type = "image",
-                        typeId = "f64eacbd-1ea1-381e-9886-2cfb552b7d90",
-                        direction = Direction.FORWARD,
-                        targetType = SerializableMusicBrainzEntity.URL,
-                        url = UrlMusicBrainzModel(
-                            resource = "https://static.metabrainz.org/irombook/guitar/guitar_acoustic_classical.png",
-                            id = "a",
-                        ),
+        coEvery { lookupApi.lookupInstrument(any(), any()) } returns musicBrainzModel.copy(
+            description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",
+            disambiguation = "Modern acoustic gut/nylon string guitar",
+            type = "String instrument",
+            relations = listOf(
+                RelationMusicBrainzModel(
+                    type = "image",
+                    typeId = "f64eacbd-1ea1-381e-9886-2cfb552b7d90",
+                    direction = Direction.FORWARD,
+                    targetType = SerializableMusicBrainzEntity.URL,
+                    url = UrlMusicBrainzModel(
+                        resource = "https://static.metabrainz.org/irombook/guitar/guitar_acoustic_classical.png",
+                        id = "a",
                     ),
-                    RelationMusicBrainzModel(
-                        type = "other databases",
-                        typeId = "41930af2-cb94-488d-a4f0-d232f6ef391a",
-                        direction = Direction.FORWARD,
-                        targetType = SerializableMusicBrainzEntity.URL,
-                        url = UrlMusicBrainzModel(
-                            resource = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_classic.html",
-                            id = "a",
-                        ),
+                ),
+                RelationMusicBrainzModel(
+                    type = "other databases",
+                    typeId = "41930af2-cb94-488d-a4f0-d232f6ef391a",
+                    direction = Direction.FORWARD,
+                    targetType = SerializableMusicBrainzEntity.URL,
+                    url = UrlMusicBrainzModel(
+                        resource = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_classic.html",
+                        id = "a",
                     ),
-                    RelationMusicBrainzModel(
-                        type = "other databases",
-                        typeId = "41930af2-cb94-488d-a4f0-d232f6ef391a",
-                        direction = Direction.FORWARD,
-                        targetType = SerializableMusicBrainzEntity.URL,
-                        url = UrlMusicBrainzModel(
-                            resource = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_gut.html",
-                            id = "a",
-                        ),
+                ),
+                RelationMusicBrainzModel(
+                    type = "other databases",
+                    typeId = "41930af2-cb94-488d-a4f0-d232f6ef391a",
+                    direction = Direction.FORWARD,
+                    targetType = SerializableMusicBrainzEntity.URL,
+                    url = UrlMusicBrainzModel(
+                        resource = "https://saisaibatake.ame-zaiku.com/gakki/guitar/gakki_guitar_gut.html",
+                        id = "a",
                     ),
-                    RelationMusicBrainzModel(
-                        type = "wikidata",
-                        typeId = "1486fccd-cf59-35e4-9399-b50e2b255877",
-                        direction = Direction.FORWARD,
-                        targetType = SerializableMusicBrainzEntity.URL,
-                        url = UrlMusicBrainzModel(
-                            resource = "https://www.wikidata.org/wiki/Q719120",
-                            id = "a",
-                        ),
+                ),
+                RelationMusicBrainzModel(
+                    type = "wikidata",
+                    typeId = "1486fccd-cf59-35e4-9399-b50e2b255877",
+                    direction = Direction.FORWARD,
+                    targetType = SerializableMusicBrainzEntity.URL,
+                    url = UrlMusicBrainzModel(
+                        resource = "https://www.wikidata.org/wiki/Q719120",
+                        id = "a",
                     ),
                 ),
             ),
         )
+        val allDataRepository = createRepository()
         var allDataArtistDetailsModel = allDataRepository.lookupEntity(
-            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+            entityId = ID,
             forceRefresh = false,
             lastUpdated = testDateTimeInThePast.plus(1.seconds),
         )
         assertEquals(
             InstrumentDetailsModel(
-                id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+                id = ID,
                 name = "classical guitar",
                 lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
         )
         allDataArtistDetailsModel = allDataRepository.lookupEntity(
-            entityId = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+            entityId = ID,
             forceRefresh = true,
             lastUpdated = testDateTimeInThePast.plus(2.seconds),
         )
         assertEquals(
             InstrumentDetailsModel(
-                id = "43f378cf-b099-46da-8ec3-a39b6f5e5258",
+                id = ID,
                 name = "classical guitar",
                 description = "Also known as Spanish guitar, it is used in classical, folk and other styles, the strings are nylon or gut.",
                 disambiguation = "Modern acoustic gut/nylon string guitar",

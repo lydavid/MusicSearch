@@ -43,6 +43,8 @@ data class ReleaseMusicBrainzNetworkModel(
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
     @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
     @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
+    @SerialName("user-genres") override val userGenres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("user-tags") override val userTags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Release
 
 @Serializable

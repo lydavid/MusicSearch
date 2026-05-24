@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.EventDetailsModel
 import ly.david.musicsearch.shared.domain.event.EventRepository
@@ -21,11 +22,13 @@ class EventRepositoryImpl(
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : EventRepository, LookupEntityRepository<EventDetailsModel, EventMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         eventDao.withTransaction(block)
@@ -51,8 +54,14 @@ class EventRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): EventMusicBrainzNetworkModel {
-        return lookupApi.lookupEvent(eventId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): EventMusicBrainzNetworkModel {
+        return lookupApi.lookupEvent(
+            eventId = entityId,
+            include = include,
+        )
     }
 
     override fun delete(entityId: String) {

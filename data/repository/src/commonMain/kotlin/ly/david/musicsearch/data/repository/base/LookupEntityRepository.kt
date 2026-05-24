@@ -4,8 +4,11 @@ import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.TagDao
+import ly.david.musicsearch.data.musicbrainz.api.GENERAL_LOOKUP_INCLUDES
+import ly.david.musicsearch.data.musicbrainz.api.USER_LOOKUP_INCLUDES
 import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -20,6 +23,7 @@ abstract class LookupEntityRepository<
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val coroutineDispatchers: CoroutineDispatchers,
+    private val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) {
     suspend fun lookupEntity(
         entityId: String,
@@ -30,7 +34,15 @@ abstract class LookupEntityRepository<
         return@withContext if (cachedData != null && !forceRefresh) {
             cachedData
         } else {
-            val musicBrainzNetworkModel = getRemoteData(entityId = entityId)
+            val include = if (musicBrainzAuthStore.userHasAllAuthScopes()) {
+                "$GENERAL_LOOKUP_INCLUDES+$USER_LOOKUP_INCLUDES"
+            } else {
+                GENERAL_LOOKUP_INCLUDES
+            }
+            val musicBrainzNetworkModel = getRemoteData(
+                entityId = entityId,
+                include = include,
+            )
             withTransaction {
                 if (forceRefresh) {
                     delete(entityId)
@@ -49,7 +61,10 @@ abstract class LookupEntityRepository<
 
     abstract suspend fun getCachedData(entityId: String): DM?
 
-    abstract suspend fun getRemoteData(entityId: String): MB
+    abstract suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): MB
 
     open fun delete(entityId: String) {
         relationRepository.deleteRelationshipsByType(
@@ -80,7 +95,9 @@ abstract class LookupEntityRepository<
         tagDao.insertAll(
             entityId = musicBrainzNetworkModel.id,
             genres = musicBrainzNetworkModel.genres,
+            userGenres = musicBrainzNetworkModel.userGenres,
             tags = musicBrainzNetworkModel.tags,
+            userTags = musicBrainzNetworkModel.userTags,
         )
     }
 }

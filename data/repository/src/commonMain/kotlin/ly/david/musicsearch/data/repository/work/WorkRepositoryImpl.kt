@@ -8,8 +8,10 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.RECORDING_REL
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -28,12 +30,14 @@ class WorkRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
     private val appPreferences: AppPreferences,
 ) : WorkRepository, LookupEntityRepository<WorkDetailsModel, WorkMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         workDao.withTransaction(block)
@@ -69,8 +73,14 @@ class WorkRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): WorkMusicBrainzNetworkModel {
-        return lookupApi.lookupWork(workId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): WorkMusicBrainzNetworkModel {
+        return lookupApi.lookupWork(
+            workId = entityId,
+            include = "$include+$RECORDING_REL",
+        )
     }
 
     override fun delete(entityId: String) {

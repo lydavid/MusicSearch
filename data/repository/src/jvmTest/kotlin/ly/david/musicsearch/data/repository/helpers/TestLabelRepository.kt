@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.repository.helpers
 
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.preferences.NoOpMusicBrainzAuthStore
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.RelationDao
@@ -53,6 +54,7 @@ interface TestLabelRepository {
                 }
             },
             coroutineDispatchers = coroutineDispatchers,
+            musicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
         )
     }
 }

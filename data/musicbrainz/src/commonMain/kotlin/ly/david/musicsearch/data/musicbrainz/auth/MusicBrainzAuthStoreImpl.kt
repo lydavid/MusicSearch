@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import kotlin.time.Clock
@@ -44,6 +45,11 @@ class MusicBrainzAuthStoreImpl(
     override suspend fun getExpiryTimeInEpochSeconds(): Long? {
         val preferences = preferencesDataStore.data.first()
         return preferences[expiryTimePreference]
+    }
+
+    override suspend fun userHasAllAuthScopes(): Boolean {
+        val preferences = preferencesDataStore.data.first()
+        return preferences[scopePreference] == MUSIC_BRAINZ_OAUTH_SCOPE
     }
 
     override suspend fun saveTokens(

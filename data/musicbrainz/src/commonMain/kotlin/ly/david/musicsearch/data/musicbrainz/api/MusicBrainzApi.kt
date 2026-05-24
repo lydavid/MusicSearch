@@ -32,10 +32,13 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                             }
                         }
                         sendWithoutRequest { request ->
-                            request.url.parameters[RESOURCE_COLLECTION] != null ||
-                                request.url.pathSegments.contains(RESOURCE_COLLECTION) ||
-                                request.url.pathSegments.contains(TAG) ||
-                                request.url.pathSegments.contains(USER_INFO)
+                            val isBrowseCollection = request.url.parameters[RESOURCE_COLLECTION] != null
+                            val isSubmitData = request.url.pathSegments.contains(RESOURCE_COLLECTION) ||
+                                request.url.pathSegments.contains(TAG)
+                            val includesUserTags = request.url.parameters[INCLUDE]?.contains(USER_TAGS) == true
+                            val isGetUserInfo = request.url.pathSegments.contains(USER_INFO)
+
+                            isBrowseCollection || isSubmitData || includesUserTags || isGetUserInfo
                         }
                     }
                 }

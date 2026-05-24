@@ -10,6 +10,8 @@ interface MusicBrainzAuthStore {
 
     suspend fun getExpiryTimeInEpochSeconds(): Long?
 
+    suspend fun userHasAllAuthScopes(): Boolean
+
     /**
      * We store [scope] to determine which scopes the user has authenticated with.
      * When we add new scope, we can compare the stored scope with [MUSIC_BRAINZ_OAUTH_SCOPE].

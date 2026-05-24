@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -24,11 +25,13 @@ class ReleaseGroupRepositoryImpl(
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : ReleaseGroupRepository, LookupEntityRepository<ReleaseGroupDetailsModel, ReleaseGroupMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         releaseGroupDao.withTransaction(block)
@@ -59,8 +62,14 @@ class ReleaseGroupRepositoryImpl(
         }
     }
 
-    override suspend fun getRemoteData(entityId: String): ReleaseGroupMusicBrainzNetworkModel {
-        return lookupApi.lookupReleaseGroup(releaseGroupId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): ReleaseGroupMusicBrainzNetworkModel {
+        return lookupApi.lookupReleaseGroup(
+            releaseGroupId = entityId,
+            include = "$include+artists",
+        )
     }
 
     override fun delete(entityId: String) {

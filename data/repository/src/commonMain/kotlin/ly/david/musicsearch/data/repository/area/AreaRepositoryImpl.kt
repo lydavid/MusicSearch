@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.area.AreaRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -21,11 +22,13 @@ class AreaRepositoryImpl(
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : AreaRepository, LookupEntityRepository<AreaDetailsModel, AreaMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         areaDao.withTransaction(block)
@@ -52,8 +55,14 @@ class AreaRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): AreaMusicBrainzNetworkModel {
-        return lookupApi.lookupArea(areaId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): AreaMusicBrainzNetworkModel {
+        return lookupApi.lookupArea(
+            areaId = entityId,
+            include = include,
+        )
     }
 
     override fun delete(entityId: String) {

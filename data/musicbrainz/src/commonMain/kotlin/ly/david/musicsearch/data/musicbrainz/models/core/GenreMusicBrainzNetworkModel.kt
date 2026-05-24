@@ -18,4 +18,6 @@ data class GenreMusicBrainzNetworkModel(
     @SerialName("relations") override val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
     @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
+    @SerialName("user-genres") override val userGenres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("user-tags") override val userTags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Genre

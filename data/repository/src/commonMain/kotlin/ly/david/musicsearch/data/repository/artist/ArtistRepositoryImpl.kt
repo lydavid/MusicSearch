@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -29,12 +30,14 @@ class ArtistRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
     private val appPreferences: AppPreferences,
 ) : ArtistRepository, LookupEntityRepository<ArtistDetailsModel, ArtistMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         artistDao.withTransaction(block)
@@ -68,8 +71,14 @@ class ArtistRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): ArtistMusicBrainzNetworkModel {
-        return lookupApi.lookupArtist(artistId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): ArtistMusicBrainzNetworkModel {
+        return lookupApi.lookupArtist(
+            artistId = entityId,
+            include = include,
+        )
     }
 
     override fun delete(entityId: String) {

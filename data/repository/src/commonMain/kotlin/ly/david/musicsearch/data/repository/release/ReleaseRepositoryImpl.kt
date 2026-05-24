@@ -30,6 +30,7 @@ import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
@@ -63,11 +64,13 @@ class ReleaseRepositoryImpl(
     private val lookupApi: LookupApi,
     private val appPreferences: AppPreferences,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : ReleaseRepository, LookupEntityRepository<ReleaseDetailsModel, ReleaseMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         releaseDao.withTransaction(block)
@@ -111,8 +114,18 @@ class ReleaseRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): ReleaseMusicBrainzNetworkModel {
-        return lookupApi.lookupRelease(releaseId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): ReleaseMusicBrainzNetworkModel {
+        return lookupApi.lookupRelease(
+            releaseId = entityId,
+            include = include +
+                "+artist-credits" +
+                "+labels" + // gives us labels (alternatively, we can get them from rels)
+                "+recordings" + // gives us tracks
+                "+release-groups", // gives us types
+        )
     }
 
     override fun delete(entityId: String) {

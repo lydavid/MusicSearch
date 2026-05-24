@@ -7,9 +7,12 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.TagDao
+import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
+import ly.david.musicsearch.data.musicbrainz.api.ISRCS
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
@@ -30,12 +33,14 @@ class RecordingRepositoryImpl(
     private val lookupApi: LookupApi,
     private val tagDao: TagDao,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
     private val appPreferences: AppPreferences,
 ) : RecordingRepository, LookupEntityRepository<RecordingDetailsModel, RecordingMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         recordingDao.withTransaction(block)
@@ -72,8 +77,14 @@ class RecordingRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): RecordingMusicBrainzNetworkModel {
-        return lookupApi.lookupRecording(recordingId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): RecordingMusicBrainzNetworkModel {
+        return lookupApi.lookupRecording(
+            recordingId = entityId,
+            include = "$include+$ARTIST_CREDITS+$ISRCS",
+        )
     }
 
     override fun delete(entityId: String) {

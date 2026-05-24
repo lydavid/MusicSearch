@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.repository.genre
 
+import ly.david.musicsearch.data.musicbrainz.api.GENERAL_LOOKUP_INCLUDES
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.genre.GenreRepository
@@ -13,7 +14,10 @@ class GenreRepositoryImpl(
         id: String,
         forceRefresh: Boolean,
     ): GenreListItemModel {
-        return lookupApi.lookupGenre(genreId = id).toListItem()
+        return lookupApi.lookupGenre(
+            genreId = id,
+            include = GENERAL_LOOKUP_INCLUDES,
+        ).toListItem()
     }
 }
 

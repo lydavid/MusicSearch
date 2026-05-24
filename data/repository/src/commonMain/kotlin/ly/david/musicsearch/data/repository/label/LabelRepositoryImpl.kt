@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
+import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.label.LabelRepository
@@ -21,11 +22,13 @@ class LabelRepositoryImpl(
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
+    musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : LabelRepository, LookupEntityRepository<LabelDetailsModel, LabelMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
+    musicBrainzAuthStore = musicBrainzAuthStore,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         labelDao.withTransaction(block)
@@ -51,8 +54,14 @@ class LabelRepositoryImpl(
         )
     }
 
-    override suspend fun getRemoteData(entityId: String): LabelMusicBrainzNetworkModel {
-        return lookupApi.lookupLabel(labelId = entityId)
+    override suspend fun getRemoteData(
+        entityId: String,
+        include: String,
+    ): LabelMusicBrainzNetworkModel {
+        return lookupApi.lookupLabel(
+            labelId = entityId,
+            include = include,
+        )
     }
 
     override fun delete(entityId: String) {

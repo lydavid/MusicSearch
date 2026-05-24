@@ -12,4 +12,6 @@ interface MusicBrainzNetworkModel : MusicBrainzModel {
     val relations: List<RelationMusicBrainzModel>?
     val genres: List<GenreMusicBrainzNetworkModel>?
     val tags: List<TagMusicBrainzNetworkModel>?
+    val userGenres: List<GenreMusicBrainzNetworkModel>?
+    val userTags: List<TagMusicBrainzNetworkModel>?
 }
