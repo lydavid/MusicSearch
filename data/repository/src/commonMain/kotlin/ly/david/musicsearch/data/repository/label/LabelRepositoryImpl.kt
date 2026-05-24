@@ -56,9 +56,9 @@ class LabelRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         labelDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

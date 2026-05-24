@@ -60,10 +60,10 @@ class PlaceRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         placeDao.delete(entityId)
         areaDao.deleteAreaPlaceLink(entityId)
-        relationRepository.deleteRelationshipsByType(entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

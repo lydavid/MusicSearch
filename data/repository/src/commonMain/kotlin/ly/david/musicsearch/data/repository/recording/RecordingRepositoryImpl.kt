@@ -77,10 +77,10 @@ class RecordingRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         recordingDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId)
         artistCreditDao.deleteArtistCreditsForEntity(entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

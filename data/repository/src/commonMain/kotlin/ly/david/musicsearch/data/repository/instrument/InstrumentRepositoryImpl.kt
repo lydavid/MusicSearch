@@ -56,9 +56,9 @@ class InstrumentRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         instrumentDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

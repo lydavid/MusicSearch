@@ -8,6 +8,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import kotlin.time.Instant
 
@@ -50,14 +51,23 @@ abstract class LookupEntityRepository<
 
     abstract suspend fun getRemoteData(entityId: String): MB
 
-    abstract fun delete(entityId: String)
+    open fun delete(entityId: String) {
+        relationRepository.deleteRelationshipsByType(
+            entityId = entityId,
+            entity = MusicBrainzEntityType.URL,
+        )
+        tagDao.deleteByEntity(entityId = entityId)
+    }
 
     open fun cache(
         oldId: String,
         musicBrainzNetworkModel: MB,
         lastUpdated: Instant,
     ) {
-        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
+        aliasDao.insertAll(
+            musicBrainzNetworkModels = listOf(musicBrainzNetworkModel),
+            deleteExisting = true,
+        )
 
         val relationWithOrderList =
             musicBrainzNetworkModel.relations.toRelationWithOrderList(entityId = musicBrainzNetworkModel.id)

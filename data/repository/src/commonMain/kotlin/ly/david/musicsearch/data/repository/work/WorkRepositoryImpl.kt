@@ -74,10 +74,10 @@ class WorkRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         workDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId = entityId, entity = MusicBrainzEntityType.URL)
         relationRepository.deleteRelationshipsByType(entityId = entityId, entity = MusicBrainzEntityType.RECORDING)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

@@ -73,12 +73,9 @@ class ArtistRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         artistDao.delete(artistId = entityId)
-        relationRepository.deleteRelationshipsByType(
-            entityId = entityId,
-            entity = MusicBrainzEntityType.URL,
-        )
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

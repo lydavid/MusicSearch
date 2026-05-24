@@ -57,9 +57,9 @@ class AreaRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         areaDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId = entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

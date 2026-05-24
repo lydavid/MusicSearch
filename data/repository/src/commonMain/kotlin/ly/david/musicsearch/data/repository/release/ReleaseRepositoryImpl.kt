@@ -116,13 +116,13 @@ class ReleaseRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         releaseDao.delete(releaseId = entityId)
         releaseReleaseGroupDao.deleteReleaseGroupByReleaseLink(releaseId = entityId)
         labelDao.deleteReleaseLabelLinks(releaseId = entityId)
         areaDao.deleteCountriesByReleaseLinks(releaseId = entityId)
-        relationRepository.deleteRelationshipsByType(entityId = entityId)
         artistCreditDao.deleteArtistCreditsForEntity(entityId = entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(

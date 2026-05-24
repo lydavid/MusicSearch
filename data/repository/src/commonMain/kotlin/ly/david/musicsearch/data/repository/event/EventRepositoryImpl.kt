@@ -56,9 +56,9 @@ class EventRepositoryImpl(
     }
 
     override fun delete(entityId: String) {
+        super.delete(entityId)
+
         eventDao.delete(entityId)
-        relationRepository.deleteRelationshipsByType(entityId = entityId)
-        tagDao.deleteByEntity(entityId = entityId)
     }
 
     override fun cache(
