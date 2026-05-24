@@ -9,7 +9,6 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
-import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.artist.ArtistRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -32,6 +31,9 @@ class ArtistRepositoryImpl(
     coroutineDispatchers: CoroutineDispatchers,
     private val appPreferences: AppPreferences,
 ) : ArtistRepository, LookupEntityRepository<ArtistDetailsModel, ArtistMusicBrainzNetworkModel>(
+    relationRepository = relationRepository,
+    aliasDao = aliasDao,
+    tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
@@ -89,24 +91,10 @@ class ArtistRepositoryImpl(
             artist = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
-
         musicBrainzNetworkModel.area?.let { area ->
             areaDao.insert(area)
         }
 
-        val relationWithOrderList =
-            musicBrainzNetworkModel.relations.toRelationWithOrderList(entityId = musicBrainzNetworkModel.id)
-        relationRepository.insertRelations(
-            entityId = musicBrainzNetworkModel.id,
-            relationWithOrderList = relationWithOrderList,
-            lastUpdated = lastUpdated,
-        )
-
-        tagDao.insertAll(
-            entityId = musicBrainzNetworkModel.id,
-            genres = musicBrainzNetworkModel.genres,
-            tags = musicBrainzNetworkModel.tags,
-        )
+        super.cache(oldId, musicBrainzNetworkModel, lastUpdated)
     }
 }

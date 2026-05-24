@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
 
 @Serializable
@@ -28,4 +29,9 @@ data class CollectionMusicBrainzNetworkModel(
     @SerialName("work-count") val workCount: Int? = null,
 
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
+
+    // not used
+    @SerialName("relations") override val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel

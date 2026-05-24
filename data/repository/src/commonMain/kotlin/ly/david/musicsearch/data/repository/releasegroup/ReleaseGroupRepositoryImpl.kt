@@ -9,7 +9,6 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
-import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -26,6 +25,9 @@ class ReleaseGroupRepositoryImpl(
     private val lookupApi: LookupApi,
     coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseGroupRepository, LookupEntityRepository<ReleaseGroupDetailsModel, ReleaseGroupMusicBrainzNetworkModel>(
+    relationRepository = relationRepository,
+    aliasDao = aliasDao,
+    tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
@@ -78,20 +80,6 @@ class ReleaseGroupRepositoryImpl(
             releaseGroup = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
-
-        val relationWithOrderList =
-            musicBrainzNetworkModel.relations.toRelationWithOrderList(musicBrainzNetworkModel.id)
-        relationRepository.insertRelations(
-            entityId = musicBrainzNetworkModel.id,
-            relationWithOrderList = relationWithOrderList,
-            lastUpdated = lastUpdated,
-        )
-
-        tagDao.insertAll(
-            entityId = musicBrainzNetworkModel.id,
-            genres = musicBrainzNetworkModel.genres,
-            tags = musicBrainzNetworkModel.tags,
-        )
+        super.cache(oldId, musicBrainzNetworkModel, lastUpdated)
     }
 }

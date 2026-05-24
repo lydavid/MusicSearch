@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.CoordinatesMusicBrainzModel
@@ -30,6 +31,7 @@ import ly.david.musicsearch.data.repository.helpers.TestPlaceRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.AreaDetailsModel
@@ -188,6 +190,18 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                         ),
                     ),
                 ),
+                aliases = listOf(
+                    AliasMusicBrainzNetworkModel(
+                        name = "Nippon Budokan",
+                        isPrimary = true,
+                        locale = "en",
+                    ),
+                    AliasMusicBrainzNetworkModel(
+                        name = "日本武道館",
+                        isPrimary = true,
+                        locale = "ja",
+                    ),
+                ),
             ),
         )
         var allDataArtistDetailsModel = allDataRepository.lookupEntity(
@@ -315,6 +329,18 @@ class PlaceRepositoryImplTest : KoinTest, TestPlaceRepository, TestAreaRepositor
                         linkedEntity = MusicBrainzEntityType.URL,
                         visited = false,
                         isForwardDirection = true,
+                    ),
+                ),
+                aliases = persistentListOf(
+                    BasicAlias(
+                        name = "Nippon Budokan",
+                        isPrimary = true,
+                        locale = "en",
+                    ),
+                    BasicAlias(
+                        name = "日本武道館",
+                        isPrimary = true,
+                        locale = "ja",
                     ),
                 ),
             ),

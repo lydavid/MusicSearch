@@ -20,8 +20,8 @@ data class AreaMusicBrainzNetworkModel(
     @SerialName("iso-3166-1-codes") val countryCodes: List<String>? = null,
     @SerialName("iso-3166-2-codes") val countrySubDivisionCodes: List<String>? = null,
     @SerialName("iso-3166-3-codes") val formerCountryCodes: List<String>? = null,
-    @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("relations") override val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-    @SerialName("genres") val genres: List<GenreMusicBrainzNetworkModel>? = null,
-    @SerialName("tags") val tags: List<TagMusicBrainzNetworkModel>? = null,
+    @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Area

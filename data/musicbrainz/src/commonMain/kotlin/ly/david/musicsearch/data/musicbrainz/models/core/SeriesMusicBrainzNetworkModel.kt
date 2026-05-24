@@ -14,8 +14,8 @@ data class SeriesMusicBrainzNetworkModel(
     @SerialName("type") val type: String? = null,
     @SerialName("type-id") val typeId: String? = null,
 
-    @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("relations") override val relations: List<RelationMusicBrainzModel>? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
-    @SerialName("genres") val genres: List<GenreMusicBrainzNetworkModel>? = null,
-    @SerialName("tags") val tags: List<TagMusicBrainzNetworkModel>? = null,
+    @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Series

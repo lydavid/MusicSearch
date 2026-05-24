@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.musicbrainz.models.core
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.shared.domain.genre.Genre
 
 @Serializable
@@ -12,4 +13,9 @@ data class GenreMusicBrainzNetworkModel(
     @SerialName("disambiguation") override val disambiguation: String? = null,
     @SerialName("aliases") override val aliases: List<AliasMusicBrainzNetworkModel>? = null,
     @SerialName("count") val count: Int? = null,
+
+    // not used
+    @SerialName("relations") override val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("genres") override val genres: List<GenreMusicBrainzNetworkModel>? = null,
+    @SerialName("tags") override val tags: List<TagMusicBrainzNetworkModel>? = null,
 ) : MusicBrainzNetworkModel, Genre

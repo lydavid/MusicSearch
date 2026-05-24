@@ -28,7 +28,6 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
-import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
@@ -65,6 +64,9 @@ class ReleaseRepositoryImpl(
     private val appPreferences: AppPreferences,
     coroutineDispatchers: CoroutineDispatchers,
 ) : ReleaseRepository, LookupEntityRepository<ReleaseDetailsModel, ReleaseMusicBrainzNetworkModel>(
+    relationRepository = relationRepository,
+    aliasDao = aliasDao,
+    tagDao = tagDao,
     coroutineDispatchers = coroutineDispatchers,
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
@@ -143,8 +145,6 @@ class ReleaseRepositoryImpl(
             release = musicBrainzNetworkModel,
         )
 
-        aliasDao.insertAll(listOf(musicBrainzNetworkModel))
-
         // This serves as a replacement for browsing labels by release.
         // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
         // Lifespan is not included, so do not upsert.
@@ -173,20 +173,7 @@ class ReleaseRepositoryImpl(
             releaseEvents = musicBrainzNetworkModel.releaseEvents,
         )
 
-        val relationWithOrderList = musicBrainzNetworkModel.relations.toRelationWithOrderList(
-            entityId = musicBrainzNetworkModel.id,
-        )
-        relationRepository.insertRelations(
-            entityId = musicBrainzNetworkModel.id,
-            relationWithOrderList = relationWithOrderList,
-            lastUpdated = lastUpdated,
-        )
-
-        tagDao.insertAll(
-            entityId = musicBrainzNetworkModel.id,
-            genres = musicBrainzNetworkModel.genres,
-            tags = musicBrainzNetworkModel.tags,
-        )
+        super.cache(oldId, musicBrainzNetworkModel, lastUpdated)
     }
 
     // region tracks by release
