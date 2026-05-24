@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.116.0](https://github.com/lydavid/MusicSearch/compare/v1.115.0...v1.116.0) (2026-05-24)
+
+
+### Features
+
+* fetch user genres/tags to prepopulate upvotes ([419eb80](https://github.com/lydavid/MusicSearch/commit/419eb808b539bd56a2b3f5f5326df4f1073a4bac))
+
 ## [1.115.0](https://github.com/lydavid/MusicSearch/compare/v1.114.1...v1.115.0) (2026-05-20)
 
 
