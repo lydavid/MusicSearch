@@ -10,6 +10,8 @@ import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
  * All attributes/attribute-value pairs should be comma-separated.
  */
 fun RelationMusicBrainzModel.getFormattedAttributes(): String {
+    // this delimiter fails for something like `task: project manager, liner notes author`
+    // but we can determine that that is a single attribute from attribute_ids
     return attributes?.joinToString(", ") { attribute ->
         attribute + attributeValues?.get(attribute).transformThisIfNotNullOrEmpty { ": $it" }
     }.orEmpty()

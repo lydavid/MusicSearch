@@ -185,6 +185,7 @@ class RelationDao(
 
     private fun String?.deduplicateAttributes(): String? {
         return this?.split(", ")
+            ?.filter { it.isNotBlank() }
             ?.distinct()
             ?.joinToString(", ")
     }
