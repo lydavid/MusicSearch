@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.117.0](https://github.com/lydavid/MusicSearch/compare/v1.116.0...v1.117.0) (2026-05-25)
+
+
+### Bug Fixes
+
+* filter out blank attributes so that successive commas are not displayed in Relationships screen ([a64ad2b](https://github.com/lydavid/MusicSearch/commit/a64ad2b4c7ad42924a53b263928c85b98b7fb4d9))
+
+
+### Features
+
+* support more relationship types ([72f3745](https://github.com/lydavid/MusicSearch/commit/72f37453d899b0b07d3fb8ece298d12429822f1c))
+
 ## [1.116.0](https://github.com/lydavid/MusicSearch/compare/v1.115.0...v1.116.0) (2026-05-24)
 
 
