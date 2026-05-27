@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.118.0](https://github.com/lydavid/MusicSearch/compare/v1.117.0...v1.118.0) (2026-05-27)
+
+
+### Bug Fixes
+
+* increase genres/tags overflow dropdown icon touch area ([16b1426](https://github.com/lydavid/MusicSearch/commit/16b14269fffac9b21ce9da8507e87765d623e03e))
+* move listen count and complete listen count to list separator; embiggen list separator vertical padding; shrink icons in list separators a bit to not dominate the text ([5a46bc8](https://github.com/lydavid/MusicSearch/commit/5a46bc8061eb88bafe93a93e624fbc785e821833))
+
+
+### Features
+
+* make new collapsible section headers sticky ([de061c8](https://github.com/lydavid/MusicSearch/commit/de061c85245bda015ad1fe9d6c0cb8bbc6806098))
+* support collapsing all sections in Details tab ([c1f5a89](https://github.com/lydavid/MusicSearch/commit/c1f5a89d5c6f1b29fb8e3eff6a1c214283075bbb))
+
 ## [1.117.0](https://github.com/lydavid/MusicSearch/compare/v1.116.0...v1.117.0) (2026-05-25)
 
 
