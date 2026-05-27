@@ -1,7 +1,7 @@
 package ly.david.musicsearch.ui.common.theme
 
 const val TINY_ICON_SIZE = 16
-const val STANDARD_ICON_SIZE = 24
+const val STANDARD_ICON_SIZE = 20
 const val SMALL_IMAGE_SIZE = 56
 
 const val TAG_BACKGROUND_ALPHA = 0.2f

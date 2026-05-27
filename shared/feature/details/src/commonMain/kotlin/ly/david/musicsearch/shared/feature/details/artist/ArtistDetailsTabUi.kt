@@ -1,11 +1,12 @@
 package ly.david.musicsearch.shared.feature.details.artist
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
@@ -189,6 +190,13 @@ private fun LazyListScope.listenSection(
                 text = stringResource(Res.string.listens),
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
+                additionalContent = {
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = artist.listenCount.toString(),
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                },
             )
         }
         if (!collapsed) {
@@ -212,16 +220,6 @@ private fun LazyListScope.listensSectionContent(
     onItemClick: MusicBrainzItemClickHandler,
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
-    item {
-        ListItem(
-            headlineContent = {
-                TextWithIcon(
-                    imageVector = CustomIcons.Headphones,
-                    text = artist.listenCount.toString(),
-                )
-            },
-        )
-    }
     items(artist.latestListens) { listen ->
         LastListenedListItemWithMoreActions(
             listenedMs = listen.listenedMs,

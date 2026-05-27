@@ -1,10 +1,8 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -331,6 +329,33 @@ private fun LazyListScope.listenSection(
                 text = stringResource(Res.string.listens),
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
+                additionalContent = {
+                    val listenCount = release.listenCount
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = listenCount.toString(),
+                        contentDescription = pluralStringResource(
+                            Res.plurals.xListens,
+                            listenCount?.toInt() ?: 0,
+                            listenCount ?: 0,
+                        ),
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                    if (release.completeListenCount > 0) {
+                        val completeListenCount = release.completeListenCount
+                        TextWithIcon(
+                            imageVector = CustomIcons.StarFilled,
+                            text = completeListenCount.toString(),
+                            contentDescription = pluralStringResource(
+                                Res.plurals.xCompleteListens,
+                                completeListenCount.toInt(),
+                                completeListenCount,
+                            ),
+                            iconTint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(start = 8.dp),
+                        )
+                    }
+                },
             )
         }
         if (!collapsed) {
@@ -355,38 +380,6 @@ private fun LazyListScope.listensSectionContent(
     onItemClick: MusicBrainzItemClickHandler,
     onGoToListenAtEpochSeconds: (listenMs: Long) -> Unit,
 ) {
-    item {
-        ListItem(
-            headlineContent = {
-                Row {
-                    val listenCount = release.listenCount
-                    TextWithIcon(
-                        imageVector = CustomIcons.Headphones,
-                        text = listenCount.toString(),
-                        contentDescription = pluralStringResource(
-                            Res.plurals.xListens,
-                            listenCount?.toInt() ?: 0,
-                            listenCount ?: 0,
-                        ),
-                    )
-                    if (release.completeListenCount > 0) {
-                        val completeListenCount = release.completeListenCount
-                        TextWithIcon(
-                            imageVector = CustomIcons.StarFilled,
-                            text = completeListenCount.toString(),
-                            contentDescription = pluralStringResource(
-                                Res.plurals.xCompleteListens,
-                                completeListenCount.toInt(),
-                                completeListenCount,
-                            ),
-                            iconTint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(start = 8.dp),
-                        )
-                    }
-                }
-            },
-        )
-    }
     items(release.latestListens) { listen ->
         LastListenedListItemWithMoreActions(
             listenedMs = listen.listenedMs,

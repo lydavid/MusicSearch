@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.listitem
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,6 +31,7 @@ fun CollapsibleListSeparatorHeader(
     collapsed: Boolean,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    additionalContent: @Composable (RowScope.() -> Unit)? = null,
     endContent: @Composable (() -> Unit)? = null,
 ) {
     val iconRotationDegree = if (collapsed) COLLAPSED_ROTATION_DEGREE else 0f
@@ -45,10 +47,7 @@ fun CollapsibleListSeparatorHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(
-                    horizontal = 8.dp,
-                    vertical = 4.dp,
-                )
+                .padding(8.dp)
                 .fillMaxWidth()
                 .semantics(mergeDescendants = true) {
                     contentDescription = "$text, ${if (collapsed) "collapsed" else "expanded"}"
@@ -69,7 +68,10 @@ fun CollapsibleListSeparatorHeader(
                 style = TextStyles.getCardBodyTextStyle(),
             )
 
+            additionalContent?.invoke(this)
+
             Spacer(modifier = Modifier.weight(1f))
+
             endContent?.invoke()
         }
     }

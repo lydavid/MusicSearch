@@ -3,7 +3,6 @@ package ly.david.musicsearch.shared.feature.details.recording
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -137,19 +136,16 @@ private fun LazyListScope.listenSection(
                 text = stringResource(Res.string.listens),
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
+                additionalContent = {
+                    TextWithIcon(
+                        imageVector = CustomIcons.Headphones,
+                        text = recording.listenCount.toString(),
+                        modifier = Modifier.padding(start = 8.dp),
+                    )
+                },
             )
         }
         if (!collapsed) {
-            item {
-                ListItem(
-                    headlineContent = {
-                        TextWithIcon(
-                            imageVector = CustomIcons.Headphones,
-                            text = recording.listenCount.toString(),
-                        )
-                    },
-                )
-            }
             items(recording.latestListensTimestampsMs) {
                 LastListenedListItem(
                     lastListenedMs = it,

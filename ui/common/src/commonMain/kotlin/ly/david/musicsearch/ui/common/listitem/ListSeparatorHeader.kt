@@ -18,6 +18,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PhotoLibrary
+import ly.david.musicsearch.ui.common.theme.STANDARD_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.numberOfImages
@@ -43,7 +44,7 @@ fun ListSeparatorHeader(
                     modifier = Modifier
                         .padding(
                             horizontal = 16.dp,
-                            vertical = 4.dp,
+                            vertical = 8.dp,
                         ),
                     color = contentColorFor(backgroundColor = surfaceColor),
                     style = TextStyles.getCardBodyTextStyle(),
@@ -72,14 +73,14 @@ fun ListSeparatorHeader(
                             horizontal = 8.dp,
                         )
                         .padding(
-                            top = 4.dp,
-                            bottom = 3.dp,
+                            top = 8.dp,
+                            bottom = 4.dp,
                         )
                         .semantics(mergeDescendants = true) {},
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(STANDARD_ICON_SIZE.dp),
                         imageVector = CustomIcons.PhotoLibrary,
                         contentDescription = stringResource(Res.string.numberOfImages),
                     )
