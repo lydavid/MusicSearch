@@ -4,14 +4,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
-import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.areaSection
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.place.getDisplayString
@@ -74,19 +73,15 @@ internal fun PlaceDetailsTabUi(
             }
         },
         bringYourOwnLabelsSection = {
-            place.area?.ifNotNull { area ->
-                item {
-                    AreaSection(
-                        areaListItemModel = area,
-                        filterText = filterText,
-                        onItemClick = onItemClick,
-                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
-                        onCollapseExpand = {
-                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
-                        },
-                    )
-                }
-            }
+            areaSection(
+                areaListItemModel = place.area,
+                filterText = filterText,
+                onItemClick = onItemClick,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                },
+            )
 
             val coordinates = place.coordinates
             val showCoordinates = coordinates.latitude != null && coordinates.longitude != null

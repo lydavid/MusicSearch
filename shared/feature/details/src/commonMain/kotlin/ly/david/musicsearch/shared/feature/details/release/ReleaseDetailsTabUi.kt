@@ -248,7 +248,7 @@ private fun LazyListScope.releaseLabelsSection(
         ).any { it?.lowercase()?.contains(searchText) == true }
     }.toPersistentList()
     labels.ifNotNullOrEmpty {
-        item {
+        stickyHeader {
             val numberOfFilteredItems = getNumberOfFilteredItems(
                 filteredCount = filteredLabels.size,
                 total = labels.size,

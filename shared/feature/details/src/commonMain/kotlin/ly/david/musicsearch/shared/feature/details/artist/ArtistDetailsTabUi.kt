@@ -15,12 +15,12 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.LastListenedListItemWithMoreActions
+import ly.david.musicsearch.shared.feature.details.utils.areaSection
 import ly.david.musicsearch.ui.common.artist.getDisplayString
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.ChevronRight
@@ -72,17 +72,15 @@ internal fun ArtistDetailsTabUi(
         },
         bringYourOwnLabelsSection = {
             artist.run {
-                item {
-                    AreaSection(
-                        areaListItemModel = areaListItemModel,
-                        filterText = filterText,
-                        onItemClick = onItemClick,
-                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
-                        onCollapseExpand = {
-                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
-                        },
-                    )
-                }
+                areaSection(
+                    areaListItemModel = areaListItemModel,
+                    filterText = filterText,
+                    onItemClick = onItemClick,
+                    collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                    onCollapseExpand = {
+                        eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                    },
+                )
 
                 // TODO: begin area, end area
 

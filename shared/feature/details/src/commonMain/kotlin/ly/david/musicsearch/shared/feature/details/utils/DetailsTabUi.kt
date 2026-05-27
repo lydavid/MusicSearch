@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -54,7 +56,7 @@ import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
 import ly.david.musicsearch.ui.common.screen.showInBottomSheetForResult
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
 import ly.david.musicsearch.ui.common.theme.STANDARD_ICON_SIZE
-import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
+import ly.david.musicsearch.ui.common.wikimedia.wikipediaSection
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.area
 import musicsearch.ui.common.generated.resources.artist
@@ -118,6 +120,8 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
         state = detailsTabUiState.lazyListState,
     ) {
         detailsModel.run {
+            val hideInformation = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Information)
+
             item {
                 if (filterText.isBlank()) {
                     LargeImage(
@@ -127,16 +131,21 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                         },
                     )
                 }
+                // To reserve space for the async image
+                // Without this, the image would load off the screen
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                )
+            }
 
-                val hideInformation = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Information)
-
+            stickyHeader {
                 val numberOfImages = detailsTabUiState.numberOfImages
                 val hasNoImages = numberOfImages == null
                 val endContent: @Composable (() -> Unit)? = if (hasNoImages) {
                     null
                 } else {
                     {
-                        Surface(modifier = Modifier) {
+                        Surface {
                             Row(
                                 modifier = Modifier
                                     .padding(
@@ -170,7 +179,8 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                     endContent = endContent,
                     verticalPadding = if (hasNoImages) 8.dp else 0.dp,
                 )
-
+            }
+            item {
                 if (!hideInformation) {
                     entityInfoSection()
                 }
@@ -243,16 +253,14 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 },
             )
 
-            item {
-                WikipediaSection(
-                    extract = detailsTabUiState.wikipediaExtract,
-                    filterText = filterText,
-                    collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Wikipedia),
-                    onCollapseExpand = {
-                        eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Wikipedia))
-                    },
-                )
-            }
+            wikipediaSection(
+                extract = detailsTabUiState.wikipediaExtract,
+                filterText = filterText,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Wikipedia),
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Wikipedia))
+                },
+            )
 
             bringYourOwnLabelsSection()
 

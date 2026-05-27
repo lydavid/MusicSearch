@@ -8,11 +8,11 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
-import ly.david.musicsearch.shared.feature.details.area.AreaSection
 import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
+import ly.david.musicsearch.shared.feature.details.utils.areaSection
 import ly.david.musicsearch.ui.common.label.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
@@ -92,19 +92,15 @@ internal fun LabelDetailsTabUi(
             }
         },
         bringYourOwnLabelsSection = {
-            item {
-                label.area?.let { area ->
-                    AreaSection(
-                        areaListItemModel = area,
-                        filterText = filterText,
-                        onItemClick = onItemClick,
-                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
-                        onCollapseExpand = {
-                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
-                        },
-                    )
-                }
-            }
+            areaSection(
+                areaListItemModel = label.area,
+                filterText = filterText,
+                onItemClick = onItemClick,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                },
+            )
         },
     )
 }

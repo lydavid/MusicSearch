@@ -2,9 +2,8 @@ package ly.david.musicsearch.ui.common.wikimedia
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,33 +30,31 @@ import musicsearch.ui.common.generated.resources.readMore
 import musicsearch.ui.common.generated.resources.wikipedia
 import org.jetbrains.compose.resources.stringResource
 
-@Composable
-fun WikipediaSection(
+fun LazyListScope.wikipediaSection(
     extract: WikipediaExtract,
-    modifier: Modifier = Modifier,
     filterText: String = "",
     collapsed: Boolean = false,
     onCollapseExpand: () -> Unit = {},
 ) {
-    val clipboard = LocalClipboard.current
-    val coroutineScope = rememberCoroutineScope()
-    val haptics = LocalHapticFeedback.current
-
     val showExtract = extract.extract.isNotBlank() &&
         extract.extract.contains(filterText, ignoreCase = true)
     val showUrl = extract.wikipediaUrl.isNotBlank() &&
         extract.wikipediaUrl.contains(filterText, ignoreCase = true)
     if (showExtract || showUrl) {
-        Column(
-            modifier = modifier,
-        ) {
+        stickyHeader {
             CollapsibleListSeparatorHeader(
                 text = stringResource(Res.string.wikipedia),
                 collapsed = collapsed,
                 onClick = onCollapseExpand,
             )
+        }
 
-            if (!collapsed) {
+        if (!collapsed) {
+            item {
+                val clipboard = LocalClipboard.current
+                val coroutineScope = rememberCoroutineScope()
+                val haptics = LocalHapticFeedback.current
+
                 var expanded by remember { mutableStateOf(false) }
 
                 if (showExtract) {
