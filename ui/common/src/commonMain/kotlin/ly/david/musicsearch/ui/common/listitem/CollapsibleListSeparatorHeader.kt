@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.ui.common.icons.ArrowDropDown
 import ly.david.musicsearch.ui.common.icons.CustomIcons
@@ -30,6 +31,7 @@ fun CollapsibleListSeparatorHeader(
     text: String,
     collapsed: Boolean,
     modifier: Modifier = Modifier,
+    verticalPadding: Dp = 8.dp,
     onClick: () -> Unit = {},
     additionalContent: @Composable (RowScope.() -> Unit)? = null,
     endContent: @Composable (() -> Unit)? = null,
@@ -47,7 +49,11 @@ fun CollapsibleListSeparatorHeader(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(
+                    start = 8.dp,
+                    top = verticalPadding,
+                    bottom = verticalPadding,
+                )
                 .fillMaxWidth()
                 .semantics(mergeDescendants = true) {
                     contentDescription = "$text, ${if (collapsed) "collapsed" else "expanded"}"

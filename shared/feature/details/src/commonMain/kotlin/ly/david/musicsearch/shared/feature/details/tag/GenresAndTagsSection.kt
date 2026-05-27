@@ -97,6 +97,7 @@ private fun LazyListScope.genresOrTagsSection(
                         label = label,
                     )
                 },
+                verticalPadding = 0.dp,
             )
         }
         if (!isCollapsed) {
@@ -150,6 +151,6 @@ private fun MoreActionsOverflowMenu(
             )
         },
         contentDescription = stringResource(Res.string.moreActionsFor, label),
-        useIconButton = false,
+        minimumInteractiveComponentSize = 0,
     )
 }
