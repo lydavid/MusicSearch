@@ -5,7 +5,7 @@ import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.area
@@ -16,11 +16,17 @@ internal fun AreaSection(
     areaListItemModel: AreaListItemModel?,
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    collapsed: Boolean = false,
+    onCollapseExpand: () -> Unit = {},
 ) {
     areaListItemModel?.run {
-        ListSeparatorHeader(text = stringResource(Res.string.area))
+        CollapsibleListSeparatorHeader(
+            text = stringResource(Res.string.area),
+            collapsed = collapsed,
+            onClick = onCollapseExpand,
+        )
 
-        if (getAnnotatedName().contains(filterText, ignoreCase = true)) {
+        if (getAnnotatedName().contains(filterText, ignoreCase = true) && !collapsed) {
             AreaListItem(
                 area = this,
                 filterText = filterText,

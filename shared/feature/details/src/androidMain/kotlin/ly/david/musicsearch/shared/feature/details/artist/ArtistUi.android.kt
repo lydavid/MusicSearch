@@ -196,8 +196,11 @@ internal fun PreviewArtistDetailsUiCollapsed() {
                     now = Instant.parse("2025-09-06T18:42:20Z"),
                     wikipediaExtract = wikipediaExtract,
                     isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.Information,
                         CollapsibleSection.Genres,
                         CollapsibleSection.Tags,
+                        CollapsibleSection.Wikipedia,
+                        CollapsibleSection.Area,
                         CollapsibleSection.ExternalLinks,
                         CollapsibleSection.Aliases,
                     ),

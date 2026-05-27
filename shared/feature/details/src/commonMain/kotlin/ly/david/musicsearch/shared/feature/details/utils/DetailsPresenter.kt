@@ -369,8 +369,12 @@ internal data class DetailsTabUiState(
 )
 
 internal enum class CollapsibleSection {
+    Information,
     Genres,
     Tags,
+    Wikipedia,
+    Area,
+    Labels,
     ReleaseEvents,
     Listens,
     ExternalLinks,

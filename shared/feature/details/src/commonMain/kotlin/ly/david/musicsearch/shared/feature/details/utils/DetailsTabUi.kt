@@ -1,14 +1,23 @@
 package ly.david.musicsearch.shared.feature.details.utils
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
@@ -32,9 +41,11 @@ import ly.david.musicsearch.shared.feature.details.alias.aliasesSection
 import ly.david.musicsearch.shared.feature.details.alias.toAliasListItemModel
 import ly.david.musicsearch.shared.feature.details.tag.genresAndTagsSection
 import ly.david.musicsearch.shared.feature.details.tag.getMessage
+import ly.david.musicsearch.ui.common.icons.CustomIcons
+import ly.david.musicsearch.ui.common.icons.PhotoLibrary
 import ly.david.musicsearch.ui.common.image.LargeImage
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.screen.NavigatableFromOverlayResult
@@ -42,6 +53,7 @@ import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
 import ly.david.musicsearch.ui.common.screen.showInBottomSheetForResult
 import ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals
+import ly.david.musicsearch.ui.common.theme.STANDARD_ICON_SIZE
 import ly.david.musicsearch.ui.common.wikimedia.WikipediaSection
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.area
@@ -50,6 +62,7 @@ import musicsearch.ui.common.generated.resources.event
 import musicsearch.ui.common.generated.resources.informationHeader
 import musicsearch.ui.common.generated.resources.instrument
 import musicsearch.ui.common.generated.resources.label
+import musicsearch.ui.common.generated.resources.numberOfImages
 import musicsearch.ui.common.generated.resources.place
 import musicsearch.ui.common.generated.resources.primary
 import musicsearch.ui.common.generated.resources.recording
@@ -115,12 +128,52 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                     )
                 }
 
-                ListSeparatorHeader(
+                val hideInformation = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Information)
+
+                val numberOfImages = detailsTabUiState.numberOfImages
+                val hasNoImages = numberOfImages == null
+                val endContent: @Composable (() -> Unit)? = if (hasNoImages) {
+                    null
+                } else {
+                    {
+                        Surface(modifier = Modifier) {
+                            Row(
+                                modifier = Modifier
+                                    .padding(
+                                        horizontal = 8.dp,
+                                        vertical = 8.dp,
+                                    )
+                                    .semantics(mergeDescendants = true) {},
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(STANDARD_ICON_SIZE.dp),
+                                    imageVector = CustomIcons.PhotoLibrary,
+                                    contentDescription = stringResource(Res.string.numberOfImages),
+                                )
+                                Text(
+                                    text = numberOfImages.toString(),
+                                    modifier = Modifier
+                                        .padding(start = 4.dp),
+                                )
+                            }
+                        }
+                    }
+                }
+
+                CollapsibleListSeparatorHeader(
                     text = stringResource(Res.string.informationHeader, getCapitalizedName()),
-                    numberOfImages = detailsTabUiState.numberOfImages,
+                    collapsed = hideInformation,
+                    onClick = {
+                        eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Information))
+                    },
+                    endContent = endContent,
+                    verticalPadding = if (hasNoImages) 8.dp else 0.dp,
                 )
 
-                entityInfoSection()
+                if (!hideInformation) {
+                    entityInfoSection()
+                }
             }
 
             genresAndTagsSection(
@@ -194,6 +247,10 @@ internal fun <T : MusicBrainzDetailsModel> DetailsTabUi(
                 WikipediaSection(
                     extract = detailsTabUiState.wikipediaExtract,
                     filterText = filterText,
+                    collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Wikipedia),
+                    onCollapseExpand = {
+                        eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Wikipedia))
+                    },
                 )
             }
 

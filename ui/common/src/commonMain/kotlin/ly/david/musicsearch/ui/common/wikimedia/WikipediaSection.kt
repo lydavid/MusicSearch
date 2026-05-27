@@ -23,8 +23,8 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import ly.david.musicsearch.ui.common.clipboard.clipEntryWith
+import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.readMore
@@ -36,6 +36,8 @@ fun WikipediaSection(
     extract: WikipediaExtract,
     modifier: Modifier = Modifier,
     filterText: String = "",
+    collapsed: Boolean = false,
+    onCollapseExpand: () -> Unit = {},
 ) {
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
@@ -49,46 +51,52 @@ fun WikipediaSection(
         Column(
             modifier = modifier,
         ) {
-            ListSeparatorHeader(text = stringResource(Res.string.wikipedia))
+            CollapsibleListSeparatorHeader(
+                text = stringResource(Res.string.wikipedia),
+                collapsed = collapsed,
+                onClick = onCollapseExpand,
+            )
 
-            var expanded by remember { mutableStateOf(false) }
+            if (!collapsed) {
+                var expanded by remember { mutableStateOf(false) }
 
-            if (showExtract) {
-                HighlightableText(
-                    text = AnnotatedString(extract.extract),
-                    highlightedText = filterText,
-                    modifier = Modifier
-                        .combinedClickable(
-                            onClick = {
-                                expanded = !expanded
-                            },
-                            onLongClick = {
-                                coroutineScope.launch {
-                                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    clipboard.setClipEntry(clipEntryWith(extract.extract))
-                                }
-                            },
-                        )
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .animateContentSize(),
-                    maxLines = if (expanded) Int.MAX_VALUE else 4,
-                    overflow = TextOverflow.Ellipsis,
+                if (showExtract) {
+                    HighlightableText(
+                        text = AnnotatedString(extract.extract),
+                        highlightedText = filterText,
+                        modifier = Modifier
+                            .combinedClickable(
+                                onClick = {
+                                    expanded = !expanded
+                                },
+                                onLongClick = {
+                                    coroutineScope.launch {
+                                        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                        clipboard.setClipEntry(clipEntryWith(extract.extract))
+                                    }
+                                },
+                            )
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .animateContentSize(),
+                        maxLines = if (expanded) Int.MAX_VALUE else 4,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+
+                UrlListItem(
+                    relation = RelationListItemModel(
+                        id = "wikipedia_section",
+                        type = stringResource(Res.string.readMore),
+                        linkedEntity = MusicBrainzEntityType.URL,
+                        // TODO: eventually, migrate the stored url to be decoded
+                        //  so that we can search with utf-8
+                        //  at that point, decode the url before storing
+                        name = extract.wikipediaUrl.decodeUrl(),
+                        linkedEntityId = "wikipedia_section",
+                    ),
+                    filterText = filterText,
                 )
             }
-
-            UrlListItem(
-                relation = RelationListItemModel(
-                    id = "wikipedia_section",
-                    type = stringResource(Res.string.readMore),
-                    linkedEntity = MusicBrainzEntityType.URL,
-                    // TODO: eventually, migrate the stored url to be decoded
-                    //  so that we can search with utf-8
-                    //  at that point, decode the url before storing
-                    name = extract.wikipediaUrl.decodeUrl(),
-                    linkedEntityId = "wikipedia_section",
-                ),
-                filterText = filterText,
-            )
         }
     }
 }

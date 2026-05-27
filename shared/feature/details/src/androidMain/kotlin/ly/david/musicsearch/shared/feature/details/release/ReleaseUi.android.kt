@@ -119,6 +119,8 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
                 detailsTabUiState = DetailsTabUiState(
                     numberOfImages = 11,
                     isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.Information,
+                        CollapsibleSection.Labels,
                         CollapsibleSection.ReleaseEvents,
                         CollapsibleSection.ExternalLinks,
                     ),

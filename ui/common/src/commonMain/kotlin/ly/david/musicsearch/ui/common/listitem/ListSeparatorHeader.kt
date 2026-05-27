@@ -4,25 +4,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.ui.common.icons.CustomIcons
-import ly.david.musicsearch.ui.common.icons.PhotoLibrary
-import ly.david.musicsearch.ui.common.theme.STANDARD_ICON_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
-import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.numberOfImages
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ListSeparatorHeader(
@@ -54,48 +44,4 @@ fun ListSeparatorHeader(
             }
         }
     }
-}
-
-@Composable
-fun ListSeparatorHeader(
-    text: String,
-    numberOfImages: Int?,
-    modifier: Modifier = Modifier,
-) {
-    val endContent: @Composable (() -> Unit)? = if (numberOfImages == null) {
-        null
-    } else {
-        {
-            Surface(modifier = Modifier) {
-                Row(
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 8.dp,
-                        )
-                        .padding(
-                            top = 8.dp,
-                            bottom = 4.dp,
-                        )
-                        .semantics(mergeDescendants = true) {},
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        modifier = Modifier.size(STANDARD_ICON_SIZE.dp),
-                        imageVector = CustomIcons.PhotoLibrary,
-                        contentDescription = stringResource(Res.string.numberOfImages),
-                    )
-                    Text(
-                        text = numberOfImages.toString(),
-                        modifier = Modifier
-                            .padding(start = 4.dp),
-                    )
-                }
-            }
-        }
-    }
-    ListSeparatorHeader(
-        text = text,
-        modifier = modifier,
-        endContent = endContent,
-    )
 }

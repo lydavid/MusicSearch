@@ -77,6 +77,10 @@ internal fun ArtistDetailsTabUi(
                         areaListItemModel = areaListItemModel,
                         filterText = filterText,
                         onItemClick = onItemClick,
+                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                        onCollapseExpand = {
+                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                        },
                     )
                 }
 

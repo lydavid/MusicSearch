@@ -9,7 +9,9 @@ import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.label.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
@@ -32,6 +34,8 @@ internal fun LabelDetailsTabUi(
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     snackbarHostState: SnackbarHostState,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     DetailsTabUi(
         detailsModel = label,
         detailsTabUiState = detailsTabUiState,
@@ -86,12 +90,21 @@ internal fun LabelDetailsTabUi(
                     )
                 }
             }
-
-            AreaSection(
-                areaListItemModel = area,
-                filterText = filterText,
-                onItemClick = onItemClick,
-            )
+        },
+        bringYourOwnLabelsSection = {
+            item {
+                label.area?.let { area ->
+                    AreaSection(
+                        areaListItemModel = area,
+                        filterText = filterText,
+                        onItemClick = onItemClick,
+                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                        onCollapseExpand = {
+                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                        },
+                    )
+                }
+            }
         },
     )
 }

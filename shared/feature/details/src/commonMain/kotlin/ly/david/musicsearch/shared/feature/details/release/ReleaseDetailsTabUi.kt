@@ -36,7 +36,6 @@ import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.StarFilled
 import ly.david.musicsearch.ui.common.label.LabelListItem
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.relation.UrlListItem
 import ly.david.musicsearch.ui.common.release.getDisplayString
 import ly.david.musicsearch.ui.common.releasegroup.getDisplayString
@@ -175,16 +174,20 @@ internal fun ReleaseDetailsTabUi(
                 labels = labels,
                 filterText = filterText,
                 onItemClick = onItemClick,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Labels),
+                onCollapseExpand = {
+                    eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Labels))
+                },
             )
 
             releaseEventsSection(
-                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ReleaseEvents),
                 areas = areas,
                 filterText = filterText,
-                onCollapseExpandReleaseEvents = {
+                onItemClick = onItemClick,
+                collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.ReleaseEvents),
+                onCollapseExpand = {
                     eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.ReleaseEvents))
                 },
-                onItemClick = onItemClick,
             )
 
             listenSection(
@@ -232,6 +235,8 @@ private fun LazyListScope.releaseLabelsSection(
     labels: ImmutableList<LabelListItemModel>,
     filterText: String,
     onItemClick: MusicBrainzItemClickHandler,
+    collapsed: Boolean,
+    onCollapseExpand: () -> Unit,
 ) {
     val filteredLabels = labels.filter { label ->
         val searchText = filterText.lowercase()
@@ -248,31 +253,38 @@ private fun LazyListScope.releaseLabelsSection(
                 filteredCount = filteredLabels.size,
                 total = labels.size,
             )
-            ListSeparatorHeader(stringResource(Res.string.labels) + " $numberOfFilteredItems")
+            CollapsibleListSeparatorHeader(
+                text = stringResource(Res.string.labels) + " $numberOfFilteredItems",
+                collapsed = collapsed,
+                onClick = onCollapseExpand,
+            )
         }
     }
-    items(filteredLabels) { label ->
-        LabelListItem(
-            label = label,
-            filterText = filterText,
-            onLabelClick = {
-                onItemClick(
-                    MusicBrainzEntityType.LABEL,
-                    id,
-                )
-            },
-            showIcon = false,
-            showEditCollection = false,
-        )
+
+    if (!collapsed) {
+        items(filteredLabels) { label ->
+            LabelListItem(
+                label = label,
+                filterText = filterText,
+                onLabelClick = {
+                    onItemClick(
+                        MusicBrainzEntityType.LABEL,
+                        id,
+                    )
+                },
+                showIcon = false,
+                showEditCollection = false,
+            )
+        }
     }
 }
 
 private fun LazyListScope.releaseEventsSection(
-    collapsed: Boolean,
     areas: ImmutableList<AreaListItemModel>,
     filterText: String,
-    onCollapseExpandReleaseEvents: () -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
+    collapsed: Boolean,
+    onCollapseExpand: () -> Unit,
 ) {
     val filteredAreas = areas.filter { area ->
         val searchText = filterText.lowercase()
@@ -290,7 +302,7 @@ private fun LazyListScope.releaseEventsSection(
             CollapsibleListSeparatorHeader(
                 text = stringResource(Res.string.releaseEvents) + " $numberOfFilteredItems",
                 collapsed = collapsed,
-                onClick = onCollapseExpandReleaseEvents,
+                onClick = onCollapseExpand,
             )
         }
     }

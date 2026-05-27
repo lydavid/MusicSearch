@@ -8,7 +8,9 @@ import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.details.PlaceDetailsModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.shared.feature.details.area.AreaSection
+import ly.david.musicsearch.shared.feature.details.utils.CollapsibleSection
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
+import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
@@ -31,6 +33,8 @@ internal fun PlaceDetailsTabUi(
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     snackbarHostState: SnackbarHostState,
 ) {
+    val eventSink = detailsTabUiState.eventSink
+
     DetailsTabUi(
         detailsModel = place,
         detailsTabUiState = detailsTabUiState,
@@ -68,23 +72,36 @@ internal fun PlaceDetailsTabUi(
                     filterText = filterText,
                 )
             }
-
-            area?.ifNotNull {
-                AreaSection(
-                    areaListItemModel = it,
-                    filterText = filterText,
-                    onItemClick = onItemClick,
-                )
+        },
+        bringYourOwnLabelsSection = {
+            place.area?.ifNotNull { area ->
+                item {
+                    AreaSection(
+                        areaListItemModel = area,
+                        filterText = filterText,
+                        onItemClick = onItemClick,
+                        collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
+                        onCollapseExpand = {
+                            eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
+                        },
+                    )
+                }
             }
 
-            coordinates.let {
-                ListSeparatorHeader(stringResource(Res.string.coordinates))
-                val label = place.name +
-                    if (place.lifeSpan.ended) " (${stringResource(Res.string.closed)})" else ""
-                CoordinateListItem(
-                    coordinates = it,
-                    label = label,
-                )
+            val coordinates = place.coordinates
+            val showCoordinates = coordinates.latitude != null && coordinates.longitude != null
+            if (showCoordinates) {
+                item {
+                    // TODO: either support collapsing coordinates, or move it under place information
+                    //  but then we need to support clicking on rows there
+                    ListSeparatorHeader(stringResource(Res.string.coordinates))
+                    val label = place.name +
+                        if (place.lifeSpan.ended) " (${stringResource(Res.string.closed)})" else ""
+                    CoordinateListItem(
+                        coordinates = coordinates,
+                        label = label,
+                    )
+                }
             }
         },
     )

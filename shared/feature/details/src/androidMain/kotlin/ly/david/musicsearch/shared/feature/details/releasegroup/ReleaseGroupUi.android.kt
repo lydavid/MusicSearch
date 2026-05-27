@@ -89,6 +89,8 @@ internal fun PreviewReleaseGroupDetailsUiCollapsed() {
             state = detailsUiState.copy(
                 detailsTabUiState = detailsTabUiState.copy(
                     isSectionCollapsed = persistentSetOf(
+                        CollapsibleSection.Information,
+                        CollapsibleSection.Wikipedia,
                         CollapsibleSection.ExternalLinks,
                         CollapsibleSection.Aliases,
                     ),

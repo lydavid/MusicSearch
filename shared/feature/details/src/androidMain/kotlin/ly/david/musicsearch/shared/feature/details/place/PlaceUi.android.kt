@@ -15,6 +15,27 @@ import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import kotlin.time.Instant
 
+private val place = PlaceDetailsModel(
+    id = "p1",
+    name = "Some Place",
+    type = PlaceType.Venue,
+    address = "123 Fake St",
+    coordinates = CoordinatesUiModel(
+        -123.4567,
+        123.4567,
+    ),
+    lifeSpan = LifeSpanUiModel(
+        begin = "2022-01-01",
+        end = "2022-12-10",
+        ended = true,
+    ),
+    area = AreaListItemModel(
+        id = "a1",
+        "Area",
+        "that one",
+    ),
+    lastUpdated = Instant.parse("2025-05-05T20:42:20Z"),
+)
 private val detailsUiState = DetailsUiState(
     browseMethod = BrowseMethod.ByEntity(
         entityId = "p1",
@@ -22,27 +43,7 @@ private val detailsUiState = DetailsUiState(
     ),
     tabs = placeTabs,
     selectedTab = Tab.DETAILS,
-    detailsModel = PlaceDetailsModel(
-        id = "p1",
-        name = "Some Place",
-        type = PlaceType.Venue,
-        address = "123 Fake St",
-        coordinates = CoordinatesUiModel(
-            -123.4567,
-            123.4567,
-        ),
-        lifeSpan = LifeSpanUiModel(
-            begin = "2022-01-01",
-            end = "2022-12-10",
-            ended = true,
-        ),
-        area = AreaListItemModel(
-            id = "a1",
-            "Area",
-            "that one",
-        ),
-        lastUpdated = Instant.parse("2025-05-05T20:42:20Z"),
-    ),
+    detailsModel = place,
     detailsTabUiState = DetailsTabUiState(
         now = Instant.parse("2025-06-05T20:42:20Z"),
     ),
@@ -54,6 +55,20 @@ internal fun PreviewPlaceDetailsUi() {
     PreviewWithTransitionAndOverlays {
         PlaceUi(
             state = detailsUiState,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewPlaceDetailsUiWithoutCoordinates() {
+    PreviewWithTransitionAndOverlays {
+        PlaceUi(
+            state = detailsUiState.copy(
+                detailsModel = place.copy(
+                    coordinates = CoordinatesUiModel(),
+                ),
+            ),
         )
     }
 }

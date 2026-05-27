@@ -11,32 +11,4 @@ class ListSeparatorHeaderTest : ScreenshotTest() {
             PreviewListSeparatorHeader()
         }
     }
-
-    @Test
-    fun listSeparatorHeaderWithUnknownNumberOfImages() {
-        snapshot {
-            PreviewListSeparatorHeaderWithUnknownNumberOfImages()
-        }
-    }
-
-    @Test
-    fun listSeparatorHeaderWithZeroImages() {
-        snapshot {
-            PreviewListSeparatorHeaderWithZeroImages()
-        }
-    }
-
-    @Test
-    fun listSeparatorHeaderWithOneImage() {
-        snapshot {
-            PreviewListSeparatorHeaderWithOneImage()
-        }
-    }
-
-    @Test
-    fun listSeparatorHeaderWithMultipleImages() {
-        snapshot {
-            PreviewListSeparatorHeaderWithMultipleImages()
-        }
-    }
 }
