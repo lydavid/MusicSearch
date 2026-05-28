@@ -11,9 +11,12 @@ import ly.david.data.test.itouKanakoArtistListItemModel
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.data.test.variousArtistsArtistListItemModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
+import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
+import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
@@ -52,6 +55,7 @@ class EntitiesListPresenterTest {
         areasListItems: List<ListItemModel>,
         artistsListItems: List<ListItemModel>,
         relationListItems: List<ListItemModel> = listOf(),
+        trackListItems: List<ListItemModel> = listOf(),
     ) = AllEntitiesListPresenter(
         areasListPresenter = AreasListPresenter(
             getEntities = FakeGetEntities(areasListItems),
@@ -151,7 +155,7 @@ class EntitiesListPresenterTest {
                     releaseId: String,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
-                    return flowOf(PagingData.from(areasListItems))
+                    return flowOf(PagingData.from(trackListItems))
                 }
             },
             getTracksIdsByRelease = object : GetTrackIdsByRelease {
@@ -159,11 +163,38 @@ class EntitiesListPresenterTest {
                     return listOf()
                 }
             },
+            observeTrackCount = object : ObserveTrackCount {
+                override fun invoke(
+                    releaseId: String,
+                    query: String,
+                ): Flow<Int> {
+                    return flowOf(123)
+                }
+            },
         ),
     )
 
     @Test
     fun `parameters are passed through`() = runTest {
+        val trackListItems = listOf(
+            ListSeparator(
+                id = "1",
+                text = "1・CD",
+            ),
+            TrackListItemModel(
+                id = "c",
+                position = 1,
+                number = "1",
+                name = "Demo",
+                length = 18733,
+                mediumId = 2,
+                recordingId = "994b2961-3527-43f7-830d-7c817d286577",
+                mediumPosition = 1,
+                trackCount = 1,
+                format = "CD",
+            ),
+        )
+
         val presenter = createPresenter(
             areasListItems = listOf(
                 AreaListItemModel(
@@ -176,6 +207,7 @@ class EntitiesListPresenterTest {
                 variousArtistsArtistListItemModel,
                 itouKanakoArtistListItemModel,
             ),
+            trackListItems = trackListItems,
         )
 
         presenterTestOf({ presenter.present() }) {
@@ -243,7 +275,34 @@ class EntitiesListPresenterTest {
                     2,
                     artistsListUiState.totalCount,
                 )
+
+                eventSink(
+                    AllEntitiesListUiEvent.Get(
+                        tab = Tab.TRACKS,
+                        browseMethod = BrowseMethod.ByEntity(
+                            entityId = "a",
+                            entityType = MusicBrainzEntityType.RELEASE,
+                        ),
+                        query = "",
+                        isRemote = true,
+                    ),
+                )
             }
+            awaitItem().run {
+                assertEquals(
+                    trackListItems,
+                    tracksByReleaseUiState.pagingDataFlow.asSnapshot(),
+                )
+                assertEquals(
+                    123,
+                    tracksByReleaseUiState.totalCount,
+                )
+                assertEquals(
+                    123,
+                    tracksByReleaseUiState.filteredCount,
+                )
+            }
+            awaitEvent()
         }
     }
 }

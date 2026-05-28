@@ -4,7 +4,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.paging.PagingData
-import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +12,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
+import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
 @PreviewLightDark
 @Composable
@@ -148,10 +148,14 @@ internal fun PreviewTracksByReleaseUi() {
             )
 
             TracksByReleaseUi(
-                lazyPagingItems = items.collectAsLazyPagingItems(),
+                uiState = TracksByReleaseUiState(
+                    pagingDataFlow = items,
+                    collapsedMediumIds = persistentSetOf(2),
+                    mostListenedTrackCount = 10,
+                    totalCount = 52,
+                    filteredCount = 5,
+                ),
                 filterText = "い",
-                mostListenedTrackCount = 10,
-                collapsedMediumIds = persistentSetOf(2),
             )
         }
     }

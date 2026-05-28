@@ -3,6 +3,7 @@ package ly.david.musicsearch.ui.common.paging
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.paging.compose.LazyPagingItems
+import ly.david.musicsearch.shared.domain.list.FilteredCount
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -12,10 +13,10 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 data class EntitiesPagingListUiState(
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState,
-    val totalCount: Int = 0,
-    val filteredCount: Int = 0,
+    override val totalCount: Int = 0,
+    override val filteredCount: Int = 0,
     val showMoreInfo: Boolean = true,
-)
+) : FilteredCount
 
 @Composable
 fun AllEntitiesListUiState.toEntitiesPagingListUiState(

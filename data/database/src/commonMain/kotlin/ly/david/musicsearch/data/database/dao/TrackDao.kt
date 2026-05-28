@@ -73,10 +73,21 @@ class TrackDao(
         }
     }
 
-    fun observeCountOfTracksByRelease(releaseId: String): Flow<Int> =
-        transacter.getCountOfTracksByRelease(
+    private fun getCountOfTracksByReleaseQuery(
+        releaseId: String,
+        query: String,
+    ) = transacter.getCountOfTracksByRelease(
+        releaseId = releaseId,
+        query = "%$query%",
+    )
+
+    fun observeCountOfTracksByRelease(
+        releaseId: String,
+        query: String,
+    ): Flow<Int> =
+        getCountOfTracksByReleaseQuery(
             releaseId = releaseId,
-            query = "%%",
+            query = query,
         )
             .asFlow()
             .mapToOne(coroutineDispatchers.io)
@@ -89,9 +100,9 @@ class TrackDao(
     ): PagingSource<Int, TrackAndMedium> {
         val queryWithWildcards = "%$query%"
         return QueryPagingSource(
-            countQuery = transacter.getCountOfTracksByRelease(
+            countQuery = getCountOfTracksByReleaseQuery(
                 releaseId = releaseId,
-                query = queryWithWildcards,
+                query = query,
             ),
             transacter = transacter,
             context = coroutineDispatchers.io,

@@ -1,7 +1,5 @@
 package ly.david.musicsearch.shared.feature.details.release
 
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
@@ -10,22 +8,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
+import ly.david.musicsearch.ui.common.paging.createFilteredCountHeader
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 
+/**
+ * Shows all tracks in all media in this release.
+ *
+ * Tracks are recordings that are part of a release. A track references a recording,
+ * but some of its details (e.g. name) might be different for a given release.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
@@ -39,46 +42,6 @@ internal fun TracksByReleaseUi(
 ) {
     val eventSink = uiState.eventSink
 
-    TracksByReleaseUi(
-        lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
-        filterText = filterText,
-        mostListenedTrackCount = uiState.mostListenedTrackCount,
-        modifier = modifier,
-        lazyListState = uiState.lazyListState,
-        onRecordingClick = onRecordingClick,
-        collapsedMediumIds = uiState.collapsedMediumIds,
-        onToggleMedium = { id ->
-            eventSink(TracksByReleaseUiEvent.ToggleMedium(id))
-        },
-        selectedIds = selectedIds,
-        onSelect = onSelect,
-        onEditCollectionClick = onEditCollectionClick,
-        onSubmitListenClick = onSubmitListenClick,
-    )
-}
-
-/**
- * Shows all tracks in all media in this release.
- *
- * Tracks are recordings that are part of a release. A track references a recording,
- * but some of its details (e.g. name) might be different for a given release.
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun TracksByReleaseUi(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
-    filterText: String,
-    mostListenedTrackCount: Long,
-    modifier: Modifier = Modifier,
-    lazyListState: LazyListState = rememberLazyListState(),
-    collapsedMediumIds: ImmutableSet<Long> = persistentSetOf(),
-    onToggleMedium: (id: String) -> Unit = {},
-    onRecordingClick: (id: String) -> Unit = {},
-    selectedIds: ImmutableList<SelectableId> = persistentListOf(),
-    onSelect: (SelectableId) -> Unit = {},
-    onEditCollectionClick: (String) -> Unit = {},
-    onSubmitListenClick: (track: TrackListItemModel) -> Unit = {},
-) {
     var showBottomSheetForTrack: TrackListItemModel? by remember { mutableStateOf(null) }
     showBottomSheetForTrack?.let { track ->
         ModalBottomSheet(
@@ -93,19 +56,21 @@ internal fun TracksByReleaseUi(
         }
     }
 
-    // TODO: show how many tracks out of total are shown when filtering
+    val header = uiState.createFilteredCountHeader()
+
     ScreenWithPagingLoadingAndError(
-        lazyPagingItems = lazyPagingItems,
+        lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
         modifier = modifier,
-        lazyListState = lazyListState,
+        lazyListState = uiState.lazyListState,
+        header = header,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is TrackListItemModel -> {
-                if (!collapsedMediumIds.contains(listItemModel.mediumId)) {
+                if (!uiState.collapsedMediumIds.contains(listItemModel.mediumId)) {
                     TrackListItem(
                         track = listItemModel,
                         filterText = filterText,
-                        mostListenedTrackCount = mostListenedTrackCount,
+                        mostListenedTrackCount = uiState.mostListenedTrackCount,
                         onRecordingClick = onRecordingClick,
                         isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
                         onSelect = onSelect,
@@ -117,8 +82,10 @@ internal fun TracksByReleaseUi(
             is ListSeparator -> {
                 CollapsibleListSeparatorHeader(
                     text = listItemModel.text,
-                    collapsed = collapsedMediumIds.contains(listItemModel.id.toLong()),
-                    onClick = { onToggleMedium(listItemModel.id) },
+                    collapsed = uiState.collapsedMediumIds.contains(listItemModel.id.toLong()),
+                    onClick = {
+                        eventSink(TracksByReleaseUiEvent.ToggleMedium(listItemModel.id))
+                    },
                 )
             }
 

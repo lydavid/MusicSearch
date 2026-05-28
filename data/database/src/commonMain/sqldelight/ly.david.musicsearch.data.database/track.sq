@@ -27,25 +27,34 @@ SET recording_id = :newId
 WHERE recording_id = :oldId;
 
 getCountOfTracksByRelease:
-SELECT IFNULL(
-  (
-    SELECT COUNT(DISTINCT track.id)
-    FROM track
-    INNER JOIN medium ON track.medium_id = medium.id
-    INNER JOIN `release` r ON medium.release_id = r.id
-    INNER JOIN artist_credit_entity ON artist_credit_entity.entity_id = track.id
-    INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
-    LEFT JOIN recording_alias ON track.recording_id = recording_alias.recording_id
-    WHERE r.id = :releaseId
-    AND (
-      track.title LIKE :query OR
-      track.number LIKE :query OR
-      artist_credit.name LIKE :query OR
-      recording_alias.name LIKE :query
-    )
-  ),
-  0
-) AS count;
+SELECT COUNT(DISTINCT track.id)
+FROM track
+INNER JOIN medium ON track.medium_id = medium.id
+INNER JOIN `release` ON medium.release_id = `release`.id
+INNER JOIN artist_credit_entity ON artist_credit_entity.entity_id = track.id
+INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary AND recording_alias.recording_id IN (
+    SELECT recording.id
+    FROM recording
+    INNER JOIN track t ON t.recording_id = recording.id
+    INNER JOIN medium m ON t.medium_id = m.id
+    WHERE m.release_id = :releaseId
+  )
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = track.recording_id
+WHERE `release`.id = :releaseId
+AND (
+  track.title LIKE :query OR
+  track.number LIKE :query OR
+  artist_credit.name LIKE :query OR
+  aliases.alias_names LIKE :query
+);
 
 -- we join artist_credit again so that we can filter on the full artist credit name
 getTracksByRelease:

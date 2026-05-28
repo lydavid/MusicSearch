@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -22,6 +23,8 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.musicsearch.shared.domain.list.FilteredCount
+import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
@@ -30,6 +33,7 @@ import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
 class TracksByReleasePresenter(
     private val observeTracksByRelease: ObserveTracksByRelease,
     private val getTracksIdsByRelease: GetTrackIdsByRelease,
+    private val observeTrackCount: ObserveTrackCount,
 ) : Presenter<TracksByReleaseUiState> {
     @Composable
     override fun present(): TracksByReleaseUiState {
@@ -53,6 +57,15 @@ class TracksByReleasePresenter(
         }
         val lazyListState: LazyListState = rememberLazyListState()
         var collapsedMediumIds: Set<Long> by rememberSaveable { mutableStateOf(setOf()) }
+
+        val totalCount by observeTrackCount(
+            releaseId = releaseId,
+            query = "",
+        ).collectAsRetainedState(0)
+        val filteredCount by observeTrackCount(
+            releaseId = releaseId,
+            query = query,
+        ).collectAsRetainedState(0)
 
         fun eventSink(event: TracksByReleaseUiEvent) {
             when (event) {
@@ -82,6 +95,8 @@ class TracksByReleasePresenter(
             collapsedMediumIds = collapsedMediumIds.toPersistentSet(),
             trackIds = trackIds.toPersistentList(),
             mostListenedTrackCount = mostListenedTrackCount,
+            totalCount = totalCount,
+            filteredCount = filteredCount,
             eventSink = { event ->
                 eventSink(event = event)
             },
@@ -96,8 +111,10 @@ data class TracksByReleaseUiState(
     val collapsedMediumIds: ImmutableSet<Long> = persistentSetOf(),
     val trackIds: ImmutableList<SelectableId> = persistentListOf(),
     val mostListenedTrackCount: Long = 0L,
+    override val totalCount: Int = 0,
+    override val filteredCount: Int = 0,
     val eventSink: (TracksByReleaseUiEvent) -> Unit = {},
-) : CircuitUiState
+) : CircuitUiState, FilteredCount
 
 sealed interface TracksByReleaseUiEvent : CircuitUiEvent {
     data class Get(
