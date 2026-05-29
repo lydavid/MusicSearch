@@ -379,6 +379,7 @@ stable class ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState {
 stable class ly.david.musicsearch.ui.common.track.TracksByReleasePresenter {
   unstable val observeTracksByRelease: ObserveTracksByRelease
   unstable val getTracksIdsByRelease: GetTrackIdsByRelease
+  unstable val observeTrackCount: ObserveTrackCount
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
@@ -387,6 +388,8 @@ stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
   stable val collapsedMediumIds: ImmutableSet<Long>
   runtime val trackIds: ImmutableList<SelectableId>
   stable val mostListenedTrackCount: Long
+  stable val totalCount: Int
+  stable val filteredCount: Int
   stable val eventSink: Function1<TracksByReleaseUiEvent, Unit>
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.Get {

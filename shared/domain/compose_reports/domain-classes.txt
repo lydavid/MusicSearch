@@ -25,6 +25,10 @@ stable class ly.david.musicsearch.shared.domain.alias.BasicAlias {
   stable val ended: Boolean
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.app.AndroidBuildConfig {
+  stable val isDebug: Boolean
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.app.AppInfo {
   stable val versionName: String
   stable val versionCode: Int

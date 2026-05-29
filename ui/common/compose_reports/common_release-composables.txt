@@ -48,6 +48,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderExpanded()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderWithEndContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderWithAdditionalContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedFooterItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedText()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextDifferentBeginAndEnd()
@@ -55,10 +56,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextBeginOnly()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextEndOnly()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeader()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeaderWithUnknownNumberOfImages()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeaderWithZeroImages()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeaderWithOneImage()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeaderWithMultipleImages()
 open fun ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenterImpl.present(
   stable <this>: MusicBrainzLoginPresenterImpl
 ): MusicBrainzLoginUiState
@@ -216,7 +213,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.OverflowMenu(
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable contentDescription: String? = @dynamic <expression>
-  stable useIconButton: Boolean = @static true
+  stable minimumInteractiveComponentSize: Int = @static 48
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.RetryButton(
   stable modifier: Modifier? = @static <expression>
@@ -408,11 +405,13 @@ open scheme("[presenter]") fun ly.david.musicsearch.ui.common.list.AllEntitiesLi
 open fun ly.david.musicsearch.ui.common.list.BaseListPresenter.present(
   stable <this>: BaseListPresenter
 ): EntitiesListUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
   stable text: String
   stable collapsed: Boolean
   stable modifier: Modifier? = @static <expression>
+  stable verticalPadding: Dp = @static <expression>
   stable onClick: Function0<Unit>? = @static <expression>
+  stable additionalContent: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static null
   stable endContent: Function2<Composer, Int, Unit>? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.HighlightableText(
@@ -468,11 +467,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable modifier: Modifier? = @static <expression>
   stable endContent: Function2<Composer, Int, Unit>? = @static null
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader(
-  stable text: String
-  stable numberOfImages: Int?
-  stable modifier: Modifier? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem(
   stable modifier: Modifier? = @static <expression>
   stable disable: Boolean = @static false
@@ -502,6 +496,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onDismiss: Function0<Unit>
   stable onSubmit: Function1<String, Unit>
 )
+fun ly.david.musicsearch.ui.common.paging.createFilteredCountHeader(
+  unstable <this>: FilteredCount
+): Function2<Composer, Int, Unit>?
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi(
   uiState: EntitiesPagingListUiState
   stable filterText: String
@@ -735,7 +732,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable imageVector: ImageVector
   stable text: String
   stable modifier: Modifier? = @static <expression>
-  stable iconSize: Int = @static 24
+  stable iconSize: Int = @static 20
   stable iconTint: Color = @dynamic <expression>
   stable contentDescription: String? = @static null
   stable textStyle: TextStyle? = @dynamic <expression>
@@ -961,11 +958,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 open fun ly.david.musicsearch.ui.common.track.TracksByReleasePresenter.present(
   stable <this>: TracksByReleasePresenter
 ): TracksByReleaseUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.wikimedia.WikipediaSection(
-  extract: WikipediaExtract
-  stable modifier: Modifier? = @static <expression>
-  stable filterText: String? = @static ""
-)
 fun ly.david.musicsearch.ui.common.work.getDisplayScript(
   stable <this>: String
 ): String?
