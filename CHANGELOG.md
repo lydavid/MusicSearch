@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.119.0](https://github.com/lydavid/MusicSearch/compare/v1.118.0...v1.119.0) (2026-05-29)
+
+
+### Features
+
+* show number of items shown out of total as a header list item when filtering Tracks ([18e7985](https://github.com/lydavid/MusicSearch/commit/18e79852bc329a5d969322c31dcd6430e2711a37))
+
 ## [1.118.0](https://github.com/lydavid/MusicSearch/compare/v1.117.0...v1.118.0) (2026-05-27)
 
 
