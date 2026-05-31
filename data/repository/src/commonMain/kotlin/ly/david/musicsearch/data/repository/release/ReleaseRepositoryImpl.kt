@@ -122,9 +122,10 @@ class ReleaseRepositoryImpl(
             releaseId = entityId,
             include = include +
                 "+artist-credits" +
-                "+labels" + // gives us labels (alternatively, we can get them from rels)
+                "+labels" +
                 "+recordings" + // gives us tracks
-                "+release-groups", // gives us types
+                "+release-groups" + // gives us types
+                "+isrcs",
         )
     }
 
