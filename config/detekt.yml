@@ -42,7 +42,7 @@ style:
   ReturnCount:
     excludeGuardClauses: true
   UnusedPrivateProperty:
-    allowedNames: '(_|ignored|expected|((android(UnitTest|InstrumentedTest)?|common|ios|jvm)(Main|Test)?))'
+    allowedNames: '(_|ignored|expected|((android(HostTest|DeviceTest)?|common|ios|jvm)(Main|Test)?))'
   UnusedPrivateMember:
     ignoreAnnotated:
       - "PreviewManyDevices"
