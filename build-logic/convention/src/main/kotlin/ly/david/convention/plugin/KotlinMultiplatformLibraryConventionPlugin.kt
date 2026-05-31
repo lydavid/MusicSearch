@@ -4,11 +4,13 @@ import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.HasHostTests
 import ly.david.convention.configureDetekt
+import ly.david.convention.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 @Suppress("unused")
@@ -36,6 +38,10 @@ class KotlinMultiplatformLibraryConventionPlugin : Plugin<Project> {
                 }
             }
 
+            dependencies {
+                add("coreLibraryDesugaring", libs.findLibrary("desugarjdklibs").get())
+            }
+
             configureKotlin()
             configureDetekt()
         }
@@ -51,6 +57,8 @@ private fun KotlinMultiplatformExtension.configureMultiplatformAndroid() {
         withHostTest {
             isIncludeAndroidResources = true
         }
+
+        enableCoreLibraryDesugaring = true
 
         // Not required at the moment.
         // A module that needs this should enable it for itself.
