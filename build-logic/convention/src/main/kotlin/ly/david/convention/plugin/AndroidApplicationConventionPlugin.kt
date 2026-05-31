@@ -2,10 +2,12 @@ package ly.david.convention.plugin
 
 import com.android.build.api.dsl.ApplicationExtension
 import ly.david.convention.configureDetekt
+import ly.david.convention.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 
 const val COMPILE_SDK_VERSION = 36
 private const val MIN_SDK_VERSION = 24
@@ -38,12 +40,12 @@ private fun Project.configureAndroid() {
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_21
             targetCompatibility = JavaVersion.VERSION_21
-//                isCoreLibraryDesugaringEnabled = true
+            isCoreLibraryDesugaringEnabled = true
         }
 
-//            dependencies {
-//                add("coreLibraryDesugaring", libs.findLibrary("desugarjdklibs").get())
-//            }
+        dependencies {
+            add("coreLibraryDesugaring", libs.findLibrary("desugarjdklibs").get())
+        }
     }
 }
 
