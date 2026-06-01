@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.119.1](https://github.com/lydavid/MusicSearch/compare/v1.119.0...v1.119.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* include ISRCs when fetching a release's tracks' recording, so we do not remove a visited recording's ISRCs ([877947f](https://github.com/lydavid/MusicSearch/commit/877947f7de230e69643d18b5154a5f5e77cccb93))
+
 ## [1.119.0](https://github.com/lydavid/MusicSearch/compare/v1.118.0...v1.119.0) (2026-05-29)
 
 
