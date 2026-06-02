@@ -35,14 +35,14 @@
                     "name": "The Android Open Source Project"
                 }
             ],
-            "artifactVersion": "1.9.1",
+            "artifactVersion": "1.10.0",
             "description": "Provides source annotations for tooling and readability.",
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
             },
             "name": "Annotation",
-            "website": "https://developer.android.com/jetpack/androidx/releases/annotation#1.9.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/annotation#1.10.0",
             "licenses": [
                 "Apache-2.0"
             ],
@@ -1517,7 +1517,7 @@
                     "name": "usuiat"
                 }
             ],
-            "artifactVersion": "2.11.1",
+            "artifactVersion": "2.12.0",
             "description": "An android library for Jetpack Compose that enables contents zoomable.",
             "scm": {
                 "connection": "scm:git:git://github.com/usuiat/Zoomable.git",
