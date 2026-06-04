@@ -9,7 +9,6 @@ import ly.david.musicsearch.shared.domain.auth.usecase.MusicBrainzLogout
 internal class MusicBrainzLogoutImpl(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzUserApi: MusicBrainzUserApi,
-    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val logger: Logger,
 ) : MusicBrainzLogout {
     override suspend operator fun invoke() {
@@ -18,8 +17,6 @@ internal class MusicBrainzLogoutImpl(
         try {
             musicBrainzUserApi.logout(
                 token = refreshToken,
-                clientId = musicBrainzOAuthInfo.clientId,
-                clientSecret = musicBrainzOAuthInfo.clientSecret,
             )
         } catch (ex: CancellationException) {
             throw ex

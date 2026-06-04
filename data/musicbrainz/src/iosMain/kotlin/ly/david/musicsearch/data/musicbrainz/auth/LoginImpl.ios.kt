@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.musicbrainz.auth
 import io.ktor.http.Url
 import io.ktor.http.encodeURLPath
 import kotlinx.coroutines.suspendCancellableCoroutine
-import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_OAUTH_SCOPE
 import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import ly.david.musicsearch.shared.domain.auth.Login
@@ -25,7 +24,7 @@ internal class LoginImpl(
     // Inspiration from https://github.com/kalinjul/kotlin-multiplatform-oidc/blob/main/oidc-appsupport/src/iosMain/kotlin/org/publicvalue/multiplatform/oidc/appsupport/PlatformCodeAuthFlow.ios.kt
     override suspend operator fun invoke(): Boolean {
         val requestUrl = NSURL.URLWithString(
-            URLString = MUSIC_BRAINZ_OAUTH_AUTHORIZATION_URL +
+            URLString = musicBrainzOAuthInfo.authorizationEndpoint +
                 "?response_type=code" +
                 "&client_id=${musicBrainzOAuthInfo.clientId}" +
                 "&redirect_uri=$APPLICATION_ID://oauth2/redirect" +

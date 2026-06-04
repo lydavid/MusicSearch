@@ -5,7 +5,6 @@ import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzUserApi
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 
 internal class GetAndSaveToken(
-    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val musicBrainzUserApi: MusicBrainzUserApi,
 ) {
@@ -16,7 +15,6 @@ internal class GetAndSaveToken(
         val response = musicBrainzUserApi.getTokens(
             authCode = authorizationCode,
             codeVerifier = codeVerifier,
-            musicBrainzOAuthInfo = musicBrainzOAuthInfo,
         )
         musicBrainzAuthStore.saveTokens(
             accessToken = response.accessToken,

@@ -6,6 +6,7 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.shared.domain.network.RESOURCE_COLLECTION
 
 interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi, TagApi {
@@ -46,6 +47,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
 
             return MusicBrainzApiImpl(
                 httpClient = extendedClient,
+                musicBrainzOAuthInfo = musicBrainzAuthRepository.musicBrainzOAuthInfo,
             )
         }
     }
@@ -53,4 +55,5 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
 
 class MusicBrainzApiImpl(
     override val httpClient: HttpClient,
+    override val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 ) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzUserApiImpl, TagApiImpl, MusicBrainzApi

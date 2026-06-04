@@ -7,7 +7,7 @@ import kotlin.time.Clock
 private const val REFRESH_TOKEN = "refresh_token"
 
 class MusicBrainzAuthRepository(
-    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+    val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzOAuthApi: MusicBrainzOAuthApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) {
@@ -20,8 +20,7 @@ class MusicBrainzAuthRepository(
         val hasExpired = (expiryTime ?: 0L) < Clock.System.now().epochSeconds
         return if (hasExpired) {
             val musicBrainzOAuthResponse = musicBrainzOAuthApi.getAccessToken(
-                clientId = musicBrainzOAuthInfo.clientId,
-                clientSecret = musicBrainzOAuthInfo.clientSecret,
+                musicBrainzOAuthInfo = musicBrainzOAuthInfo,
                 grantType = REFRESH_TOKEN,
                 refreshToken = refreshToken,
             )

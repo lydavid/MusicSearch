@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.musicbrainz.auth.api
 
 import io.ktor.client.HttpClient
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 
 interface MusicBrainzOAuthApi {
 
@@ -15,8 +16,7 @@ interface MusicBrainzOAuthApi {
     }
 
     suspend fun getAccessToken(
-        clientId: String,
-        clientSecret: String,
+        musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
         grantType: String,
         refreshToken: String,
     ): AccessToken
