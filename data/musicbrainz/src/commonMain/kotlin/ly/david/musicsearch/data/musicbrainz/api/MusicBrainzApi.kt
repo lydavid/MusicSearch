@@ -7,18 +7,19 @@ import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
 import ly.david.musicsearch.shared.domain.network.RESOURCE_COLLECTION
 
 interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi, TagApi {
     companion object {
         fun create(
             httpClient: HttpClient,
-            musicBrainzBaseUrl: String,
+            musicbrainzRepository: MusicbrainzRepository,
             musicBrainzAuthRepository: MusicBrainzAuthRepository,
         ): MusicBrainzApi {
             val extendedClient = httpClient.config {
                 defaultRequest {
-                    url("$musicBrainzBaseUrl/ws/2/")
+                    url("${musicbrainzRepository.getBaseUrl()}/ws/2/")
                 }
                 install(Auth) {
                     bearer {

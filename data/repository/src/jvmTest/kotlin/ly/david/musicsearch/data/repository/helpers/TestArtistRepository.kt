@@ -63,6 +63,10 @@ interface TestArtistRepository {
                 override fun getBaseUrl(): String {
                     return ""
                 }
+
+                override fun getBaseApiUrl(): String {
+                    return ""
+                }
             },
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArtist(

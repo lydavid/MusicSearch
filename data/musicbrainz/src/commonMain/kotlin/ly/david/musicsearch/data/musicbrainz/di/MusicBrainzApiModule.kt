@@ -22,7 +22,7 @@ val musicBrainzApiModule = module {
     single<MusicBrainzApi> {
         MusicBrainzApi.create(
             httpClient = get(),
-            musicBrainzBaseUrl = get<MusicbrainzRepository>().getBaseUrl(),
+            musicbrainzRepository = get<MusicbrainzRepository>(),
             musicBrainzAuthRepository = get(),
         )
     } binds arrayOf(

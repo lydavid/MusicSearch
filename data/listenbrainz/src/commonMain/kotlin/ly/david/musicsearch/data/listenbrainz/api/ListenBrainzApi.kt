@@ -19,9 +19,8 @@ import ly.david.musicsearch.shared.domain.MS_IN_SECOND
 import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listen.ListenSubmission
-
-private const val API_BASE_URL = "https://api.listenbrainz.org/1/"
 
 private const val AUTHORIZATION = "Authorization"
 
@@ -65,10 +64,11 @@ interface ListenBrainzApi {
         fun create(
             httpClient: HttpClient,
             authStore: ListenBrainzAuthStore,
+            listenBrainzRepository: ListenBrainzRepository,
         ): ListenBrainzApi {
             val extendedClient = httpClient.config {
                 defaultRequest {
-                    url(API_BASE_URL)
+                    url(listenBrainzRepository.getBaseApiUrl())
                 }
                 install(Auth) {
                     providers += object : AuthProvider {

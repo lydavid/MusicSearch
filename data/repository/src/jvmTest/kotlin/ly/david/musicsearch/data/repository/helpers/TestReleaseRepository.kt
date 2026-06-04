@@ -73,7 +73,13 @@ interface TestReleaseRepository {
             aliasDao = aliasDao,
             tagDao = tagDao,
             listenBrainzRepository = object : ListenBrainzRepository {
-                override fun getBaseUrl(): String = ""
+                override fun getBaseUrl(): String {
+                    return ""
+                }
+
+                override fun getBaseApiUrl(): String {
+                    return ""
+                }
             },
             listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
                 override val browseUsername: Flow<String>

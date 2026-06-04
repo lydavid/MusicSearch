@@ -69,6 +69,10 @@ interface TestRecordingRepository {
                 override fun getBaseUrl(): String {
                     return ""
                 }
+
+                override fun getBaseApiUrl(): String {
+                    return ""
+                }
             },
             coroutineDispatchers = coroutineDispatchers,
             appPreferences = NoOpAppPreferences(),
