@@ -1,0 +1,226 @@
+stable class musicsearch.shared.feature.details.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.details.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.details.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.details.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.details.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.details.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.alias.AliasListItemModel {
+  stable val name: String
+  stable val locale: String
+  stable val isPrimary: Boolean
+  stable val language: String?
+  stable val type: String?
+  stable val begin: String
+  stable val end: String
+  stable val ended: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.area.AreaPresenter {
+  runtime val repository: AreaRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter {
+  runtime val repository: ArtistRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.event.EventPresenter {
+  runtime val repository: EventRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.genre.GenrePresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  runtime val repository: GenreRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  runtime val logger: Logger
+  runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiState {
+  stable val title: String
+  runtime val genre: GenreListItemModel?
+  runtime val handledException: HandledException?
+  stable val url: String
+  stable val eventSink: Function1<GenreUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiEvent.ForceRefresh {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.instrument.InstrumentPresenter {
+  runtime val repository: InstrumentRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.label.LabelPresenter {
+  runtime val repository: LabelRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.place.PlacePresenter {
+  runtime val repository: PlaceRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.recording.RecordingPresenter {
+  runtime val repository: RecordingRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.release.ReleasePresenter {
+  runtime val repository: ReleaseRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPresenter {
+  runtime val repository: ReleaseGroupRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.series.SeriesPresenter {
+  runtime val repository: SeriesRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.tag.TagDetailsPresenter {
+  stable val screen: TagDetailsScreen
+  stable val navigator: Navigator
+  runtime val tagRepository: TagRepository
+  runtime val coroutineScope: CoroutineScope
+  stable val clock: Clock
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiState {
+  runtime val genreOrTag: GenreOrTag
+  runtime val feedback: Feedback<TagFeedback>?
+  stable val eventSink: Function1<TagDetailsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiEvent.SearchGenreOrTag {
+  stable val name: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiEvent.GoToGenre {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiEvent.Vote {
+  stable val voteType: VoteType
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsPresenter {
+  stable val screen: DetailsScreen
+  stable val navigator: Navigator
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val allEntitiesListPresenter: AllEntitiesListPresenter
+  runtime val imageMetadataRepository: ImageMetadataRepository
+  runtime val logger: Logger
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  runtime val wikimediaRepository: WikimediaRepository
+  runtime val collectionRepository: CollectionRepository
+  runtime val listenBrainzAuthStore: ListenBrainzAuthStore
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
+  runtime val browseMethod: ByEntity
+  stable val subtitle: String
+  stable val tabs: ImmutableList<Tab>
+  stable val selectedTab: Tab
+  stable val url: String
+  runtime val detailsModel: DetailsModel?
+  stable val collected: Boolean
+  stable val snackbarMessage: String?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val selectionState: SelectionState
+  stable val showListenSubmission: Boolean
+  runtime val detailsTabUiState: DetailsTabUiState
+  stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<DetailsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+runtime class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState {
+  stable val isLoading: Boolean
+  runtime val handledException: HandledException?
+  stable val imageMetadata: ImageMetadata?
+  stable val numberOfImages: Int?
+  runtime val wikipediaExtract: WikipediaExtract
+  stable val lazyListState: LazyListState
+  stable val isSectionCollapsed: ImmutableSet<CollapsibleSection>
+  stable val showDownvotedTags: Boolean
+  stable val now: Instant
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val eventSink: Function1<DetailsTabUiEvent, Unit>
+  <runtime stability> = Runtime(WikipediaExtract),Runtime(HandledException)
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.RefreshLocalDetails {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ForceRefreshDetails {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.UpdateTab {
+  stable val tab: Tab
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleSelectItem {
+  runtime val collectableId: SelectableId
+  stable val loadedCount: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.ToggleSelectAllItems {
+  runtime val collectableIds: List<SelectableId>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent.NavigateToCollaboratorsGraph {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent.RefreshLocalDetails {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent.ClickImage {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent.ToggleCollapseExpandSection {
+  stable val section: CollapsibleSection
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent.ToggleShowDownvotedTags {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.details.work.WorkPresenter {
+  runtime val repository: WorkRepository
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  <runtime stability> = Stable
+}

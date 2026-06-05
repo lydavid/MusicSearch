@@ -1,0 +1,137 @@
+stable class musicsearch.shared.feature.collections.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.collections.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionPresenter {
+  stable val screen: EditCollectionScreen
+  stable val navigator: Navigator
+  runtime val getAllCollections: GetAllCollections
+  runtime val createCollection: CreateCollection
+  runtime val collectionRepository: CollectionRepository
+  stable val clock: Clock
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiState {
+  stable val defaultEntityType: MusicBrainzEntityType
+  stable val numberOfItemsToAddToCollection: Int
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  runtime val feedback: Feedback<EditACollectionFeedback>?
+  stable val eventSink: Function1<EditCollectionUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.CreateNewCollection {
+  runtime val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.AddToCollection {
+  stable val collectionId: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter {
+  stable val screen: CollectionListScreen
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  runtime val getAllCollections: GetAllCollections
+  runtime val createCollection: CreateCollection
+  runtime val collectionRepository: CollectionRepository
+  runtime val externalScope: CoroutineScope
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  stable val sortOption: CollectionSortOption
+  stable val selectionState: SelectionState
+  runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
+  stable val lazyListState: LazyListState
+  runtime val firstActionableResult: ActionableResult?
+  runtime val secondActionableResult: ActionableResult?
+  stable val eventSink: Function1<CollectionsListUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.UpdateShowLocal {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.UpdateShowRemote {
+  stable val show: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.UpdateSortOption {
+  stable val sortOption: CollectionSortOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.CreateNewCollection {
+  runtime val newCollection: NewCollection
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.GoToCollection {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.MarkSelectedItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.UnMarkItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiEvent.DeleteItemsMarkedAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter {
+  stable val screen: CollectionScreen
+  stable val navigator: Navigator
+  runtime val getCollection: GetCollection
+  runtime val incrementLookupHistory: IncrementLookupHistory
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  stable val allEntitiesListPresenter: AllEntitiesListPresenter
+  runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  runtime val collectionRepository: CollectionRepository
+  runtime val externalScope: CoroutineScope
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiState {
+  stable val title: String
+  runtime val collection: CollectionListItemModel?
+  runtime val softDeleteFeedback: Feedback<EditACollectionFeedback>?
+  runtime val finalFeedback: Feedback<EditACollectionFeedback>?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val url: String
+  stable val selectionState: SelectionState
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<CollectionUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.MarkSelectedItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.UnMarkItemsAsDeleted {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.ClickItem {
+  stable val entityType: MusicBrainzEntityType
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.DeleteItemsMarkedAsDeleted {
+  <runtime stability> = Stable
+}

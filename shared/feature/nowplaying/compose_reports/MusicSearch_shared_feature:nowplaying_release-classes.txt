@@ -1,0 +1,50 @@
+unstable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingNotificationListener {
+  runtime val coroutineDispatchers$delegate: Lazy<CoroutineDispatchers>
+  runtime val coroutineScope: CoroutineScope
+  runtime val nowPlayingHistoryRepository$delegate: Lazy<NowPlayingHistoryRepository>
+  <runtime stability> = Unstable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.nowplaying.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPresenter {
+  stable val navigator: Navigator
+  runtime val getNowPlayingHistory: GetNowPlayingHistory
+  runtime val deleteNowPlayingHistory: DeleteNowPlayingHistory
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.DeleteHistory {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiEvent.GoToSearch {
+  stable val query: String
+  stable val entityType: MusicBrainzEntityType
+  <runtime stability> = Stable
+}

@@ -1,0 +1,74 @@
+stable class musicsearch.shared.feature.images.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.images.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.images.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.images.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.images.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.images.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesPresenter {
+  stable val screen: CoverArtsScreen
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  runtime val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
+  runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesTitle.All {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesTitle.Selected {
+  stable val page: Int
+  stable val totalPages: Int
+  stable val typeAndComment: String
+  <runtime stability> = Stable
+}
+runtime class ly.david.musicsearch.shared.feature.images.ImagesTitle {
+  <runtime stability> = Uncertain(ImagesTitle)
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiState {
+  runtime val title: ImagesTitle
+  stable val subtitle: String
+  stable val linkUrl: String
+  stable val scrollToHideTopAppBar: Boolean
+  stable val numberOfImagesPerRow: Int
+  stable val imagesGridPaddingDp: Int
+  runtime val imageMetadataPagingDataFlow: Flow<PagingData<ImageMetadataWithEntity>>
+  stable val lazyGridState: LazyGridState
+  stable val sortOption: ImagesSortOption
+  stable val selectedImageIndex: Int?
+  runtime val selectedImageMetadata: ImageMetadataWithEntity?
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val showSort: Boolean
+  stable val eventSink: Function1<ImagesUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.SelectImage {
+  stable val index: Int
+  runtime val imageMetadataSnapshot: List<ImageMetadataWithEntity?>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.AutoSelectSingleImage {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.ClickItem {
+  stable val entityType: MusicBrainzEntityType
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.images.ImagesUiEvent.UpdateSortOption {
+  stable val sortOptionIndex: Int
+  <runtime stability> = Stable
+}

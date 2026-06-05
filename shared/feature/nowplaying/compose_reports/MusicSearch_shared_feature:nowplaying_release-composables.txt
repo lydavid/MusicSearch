@@ -1,0 +1,23 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.PreviewNowPlayingHistoryListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.PreviewNowPlayingHistoryUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryListItem(
+  nowPlayingHistory: NowPlayingHistoryListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: @[ExtensionFunctionType] Function1<NowPlayingHistoryListItemModel, Unit>? = @static <expression>
+)
+open fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPresenter.present(
+  stable <this>: NowPlayingHistoryPresenter
+): NowPlayingHistoryUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUi(
+  stable state: NowPlayingHistoryUiState
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryContent(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable searchMusicBrainz: Function2<@[ParameterName(name = 'query')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
+  stable onDelete: Function1<String, Unit>? = @static <expression>
+)

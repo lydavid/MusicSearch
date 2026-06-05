@@ -1,0 +1,26 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.PreviewArtistCollaborationGraphUi()
+open fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphPresenter.present(
+  stable <this>: ArtistCollaborationGraphPresenter
+): ArtistCollaborationGraphUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi(
+  stable state: ArtistCollaborationGraphUiState
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.ArtistCollaborationGraphUi(
+  edges: ImmutableList<GraphEdge>
+  nodes: ImmutableList<GraphNode>
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable showDebugInfo: Boolean = @static false
+  stable onClick: Function1<@[ParameterName(name = 'transformedTapPosition')] Offset, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheet(
+  stable selectedEntityType: MusicBrainzEntityType
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.graph.EntityCollaborationBottomSheetContent(
+  stable selectedEntityType: MusicBrainzEntityType
+  stable onClick: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
+)

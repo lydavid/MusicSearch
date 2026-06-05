@@ -1,0 +1,155 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentRecordings()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentReleases()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewFacetsBottomSheetContentArtists()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentAlternative()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringByUnlinked()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinkedFilteringByDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListenListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithRecordingFacet()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithDateFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiWithRecordingFacetAndDateFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiUpdated()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiNeedToLogin()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewListensUiNoUsername()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiStartedCustomLocal()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiStartedCustomUTC()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiStartedNowLocal()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiStartedNowUTC()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiFinished()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiStartedCustomLocalDaylightSaving()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiFinishedCustomLocalWithoutAlbum()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewSubmitListenUiAlbumTypeFinishedCustom()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewTimePickerField()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewTimePickerDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewTimePickerDialogDaylightSaving()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetsBottomSheetContent(
+  state: FacetsUiState
+  stable onUpdateTab: Function1<@[ParameterName(name = 'tab')] Tab, Unit>? = @static <expression>
+  stable onFacetClick: Function1<@[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
+  listen: ListenListItemModel
+  stable filterText: String
+  stable showUnmappedData: Boolean
+  stable toggleShowUnmappedData: Function0<Unit>? = @static <expression>
+  stable onGoToRelease: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
+  stable filteringByThisRecording: Boolean
+  stable onFilterByRecording: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable filteringByThisDate: Boolean
+  stable onFilterByDate: Function1<@[ParameterName(name = 'dateMilliseconds')] Long, Unit>? = @static <expression>
+  stable allowedToEdit: Boolean
+  stable onSubmitMapping: Function2<@[ParameterName(name = 'recordingMessyBrainzId')] String, @[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable onRefreshMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
+  stable onOpenInBrowser: Function1<@[ParameterName(name = 'listenedAtMs')] Long, Unit>? = @static <expression>
+  stable onDelete: Function3<@[ParameterName(name = 'listenedAtMs')] Long, @[ParameterName(name = 'username')] String, @[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewSection(
+  stable modifier: Modifier
+  listen: ListenListItemModel
+  stable filterText: String
+  stable showUnmappedData: Boolean
+  stable toggleShowUnmappedData: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.LinkWithMusicBrainzItem(
+  stable onSubmitMapping: Function1<@[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
+  listen: ListenListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onMoreActionsClick: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
+)
+open fun ly.david.musicsearch.shared.feature.listens.ListensPresenter.present(
+  stable <this>: ListensPresenter
+): ListensUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensUi(
+  stable state: ListensUiState
+  unstable timeZone: TimeZone? = @dynamic <expression>
+  stable clock: Clock? = @static <expression>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetsAdditionalBar(
+  state: FacetsUiState
+  unstable timeZone: TimeZone
+  stable clock: Clock
+  stable onClearAll: Function0<Unit>
+  stable onSelectEntityFacet: Function1<MusicBrainzEntity?, Unit>
+  stable onUpdateTab: Function1<Tab, Unit>
+  stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long?, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetChip(
+  facetsUiState: FacetsUiState
+  selectedEntityFacet: MusicBrainzEntity?
+  stable modifier: Modifier
+  stable onSelectFacet: Function1<MusicBrainzEntity?, Unit>
+  stable onUpdateTab: Function1<Tab, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.DatePickerChip(
+  stable dateTimeEpochSeconds: Long?
+  unstable timeZone: TimeZone
+  stable clock: Clock
+  stable modifier: Modifier
+  stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long?, Unit>
+)
+fun ly.david.musicsearch.shared.feature.listens.getMessage(
+  feedback: Feedback<ListensListFeedback>
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListensContent(
+  stable noUsernameSet: Boolean
+  stable innerPadding: PaddingValues
+  stable scrollBehavior: TopAppBarScrollBehavior
+  stable state: ListensUiState
+  stable filterText: String
+  stable eventSink: Function1<ListensUiEvent, Unit>
+  selectedEntityFacet: MusicBrainzEntity?
+  lazyPagingItems: LazyPagingItems<Identifiable>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.UsernameInput(
+  stable listenBrainzUrl: String
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+  stable onTextChange: Function1<String, Unit>? = @static <expression>
+  stable onSetUsername: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.components.DatePickerDialog(
+  stable dateTimeEpochSeconds: Long?
+  unstable timeZone: TimeZone
+  stable clock: Clock
+  stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long, Unit>
+  stable onDismiss: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.DatePickerField(
+  stable dateTimeEpochSeconds: Long
+  unstable timeZone: TimeZone
+  stable clock: Clock
+  stable modifier: Modifier? = @static <expression>
+  stable onSelectDate: Function1<@[ParameterName(name = 'dateSeconds')] Long, Unit>
+)
+open fun ly.david.musicsearch.shared.feature.listens.submit.SubmitListenPresenter.present(
+  stable <this>: SubmitListenPresenter
+): SubmitListenUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.SubmitListenUi(
+  stable state: SubmitListenUiState
+  unstable timeZone: TimeZone
+  stable clock: Clock
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.TimePickerField(
+  stable dateTimeEpochSeconds: Long
+  unstable timeZone: TimeZone
+  stable modifier: Modifier? = @static <expression>
+  stable onSelectTime: Function1<@[ParameterName(name = 'timeSeconds')] Long, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.TimePickerDialog(
+  stable dateTimeEpochSeconds: Long
+  unstable timeZone: TimeZone
+  stable modifier: Modifier? = @static <expression>
+  stable onDismiss: Function0<Unit>
+  stable onSelectTime: Function1<@[ParameterName(name = 'timeSeconds')] Long, Unit>
+)

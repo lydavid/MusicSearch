@@ -1,0 +1,22 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.PreviewAppBottomNavigationBar()
+fun ly.david.musicsearch.shared.getText(
+  stable <this>: AppNavigationItem
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppBottomNavigationBar(
+  stable currentTopLevelScreen: Screen
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>
+)
+restartable skippable fun ly.david.musicsearch.shared.AppNavigationRail(
+  stable currentTopLevelScreen: Screen
+  stable modifier: Modifier? = @static <expression>
+  stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppRoot(
+  stable circuit: Circuit
+  stable backStack: SaveableBackStack
+  stable navigator: Navigator
+  stable modifier: Modifier? = @static <expression>
+)
+fun ly.david.musicsearch.shared.useDarkTheme(
+  <this>: AppPreferences
+): Boolean

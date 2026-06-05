@@ -1,0 +1,166 @@
+stable class musicsearch.shared.feature.settings.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.settings.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class MusicSearch.shared.feature.settings.BuildConfig {
+  stable val VERSION_CODE: String
+  stable val VERSION_NAME: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  runtime val musicBrainzAuthStore: MusicBrainzAuthStore
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  runtime val musicBrainzLogout: MusicBrainzLogout
+  runtime val listenBrainzRepository: ListenBrainzRepository
+  runtime val listenBrainzAuthStore: ListenBrainzAuthStore
+  runtime val updateListenBrainzToken: UpdateListenBrainzToken
+  runtime val exportDatabase: ExportDatabase
+  runtime val metadataRepository: MetadataRepository
+  runtime val appInfo: AppInfo
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState {
+  stable val musicBrainzUsername: String
+  stable val musicBrainzAccessToken: String?
+  stable val listenBrainzUrl: String
+  stable val listenBrainzText: String
+  runtime val listenBrainzLoginState: ListenBrainzLoginState?
+  stable val listenBrainzUsername: String
+  stable val listenBrainzUserToken: String
+  stable val showCrashReporterSettings: Boolean
+  stable val isCrashReportingEnabled: Boolean
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val snackbarMessage: String?
+  stable val appDatabaseVersion: String
+  stable val sqliteVersion: String
+  stable val versionNameAndCode: String
+  stable val isDeveloperMode: Boolean
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<SettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.MusicBrainzLogout {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.UpdateListenBrainzUserToken {
+  stable val token: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.ListenBrainzLogin {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.ListenBrainzLogout {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.DismissSnackbar {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.EnableCrashReporting {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.ExportDatabase {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiEvent.EnableDeveloperMode {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiState {
+  stable val theme: Theme
+  stable val scrollToHideTopAppBar: Boolean
+  stable val useMaterialYou: Boolean
+  stable val seedColor: Int
+  stable val eventSink: Function1<AppearanceSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateTheme {
+  stable val theme: Theme
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateScrollToHideTopAppBar {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateUseMaterialYou {
+  stable val use: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.SetSeedColor {
+  stable val seedColor: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiState {
+  stable val numberOfImagesPerRow: Int
+  stable val imagesGridPaddingDp: Int
+  stable val eventSink: Function1<ImagesSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiEvent.UpdateNumberOfImagesPerRow {
+  stable val numberOfImagesPerRow: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiEvent.UpdateImagesGridPaddingDp {
+  stable val imagesGridPaddingDp: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiState {
+  stable val numberOfListensInDetails: Long
+  stable val submitClientAndVersionWithListen: Boolean
+  stable val eventSink: Function1<ListensSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.UpdateNumberOfListensInDetails {
+  stable val number: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.ToggleIncludeClientAndVersion {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.Reset {
+  <runtime stability> = Stable
+}

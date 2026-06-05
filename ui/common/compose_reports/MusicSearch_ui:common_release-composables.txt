@@ -1,0 +1,975 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.PreviewExposedDropdownMenuBox()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewAreaListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewAreaListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewAreaListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewAreaListItemWorldwide()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewReleaseEvent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewReleaseEventNoDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewAreaListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.PreviewReleaseEventVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemSimple()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemCountryCode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemAllInfoUnvisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemAllInfoVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemSelected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOff()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewRetryButton()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextOff()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextIndeterminate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewTriStateCheckboxWithTextOn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithSubtitle()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithEndIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithStartIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewClickableItemWithStartEndIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.PreviewMultipleChoiceBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.dialog.PreviewMultipleChoiceDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.dialog.PreviewSimpleAlertDialog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItemLong()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItemMultiDay()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItemCancelled()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.PreviewEventListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.PreviewFullScreenErrorWithActionableButtonRetry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.PreviewFullScreenErrorWithActionableButtonLogin()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.PreviewFullScreenLoadingIndicator()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.PreviewFullScreenText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.genre.PreviewGenreListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.PreviewInstrumentListItemModel()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.PreviewInstrumentListItemModelAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.PreviewInstrumentListItemModelVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemWithCatalogNumberDoesNotShowDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemWithBeginDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.PreviewLabelListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderCollapsed()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderExpanded()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderWithEndContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewCollapsibleListSeparatorHeaderWithAdditionalContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedFooterItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLastUpdatedText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextDifferentBeginAndEnd()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextSameBeginAndEnd()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextBeginOnly()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewLifeSpanTextEndOnly()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.PreviewListSeparatorHeader()
+open fun ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenterImpl.present(
+  stable <this>: MusicBrainzLoginPresenterImpl
+): MusicBrainzLoginUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.PreviewFooterLoadingIndicator()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PreviewPlaceListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PreviewPlaceListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PreviewPlaceListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PreviewCoordinateListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.PreviewRecordingListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.PreviewRecordingListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.PreviewRecordingListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewArtistRelationListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewRecordingRelationListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewRecordingRelationListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikipedia()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikipediaWithFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.PreviewUrlListItemWikidata()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemDisambiguation()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemDisambiguationCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemCountry()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemDateCountryFormatsTracks()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemCountryDate()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemDateArtistCredits()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemMultipleCountries()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemShowLessInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemCatalog()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithUnknownNumberOfListens()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentAll()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneDeselected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithOneSelected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentWithNoneSelected()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithType()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisited()
+fun ly.david.musicsearch.ui.common.screen.screenContainerSize()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.PreviewSeriesListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.PreviewSeriesListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.PreviewSeriesListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentNone()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByDateAscending()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByDateDescending()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByCompleteListensAscending()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.PreviewSortOptionsBottomSheetContentByCompleteListensDescending()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewSingleLineTextFieldEmpty()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewSingleLineTextFieldWithText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.PreviewTextWithHeading()
+fun ly.david.musicsearch.ui.common.theme.materialYouColorScheme(
+  stable darkTheme: Boolean = @dynamic <expression>
+): ColorScheme
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewDotsFlashing()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewScrollableTopAppBar()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewScrollableTopAppBarWithIcon()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewScrollableTopAppBarWithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewScrollableTopAppBarLoading()
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter(
+  stable annotatedString: AnnotatedString
+  stable modifier: Modifier? = @static <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable showBackButton: Boolean = @static true
+  stable onSelectAllToggle: Function0<Unit>? = @static <expression>
+  stable entity: MusicBrainzEntityType? = @static null
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
+  stable selectionState: SelectionState? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterFilterMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterFilterModeWithText()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterNoFilter()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithTabs()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithTabsFilterMode()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedOne()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedAll()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.PreviewTopAppBarWithFilterWithSelectedAllExceptOne()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.wikimedia.PreviewWikipediaSection()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItem()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemAllInfo()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemUnknownListens()
+fun ly.david.musicsearch.ui.common.work.getDisplayLanguage(
+  stable <this>: String
+): String?
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.EntityIcon(
+  stable entityType: MusicBrainzEntityType
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.ResourceDropdownPicker(
+  options: List<MusicBrainzEntityType>
+  stable selectedOption: MusicBrainzEntityType
+  stable modifier: Modifier? = @static <expression>
+  stable onSelectOption: Function1<MusicBrainzEntityType, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.area.AreaListItem(
+  area: AreaListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable showType: Boolean = @static true
+  stable showIcon: Boolean = @static true
+  stable showEditCollection: Boolean = @static true
+  stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.area.getDisplayString(
+  stable <this>: AreaType
+): String
+fun ly.david.musicsearch.ui.common.artist.getDisplayString(
+  stable <this>: ArtistGender
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.ArtistListItem(
+  artist: ArtistListItemModel
+  stable filterText: String? = @static ""
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.artist.getDisplayString(
+  stable <this>: ArtistType
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.ButtonWithIcon(
+  stable imageVector: ImageVector
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.CheckboxRowLayout(
+  stable text: String
+  stable isCheckedLike: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
+  stable checkbox: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.CheckboxWithText(
+  stable text: String
+  stable checked: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.button.OverflowMenu(
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable contentDescription: String? = @dynamic <expression>
+  stable minimumInteractiveComponentSize: Int = @static 48
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.RetryButton(
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.TriStateCheckboxWithText(
+  stable text: String
+  stable toggleableState: ToggleableState
+  stable modifier: Modifier? = @static <expression>
+  stable onClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.ClickableItem(
+  stable title: String
+  stable modifier: Modifier? = @static <expression>
+  stable iconModifier: Modifier? = @static <expression>
+  stable filterText: String? = @static ""
+  stable subtitle: String? = @static null
+  stable startIcon: ImageVector? = @static null
+  stable endIcon: ImageVector? = @static null
+  stable fontWeight: FontWeight? = @static <expression>
+  stable foregroundColor: Color = @dynamic <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.component.ClickableItem(
+  stable title: String
+  stable modifier: Modifier? = @static <expression>
+  stable iconModifier: Modifier? = @static <expression>
+  stable filterText: String? = @static ""
+  stable subtitle: String? = @static null
+  stable startIcon: @[ExtensionFunctionType] Function3<BoxScope, Composer, Int, Unit>?
+  stable endIcon: ImageVector? = @static null
+  stable fontWeight: FontWeight? = @static <expression>
+  stable foregroundColor: Color = @dynamic <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet(
+  options: List<String>
+  stable selectedOptionIndex: Int
+  stable onSortOptionIndexClick: Function1<Int, Unit>? = @static <expression>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheetContent(
+  options: List<String>
+  stable selectedOptionIndex: Int
+  stable onSortOptionIndexClick: Function1<Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.dialog.BasicDialog(
+  stable onDismiss: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton(
+  stable modifier: Modifier? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.dialog.DialogContentWithCloseButton(
+  stable modifier: Modifier? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.dialog.MultipleChoiceDialog(
+  stable title: String
+  choices: List<String>
+  stable selectedChoiceIndex: Int
+  stable modifier: Modifier? = @static <expression>
+  stable onSelectChoiceIndex: Function1<Int, Unit>? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog(
+  stable title: String
+  stable confirmText: String
+  stable dismissText: String
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable onConfirmClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.event.EventListItem(
+  event: EventListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.event.getDisplayString(
+  stable <this>: EventType
+): String
+restartable skippable fun ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling(
+  detailsModel: T?
+  stable onRefresh: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable isLoading: Boolean = @static false
+  handledException: HandledException? = @static null
+  stable detailsScreen: Function3<T, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.fullscreen.FullScreenContent(
+  stable modifier: Modifier? = @static <expression>
+  stable content: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.FullScreenErrorWithActionableButton(
+  stable modifier: Modifier? = @static <expression>
+  handledException: HandledException? = @static null
+  stable onRefresh: Function0<Unit>? = @static <expression>
+  stable onLogin: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.FullScreenLoadingIndicator(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.fullscreen.FullScreenText(
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.genre.GenreListItem(
+  genre: GenreListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onGenreClick: @[ExtensionFunctionType] Function1<GenreListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.AddToCollectionIcon(
+  stable collected: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable nameWithDisambiguation: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton(
+  entityListItemModel: EntityListItemModel
+  stable onClick: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.CollectionIcon(
+  stable collected: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable contentDescription: String? = @static null
+)
+restartable skippable fun ly.david.musicsearch.ui.common.image.InitializeImageLoader()
+restartable skippable fun ly.david.musicsearch.ui.common.image.LargeImage(
+  stable imageMetadata: ImageMetadata?
+  stable modifier: Modifier? = @static <expression>
+  stable isCompact: Boolean = @static true
+  stable zoomEnabled: Boolean = @static false
+  stable onClick: Function0<Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.image.PlaceholderIcon(
+  stable modifier: Modifier? = @static <expression>
+  stable placeholderIcon: ImageVector? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.image.ThumbnailImage(
+  stable imageMetadata: ImageMetadata?
+  stable placeholderIcon: ImageVector?
+  stable modifier: Modifier? = @static <expression>
+  stable clipCircle: Boolean = @static false
+  stable isSelected: Boolean = @static false
+  stable size: Dp = @static <expression>
+  stable enableSharedTransition: Boolean = @static true
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.instrument.InstrumentListItem(
+  instrument: InstrumentListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.instrument.getDisplayString(
+  stable <this>: InstrumentType
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.label.LabelListItem(
+  label: LabelListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable showIcon: Boolean = @static true
+  stable showEditCollection: Boolean = @static true
+  stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.label.getDisplayString(
+  stable <this>: LabelType
+): String
+open scheme("[presenter]") fun ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter.present(
+  stable <this>: AllEntitiesListPresenter
+): AllEntitiesListUiState
+open fun ly.david.musicsearch.ui.common.list.BaseListPresenter.present(
+  stable <this>: BaseListPresenter
+): EntitiesListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
+  stable text: String
+  stable collapsed: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable verticalPadding: Dp = @static <expression>
+  stable onClick: Function0<Unit>? = @static <expression>
+  stable additionalContent: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static null
+  stable endContent: Function2<Composer, Int, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.HighlightableText(
+  stable text: String
+  stable highlightedText: String
+  stable modifier: Modifier? = @static <expression>
+  stable maxLines: Int = @static 2147483647
+  stable overflow: TextOverflow = @static <expression>
+  stable style: TextStyle? = @dynamic <expression>
+  stable textAlign: TextAlign? = @static null
+  stable foregroundColor: Color = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.HighlightableText(
+  stable text: AnnotatedString
+  stable highlightedText: String
+  stable modifier: Modifier? = @static <expression>
+  stable maxLines: Int = @static 2147483647
+  stable overflow: TextOverflow = @static <expression>
+  stable style: TextStyle? = @dynamic <expression>
+  stable textAlign: TextAlign? = @static null
+  stable foregroundColor: Color = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LastUpdatedFooterItem(
+  stable lastUpdated: Instant
+  stable now: Instant
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LastUpdatedText(
+  stable lastUpdated: Instant
+  stable now: Instant
+  stable modifier: Modifier? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.listitem.formatPeriod(
+  unstable period: DateTimePeriod
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.LifeSpanText(
+  lifeSpan: LifeSpanUiModel
+  stable heading: String
+  stable modifier: Modifier? = @static <expression>
+  stable beginHeading: String? = @static ""
+  stable endHeading: String? = @static ""
+  stable filterText: String? = @static ""
+)
+fun ly.david.musicsearch.ui.common.listitem.listItemColors(
+  stable isSelected: Boolean
+  stable enabled: Boolean = @static true
+): ListItemColors
+fun ly.david.musicsearch.ui.common.listitem.getEnabledColor(
+  stable enabled: Boolean
+): Color
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader(
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+  stable endContent: Function2<Composer, Int, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem(
+  stable modifier: Modifier? = @static <expression>
+  stable disable: Boolean = @static false
+  stable onDelete: Function0<Unit>? = @static <expression>
+  stable content: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.SwipeToDeleteListItem(
+  stable onDelete: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable dismissContent: @[ExtensionFunctionType] Function3<RowScope, Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listitem.SwipeToDeleteBackground(
+  stable alignment: Alignment
+)
+fun ly.david.musicsearch.ui.common.locale.getAnnotatedName(
+  <this>: NameWithDisambiguationAndAliases?
+): AnnotatedString
+abstract fun ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter.present(
+  stable <this>: Presenter<MusicBrainzLoginUiState>
+): MusicBrainzLoginUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi(
+  stable state: MusicBrainzLoginUiState
+  stable onSuccessfulLogin: Function0<Unit>? = @static <expression>
+  onError: SuspendFunction1<String, Unit>? = @dynamic <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.musicbrainz.AuthorizationDialog(
+  stable onDismiss: Function0<Unit>
+  stable onSubmit: Function1<String, Unit>
+)
+fun ly.david.musicsearch.ui.common.paging.createFilteredCountHeader(
+  <this>: FilteredCount
+): Function2<Composer, Int, Unit>?
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.EntitiesPagingListUi(
+  uiState: EntitiesPagingListUiState
+  stable filterText: String
+  stable now: Instant
+  stable modifier: Modifier? = @static <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable selectedIds: ImmutableList<String>? = @static <expression>
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+  requestForMissingCoverArtUrl: SuspendFunction1<@[ParameterName(name = 'id')] String, Unit>? = @dynamic <expression>
+  stable onLogin: Function0<Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState(
+  stable <this>: AllEntitiesListUiState
+  stable tab: Tab?
+  entitiesLazyPagingItems: EntitiesLazyPagingItems
+): EntitiesPagingListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.FooterLoadingIndicator()
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [_], [_]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
+  lazyPagingItems: LazyPagingItems<T>
+  stable modifier: Modifier? = @static <expression>
+  stable lazyListState: LazyListState? = @dynamic <expression>
+  stable customNoResultsText: String? = @static ""
+  stable keyed: Boolean = @static false
+  stable onLogin: Function0<Unit>? = @static <expression>
+  stable header: Function2<Composer, Int, Unit>? = @static null
+  stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.AppendFooter(
+  unused stable <this>: LazyItemScope
+  lazyPagingItems: LazyPagingItems<T>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.CoordinateListItem(
+  coordinates: CoordinatesUiModel
+  stable modifier: Modifier? = @static <expression>
+  stable label: String? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.place.PlaceListItem(
+  place: PlaceListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static <expression>
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.place.getDisplayString(
+  stable <this>: PlaceType
+): String
+restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.preview.PreviewTheme(
+  stable darkTheme: Boolean = @dynamic <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays(
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.RecordingListItem(
+  recording: RecordingListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.RelationListItem(
+  relation: RelationListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+)
+abstract scheme("[presenter]") fun ly.david.musicsearch.ui.common.relation.RelationsPresenter.present(
+  stable <this>: Presenter<RelationsUiState>
+): RelationsUiState
+open fun ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl.present(
+  stable <this>: RelationsPresenterImpl
+): RelationsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.UrlListItem(
+  relation: RelationListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseListItem(
+  release: ReleaseListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable showMoreInfo: Boolean = @static true
+  requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic <expression>
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.release.getDisplayString(
+  stable <this>: ReleaseStatus
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheet(
+  selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus?, Unit>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ReleaseStatusesBottomSheetContent(
+  selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus?, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem(
+  unused <this>: OverflowMenuScope
+  selectedStatuses: Set<ReleaseStatus>
+  stable onClick: Function1<ReleaseStatus?, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupListItem(
+  releaseGroup: ReleaseGroupListItemModel
+  stable filterText: String
+  stable showType: Boolean
+  stable modifier: Modifier? = @static <expression>
+  requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic <expression>
+  stable onClick: @[ExtensionFunctionType] Function1<ReleaseGroupListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  <this>: ReleaseGroupTypes
+): String
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  stable <this>: ReleaseGroupPrimaryType
+): String
+fun ly.david.musicsearch.ui.common.releasegroup.getDisplayString(
+  stable <this>: ReleaseGroupSecondaryType
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.scaffold.AppScaffold(
+  stable scrollToHideTopAppBar: Boolean
+  stable topBar: Function3<TopAppBarScrollBehavior, Composer, Int, Unit>
+  stable snackbarHostState: SnackbarHostState
+  stable modifier: Modifier? = @static <expression>
+  stable content: Function4<PaddingValues, TopAppBarScrollBehavior, Composer, Int, Unit>
+)
+open fun ly.david.musicsearch.ui.common.screen.RecordVisit.RecordVisit(
+  stable oldId: String
+  stable mbid: String?
+  stable title: String
+  stable entity: MusicBrainzEntityType
+  stable searchHint: String?
+  <this>: RecordVisit
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.SeriesListItem(
+  series: SeriesListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.series.getDisplayString(
+  stable <this>: SeriesType
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarHost(
+  stable snackbarHostState: SnackbarHostState
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems(
+  <this>: OverflowMenuScope
+  listFilters: ListFilters
+  stable eventSink: Function1<EntitiesListUiEvent, Unit>
+)
+restartable skippable fun ly.david.musicsearch.ui.common.sort.SortMenuItem(
+  <this>: OverflowMenuScope
+  sortOptions: List<T>
+  selectedSortOption: T
+  stable modifier: Modifier? = @static <expression>
+  stable onSortOptionClick: Function1<T, Unit>? = @static <expression>
+)
+restartable skippable fun ly.david.musicsearch.ui.common.sort.SortOptionsBottomSheet(
+  sortOptions: List<T>
+  selectedSortOption: T
+  stable onSortOptionClick: Function1<T, Unit>
+  stable bottomSheetState: SheetState? = @dynamic <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+)
+restartable skippable fun ly.david.musicsearch.ui.common.sort.SortOptionsBottomSheetContent(
+  sortOptions: List<T>
+  selectedSortOption: T
+  stable onSortOptionClick: Function1<T, Unit>
+)
+fun ly.david.musicsearch.ui.common.sort.getLabel(
+  <this>: SortableOption
+): String
+fun ly.david.musicsearch.ui.common.text.buildStringWithSingleLink(
+  stable resourceWithPlaceholder: StringResource
+  stable linkLabel: String
+  stable url: String
+): AnnotatedString
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SingleLineTextField(
+  stable text: String
+  stable textLabel: String?
+  stable textHint: String?
+  stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.LimitedLinesTextField(
+  stable maxLines: Int
+  stable text: String
+  stable textLabel: String?
+  stable textHint: String?
+  stable onTextChange: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.SyncingText(
+  stable message: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextInput(
+  stable instructions: AnnotatedString
+  stable textLabel: String?
+  stable textHint: String?
+  stable text: String
+  stable buttonText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onTextChange: Function1<String, Unit>? = @static <expression>
+  stable onButtonClick: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextWithHeading(
+  stable heading: String
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+  stable filterText: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.text.TextWithIcon(
+  stable imageVector: ImageVector
+  stable text: String
+  stable modifier: Modifier? = @static <expression>
+  stable iconSize: Int = @static 20
+  stable iconTint: Color = @dynamic <expression>
+  stable contentDescription: String? = @static null
+  stable textStyle: TextStyle? = @dynamic <expression>
+)
+restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.theme.BaseTheme(
+  appPreferences: AppPreferences
+  stable darkTheme: Boolean = @dynamic <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+fun ly.david.musicsearch.ui.common.theme.getSubTextColor()
+fun ly.david.musicsearch.ui.common.theme.getSeedColor(
+  <this>: AppPreferences
+): Color
+fun ly.david.musicsearch.ui.common.theme.TextStyles.getHeaderTextStyle(
+  unused stable <this>: TextStyles
+): TextStyle
+fun ly.david.musicsearch.ui.common.theme.TextStyles.getCardBodyTextStyle(
+  unused stable <this>: TextStyles
+): TextStyle
+fun ly.david.musicsearch.ui.common.theme.TextStyles.getCardBodySubTextStyle(
+  unused stable <this>: TextStyles
+): TextStyle
+fun ly.david.musicsearch.ui.common.theme.useMaterialYou(
+  <this>: AppPreferences
+): Boolean
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem(
+  <this>: OverflowMenuScope
+  stable tab: Tab?
+  stable entityIds: ImmutableList<String>
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable onLoginClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle(
+  stable collected: Boolean
+  stable entityType: MusicBrainzEntityType
+  stable entityId: String
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable onLoginClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable nameWithDisambiguation: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem(
+  <this>: OverflowMenuScope
+  stable entityId: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.DeleteMenuItem(
+  <this>: OverflowMenuScope
+  stable selectionState: SelectionState
+  stable onClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing.Dot(
+  stable alpha: Float
+)
+fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing.animateAlphaWithDelay(
+  stable delay: Int
+): State<Float>
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.GoToScreenMenuItem(
+  <this>: OverflowMenuScope
+  stable text: String
+  stable leadingIconImageVector: ImageVector
+  stable onClick: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.MoreInfoToggleMenuItem(
+  <this>: OverflowMenuScope
+  stable showMoreInfo: Boolean
+  stable onToggle: Function1<Boolean, Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem(
+  <this>: OverflowMenuScope
+  stable url: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem(
+  <this>: OverflowMenuScope
+  stable onClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable show: Boolean = @static true
+  stable tab: Tab? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar(
+  stable modifier: Modifier? = @static <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntityType? = @static null
+  stable title: String? = @static ""
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable containerColor: Color = @static <expression>
+  stable actions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable additionalBar: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar(
+  stable modifier: Modifier? = @static <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntityType? = @static null
+  stable annotatedString: AnnotatedString? = @static <expression>
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable containerColor: Color = @static <expression>
+  stable actions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable additionalBar: @[ExtensionFunctionType] Function3<ColumnScope, Composer, Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TitleAndSubtitle(
+  stable annotatedString: AnnotatedString
+  stable entity: MusicBrainzEntityType? = @static null
+  stable subtitle: String? = @static ""
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.SubtitleWithOverflow(
+  stable subtitle: String? = @static ""
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+)
+fun ly.david.musicsearch.ui.common.topappbar.rememberSelectionState(
+  stable totalCount: Int = @static 0
+): SelectionState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.StatsMenuItem(
+  <this>: OverflowMenuScope
+  stable statsScreen: StatsScreen
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.SubmitListenMenuItem(
+  <this>: OverflowMenuScope
+  submitListenType: SubmitListenType
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable modifier: Modifier? = @static <expression>
+  stable onSuccess: Function0<Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.topappbar.getTitle(
+  stable <this>: Tab
+): String
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.TabsBar(
+  stable modifier: Modifier? = @static <expression>
+  tabsTitle: List<String>? = @static <expression>
+  stable selectedTabIndex: Int = @static 0
+  stable onSelectTabIndex: Function1<Int, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.ToggleMenuItem(
+  <this>: OverflowMenuScope
+  stable toggleOnText: String
+  stable toggleOffText: String
+  stable toggled: Boolean
+  stable onToggle: Function1<Boolean, Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable leadingIcon: Function2<Composer, Int, Unit>? = @static null
+)
+fun ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState(
+  stable initialFilterText: String? = @static ""
+  stable initialIsFilterMode: Boolean = @static false
+  stable transitionType: TransitionType? = @static <expression>
+): TopAppBarFilterState
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter(
+  stable modifier: Modifier? = @static <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntityType? = @static null
+  stable title: String? = @static ""
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
+  stable selectionState: SelectionState? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static <expression>
+  stable onSelectAllToggle: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilterInternal(
+  stable annotatedString: AnnotatedString
+  stable modifier: Modifier? = @static <expression>
+  stable onBack: Function0<Unit>? = @static <expression>
+  stable showBackButton: Boolean = @static true
+  stable entity: MusicBrainzEntityType? = @static null
+  stable subtitle: String? = @static ""
+  stable scrollBehavior: TopAppBarScrollBehavior? = @static null
+  stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
+  stable topAppBarFilterState: TopAppBarFilterState? = @dynamic <expression>
+  stable selectionState: SelectionState? = @dynamic <expression>
+  stable additionalActions: Function2<Composer, Int, Unit>? = @static <expression>
+  stable additionalBar: Function2<Composer, Int, Unit>? = @static <expression>
+  stable onSelectAllToggle: Function0<Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackListItem(
+  track: TrackListItemModel
+  stable filterText: String
+  stable mostListenedTrackCount: Long
+  stable modifier: Modifier? = @static <expression>
+  stable onRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<SelectableId, Unit>? = @static <expression>
+  stable onMoreActionsClick: @[ExtensionFunctionType] Function1<TrackListItemModel, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackTitleWithLength(
+  track: TrackListItemModel
+  stable filterText: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.TrackNumber(
+  track: TrackListItemModel
+  stable modifier: Modifier? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onClick: Function0<Unit>? = @static null
+)
+open fun ly.david.musicsearch.ui.common.track.TracksByReleasePresenter.present(
+  stable <this>: TracksByReleasePresenter
+): TracksByReleaseUiState
+fun ly.david.musicsearch.ui.common.work.getDisplayScript(
+  stable <this>: String
+): String?
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.WorkListItem(
+  work: WorkListItemModel
+  stable filterText: String
+  stable modifier: Modifier? = @static <expression>
+  stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.ui.common.work.getDisplayString(
+  stable <this>: WorkType
+): String

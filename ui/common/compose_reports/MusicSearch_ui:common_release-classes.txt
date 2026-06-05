@@ -1,0 +1,410 @@
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenterImpl {
+  runtime val musicBrainzLoginActivityResultContract: MusicBrainzLoginActivityResultContract
+  runtime val login: Login
+  stable val clock: Clock
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.ui.common.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.area.AreasListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.artist.ArtistsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.event.EventsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.genre.GenresListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.icons.CustomIcons {
+  <runtime stability> = Stable
+}
+runtime class ly.david.musicsearch.ui.common.image.ForwardingDrawInfo {
+  runtime val painter: Painter
+  stable val alpha: Float
+  stable val colorFilter: ColorFilter?
+  <runtime stability> = Runtime(Painter)
+}
+stable class ly.david.musicsearch.ui.common.instrument.InstrumentsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.label.LabelsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter {
+  stable val areasListPresenter: AreasListPresenter
+  stable val artistsListPresenter: ArtistsListPresenter
+  stable val eventsListPresenter: EventsListPresenter
+  stable val genresListPresenter: GenresListPresenter
+  stable val instrumentsListPresenter: InstrumentsListPresenter
+  stable val labelsListPresenter: LabelsListPresenter
+  stable val placesListPresenter: PlacesListPresenter
+  stable val recordingsListPresenter: RecordingsListPresenter
+  stable val releasesListPresenter: ReleasesListPresenter
+  stable val releaseGroupsListPresenter: ReleaseGroupsListPresenter
+  stable val seriesListPresenter: SeriesListPresenter
+  stable val worksListPresenter: WorksListPresenter
+  stable val tracksByReleasePresenter: TracksByReleasePresenter
+  stable val relationsPresenter: RelationsPresenter
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent.Get {
+  stable val tab: Tab?
+  runtime val browseMethod: BrowseMethod
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val mostListenedTrackCount: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.AllEntitiesListUiState {
+  stable val areasListUiState: EntitiesListUiState
+  stable val artistsListUiState: EntitiesListUiState
+  stable val eventsListUiState: EntitiesListUiState
+  stable val genresListUiState: EntitiesListUiState
+  stable val instrumentsListUiState: EntitiesListUiState
+  stable val labelsListUiState: EntitiesListUiState
+  stable val placesListUiState: EntitiesListUiState
+  stable val recordingsListUiState: EntitiesListUiState
+  stable val releasesListUiState: EntitiesListUiState
+  stable val releaseGroupsListUiState: EntitiesListUiState
+  stable val seriesListUiState: EntitiesListUiState
+  stable val worksListUiState: EntitiesListUiState
+  stable val relationsUiState: RelationsUiState
+  stable val tracksByReleaseUiState: TracksByReleaseUiState
+  stable val eventSink: Function1<AllEntitiesListUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.list.BaseListPresenter {
+  runtime val getEntities: GetEntities
+  runtime val observeLocalCount: ObserveLocalCount
+  runtime val appPreferences: AppPreferences
+  runtime val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.Get {
+  runtime val browseMethod: BrowseMethod
+  stable val isRemote: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.RequestForMissingCoverArtUrl {
+  stable val entityId: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateSortOption {
+  runtime val sortOption: SortableOption
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem {
+  stable val showMore: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowReleaseStatus {
+  stable val status: ReleaseStatus?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
+  runtime val pagingDataFlow: Flow<PagingData<ListItemModel>>
+  stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
+  runtime val listFilters: ListFilters
+  stable val eventSink: Function1<EntitiesListUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.listitem.ListItemSharedTransitionKey {
+  stable val imageId: ImageId
+  stable val type: ElementType
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent.StartLogin {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent.DismissDialog {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent.DismissError {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent.SubmitAuthCode {
+  stable val authCode: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState {
+  stable val showDialog: Boolean
+  stable val successfulLoginAt: Instant?
+  stable val errorMessage: String?
+  stable val eventSink: Function1<MusicBrainzLoginUiEvent, Unit>
+  <runtime stability> = Stable
+}
+runtime class ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems {
+  runtime val areasLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val artistsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val eventsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val genresLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val instrumentsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val labelsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val placesLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val recordingsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val releasesLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val releaseGroupsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val seriesLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val worksLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val relationsLazyPagingItems: LazyPagingItems<ListItemModel>
+  runtime val tracksLazyPagingItems: LazyPagingItems<ListItemModel>
+  <runtime stability> = Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems),Runtime(LazyPagingItems)
+}
+runtime class ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState {
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
+  stable val showMoreInfo: Boolean
+  <runtime stability> = Runtime(LazyPagingItems)
+}
+stable class ly.david.musicsearch.ui.common.place.PlacesListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.recording.RecordingsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl {
+  runtime val getEntityRelationships: GetEntityRelationships
+  runtime val observeCountOfRelationshipsByEntity: ObserveCountOfRelationshipsByEntity
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.GetRelations {
+  runtime val byEntity: MusicBrainzEntity
+  runtime val relatedEntities: Set<MusicBrainzEntityType>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.relation.RelationsUiState {
+  runtime val pagingDataFlow: Flow<PagingData<ListItemModel>>
+  stable val lazyListState: LazyListState
+  stable val totalCount: Int
+  stable val filteredCount: Int
+  stable val eventSink: Function1<RelationsUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.release.ReleasesListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.releasegroup.ReleaseGroupsListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SearchScreen {
+  stable val query: String?
+  stable val entityType: MusicBrainzEntityType?
+  runtime var CREATOR: Creator<SearchScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.LookupUrlScreen {
+  stable val query: String?
+  runtime var CREATOR: Creator<LookupUrlScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.ArtistCollaborationScreen {
+  stable val id: String
+  stable val name: String
+  runtime var CREATOR: Creator<ArtistCollaborationScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.DatabaseScreen {
+  runtime var CREATOR: Creator<DatabaseScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.AllEntitiesScreen {
+  stable val entityType: MusicBrainzEntityType
+  runtime var CREATOR: Creator<AllEntitiesScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.HistoryScreen {
+  runtime var CREATOR: Creator<HistoryScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.CollectionListScreen {
+  stable val newCollectionId: String?
+  stable val newCollectionName: String?
+  stable val newCollectionEntity: MusicBrainzEntityType?
+  runtime var CREATOR: Creator<CollectionListScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.CollectionScreen {
+  stable val collectionId: String
+  stable val collectableId: String?
+  runtime var CREATOR: Creator<CollectionScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.EditCollectionScreen {
+  stable val entityType: MusicBrainzEntityType
+  runtime val collectableIds: List<String>
+  runtime var CREATOR: Creator<EditCollectionScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.TagDetailsScreen {
+  runtime val entity: MusicBrainzEntity
+  runtime val genreOrTag: GenreOrTag
+  runtime var CREATOR: Creator<TagDetailsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {
+  runtime var CREATOR: Creator<PopWithoutResult>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SnackbarPopResult {
+  runtime val feedback: T?
+  runtime var CREATOR: Creator<SnackbarPopResult<*>>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.DetailsScreen {
+  stable val entityType: MusicBrainzEntityType
+  stable val id: String
+  runtime var CREATOR: Creator<DetailsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.CoverArtsScreen {
+  runtime val entity: MusicBrainzEntity?
+  runtime var CREATOR: Creator<CoverArtsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.StatsScreen {
+  runtime val browseMethod: BrowseMethod
+  stable val tabs: ImmutableList<Tab>
+  stable val isRemote: Boolean
+  runtime var CREATOR: Creator<StatsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SettingsScreen {
+  runtime var CREATOR: Creator<SettingsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen {
+  runtime var CREATOR: Creator<AppearanceSettingsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen {
+  runtime var CREATOR: Creator<ImagesSettingsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.ListensSettingsScreen {
+  runtime var CREATOR: Creator<ListensSettingsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.LicensesScreen {
+  runtime var CREATOR: Creator<LicensesScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen {
+  runtime var CREATOR: Creator<NowPlayingHistoryScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen {
+  runtime var CREATOR: Creator<SpotifyHistoryScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.ListensScreen {
+  runtime val entityFacet: MusicBrainzEntity?
+  stable val dateTimeEpochSeconds: Long?
+  runtime var CREATOR: Creator<ListensScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.SubmitListenScreen {
+  runtime val submitListenType: SubmitListenType
+  runtime var CREATOR: Creator<SubmitListenScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.series.SeriesListPresenter {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.snackbar.FeedbackSnackbarVisuals {
+  stable val actionLabel: String?
+  stable val duration: SnackbarDuration
+  stable val message: String
+  stable val withDismissAction: Boolean
+  runtime val feedback: Feedback<T>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.theme.ExtendedColors {
+  stable val artist: Color
+  stable val area: Color
+  stable val collection: Color
+  stable val event: Color
+  stable val genre: Color
+  stable val instrument: Color
+  stable val label: Color
+  stable val place: Color
+  stable val recording: Color
+  stable val release: Color
+  stable val releaseGroup: Color
+  stable val series: Color
+  stable val work: Color
+  stable val url: Color
+}
+stable class ly.david.musicsearch.ui.common.theme.TextStyles {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.topappbar.SelectionState {
+  stable var totalCount$delegate: MutableIntState
+  stable var loadedCount$delegate: MutableIntState
+  stable var selectedItems$delegate: MutableState<PersistentList<SelectableId>>
+}
+stable class ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState {
+  stable val transitionType: TransitionType
+  stable var filterText$delegate: MutableState<String>
+  stable var isFilterMode$delegate: MutableState<Boolean>
+  stable var show$delegate: MutableState<Boolean>
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleasePresenter {
+  runtime val observeTracksByRelease: ObserveTracksByRelease
+  runtime val getTracksIdsByRelease: GetTrackIdsByRelease
+  runtime val observeTrackCount: ObserveTrackCount
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
+  runtime val pagingDataFlow: Flow<PagingData<ListItemModel>>
+  stable val lazyListState: LazyListState
+  stable val collapsedMediumIds: ImmutableSet<Long>
+  runtime val trackIds: ImmutableList<SelectableId>
+  stable val mostListenedTrackCount: Long
+  stable val totalCount: Int
+  stable val filteredCount: Int
+  stable val eventSink: Function1<TracksByReleaseUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.Get {
+  stable val byReleaseId: String
+  stable val mostListenedTrackCount: Long
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.UpdateQuery {
+  stable val query: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.ToggleMedium {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.work.WorksListPresenter {
+  <runtime stability> = Stable
+}

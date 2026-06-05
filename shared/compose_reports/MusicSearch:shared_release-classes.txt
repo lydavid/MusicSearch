@@ -1,0 +1,18 @@
+stable class musicsearch.shared.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.generated.resources.Res {
+  <runtime stability> = Stable
+}

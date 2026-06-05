@@ -1,0 +1,64 @@
+stable class musicsearch.shared.feature.stats.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.stats.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.Stats {
+  runtime val relationStats: RelationStats
+  stable val tabToStats: ImmutableMap<Tab, EntityStats>
+}
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.Default {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  stable val totalVisited: Int
+  stable val totalCollected: Int
+  stable val lastUpdated: Instant?
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.ReleaseGroup {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  stable val totalVisited: Int
+  stable val totalCollected: Int
+  stable val lastUpdated: Instant?
+  runtime val typeCounts: ImmutableList<ReleaseGroupTypeCount>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.EntityStats.Release {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  stable val totalVisited: Int
+  stable val totalCollected: Int
+  stable val lastUpdated: Instant?
+  runtime val statusCounts: ImmutableList<ReleaseStatusCount>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.StatsPresenter {
+  stable val screen: StatsScreen
+  runtime val observeRelationStatsUseCase: ObserveRelationStatsUseCase
+  runtime val browseRemoteMetadataRepository: BrowseRemoteMetadataRepository
+  runtime val observeLocalCount: ObserveLocalCount
+  runtime val observeVisitedCount: ObserveVisitedCount
+  runtime val observeCollectedCount: ObserveCollectedCount
+  runtime val observeCountOfEachAlbumType: ObserveCountOfEachAlbumType
+  runtime val observeCountOfEachStatus: ObserveCountOfEachStatus
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.stats.StatsUiState {
+  stable val stats: Stats
+  stable val tabs: ImmutableList<Tab>
+  <runtime stability> = Stable
+}

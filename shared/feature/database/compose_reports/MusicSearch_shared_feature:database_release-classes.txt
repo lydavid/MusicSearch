@@ -1,0 +1,63 @@
+stable class musicsearch.shared.feature.database.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.database.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.database.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.database.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.database.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.database.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.share.feature.database.DatabasePresenter {
+  stable val navigator: Navigator
+  runtime val musicBrainzImageMetadataRepository: MusicBrainzImageMetadataRepository
+  runtime val observeLocalCountsOfAllEntities: ObserveLocalCountsOfAllEntities
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.share.feature.database.DatabaseUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val lazyListState: LazyListState
+  stable val countOfAllImages: Long?
+  stable val entitiesCount: ImmutableMap<MusicBrainzEntityType, Long>
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<DatabaseUiEvent, Unit>
+}
+stable class ly.david.musicsearch.share.feature.database.DatabaseUiEvent.GoToScreen {
+  stable val screen: Screen
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesPresenter {
+  stable val screen: AllEntitiesScreen
+  stable val navigator: Navigator
+  stable val allEntitiesListPresenter: AllEntitiesListPresenter
+  stable val musicBrainzLoginPresenter: MusicBrainzLoginPresenter
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiState {
+  stable val subtitle: String
+  stable val entityType: MusicBrainzEntityType
+  stable val scrollToHideTopAppBar: Boolean
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val selectionState: SelectionState
+  stable val allEntitiesListUiState: AllEntitiesListUiState
+  stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
+  stable val eventSink: Function1<AllLocalEntitiesUiEvent, Unit>
+}
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.ClickItem {
+  stable val entityType: MusicBrainzEntityType
+  stable val id: String
+  <runtime stability> = Stable
+}
