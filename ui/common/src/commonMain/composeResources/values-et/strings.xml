@@ -454,4 +454,8 @@
     <string name="seriesSeries">Sarjade sari</string>
     <string name="tour">Ringreisiga seotud sari</string>
     <string name="workSeries">Tööde sari</string>
+    <string name="services">Teenused</string>
+    <string name="default">Vaikimisi</string>
+    <string name="musicBrainzInstance">MusicBrainzi server</string>
+    <string name="listenBrainzInstance">ListenBrainzi server</string>
 </resources>
