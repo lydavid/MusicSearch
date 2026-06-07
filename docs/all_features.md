@@ -222,6 +222,10 @@ HTTPS is required for Android.
 https://github.com/metabrainz/musicbrainz-docker.
 
 
+### ListenBrainz
+
+https://listenbrainz.readthedocs.io/en/latest/developers/devel-env.html
+
 
 ## Spotify Playing History
 

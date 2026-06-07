@@ -168,7 +168,7 @@ internal fun SettingsUi(
 
             ListenBrainzProfileCard(
                 modifier = Modifier.padding(top = 4.dp),
-                listenBrainzUrl = state.listenBrainzUrl,
+                listenBrainzSettingsUrl = state.listenBrainzSettingsUrl,
                 username = state.listenBrainzUsername,
                 showLogin = state.listenBrainzUserToken.isEmpty(),
                 text = state.listenBrainzText,

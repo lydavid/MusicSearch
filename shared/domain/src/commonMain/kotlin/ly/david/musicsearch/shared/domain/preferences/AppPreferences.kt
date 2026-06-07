@@ -114,4 +114,7 @@ interface AppPreferences {
 
     val musicBrainzInstance: Flow<MusicBrainzInstance>
     fun setMusicBrainzInstance(instance: MusicBrainzInstance)
+
+    val listenBrainzInstance: Flow<ListenBrainzInstance>
+    fun setListenBrainzInstance(instance: ListenBrainzInstance)
 }

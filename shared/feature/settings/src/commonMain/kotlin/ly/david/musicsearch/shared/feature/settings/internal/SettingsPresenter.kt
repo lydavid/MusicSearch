@@ -113,7 +113,7 @@ internal class SettingsPresenter(
         return SettingsUiState(
             musicBrainzUsername = musicBrainzUsername,
             musicBrainzAccessToken = musicBrainzAccessToken,
-            listenBrainzUrl = listenBrainzRepository.getBaseUrl(),
+            listenBrainzSettingsUrl = "${listenBrainzRepository.getBaseUrl()}/settings",
             listenBrainzText = textFieldText,
             listenBrainzLoginState = listenBrainzLoginState,
             listenBrainzUsername = listenBrainzUsername,
@@ -135,7 +135,7 @@ internal class SettingsPresenter(
 internal data class SettingsUiState(
     val musicBrainzUsername: String = "",
     val musicBrainzAccessToken: String? = null,
-    val listenBrainzUrl: String = "",
+    val listenBrainzSettingsUrl: String = "",
     val listenBrainzText: String = "",
     val listenBrainzLoginState: ListenBrainzLoginState? = null,
     val listenBrainzUsername: String = "",

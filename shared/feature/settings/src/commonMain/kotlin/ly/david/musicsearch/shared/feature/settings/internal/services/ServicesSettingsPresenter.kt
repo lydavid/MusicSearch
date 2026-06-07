@@ -8,6 +8,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 
 internal class ServicesSettingsPresenter(
@@ -19,28 +20,48 @@ internal class ServicesSettingsPresenter(
         val musicBrainzInstance by appPreferences.musicBrainzInstance.collectAsState(
             initial = MusicBrainzInstance.Default,
         )
+        val listenBrainzInstance by appPreferences.listenBrainzInstance.collectAsState(
+            initial = ListenBrainzInstance.Default,
+        )
+
+        fun String.cleanedUrl(): String {
+            return this.trim().removeSuffix("/")
+        }
 
         fun eventSink(event: ServicesSettingsUiEvent) {
             when (event) {
                 ServicesSettingsUiEvent.NavigateUp -> navigator.pop()
 
                 is ServicesSettingsUiEvent.ConfirmMusicBrainzInstance -> {
-                    val instance = if (event.isCustom && event.url.isNotBlank()) {
-                        MusicBrainzInstance.Custom(url = event.url)
+                    val cleanedUrl = event.url.cleanedUrl()
+                    val instance = if (event.isCustom && cleanedUrl.isNotEmpty()) {
+                        MusicBrainzInstance.Custom(url = cleanedUrl)
                     } else {
                         MusicBrainzInstance.Default
                     }
                     appPreferences.setMusicBrainzInstance(instance)
                 }
 
+                is ServicesSettingsUiEvent.ConfirmListenBrainzInstance -> {
+                    val cleanedUrl = event.url.cleanedUrl()
+                    val instance = if (event.isCustom && cleanedUrl.isNotEmpty()) {
+                        ListenBrainzInstance.Custom(url = cleanedUrl)
+                    } else {
+                        ListenBrainzInstance.Default
+                    }
+                    appPreferences.setListenBrainzInstance(instance)
+                }
+
                 ServicesSettingsUiEvent.Reset -> {
                     appPreferences.setMusicBrainzInstance(MusicBrainzInstance.Default)
+                    appPreferences.setListenBrainzInstance(ListenBrainzInstance.Default)
                 }
             }
         }
 
         return ServicesSettingsUiState(
             musicBrainzInstance = musicBrainzInstance,
+            listenBrainzInstance = listenBrainzInstance,
             eventSink = ::eventSink,
         )
     }
@@ -48,6 +69,7 @@ internal class ServicesSettingsPresenter(
 
 internal data class ServicesSettingsUiState(
     val musicBrainzInstance: MusicBrainzInstance,
+    val listenBrainzInstance: ListenBrainzInstance,
     val eventSink: (ServicesSettingsUiEvent) -> Unit = {},
 ) : CircuitUiState
 
@@ -55,6 +77,11 @@ internal sealed interface ServicesSettingsUiEvent : CircuitUiEvent {
     data object NavigateUp : ServicesSettingsUiEvent
 
     data class ConfirmMusicBrainzInstance(
+        val isCustom: Boolean,
+        val url: String,
+    ) : ServicesSettingsUiEvent
+
+    data class ConfirmListenBrainzInstance(
         val isCustom: Boolean,
         val url: String,
     ) : ServicesSettingsUiEvent

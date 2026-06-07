@@ -25,6 +25,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
+import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
@@ -573,7 +574,7 @@ internal class AppPreferencesImpl(
             return preferencesDataStore.data
                 .map {
                     val url = it[customMusicBrainzInstancePreference]
-                    if (url.isNullOrEmpty()) {
+                    if (url.isNullOrBlank()) {
                         MusicBrainzInstance.Default
                     } else {
                         MusicBrainzInstance.Custom(url = url)
@@ -588,6 +589,33 @@ internal class AppPreferencesImpl(
                 it[customMusicBrainzInstancePreference] = when (instance) {
                     MusicBrainzInstance.Default -> ""
                     is MusicBrainzInstance.Custom -> instance.url
+                }
+            }
+        }
+    }
+
+    private val customListenBrainzInstancePreference =
+        stringPreferencesKey(AppPreferencesKey.CUSTOM_LISTENBRAINZ_INSTANCE.name)
+    override val listenBrainzInstance: Flow<ListenBrainzInstance>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    val url = it[customListenBrainzInstancePreference]
+                    if (url.isNullOrBlank()) {
+                        ListenBrainzInstance.Default
+                    } else {
+                        ListenBrainzInstance.Custom(url = url)
+                    }
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setListenBrainzInstance(instance: ListenBrainzInstance) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[customListenBrainzInstancePreference] = when (instance) {
+                    ListenBrainzInstance.Default -> ""
+                    is ListenBrainzInstance.Custom -> instance.url
                 }
             }
         }

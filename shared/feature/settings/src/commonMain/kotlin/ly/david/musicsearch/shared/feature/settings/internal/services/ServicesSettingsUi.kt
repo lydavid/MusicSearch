@@ -3,6 +3,8 @@ package ly.david.musicsearch.shared.feature.settings.internal.services
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -10,10 +12,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ly.david.musicsearch.shared.domain.LISTEN_BRAINZ_BASE_URL
 import ly.david.musicsearch.shared.domain.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
+import musicsearch.ui.common.generated.resources.listenBrainzInstance
 import musicsearch.ui.common.generated.resources.musicBrainzInstance
 import musicsearch.ui.common.generated.resources.reset
 import musicsearch.ui.common.generated.resources.services
@@ -42,6 +47,7 @@ internal fun ServicesSettingsUi(
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .verticalScroll(state = rememberScrollState())
                 .padding(innerPadding),
         ) {
             DefaultCustomInstanceSetting(
@@ -58,6 +64,23 @@ internal fun ServicesSettingsUi(
                 initialTextInputValue = (state.musicBrainzInstance as? MusicBrainzInstance.Custom)?.url.orEmpty(),
                 onConfirm = { isCustom, url ->
                     eventSink(ServicesSettingsUiEvent.ConfirmMusicBrainzInstance(isCustom, url))
+                },
+            )
+
+            DefaultCustomInstanceSetting(
+                title = stringResource(Res.string.listenBrainzInstance),
+                subtitle = when (val instance = state.listenBrainzInstance) {
+                    is ListenBrainzInstance.Custom -> {
+                        instance.url
+                    }
+                    ListenBrainzInstance.Default -> {
+                        "ListenBrainz ($LISTEN_BRAINZ_BASE_URL)"
+                    }
+                },
+                initialSelectedCustom = state.listenBrainzInstance != ListenBrainzInstance.Default,
+                initialTextInputValue = (state.listenBrainzInstance as? ListenBrainzInstance.Custom)?.url.orEmpty(),
+                onConfirm = { isCustom, url ->
+                    eventSink(ServicesSettingsUiEvent.ConfirmListenBrainzInstance(isCustom, url))
                 },
             )
 

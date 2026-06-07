@@ -36,7 +36,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ListenBrainzProfileCard(
-    listenBrainzUrl: String,
+    listenBrainzSettingsUrl: String,
     username: String,
     text: String,
     showLogin: Boolean,
@@ -52,7 +52,7 @@ internal fun ListenBrainzProfileCard(
             onDismiss = { showDialog = false },
         ) {
             TokenInput(
-                listenBrainzUrl = listenBrainzUrl,
+                listenBrainzSettingsUrl = listenBrainzSettingsUrl,
                 text = text,
                 onTextChange = onTextChange,
                 onSetToken = {
@@ -116,19 +116,18 @@ internal fun ListenBrainzProfileCard(
 
 @Composable
 fun TokenInput(
-    listenBrainzUrl: String,
+    listenBrainzSettingsUrl: String,
     text: String,
     modifier: Modifier = Modifier,
     onTextChange: (String) -> Unit = {},
     onSetToken: () -> Unit = {},
 ) {
-    val settingsUrl = "$listenBrainzUrl/settings"
     TextInput(
         modifier = modifier,
         instructions = buildStringWithSingleLink(
             resourceWithPlaceholder = Res.string.findYourListenBrainzUserTokenAt,
-            linkLabel = settingsUrl,
-            url = settingsUrl,
+            linkLabel = listenBrainzSettingsUrl,
+            url = listenBrainzSettingsUrl,
         ),
         textLabel = stringResource(Res.string.userToken),
         textHint = stringResource(Res.string.enterYourUserToken),
