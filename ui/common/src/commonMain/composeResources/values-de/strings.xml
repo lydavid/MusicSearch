@@ -454,4 +454,8 @@
     <string name="tour">Tour</string>
     <string name="workAward">Arbeitspreis</string>
     <string name="workSeries">Arbeitsreihe</string>
+    <string name="services">Dienstleistungen</string>
+    <string name="default">Standard</string>
+    <string name="musicBrainzInstance">MusikBrainz-Instanz</string>
+    <string name="listenBrainzInstance">ListenBrainz Instanz</string>
 </resources>
