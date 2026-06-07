@@ -10,6 +10,7 @@ import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
@@ -223,6 +224,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(false)
 
     override fun setSearchLocalDatabaseInUrlLookup(searchLocal: Boolean) {
+        // No-op.
+    }
+
+    override val musicBrainzInstance: Flow<MusicBrainzInstance>
+        get() = flowOf(MusicBrainzInstance.Default)
+
+    override fun setMusicBrainzInstance(instance: MusicBrainzInstance) {
         // No-op.
     }
 }

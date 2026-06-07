@@ -38,6 +38,7 @@ import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.screen.NowPlayingHistoryScreen
+import ly.david.musicsearch.ui.common.screen.ServicesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.SpotifyHistoryScreen
 import ly.david.musicsearch.ui.common.text.TextWithIcon
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
@@ -59,6 +60,7 @@ import musicsearch.ui.common.generated.resources.nowPlayingHistory
 import musicsearch.ui.common.generated.resources.nowPlayingHistorySubtitle
 import musicsearch.ui.common.generated.resources.openSourceLicenses
 import musicsearch.ui.common.generated.resources.saveDatabase
+import musicsearch.ui.common.generated.resources.services
 import musicsearch.ui.common.generated.resources.settings
 import musicsearch.ui.common.generated.resources.spotify
 import musicsearch.ui.common.generated.resources.spotifySubtitle
@@ -188,6 +190,14 @@ internal fun SettingsUi(
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(ImagesSettingsScreen))
+                },
+            )
+
+            ClickableItem(
+                title = stringResource(Res.string.services),
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    eventSink(SettingsUiEvent.GoToScreen(ServicesSettingsScreen))
                 },
             )
 

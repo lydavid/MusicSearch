@@ -20,6 +20,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [MusicBrainz Login](#musicbrainz-login)                     | ✅       | ✅       | ✅   |
 | Pixel Now Playing History                                   | ✅       | ❌       | ❌   |
 | [Search MusicBrainz](#search-musicbrainz)                   | ✅       | ✅       | ✅   |
+| [Self-host services](#self-host-services)                   | ✅       | ✅       | ✅   |
 | [Spotify Playing History](#spotify-playing-history)         | ✅       | ⬜️      | ⬜️  |
 | [Swipe to Refresh](#swipe-to-refresh)                       | ✅       | ✅       | ✅   |
 | [Themes](#themes)                                           | ✅       | ✅       | ✅   |
@@ -209,6 +210,18 @@ This allows the app to fetch and display all of your [collections](#collections)
 | release group | ✅         |
 | series        | ✅         |
 | work          | ✅         |
+
+## Self-host services
+
+From Settings -> Services.
+
+HTTPS is required for Android.
+
+### MusicBrainz
+
+https://github.com/metabrainz/musicbrainz-docker.
+
+
 
 ## Spotify Playing History
 

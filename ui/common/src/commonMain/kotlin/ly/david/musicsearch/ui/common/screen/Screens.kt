@@ -105,6 +105,9 @@ data object AppearanceSettingsScreen : Screen
 data object ImagesSettingsScreen : Screen
 
 @Parcelize
+data object ServicesSettingsScreen : Screen
+
+@Parcelize
 data object ListensSettingsScreen : Screen
 
 @Parcelize

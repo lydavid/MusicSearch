@@ -111,4 +111,7 @@ interface AppPreferences {
 
     val searchLocalDatabaseInUrlLookup: Flow<Boolean>
     fun setSearchLocalDatabaseInUrlLookup(searchLocal: Boolean)
+
+    val musicBrainzInstance: Flow<MusicBrainzInstance>
+    fun setMusicBrainzInstance(instance: MusicBrainzInstance)
 }

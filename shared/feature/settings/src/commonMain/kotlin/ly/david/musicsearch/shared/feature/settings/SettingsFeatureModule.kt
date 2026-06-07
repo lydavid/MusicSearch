@@ -17,9 +17,13 @@ import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettin
 import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiState
+import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter
+import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUi
+import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiState
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ListensSettingsScreen
+import ly.david.musicsearch.ui.common.screen.ServicesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -59,6 +63,11 @@ val settingsFeatureModule = module {
                     appPreferences = get(),
                 )
 
+                is ServicesSettingsScreen -> ServicesSettingsPresenter(
+                    navigator = navigator,
+                    appPreferences = get(),
+                )
+
                 is ListensSettingsScreen -> ListensSettingsPresenter(
                     navigator = navigator,
                     appPreferences = get(),
@@ -92,6 +101,15 @@ val settingsFeatureModule = module {
                 is ImagesSettingsScreen -> {
                     ui<ImagesSettingsUiState> { state, modifier ->
                         ImagesSettingsUi(
+                            state = state,
+                            modifier = modifier,
+                        )
+                    }
+                }
+
+                is ServicesSettingsScreen -> {
+                    ui<ServicesSettingsUiState> { state, modifier ->
+                        ServicesSettingsUi(
                             state = state,
                             modifier = modifier,
                         )

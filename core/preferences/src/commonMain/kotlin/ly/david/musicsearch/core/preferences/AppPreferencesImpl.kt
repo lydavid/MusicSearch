@@ -25,6 +25,7 @@ import ly.david.musicsearch.shared.domain.network.resourceUri
 import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
+import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
@@ -561,6 +562,33 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[searchLocalDatabaseInUrlLookupPreference] = searchLocal
+            }
+        }
+    }
+
+    private val customMusicBrainzInstancePreference =
+        stringPreferencesKey(AppPreferencesKey.CUSTOM_MUSICBRAINZ_INSTANCE.name)
+    override val musicBrainzInstance: Flow<MusicBrainzInstance>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    val url = it[customMusicBrainzInstancePreference]
+                    if (url.isNullOrEmpty()) {
+                        MusicBrainzInstance.Default
+                    } else {
+                        MusicBrainzInstance.Custom(url = url)
+                    }
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setMusicBrainzInstance(instance: MusicBrainzInstance) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[customMusicBrainzInstancePreference] = when (instance) {
+                    MusicBrainzInstance.Default -> ""
+                    is MusicBrainzInstance.Custom -> instance.url
+                }
             }
         }
     }

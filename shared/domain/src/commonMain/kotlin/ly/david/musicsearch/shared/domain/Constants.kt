@@ -10,6 +10,11 @@ const val APPLICATION_ID = "io.github.lydavid.musicsearch.debug"
 const val USER_AGENT = "User-Agent"
 const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
 
+/**
+ * MusicBrainz base url for API and web.
+ */
+const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org"
+
 const val DEFAULT_SEED_COLOR_LONG: Long = 0xFF571AFF
 const val DEFAULT_SEED_COLOR_INT: Int = DEFAULT_SEED_COLOR_LONG.toInt()
 

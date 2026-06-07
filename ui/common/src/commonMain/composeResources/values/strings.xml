@@ -454,4 +454,8 @@
     <string name="tour">Tour</string>
     <string name="workAward">Work award</string>
     <string name="workSeries">Work series</string>
+    <string name="services">Services</string>
+    <string name="default">Default</string>
+    <string name="musicBrainzInstance">MusicBrainz instance</string>
+    <string name="listenBrainzInstance">ListenBrainz instance</string>
 </resources>

@@ -50,9 +50,15 @@ kotlin {
         }
         val androidUnitTest by getting {
             dependencies {
+                implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)
                 implementation(libs.test.parameter.injector)
                 implementation(libs.bundles.kotlinx.coroutines)
+                implementation(libs.junit)
+                implementation(libs.koin.test)
+                implementation(libs.circuit.test)
+                implementation(libs.robolectric)
+                implementation(libs.mockk)
             }
         }
     }
