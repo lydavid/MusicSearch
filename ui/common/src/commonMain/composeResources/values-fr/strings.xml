@@ -458,4 +458,8 @@
     <string name="tour">Visite guidée</string>
     <string name="workAward">Contrat de travail</string>
     <string name="workSeries">Série de travaux</string>
+    <string name="services">Services</string>
+    <string name="default">Par défaut</string>
+    <string name="musicBrainzInstance">Instance de MusicBrainz</string>
+    <string name="listenBrainzInstance">Instance ListenBrainz</string>
 </resources>
