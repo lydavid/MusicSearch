@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.120.0](https://github.com/lydavid/MusicSearch/compare/v1.119.1...v1.120.0) (2026-06-07)
+
+
+### Features
+
+* support changing ListenBrainz instance ([c3b2629](https://github.com/lydavid/MusicSearch/commit/c3b2629269c7cdc0d12f5c24e233fab045ba171d))
+* support changing MusicBrainz instance (such as to a self-hosted one) ([ba12783](https://github.com/lydavid/MusicSearch/commit/ba1278353b4d4ee340890b3ee07af6de40cdd7d0))
+
 ## [1.119.1](https://github.com/lydavid/MusicSearch/compare/v1.119.0...v1.119.1) (2026-06-01)
 
 
