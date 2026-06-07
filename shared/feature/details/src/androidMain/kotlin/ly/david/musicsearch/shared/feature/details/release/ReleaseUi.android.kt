@@ -85,12 +85,14 @@ private val release = ReleaseDetailsModel(
     ),
 )
 
+private val detailsTabUiState = DetailsTabUiState(
+    numberOfImages = 11,
+    now = Instant.parse("2025-06-05T19:42:20Z"),
+)
+
 private val detailsUiState = DetailsUiState(
     detailsModel = release,
-    detailsTabUiState = DetailsTabUiState(
-        numberOfImages = 11,
-        now = Instant.parse("2025-06-05T19:42:20Z"),
-    ),
+    detailsTabUiState = detailsTabUiState,
     browseMethod = BrowseMethod.ByEntity(
         entityId = release.id,
         entityType = MusicBrainzEntityType.RELEASE,
@@ -116,7 +118,7 @@ internal fun PreviewReleaseDetailsUiCollapsed() {
     PreviewWithTransitionAndOverlays {
         ReleaseUi(
             state = detailsUiState.copy(
-                detailsTabUiState = DetailsTabUiState(
+                detailsTabUiState = detailsTabUiState.copy(
                     numberOfImages = 11,
                     isSectionCollapsed = persistentSetOf(
                         CollapsibleSection.Information,
@@ -165,7 +167,7 @@ internal fun PreviewReleaseDetailsUiWithListens() {
                     ),
                     listenBrainzUrl = "https://listenbrainz.org/album/22760f81-37ce-47ce-98b6-65f8a285f083",
                 ),
-                detailsTabUiState = DetailsTabUiState(
+                detailsTabUiState = detailsTabUiState.copy(
                     numberOfImages = 11,
                     isSectionCollapsed = persistentSetOf(
                         CollapsibleSection.ReleaseEvents,
