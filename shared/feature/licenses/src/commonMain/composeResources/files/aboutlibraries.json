@@ -1450,7 +1450,7 @@
                     "name": "Coil Contributors"
                 }
             ],
-            "artifactVersion": "3.4.0",
+            "artifactVersion": "3.5.0",
             "description": "An image loading library for Android and Compose Multiplatform.",
             "scm": {
                 "connection": "scm:git:git://github.com/coil-kt/coil.git",
