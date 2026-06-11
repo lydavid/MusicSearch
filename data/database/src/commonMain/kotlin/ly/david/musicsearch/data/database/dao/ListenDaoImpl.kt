@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
@@ -51,6 +52,9 @@ class ListenDaoImpl(
                         artist_name = listen.artistName,
                         track_name = listen.trackName,
                         release_name = listen.entityMapping.releaseName,
+                        disc_number = listen.discNumber,
+                        track_number = listen.trackNumber,
+                        isrc = listen.isrc,
                         duration_ms = listen.entityMapping.durationMs,
                         media_player = listen.mediaPlayer,
                         submission_client = listen.submissionClient,
@@ -363,6 +367,10 @@ private fun mapToListenListItemModel(
     releaseName: String?,
     unmappedReleaseName: String?,
     releaseId: String?,
+    unmappedDiscNumber: Int?,
+    unmappedTrackNumber: String?,
+    unmappedIsrc: String?,
+    isrcs: List<String>?,
     thumbnailUrl: String?,
     imageId: Long?,
     source: ImageSource?,
@@ -391,6 +399,10 @@ private fun mapToListenListItemModel(
     recordingId = recordingMusicbrainzId,
     recordingDurationMs = recordingDurationMs,
     unmappedDurationMs = unmappedDurationMs?.toInt(),
+    unmappedDiscNumber = unmappedDiscNumber,
+    unmappedTrackNumber = unmappedTrackNumber,
+    unmappedIsrc = unmappedIsrc,
+    isrcs = isrcs.orEmpty().toPersistentList(),
     imageMetadata = mapToImageMetadata(
         id = imageId,
         thumbnailUrl = thumbnailUrl,

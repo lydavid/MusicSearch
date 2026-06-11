@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.listens
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -23,6 +24,10 @@ private val listen = ListenListItemModel(
         name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
         unmappedName = "Persona 3 Reload Original Soundtrack",
     ),
+    unmappedDiscNumber = 1,
+    unmappedTrackNumber = "16",
+    unmappedIsrc = "JPK652300116",
+    isrcs = persistentListOf("JPK652300116"),
 )
 
 private val unlinkedListen = listen.copy(

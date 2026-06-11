@@ -495,7 +495,7 @@ private fun ListensContent(
                     listen = listen,
                     filterText = filterText,
                     showUnmappedData = state.showUnmappedData,
-                    toggleShowUnmappedData = {
+                    onToggleShowUnmappedData = {
                         eventSink(ListensUiEvent.ToggleShowUnmappedData)
                     },
                     onGoToRelease = { releaseId ->
