@@ -13,6 +13,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +26,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.common.toDisplayTime
+import ly.david.musicsearch.shared.domain.common.transformOrEmptyIfNull
+import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -69,7 +73,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
     filterText: String,
     showUnmappedData: Boolean,
-    toggleShowUnmappedData: () -> Unit = {},
+    onToggleShowUnmappedData: () -> Unit = {},
     onGoToRelease: (releaseId: String) -> Unit = {},
     filteringByThisRecording: Boolean,
     onFilterByRecording: (recordingId: String) -> Unit = {},
@@ -91,7 +95,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             listen = listen,
             filterText = filterText,
             showUnmappedData = showUnmappedData,
-            toggleShowUnmappedData = toggleShowUnmappedData,
+            onToggleShowUnmappedData = onToggleShowUnmappedData,
         )
 
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
@@ -220,7 +224,7 @@ private fun PreviewSection(
     listen: ListenListItemModel,
     filterText: String,
     showUnmappedData: Boolean,
-    toggleShowUnmappedData: () -> Unit = {},
+    onToggleShowUnmappedData: () -> Unit = {},
 ) {
     val release = listen.release
     Row(
@@ -266,6 +270,11 @@ private fun PreviewSection(
                                 ),
                             ) {
                                 append(listen.unmappedTrackName)
+
+                                val discNumberString = listen.unmappedDiscNumber.transformOrEmptyIfNull { "$it." }
+                                val trackNumberString = listen.unmappedTrackNumber.orEmpty()
+                                val discTrack = "$discNumberString$trackNumberString"
+                                append(discTrack.transformThisIfNotNullOrEmpty { " ($it)" })
                             }
                             // Could possibly show the recording duration here, but that may be confusing
                             // as the submitted data is the unmapped data.
@@ -340,13 +349,39 @@ private fun PreviewSection(
                                 }
                             }
                         }
+
+                        if (showUnmappedData) {
+                            listen.unmappedIsrc?.let { unmappedIsrc ->
+                                Spacer(modifier = Modifier.padding(top = 4.dp))
+                                listen.isrcs.joinToString(", ").ifNotEmpty { isrcs ->
+                                    Text(
+                                        text = isrcs,
+                                        style = TextStyles.getCardBodySubTextStyle(),
+                                    )
+                                }
+                                HighlightableText(
+                                    text = buildAnnotatedString {
+                                        withStyle(
+                                            style = SpanStyle(
+                                                fontStyle = FontStyle.Italic,
+                                                color = getSubTextColor(),
+                                            ),
+                                        ) {
+                                            append(unmappedIsrc)
+                                        }
+                                    },
+                                    highlightedText = filterText,
+                                    style = TextStyles.getCardBodySubTextStyle(),
+                                )
+                            }
+                        }
                     }
 
                     IconButton(
                         modifier = Modifier
                             .padding(end = 4.dp)
                             .align(Alignment.CenterEnd),
-                        onClick = toggleShowUnmappedData,
+                        onClick = onToggleShowUnmappedData,
                     ) {
                         Icon(
                             imageVector = if (showUnmappedData) CustomIcons.CollapseAll else CustomIcons.ExpandAll,

@@ -85,19 +85,13 @@ data class AdditionalInfo(
     val spotify_artist_ids: List<String>? = null,
     val spotify_id: String? = null,
 
+    val discnumber: String? = null,
+    val tracknumber: String? = null,
+    val isrc: String? = null,
+
     // prefer TrackMetadata.artist_name when we're missing MB artist
 //    val artist_names: List<String>?,
 //    val release_artist_names: List<String>?,
-
-    // let recording be source of truth
-//    val isrc: String?,
-
-    // let track be source of truth
-//    val discnumber: Int?,
-
-    // let track be source of truth
-    // could be a string when submitted through listenbrainz web, otherwise int
-//    val tracknumber: String?,
 
     // jq '.payload.listens[] | select(.track_metadata.additional_info.recording_msid != .recording_msid) | { a: .track_metadata.additional_info.recording_msid, b: .recording_msid }' scratch/listens.json
     // was empty for 2000 of my listens, so I'm assuming they are the same.
@@ -152,6 +146,9 @@ fun GetListensResponse.asListOfListens(): List<Listen> {
             username = listen.user_name,
             artistName = trackMetadata.artist_name,
             trackName = trackMetadata.track_name,
+            discNumber = additionalInfo?.discnumber?.toIntOrNull(),
+            trackNumber = additionalInfo?.tracknumber,
+            isrc = additionalInfo?.isrc,
             mediaPlayer = additionalInfo?.media_player,
             submissionClient = additionalInfo?.submission_client,
             musicService = additionalInfo?.music_service,

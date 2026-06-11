@@ -115,6 +115,7 @@ fun createDatabase(driver: SqlDriver): Database {
         listenAdapter = Listen.Adapter(
             spotify_artist_idsAdapter = ListStringColumnAdapter,
             spotify_album_artist_idsAdapter = ListStringColumnAdapter,
+            disc_numberAdapter = IntColumnAdapter,
         ),
         releaseAdapter = Release.Adapter(
             statusAdapter = ReleaseStatusIntColumnAdapter,

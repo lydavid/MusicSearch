@@ -1,3 +1,4 @@
+import kotlin.Int;
 import kotlin.String;
 import kotlin.collections.List;
 
@@ -23,7 +24,9 @@ CREATE TABLE listen (
   track_name TEXT NOT NULL,
 
   release_name TEXT,
-
+  disc_number INTEGER AS Int,
+  track_number TEXT,
+  isrc TEXT,
   duration_ms INTEGER,
   media_player TEXT,
   submission_client TEXT,
@@ -156,6 +159,10 @@ SELECT
   `release`.name AS releaseName,
   listen.release_name AS unmappedReleaseName,
   COALESCE(listen.release_mbid, listen.caa_release_mbid) AS releaseId,
+  listen.disc_number AS unmappedDiscNumber,
+  listen.track_number AS unmappedTrackNumber,
+  listen.isrc AS unmappedIsrc,
+  recording.isrcs,
   mi.thumbnail_url,
   mi.id AS imageId,
   mi.source,

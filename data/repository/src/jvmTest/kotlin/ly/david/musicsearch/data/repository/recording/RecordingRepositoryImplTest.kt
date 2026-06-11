@@ -339,6 +339,7 @@ class RecordingRepositoryImplTest :
                             name = "Persona 3 Reload Original Soundtrack",
                             unmappedName = "Persona 3 Reload Original Soundtrack",
                         ),
+                        isrcs = persistentListOf("JPK652300116"),
                         visited = true,
                     ),
                 ),
