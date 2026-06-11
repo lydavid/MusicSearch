@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.121.0](https://github.com/lydavid/MusicSearch/compare/v1.120.0...v1.121.0) (2026-06-11)
+
+
+### Features
+
+* save listen's disc/track number and ISRC and show them when Show originally submitted data icon button is toggled to help with mapping listens; update database version to 80 ([#2249](https://github.com/lydavid/MusicSearch/issues/2249)) ([463b0b9](https://github.com/lydavid/MusicSearch/commit/463b0b9eaf7215aec8583475c3f05081d4d54d0d))
+
 ## [1.120.0](https://github.com/lydavid/MusicSearch/compare/v1.119.1...v1.120.0) (2026-06-07)
 
 
