@@ -38,7 +38,7 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsPrese
 stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState {
   stable val musicBrainzUsername: String
   stable val musicBrainzAccessToken: String?
-  stable val listenBrainzUrl: String
+  stable val listenBrainzSettingsUrl: String
   stable val listenBrainzText: String
   runtime val listenBrainzLoginState: ListenBrainzLoginState?
   stable val listenBrainzUsername: String
@@ -162,5 +162,32 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.listens.Liste
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.listens.ListensSettingsUiEvent.Reset {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiState {
+  runtime val musicBrainzInstance: MusicBrainzInstance
+  runtime val listenBrainzInstance: ListenBrainzInstance
+  stable val eventSink: Function1<ServicesSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.ConfirmMusicBrainzInstance {
+  stable val isCustom: Boolean
+  stable val url: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.ConfirmListenBrainzInstance {
+  stable val isCustom: Boolean
+  stable val url: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.Reset {
   <runtime stability> = Stable
 }

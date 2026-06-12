@@ -308,6 +308,10 @@ stable class ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen {
   runtime var CREATOR: Creator<ImagesSettingsScreen>
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.ServicesSettingsScreen {
+  runtime var CREATOR: Creator<ServicesSettingsScreen>
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.ListensSettingsScreen {
   runtime var CREATOR: Creator<ListensSettingsScreen>
   <runtime stability> = Stable
