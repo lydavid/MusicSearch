@@ -1,17 +1,5 @@
 plugins {
-    id("ly.david.android.library")
-    id("ly.david.musicsearch.compose.multiplatform")
-    id("ly.david.musicsearch.kotlin.multiplatform")
-}
-
-android {
-    namespace = "ly.david.musicsearch.konsist"
-}
-
-kotlin {
-    sourceSets {
-        val androidMain by getting
-    }
+    kotlin("jvm")
 }
 
 tasks.withType<Test> {
@@ -23,4 +11,6 @@ dependencies {
     // https://github.com/LemonAppDev/konsist/blob/main/samples/starter-projects/konsist-starter-kmp-gradle-kotlin-junit5/konsistTest/build.gradle.kts
     testImplementation(libs.konsist)
     testImplementation(libs.junit.jupiter.engine)
+    // https://github.com/gradle/gradle/issues/34512
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

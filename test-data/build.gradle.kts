@@ -3,6 +3,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.test"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

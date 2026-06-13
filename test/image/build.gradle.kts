@@ -1,14 +1,18 @@
 plugins {
-    id("ly.david.android.library")
-    kotlin("android")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     id("ly.david.musicsearch.compose.multiplatform")
 }
 
-android {
-    namespace = "ly.david.musicsearch.test.image"
-}
-
-dependencies {
-    implementation(libs.coil.compose)
-    implementation(libs.coil.test)
+kotlin {
+    android {
+        namespace = "ly.david.musicsearch.test.image"
+    }
+    sourceSets {
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.coil.compose)
+                implementation(libs.coil.test)
+            }
+        }
+    }
 }

@@ -4,6 +4,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.wikimedia"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

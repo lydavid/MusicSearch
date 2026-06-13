@@ -3,8 +3,7 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.application")
-    id("ly.david.musicsearch.compose.multiplatform")
-    alias(libs.plugins.baselineprofile)
+//    alias(libs.plugins.baselineprofile)
     alias(libs.plugins.aboutlibraries)
 }
 
@@ -89,6 +88,7 @@ android {
         includeInBundle = false
     }
     buildFeatures {
+        compose = true
         buildConfig = true
     }
 }
@@ -108,7 +108,7 @@ dependencies {
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
     implementation(libs.androidx.profileinstaller)
-    "baselineProfile"(projects.android.baselineprofile)
+//    "baselineProfile"(projects.android.baselineprofile)
 
     googlePlayImplementation(platform(libs.firebase.bom))
     googlePlayImplementation(libs.firebase.analytics)
