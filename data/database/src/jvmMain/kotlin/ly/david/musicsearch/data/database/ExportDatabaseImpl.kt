@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.ExportDatabase
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import okio.FileSystem
 import okio.Path.Companion.toPath
+import javax.swing.JFileChooser
 import kotlin.time.Clock
 
 internal class ExportDatabaseImpl(
@@ -14,9 +15,20 @@ internal class ExportDatabaseImpl(
 ) : ExportDatabase {
     override suspend operator fun invoke(): String {
         return try {
+            val chooser = JFileChooser().apply {
+                fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
+                dialogTitle = "Choose export folder"
+            }
+            if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+                return "You need to select a folder to save the database to."
+            }
+
             withContext(coroutineDispatchers.io) {
                 val databasePath = databasePath.toPath()
-                val destinationPath = "./${getExportFileName(clock = clock)}".toPath()
+
+                val folder = chooser.selectedFile.absolutePath
+                val destinationPath = "$folder/${getExportFileName(clock = clock)}".toPath()
+
                 FileSystem.SYSTEM.copy(
                     source = databasePath,
                     target = destinationPath,
