@@ -1,14 +1,12 @@
 plugins {
-    id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "ly.david.musicsearch.data.common.network"
-}
-
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.common.network"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -46,7 +44,8 @@ kotlin {
     }
 }
 
+// TODO: if I want to keep chucker, maybe have android module bind an implementation based on flavor
 dependencies {
-    debugImplementation(libs.chucker)
-    releaseImplementation(libs.chucker.noop)
+//    "androidRuntimeClasspath"(libs.chucker)
+//    releaseImplementation(libs.chucker.noop)
 }

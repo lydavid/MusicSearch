@@ -1,14 +1,9 @@
 import java.util.Properties
 
 plugins {
-    id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.build.config)
-}
-
-android {
-    namespace = "ly.david.musicsearch.data.musicbrainz"
 }
 
 buildConfig {
@@ -41,6 +36,9 @@ buildConfig {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.musicbrainz"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

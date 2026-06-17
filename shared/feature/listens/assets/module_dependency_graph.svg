@@ -32,7 +32,7 @@
 <!-- :ui:test:screenshot -->
 <g id="node3" class="node">
 <title>:ui:test:screenshot</title>
-<ellipse fill="#9affb5" stroke="black" cx="769.54" cy="-429" rx="96.68" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="769.54" cy="-429" rx="96.68" ry="18"/>
 <text text-anchor="middle" x="769.54" y="-425.3" font-family="Times,serif" font-size="14.00">:ui:test:screenshot</text>
 </g>
 <!-- :shared:feature:listens&#45;&gt;:ui:test:screenshot -->
@@ -122,7 +122,7 @@
 <!-- :test:image -->
 <g id="node10" class="node">
 <title>:test:image</title>
-<ellipse fill="#9affb5" stroke="black" cx="746.54" cy="-292" rx="63.09" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="746.54" cy="-292" rx="63.09" ry="18"/>
 <text text-anchor="middle" x="746.54" y="-288.3" font-family="Times,serif" font-size="14.00">:test:image</text>
 </g>
 <!-- :ui:test:screenshot&#45;&gt;:test:image -->
@@ -132,13 +132,13 @@
 <polygon fill="black" stroke="black" points="750.04,-320.44 746.54,-310.44 743.04,-320.44 750.04,-320.44"/>
 </g>
 <!-- :ui:common&#45;&gt;:test&#45;data -->
-<g id="edge12" class="edge">
+<g id="edge11" class="edge">
 <title>:ui:common&#45;&gt;:test&#45;data</title>
 <path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M534.62,-560C504.17,-560 473.71,-560 473.71,-560 473.71,-560 473.71,-452.53 473.71,-452.53"/>
 <polygon fill="#ff9ab1" stroke="#ff9ab1" points="477.21,-452.53 473.71,-442.53 470.21,-452.53 477.21,-452.53"/>
 </g>
 <!-- :ui:common&#45;&gt;:ui:test:screenshot -->
-<g id="edge13" class="edge">
+<g id="edge12" class="edge">
 <title>:ui:common&#45;&gt;:ui:test:screenshot</title>
 <path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M651.02,-556.58C651.02,-525.63 651.02,-429 651.02,-429 651.02,-429 662.49,-429 662.49,-429"/>
 <polygon fill="#ff9ab1" stroke="#ff9ab1" points="662.49,-432.5 672.49,-429 662.49,-425.5 662.49,-432.5"/>
@@ -150,7 +150,7 @@
 <polygon fill="black" stroke="black" points="47.88,-43.98 44.38,-33.98 40.88,-43.98 47.88,-43.98"/>
 </g>
 <!-- :ui:common&#45;&gt;:test:image -->
-<g id="edge11" class="edge">
+<g id="edge13" class="edge">
 <title>:ui:common&#45;&gt;:test:image</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M642.16,-553.43C642.16,-500.45 642.16,-298 642.16,-298 642.16,-298 677.03,-298 677.03,-298"/>
 <polygon fill="black" stroke="black" points="677.03,-301.5 687.03,-298 677.03,-294.5 677.03,-301.5"/>

@@ -14,13 +14,13 @@
 <!-- :ui:test:screenshot -->
 <g id="node1" class="node">
 <title>:ui:test:screenshot</title>
-<polygon fill="#9affb5" stroke="black" points="191,-173 42,-173 42,-137 191,-137 191,-173"/>
+<polygon fill="#b59aff" stroke="black" points="191,-173 42,-173 42,-137 191,-137 191,-173"/>
 <text text-anchor="middle" x="116.5" y="-151.3" font-family="Times,serif" font-size="14.00">:ui:test:screenshot</text>
 </g>
 <!-- :test:image -->
 <g id="node2" class="node">
 <title>:test:image</title>
-<ellipse fill="#9affb5" stroke="black" cx="116.5" cy="-18" rx="63.09" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="116.5" cy="-18" rx="63.09" ry="18"/>
 <text text-anchor="middle" x="116.5" y="-14.3" font-family="Times,serif" font-size="14.00">:test:image</text>
 </g>
 <!-- :ui:test:screenshot&#45;&gt;:test:image -->

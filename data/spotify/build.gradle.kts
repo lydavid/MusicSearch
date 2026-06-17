@@ -35,6 +35,9 @@ buildConfig {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.spotify"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

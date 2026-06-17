@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.common.network.di
 
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import io.ktor.client.engine.okhttp.OkHttpConfig
 import io.ktor.client.engine.okhttp.OkHttpEngine
 import io.ktor.client.plugins.HttpRequestRetry
@@ -23,7 +22,7 @@ actual val HttpClientModule: Module = module {
         okHttpConfig.config {
             readTimeout(10, TimeUnit.SECONDS)
             cache(null)
-            addInterceptor(ChuckerInterceptor(context = get()))
+//            addInterceptor(ChuckerInterceptor(context = get()))
         }
         ApiHttpClient.configAndCreate(
             engine = OkHttpEngine(config = okHttpConfig),

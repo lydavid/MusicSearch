@@ -53,7 +53,7 @@ jobs:
       - name: Verify screenshot tests
         id: screenshotsverify
         if: ${{ !cancelled() }}
-        run: ./gradlew verifyPaparazziDebug
+        run: ./gradlew verifyPaparazzi
 
       - name: Delete all snapshot golden
         if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' }}
@@ -63,7 +63,7 @@ jobs:
         id: screenshotsrecord
         if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' && !startsWith(github.ref, 'refs/heads/renovate/') }}
         run: |
-          ./gradlew recordPaparazziDebug
+          ./gradlew recordPaparazzi
 
       - name: Push new screenshots if available
         if: ${{ !cancelled() && steps.screenshotsrecord.outcome == 'success' }}
