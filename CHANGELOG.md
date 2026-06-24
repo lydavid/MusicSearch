@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.121.1](https://github.com/lydavid/MusicSearch/compare/v1.121.0...v1.121.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* **desktop:** allow choosing folder to save database to ([b8899d3](https://github.com/lydavid/MusicSearch/commit/b8899d3a1b5eb141c2c111dc4638ec51e10e18dc))
+
 ## [1.121.0](https://github.com/lydavid/MusicSearch/compare/v1.120.0...v1.121.0) (2026-06-11)
 
 
