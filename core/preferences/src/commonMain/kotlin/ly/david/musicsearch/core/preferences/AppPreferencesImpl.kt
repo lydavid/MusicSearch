@@ -19,6 +19,7 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SH
 import ly.david.musicsearch.shared.domain.DEFAULT_SEED_COLOR_INT
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.network.resourceUri
@@ -37,11 +38,13 @@ import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
+import ly.david.musicsearch.shared.domain.spotify.SpotifyOAuthInfo
 
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,
     private val crashReporterSettings: CrashReporterSettings,
+    private val defaultSpotifyOAuthInfo: SpotifyOAuthInfo,
 ) : AppPreferences {
 
     private val themePreference = stringPreferencesKey(AppPreferencesKey.THEME.name)
@@ -620,4 +623,58 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val artistImageSourcePreference =
+        stringPreferencesKey(AppPreferencesKey.ARTIST_IMAGE_SOURCE.name)
+
+    override val artistImageSource: Flow<ArtistImageSource>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    when (it[artistImageSourcePreference]) {
+                        ArtistImageSourceKey.WIKIMEDIA -> ArtistImageSource.Wikimedia
+                        ArtistImageSourceKey.SPOTIFY_DEFAULT -> ArtistImageSource.Spotify.Default
+                        else -> {
+                            // Stored as "clientId|clientSecret"
+                            val raw = it[artistImageSourcePreference]
+                            val parts = raw?.split("|")
+                            if (parts?.size == 2 && parts[0].isNotBlank()) {
+                                ArtistImageSource.Spotify.Custom(
+                                    clientId = parts[0],
+                                    clientSecret = parts[1],
+                                )
+                            } else {
+                                defaultArtistImageSource()
+                            }
+                        }
+                    }
+                }
+                .distinctUntilChanged()
+        }
+
+    override val hasDefaultSpotifyCredentials: Boolean = defaultSpotifyOAuthInfo.clientId.isNotEmpty()
+
+    private fun defaultArtistImageSource(): ArtistImageSource =
+        if (hasDefaultSpotifyCredentials) {
+            ArtistImageSource.Spotify.Default
+        } else {
+            ArtistImageSource.Wikimedia
+        }
+
+    override fun setArtistImageSource(source: ArtistImageSource) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[artistImageSourcePreference] = when (source) {
+                    ArtistImageSource.Wikimedia -> ArtistImageSourceKey.WIKIMEDIA
+                    ArtistImageSource.Spotify.Default -> ArtistImageSourceKey.SPOTIFY_DEFAULT
+                    is ArtistImageSource.Spotify.Custom -> "${source.clientId}|${source.clientSecret}"
+                }
+            }
+        }
+    }
+}
+
+private object ArtistImageSourceKey {
+    const val WIKIMEDIA = "wikimedia"
+    const val SPOTIFY_DEFAULT = "spotify_default"
 }

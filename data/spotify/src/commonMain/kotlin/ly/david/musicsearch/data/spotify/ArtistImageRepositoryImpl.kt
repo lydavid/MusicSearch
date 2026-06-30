@@ -5,7 +5,7 @@ import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
 import ly.david.musicsearch.data.spotify.api.getLargeImageUrl
 import ly.david.musicsearch.data.spotify.api.getThumbnailImageUrl
-import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
+import ly.david.musicsearch.data.spotify.auth.store.SpotifyAuthRepository
 import ly.david.musicsearch.shared.domain.artist.ArtistImageRepository
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -18,7 +18,7 @@ import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import kotlin.coroutines.cancellation.CancellationException
 
 class ArtistImageRepositoryImpl(
-    private val spotifyOAuthInfo: SpotifyOAuthInfo,
+    private val spotifyAuthRepository: SpotifyAuthRepository,
     private val spotifyApi: SpotifyApi,
     private val wikimediaRepository: WikimediaRepository,
     private val imageUrlDao: ImageUrlDao,
@@ -46,7 +46,8 @@ class ArtistImageRepositoryImpl(
         detailsModel: MusicBrainzDetailsModel,
     ) {
         try {
-            val noSpotifySecrets = spotifyOAuthInfo.clientSecret.isEmpty() || spotifyOAuthInfo.clientId.isEmpty()
+            val authInfo = spotifyAuthRepository.getOAuthInfo()
+            val noSpotifySecrets = authInfo.clientSecret.isEmpty() || authInfo.clientId.isEmpty()
             val spotifyUrl =
                 detailsModel.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name
 

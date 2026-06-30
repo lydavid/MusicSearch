@@ -12,7 +12,7 @@ val spotifyApiModule = module {
     single {
         SpotifyApi.create(
             httpClient = get(),
-            spotifyOAuthInfo = get(),
+            spotifyAuthRepository = get(),
             spotifyOAuthApi = get(),
             spotifyAuthStore = get(),
         )

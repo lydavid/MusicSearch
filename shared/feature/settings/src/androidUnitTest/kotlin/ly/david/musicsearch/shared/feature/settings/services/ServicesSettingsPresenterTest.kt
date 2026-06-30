@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.preferences.NoOpAppPreferences
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter
@@ -30,6 +31,8 @@ class ServicesSettingsPresenterTest {
         navigator: Navigator,
         musicBrainzInstance: MusicBrainzInstance,
         listenBrainzInstance: ListenBrainzInstance,
+        artistImageSource: ArtistImageSource = ArtistImageSource.Wikimedia,
+        hasDefaultSpotifyCredentials: Boolean = false,
     ) = ServicesSettingsPresenter(
         navigator = navigator,
         appPreferences = object : NoOpAppPreferences() {
@@ -50,6 +53,18 @@ class ServicesSettingsPresenterTest {
             override fun setListenBrainzInstance(instance: ListenBrainzInstance) {
                 listenBrainzInstanceFlow.value = instance
             }
+
+            private val artistImageSourceFlow = MutableStateFlow(artistImageSource)
+
+            override val artistImageSource: Flow<ArtistImageSource>
+                get() = artistImageSourceFlow
+
+            override fun setArtistImageSource(source: ArtistImageSource) {
+                artistImageSourceFlow.value = source
+            }
+
+            override val hasDefaultSpotifyCredentials: Boolean
+                get() = hasDefaultSpotifyCredentials
         },
     )
 
@@ -157,6 +172,131 @@ class ServicesSettingsPresenterTest {
                 ),
                 navigator.awaitPop(),
             )
+        }
+    }
+
+    @Test
+    fun `confirm artist image source updates state`() = runTest {
+        val presenter = createPresenter(
+            navigator = navigator,
+            musicBrainzInstance = MusicBrainzInstance.Default,
+            listenBrainzInstance = ListenBrainzInstance.Default,
+            artistImageSource = ArtistImageSource.Wikimedia,
+            hasDefaultSpotifyCredentials = true,
+        )
+
+        presenterTestOf({ presenter.present() }) {
+            val state = awaitItem()
+            assertEquals(
+                ArtistImageSource.Wikimedia,
+                state.artistImageSource,
+            )
+            assertEquals(
+                true,
+                state.showDefaultSpotifyOption,
+            )
+
+            state.eventSink(
+                ServicesSettingsUiEvent.ConfirmArtistImageSource(
+                    source = ArtistImageSource.Spotify.Default,
+                ),
+            )
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Spotify.Default,
+                    artistImageSource,
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `reset falls back to spotify default artist image source when available`() = runTest {
+        val presenter = createPresenter(
+            navigator = navigator,
+            musicBrainzInstance = MusicBrainzInstance.Default,
+            listenBrainzInstance = ListenBrainzInstance.Default,
+            artistImageSource = ArtistImageSource.Spotify.Default,
+            hasDefaultSpotifyCredentials = true,
+        )
+
+        presenterTestOf({ presenter.present() }) {
+            val state = awaitItem()
+            assertEquals(
+                ArtistImageSource.Wikimedia,
+                state.artistImageSource,
+            )
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Spotify.Default,
+                    artistImageSource,
+                )
+            }
+
+            state.eventSink(
+                ServicesSettingsUiEvent.ConfirmArtistImageSource(
+                    source = ArtistImageSource.Wikimedia,
+                ),
+            )
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Wikimedia,
+                    artistImageSource,
+                )
+            }
+
+            state.eventSink(ServicesSettingsUiEvent.Reset)
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Spotify.Default,
+                    artistImageSource,
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `reset falls back to wikimedia artist image source when no default spotify credentials`() = runTest {
+        val presenter = createPresenter(
+            navigator = navigator,
+            musicBrainzInstance = MusicBrainzInstance.Default,
+            listenBrainzInstance = ListenBrainzInstance.Default,
+            artistImageSource = ArtistImageSource.Wikimedia,
+            hasDefaultSpotifyCredentials = false,
+        )
+
+        presenterTestOf({ presenter.present() }) {
+            val state = awaitItem()
+            assertEquals(
+                false,
+                state.showDefaultSpotifyOption,
+            )
+
+            state.eventSink(
+                ServicesSettingsUiEvent.ConfirmArtistImageSource(
+                    source = ArtistImageSource.Spotify.Custom(
+                        clientId = "id",
+                        clientSecret = "secret",
+                    ),
+                ),
+            )
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Spotify.Custom(
+                        clientId = "id",
+                        clientSecret = "secret",
+                    ),
+                    artistImageSource,
+                )
+            }
+
+            state.eventSink(ServicesSettingsUiEvent.Reset)
+            awaitItem().run {
+                assertEquals(
+                    ArtistImageSource.Wikimedia,
+                    artistImageSource,
+                )
+            }
         }
     }
 }

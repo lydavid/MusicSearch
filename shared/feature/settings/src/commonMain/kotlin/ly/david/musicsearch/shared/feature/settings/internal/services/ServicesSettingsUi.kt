@@ -56,6 +56,7 @@ internal fun ServicesSettingsUi(
                     is MusicBrainzInstance.Custom -> {
                         instance.url
                     }
+
                     MusicBrainzInstance.Default -> {
                         "MusicBrainz ($MUSIC_BRAINZ_BASE_URL)"
                     }
@@ -73,6 +74,7 @@ internal fun ServicesSettingsUi(
                     is ListenBrainzInstance.Custom -> {
                         instance.url
                     }
+
                     ListenBrainzInstance.Default -> {
                         "ListenBrainz ($LISTEN_BRAINZ_BASE_URL)"
                     }
@@ -81,6 +83,14 @@ internal fun ServicesSettingsUi(
                 initialTextInputValue = (state.listenBrainzInstance as? ListenBrainzInstance.Custom)?.url.orEmpty(),
                 onConfirm = { isCustom, url ->
                     eventSink(ServicesSettingsUiEvent.ConfirmListenBrainzInstance(isCustom, url))
+                },
+            )
+
+            ArtistImageSourceSetting(
+                initialSelectedArtistImageSource = state.artistImageSource,
+                showDefaultSpotifyOption = state.showDefaultSpotifyOption,
+                onConfirm = { source ->
+                    eventSink(ServicesSettingsUiEvent.ConfirmArtistImageSource(source))
                 },
             )
 

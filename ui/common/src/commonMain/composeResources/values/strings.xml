@@ -458,4 +458,7 @@
     <string name="default">Default</string>
     <string name="musicBrainzInstance">MusicBrainz instance</string>
     <string name="listenBrainzInstance">ListenBrainz instance</string>
+    <string name="artistImageSource">Artist image source</string>
+    <string name="clientID">Client ID</string>
+    <string name="clientSecret">Client Secret</string>
 </resources>

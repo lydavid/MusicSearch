@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_IMAGES_PER_ROW
 import ly.david.musicsearch.shared.domain.DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
@@ -239,6 +240,16 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(ListenBrainzInstance.Default)
 
     override fun setListenBrainzInstance(instance: ListenBrainzInstance) {
+        // No-op.
+    }
+
+    override val artistImageSource: Flow<ArtistImageSource>
+        get() = flowOf(ArtistImageSource.Wikimedia)
+
+    override val hasDefaultSpotifyCredentials: Boolean
+        get() = false
+
+    override fun setArtistImageSource(source: ArtistImageSource) {
         // No-op.
     }
 }

@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.settings.internal.services
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
@@ -16,6 +17,8 @@ internal fun PreviewServicesSettingsUi() {
                 state = ServicesSettingsUiState(
                     musicBrainzInstance = MusicBrainzInstance.Default,
                     listenBrainzInstance = ListenBrainzInstance.Default,
+                    artistImageSource = ArtistImageSource.Wikimedia,
+                    showDefaultSpotifyOption = false,
                 ),
             )
         }
@@ -35,6 +38,8 @@ internal fun PreviewServicesSettingsUiCustom() {
                     listenBrainzInstance = ListenBrainzInstance.Custom(
                         url = "https://listenbrainz.example.com",
                     ),
+                    artistImageSource = ArtistImageSource.Spotify.Custom(),
+                    showDefaultSpotifyOption = true,
                 ),
             )
         }

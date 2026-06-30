@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.domain.preferences
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.history.HistorySortOption
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.image.ImagesSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
@@ -117,4 +118,8 @@ interface AppPreferences {
 
     val listenBrainzInstance: Flow<ListenBrainzInstance>
     fun setListenBrainzInstance(instance: ListenBrainzInstance)
+
+    val artistImageSource: Flow<ArtistImageSource>
+    val hasDefaultSpotifyCredentials: Boolean
+    fun setArtistImageSource(source: ArtistImageSource)
 }

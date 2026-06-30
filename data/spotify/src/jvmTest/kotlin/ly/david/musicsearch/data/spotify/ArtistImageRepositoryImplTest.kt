@@ -6,7 +6,7 @@ import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeSpotifyApi
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.data.spotify.api.SpotifyArtist
-import ly.david.musicsearch.data.spotify.auth.SpotifyOAuthInfo
+import ly.david.musicsearch.data.spotify.auth.store.SpotifyAuthRepository
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
@@ -16,6 +16,7 @@ import ly.david.musicsearch.shared.domain.image.ImageUrlDao
 import ly.david.musicsearch.shared.domain.image.RawImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.spotify.SpotifyOAuthInfo
 import ly.david.musicsearch.shared.domain.wikimedia.WikimediaRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
 import org.junit.Rule
@@ -54,7 +55,11 @@ class ArtistImageRepositoryImplTest : KoinTest {
         wikidataImage: RawImageMetadata,
         spotifyApi: FakeSpotifyApi,
     ) = ArtistImageRepositoryImpl(
-        spotifyOAuthInfo = spotifyOAuthInfo,
+        spotifyAuthRepository = object : SpotifyAuthRepository {
+            override suspend fun getOAuthInfo(): SpotifyOAuthInfo {
+                return spotifyOAuthInfo
+            }
+        },
         spotifyApi = spotifyApi,
         wikimediaRepository = object : WikimediaRepository {
             override suspend fun getWikipediaExtract(

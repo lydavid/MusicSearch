@@ -7,6 +7,7 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
+import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
@@ -22,6 +23,10 @@ internal class ServicesSettingsPresenter(
         )
         val listenBrainzInstance by appPreferences.listenBrainzInstance.collectAsState(
             initial = ListenBrainzInstance.Default,
+        )
+        val hasDefaultSpotifyCredentials = appPreferences.hasDefaultSpotifyCredentials
+        val artistImageSource by appPreferences.artistImageSource.collectAsState(
+            initial = ArtistImageSource.Wikimedia,
         )
 
         fun String.cleanedUrl(): String {
@@ -52,9 +57,20 @@ internal class ServicesSettingsPresenter(
                     appPreferences.setListenBrainzInstance(instance)
                 }
 
+                is ServicesSettingsUiEvent.ConfirmArtistImageSource -> {
+                    appPreferences.setArtistImageSource(event.source)
+                }
+
                 ServicesSettingsUiEvent.Reset -> {
                     appPreferences.setMusicBrainzInstance(MusicBrainzInstance.Default)
                     appPreferences.setListenBrainzInstance(ListenBrainzInstance.Default)
+                    appPreferences.setArtistImageSource(
+                        if (hasDefaultSpotifyCredentials) {
+                            ArtistImageSource.Spotify.Default
+                        } else {
+                            ArtistImageSource.Wikimedia
+                        },
+                    )
                 }
             }
         }
@@ -62,6 +78,8 @@ internal class ServicesSettingsPresenter(
         return ServicesSettingsUiState(
             musicBrainzInstance = musicBrainzInstance,
             listenBrainzInstance = listenBrainzInstance,
+            artistImageSource = artistImageSource,
+            showDefaultSpotifyOption = hasDefaultSpotifyCredentials,
             eventSink = ::eventSink,
         )
     }
@@ -70,6 +88,8 @@ internal class ServicesSettingsPresenter(
 internal data class ServicesSettingsUiState(
     val musicBrainzInstance: MusicBrainzInstance,
     val listenBrainzInstance: ListenBrainzInstance,
+    val artistImageSource: ArtistImageSource,
+    val showDefaultSpotifyOption: Boolean,
     val eventSink: (ServicesSettingsUiEvent) -> Unit = {},
 ) : CircuitUiState
 
@@ -84,6 +104,10 @@ internal sealed interface ServicesSettingsUiEvent : CircuitUiEvent {
     data class ConfirmListenBrainzInstance(
         val isCustom: Boolean,
         val url: String,
+    ) : ServicesSettingsUiEvent
+
+    data class ConfirmArtistImageSource(
+        val source: ArtistImageSource,
     ) : ServicesSettingsUiEvent
 
     data object Reset : ServicesSettingsUiEvent
