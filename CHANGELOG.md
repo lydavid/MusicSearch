@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.122.0](https://github.com/lydavid/MusicSearch/compare/v1.121.1...v1.122.0) (2026-06-30)
+
+
+### Features
+
+* support changing artist image source between Wikimedia or Spotify, with the option to enter your own Spotify client id/secret ([4c09989](https://github.com/lydavid/MusicSearch/commit/4c099891e9fd285d0483d440546fa6cf6cd4b40d))
+
 ## [1.121.1](https://github.com/lydavid/MusicSearch/compare/v1.121.0...v1.121.1) (2026-06-24)
 
 
