@@ -26,6 +26,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewSettingWithDialogChoices()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.images.PreviewImagesSettingsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.listens.PreviewListensSettingsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewArtistImageSourcePickerDialogWikimedia()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewArtistImageSourcePickerDialogDefaultSpotify()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewArtistImageSourcePickerDialogCustomSpotify()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewDefaultCustomInstancePickerDialogDefault()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewDefaultCustomInstancePickerDialogCustom()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.PreviewDefaultCustomInstancePickerDialogCustomWithText()
@@ -121,6 +124,23 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable state: ListensSettingsUiState
   stable modifier: Modifier? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.ArtistImageSourcePickerDialog(
+  initialSelectedArtistImageSource: ArtistImageSource
+  stable showDefaultSpotifyOption: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onDismiss: Function0<Unit>? = @static <expression>
+  stable onConfirm: Function1<ArtistImageSource, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.ArtistImageSourceSetting(
+  initialSelectedArtistImageSource: ArtistImageSource
+  stable showDefaultSpotifyOption: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable onConfirm: Function1<ArtistImageSource, Unit>? = @static <expression>
+)
+fun ly.david.musicsearch.shared.feature.settings.internal.services.getDefaultSpotifyString()
+fun ly.david.musicsearch.shared.feature.settings.internal.services.getCustomSpotifyString(
+  stable showDefaultSpotifyOption: Boolean
+): String
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.DefaultCustomInstancePickerDialog(
   stable title: String
   stable initialSelectedCustom: Boolean
@@ -136,6 +156,11 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable initialTextInputValue: String
   stable modifier: Modifier? = @static <expression>
   stable onConfirm: Function2<@[ParameterName(name = 'isCustom')] Boolean, @[ParameterName(name = 'url')] String, Unit>? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.services.RadioRowWithText(
+  stable label: String
+  stable isSelected: Boolean
+  stable onClick: Function0<Unit>
 )
 open fun ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter.present(
   stable <this>: ServicesSettingsPresenter

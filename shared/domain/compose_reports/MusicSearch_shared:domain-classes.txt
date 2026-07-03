@@ -424,6 +424,17 @@ runtime class ly.david.musicsearch.shared.domain.history.usecase.UnMarkLookupHis
   runtime val lookupHistoryRepository: LookupHistoryRepository
   <runtime stability> = Uncertain(LookupHistoryRepository)
 }
+stable class ly.david.musicsearch.shared.domain.image.ArtistImageSource.Wikimedia {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.image.ArtistImageSource.Spotify.Default {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.image.ArtistImageSource.Spotify.Custom {
+  stable val clientId: String
+  stable val clientSecret: String
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.image.ImageMetadata.InternetArchive {
   stable val imageId: ImageId
   stable val rawThumbnailUrl: String
@@ -1182,6 +1193,11 @@ stable class ly.david.musicsearch.shared.domain.search.results.usecase.GetSearch
   runtime val coroutineScope: CoroutineScope
   runtime val _searchQueries: MutableStateFlow<Pair<MusicBrainzEntityType, String>>
   <runtime stability> = 
+}
+stable class ly.david.musicsearch.shared.domain.spotify.SpotifyOAuthInfo {
+  stable val clientId: String
+  stable val clientSecret: String
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.tag.GenreChip {
   stable val id: String
