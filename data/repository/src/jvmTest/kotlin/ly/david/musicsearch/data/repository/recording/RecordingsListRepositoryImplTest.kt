@@ -649,6 +649,7 @@ class RecordingsListRepositoryImplTest :
                 listOf(
                     skycladObserverRecordingListItemModel.copy(
                         listenCount = 1,
+                        lastListenedAtMs = 1755101240000,
                     ),
                     skycladObserverCoverRecordingListItemModel.copy(
                         listenCount = 0,
@@ -668,6 +669,7 @@ class RecordingsListRepositoryImplTest :
                 listOf(
                     skycladObserverRecordingListItemModel.copy(
                         listenCount = 1,
+                        lastListenedAtMs = 1755101240000,
                     ),
                 ),
                 this,

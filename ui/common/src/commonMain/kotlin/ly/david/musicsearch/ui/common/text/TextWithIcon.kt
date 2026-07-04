@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -24,18 +25,22 @@ fun TextWithIcon(
     modifier: Modifier = Modifier,
     iconSize: Int = STANDARD_ICON_SIZE,
     iconTint: Color = LocalContentColor.current,
-    contentDescription: String? = null,
+    mergedContentDescription: String? = null,
     textStyle: TextStyle = TextStyles.getCardBodyTextStyle(),
 ) {
     Row(
-        modifier = modifier.semantics(mergeDescendants = true) {},
+        modifier = modifier.semantics(mergeDescendants = true) {
+            mergedContentDescription?.let {
+                contentDescription = it
+            }
+        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = imageVector,
             modifier = Modifier.size(iconSize.dp),
             tint = iconTint,
-            contentDescription = contentDescription,
+            contentDescription = null,
         )
         Text(
             text = text,

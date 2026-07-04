@@ -182,6 +182,8 @@ fun EntitiesPagingListUi(
                     RecordingListItem(
                         recording = listItemModel,
                         filterText = filterText,
+                        now = now,
+                        showLastListenedPeriod = uiState.showMoreInfo,
                         onRecordingClick = {
                             onItemClick(
                                 MusicBrainzEntityType.RECORDING,

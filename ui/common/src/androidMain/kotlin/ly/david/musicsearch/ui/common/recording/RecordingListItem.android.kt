@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -16,6 +17,8 @@ internal fun PreviewRecordingListItem() {
                 name = "Recording name",
             ),
             filterText = "",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = false,
         )
     }
 }
@@ -35,8 +38,11 @@ internal fun PreviewRecordingListItemAllInfo() {
                 isrcs = persistentListOf("JPVI02601342"),
                 formattedArtistCredits = "Some artist feat. Other artist",
                 listenCount = 38,
+                lastListenedAtMs = 1783121497000,
             ),
             filterText = "feat",
+            now = Instant.parse("2026-07-04T16:42:20Z"),
+            showLastListenedPeriod = true,
         )
     }
 }
@@ -57,6 +63,8 @@ internal fun PreviewRecordingListItemVisited() {
                 visited = true,
             ),
             filterText = "",
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = true,
         )
     }
 }

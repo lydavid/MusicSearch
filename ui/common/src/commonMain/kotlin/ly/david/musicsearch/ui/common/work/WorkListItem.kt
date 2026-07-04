@@ -93,7 +93,7 @@ fun WorkListItem(
                                 imageVector = CustomIcons.Headphones,
                                 iconSize = TINY_ICON_SIZE,
                                 text = if (hasListens) state.listenCount.toString() else UNKNOWN,
-                                contentDescription = if (hasListens) {
+                                mergedContentDescription = if (hasListens) {
                                     val listenCount = state.listenCount
                                     pluralStringResource(
                                         Res.plurals.xListens,

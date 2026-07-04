@@ -346,7 +346,7 @@ private fun LazyListScope.listenSection(
                     TextWithIcon(
                         imageVector = CustomIcons.Headphones,
                         text = listenCount.toString(),
-                        contentDescription = pluralStringResource(
+                        mergedContentDescription = pluralStringResource(
                             Res.plurals.xListens,
                             listenCount?.toInt() ?: 0,
                             listenCount ?: 0,
@@ -358,7 +358,7 @@ private fun LazyListScope.listenSection(
                         TextWithIcon(
                             imageVector = CustomIcons.StarFilled,
                             text = completeListenCount.toString(),
-                            contentDescription = pluralStringResource(
+                            mergedContentDescription = pluralStringResource(
                                 Res.plurals.xCompleteListens,
                                 completeListenCount.toInt(),
                                 completeListenCount,

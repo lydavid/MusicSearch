@@ -19,6 +19,7 @@ data class RecordingListItemModel(
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
     val listenCount: Long? = null,
+    val lastListenedAtMs: Long? = null,
 ) : EntityListItemModel, Recording, NameWithDisambiguationAndAliases {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)

@@ -137,7 +137,8 @@ SELECT
   ) AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM recordings_by_entity re
 INNER JOIN recording ON recording.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
@@ -174,12 +175,14 @@ ORDER BY
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN re.rowid
     WHEN 3 THEN recording.name
     WHEN 5 THEN recording.first_release_date
     WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC
@@ -224,7 +227,8 @@ SELECT
   collection_entity.id IS NOT NULL AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM recording
 INNER JOIN collection_entity ON recording.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
@@ -262,12 +266,14 @@ ORDER BY
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN collection_entity.rowid
     WHEN 3 THEN recording.name
     WHEN 5 THEN recording.first_release_date
     WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC
@@ -311,7 +317,8 @@ SELECT
   ) AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
@@ -341,12 +348,14 @@ ORDER BY
     WHEN 2 THEN recording.name
     WHEN 4 THEN recording.first_release_date
     WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN recording.rowid
     WHEN 3 THEN recording.name
     WHEN 5 THEN recording.first_release_date
     WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   recording.first_release_date ASC,
   recording.name ASC

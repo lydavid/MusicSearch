@@ -10,4 +10,6 @@ enum class RecordingSortOption(val order: Int) : SortableOption {
     DateDescending(5),
     ListensAscending(6),
     ListensDescending(7),
+    LastListenedAscending(8),
+    LastListenedDescending(9),
 }

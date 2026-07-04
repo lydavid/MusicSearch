@@ -41,8 +41,10 @@ import musicsearch.ui.common.generated.resources.latestReleaseDate
 import musicsearch.ui.common.generated.resources.latestStartDate
 import musicsearch.ui.common.generated.resources.leastCompleteListened
 import musicsearch.ui.common.generated.resources.leastListened
+import musicsearch.ui.common.generated.resources.leastRecentlyListened
 import musicsearch.ui.common.generated.resources.mostCompleteListened
 import musicsearch.ui.common.generated.resources.mostListened
+import musicsearch.ui.common.generated.resources.mostRecentlyListened
 import musicsearch.ui.common.generated.resources.typeAlphabetically
 import musicsearch.ui.common.generated.resources.typeReverseAlphabetically
 import org.jetbrains.compose.resources.StringResource
@@ -189,6 +191,9 @@ private fun RecordingSortOption.getLabelRes(): StringResource {
 
         RecordingSortOption.ListensAscending -> Res.string.leastListened
         RecordingSortOption.ListensDescending -> Res.string.mostListened
+
+        RecordingSortOption.LastListenedAscending -> Res.string.leastRecentlyListened
+        RecordingSortOption.LastListenedDescending -> Res.string.mostRecentlyListened
     }
 }
 

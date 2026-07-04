@@ -45,6 +45,7 @@ import musicsearch.ui.common.generated.resources.foundXResults
 import musicsearch.ui.common.generated.resources.noResultsFoundSearch
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
 
 @Composable
 internal fun SearchResultsUi(
@@ -177,6 +178,8 @@ private fun ListItemUi(
             RecordingListItem(
                 recording = listItemModel,
                 filterText = filterText,
+                now = Clock.System.now(),
+                showLastListenedPeriod = false,
                 onEditCollectionClick = onEditCollectionClick,
                 onRecordingClick = {
                     onItemClick(

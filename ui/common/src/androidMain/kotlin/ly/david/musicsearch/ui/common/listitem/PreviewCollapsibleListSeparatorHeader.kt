@@ -78,13 +78,13 @@ internal fun PreviewCollapsibleListSeparatorHeaderWithAdditionalContent() {
                     TextWithIcon(
                         imageVector = CustomIcons.Headphones,
                         text = "99",
-                        contentDescription = null,
+                        mergedContentDescription = null,
                         modifier = Modifier.padding(start = 8.dp),
                     )
                     TextWithIcon(
                         imageVector = CustomIcons.StarFilled,
                         text = "7",
-                        contentDescription = null,
+                        mergedContentDescription = null,
                         iconTint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(start = 8.dp),
                     )

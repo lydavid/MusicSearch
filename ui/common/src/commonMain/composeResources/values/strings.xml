@@ -461,4 +461,7 @@
     <string name="artistImageSource">Artist image source</string>
     <string name="clientID">Client ID</string>
     <string name="clientSecret">Client Secret</string>
+    <string name="leastRecentlyListened">Least recently listened</string>
+    <string name="mostRecentlyListened">Most recently listened</string>
+    <string name="lastListenedXAgo">Last listened %s.</string>
 </resources>

@@ -163,7 +163,7 @@ fun ReleaseListItem(
                                     imageVector = CustomIcons.Headphones,
                                     iconSize = TINY_ICON_SIZE,
                                     text = if (hasListens) state.listenCount.toString() else UNKNOWN,
-                                    contentDescription = if (hasListens) {
+                                    mergedContentDescription = if (hasListens) {
                                         val listenCount = state.listenCount
                                         pluralStringResource(
                                             Res.plurals.xListens,
@@ -184,7 +184,7 @@ fun ReleaseListItem(
                                         iconTint = MaterialTheme.colorScheme.primary,
                                         text = completeListenCount.toString(),
                                         textStyle = TextStyles.getCardBodySubTextStyle(),
-                                        contentDescription = pluralStringResource(
+                                        mergedContentDescription = pluralStringResource(
                                             Res.plurals.xCompleteListens,
                                             completeListenCount.toInt(),
                                             completeListenCount,
