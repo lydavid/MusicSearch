@@ -55,6 +55,7 @@ interface TestArtistRepository {
             areaDao = areaDao,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
                 override val browseUsername: Flow<String>
                     get() = flowOf(fakeBrowseUsername)

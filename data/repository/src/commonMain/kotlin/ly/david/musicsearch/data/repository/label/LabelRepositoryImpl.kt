@@ -10,6 +10,7 @@ import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.LabelDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.label.LabelRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
@@ -21,12 +22,14 @@ class LabelRepositoryImpl(
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
     private val lookupApi: LookupApi,
+    detailsMetadataDao: DetailsMetadataDao,
     coroutineDispatchers: CoroutineDispatchers,
     musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : LabelRepository, LookupEntityRepository<LabelDetailsModel, LabelMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
+    detailsMetadataDao = detailsMetadataDao,
     coroutineDispatchers = coroutineDispatchers,
     musicBrainzAuthStore = musicBrainzAuthStore,
 ) {

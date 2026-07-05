@@ -11,6 +11,7 @@ import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.MusicBrainzDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import kotlin.time.Instant
@@ -22,6 +23,7 @@ abstract class LookupEntityRepository<
     private val relationRepository: RelationRepository,
     private val aliasDao: AliasDao,
     private val tagDao: TagDao,
+    private val detailsMetadataDao: DetailsMetadataDao,
     private val coroutineDispatchers: CoroutineDispatchers,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) {
@@ -84,16 +86,23 @@ abstract class LookupEntityRepository<
             deleteExisting = true,
         )
 
+        val entityId = musicBrainzNetworkModel.id
+
         val relationWithOrderList =
-            musicBrainzNetworkModel.relations.toRelationWithOrderList(entityId = musicBrainzNetworkModel.id)
+            musicBrainzNetworkModel.relations.toRelationWithOrderList(entityId = entityId)
         relationRepository.insertRelations(
-            entityId = musicBrainzNetworkModel.id,
+            entityId = entityId,
             relationWithOrderList = relationWithOrderList,
             lastUpdated = lastUpdated,
         )
 
+        detailsMetadataDao.upsert(
+            entityId = entityId,
+            lastUpdated = lastUpdated,
+        )
+
         tagDao.insertAll(
-            entityId = musicBrainzNetworkModel.id,
+            entityId = entityId,
             genres = musicBrainzNetworkModel.genres,
             userGenres = musicBrainzNetworkModel.userGenres,
             tags = musicBrainzNetworkModel.tags,

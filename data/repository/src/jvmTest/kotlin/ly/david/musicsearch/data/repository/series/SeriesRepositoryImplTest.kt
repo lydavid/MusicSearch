@@ -72,6 +72,7 @@ class SeriesRepositoryImplTest : KoinTest {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupSeries(
                     seriesId: String,

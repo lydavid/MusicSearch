@@ -15,6 +15,7 @@ import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -32,6 +33,7 @@ class RecordingRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val tagDao: TagDao,
+    detailsMetadataDao: DetailsMetadataDao,
     coroutineDispatchers: CoroutineDispatchers,
     musicBrainzAuthStore: MusicBrainzAuthStore,
     private val appPreferences: AppPreferences,
@@ -39,6 +41,7 @@ class RecordingRepositoryImpl(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
+    detailsMetadataDao = detailsMetadataDao,
     coroutineDispatchers = coroutineDispatchers,
     musicBrainzAuthStore = musicBrainzAuthStore,
 ) {

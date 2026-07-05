@@ -44,6 +44,7 @@ interface TestEventRepository {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupEvent(
                     eventId: String,

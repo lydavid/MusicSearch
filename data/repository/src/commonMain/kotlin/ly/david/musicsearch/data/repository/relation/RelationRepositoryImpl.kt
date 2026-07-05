@@ -42,13 +42,6 @@ class RelationRepositoryImpl(
         lastUpdated: Instant,
     ) {
         relationDao.insertAll(relationWithOrderList)
-
-        // TODO: move this to entity repository
-        //  and consider creating a base repository for them or interface
-        detailsMetadataDao.upsert(
-            entityId = entityId,
-            lastUpdated = lastUpdated,
-        )
     }
 
     override fun visited(entityId: String): Boolean =

@@ -48,6 +48,7 @@ interface TestAreaRepository {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupArea(
                     areaId: String,

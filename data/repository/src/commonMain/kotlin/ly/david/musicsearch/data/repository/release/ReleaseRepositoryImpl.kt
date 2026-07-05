@@ -34,6 +34,7 @@ import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
+import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
@@ -63,12 +64,14 @@ class ReleaseRepositoryImpl(
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
     private val appPreferences: AppPreferences,
+    detailsMetadataDao: DetailsMetadataDao,
     coroutineDispatchers: CoroutineDispatchers,
     musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : ReleaseRepository, LookupEntityRepository<ReleaseDetailsModel, ReleaseMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
     tagDao = tagDao,
+    detailsMetadataDao = detailsMetadataDao,
     coroutineDispatchers = coroutineDispatchers,
     musicBrainzAuthStore = musicBrainzAuthStore,
 ) {

@@ -72,6 +72,7 @@ interface TestReleaseRepository {
             trackDao = trackDao,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             listenBrainzRepository = object : ListenBrainzRepository {
                 override fun getBaseUrl(): String {
                     return ""

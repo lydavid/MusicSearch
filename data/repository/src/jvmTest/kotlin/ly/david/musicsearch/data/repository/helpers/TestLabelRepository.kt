@@ -45,6 +45,7 @@ interface TestLabelRepository {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupLabel(
                     labelId: String,

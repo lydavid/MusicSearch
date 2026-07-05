@@ -52,6 +52,7 @@ interface TestWorkRepository {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupWork(
                     workId: String,

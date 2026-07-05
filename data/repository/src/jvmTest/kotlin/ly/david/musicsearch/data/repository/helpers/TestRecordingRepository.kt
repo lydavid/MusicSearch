@@ -53,6 +53,7 @@ interface TestRecordingRepository {
             artistCreditDao = artistCreditDao,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupRecording(
                     recordingId: String,

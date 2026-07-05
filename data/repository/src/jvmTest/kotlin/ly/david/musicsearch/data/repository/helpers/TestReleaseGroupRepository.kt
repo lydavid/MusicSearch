@@ -47,6 +47,7 @@ interface TestReleaseGroupRepository {
             relationRepository = relationRepository,
             aliasDao = aliasDao,
             tagDao = tagDao,
+            detailsMetadataDao = detailsMetadataDao,
             lookupApi = object : FakeLookupApi() {
                 override suspend fun lookupReleaseGroup(
                     releaseGroupId: String,
