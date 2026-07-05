@@ -38,7 +38,7 @@ class EventRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): EventDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
         val event = eventDao.getEventForDetails(entityId) ?: return null
 
         val urlRelations = relationRepository.getRelationshipsByType(entityId)

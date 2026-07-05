@@ -38,7 +38,7 @@ class AreaRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): AreaDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
 
         val area = areaDao.getAreaForDetails(entityId) ?: return null
 

@@ -37,7 +37,6 @@ interface TestLabelRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return LabelRepositoryImpl(

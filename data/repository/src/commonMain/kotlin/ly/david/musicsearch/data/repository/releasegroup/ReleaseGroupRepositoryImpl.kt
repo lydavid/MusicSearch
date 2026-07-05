@@ -44,7 +44,7 @@ class ReleaseGroupRepositoryImpl(
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(entityId)
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
         val urlRelations = relationRepository.getRelationshipsByType(entityId)
-        val visited = relationRepository.visited(entityId)
+        val visited = visited(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RELEASE_GROUP,
             mbid = entityId,

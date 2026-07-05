@@ -57,7 +57,6 @@ interface TestReleaseRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return ReleaseRepositoryImpl(

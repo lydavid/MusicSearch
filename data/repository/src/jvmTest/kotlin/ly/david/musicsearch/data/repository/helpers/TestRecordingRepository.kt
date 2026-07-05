@@ -44,7 +44,6 @@ interface TestRecordingRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return RecordingRepositoryImpl(

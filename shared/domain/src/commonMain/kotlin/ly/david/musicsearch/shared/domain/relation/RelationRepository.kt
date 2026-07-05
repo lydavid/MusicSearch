@@ -12,7 +12,6 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 
 interface RelationRepository {
-    fun visited(entityId: String): Boolean
 
     /**
      * See [observeEntityRelationships] for inserting the rest of the relations not inserted by this.

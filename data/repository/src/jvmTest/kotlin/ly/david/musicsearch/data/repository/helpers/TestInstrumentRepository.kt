@@ -30,7 +30,6 @@ interface TestInstrumentRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = lookupApi,
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return InstrumentRepositoryImpl(

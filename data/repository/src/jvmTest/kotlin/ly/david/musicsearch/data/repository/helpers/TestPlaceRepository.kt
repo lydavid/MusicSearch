@@ -42,7 +42,6 @@ interface TestPlaceRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return PlaceRepositoryImpl(

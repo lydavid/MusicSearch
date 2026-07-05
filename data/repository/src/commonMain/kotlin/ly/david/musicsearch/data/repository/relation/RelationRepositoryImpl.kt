@@ -17,7 +17,6 @@ import ly.david.musicsearch.data.musicbrainz.api.asRelationshipParameters
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
-import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
@@ -32,7 +31,6 @@ import kotlin.time.Instant
 class RelationRepositoryImpl(
     private val lookupApi: LookupApi,
     private val relationsMetadataDao: RelationsMetadataDao,
-    private val detailsMetadataDao: DetailsMetadataDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
 
@@ -43,9 +41,6 @@ class RelationRepositoryImpl(
     ) {
         relationDao.insertAll(relationWithOrderList)
     }
-
-    override fun visited(entityId: String): Boolean =
-        detailsMetadataDao.contains(entityId)
 
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(

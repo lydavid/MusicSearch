@@ -109,4 +109,8 @@ abstract class LookupEntityRepository<
             userTags = musicBrainzNetworkModel.userTags,
         )
     }
+
+    protected fun visited(entityId: String): Boolean {
+        return detailsMetadataDao.contains(entityId)
+    }
 }

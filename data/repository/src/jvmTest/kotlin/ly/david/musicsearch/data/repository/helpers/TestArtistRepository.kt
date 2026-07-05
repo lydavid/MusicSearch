@@ -46,7 +46,6 @@ interface TestArtistRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return ArtistRepositoryImpl(

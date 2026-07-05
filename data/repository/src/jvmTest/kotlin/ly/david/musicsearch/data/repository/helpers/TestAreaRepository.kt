@@ -40,7 +40,6 @@ interface TestAreaRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return AreaRepositoryImpl(

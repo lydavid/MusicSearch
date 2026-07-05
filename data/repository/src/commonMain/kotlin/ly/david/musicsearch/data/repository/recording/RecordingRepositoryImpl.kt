@@ -50,7 +50,7 @@ class RecordingRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): RecordingDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
 
         val username = listenBrainzAuthStore.browseUsername.first()
         val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()

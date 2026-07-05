@@ -80,7 +80,7 @@ class ReleaseRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): ReleaseDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(entityId) ?: return null
 
         val username = listenBrainzAuthStore.browseUsername.first()

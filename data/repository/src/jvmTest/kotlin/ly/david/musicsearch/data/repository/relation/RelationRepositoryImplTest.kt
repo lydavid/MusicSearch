@@ -80,7 +80,6 @@ class RelationRepositoryImplTest :
         return RelationRepositoryImpl(
             lookupApi = lookupApi,
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
     }

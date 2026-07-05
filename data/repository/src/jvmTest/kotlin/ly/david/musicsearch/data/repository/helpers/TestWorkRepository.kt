@@ -43,7 +43,6 @@ interface TestWorkRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return WorkRepositoryImpl(

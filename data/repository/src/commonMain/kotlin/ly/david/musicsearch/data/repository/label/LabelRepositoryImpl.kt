@@ -38,7 +38,7 @@ class LabelRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): LabelDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
         val label = labelDao.getLabelForDetails(entityId) ?: return null
 
         val urlRelations = relationRepository.getRelationshipsByType(entityId)

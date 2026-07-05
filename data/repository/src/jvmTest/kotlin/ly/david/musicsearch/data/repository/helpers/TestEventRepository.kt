@@ -36,7 +36,6 @@ interface TestEventRepository {
                 }
             },
             relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
             relationDao = relationDao,
         )
         return EventRepositoryImpl(

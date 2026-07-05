@@ -38,7 +38,7 @@ class InstrumentRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): InstrumentDetailsModel? {
-        if (!relationRepository.visited(entityId)) return null
+        if (!visited(entityId)) return null
         val instrument = instrumentDao.getInstrumentForDetails(entityId) ?: return null
 
         val urlRelations = relationRepository.getRelationshipsByType(entityId)
