@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.123.0](https://github.com/lydavid/MusicSearch/compare/v1.122.0...v1.123.0) (2026-07-05)
+
+
+### Features
+
+* support sorting recordings by most/least recently listened datetime ([47cc5f4](https://github.com/lydavid/MusicSearch/commit/47cc5f4f59c33bef973ac7da8d29667359f4fe48))
+
 ## [1.122.0](https://github.com/lydavid/MusicSearch/compare/v1.121.1...v1.122.0) (2026-06-30)
 
 
