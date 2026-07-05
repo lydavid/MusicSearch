@@ -11,6 +11,7 @@ import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 
 internal class ServicesSettingsPresenter(
     private val navigator: Navigator,
@@ -24,37 +25,49 @@ internal class ServicesSettingsPresenter(
         val listenBrainzInstance by appPreferences.listenBrainzInstance.collectAsState(
             initial = ListenBrainzInstance.Default,
         )
+        val wikidataInstance by appPreferences.wikidataInstance.collectAsState(
+            initial = WikidataInstance.Default,
+        )
         val hasDefaultSpotifyCredentials = appPreferences.hasDefaultSpotifyCredentials
         val artistImageSource by appPreferences.artistImageSource.collectAsState(
             initial = ArtistImageSource.Wikimedia,
         )
-
-        fun String.cleanedUrl(): String {
-            return this.trim().removeSuffix("/")
-        }
 
         fun eventSink(event: ServicesSettingsUiEvent) {
             when (event) {
                 ServicesSettingsUiEvent.NavigateUp -> navigator.pop()
 
                 is ServicesSettingsUiEvent.ConfirmMusicBrainzInstance -> {
-                    val cleanedUrl = event.url.cleanedUrl()
-                    val instance = if (event.isCustom && cleanedUrl.isNotEmpty()) {
-                        MusicBrainzInstance.Custom(url = cleanedUrl)
-                    } else {
-                        MusicBrainzInstance.Default
-                    }
-                    appPreferences.setMusicBrainzInstance(instance)
+                    appPreferences.setMusicBrainzInstance(
+                        resolveInstance(
+                            url = event.url,
+                            isCustom = event.isCustom,
+                            default = MusicBrainzInstance.Default,
+                            custom = MusicBrainzInstance::Custom,
+                        ),
+                    )
                 }
 
                 is ServicesSettingsUiEvent.ConfirmListenBrainzInstance -> {
-                    val cleanedUrl = event.url.cleanedUrl()
-                    val instance = if (event.isCustom && cleanedUrl.isNotEmpty()) {
-                        ListenBrainzInstance.Custom(url = cleanedUrl)
-                    } else {
-                        ListenBrainzInstance.Default
-                    }
-                    appPreferences.setListenBrainzInstance(instance)
+                    appPreferences.setListenBrainzInstance(
+                        resolveInstance(
+                            url = event.url,
+                            isCustom = event.isCustom,
+                            default = ListenBrainzInstance.Default,
+                            custom = ListenBrainzInstance::Custom,
+                        ),
+                    )
+                }
+
+                is ServicesSettingsUiEvent.ConfirmWikimediaInstance -> {
+                    appPreferences.setWikidataInstance(
+                        resolveInstance(
+                            url = event.url,
+                            isCustom = event.isCustom,
+                            default = WikidataInstance.Default,
+                            custom = WikidataInstance::Custom,
+                        ),
+                    )
                 }
 
                 is ServicesSettingsUiEvent.ConfirmArtistImageSource -> {
@@ -78,6 +91,7 @@ internal class ServicesSettingsPresenter(
         return ServicesSettingsUiState(
             musicBrainzInstance = musicBrainzInstance,
             listenBrainzInstance = listenBrainzInstance,
+            wikidataInstance = wikidataInstance,
             artistImageSource = artistImageSource,
             showDefaultSpotifyOption = hasDefaultSpotifyCredentials,
             eventSink = ::eventSink,
@@ -85,9 +99,24 @@ internal class ServicesSettingsPresenter(
     }
 }
 
+private inline fun <T> resolveInstance(
+    url: String,
+    isCustom: Boolean,
+    default: T,
+    custom: (String) -> T,
+): T {
+    val cleanedUrl = url.trim().removeSuffix("/")
+    return if (isCustom && cleanedUrl.isNotEmpty()) {
+        custom(cleanedUrl)
+    } else {
+        default
+    }
+}
+
 internal data class ServicesSettingsUiState(
     val musicBrainzInstance: MusicBrainzInstance,
     val listenBrainzInstance: ListenBrainzInstance,
+    val wikidataInstance: WikidataInstance,
     val artistImageSource: ArtistImageSource,
     val showDefaultSpotifyOption: Boolean,
     val eventSink: (ServicesSettingsUiEvent) -> Unit = {},
@@ -102,6 +131,11 @@ internal sealed interface ServicesSettingsUiEvent : CircuitUiEvent {
     ) : ServicesSettingsUiEvent
 
     data class ConfirmListenBrainzInstance(
+        val isCustom: Boolean,
+        val url: String,
+    ) : ServicesSettingsUiEvent
+
+    data class ConfirmWikimediaInstance(
         val isCustom: Boolean,
         val url: String,
     ) : ServicesSettingsUiEvent

@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
@@ -240,6 +241,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(ListenBrainzInstance.Default)
 
     override fun setListenBrainzInstance(instance: ListenBrainzInstance) {
+        // No-op.
+    }
+
+    override val wikidataInstance: Flow<WikidataInstance>
+        get() = flowOf(WikidataInstance.Default)
+
+    override fun setWikidataInstance(instance: WikidataInstance) {
         // No-op.
     }
 

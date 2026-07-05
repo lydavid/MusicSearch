@@ -6,6 +6,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 
 @PreviewLightDark
@@ -18,6 +19,7 @@ internal fun PreviewServicesSettingsUi() {
                     musicBrainzInstance = MusicBrainzInstance.Default,
                     listenBrainzInstance = ListenBrainzInstance.Default,
                     artistImageSource = ArtistImageSource.Wikimedia,
+                    wikidataInstance = WikidataInstance.Default,
                     showDefaultSpotifyOption = false,
                 ),
             )
@@ -37,6 +39,9 @@ internal fun PreviewServicesSettingsUiCustom() {
                     ),
                     listenBrainzInstance = ListenBrainzInstance.Custom(
                         url = "https://listenbrainz.example.com",
+                    ),
+                    wikidataInstance = WikidataInstance.Custom(
+                        url = "https://wikidata.example.com"
                     ),
                     artistImageSource = ArtistImageSource.Spotify.Custom(),
                     showDefaultSpotifyOption = true,

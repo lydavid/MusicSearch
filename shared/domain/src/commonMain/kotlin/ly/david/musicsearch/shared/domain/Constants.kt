@@ -17,6 +17,8 @@ const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org"
 
 const val LISTEN_BRAINZ_BASE_URL = "https://listenbrainz.org"
 
+const val WIKIDATA_BASE_URL = "https://www.wikidata.org"
+
 const val DEFAULT_SEED_COLOR_LONG: Long = 0xFF571AFF
 const val DEFAULT_SEED_COLOR_INT: Int = DEFAULT_SEED_COLOR_LONG.toInt()
 

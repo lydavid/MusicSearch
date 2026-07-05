@@ -12,13 +12,13 @@ import kotlinx.serialization.json.jsonPrimitive
 import ly.david.musicsearch.core.logging.Logger
 import ly.david.musicsearch.shared.domain.image.ImageSource
 import ly.david.musicsearch.shared.domain.image.RawImageMetadata
+import ly.david.musicsearch.shared.domain.wikimedia.WikidataInstanceRepository
 import ly.david.musicsearch.shared.domain.wikimedia.WikipediaExtract
-
-private const val WIKIDATA_BASE_URL = "https://www.wikidata.org/w/api.php"
 
 internal class WikimediaApiImpl(
     private val client: HttpClient,
     private val logger: Logger,
+    private val wikimediaInstanceRepository: WikidataInstanceRepository,
 ) : WikimediaApi {
 
     override suspend fun getWikipediaExtract(
@@ -26,7 +26,7 @@ internal class WikimediaApiImpl(
         languageTag: String,
     ): WikipediaExtract {
         // 1. Get Wikipedia url using the Wikidata ID
-        val wikidataUrl = WIKIDATA_BASE_URL +
+        val wikidataUrl = wikimediaInstanceRepository.getBaseUrl() +
             "?action=wbgetentities" +
             "&format=json" +
             "&props=sitelinks%2Furls" +
@@ -84,7 +84,7 @@ internal class WikimediaApiImpl(
     override suspend fun getWikimediaImageUrls(
         wikidataId: String,
     ): RawImageMetadata {
-        val wikidataUrl = WIKIDATA_BASE_URL +
+        val wikidataUrl = wikimediaInstanceRepository.getBaseUrl() +
             "?action=wbgetclaims" +
             "&format=json" +
             "&property=P18" +

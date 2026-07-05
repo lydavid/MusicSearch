@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.preferences.AppPreferencesKey
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
@@ -619,6 +620,33 @@ internal class AppPreferencesImpl(
                 it[customListenBrainzInstancePreference] = when (instance) {
                     ListenBrainzInstance.Default -> ""
                     is ListenBrainzInstance.Custom -> instance.url
+                }
+            }
+        }
+    }
+
+    private val customWikidataInstancePreference =
+        stringPreferencesKey(AppPreferencesKey.CUSTOM_WIKIDATA_INSTANCE.name)
+    override val wikidataInstance: Flow<WikidataInstance>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    val url = it[customWikidataInstancePreference]
+                    if (url.isNullOrBlank()) {
+                        WikidataInstance.Default
+                    } else {
+                        WikidataInstance.Custom(url = url)
+                    }
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setWikidataInstance(instance: WikidataInstance) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[customWikidataInstancePreference] = when (instance) {
+                    WikidataInstance.Default -> ""
+                    is WikidataInstance.Custom -> instance.url
                 }
             }
         }

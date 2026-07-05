@@ -14,14 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.LISTEN_BRAINZ_BASE_URL
 import ly.david.musicsearch.shared.domain.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.shared.domain.WIKIDATA_BASE_URL
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.listenBrainzInstance
 import musicsearch.ui.common.generated.resources.musicBrainzInstance
 import musicsearch.ui.common.generated.resources.reset
 import musicsearch.ui.common.generated.resources.services
+import musicsearch.ui.common.generated.resources.wikidataInstance
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,6 +86,24 @@ internal fun ServicesSettingsUi(
                 initialTextInputValue = (state.listenBrainzInstance as? ListenBrainzInstance.Custom)?.url.orEmpty(),
                 onConfirm = { isCustom, url ->
                     eventSink(ServicesSettingsUiEvent.ConfirmListenBrainzInstance(isCustom, url))
+                },
+            )
+
+            DefaultCustomInstanceSetting(
+                title = stringResource(Res.string.wikidataInstance),
+                subtitle = when (val instance = state.wikidataInstance) {
+                    is WikidataInstance.Custom -> {
+                        instance.url
+                    }
+
+                    WikidataInstance.Default -> {
+                        "Wikidata ($WIKIDATA_BASE_URL)"
+                    }
+                },
+                initialSelectedCustom = state.wikidataInstance != WikidataInstance.Default,
+                initialTextInputValue = (state.wikidataInstance as? WikidataInstance.Custom)?.url.orEmpty(),
+                onConfirm = { isCustom, url ->
+                    eventSink(ServicesSettingsUiEvent.ConfirmWikimediaInstance(isCustom, url))
                 },
             )
 

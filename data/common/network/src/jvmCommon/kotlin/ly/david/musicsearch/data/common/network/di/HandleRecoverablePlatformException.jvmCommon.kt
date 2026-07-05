@@ -10,6 +10,7 @@ actual fun handleRecoverablePlatformException(exception: Throwable) {
         is java.net.UnknownHostException,
         is java.net.SocketTimeoutException,
         is java.net.SocketException,
+        is java.net.UnknownServiceException,
         is okhttp3.internal.http2.StreamResetException,
         -> {
             throw HandledException(

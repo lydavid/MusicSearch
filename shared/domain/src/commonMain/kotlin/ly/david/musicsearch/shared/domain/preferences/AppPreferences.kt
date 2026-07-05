@@ -119,6 +119,9 @@ interface AppPreferences {
     val listenBrainzInstance: Flow<ListenBrainzInstance>
     fun setListenBrainzInstance(instance: ListenBrainzInstance)
 
+    val wikidataInstance: Flow<WikidataInstance>
+    fun setWikidataInstance(instance: WikidataInstance)
+
     val artistImageSource: Flow<ArtistImageSource>
     val hasDefaultSpotifyCredentials: Boolean
     fun setArtistImageSource(source: ArtistImageSource)
