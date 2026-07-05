@@ -41,10 +41,11 @@ class ReleaseGroupRepositoryImpl(
     }
 
     override suspend fun getCachedData(entityId: String): ReleaseGroupDetailsModel? {
-        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(entityId)
+        if (!visited(entityId)) return null
+        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(entityId) ?: return null
+
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
         val urlRelations = relationRepository.getRelationshipsByType(entityId)
-        val visited = visited(entityId)
         val aliases = aliasDao.getAliases(
             entityType = MusicBrainzEntityType.RELEASE_GROUP,
             mbid = entityId,
@@ -52,17 +53,13 @@ class ReleaseGroupRepositoryImpl(
         val genres = tagDao.getGenres(entityId = entityId)
         val tags = tagDao.getTags(entityId = entityId)
 
-        return if (releaseGroup != null && artistCredits.isNotEmpty() && visited) {
-            releaseGroup.copy(
-                artistCredits = artistCredits.toPersistentList(),
-                urls = urlRelations,
-                aliases = aliases,
-                genres = genres,
-                tags = tags,
-            )
-        } else {
-            null
-        }
+        return releaseGroup.copy(
+            artistCredits = artistCredits.toPersistentList(),
+            urls = urlRelations,
+            aliases = aliases,
+            genres = genres,
+            tags = tags,
+        )
     }
 
     override suspend fun getRemoteData(
