@@ -41,7 +41,7 @@ internal fun PreviewServicesSettingsUiCustom() {
                         url = "https://listenbrainz.example.com",
                     ),
                     wikidataInstance = WikidataInstance.Custom(
-                        url = "https://wikidata.example.com"
+                        url = "https://wikidata.example.com",
                     ),
                     artistImageSource = ArtistImageSource.Spotify.Custom(),
                     showDefaultSpotifyOption = true,
