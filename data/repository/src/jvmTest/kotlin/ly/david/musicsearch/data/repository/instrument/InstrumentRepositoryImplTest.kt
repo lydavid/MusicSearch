@@ -21,12 +21,11 @@ import ly.david.musicsearch.data.musicbrainz.models.core.TagMusicBrainzNetworkMo
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.repository.helpers.TestInstrumentRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
-import ly.david.musicsearch.shared.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -42,46 +41,25 @@ import kotlin.time.Duration.Companion.seconds
 
 private const val ID = "43f378cf-b099-46da-8ec3-a39b6f5e5258"
 
-class InstrumentRepositoryImplTest : KoinTest {
+class InstrumentRepositoryImplTest : KoinTest, TestInstrumentRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val relationsMetadataDao: RelationsMetadataDao by inject()
-    private val detailsMetadataDao: DetailsMetadataDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val instrumentDao: InstrumentDao by inject()
-    private val aliasDao: AliasDao by inject()
-    private val tagDao: TagDao by inject()
-    private val coroutineDispatchers: CoroutineDispatchers by inject()
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val instrumentDao: InstrumentDao by inject()
+    override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
-    private val lookupApi: LookupApi = mockk()
+    override val lookupApi: LookupApi = mockk()
 
     private val musicBrainzModel = InstrumentMusicBrainzNetworkModel(
         id = ID,
         name = "classical guitar",
     )
-
-    private fun createRepository(
-        musicBrainzAuthStore: NoOpMusicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
-    ): InstrumentRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = lookupApi,
-            relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
-            relationDao = relationDao,
-        )
-        return InstrumentRepositoryImpl(
-            instrumentDao = instrumentDao,
-            relationRepository = relationRepository,
-            aliasDao = aliasDao,
-            tagDao = tagDao,
-            detailsMetadataDao = detailsMetadataDao,
-            lookupApi = lookupApi,
-            coroutineDispatchers = coroutineDispatchers,
-            musicBrainzAuthStore = musicBrainzAuthStore,
-        )
-    }
 
     @Test
     fun `include user lookup includes only if user has all auth scopes`() = runTest {
@@ -133,7 +111,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 ),
             ),
         )
-        val repositoryWithoutAllScopes = createRepository(
+        val repositoryWithoutAllScopes = createInstrumentRepository(
             musicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
         )
         repositoryWithoutAllScopes.lookupEntity(
@@ -151,7 +129,7 @@ class InstrumentRepositoryImplTest : KoinTest {
             )
         }
 
-        val repositoryWithAllScopes = createRepository(
+        val repositoryWithAllScopes = createInstrumentRepository(
             musicBrainzAuthStore = object : NoOpMusicBrainzAuthStore() {
                 override suspend fun userHasAllAuthScopes(): Boolean {
                     return true
@@ -196,7 +174,7 @@ class InstrumentRepositoryImplTest : KoinTest {
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
         coEvery { lookupApi.lookupInstrument(any(), any()) } returns musicBrainzModel
-        val sparseRepository = createRepository()
+        val sparseRepository = createInstrumentRepository()
         val sparseDetailsModel = sparseRepository.lookupEntity(
             entityId = ID,
             forceRefresh = false,
@@ -258,7 +236,7 @@ class InstrumentRepositoryImplTest : KoinTest {
                 ),
             ),
         )
-        val allDataRepository = createRepository()
+        val allDataRepository = createInstrumentRepository()
         var allDataArtistDetailsModel = allDataRepository.lookupEntity(
             entityId = ID,
             forceRefresh = false,

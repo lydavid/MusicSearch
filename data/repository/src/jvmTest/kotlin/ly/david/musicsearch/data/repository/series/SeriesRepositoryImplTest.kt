@@ -3,8 +3,6 @@ package ly.david.musicsearch.data.repository.series
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeLookupApi
-import ly.david.data.test.preferences.NoOpMusicBrainzAuthStore
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
@@ -15,15 +13,13 @@ import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.repository.helpers.TestSeriesRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
-import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.relation.RelationRepository
-import ly.david.musicsearch.shared.domain.series.SeriesRepository
 import ly.david.musicsearch.shared.domain.series.SeriesType
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -31,60 +27,18 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class SeriesRepositoryImplTest : KoinTest {
+class SeriesRepositoryImplTest : KoinTest, TestSeriesRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
 
-    private val relationsMetadataDao: RelationsMetadataDao by inject()
-    private val detailsMetadataDao: DetailsMetadataDao by inject()
-    private val relationDao: RelationDao by inject()
-    private val seriesDao: SeriesDao by inject()
-    private val aliasDao: AliasDao by inject()
-    private val tagDao: TagDao by inject()
-    private val coroutineDispatchers: CoroutineDispatchers by inject()
-
-    private fun createRelationRepository(
-        musicBrainzModel: SeriesMusicBrainzNetworkModel,
-    ): RelationRepository {
-        val relationRepository = RelationRepositoryImpl(
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupSeries(
-                    seriesId: String,
-                    include: String?,
-                ): SeriesMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
-            relationsMetadataDao = relationsMetadataDao,
-            detailsMetadataDao = detailsMetadataDao,
-            relationDao = relationDao,
-        )
-        return relationRepository
-    }
-
-    private fun createSeriesRepository(
-        musicBrainzModel: SeriesMusicBrainzNetworkModel,
-    ): SeriesRepository {
-        val relationRepository = createRelationRepository(musicBrainzModel)
-        return SeriesRepositoryImpl(
-            seriesDao = seriesDao,
-            relationRepository = relationRepository,
-            aliasDao = aliasDao,
-            tagDao = tagDao,
-            detailsMetadataDao = detailsMetadataDao,
-            lookupApi = object : FakeLookupApi() {
-                override suspend fun lookupSeries(
-                    seriesId: String,
-                    include: String?,
-                ): SeriesMusicBrainzNetworkModel {
-                    return musicBrainzModel
-                }
-            },
-            coroutineDispatchers = coroutineDispatchers,
-            musicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
-        )
-    }
+    override val relationsMetadataDao: RelationsMetadataDao by inject()
+    override val detailsMetadataDao: DetailsMetadataDao by inject()
+    override val relationDao: RelationDao by inject()
+    override val seriesDao: SeriesDao by inject()
+    override val aliasDao: AliasDao by inject()
+    override val tagDao: TagDao by inject()
+    override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     @Test
     fun `lookup is cached, and force refresh invalidates cache`() = runTest {
