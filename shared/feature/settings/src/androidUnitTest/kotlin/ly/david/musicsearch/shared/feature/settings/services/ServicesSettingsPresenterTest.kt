@@ -11,6 +11,7 @@ import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.musicsearch.shared.domain.image.ArtistImageSource
 import ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
 import ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance
+import ly.david.musicsearch.shared.domain.preferences.WikidataInstance
 import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent
 import ly.david.musicsearch.ui.common.screen.ServicesSettingsScreen
@@ -31,6 +32,7 @@ class ServicesSettingsPresenterTest {
         navigator: Navigator,
         musicBrainzInstance: MusicBrainzInstance,
         listenBrainzInstance: ListenBrainzInstance,
+        wikidataInstance: WikidataInstance = WikidataInstance.Default,
         artistImageSource: ArtistImageSource = ArtistImageSource.Wikimedia,
         hasDefaultSpotifyCredentials: Boolean = false,
     ) = ServicesSettingsPresenter(
@@ -54,6 +56,15 @@ class ServicesSettingsPresenterTest {
                 listenBrainzInstanceFlow.value = instance
             }
 
+            private val wikidataInstanceFlow = MutableStateFlow(wikidataInstance)
+
+            override val wikidataInstance: Flow<WikidataInstance>
+                get() = wikidataInstanceFlow
+
+            override fun setWikidataInstance(instance: WikidataInstance) {
+                wikidataInstanceFlow.value = instance
+            }
+
             private val artistImageSourceFlow = MutableStateFlow(artistImageSource)
 
             override val artistImageSource: Flow<ArtistImageSource>
@@ -74,6 +85,7 @@ class ServicesSettingsPresenterTest {
             navigator = navigator,
             musicBrainzInstance = MusicBrainzInstance.Default,
             listenBrainzInstance = ListenBrainzInstance.Default,
+            wikidataInstance = WikidataInstance.Default,
         )
 
         presenterTestOf({ presenter.present() }) {
@@ -85,6 +97,10 @@ class ServicesSettingsPresenterTest {
             assertEquals(
                 ListenBrainzInstance.Default,
                 state.listenBrainzInstance,
+            )
+            assertEquals(
+                WikidataInstance.Default,
+                state.wikidataInstance,
             )
 
             // no changes when blank
@@ -140,6 +156,33 @@ class ServicesSettingsPresenterTest {
             }
 
             state.eventSink(
+                ServicesSettingsUiEvent.ConfirmWikimediaInstance(
+                    isCustom = true,
+                    url = "https://wikidata.example.com",
+                ),
+            )
+            awaitItem().run {
+                assertEquals(
+                    MusicBrainzInstance.Custom(
+                        url = "https://musicbrainz.example.com",
+                    ),
+                    musicBrainzInstance,
+                )
+                assertEquals(
+                    ListenBrainzInstance.Custom(
+                        url = "https://listenbrainz.example.com",
+                    ),
+                    listenBrainzInstance,
+                )
+                assertEquals(
+                    WikidataInstance.Custom(
+                        url = "https://wikidata.example.com",
+                    ),
+                    wikidataInstance,
+                )
+            }
+
+            state.eventSink(
                 ServicesSettingsUiEvent.Reset,
             )
             awaitItem().run {
@@ -153,6 +196,12 @@ class ServicesSettingsPresenterTest {
                     ),
                     listenBrainzInstance,
                 )
+                assertEquals(
+                    WikidataInstance.Custom(
+                        url = "https://wikidata.example.com",
+                    ),
+                    wikidataInstance,
+                )
             }
             awaitItem().run {
                 assertEquals(
@@ -162,6 +211,26 @@ class ServicesSettingsPresenterTest {
                 assertEquals(
                     ListenBrainzInstance.Default,
                     listenBrainzInstance,
+                )
+                assertEquals(
+                    WikidataInstance.Custom(
+                        url = "https://wikidata.example.com",
+                    ),
+                    wikidataInstance,
+                )
+            }
+            awaitItem().run {
+                assertEquals(
+                    MusicBrainzInstance.Default,
+                    musicBrainzInstance,
+                )
+                assertEquals(
+                    ListenBrainzInstance.Default,
+                    listenBrainzInstance,
+                )
+                assertEquals(
+                    WikidataInstance.Default,
+                    wikidataInstance,
                 )
             }
 

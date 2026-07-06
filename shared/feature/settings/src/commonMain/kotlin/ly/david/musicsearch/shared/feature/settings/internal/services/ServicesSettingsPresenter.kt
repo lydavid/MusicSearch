@@ -77,6 +77,7 @@ internal class ServicesSettingsPresenter(
                 ServicesSettingsUiEvent.Reset -> {
                     appPreferences.setMusicBrainzInstance(MusicBrainzInstance.Default)
                     appPreferences.setListenBrainzInstance(ListenBrainzInstance.Default)
+                    appPreferences.setWikidataInstance(WikidataInstance.Default)
                     appPreferences.setArtistImageSource(
                         if (hasDefaultSpotifyCredentials) {
                             ArtistImageSource.Spotify.Default
