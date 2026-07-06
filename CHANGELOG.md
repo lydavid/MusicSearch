@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.124.0](https://github.com/lydavid/MusicSearch/compare/v1.123.0...v1.124.0) (2026-07-06)
+
+
+### Features
+
+* support changing Wikidata instance ([7dc2ca8](https://github.com/lydavid/MusicSearch/commit/7dc2ca860e5661d6175133cd247928de892914eb))
+
 ## [1.123.0](https://github.com/lydavid/MusicSearch/compare/v1.122.0...v1.123.0) (2026-07-05)
 
 
