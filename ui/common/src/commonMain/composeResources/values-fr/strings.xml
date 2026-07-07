@@ -462,4 +462,11 @@
     <string name="default">Par défaut</string>
     <string name="musicBrainzInstance">Instance de MusicBrainz</string>
     <string name="listenBrainzInstance">Instance ListenBrainz</string>
+    <string name="wikidataInstance">Instance Wikidata</string>
+    <string name="artistImageSource">Source de l'image de l'artiste</string>
+    <string name="clientID">Identifiant client</string>
+    <string name="clientSecret">Client Secret</string>
+    <string name="leastRecentlyListened">Écoutés le moins récemment</string>
+    <string name="mostRecentlyListened">Écoutés le plus récemment</string>
+    <string name="lastListenedXAgo">Dernière écoute : %s.</string>
 </resources>
