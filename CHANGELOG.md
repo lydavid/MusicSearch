@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.124.1](https://github.com/lydavid/MusicSearch/compare/v1.124.0...v1.124.1) (2026-07-07)
+
+
+### Bug Fixes
+
+* Services settings' reset button also resets Wikidata instance ([c894eae](https://github.com/lydavid/MusicSearch/commit/c894eae7120cd99d8dafdd3a0c4facc94dcf44f0))
+
 ## [1.124.0](https://github.com/lydavid/MusicSearch/compare/v1.123.0...v1.124.0) (2026-07-06)
 
 
