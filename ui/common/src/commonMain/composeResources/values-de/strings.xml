@@ -458,4 +458,11 @@
     <string name="default">Standard</string>
     <string name="musicBrainzInstance">MusikBrainz-Instanz</string>
     <string name="listenBrainzInstance">ListenBrainz Instanz</string>
+    <string name="wikidataInstance">Wikidata Instanz</string>
+    <string name="artistImageSource">Künstler Bildquelle</string>
+    <string name="clientID">Client ID</string>
+    <string name="clientSecret">Client Geheimnis</string>
+    <string name="leastRecentlyListened">Am wenigsten zuletzt gehört</string>
+    <string name="mostRecentlyListened">Am meisten zuletzt gehört</string>
+    <string name="lastListenedXAgo">Zuletzt gehört %s.</string>
 </resources>
