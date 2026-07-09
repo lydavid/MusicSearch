@@ -32,13 +32,9 @@ musicsearch.ipa
 
 # We only need this file for building locally.
 # CI environments will set these using ORG_GRADLE_PROJECT_ prefix as env.
-# MUSICBRAINZ_CLIENT_ID
-# MUSICBRAINZ_CLIENT_SECRET
 # SPOTIFY_CLIENT_ID
 # SPOTIFY_CLIENT_SECRET
 secrets.properties
-.aider*
-!.aiderignore
 
 # DataStore preferences
 *.preferences_pb
