@@ -13,6 +13,7 @@ Inspired by [Spotless' feature matrix](https://github.com/diffplug/spotless?tab=
 | [Collections](#collections)                                 | ✅       | ✅       | ✅   |
 | [Export](#export)                                           | ✅       | ✅       | ✅   |
 | [Filtering](#filtering)                                     | ✅       | ✅       | ✅   |
+| [History](#history)                                         | ✅       | ✅       | ✅   |
 | [Images](#images)                                           | ✅       | ✅       | ✅   |
 | [Graph](#graph)                                             | ✅       | ✅       | ✅   |
 | [ListenBrainz integration](#listenbrainz-integration)       | ✅       | ✅       | ✅   |
@@ -33,6 +34,10 @@ When [filtering](#filtering), aliases will also be used.
 This means you can type text in your own language and find results.
 This depends on the alias existing in your language in MusicBrainz.
 Consider adding it if it's missing.
+
+More specifically, the alias must be a **primary** alias.
+This is because there can be many aliases for the same language.
+The app only shows one based on your device locale.
 
 ## Browse
 
@@ -124,6 +129,10 @@ Most screen supports filtering its content by text.
 | History | name + disambiguation, entity type, sort name, aliases |
 
 
+## History
+
+See all the pages you've visited, so you can quickly get back to them.
+
 ## Images
 
 | Entity        | Supported | Sources                                                                                                                                             |
@@ -140,6 +149,11 @@ Most screen supports filtering its content by text.
 | release group | ✅         | [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive)                                                                                  |
 | series        | ❌         |                                                                                                                                                     |
 | work          | ❌         |                                                                                                                                                     |
+
+You can switch the source for artist images from Settings.
+If you're not on Google Play, for Spotify, you will need to provide your own client id and secret.
+You can do this by creating an app through https://developer.spotify.com/dashboard.
+You will need a Spotify Premium account to do this.
 
 ## Graph
 
@@ -164,9 +178,9 @@ You can also filter by facets such as by:
 
 The facets are organized by most listened first. The facets can also be filtered by text.
 
-Some features are only available if you log in with [your user token](https://listenbrainz.org/settings/).
+Some features are only available if you log in with your [ListenBrainz user token](https://listenbrainz.org/settings/).
 These include:
-- linking your listen to a MusicBrainz recording to get metadata about it
+- linking your listen to a MusicBrainz recording to get metadata for it
 - refreshing listen metadata
 - deleting a listen
 
@@ -176,6 +190,7 @@ You can submit manual listens to ListenBrainz from a few places:
 - Recording: submit the recording without album data
 - Release: single track: submit its recording with the release as the album
 - Release: multiple tracks: submit all selected tracks' recordings with the release as the album
+  - To do this, click the track number, or long-click the track, then click the more actions ellipses, then submit listens
 
 
 ## Local Database
@@ -186,12 +201,12 @@ Browse all entities that have been cached locally in the app's database while yo
 
 All [images](#images) that you've come across are stored in the app's local database.
 This feature allows you to browse them in a grid.
-You can filter and sort based on a few metadata such as its type (e.g. Front, Spine, Back), comment, and the linked entity's name.
+You can filter and sort based on some metadata such as its type (e.g. Front, Spine, Back), comment, and the linked entity's name.
 
 
 ## MusicBrainz Login
 
-From the app's settings, you can login to your MusicBrianz account.
+From the app's settings, you can log in to your MusicBrianz account.
 This allows the app to fetch and display all of your [collections](#collections).
 
 ## Search MusicBrainz
