@@ -458,4 +458,11 @@
     <string name="default">Vaikimisi</string>
     <string name="musicBrainzInstance">MusicBrainzi server</string>
     <string name="listenBrainzInstance">ListenBrainzi server</string>
+    <string name="wikidataInstance">Wikidata server</string>
+    <string name="artistImageSource">Esineja pildi allikas</string>
+    <string name="clientID">Kliendi tunnus</string>
+    <string name="clientSecret">Kliendi saladus</string>
+    <string name="leastRecentlyListened">Varem kuulatud</string>
+    <string name="mostRecentlyListened">Hiljuti kuulatud</string>
+    <string name="lastListenedXAgo">Viimati kuulatud %s.</string>
 </resources>
