@@ -558,6 +558,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.RecordingListItem(
   recording: RecordingListItemModel
   stable filterText: String
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static <expression>
   stable isSelected: Boolean = @static false
@@ -734,7 +736,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable iconSize: Int = @static 20
   stable iconTint: Color = @dynamic <expression>
-  stable contentDescription: String? = @static null
+  stable mergedContentDescription: String? = @static null
   stable textStyle: TextStyle? = @dynamic <expression>
 )
 restartable skippable scheme("[0, [0]]") fun ly.david.musicsearch.ui.common.theme.BaseTheme(

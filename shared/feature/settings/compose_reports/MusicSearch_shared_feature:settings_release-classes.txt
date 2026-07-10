@@ -172,6 +172,7 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.services.Serv
 stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiState {
   runtime val musicBrainzInstance: MusicBrainzInstance
   runtime val listenBrainzInstance: ListenBrainzInstance
+  runtime val wikidataInstance: WikidataInstance
   runtime val artistImageSource: ArtistImageSource
   stable val showDefaultSpotifyOption: Boolean
   stable val eventSink: Function1<ServicesSettingsUiEvent, Unit>
@@ -186,6 +187,11 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.services.Serv
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.ConfirmListenBrainzInstance {
+  stable val isCustom: Boolean
+  stable val url: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiEvent.ConfirmWikimediaInstance {
   stable val isCustom: Boolean
   stable val url: String
   <runtime stability> = Stable

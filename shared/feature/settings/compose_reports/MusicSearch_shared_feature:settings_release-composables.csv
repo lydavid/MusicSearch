@@ -53,5 +53,5 @@ ly.david.musicsearch.shared.feature.settings.internal.services.getCustomSpotifyS
 ly.david.musicsearch.shared.feature.settings.internal.services.DefaultCustomInstancePickerDialog,DefaultCustomInstancePickerDialog,1,1,1,0,0,0,0,0,1,4,
 ly.david.musicsearch.shared.feature.settings.internal.services.DefaultCustomInstanceSetting,DefaultCustomInstanceSetting,1,1,1,0,0,0,0,0,3,3,
 ly.david.musicsearch.shared.feature.settings.internal.services.RadioRowWithText,RadioRowWithText,1,1,1,0,0,0,0,0,1,1,
-ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,3,
+ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
 ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUi,ServicesSettingsUi,1,1,1,0,0,0,0,0,1,3,

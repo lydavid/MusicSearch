@@ -895,6 +895,7 @@ runtime class ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
   stable val collected: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
+  stable val lastListenedAtMs: Long?
   <runtime stability> = Runtime(BasicAlias)
 }
 runtime class ly.david.musicsearch.shared.domain.listitem.RelationListItemModel {
@@ -1077,13 +1078,6 @@ stable class ly.david.musicsearch.shared.domain.place.CoordinatesUiModel {
   stable val latitude: Double?
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance.Default {
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance.Custom {
-  stable val url: String
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance.Default {
   <runtime stability> = Stable
 }
@@ -1091,10 +1085,17 @@ stable class ly.david.musicsearch.shared.domain.preferences.ListenBrainzInstance
   stable val url: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.preferences.WikimediaInstance.Default {
+stable class ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance.Default {
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.preferences.WikimediaInstance.Custom {
+stable class ly.david.musicsearch.shared.domain.preferences.MusicBrainzInstance.Custom {
+  stable val url: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.preferences.WikidataInstance.Default {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.preferences.WikidataInstance.Custom {
   stable val url: String
   <runtime stability> = Stable
 }
