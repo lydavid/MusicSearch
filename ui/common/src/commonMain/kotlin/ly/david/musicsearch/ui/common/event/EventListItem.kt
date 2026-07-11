@@ -32,6 +32,7 @@ fun EventListItem(
     event: EventListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onEventClick: EventListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -42,7 +43,7 @@ fun EventListItem(
             Column {
                 event.run {
                     HighlightableText(
-                        text = getAnnotatedName(),
+                        text = getAnnotatedName(boldUnvisited = boldUnvisited),
                         highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )

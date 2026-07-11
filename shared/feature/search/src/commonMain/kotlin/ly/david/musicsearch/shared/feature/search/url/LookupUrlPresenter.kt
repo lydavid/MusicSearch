@@ -43,6 +43,7 @@ internal class LookupUrlPresenter(
         var result: LookupUrlUiState.Result? by rememberRetained { mutableStateOf(null) }
         val coroutineScope = rememberCoroutineScope()
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         fun eventSink(event: LookupUrlUiEvent) {
             when (event) {
@@ -113,6 +114,7 @@ internal class LookupUrlPresenter(
             excludeParameters = excludeParameters,
             searchLocalDatabase = searchLocalDatabase,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            boldUnvisited = boldUnvisited,
             eventSink = ::eventSink,
         )
     }
@@ -125,6 +127,7 @@ internal data class LookupUrlUiState(
     val excludeParameters: Boolean = false,
     val searchLocalDatabase: Boolean = false,
     val scrollToHideTopAppBar: Boolean = false,
+    val boldUnvisited: Boolean = true,
     val eventSink: (LookupUrlUiEvent) -> Unit = {},
 ) : CircuitUiState {
 

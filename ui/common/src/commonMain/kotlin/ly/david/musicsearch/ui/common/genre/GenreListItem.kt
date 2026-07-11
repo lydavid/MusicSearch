@@ -17,7 +17,7 @@ import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
-import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.text.getFontWeightWithPreference
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
 @Composable
@@ -25,6 +25,7 @@ fun GenreListItem(
     genre: GenreListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onGenreClick: GenreListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -35,7 +36,11 @@ fun GenreListItem(
             Column {
                 HighlightableText(
                     text = buildAnnotatedString {
-                        withStyle(style = SpanStyle(fontWeight = genre.fontWeight)) {
+                        withStyle(
+                            style = SpanStyle(
+                                fontWeight = genre.getFontWeightWithPreference(boldUnvisited = boldUnvisited),
+                            ),
+                        ) {
                             append(genre.getNameWithDisambiguation())
                         }
                     },

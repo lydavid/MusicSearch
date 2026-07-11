@@ -170,6 +170,7 @@ private fun SearchUiContent(
             SearchResultsUi(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
+                boldUnvisited = state.boldUnvisited,
                 onEditCollectionClick = {
                     showEditCollectionSheet(
                         coroutineScope = coroutineScope,

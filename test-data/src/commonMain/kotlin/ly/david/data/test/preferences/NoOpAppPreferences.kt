@@ -260,4 +260,11 @@ open class NoOpAppPreferences : AppPreferences {
     override fun setArtistImageSource(source: ArtistImageSource) {
         // No-op.
     }
+
+    override val boldUnvisited: Flow<Boolean>
+        get() = flowOf(true)
+
+    override fun setBoldUnvisited(bold: Boolean) {
+        // No-op.
+    }
 }

@@ -45,6 +45,7 @@ internal fun PreviewTrackAdditionalActionsBottomSheetContentLong() {
                         ),
                     ),
                 ),
+                boldUnvisited = true,
             )
         }
     }
@@ -74,6 +75,7 @@ internal fun PreviewTrackAdditionalActionsBottomSheetContent() {
                     mediumPosition = 1,
                     listenCount = 3,
                 ),
+                boldUnvisited = true,
             )
         }
     }

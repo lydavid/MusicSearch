@@ -33,6 +33,7 @@ fun AreaListItem(
     area: AreaListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     showType: Boolean = true,
     showIcon: Boolean = true,
     showEditCollection: Boolean = true,
@@ -63,7 +64,7 @@ fun AreaListItem(
             val flags = area.countryCodes.joinToString { it.toFlagEmoji() }
             val fullName = buildAnnotatedString {
                 flags.ifNotNullOrEmpty { append("$it ") }
-                append(area.getAnnotatedName())
+                append(area.getAnnotatedName(boldUnvisited = boldUnvisited))
             }
             HighlightableText(
                 text = fullName,

@@ -56,6 +56,7 @@ fun TrackListItem(
     filterText: String,
     mostListenedTrackCount: Long,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onRecordingClick: (recordingId: String) -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (SelectableId) -> Unit = {},
@@ -67,6 +68,7 @@ fun TrackListItem(
                 TrackTitleWithLength(
                     track = track,
                     filterText = filterText,
+                    boldUnvisited = boldUnvisited,
                 )
             }
         },
@@ -152,6 +154,7 @@ fun TrackListItem(
 @Composable
 fun TrackTitleWithLength(
     track: TrackListItemModel,
+    boldUnvisited: Boolean,
     filterText: String = "",
 ) {
     HighlightableText(
@@ -161,7 +164,7 @@ fun TrackTitleWithLength(
                     fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                 ),
             ) {
-                append(track.getAnnotatedName())
+                append(track.getAnnotatedName(boldUnvisited = boldUnvisited))
             }
             withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                 append(" ${track.length.toDisplayTime()}")

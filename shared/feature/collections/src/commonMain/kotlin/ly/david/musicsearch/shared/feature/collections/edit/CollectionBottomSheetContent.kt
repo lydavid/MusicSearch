@@ -39,6 +39,7 @@ internal fun CollectionBottomSheetContent(
     collections: LazyPagingItems<CollectionListItemModel>,
     numberOfItemsToAddToCollection: Int,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     feedback: Feedback<EditACollectionFeedback>? = null,
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollection: (collectionId: String) -> Unit = {},
@@ -93,6 +94,7 @@ internal fun CollectionBottomSheetContent(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collection,
+                        boldUnvisited = boldUnvisited,
                         onClick = {
                             onAddToCollection(collection.id)
                         },

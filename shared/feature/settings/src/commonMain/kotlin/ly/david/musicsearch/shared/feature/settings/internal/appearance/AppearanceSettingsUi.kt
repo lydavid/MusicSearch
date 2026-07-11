@@ -44,6 +44,8 @@ import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.topappbar.ScrollableTopAppBar
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.appearance
+import musicsearch.ui.common.generated.resources.boldUnvisited
+import musicsearch.ui.common.generated.resources.boldUnvisitedDescription
 import musicsearch.ui.common.generated.resources.dark
 import musicsearch.ui.common.generated.resources.light
 import musicsearch.ui.common.generated.resources.reset
@@ -104,6 +106,15 @@ internal fun AppearanceSettingsUi(
                 checked = state.scrollToHideTopAppBar,
                 onCheckedChange = {
                     eventSink(AppearanceSettingsUiEvent.UpdateScrollToHideTopAppBar(it))
+                },
+            )
+
+            SettingSwitch(
+                header = stringResource(Res.string.boldUnvisited),
+                subtitle = stringResource(Res.string.boldUnvisitedDescription),
+                checked = state.boldUnvisited,
+                onCheckedChange = {
+                    eventSink(AppearanceSettingsUiEvent.BoldUnvisited(it))
                 },
             )
 

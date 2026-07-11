@@ -155,6 +155,7 @@ internal fun PreviewTracksByReleaseUi() {
                     totalCount = 52,
                     filteredCount = 5,
                 ),
+                boldUnvisited = true,
                 filterText = "い",
             )
         }

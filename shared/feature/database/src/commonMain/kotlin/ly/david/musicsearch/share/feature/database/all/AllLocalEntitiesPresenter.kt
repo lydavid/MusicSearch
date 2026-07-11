@@ -45,6 +45,7 @@ internal class AllLocalEntitiesPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         val entitiesListUiState = allEntitiesListPresenter.present()
         val entitiesListEventSink = entitiesListUiState.eventSink
@@ -92,6 +93,7 @@ internal class AllLocalEntitiesPresenter(
             subtitle = subtitle,
             entityType = screen.entityType,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            boldUnvisited = boldUnvisited,
             topAppBarFilterState = topAppBarFilterState,
             selectionState = selectionState,
             allEntitiesListUiState = entitiesListUiState,
@@ -106,6 +108,7 @@ internal data class AllLocalEntitiesUiState(
     val subtitle: String,
     val entityType: MusicBrainzEntityType,
     val scrollToHideTopAppBar: Boolean = false,
+    val boldUnvisited: Boolean = true,
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val selectionState: SelectionState = SelectionState(),
     val allEntitiesListUiState: AllEntitiesListUiState,

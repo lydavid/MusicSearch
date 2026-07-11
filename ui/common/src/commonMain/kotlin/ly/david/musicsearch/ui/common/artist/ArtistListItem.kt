@@ -33,6 +33,7 @@ fun ArtistListItem(
     artist: ArtistListItemModel,
     filterText: String = "",
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onClick: ArtistListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -41,7 +42,7 @@ fun ArtistListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = artist.getAnnotatedName(),
+                text = artist.getAnnotatedName(boldUnvisited = boldUnvisited),
                 highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )

@@ -31,6 +31,7 @@ fun LabelListItem(
     label: LabelListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     showIcon: Boolean = true,
     showEditCollection: Boolean = true,
     onLabelClick: LabelListItemModel.() -> Unit = {},
@@ -59,7 +60,7 @@ fun LabelListItem(
         headlineContent = {
             Column {
                 HighlightableText(
-                    text = label.getAnnotatedName(),
+                    text = label.getAnnotatedName(boldUnvisited = boldUnvisited),
                     highlightedText = filterText,
                     style = TextStyles.getCardBodyTextStyle(),
                 )

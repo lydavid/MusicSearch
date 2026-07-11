@@ -33,6 +33,7 @@ import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
 internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
     filterText: String,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
     selectedIds: ImmutableList<SelectableId> = persistentListOf(),
@@ -49,6 +50,7 @@ internal fun TracksByReleaseUi(
         ) {
             TrackAdditionalActionsBottomSheetContent(
                 track = track,
+                boldUnvisited = boldUnvisited,
                 onDismiss = { showBottomSheetForTrack = null },
                 onAddToCollectionClick = onEditCollectionClick,
                 onSubmitListenClick = onSubmitListenClick,
@@ -70,6 +72,7 @@ internal fun TracksByReleaseUi(
                     TrackListItem(
                         track = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         mostListenedTrackCount = uiState.mostListenedTrackCount,
                         onRecordingClick = onRecordingClick,
                         isSelected = selectedIds.map { it.id }.contains(listItemModel.id),

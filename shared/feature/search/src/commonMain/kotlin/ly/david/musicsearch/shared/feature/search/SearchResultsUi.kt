@@ -50,6 +50,7 @@ import kotlin.time.Clock
 @Composable
 internal fun SearchResultsUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
+    boldUnvisited: Boolean,
     lazyListState: LazyListState = rememberLazyListState(),
     onEditCollectionClick: (String) -> Unit,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
@@ -61,6 +62,7 @@ internal fun SearchResultsUi(
     ) { listItemModel: ListItemModel? ->
         ListItemUi(
             listItemModel = listItemModel,
+            boldUnvisited = boldUnvisited,
             onEditCollectionClick = onEditCollectionClick,
             onItemClick = onItemClick,
         )
@@ -70,6 +72,7 @@ internal fun SearchResultsUi(
 @Composable
 private fun ListItemUi(
     listItemModel: ListItemModel?,
+    boldUnvisited: Boolean,
     filterText: String = "", // not used yet
     onEditCollectionClick: (String) -> Unit,
     onItemClick: MusicBrainzItemClickHandler,
@@ -93,6 +96,7 @@ private fun ListItemUi(
             AreaListItem(
                 area = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 showType = true,
                 onEditCollectionClick = onEditCollectionClick,
                 onAreaClick = {
@@ -108,6 +112,7 @@ private fun ListItemUi(
             ArtistListItem(
                 artist = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onClick = {
                     onItemClick(
@@ -122,6 +127,7 @@ private fun ListItemUi(
             EventListItem(
                 event = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onEventClick = {
                     onItemClick(
@@ -136,6 +142,7 @@ private fun ListItemUi(
             InstrumentListItem(
                 instrument = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onInstrumentClick = {
                     onItemClick(
@@ -150,6 +157,7 @@ private fun ListItemUi(
             LabelListItem(
                 label = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onLabelClick = {
                     onItemClick(
@@ -164,6 +172,7 @@ private fun ListItemUi(
             PlaceListItem(
                 place = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onPlaceClick = {
                     onItemClick(
@@ -179,6 +188,7 @@ private fun ListItemUi(
                 recording = listItemModel,
                 filterText = filterText,
                 now = Clock.System.now(),
+                boldUnvisited = boldUnvisited,
                 showLastListenedPeriod = false,
                 onEditCollectionClick = onEditCollectionClick,
                 onRecordingClick = {
@@ -194,6 +204,7 @@ private fun ListItemUi(
             ReleaseListItem(
                 release = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onClick = {
                     onItemClick(
@@ -208,6 +219,7 @@ private fun ListItemUi(
             ReleaseGroupListItem(
                 releaseGroup = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 showType = true,
                 onClick = {
@@ -223,6 +235,7 @@ private fun ListItemUi(
             SeriesListItem(
                 series = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onSeriesClick = {
                     onItemClick(
@@ -237,6 +250,7 @@ private fun ListItemUi(
             WorkListItem(
                 work = listItemModel,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onWorkClick = {
                     onItemClick(

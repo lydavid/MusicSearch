@@ -201,6 +201,7 @@ private fun LookupUrlUiContent(
                     RelationListItem(
                         relation = listItemModel,
                         filterText = "",
+                        boldUnvisited = state.boldUnvisited,
                         onItemClick = { entity, id ->
                             eventSink(
                                 LookupUrlUiEvent.ClickItem(

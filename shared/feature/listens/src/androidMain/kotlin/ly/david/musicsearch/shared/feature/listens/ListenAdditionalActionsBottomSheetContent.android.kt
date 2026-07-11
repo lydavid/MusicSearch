@@ -52,6 +52,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = false,
+                boldUnvisited = true,
             )
         }
     }
@@ -69,6 +70,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
                 allowedToEdit = true,
                 filteringByThisRecording = true,
                 filteringByThisDate = false,
+                boldUnvisited = false,
             )
         }
     }
@@ -86,6 +88,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = false,
+                boldUnvisited = true,
             )
         }
     }
@@ -103,6 +106,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
                 allowedToEdit = false,
                 filteringByThisRecording = true,
                 filteringByThisDate = false,
+                boldUnvisited = true,
             )
         }
     }
@@ -120,6 +124,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinkedFi
                 allowedToEdit = false,
                 filteringByThisRecording = false,
                 filteringByThisDate = true,
+                boldUnvisited = true,
             )
         }
     }

@@ -26,7 +26,7 @@ import ly.david.musicsearch.ui.common.icons.Cloud
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
-import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.text.getFontWeightWithPreference
 import ly.david.musicsearch.ui.common.theme.SMALL_IMAGE_SIZE
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 internal fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     query: String = "",
     onClick: (String) -> Unit = {},
     enabled: Boolean = true,
@@ -58,7 +59,11 @@ internal fun CollectionListItem(
         headlineContent = {
             HighlightableText(
                 text = buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = collection.fontWeight)) {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = collection.getFontWeightWithPreference(boldUnvisited = boldUnvisited),
+                        ),
+                    ) {
                         append(collection.name)
                     }
                 },

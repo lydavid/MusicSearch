@@ -26,6 +26,7 @@ fun PlaceListItem(
     place: PlaceListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onPlaceClick: PlaceListItemModel.() -> Unit = {},
     onSelect: (String) -> Unit = {},
     isSelected: Boolean = false,
@@ -36,7 +37,7 @@ fun PlaceListItem(
             Column {
                 place.run {
                     HighlightableText(
-                        text = getAnnotatedName(),
+                        text = getAnnotatedName(boldUnvisited = boldUnvisited),
                         highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )

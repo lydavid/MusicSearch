@@ -52,6 +52,7 @@ fun RecordingListItem(
     now: Instant,
     showLastListenedPeriod: Boolean,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onRecordingClick: RecordingListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -60,7 +61,7 @@ fun RecordingListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = recording.getAnnotatedName(),
+                text = recording.getAnnotatedName(boldUnvisited = boldUnvisited),
                 highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )

@@ -18,3 +18,19 @@ internal fun PreviewGenreListItem() {
         )
     }
 }
+
+@PreviewLightDark
+@Composable
+internal fun PreviewGenreListItemNoBold() {
+    PreviewWithTransitionAndOverlays {
+        GenreListItem(
+            genre = GenreListItemModel(
+                id = "911c7bbb-172d-4df8-9478-dbff4296e791",
+                name = "pop",
+                visited = false,
+            ),
+            filterText = "",
+            boldUnvisited = false,
+        )
+    }
+}

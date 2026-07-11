@@ -44,6 +44,7 @@ internal fun EditCollectionUi(
     CollectionBottomSheetContent(
         collections = state.lazyPagingItems,
         numberOfItemsToAddToCollection = state.numberOfItemsToAddToCollection,
+        boldUnvisited = state.boldUnvisited,
         modifier = modifier,
         feedback = state.feedback,
         onCreateCollectionClick = {

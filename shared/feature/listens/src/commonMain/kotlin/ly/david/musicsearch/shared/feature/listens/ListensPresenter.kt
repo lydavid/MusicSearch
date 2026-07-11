@@ -98,6 +98,7 @@ internal class ListensPresenter(
         }
 
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         var showUnmappedData by rememberSaveable { mutableStateOf(false) }
 
@@ -222,6 +223,7 @@ internal class ListensPresenter(
             listensPagingDataFlow = listens,
             browsingUserIsSameAsLoggedInUser = loggedInUsername.isNotBlank() && browseUsername == loggedInUsername,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            boldUnvisited = boldUnvisited,
             showUnmappedData = showUnmappedData,
             eventSink = ::eventSink,
         )
@@ -242,6 +244,7 @@ internal data class ListensUiState(
     val listensPagingDataFlow: Flow<PagingData<Identifiable>> = emptyFlow(),
     val browsingUserIsSameAsLoggedInUser: Boolean = false,
     val scrollToHideTopAppBar: Boolean = false,
+    val boldUnvisited: Boolean = true,
     val showUnmappedData: Boolean = false,
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {

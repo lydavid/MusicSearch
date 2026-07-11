@@ -219,6 +219,7 @@ internal fun CollectionListUi(
                         CollectionListItem(
                             collection = collectionListItemModel,
                             query = state.topAppBarFilterState.filterText,
+                            boldUnvisited = state.boldUnvisited,
                             onClick = {
                                 eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
                             },

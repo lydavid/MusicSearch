@@ -123,7 +123,9 @@ internal fun SeriesUi(
         scrollToHideTopAppBar = state.scrollToHideTopAppBar,
         snackbarHostState = snackbarHostState,
         topBar = { scrollBehavior ->
-            val annotatedName = state.detailsModel.getAnnotatedName()
+            val annotatedName = state.detailsModel.getAnnotatedName(
+                boldUnvisited = false,
+            )
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)

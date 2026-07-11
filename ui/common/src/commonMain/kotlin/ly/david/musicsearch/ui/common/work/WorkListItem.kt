@@ -35,6 +35,7 @@ fun WorkListItem(
     work: WorkListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onWorkClick: WorkListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -43,7 +44,7 @@ fun WorkListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = work.getAnnotatedName(),
+                text = work.getAnnotatedName(boldUnvisited = boldUnvisited),
                 highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )

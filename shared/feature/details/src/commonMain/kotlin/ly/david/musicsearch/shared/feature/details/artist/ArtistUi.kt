@@ -138,7 +138,9 @@ internal fun ArtistUi(
         scrollToHideTopAppBar = state.scrollToHideTopAppBar,
         snackbarHostState = snackbarHostState,
         topBar = { scrollBehavior ->
-            val annotatedName = state.detailsModel.getAnnotatedName()
+            val annotatedName = state.detailsModel.getAnnotatedName(
+                boldUnvisited = false,
+            )
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
@@ -157,7 +159,7 @@ internal fun ArtistUi(
                         onLoginClick = {
                             loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
-                        nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
+                        nameWithDisambiguation = annotatedName.text,
                     )
                 },
                 overflowDropdownMenuItems = {
@@ -273,6 +275,7 @@ internal fun ArtistUi(
             detailsScreen = { detailsModel ->
                 ArtistDetailsTabUi(
                     artist = detailsModel,
+                    boldUnvisited = state.boldUnvisited,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     onItemClick = { entity, id ->

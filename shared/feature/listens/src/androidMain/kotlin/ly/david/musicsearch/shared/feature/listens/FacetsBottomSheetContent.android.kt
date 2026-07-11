@@ -56,6 +56,7 @@ internal fun PreviewFacetsBottomSheetContentRecordings() {
                     filterState = filterState,
                     facetsPagingDataFlow = facets,
                 ),
+                boldUnvisited = true,
             )
         }
     }
@@ -99,6 +100,7 @@ internal fun PreviewFacetsBottomSheetContentReleases() {
                     selectedTab = Tab.RELEASES,
                     facetsPagingDataFlow = facets,
                 ),
+                boldUnvisited = true,
             )
         }
     }
@@ -150,6 +152,7 @@ internal fun PreviewFacetsBottomSheetContentArtists() {
                     selectedTab = Tab.ARTISTS,
                     facetsPagingDataFlow = facets,
                 ),
+                boldUnvisited = true,
             )
         }
     }

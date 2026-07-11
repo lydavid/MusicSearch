@@ -173,6 +173,7 @@ internal fun ListensUi(
                 state = state.facetsUiState,
                 timeZone = timeZone,
                 clock = clock,
+                boldUnvisited = state.boldUnvisited,
                 onClearAll = {
                     eventSink(ListensUiEvent.ToggleEntityFacet(null))
                     eventSink(ListensUiEvent.SelectMaxDateAtMidnight(null))
@@ -266,6 +267,7 @@ private fun FacetsAdditionalBar(
     state: FacetsUiState,
     timeZone: TimeZone,
     clock: Clock,
+    boldUnvisited: Boolean,
     onClearAll: () -> Unit,
     onSelectEntityFacet: (MusicBrainzEntity?) -> Unit,
     onUpdateTab: (Tab) -> Unit,
@@ -295,6 +297,7 @@ private fun FacetsAdditionalBar(
             ),
             facetsUiState = state,
             selectedEntityFacet = selectedEntityFacet,
+            boldUnvisited = boldUnvisited,
             onSelectFacet = onSelectEntityFacet,
             onUpdateTab = onUpdateTab,
         )
@@ -314,6 +317,7 @@ private fun FacetsAdditionalBar(
 private fun FacetChip(
     facetsUiState: FacetsUiState,
     selectedEntityFacet: MusicBrainzEntity?,
+    boldUnvisited: Boolean,
     modifier: Modifier,
     onSelectFacet: (MusicBrainzEntity?) -> Unit,
     onUpdateTab: (Tab) -> Unit,
@@ -327,6 +331,7 @@ private fun FacetChip(
         ) {
             FacetsBottomSheetContent(
                 state = facetsUiState,
+                boldUnvisited = boldUnvisited,
                 onUpdateTab = {
                     onUpdateTab(it)
                 },
@@ -494,6 +499,7 @@ private fun ListensContent(
                 ListenAdditionalActionsBottomSheetContent(
                     listen = listen,
                     filterText = filterText,
+                    boldUnvisited = state.boldUnvisited,
                     showUnmappedData = state.showUnmappedData,
                     onToggleShowUnmappedData = {
                         eventSink(ListensUiEvent.ToggleShowUnmappedData)
@@ -568,6 +574,7 @@ private fun ListensContent(
                 is ListenListItemModel -> ListenListItem(
                     listen = listItemModel,
                     filterText = filterText,
+                    boldUnvisited = state.boldUnvisited,
                     onClick = { id ->
                         eventSink(
                             ListensUiEvent.GoToScreen(

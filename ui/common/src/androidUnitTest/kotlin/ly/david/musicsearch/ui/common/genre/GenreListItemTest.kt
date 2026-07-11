@@ -11,4 +11,11 @@ class GenreListItemTest : ScreenshotTest() {
             PreviewGenreListItem()
         }
     }
+
+    @Test
+    fun noBold() {
+        snapshot {
+            PreviewGenreListItemNoBold()
+        }
+    }
 }

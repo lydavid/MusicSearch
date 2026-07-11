@@ -154,6 +154,7 @@ internal fun AllLocalEntitiesUi(
             uiState = uiState,
             filterText = state.topAppBarFilterState.filterText,
             now = now,
+            boldUnvisited = state.boldUnvisited,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()

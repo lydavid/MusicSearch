@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 fun ListenListItem(
     listen: ListenListItemModel,
     filterText: String,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     onClick: (id: String) -> Unit = {},
     onMoreActionsClick: ListenListItemModel.() -> Unit = {},
@@ -47,7 +48,7 @@ fun ListenListItem(
                             fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                         ),
                     ) {
-                        append(listen.getAnnotatedName())
+                        append(listen.getAnnotatedName(boldUnvisited = boldUnvisited))
                     }
                     withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                         append(" ${listen.durationMs.toDisplayTime()}")

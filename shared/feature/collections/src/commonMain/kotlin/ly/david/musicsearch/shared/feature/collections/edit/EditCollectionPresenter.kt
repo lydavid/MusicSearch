@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -26,6 +27,7 @@ import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.withTime
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import kotlin.time.Clock
@@ -36,6 +38,7 @@ internal class EditCollectionPresenter(
     private val getAllCollections: GetAllCollections,
     private val createCollection: CreateCollection,
     private val collectionRepository: CollectionRepository,
+    private val appPreferences: AppPreferences,
     private val clock: Clock,
 ) : Presenter<EditCollectionUiState> {
     @Composable
@@ -52,6 +55,7 @@ internal class EditCollectionPresenter(
                 ),
             )
         }
+        val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         fun eventSink(event: EditCollectionUiEvent) {
             when (event) {
@@ -101,6 +105,7 @@ internal class EditCollectionPresenter(
             numberOfItemsToAddToCollection = screen.collectableIds.size,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             feedback = intermediateFeedback,
+            boldUnvisited = boldUnvisited,
             eventSink = ::eventSink,
         )
     }
@@ -112,6 +117,7 @@ internal data class EditCollectionUiState(
     val numberOfItemsToAddToCollection: Int,
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val feedback: Feedback<EditACollectionFeedback>?,
+    val boldUnvisited: Boolean = true,
     val eventSink: (EditCollectionUiEvent) -> Unit,
 ) : CircuitUiState
 

@@ -54,6 +54,7 @@ internal val tabs = persistentListOf(
 @Composable
 internal fun FacetsBottomSheetContent(
     state: FacetsUiState,
+    boldUnvisited: Boolean,
     onUpdateTab: (tab: Tab) -> Unit = {},
     onFacetClick: (entity: MusicBrainzEntity) -> Unit = {},
     onDismiss: () -> Unit = {},
@@ -131,7 +132,7 @@ internal fun FacetsBottomSheetContent(
                                         if (hasUnknownId) {
                                             "(${stringResource(Res.string.unlinkedListens)})"
                                         } else {
-                                            facet.getAnnotatedName()
+                                            facet.getAnnotatedName(boldUnvisited = boldUnvisited)
                                         },
                                     )
                                     append(" (${facet.count})")

@@ -12,9 +12,9 @@ import ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiSta
 import ly.david.musicsearch.shared.feature.collections.single.CollectionPresenter
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 import ly.david.musicsearch.shared.feature.collections.single.CollectionUiState
-import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
 import ly.david.musicsearch.ui.common.screen.CollectionListScreen
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
+import ly.david.musicsearch.ui.common.screen.EditCollectionScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -51,6 +51,7 @@ val collectionsFeatureModule = module {
                     getAllCollections = get(),
                     createCollection = get(),
                     collectionRepository = get(),
+                    appPreferences = get(),
                     clock = get(),
                 )
 

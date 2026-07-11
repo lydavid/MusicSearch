@@ -52,7 +52,7 @@ import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.text.TextInput
-import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.text.getFontWeightWithPreference
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
 import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
@@ -72,6 +72,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
     filterText: String,
+    boldUnvisited: Boolean,
     showUnmappedData: Boolean,
     onToggleShowUnmappedData: () -> Unit = {},
     onGoToRelease: (releaseId: String) -> Unit = {},
@@ -95,6 +96,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             listen = listen,
             filterText = filterText,
             showUnmappedData = showUnmappedData,
+            boldUnvisited = boldUnvisited,
             onToggleShowUnmappedData = onToggleShowUnmappedData,
         )
 
@@ -105,7 +107,7 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 title = stringResource(Res.string.goToAlbum),
                 startIcon = CustomIcons.Album,
                 endIcon = CustomIcons.ChevronRight,
-                fontWeight = release.fontWeight,
+                fontWeight = release.getFontWeightWithPreference(boldUnvisited = boldUnvisited),
                 onClick = {
                     onGoToRelease(releaseId)
                     onDismiss()
@@ -223,6 +225,7 @@ private fun PreviewSection(
     modifier: Modifier,
     listen: ListenListItemModel,
     filterText: String,
+    boldUnvisited: Boolean,
     showUnmappedData: Boolean,
     onToggleShowUnmappedData: () -> Unit = {},
 ) {
@@ -249,7 +252,7 @@ private fun PreviewSection(
                                 fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                             ),
                         ) {
-                            append(listen.getAnnotatedName())
+                            append(listen.getAnnotatedName(boldUnvisited = boldUnvisited))
                         }
                         withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                             append(" ${listen.durationMs.toDisplayTime()}")
@@ -322,7 +325,13 @@ private fun PreviewSection(
                         releaseName?.let { releaseName ->
                             HighlightableText(
                                 text = buildAnnotatedString {
-                                    withStyle(style = SpanStyle(fontWeight = release.fontWeight)) {
+                                    withStyle(
+                                        style = SpanStyle(
+                                            fontWeight = release.getFontWeightWithPreference(
+                                                boldUnvisited = boldUnvisited,
+                                            ),
+                                        ),
+                                    ) {
                                         append(releaseName)
                                     }
                                 },

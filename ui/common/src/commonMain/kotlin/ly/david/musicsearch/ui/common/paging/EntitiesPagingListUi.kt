@@ -47,6 +47,7 @@ fun EntitiesPagingListUi(
     uiState: EntitiesPagingListUiState,
     filterText: String,
     now: Instant,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     selectedIds: ImmutableList<String> = persistentListOf(),
@@ -70,6 +71,7 @@ fun EntitiesPagingListUi(
                     AreaListItem(
                         area = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onAreaClick = {
                             onItemClick(
                                 MusicBrainzEntityType.AREA,
@@ -86,6 +88,7 @@ fun EntitiesPagingListUi(
                     ArtistListItem(
                         artist = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onClick = {
                             onItemClick(
                                 MusicBrainzEntityType.ARTIST,
@@ -102,6 +105,7 @@ fun EntitiesPagingListUi(
                     EventListItem(
                         event = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onEventClick = {
                             onItemClick(
                                 MusicBrainzEntityType.EVENT,
@@ -118,6 +122,7 @@ fun EntitiesPagingListUi(
                     GenreListItem(
                         genre = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onGenreClick = {
                             onItemClick(
                                 MusicBrainzEntityType.GENRE,
@@ -134,6 +139,7 @@ fun EntitiesPagingListUi(
                     InstrumentListItem(
                         instrument = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onInstrumentClick = {
                             onItemClick(
                                 MusicBrainzEntityType.INSTRUMENT,
@@ -150,6 +156,7 @@ fun EntitiesPagingListUi(
                     LabelListItem(
                         label = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onLabelClick = {
                             onItemClick(
                                 MusicBrainzEntityType.LABEL,
@@ -166,6 +173,7 @@ fun EntitiesPagingListUi(
                     PlaceListItem(
                         place = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onPlaceClick = {
                             onItemClick(
                                 MusicBrainzEntityType.PLACE,
@@ -183,6 +191,7 @@ fun EntitiesPagingListUi(
                         recording = listItemModel,
                         filterText = filterText,
                         now = now,
+                        boldUnvisited = boldUnvisited,
                         showLastListenedPeriod = uiState.showMoreInfo,
                         onRecordingClick = {
                             onItemClick(
@@ -200,6 +209,7 @@ fun EntitiesPagingListUi(
                     ReleaseListItem(
                         release = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         showMoreInfo = uiState.showMoreInfo,
                         requestForMissingCoverArtUrl = {
                             requestForMissingCoverArtUrl(listItemModel.id)
@@ -220,6 +230,7 @@ fun EntitiesPagingListUi(
                     ReleaseGroupListItem(
                         releaseGroup = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         showType = uiState.showMoreInfo,
                         requestForMissingCoverArtUrl = {
                             requestForMissingCoverArtUrl(listItemModel.id)
@@ -240,6 +251,7 @@ fun EntitiesPagingListUi(
                     SeriesListItem(
                         series = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onSeriesClick = {
                             onItemClick(
                                 MusicBrainzEntityType.SERIES,
@@ -256,6 +268,7 @@ fun EntitiesPagingListUi(
                     WorkListItem(
                         work = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onWorkClick = {
                             onItemClick(
                                 MusicBrainzEntityType.WORK,
@@ -272,6 +285,7 @@ fun EntitiesPagingListUi(
                     RelationListItem(
                         relation = listItemModel,
                         filterText = filterText,
+                        boldUnvisited = boldUnvisited,
                         onItemClick = { entity, id ->
                             require(entity != MusicBrainzEntityType.URL)
                             onItemClick(

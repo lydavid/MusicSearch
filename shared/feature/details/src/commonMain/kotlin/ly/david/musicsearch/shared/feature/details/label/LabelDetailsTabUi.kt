@@ -28,6 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun LabelDetailsTabUi(
     label: LabelDetailsModel,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
@@ -95,6 +96,7 @@ internal fun LabelDetailsTabUi(
             areaSection(
                 areaListItemModel = label.area,
                 filterText = filterText,
+                boldUnvisited = boldUnvisited,
                 onItemClick = onItemClick,
                 collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
                 onCollapseExpand = {

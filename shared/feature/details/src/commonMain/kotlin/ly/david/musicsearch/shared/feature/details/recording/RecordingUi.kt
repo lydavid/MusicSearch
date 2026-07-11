@@ -132,7 +132,9 @@ internal fun RecordingUi(
         scrollToHideTopAppBar = state.scrollToHideTopAppBar,
         snackbarHostState = snackbarHostState,
         topBar = { scrollBehavior ->
-            val annotatedName = recordingDetailsModel.getAnnotatedName()
+            val annotatedName = recordingDetailsModel.getAnnotatedName(
+                boldUnvisited = false,
+            )
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
@@ -152,7 +154,7 @@ internal fun RecordingUi(
                         onLoginClick = {
                             loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
-                        nameWithDisambiguation = recordingDetailsModel.getAnnotatedName().text,
+                        nameWithDisambiguation = annotatedName.text,
                     )
                 },
                 overflowDropdownMenuItems = {

@@ -52,6 +52,7 @@ import kotlin.time.Instant
 @Composable
 internal fun ArtistDetailsTabUi(
     artist: ArtistDetailsModel,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     detailsTabUiState: DetailsTabUiState = DetailsTabUiState(),
     filterText: String = "",
@@ -75,6 +76,7 @@ internal fun ArtistDetailsTabUi(
                 areaSection(
                     areaListItemModel = areaListItemModel,
                     filterText = filterText,
+                    boldUnvisited = boldUnvisited,
                     onItemClick = onItemClick,
                     collapsed = detailsTabUiState.isSectionCollapsed.contains(CollapsibleSection.Area),
                     onCollapseExpand = {

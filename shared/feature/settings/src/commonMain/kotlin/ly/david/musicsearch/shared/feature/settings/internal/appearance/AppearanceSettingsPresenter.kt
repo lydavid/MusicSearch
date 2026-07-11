@@ -19,6 +19,7 @@ internal class AppearanceSettingsPresenter(
     override fun present(): AppearanceSettingsUiState {
         val theme by appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
         val useMaterialYou by appPreferences.useMaterialYou.collectAsState(initial = true)
         val seedColor by appPreferences.observeSeedColor.collectAsState(initial = DEFAULT_SEED_COLOR_INT)
 
@@ -34,6 +35,10 @@ internal class AppearanceSettingsPresenter(
                     appPreferences.setScrollToHideTopAppBar(event.enable)
                 }
 
+                is AppearanceSettingsUiEvent.BoldUnvisited -> {
+                    appPreferences.setBoldUnvisited(event.bold)
+                }
+
                 is AppearanceSettingsUiEvent.UpdateUseMaterialYou -> {
                     appPreferences.setUseMaterialYou(event.use)
                 }
@@ -47,6 +52,7 @@ internal class AppearanceSettingsPresenter(
         return AppearanceSettingsUiState(
             theme = theme,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            boldUnvisited = boldUnvisited,
             useMaterialYou = useMaterialYou,
             seedColor = seedColor,
             eventSink = ::eventSink,
@@ -57,6 +63,7 @@ internal class AppearanceSettingsPresenter(
 internal data class AppearanceSettingsUiState(
     val theme: AppPreferences.Theme = AppPreferences.Theme.SYSTEM,
     val scrollToHideTopAppBar: Boolean = false,
+    val boldUnvisited: Boolean = true,
     val useMaterialYou: Boolean = false,
     val seedColor: Int = DEFAULT_SEED_COLOR_INT,
     val eventSink: (AppearanceSettingsUiEvent) -> Unit = {},
@@ -66,6 +73,7 @@ internal sealed interface AppearanceSettingsUiEvent : CircuitUiEvent {
     data object NavigateUp : AppearanceSettingsUiEvent
     data class UpdateTheme(val theme: AppPreferences.Theme) : AppearanceSettingsUiEvent
     data class UpdateScrollToHideTopAppBar(val enable: Boolean) : AppearanceSettingsUiEvent
+    data class BoldUnvisited(val bold: Boolean) : AppearanceSettingsUiEvent
     data class UpdateUseMaterialYou(val use: Boolean) : AppearanceSettingsUiEvent
     data class SetSeedColor(val seedColor: Int) : AppearanceSettingsUiEvent
 }

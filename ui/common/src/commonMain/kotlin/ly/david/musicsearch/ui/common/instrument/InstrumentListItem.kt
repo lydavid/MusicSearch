@@ -25,6 +25,7 @@ fun InstrumentListItem(
     instrument: InstrumentListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onInstrumentClick: InstrumentListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -35,7 +36,7 @@ fun InstrumentListItem(
             Column {
                 instrument.run {
                     HighlightableText(
-                        text = getAnnotatedName(),
+                        text = getAnnotatedName(boldUnvisited = boldUnvisited),
                         highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )

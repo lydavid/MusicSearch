@@ -24,6 +24,7 @@ fun SeriesListItem(
     series: SeriesListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onSeriesClick: SeriesListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
     onSelect: (String) -> Unit = {},
@@ -34,7 +35,7 @@ fun SeriesListItem(
             Column {
                 series.run {
                     HighlightableText(
-                        text = getAnnotatedName(),
+                        text = getAnnotatedName(boldUnvisited = boldUnvisited),
                         highlightedText = filterText,
                         style = TextStyles.getCardBodyTextStyle(),
                     )

@@ -31,6 +31,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun TrackAdditionalActionsBottomSheetContent(
     track: TrackListItemModel,
+    boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {},
     onAddToCollectionClick: (recordingId: String) -> Unit = {},
@@ -49,7 +50,10 @@ internal fun TrackAdditionalActionsBottomSheetContent(
                 Column(
                     modifier = Modifier.padding(start = 16.dp),
                 ) {
-                    TrackTitleWithLength(track = track)
+                    TrackTitleWithLength(
+                        track = track,
+                        boldUnvisited = boldUnvisited,
+                    )
 
                     Text(
                         text = track.artists.getDisplayNames(),

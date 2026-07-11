@@ -126,12 +126,15 @@ internal fun AreaUi(
         scrollToHideTopAppBar = state.scrollToHideTopAppBar,
         snackbarHostState = snackbarHostState,
         topBar = { scrollBehavior ->
+            val annotatedName = state.detailsModel.getAnnotatedName(
+                boldUnvisited = false,
+            )
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
                 entity = entityType,
-                annotatedString = state.detailsModel.getAnnotatedName(),
+                annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
                     AddToCollectionActionToggle(
@@ -144,7 +147,7 @@ internal fun AreaUi(
                         onLoginClick = {
                             loginEventSink(MusicBrainzLoginUiEvent.StartLogin)
                         },
-                        nameWithDisambiguation = state.detailsModel.getAnnotatedName().text,
+                        nameWithDisambiguation = annotatedName.text,
                     )
                 },
                 overflowDropdownMenuItems = {

@@ -46,6 +46,7 @@ fun ReleaseListItem(
     release: ReleaseListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     showMoreInfo: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {},
@@ -63,7 +64,7 @@ fun ReleaseListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = release.getAnnotatedName(),
+                text = release.getAnnotatedName(boldUnvisited = boldUnvisited),
                 highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )

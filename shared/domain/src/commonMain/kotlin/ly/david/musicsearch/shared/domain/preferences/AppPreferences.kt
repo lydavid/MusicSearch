@@ -125,4 +125,7 @@ interface AppPreferences {
     val artistImageSource: Flow<ArtistImageSource>
     val hasDefaultSpotifyCredentials: Boolean
     fun setArtistImageSource(source: ArtistImageSource)
+
+    val boldUnvisited: Flow<Boolean>
+    fun setBoldUnvisited(bold: Boolean)
 }

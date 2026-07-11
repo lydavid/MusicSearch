@@ -32,6 +32,7 @@ internal fun PreviewListenListItem() {
                     ),
                 ),
                 filterText = "ze",
+                boldUnvisited = true,
             )
         }
     }

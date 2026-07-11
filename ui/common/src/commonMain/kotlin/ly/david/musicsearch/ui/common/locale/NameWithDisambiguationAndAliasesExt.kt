@@ -12,7 +12,7 @@ import kotlinx.collections.immutable.toPersistentList
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listitem.Visitable
-import ly.david.musicsearch.ui.common.text.fontWeight
+import ly.david.musicsearch.ui.common.text.getFontWeightWithPreference
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
 
 private const val SCRIPT_LENGTH = 4
@@ -66,11 +66,13 @@ private fun matches(
     parts[0] == systemParts[0] && parts[1] == systemParts[1]
 
 @Composable
-fun NameWithDisambiguationAndAliases?.getAnnotatedName(): AnnotatedString {
+fun NameWithDisambiguationAndAliases?.getAnnotatedName(
+    boldUnvisited: Boolean,
+): AnnotatedString {
     if (this == null) return AnnotatedString("")
     return buildAnnotatedString {
         val fontWeight = when (this@getAnnotatedName) {
-            is Visitable -> this@getAnnotatedName.fontWeight
+            is Visitable -> this@getAnnotatedName.getFontWeightWithPreference(boldUnvisited = boldUnvisited)
             else -> FontWeight.Normal
         }
         withStyle(style = SpanStyle(fontWeight = fontWeight)) {

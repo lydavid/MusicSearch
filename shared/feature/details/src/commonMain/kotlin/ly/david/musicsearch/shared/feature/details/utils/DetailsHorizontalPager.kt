@@ -65,6 +65,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 TracksByReleaseUi(
                     uiState = state.allEntitiesListUiState.tracksByReleaseUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    boldUnvisited = state.boldUnvisited,
                     onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
@@ -97,6 +98,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     uiState = uiState,
                     filterText = filterText,
                     now = state.detailsTabUiState.now,
+                    boldUnvisited = state.boldUnvisited,
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(

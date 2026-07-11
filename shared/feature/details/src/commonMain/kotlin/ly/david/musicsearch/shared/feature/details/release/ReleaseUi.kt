@@ -136,7 +136,9 @@ internal fun ReleaseUi(
         scrollToHideTopAppBar = state.scrollToHideTopAppBar,
         snackbarHostState = snackbarHostState,
         topBar = { scrollBehavior ->
-            val annotatedName = releaseDetailsModel.getAnnotatedName()
+            val annotatedName = releaseDetailsModel.getAnnotatedName(
+                boldUnvisited = false,
+            )
             TopAppBarWithFilter(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)

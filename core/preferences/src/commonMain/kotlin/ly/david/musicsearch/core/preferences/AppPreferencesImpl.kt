@@ -700,6 +700,25 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val boldUnvisitedPreference =
+        booleanPreferencesKey(AppPreferencesKey.BOLD_UNVISITED.name)
+    override val boldUnvisited: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[boldUnvisitedPreference] ?: true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setBoldUnvisited(bold: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[boldUnvisitedPreference] = bold
+            }
+        }
+    }
 }
 
 private object ArtistImageSourceKey {

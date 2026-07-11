@@ -77,7 +77,7 @@ internal fun SubmitListenUi(
                                 fontSize = TextStyles.getCardBodyTextStyle().fontSize,
                             ),
                         ) {
-                            append(type.info.getAnnotatedName())
+                            append(type.info.getAnnotatedName(boldUnvisited = false))
                         }
                         withStyle(style = SpanStyle(fontSize = TextStyles.getCardBodySubTextStyle().fontSize)) {
                             append(" ${type.info.lengthMilliseconds.toDisplayTime()}")

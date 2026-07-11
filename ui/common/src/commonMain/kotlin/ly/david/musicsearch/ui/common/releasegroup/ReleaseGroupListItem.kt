@@ -30,6 +30,7 @@ fun ReleaseGroupListItem(
     filterText: String,
     showType: Boolean,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {},
     isSelected: Boolean = false,
@@ -46,7 +47,7 @@ fun ReleaseGroupListItem(
     ListItem(
         headlineContent = {
             HighlightableText(
-                text = releaseGroup.getAnnotatedName(),
+                text = releaseGroup.getAnnotatedName(boldUnvisited = boldUnvisited),
                 highlightedText = filterText,
                 style = TextStyles.getCardBodyTextStyle(),
             )

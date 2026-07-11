@@ -31,6 +31,7 @@ fun RelationListItem(
     relation: RelationListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
 ) {
     val clipboard = LocalClipboard.current
@@ -55,7 +56,7 @@ fun RelationListItem(
                 }
 
                 HighlightableText(
-                    text = relation.getAnnotatedName(),
+                    text = relation.getAnnotatedName(boldUnvisited = boldUnvisited),
                     highlightedText = filterText,
                     style = TextStyles.getCardBodyTextStyle(),
                 )

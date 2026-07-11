@@ -13,6 +13,7 @@ import org.jetbrains.compose.resources.stringResource
 
 internal fun LazyListScope.areaSection(
     areaListItemModel: AreaListItemModel?,
+    boldUnvisited: Boolean,
     filterText: String = "",
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     collapsed: Boolean = false,
@@ -28,7 +29,9 @@ internal fun LazyListScope.areaSection(
         }
 
         item {
-            if (getAnnotatedName().contains(filterText, ignoreCase = true) && !collapsed) {
+            if (getAnnotatedName(boldUnvisited = boldUnvisited)
+                    .contains(filterText, ignoreCase = true) && !collapsed
+            ) {
                 AreaListItem(
                     area = this@run,
                     filterText = filterText,
