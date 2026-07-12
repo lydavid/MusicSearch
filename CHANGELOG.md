@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.125.0](https://github.com/lydavid/MusicSearch/compare/v1.124.1...v1.125.0) (2026-07-12)
+
+
+### Features
+
+* add setting under Appearance to control whether to bold unvisited items (default is on) ([aa01fdb](https://github.com/lydavid/MusicSearch/commit/aa01fdbaf65f1a477e8809563785122767d91a15))
+
 ## [1.124.1](https://github.com/lydavid/MusicSearch/compare/v1.124.0...v1.124.1) (2026-07-07)
 
 
