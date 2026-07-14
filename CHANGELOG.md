@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.126.0](https://github.com/lydavid/MusicSearch/compare/v1.125.0...v1.126.0) (2026-07-14)
+
+
+### Features
+
+* add more filters to each listen in listens list to filter on its song, album, or artist credited on song ([8c004d1](https://github.com/lydavid/MusicSearch/commit/8c004d1e59931869624f796aff631aed2d9cafff))
+
 ## [1.125.0](https://github.com/lydavid/MusicSearch/compare/v1.124.1...v1.125.0) (2026-07-12)
 
 
