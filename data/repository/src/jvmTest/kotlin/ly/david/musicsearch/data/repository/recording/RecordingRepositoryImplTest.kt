@@ -222,7 +222,18 @@ class RecordingRepositoryImplTest :
                         recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                         recordingName = "Color Your Night",
                         unmappedTrackName = "Color Your Night",
-                        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                        separateArtistCredits = persistentListOf(
+                            ArtistCreditUiModel(
+                                artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                name = "Lotus Juice",
+                                joinPhrase = " & ",
+                            ),
+                            ArtistCreditUiModel(
+                                artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                name = "高橋あず美",
+                                joinPhrase = "",
+                            ),
+                        ),
                         unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
                         recordingDurationMs = 227240,
@@ -233,7 +244,7 @@ class RecordingRepositoryImplTest :
                         ),
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                            name = "Persona 3 Reload Original Soundtrack",
+                            mappedName = "Persona 3 Reload Original Soundtrack",
                             unmappedName = "Persona 3 Reload Original Soundtrack",
                         ),
                     ),
@@ -325,7 +336,18 @@ class RecordingRepositoryImplTest :
                         recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
                         recordingName = "Color Your Night",
                         unmappedTrackName = "Color Your Night",
-                        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+                        separateArtistCredits = persistentListOf(
+                            ArtistCreditUiModel(
+                                artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+                                name = "Lotus Juice",
+                                joinPhrase = " & ",
+                            ),
+                            ArtistCreditUiModel(
+                                artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                                name = "高橋あず美",
+                                joinPhrase = "",
+                            ),
+                        ),
                         unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
                         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda2",
                         recordingDurationMs = 227240,
@@ -336,7 +358,7 @@ class RecordingRepositoryImplTest :
                         ),
                         release = ListenRelease(
                             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-                            name = "Persona 3 Reload Original Soundtrack",
+                            mappedName = "Persona 3 Reload Original Soundtrack",
                             unmappedName = "Persona 3 Reload Original Soundtrack",
                         ),
                         isrcs = persistentListOf("JPK652300116"),

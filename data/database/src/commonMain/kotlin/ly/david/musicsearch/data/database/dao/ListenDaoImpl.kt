@@ -8,6 +8,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.combineToAliases
+import ly.david.musicsearch.data.database.mapper.combineToArtistCredits
 import ly.david.musicsearch.data.database.mapper.mapToImageMetadata
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -363,6 +364,8 @@ private fun mapToListenListItemModel(
     recordingDurationMs: Int?,
     unmappedDurationMs: Long?,
     artistCreditNames: String?,
+    artistCreditIds: String?,
+    artistCreditJoinPhrases: String?,
     unmappedArtistCreditNames: String,
     releaseName: String?,
     unmappedReleaseName: String?,
@@ -393,8 +396,12 @@ private fun mapToListenListItemModel(
     username = username,
     recordingMessybrainzId = recordingMessybrainzId,
     disambiguation = recordingDisambiguation.orEmpty(),
-    formattedArtistCredits = artistCreditNames,
     unmappedFormattedArtistCredits = unmappedArtistCreditNames,
+    separateArtistCredits = combineToArtistCredits(
+        names = artistCreditNames,
+        ids = artistCreditIds,
+        joinPhrases = artistCreditJoinPhrases,
+    ),
     listenedAtMs = listenedAtMs,
     recordingId = recordingMusicbrainzId,
     recordingDurationMs = recordingDurationMs,
@@ -410,7 +417,7 @@ private fun mapToListenListItemModel(
     ),
     visited = visitedRecording,
     release = ListenRelease(
-        name = releaseName,
+        mappedName = releaseName,
         unmappedName = unmappedReleaseName,
         id = releaseId,
         visited = visitedRelease,

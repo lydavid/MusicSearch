@@ -4,8 +4,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import kotlinx.collections.immutable.persistentListOf
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 
 private val listen = ListenListItemModel(
@@ -17,11 +20,22 @@ private val listen = ListenListItemModel(
     recordingDurationMs = 227240,
     unmappedDurationMs = 228240,
     unmappedTrackName = "COLOR YOUR NIGHT",
-    formattedArtistCredits = "Lotus Juice & 高橋あず美",
+    separateArtistCredits = persistentListOf(
+        ArtistCreditUiModel(
+            artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+            name = "Lotus Juice",
+            joinPhrase = " & ",
+        ),
+        ArtistCreditUiModel(
+            artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+            name = "高橋あず美",
+            joinPhrase = "",
+        ),
+    ),
     unmappedFormattedArtistCredits = "Lotus Juice, 高橋あず美, アトラスサウンドチーム, ATLUS GAME MUSIC",
     release = ListenRelease(
         id = "6ad6af61-7e68-472a-9f9d-0030781ad964",
-        name = "PERSONA3 RELOAD Limited Box Original Soundtrack",
+        mappedName = "PERSONA3 RELOAD Limited Box Original Soundtrack",
         unmappedName = "Persona 3 Reload Original Soundtrack",
     ),
     unmappedDiscNumber = 1,
@@ -34,7 +48,7 @@ private val unlinkedListen = listen.copy(
     recordingId = "",
     recordingName = null,
     recordingDurationMs = null,
-    formattedArtistCredits = null,
+    separateArtistCredits = persistentListOf(),
     release = ListenRelease(
         unmappedName = "Persona 3 Reload Original Soundtrack",
     ),
@@ -50,7 +64,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContent() {
                 filterText = "",
                 showUnmappedData = false,
                 allowedToEdit = false,
-                filteringByThisRecording = false,
+                selectedEntityFacet = null,
                 filteringByThisDate = false,
                 boldUnvisited = true,
             )
@@ -68,7 +82,11 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentAlternativ
                 filterText = "sound",
                 showUnmappedData = true,
                 allowedToEdit = true,
-                filteringByThisRecording = true,
+                selectedEntityFacet = MusicBrainzEntity(
+                    type = MusicBrainzEntityType.RECORDING,
+                    id = "a",
+                ),
+                showMoreFilters = true,
                 filteringByThisDate = false,
                 boldUnvisited = false,
             )
@@ -86,7 +104,8 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinked()
                 filterText = "",
                 showUnmappedData = false,
                 allowedToEdit = false,
-                filteringByThisRecording = false,
+                selectedEntityFacet = null,
+                showMoreFilters = true,
                 filteringByThisDate = false,
                 boldUnvisited = true,
             )
@@ -104,7 +123,11 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentFilteringB
                 filterText = "",
                 showUnmappedData = false,
                 allowedToEdit = false,
-                filteringByThisRecording = true,
+                selectedEntityFacet = MusicBrainzEntity(
+                    type = MusicBrainzEntityType.RECORDING,
+                    id = "",
+                ),
+                showMoreFilters = true,
                 filteringByThisDate = false,
                 boldUnvisited = true,
             )
@@ -122,7 +145,7 @@ internal fun PreviewListensUiListenAdditionalActionsBottomSheetContentUnlinkedFi
                 filterText = "",
                 showUnmappedData = false,
                 allowedToEdit = false,
-                filteringByThisRecording = false,
+                selectedEntityFacet = null,
                 filteringByThisDate = true,
                 boldUnvisited = true,
             )

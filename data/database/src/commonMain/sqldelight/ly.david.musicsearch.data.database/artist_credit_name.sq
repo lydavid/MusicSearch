@@ -20,11 +20,11 @@ VALUES ?;
 
 getArtistCreditNamesForEntity:
 SELECT
-  acn.artist_id,
-  acn.name,
-  acn.join_phrase
-FROM artist_credit_entity ace
-INNER JOIN artist_credit ac ON ac.id = ace.artist_credit_id
-INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
-WHERE ace.entity_id = :entityId
-ORDER BY acn.position;
+  artist_credit_name.artist_id,
+  artist_credit_name.name,
+  artist_credit_name.join_phrase
+FROM artist_credit_entity
+INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+INNER JOIN artist_credit_name ON artist_credit_name.artist_credit_id = artist_credit.id
+WHERE artist_credit_entity.entity_id = :entityId
+ORDER BY artist_credit_name.position;

@@ -26,6 +26,7 @@ import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testListens
 import ly.david.musicsearch.data.repository.helpers.track5ListenedAtMs
 import ly.david.musicsearch.data.repository.helpers.track6ListenedAtMs
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
@@ -176,7 +177,13 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         recordingName = "スカイクラッドの観測者",
                         unmappedTrackName = "スカイクラッドの観測者",
                         disambiguation = "",
-                        formattedArtistCredits = "いとうかなこ",
+                        separateArtistCredits = persistentListOf(
+                            ArtistCreditUiModel(
+                                artistId = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                                name = "いとうかなこ",
+                                joinPhrase = "",
+                            ),
+                        ),
                         unmappedFormattedArtistCredits = "いとうかなこ",
                         recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
                         recordingDurationMs = 275640,
@@ -187,7 +194,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         ),
                         visited = false,
                         release = ListenRelease(
-                            name = "ChaosAttractor",
+                            mappedName = "ChaosAttractor",
                             unmappedName = "ChaosAttractor",
                             id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
                             visited = false,
@@ -200,7 +207,18 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         recordingName = "スカイクラッドの観測者",
                         unmappedTrackName = "スカイクラッドの観測者",
                         disambiguation = "",
-                        formattedArtistCredits = "Roselia×いとうかなこ",
+                        separateArtistCredits = persistentListOf(
+                            ArtistCreditUiModel(
+                                name = "Roselia",
+                                artistId = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                                joinPhrase = "×",
+                            ),
+                            ArtistCreditUiModel(
+                                name = "いとうかなこ",
+                                artistId = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                                joinPhrase = "",
+                            ),
+                        ),
                         unmappedFormattedArtistCredits = "Roselia, いとうかなこ",
                         recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
                         recordingDurationMs = 273866,
@@ -211,7 +229,7 @@ class WorkRepositoryImplTest : KoinTest, TestWorkRepository, TestListensListRepo
                         ),
                         visited = false,
                         release = ListenRelease(
-                            name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+                            mappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
                             unmappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
                             id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
                             visited = false,

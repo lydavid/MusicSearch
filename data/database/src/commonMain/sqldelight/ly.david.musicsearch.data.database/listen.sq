@@ -97,9 +97,7 @@ FROM (
   LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
   LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
     AND recording_alias.is_primary
-  LEFT JOIN track ON track.recording_id = recording.id
-  LEFT JOIN medium ON medium.id = track.medium_id
-  LEFT JOIN `release` ON `release`.id = medium.release_id
+  LEFT JOIN `release` ON `release`.id = COALESCE(listen.release_mbid, listen.caa_release_mbid)
   LEFT JOIN release_alias ON release_alias.release_id = `release`.id
     AND release_alias.is_primary
   WHERE listen.username = :username
@@ -110,12 +108,25 @@ FROM (
   END
   AND CASE
     WHEN :releaseId IS NULL THEN 1
-    ELSE COALESCE(`release`.id, '') = :releaseId
+    ELSE
+      COALESCE(listen.release_mbid, listen.caa_release_mbid, '') = :releaseId
+      OR EXISTS (
+        SELECT 1
+        FROM track
+        JOIN medium ON medium.id = track.medium_id
+        WHERE track.recording_id = listen.recording_musicbrainz_id
+          AND medium.release_id = :releaseId
+      )
   END
-  AND CASE
-    WHEN :artistId IS NULL THEN 1
-    ELSE COALESCE(artist_credit_name.artist_id, '') = :artistId
-  END
+  AND (
+    :artistId IS NULL OR
+    EXISTS (
+      SELECT 1
+      FROM artist_credit_name
+      WHERE artist_credit_name.artist_credit_id = artist_credit.id
+        AND artist_credit_name.artist_id = :artistId
+    )
+  )
   AND (
     :workId IS NULL OR
     EXISTS (
@@ -154,7 +165,9 @@ SELECT
   listen.track_name AS unmappedTrackName,
   recording.length AS recordingDurationMs,
   listen.duration_ms AS unmappedDurationMs,
-  artist_credit.name AS artistCreditNames,
+  recording_credits.credit_names,
+  recording_credits.credit_artist_ids,
+  recording_credits.credit_join_phrases,
   listen.artist_name AS unmappedArtistCreditNames,
   `release`.name AS releaseName,
   listen.release_name AS unmappedReleaseName,
@@ -174,18 +187,40 @@ SELECT
     SELECT 1 FROM details_metadata
     WHERE details_metadata.entity_id = COALESCE(listen.release_mbid, listen.caa_release_mbid)
   ) AS visitedRelease,
-  GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  recording_aliases.alias_names,
+  recording_aliases.alias_locales
 FROM listen
 LEFT JOIN artist_credit_entity ON artist_credit_entity.entity_id = listen.recording_musicbrainz_id
 LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
-LEFT JOIN artist_credit_name ON artist_credit_name.artist_credit_id = artist_credit.id
+LEFT JOIN (
+  SELECT
+    artist_credit_id,
+    GROUP_CONCAT(name, CHAR(9)) AS credit_names,
+    GROUP_CONCAT(artist_id, CHAR(9)) AS credit_artist_ids,
+    GROUP_CONCAT(join_phrase, CHAR(9)) AS credit_join_phrases
+  FROM artist_credit_name
+  GROUP BY artist_credit_id
+) recording_credits ON recording_credits.artist_credit_id = artist_credit.id
 LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
-LEFT JOIN recording_alias ON listen.recording_musicbrainz_id = recording_alias.recording_id
-  AND recording_alias.is_primary
 LEFT JOIN `release` ON `release`.id = COALESCE(listen.release_mbid, listen.caa_release_mbid)
-LEFT JOIN release_alias ON release_alias.release_id = `release`.id
-  AND release_alias.is_primary
+LEFT JOIN (
+  SELECT
+    release_id,
+    GROUP_CONCAT(name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(locale, CHAR(9)) AS alias_locales
+  FROM release_alias
+  WHERE is_primary
+  GROUP BY release_id
+) release_aliases ON release_aliases.release_id = `release`.id
+LEFT JOIN (
+  SELECT
+    recording_id,
+    GROUP_CONCAT(name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE is_primary
+  GROUP BY recording_id
+) recording_aliases ON recording_aliases.recording_id = listen.recording_musicbrainz_id
 LEFT JOIN mbid_image mi ON mi.mbid = listen.caa_release_mbid
 WHERE listen.username = :username
 AND listen.deleted_at_ms IS NULL
@@ -205,10 +240,15 @@ AND CASE
         AND medium.release_id = :releaseId
     )
 END
-AND CASE
-  WHEN :artistId IS NULL THEN 1
-  ELSE COALESCE(artist_credit_name.artist_id, '') = :artistId
-END
+AND (
+  :artistId IS NULL OR
+  EXISTS (
+    SELECT 1
+    FROM artist_credit_name
+    WHERE artist_credit_name.artist_credit_id = artist_credit.id
+      AND artist_credit_name.artist_id = :artistId
+  )
+)
 AND (
   :workId IS NULL OR
   EXISTS (
@@ -225,14 +265,14 @@ AND (
 AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
-  recording_alias.name LIKE :query OR
+  recording_aliases.alias_names LIKE :query OR
   listen.track_name LIKE :query OR
   artist_credit.name LIKE :query OR
   listen.artist_name LIKE :query OR
   listen.release_name LIKE :query OR
   release.name LIKE :query OR
   release.disambiguation LIKE :query OR
-  release_alias.name LIKE :query
+  release_aliases.alias_names LIKE :query
 )
 GROUP BY listened_at_ms, username, recording_messybrainz_id
 ORDER BY listened_at_ms DESC

@@ -97,6 +97,8 @@ internal fun FacetsBottomSheetContent(
                     key = { index -> facets[index]?.id.orEmpty() },
                 ) {
                     facets[it]?.let { facet ->
+                        // Minor: when unlinked recording or release is selected, both are shown selected
+                        // because both are represented by an empty string id
                         val selected = state.selectedEntityFacet?.id == facet.id
                         Box(
                             modifier = Modifier

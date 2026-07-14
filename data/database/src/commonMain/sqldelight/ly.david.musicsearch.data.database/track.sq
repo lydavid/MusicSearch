@@ -89,6 +89,7 @@ INNER JOIN medium ON track.medium_id = medium.id
 INNER JOIN `release` ON medium.release_id = `release`.id
 INNER JOIN artist_credit_entity ON artist_credit_entity.entity_id = track.id
 INNER JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit_id
+-- TODO: reduce joins: do like listens
 LEFT JOIN (
   SELECT
     ace.entity_id AS track_id,

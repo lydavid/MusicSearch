@@ -31,6 +31,8 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.common.transformOrEmptyIfNull
 import ly.david.musicsearch.shared.domain.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenRelease
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
@@ -47,6 +49,7 @@ import ly.david.musicsearch.ui.common.icons.FilterAlt
 import ly.david.musicsearch.ui.common.icons.FilterAltOff
 import ly.david.musicsearch.ui.common.icons.Mic
 import ly.david.musicsearch.ui.common.icons.OpenInNew
+import ly.david.musicsearch.ui.common.icons.Person
 import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -68,6 +71,7 @@ import musicsearch.ui.common.generated.resources.refreshMapping
 import musicsearch.ui.common.generated.resources.stopFilteringFromThisDate
 import org.jetbrains.compose.resources.stringResource
 
+// TODO:
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
@@ -76,8 +80,10 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     showUnmappedData: Boolean,
     onToggleShowUnmappedData: () -> Unit = {},
     onGoToRelease: (releaseId: String) -> Unit = {},
-    filteringByThisRecording: Boolean,
-    onFilterByRecording: (recordingId: String) -> Unit = {},
+    selectedEntityFacet: MusicBrainzEntity?,
+    onFilterByEntityClick: (entity: MusicBrainzEntity) -> Unit = {},
+    showMoreFilters: Boolean = false,
+    onToggleMoreFilters: () -> Unit = {},
     filteringByThisDate: Boolean,
     onFilterByDate: (dateMilliseconds: Long) -> Unit = {},
     allowedToEdit: Boolean,
@@ -102,7 +108,8 @@ internal fun ListenAdditionalActionsBottomSheetContent(
 
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
-        release.id?.let { releaseId ->
+        val releaseId = release.id.orEmpty()
+        if (releaseId.isNotEmpty()) {
             ClickableItem(
                 title = stringResource(Res.string.goToAlbum),
                 startIcon = CustomIcons.Album,
@@ -117,59 +124,18 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             HorizontalDivider(modifier = Modifier.padding())
         }
 
-        val recordingId = listen.recordingId
-        val hasRecordingId = recordingId.isNotEmpty()
-        ClickableItem(
-            title = when {
-                filteringByThisRecording && hasRecordingId -> {
-                    "Stop filtering by this song"
-                }
-
-                hasRecordingId -> {
-                    "Filter by this song"
-                }
-
-                filteringByThisRecording -> {
-                    "Stop filtering by unlinked songs"
-                }
-
-                else -> {
-                    "Filter by unlinked songs"
-                }
-            },
-            startIcon = CustomIcons.Mic,
-            endIcon = if (filteringByThisRecording) {
-                CustomIcons.FilterAltOff
-            } else {
-                CustomIcons.FilterAlt
-            },
-            onClick = {
-                onFilterByRecording(recordingId)
-                onDismiss()
-            },
+        FiltersSection(
+            showMoreFilters = showMoreFilters,
+            onToggleMoreFilters = onToggleMoreFilters,
+            listen = listen,
+            selectedEntityFacet = selectedEntityFacet,
+            onFilterByEntityClick = onFilterByEntityClick,
+            onDismiss = onDismiss,
+            releaseId = releaseId,
+            release = release,
+            filteringByThisDate = filteringByThisDate,
+            onFilterByDate = onFilterByDate,
         )
-
-        ClickableItem(
-            title = stringResource(
-                if (filteringByThisDate) {
-                    Res.string.stopFilteringFromThisDate
-                } else {
-                    Res.string.filterFromListenDate
-                },
-            ),
-            startIcon = CustomIcons.CalendarMonth,
-            endIcon = if (filteringByThisDate) {
-                CustomIcons.FilterAltOff
-            } else {
-                CustomIcons.FilterAlt
-            },
-            onClick = {
-                onFilterByDate(listen.listenedAtMs)
-                onDismiss()
-            },
-        )
-
-        HorizontalDivider()
 
         if (allowedToEdit) {
             LinkWithMusicBrainzItem(
@@ -217,6 +183,224 @@ internal fun ListenAdditionalActionsBottomSheetContent(
         }
 
         Spacer(modifier = Modifier.padding(bottom = 32.dp))
+    }
+}
+
+@Composable
+private fun FiltersSection(
+    showMoreFilters: Boolean,
+    onToggleMoreFilters: () -> Unit,
+    listen: ListenListItemModel,
+    selectedEntityFacet: MusicBrainzEntity?,
+    onFilterByEntityClick: (MusicBrainzEntity) -> Unit,
+    onDismiss: () -> Unit,
+    releaseId: String,
+    release: ListenRelease,
+    filteringByThisDate: Boolean,
+    onFilterByDate: (Long) -> Unit,
+) {
+    ClickableItem(
+        title = "Filter by ...",
+        startIcon = CustomIcons.FilterAlt,
+        endIcon = if (showMoreFilters) CustomIcons.CollapseAll else CustomIcons.ExpandAll,
+        onClick = onToggleMoreFilters,
+    )
+
+    if (showMoreFilters) {
+        MoreFiltersSection(
+            listen = listen,
+            selectedEntityFacet = selectedEntityFacet,
+            onFilterByEntityClick = onFilterByEntityClick,
+            onDismiss = onDismiss,
+            releaseId = releaseId,
+            release = release,
+        )
+    }
+
+    ClickableItem(
+        title = stringResource(
+            if (filteringByThisDate) {
+                Res.string.stopFilteringFromThisDate
+            } else {
+                Res.string.filterFromListenDate
+            },
+        ),
+        startIcon = CustomIcons.CalendarMonth,
+        endIcon = if (filteringByThisDate) {
+            CustomIcons.FilterAltOff
+        } else {
+            CustomIcons.FilterAlt
+        },
+        onClick = {
+            onFilterByDate(listen.listenedAtMs)
+            onDismiss()
+        },
+    )
+
+    HorizontalDivider()
+}
+
+@Composable
+private fun MoreFiltersSection(
+    listen: ListenListItemModel,
+    selectedEntityFacet: MusicBrainzEntity?,
+    onFilterByEntityClick: (MusicBrainzEntity) -> Unit,
+    onDismiss: () -> Unit,
+    releaseId: String,
+    release: ListenRelease,
+) {
+    RecordingFilter(
+        listen = listen,
+        selectedEntityFacet = selectedEntityFacet,
+        onFilterByEntityClick = onFilterByEntityClick,
+        onDismiss = onDismiss,
+    )
+
+    ReleaseFilter(
+        releaseId = releaseId,
+        selectedEntityFacet = selectedEntityFacet,
+        release = release,
+        onFilterByEntityClick = onFilterByEntityClick,
+        onDismiss = onDismiss,
+    )
+
+    // TODO: filter by recording's work if it exists. there can be more than one (e.g. tracks with two songs)
+
+    ArtistFilters(
+        listen = listen,
+        selectedEntityFacet = selectedEntityFacet,
+        onFilterByEntityClick = onFilterByEntityClick,
+        onDismiss = onDismiss,
+    )
+}
+
+@Composable
+private fun RecordingFilter(
+    listen: ListenListItemModel,
+    selectedEntityFacet: MusicBrainzEntity?,
+    onFilterByEntityClick: (MusicBrainzEntity) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val recordingId = listen.recordingId
+    val hasRecordingId = recordingId.isNotEmpty()
+    val filteringByThisRecording = selectedEntityFacet?.type == MusicBrainzEntityType.RECORDING &&
+        selectedEntityFacet.id == recordingId
+    ClickableItem(
+        title = when {
+            filteringByThisRecording && hasRecordingId -> {
+                "Stop filtering by this song"
+            }
+
+            hasRecordingId -> {
+                "Filter by this song"
+            }
+
+            filteringByThisRecording -> {
+                "Stop filtering by unlinked songs"
+            }
+
+            else -> {
+                "Filter by unlinked songs"
+            }
+        },
+        startIcon = CustomIcons.Mic,
+        endIcon = if (filteringByThisRecording) {
+            CustomIcons.FilterAltOff
+        } else {
+            CustomIcons.FilterAlt
+        },
+        onClick = {
+            onFilterByEntityClick(
+                MusicBrainzEntity(
+                    id = recordingId,
+                    type = MusicBrainzEntityType.RECORDING,
+                ),
+            )
+            onDismiss()
+        },
+    )
+}
+
+@Composable
+private fun ReleaseFilter(
+    releaseId: String,
+    selectedEntityFacet: MusicBrainzEntity?,
+    release: ListenRelease,
+    onFilterByEntityClick: (MusicBrainzEntity) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val hasReleaseId = releaseId.isNotEmpty()
+    val filteringByThisRelease = selectedEntityFacet?.type == MusicBrainzEntityType.RELEASE &&
+        selectedEntityFacet.id == releaseId
+
+    val releaseName = release.name ?: "this album"
+    ClickableItem(
+        title = when {
+            filteringByThisRelease && hasReleaseId -> {
+                "Stop filtering by $releaseName"
+            }
+
+            hasReleaseId -> {
+                "Filter by $releaseName"
+            }
+
+            filteringByThisRelease -> {
+                "Stop filtering by unlinked albums"
+            }
+
+            else -> {
+                "Filter by unlinked albums"
+            }
+        },
+        startIcon = CustomIcons.Album,
+        endIcon = if (filteringByThisRelease) {
+            CustomIcons.FilterAltOff
+        } else {
+            CustomIcons.FilterAlt
+        },
+        onClick = {
+            onFilterByEntityClick(
+                MusicBrainzEntity(
+                    id = releaseId,
+                    type = MusicBrainzEntityType.RELEASE,
+                ),
+            )
+            onDismiss()
+        },
+    )
+}
+
+@Composable
+private fun ArtistFilters(
+    listen: ListenListItemModel,
+    selectedEntityFacet: MusicBrainzEntity?,
+    onFilterByEntityClick: (MusicBrainzEntity) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    listen.separateArtistCredits.forEach { (artistId, name, _) ->
+        val filteringByThisArtist = artistId == selectedEntityFacet?.id
+        ClickableItem(
+            title = if (filteringByThisArtist) {
+                "Stop filtering by $name"
+            } else {
+                "Filter by $name"
+            },
+            startIcon = CustomIcons.Person,
+            endIcon = if (filteringByThisArtist) {
+                CustomIcons.FilterAltOff
+            } else {
+                CustomIcons.FilterAlt
+            },
+            onClick = {
+                onFilterByEntityClick(
+                    MusicBrainzEntity(
+                        id = artistId,
+                        type = MusicBrainzEntityType.ARTIST,
+                    ),
+                )
+                onDismiss()
+            },
+        )
     }
 }
 
@@ -321,7 +505,7 @@ private fun PreviewSection(
                             )
                         }
 
-                        val releaseName = release.name ?: release.unmappedName
+                        val releaseName = release.name
                         releaseName?.let { releaseName ->
                             HighlightableText(
                                 text = buildAnnotatedString {

@@ -5,6 +5,9 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.Identifiable
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
+import ly.david.musicsearch.shared.domain.artist.getDisplayNames
+import ly.david.musicsearch.shared.domain.common.emptyToNull
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.Visitable
 import kotlin.time.Instant
@@ -16,7 +19,7 @@ data class ListenListItemModel(
     val recordingName: String? = null,
     val unmappedTrackName: String,
     override val disambiguation: String = "",
-    val formattedArtistCredits: String? = null,
+    val separateArtistCredits: ImmutableList<ArtistCreditUiModel> = persistentListOf(),
     val unmappedFormattedArtistCredits: String,
     val recordingId: String = "",
     val recordingDurationMs: Int? = null,
@@ -39,7 +42,7 @@ data class ListenListItemModel(
      */
     val durationMs: Int? = unmappedDurationMs ?: recordingDurationMs
 
-    val artistCredits: String = formattedArtistCredits ?: unmappedFormattedArtistCredits
+    val artistCredits: String = separateArtistCredits.getDisplayNames().emptyToNull() ?: unmappedFormattedArtistCredits
 
     val listenedAt: Instant = Instant.fromEpochMilliseconds(listenedAtMs)
 
@@ -49,8 +52,10 @@ data class ListenListItemModel(
 }
 
 data class ListenRelease(
-    val name: String? = null,
+    val mappedName: String? = null,
     val unmappedName: String? = null,
     val id: String? = null,
     override val visited: Boolean = false,
-) : Visitable
+) : Visitable {
+    val name: String? = mappedName ?: unmappedName
+}

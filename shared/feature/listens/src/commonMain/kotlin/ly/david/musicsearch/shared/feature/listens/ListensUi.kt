@@ -491,6 +491,8 @@ private fun ListensContent(
         )
     } else {
         var showBottomSheetForListen: ListenListItemModel? by remember { mutableStateOf(null) }
+        var showMoreFilters by rememberSaveable { mutableStateOf(false) }
+
         showBottomSheetForListen?.let { listen ->
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheetForListen = null },
@@ -514,16 +516,13 @@ private fun ListensContent(
                             ),
                         )
                     },
-                    filteringByThisRecording = listen.recordingId == selectedEntityFacet?.id,
-                    onFilterByRecording = { id ->
-                        eventSink(
-                            ListensUiEvent.ToggleEntityFacet(
-                                MusicBrainzEntity(
-                                    id = id,
-                                    type = MusicBrainzEntityType.RECORDING,
-                                ),
-                            ),
-                        )
+                    selectedEntityFacet = selectedEntityFacet,
+                    onFilterByEntityClick = {
+                        eventSink(ListensUiEvent.ToggleEntityFacet(it))
+                    },
+                    showMoreFilters = showMoreFilters,
+                    onToggleMoreFilters = {
+                        showMoreFilters = !showMoreFilters
                     },
                     filteringByThisDate = listen.listenedAtMs / MS_IN_SECOND == selectedDateTimeEpochSeconds,
                     onFilterByDate = {

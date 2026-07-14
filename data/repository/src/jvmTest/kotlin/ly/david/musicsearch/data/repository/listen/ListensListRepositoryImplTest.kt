@@ -94,7 +94,18 @@ class ListensListRepositoryImplTest :
         recordingMessybrainzId = "f5700f45-6003-40ee-9c01-3ea270c77cd3",
         recordingName = "絶絶絶絶対聖域",
         unmappedTrackName = "絶絶絶絶対聖域",
-        formattedArtistCredits = "ano feat. 幾田りら",
+        separateArtistCredits = persistentListOf(
+            ArtistCreditUiModel(
+                name = "ano",
+                artistId = "ebb4513e-4aab-4ac9-a949-14e77bb7b836",
+                joinPhrase = " feat. ",
+            ),
+            ArtistCreditUiModel(
+                name = "幾田りら",
+                artistId = "55e42264-ef27-49d8-93fd-29f930dc96e4",
+                joinPhrase = "",
+            ),
+        ),
         unmappedFormattedArtistCredits = "ano, Lilas",
         recordingId = "57c4f7cb-99f1-4305-bf3e-9ea51cc243f0",
         recordingDurationMs = 213868,
@@ -114,7 +125,18 @@ class ListensListRepositoryImplTest :
         recordingMessybrainzId = "28f390ae-b7a3-4636-82bc-7d39a7348978",
         recordingName = "Color Your Night",
         unmappedTrackName = "Color Your Night",
-        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+        separateArtistCredits = persistentListOf(
+            ArtistCreditUiModel(
+                artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+                name = "Lotus Juice",
+                joinPhrase = " & ",
+            ),
+            ArtistCreditUiModel(
+                artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                name = "高橋あず美",
+                joinPhrase = "",
+            ),
+        ),
         unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
         recordingId = "e68e22b0-241e-4a6a-b4bf-0cfa8b83fda1",
         recordingDurationMs = 227240,
@@ -125,7 +147,7 @@ class ListensListRepositoryImplTest :
         ),
         release = ListenRelease(
             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-            name = "Persona 3 Reload Original Soundtrack",
+            mappedName = "Persona 3 Reload Original Soundtrack",
             unmappedName = "Persona 3 Reload Original Soundtrack",
         ),
     )
@@ -134,7 +156,18 @@ class ListensListRepositoryImplTest :
         recordingMessybrainzId = "9e164036-5379-4bbd-8a9b-fb7b9e697993",
         recordingName = "Full Moon Full Life",
         unmappedTrackName = "Full Moon Full Life",
-        formattedArtistCredits = "Lotus Juice & 高橋あず美",
+        separateArtistCredits = persistentListOf(
+            ArtistCreditUiModel(
+                artistId = "c731e592-2620-4f4c-859d-39e294b06b35",
+                name = "Lotus Juice",
+                joinPhrase = " & ",
+            ),
+            ArtistCreditUiModel(
+                artistId = "2bd16069-0d18-4925-a4c0-cf99344cca0b",
+                name = "高橋あず美",
+                joinPhrase = "",
+            ),
+        ),
         unmappedFormattedArtistCredits = "高橋あず美, Lotus Juice, アトラスサウンドチーム, ATLUS GAME MUSIC",
         listenedAtMs = track3ListenedAtMs,
         recordingId = "c4090c59-be0c-4a79-b76d-5e2669e0cd4c",
@@ -146,7 +179,7 @@ class ListensListRepositoryImplTest :
         ),
         release = ListenRelease(
             id = "0d516a93-061e-4a27-9cf7-f36e3a96f888",
-            name = "Persona 3 Reload Original Soundtrack",
+            mappedName = "Persona 3 Reload Original Soundtrack",
             unmappedName = "Persona 3 Reload Original Soundtrack",
         ),
     )
@@ -167,7 +200,13 @@ class ListensListRepositoryImplTest :
         recordingName = "スカイクラッドの観測者",
         unmappedTrackName = "スカイクラッドの観測者",
         disambiguation = "",
-        formattedArtistCredits = "いとうかなこ",
+        separateArtistCredits = persistentListOf(
+            ArtistCreditUiModel(
+                name = "いとうかなこ",
+                artistId = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                joinPhrase = "",
+            ),
+        ),
         unmappedFormattedArtistCredits = "いとうかなこ",
         recordingId = "6a8fc477-9b12-4001-9387-f5d936b05503",
         recordingDurationMs = 275640,
@@ -178,7 +217,7 @@ class ListensListRepositoryImplTest :
         ),
         visited = false,
         release = ListenRelease(
-            name = "ChaosAttractor",
+            mappedName = "ChaosAttractor",
             unmappedName = "ChaosAttractor",
             id = "2387c59b-62c4-4752-b1fa-64f126ed0c8c",
             visited = false,
@@ -191,7 +230,18 @@ class ListensListRepositoryImplTest :
         recordingName = "スカイクラッドの観測者",
         unmappedTrackName = "スカイクラッドの観測者",
         disambiguation = "",
-        formattedArtistCredits = "Roselia×いとうかなこ",
+        separateArtistCredits = persistentListOf(
+            ArtistCreditUiModel(
+                name = "Roselia",
+                artistId = "adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                joinPhrase = "×",
+            ),
+            ArtistCreditUiModel(
+                name = "いとうかなこ",
+                artistId = "eee65fbc-ead0-4c01-b385-a6f563c418d3",
+                joinPhrase = "",
+            ),
+        ),
         unmappedFormattedArtistCredits = "Roselia, いとうかなこ",
         recordingId = "cb10d0b9-26a5-4f84-93bb-ddcffa39c170",
         recordingDurationMs = 273866,
@@ -202,7 +252,7 @@ class ListensListRepositoryImplTest :
         ),
         visited = false,
         release = ListenRelease(
-            name = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
+            mappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
             unmappedName = "バンドリ！ ガールズバンドパーティ！ カバーコレクションVol.8",
             id = "06fecdc4-dbfa-484f-a03b-5da975fadf0e",
             visited = false,
@@ -621,7 +671,13 @@ class ListensListRepositoryImplTest :
                         listen4.copy(
                             recordingId = "6489abdb-6169-4a62-977a-8d7775f10a54",
                             recordingName = "絶対零度",
-                            formattedArtistCredits = "月詠み",
+                            separateArtistCredits = persistentListOf(
+                                ArtistCreditUiModel(
+                                    name = "月詠み",
+                                    artistId = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
+                                    joinPhrase = "",
+                                ),
+                            ),
                             recordingDurationMs = 222000,
                             imageMetadata = ImageMetadata.InternetArchive(
                                 imageId = ImageId(value = 46),
@@ -629,7 +685,7 @@ class ListensListRepositoryImplTest :
                             ),
                             release = ListenRelease(
                                 id = "ac3e8592-b411-4b69-937d-9f58f8e4935f",
-                                name = "絶対零度",
+                                mappedName = "絶対零度",
                                 unmappedName = "Absolute zero",
                             ),
                         ),
