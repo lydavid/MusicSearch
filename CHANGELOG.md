@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.127.0](https://github.com/lydavid/MusicSearch/compare/v1.126.0...v1.127.0) (2026-07-17)
+
+
+### Features
+
+* show count of each release status in Filter statuses menu ([2982906](https://github.com/lydavid/MusicSearch/commit/29829064c02ffe45842fd61a49f59d891d4fbed7))
+
 ## [1.126.0](https://github.com/lydavid/MusicSearch/compare/v1.125.0...v1.126.0) (2026-07-14)
 
 
