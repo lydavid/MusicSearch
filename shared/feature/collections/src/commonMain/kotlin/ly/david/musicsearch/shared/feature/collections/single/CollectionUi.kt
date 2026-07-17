@@ -207,12 +207,13 @@ internal fun CollectionUi(
                             },
                         )
                     }
+                    val browseMethod = BrowseMethod.ByEntity(
+                        entityId = collection?.id.orEmpty(),
+                        entityType = MusicBrainzEntityType.COLLECTION,
+                    )
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            browseMethod = BrowseMethod.ByEntity(
-                                entityId = collection?.id.orEmpty(),
-                                entityType = MusicBrainzEntityType.COLLECTION,
-                            ),
+                            browseMethod = browseMethod,
                             tabs = listOfNotNull(tab).toPersistentList(),
                             isRemote = collection?.isRemote == true,
                         ),
@@ -226,9 +227,12 @@ internal fun CollectionUi(
                     }
                     CopyToClipboardMenuItem(collection?.id.orEmpty())
                     ListFiltersMenuItems(
+                        browseMethod = browseMethod,
                         listFilters = state.allEntitiesListUiState.getListFilters(
                             entity = entity,
                         ),
+                        coroutineScope = coroutineScope,
+                        overlayHost = overlayHost,
                         eventSink = releasesByEntityEventSink,
                     )
                     AddAllToCollectionMenuItem(

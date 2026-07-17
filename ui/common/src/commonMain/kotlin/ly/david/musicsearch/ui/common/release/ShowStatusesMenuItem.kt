@@ -5,36 +5,25 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.shared.domain.release.ReleaseStatus
+import com.slack.circuit.overlay.OverlayHost
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.FilterAlt
+import ly.david.musicsearch.ui.common.screen.ReleaseStatusesScreen
+import ly.david.musicsearch.ui.common.screen.showInBottomSheet
 import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OverflowMenuScope.ShowStatusesMenuItem(
-    selectedStatuses: Set<ReleaseStatus>,
-    onClick: (ReleaseStatus?) -> Unit,
+    browseMethod: BrowseMethod,
+    coroutineScope: CoroutineScope,
+    overlayHost: OverlayHost,
     modifier: Modifier = Modifier,
 ) {
-    var showBottomSheet by remember { mutableStateOf(false) }
-    if (showBottomSheet) {
-        ReleaseStatusesBottomSheet(
-            selectedStatuses = selectedStatuses,
-            onClick = {
-                onClick(it)
-            },
-            onDismiss = {
-                showBottomSheet = false
-            },
-        )
-    }
-
     DropdownMenuItem(
         text = {
             Text("Filter statuses")
@@ -46,7 +35,13 @@ fun OverflowMenuScope.ShowStatusesMenuItem(
             )
         },
         onClick = {
-            showBottomSheet = true
+            coroutineScope.launch {
+                overlayHost.showInBottomSheet(
+                    screen = ReleaseStatusesScreen(
+                        browseMethod = browseMethod,
+                    ),
+                )
+            }
         },
         modifier = modifier,
     )

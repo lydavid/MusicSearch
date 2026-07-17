@@ -110,9 +110,10 @@ internal fun AllLocalEntitiesUi(
                 title = stringResource(entity.getNamePlural()),
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
+                    val browseMethod = BrowseMethod.All
                     StatsMenuItem(
                         statsScreen = StatsScreen(
-                            browseMethod = BrowseMethod.All,
+                            browseMethod = browseMethod,
                             tabs = listOfNotNull(entity.toTab()).toPersistentList(),
                             isRemote = false,
                         ),
@@ -120,7 +121,10 @@ internal fun AllLocalEntitiesUi(
                         coroutineScope = coroutineScope,
                     )
                     ListFiltersMenuItems(
+                        browseMethod = browseMethod,
                         listFilters = state.allEntitiesListUiState.getListFilters(entity),
+                        coroutineScope = coroutineScope,
+                        overlayHost = overlayHost,
                         eventSink = releasesByEntityEventSink,
                     )
                     AddAllToCollectionMenuItem(

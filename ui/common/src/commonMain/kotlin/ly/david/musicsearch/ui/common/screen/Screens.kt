@@ -96,6 +96,11 @@ data class StatsScreen(
 ) : Screen
 
 @Parcelize
+data class ReleaseStatusesScreen(
+    val browseMethod: BrowseMethod,
+) : Screen
+
+@Parcelize
 data object SettingsScreen : Screen
 
 @Parcelize

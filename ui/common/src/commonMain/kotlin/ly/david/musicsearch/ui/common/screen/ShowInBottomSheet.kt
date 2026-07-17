@@ -34,3 +34,27 @@ suspend fun <T : CommonParcelable> OverlayHost.showInBottomSheetForResult(
         )
     },
 )
+
+suspend fun OverlayHost.showInBottomSheet(
+    screen: Screen,
+) {
+    show(
+        @OptIn(ExperimentalMaterial3Api::class)
+        BottomSheetOverlay(
+            model = Unit,
+            onDismiss = { },
+            contentWindowInsets = { WindowInsets.navigationBars },
+        ) { _, overlayNavigator ->
+            CircuitContent(
+                screen = screen,
+                modifier = Modifier.navigationBarsPadding(),
+                onNavEvent = { event ->
+                    when (event) {
+                        is NavEvent.Pop -> overlayNavigator.finish(Unit)
+                        else -> {}
+                    }
+                },
+            )
+        },
+    )
+}

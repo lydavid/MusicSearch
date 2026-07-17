@@ -210,9 +210,12 @@ internal fun RecordingUi(
                     CopyToClipboardMenuItem(entityId)
 
                     ListFiltersMenuItems(
+                        browseMethod = browseMethod,
                         listFilters = state.allEntitiesListUiState.getListFilters(
                             entity = selectedTab.toMusicBrainzEntityType(),
                         ),
+                        coroutineScope = coroutineScope,
+                        overlayHost = overlayHost,
                         eventSink = releasesByEntityEventSink,
                     )
 

@@ -1142,7 +1142,6 @@ class ReleasesListRepositoryImplTest :
             ),
             listFilters = ListFilters.Releases(
                 showStatuses = persistentSetOf(ReleaseStatus.PSEUDO_RELEASE),
-
             ),
             now = testDateTimeInThePast,
         ).asSnapshot().run {

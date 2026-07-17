@@ -219,10 +219,6 @@ abstract class BaseListPresenter(
                 is EntitiesListUiEvent.UpdateShowMoreInfoInReleaseListItem -> {
                     appPreferences.setShowMoreInfoInReleaseListItem(event.showMore)
                 }
-
-                is EntitiesListUiEvent.UpdateShowReleaseStatus -> {
-                    appPreferences.setShowReleaseStatus(event.status)
-                }
             }
         }
 
@@ -259,9 +255,5 @@ sealed interface EntitiesListUiEvent : CircuitUiEvent {
 
     data class UpdateShowMoreInfoInReleaseListItem(
         val showMore: Boolean,
-    ) : EntitiesListUiEvent
-
-    data class UpdateShowReleaseStatus(
-        val status: ReleaseStatus?,
     ) : EntitiesListUiEvent
 }

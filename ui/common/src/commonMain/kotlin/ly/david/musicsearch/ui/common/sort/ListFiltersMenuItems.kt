@@ -1,6 +1,9 @@
 package ly.david.musicsearch.ui.common.sort
 
 import androidx.compose.runtime.Composable
+import com.slack.circuit.overlay.OverlayHost
+import kotlinx.coroutines.CoroutineScope
+import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
@@ -18,7 +21,10 @@ import ly.david.musicsearch.ui.common.topappbar.OverflowMenuScope
 
 @Composable
 fun OverflowMenuScope.ListFiltersMenuItems(
+    browseMethod: BrowseMethod,
     listFilters: ListFilters,
+    coroutineScope: CoroutineScope,
+    overlayHost: OverlayHost,
     eventSink: (EntitiesListUiEvent) -> Unit,
 ) {
     when (listFilters) {
@@ -101,12 +107,9 @@ fun OverflowMenuScope.ListFiltersMenuItems(
 
         is ListFilters.Releases -> {
             ShowStatusesMenuItem(
-                selectedStatuses = listFilters.showStatuses,
-                onClick = {
-                    eventSink(
-                        EntitiesListUiEvent.UpdateShowReleaseStatus(it),
-                    )
-                },
+                browseMethod = browseMethod,
+                coroutineScope = coroutineScope,
+                overlayHost = overlayHost,
             )
             SortMenuItem(
                 sortOptions = ReleaseSortOption.entries,
