@@ -32,12 +32,14 @@ open scheme("[presenter]") fun ly.david.musicsearch.shared.feature.search.Search
 ): SearchUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchResultsUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable boldUnvisited: Boolean
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable onEditCollectionClick: Function1<String, Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.ListItemUi(
   listItemModel: ListItemModel?
+  stable boldUnvisited: Boolean
   stable filterText: String? = @static ""
   stable onEditCollectionClick: Function1<String, Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>

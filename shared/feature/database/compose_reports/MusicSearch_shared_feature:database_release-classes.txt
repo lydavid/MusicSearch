@@ -47,6 +47,7 @@ stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiS
   stable val subtitle: String
   stable val entityType: MusicBrainzEntityType
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val selectionState: SelectionState
   stable val allEntitiesListUiState: AllEntitiesListUiState

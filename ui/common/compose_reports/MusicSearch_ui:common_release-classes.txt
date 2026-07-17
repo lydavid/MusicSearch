@@ -119,10 +119,6 @@ stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowM
   stable val showMore: Boolean
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.ui.common.list.EntitiesListUiEvent.UpdateShowReleaseStatus {
-  stable val status: ReleaseStatus?
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.ui.common.list.EntitiesListUiState {
   runtime val pagingDataFlow: Flow<PagingData<ListItemModel>>
   stable val lazyListState: LazyListState
@@ -207,6 +203,21 @@ stable class ly.david.musicsearch.ui.common.relation.RelationsUiState {
   stable val totalCount: Int
   stable val filteredCount: Int
   stable val eventSink: Function1<RelationsUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.release.ReleaseStatusesPresenter {
+  stable val screen: ReleaseStatusesScreen
+  runtime val appPreferences: AppPreferences
+  runtime val observeCountOfEachStatus: ObserveCountOfEachStatus
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.release.ReleaseStatusesUiState {
+  stable val selectedStatuses: ImmutableSet<ReleaseStatus>
+  stable val releaseStatusCounts: ImmutableMap<ReleaseStatus, Int>
+  stable val eventSink: Function1<ReleaseStatusesUiEvent, Unit>
+}
+stable class ly.david.musicsearch.ui.common.release.ReleaseStatusesUiEvent.UpdateShowReleaseStatus {
+  stable val status: ReleaseStatus?
+  <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.release.ReleasesListPresenter {
   <runtime stability> = Stable
@@ -294,6 +305,11 @@ stable class ly.david.musicsearch.ui.common.screen.StatsScreen {
   stable val tabs: ImmutableList<Tab>
   stable val isRemote: Boolean
   runtime var CREATOR: Creator<StatsScreen>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.screen.ReleaseStatusesScreen {
+  runtime val browseMethod: BrowseMethod
+  runtime var CREATOR: Creator<ReleaseStatusesScreen>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.screen.SettingsScreen {

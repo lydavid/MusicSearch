@@ -76,6 +76,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.ArtistDetailsTabUi(
   artist: ArtistDetailsModel
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
@@ -121,6 +122,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.LabelDetailsTabUi(
   label: LabelDetailsModel
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
@@ -133,6 +135,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PlaceDetailsTabUi(
   place: PlaceDetailsModel
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   detailsTabUiState: DetailsTabUiState? = @dynamic <expression>
   stable filterText: String? = @static ""
@@ -168,6 +171,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TrackAdditionalActionsBottomSheetContent(
   track: TrackListItemModel
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
   stable onAddToCollectionClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
@@ -176,6 +180,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(
   stable uiState: TracksByReleaseUiState
   stable filterText: String
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   selectedIds: ImmutableList<SelectableId>? = @static <expression>

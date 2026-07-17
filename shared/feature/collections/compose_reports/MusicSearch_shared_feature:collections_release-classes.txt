@@ -22,6 +22,7 @@ stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollection
   runtime val getAllCollections: GetAllCollections
   runtime val createCollection: CreateCollection
   runtime val collectionRepository: CollectionRepository
+  runtime val appPreferences: AppPreferences
   stable val clock: Clock
   <runtime stability> = Stable
 }
@@ -30,6 +31,7 @@ stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollection
   stable val numberOfItemsToAddToCollection: Int
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   runtime val feedback: Feedback<EditACollectionFeedback>?
+  stable val boldUnvisited: Boolean
   stable val eventSink: Function1<EditCollectionUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.CreateNewCollection {
@@ -53,6 +55,7 @@ stable class ly.david.musicsearch.shared.feature.collections.list.CollectionList
 stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsListUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val showLocal: Boolean
   stable val showRemote: Boolean
   stable val sortOption: CollectionSortOption
@@ -116,6 +119,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUi
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.NavigateUp {

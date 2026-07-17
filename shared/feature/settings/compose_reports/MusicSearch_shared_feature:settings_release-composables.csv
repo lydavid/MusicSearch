@@ -33,7 +33,7 @@ ly.david.musicsearch.shared.feature.settings.internal.DevSettingsSection,DevSett
 ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,11,
 ly.david.musicsearch.shared.feature.settings.internal.SettingsUi,SettingsUi,1,1,1,0,0,0,0,0,5,3,
 ly.david.musicsearch.shared.feature.settings.internal.SettingsUi,SettingsUi,1,1,1,0,0,0,0,0,1,4,
-ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,4,
+ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter.present,present,1,0,0,0,0,0,0,0,1,5,
 ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUi,AppearanceSettingsUi,1,1,1,0,0,0,0,0,1,3,
 ly.david.musicsearch.shared.feature.settings.internal.appearance.CustomColorPickerSection,CustomColorPickerSection,1,1,1,0,0,0,0,0,3,6,
 ly.david.musicsearch.shared.feature.settings.internal.appearance.getText,getText,1,0,0,0,0,0,0,0,1,1,

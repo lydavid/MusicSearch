@@ -27,6 +27,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.submit.PreviewTimePickerDialogDaylightSaving()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetsBottomSheetContent(
   state: FacetsUiState
+  stable boldUnvisited: Boolean
   stable onUpdateTab: Function1<@[ParameterName(name = 'tab')] Tab, Unit>? = @static <expression>
   stable onFacetClick: Function1<@[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
@@ -34,11 +35,14 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenAdditionalActionsBottomSheetContent(
   listen: ListenListItemModel
   stable filterText: String
+  stable boldUnvisited: Boolean
   stable showUnmappedData: Boolean
   stable onToggleShowUnmappedData: Function0<Unit>? = @static <expression>
   stable onGoToRelease: Function1<@[ParameterName(name = 'releaseId')] String, Unit>? = @static <expression>
-  stable filteringByThisRecording: Boolean
-  stable onFilterByRecording: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  selectedEntityFacet: MusicBrainzEntity?
+  stable onFilterByEntityClick: Function1<@[ParameterName(name = 'entity')] MusicBrainzEntity, Unit>? = @static <expression>
+  stable showMoreFilters: Boolean = @static false
+  stable onToggleMoreFilters: Function0<Unit>? = @static <expression>
   stable filteringByThisDate: Boolean
   stable onFilterByDate: Function1<@[ParameterName(name = 'dateMilliseconds')] Long, Unit>? = @static <expression>
   stable allowedToEdit: Boolean
@@ -48,10 +52,50 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onDelete: Function3<@[ParameterName(name = 'listenedAtMs')] Long, @[ParameterName(name = 'username')] String, @[ParameterName(name = 'recordingMessyBrainzId')] String, Unit>? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FiltersSection(
+  stable showMoreFilters: Boolean
+  stable onToggleMoreFilters: Function0<Unit>
+  listen: ListenListItemModel
+  selectedEntityFacet: MusicBrainzEntity?
+  stable onFilterByEntityClick: Function1<MusicBrainzEntity, Unit>
+  stable onDismiss: Function0<Unit>
+  stable releaseId: String
+  release: ListenRelease
+  stable filteringByThisDate: Boolean
+  stable onFilterByDate: Function1<Long, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.MoreFiltersSection(
+  listen: ListenListItemModel
+  selectedEntityFacet: MusicBrainzEntity?
+  stable onFilterByEntityClick: Function1<MusicBrainzEntity, Unit>
+  stable onDismiss: Function0<Unit>
+  stable releaseId: String
+  release: ListenRelease
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.RecordingFilter(
+  listen: ListenListItemModel
+  selectedEntityFacet: MusicBrainzEntity?
+  stable onFilterByEntityClick: Function1<MusicBrainzEntity, Unit>
+  stable onDismiss: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ReleaseFilter(
+  stable releaseId: String
+  selectedEntityFacet: MusicBrainzEntity?
+  release: ListenRelease
+  stable onFilterByEntityClick: Function1<MusicBrainzEntity, Unit>
+  stable onDismiss: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ArtistFilters(
+  listen: ListenListItemModel
+  selectedEntityFacet: MusicBrainzEntity?
+  stable onFilterByEntityClick: Function1<MusicBrainzEntity, Unit>
+  stable onDismiss: Function0<Unit>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.PreviewSection(
   stable modifier: Modifier
   listen: ListenListItemModel
   stable filterText: String
+  stable boldUnvisited: Boolean
   stable showUnmappedData: Boolean
   stable onToggleShowUnmappedData: Function0<Unit>? = @static <expression>
 )
@@ -61,6 +105,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.ListenListItem(
   listen: ListenListItemModel
   stable filterText: String
+  stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable onMoreActionsClick: @[ExtensionFunctionType] Function1<ListenListItemModel, Unit>? = @static <expression>
@@ -78,6 +123,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   state: FacetsUiState
   unstable timeZone: TimeZone
   stable clock: Clock
+  stable boldUnvisited: Boolean
   stable onClearAll: Function0<Unit>
   stable onSelectEntityFacet: Function1<MusicBrainzEntity?, Unit>
   stable onUpdateTab: Function1<Tab, Unit>
@@ -86,6 +132,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.listens.FacetChip(
   facetsUiState: FacetsUiState
   selectedEntityFacet: MusicBrainzEntity?
+  stable boldUnvisited: Boolean
   stable modifier: Modifier
   stable onSelectFacet: Function1<MusicBrainzEntity?, Unit>
   stable onUpdateTab: Function1<Tab, Unit>

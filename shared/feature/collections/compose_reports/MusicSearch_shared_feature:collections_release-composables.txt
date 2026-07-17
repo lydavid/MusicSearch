@@ -15,6 +15,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.CollectionListItem(
   collection: CollectionListItemModel
   stable modifier: Modifier? = @static <expression>
+  stable boldUnvisited: Boolean = @static true
   stable query: String? = @static ""
   stable onClick: Function1<String, Unit>? = @static <expression>
   stable enabled: Boolean = @static true
@@ -31,6 +32,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   collections: LazyPagingItems<CollectionListItemModel>
   stable numberOfItemsToAddToCollection: Int
   stable modifier: Modifier? = @static <expression>
+  stable boldUnvisited: Boolean = @static true
   feedback: Feedback<EditACollectionFeedback>? = @static null
   stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
   stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>

@@ -640,7 +640,7 @@ runtime class ly.david.musicsearch.shared.domain.listen.ListenListItemModel {
   stable val recordingName: String?
   stable val unmappedTrackName: String
   stable val disambiguation: String
-  stable val formattedArtistCredits: String?
+  runtime val separateArtistCredits: ImmutableList<ArtistCreditUiModel>
   stable val unmappedFormattedArtistCredits: String
   stable val recordingId: String
   stable val recordingDurationMs: Int?
@@ -658,13 +658,14 @@ runtime class ly.david.musicsearch.shared.domain.listen.ListenListItemModel {
   stable val durationMs: Int?
   stable val artistCredits: String
   stable val listenedAt: Instant
-  <runtime stability> = Runtime(BasicAlias)
+  <runtime stability> = Runtime(BasicAlias),Runtime(ArtistCreditUiModel)
 }
 stable class ly.david.musicsearch.shared.domain.listen.ListenRelease {
-  stable val name: String?
+  stable val mappedName: String?
   stable val unmappedName: String?
   stable val id: String?
   stable val visited: Boolean
+  stable val name: String?
   <runtime stability> = Stable
 }
 runtime class ly.david.musicsearch.shared.domain.listen.ListenSubmission {

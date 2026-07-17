@@ -156,6 +156,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val eventSink: Function1<DetailsUiEvent, Unit>
   <runtime stability> = Stable
 }

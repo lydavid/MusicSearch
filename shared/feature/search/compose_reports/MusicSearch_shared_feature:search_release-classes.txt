@@ -35,6 +35,7 @@ stable class ly.david.musicsearch.shared.feature.search.SearchUiState {
   runtime val searchHistory: LazyPagingItems<ListItemModel>
   stable val searchHistoryListState: LazyListState
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val eventSink: Function1<SearchUiEvent, Unit>
 }
@@ -91,6 +92,7 @@ stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiState {
   stable val excludeParameters: Boolean
   stable val searchLocalDatabase: Boolean
   stable val scrollToHideTopAppBar: Boolean
+  stable val boldUnvisited: Boolean
   stable val eventSink: Function1<LookupUrlUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.search.url.LookupUrlUiEvent.UpdateQuery {
