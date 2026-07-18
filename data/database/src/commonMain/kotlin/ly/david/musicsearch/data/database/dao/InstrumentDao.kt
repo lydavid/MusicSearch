@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.InstrumentDetailsModel
 import ly.david.musicsearch.shared.domain.instrument.InstrumentType
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -84,10 +85,12 @@ class InstrumentDao(
     fun getInstruments(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: InstrumentSortOption,
     ): PagingSource<Int, InstrumentListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllInstruments(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -95,6 +98,7 @@ class InstrumentDao(
             getInstrumentsByCollection(
                 collectionId = browseMethod.entityId,
                 query = query,
+                sortOption = sortOption,
             )
         }
     }
@@ -124,6 +128,7 @@ class InstrumentDao(
     private fun getInstrumentsByCollection(
         collectionId: String,
         query: String,
+        sortOption: InstrumentSortOption,
     ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
         countQuery = getCountOfInstrumentsByCollectionQuery(
             collectionId = collectionId,
@@ -135,6 +140,7 @@ class InstrumentDao(
             transacter.getInstrumentsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToInstrumentListItemModel,
@@ -152,6 +158,7 @@ class InstrumentDao(
 
     private fun getAllInstruments(
         query: String,
+        sortOption: InstrumentSortOption,
     ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllInstruments(
             query = query,
@@ -161,6 +168,7 @@ class InstrumentDao(
         queryProvider = { limit, offset ->
             transacter.getAllInstruments(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToInstrumentListItemModel,

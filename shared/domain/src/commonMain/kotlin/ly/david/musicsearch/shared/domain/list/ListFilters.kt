@@ -6,6 +6,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -38,6 +39,12 @@ sealed interface ListFilters {
         override val query: String = "",
         override val isRemote: Boolean = true,
         val sortOption: EventSortOption = EventSortOption.InsertedAscending,
+    ) : ListFilters
+
+    data class Instruments(
+        override val query: String = "",
+        override val isRemote: Boolean = true,
+        val sortOption: InstrumentSortOption = InstrumentSortOption.InsertedAscending,
     ) : ListFilters
 
     data class Labels(

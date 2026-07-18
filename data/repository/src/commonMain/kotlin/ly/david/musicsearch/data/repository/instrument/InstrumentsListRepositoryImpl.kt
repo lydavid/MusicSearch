@@ -12,8 +12,8 @@ import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.InstrumentListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -48,6 +48,7 @@ class InstrumentsListRepositoryImpl(
         return instrumentDao.getInstruments(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Instruments).sortOption,
         )
     }
 

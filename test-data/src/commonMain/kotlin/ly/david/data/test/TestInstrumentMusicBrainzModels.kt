@@ -31,7 +31,8 @@ val violinInstrumentMusicBrainzModel = InstrumentMusicBrainzNetworkModel(
     disambiguation = "Soprano of modern violin family",
     type = "String instrument",
     typeId = "cc00f97f-cf3d-3ae2-9163-041cb1a0d726",
-    description = "The most famous member of the violin family, it is actually the \"small viol\". Its register is soprano and it's a principal member of the symphony orchestra.",
+    description = "The most famous member of the violin family, it is actually the \"small viol\"." +
+        " Its register is soprano and it's a principal member of the symphony orchestra.",
     aliases = listOf(
         AliasMusicBrainzNetworkModel(
             name = "violin",

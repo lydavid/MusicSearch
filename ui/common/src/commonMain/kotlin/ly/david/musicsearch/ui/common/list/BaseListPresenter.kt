@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -59,6 +60,9 @@ abstract class BaseListPresenter(
 
         val eventSortOption
             by appPreferences.eventSortOption.collectAsRetainedState(EventSortOption.InsertedAscending)
+
+        val instrumentSortOption
+            by appPreferences.instrumentSortOption.collectAsRetainedState(InstrumentSortOption.InsertedAscending)
 
         val labelSortOption
             by appPreferences.labelSortOption.collectAsRetainedState(LabelSortOption.InsertedAscending)
@@ -99,6 +103,12 @@ abstract class BaseListPresenter(
                 query = query,
                 isRemote = isRemote,
                 sortOption = eventSortOption,
+            )
+
+            MusicBrainzEntityType.INSTRUMENT -> ListFilters.Instruments(
+                query = query,
+                isRemote = isRemote,
+                sortOption = instrumentSortOption,
             )
 
             MusicBrainzEntityType.LABEL -> ListFilters.Labels(
@@ -207,6 +217,7 @@ abstract class BaseListPresenter(
                         is AreaSortOption -> appPreferences.setAreaSortOption(sortOption)
                         is ArtistSortOption -> appPreferences.setArtistSortOption(sortOption)
                         is EventSortOption -> appPreferences.setEventSortOption(sortOption)
+                        is InstrumentSortOption -> appPreferences.setInstrumentSortOption(sortOption)
                         is LabelSortOption -> appPreferences.setLabelSortOption(sortOption)
                         is PlaceSortOption -> appPreferences.setPlaceSortOption(sortOption)
                         is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)

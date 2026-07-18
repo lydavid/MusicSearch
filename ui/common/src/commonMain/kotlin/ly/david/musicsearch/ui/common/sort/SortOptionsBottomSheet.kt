@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -97,6 +98,7 @@ private fun SortableOption.getLabel(): String {
             is AreaSortOption -> getLabelRes()
             is ArtistSortOption -> getLabelRes()
             is EventSortOption -> getLabelRes()
+            is InstrumentSortOption -> getLabelRes()
             is LabelSortOption -> getLabelRes()
             is PlaceSortOption -> getLabelRes()
             is RecordingSortOption -> getLabelRes()
@@ -143,6 +145,16 @@ private fun EventSortOption.getLabelRes(): StringResource {
 
         EventSortOption.DateAscending -> Res.string.earliestStartDate
         EventSortOption.DateDescending -> Res.string.latestStartDate
+    }
+}
+
+private fun InstrumentSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        InstrumentSortOption.InsertedAscending -> Res.string.earliestCached
+        InstrumentSortOption.InsertedDescending -> Res.string.latestCached
+
+        InstrumentSortOption.NameAscending -> Res.string.alphabetically
+        InstrumentSortOption.NameDescending -> Res.string.alphabeticallyReverse
     }
 }
 

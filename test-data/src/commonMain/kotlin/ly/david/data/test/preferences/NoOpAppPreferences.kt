@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -65,6 +66,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(EventSortOption.InsertedAscending)
 
     override fun setEventSortOption(sort: EventSortOption) {
+        // No-op.
+    }
+
+    override val instrumentSortOption: Flow<InstrumentSortOption>
+        get() = flowOf(InstrumentSortOption.InsertedAscending)
+
+    override fun setInstrumentSortOption(sort: InstrumentSortOption) {
         // No-op.
     }
 

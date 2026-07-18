@@ -91,6 +91,15 @@ AND (
   instrument_alias.name LIKE :query
 )
 GROUP BY instrument.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN instrument.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN instrument.name
+  END DESC
 LIMIT :limit OFFSET :offset;
 
 -- all instruments
@@ -136,4 +145,13 @@ WHERE (
   instrument_alias.name LIKE :query
 )
 GROUP BY instrument.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN instrument.rowid
+    WHEN 2 THEN instrument.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN instrument.rowid
+    WHEN 3 THEN instrument.name
+  END DESC
 LIMIT :limit OFFSET :offset;

@@ -15,12 +15,15 @@ import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.FiltersTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.instrument.InstrumentsListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -96,7 +99,7 @@ class InstrumentsListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 instrumentsListRepository.observeInstruments(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Instruments(
                         query = query,
                     ),
                 )
@@ -123,6 +126,15 @@ class InstrumentsListRepositoryImplTest : KoinTest {
                         ),
                     ),
                 ),
+                FilterTestCase(
+                    description = "by type",
+                    query = "string",
+                    expectedResult = listOf(
+                        violinInstrumentListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
             ),
         )
     }
@@ -135,19 +147,17 @@ class InstrumentsListRepositoryImplTest : KoinTest {
             instruments = listOf(),
         )
 
-        testFilter(
+        testFilters(
             pagingFlowProducer = { query ->
                 instrumentsListRepository.observeInstruments(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(
-                        query = query,
-                    ),
+                    listFilters = query,
                 )
             },
             testCases = listOf(
-                FilterTestCase(
+                FiltersTestCase(
                     description = "no filter",
-                    query = "",
+                    listFilters = ListFilters.Instruments(),
                     expectedResult = listOf(
                         fiddleInstrumentListItemModel.copy(
                             collected = true,
@@ -157,11 +167,16 @@ class InstrumentsListRepositoryImplTest : KoinTest {
                         ),
                     ),
                 ),
-                FilterTestCase(
-                    description = "by type",
-                    query = "string",
+                FiltersTestCase(
+                    description = "sort name desc",
+                    listFilters = ListFilters.Instruments(
+                        sortOption = InstrumentSortOption.NameDescending,
+                    ),
                     expectedResult = listOf(
                         violinInstrumentListItemModel.copy(
+                            collected = true,
+                        ),
+                        fiddleInstrumentListItemModel.copy(
                             collected = true,
                         ),
                     ),

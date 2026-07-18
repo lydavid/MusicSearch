@@ -33,6 +33,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
@@ -148,6 +149,25 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[eventSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
+
+    // region Instrument
+    private val instrumentSortOptionPreference = stringPreferencesKey(AppPreferencesKey.INSTRUMENT_SORT_OPTION.name)
+
+    override val instrumentSortOption: Flow<InstrumentSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                it[instrumentSortOptionPreference].toEnumOrDefault(InstrumentSortOption.InsertedAscending)
+            }
+            .distinctUntilChanged()
+
+    override fun setInstrumentSortOption(sort: InstrumentSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[instrumentSortOptionPreference] = sort.name
             }
         }
     }
