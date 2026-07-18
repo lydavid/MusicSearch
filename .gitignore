@@ -40,7 +40,7 @@ secrets.properties
 *.preferences_pb
 
 # App database
-musicsearch.db
+musicsearch*.db
 
 # Xcode
 xcuserdata/
