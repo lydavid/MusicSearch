@@ -7,13 +7,13 @@ import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.GenreDao
+import ly.david.musicsearch.data.musicbrainz.api.BrowseApi
 import ly.david.musicsearch.data.musicbrainz.api.BrowseGenresResponse
-import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
-import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
+import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -22,7 +22,7 @@ class GenresListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val genreDao: GenreDao,
-    private val musicBrainzApi: MusicBrainzApi,
+    private val browseApi: BrowseApi,
     aliasDao: AliasDao,
 ) : GenresListRepository,
     BrowseEntities<GenreListItemModel, GenreMusicBrainzNetworkModel, BrowseGenresResponse>(
@@ -76,7 +76,7 @@ class GenresListRepositoryImpl(
         entity: MusicBrainzEntity,
         offset: Int,
     ): BrowseGenresResponse {
-        return musicBrainzApi.browseGenresByEntity(
+        return browseApi.browseGenresByEntity(
             entityId = entity.id,
             entity = entity.type,
             offset = offset,
