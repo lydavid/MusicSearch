@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.128.0](https://github.com/lydavid/MusicSearch/compare/v1.127.0...v1.128.0) (2026-07-19)
+
+
+### Bug Fixes
+
+* improve local url lookup speed; update database version to 81 ([9a315ce](https://github.com/lydavid/MusicSearch/commit/9a315ceedef922cd4675cffd9bfb7f1e49bf8f76))
+
+
+### Features
+
+* support sorting instruments by cached order or name, ascending/descending; default is cached order ascending ([378fb05](https://github.com/lydavid/MusicSearch/commit/378fb05f2ffe03a62bbcf791ae5b476f58e71204))
+
 ## [1.127.0](https://github.com/lydavid/MusicSearch/compare/v1.126.0...v1.127.0) (2026-07-17)
 
 
