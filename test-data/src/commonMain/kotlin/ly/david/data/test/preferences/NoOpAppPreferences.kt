@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 open class NoOpAppPreferences : AppPreferences {
@@ -122,6 +123,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(ReleaseGroupSortOption.InsertedAscending)
 
     override fun setReleaseGroupSortOption(sortOption: ReleaseGroupSortOption) {
+        // No-op.
+    }
+
+    override val seriesSortOption: Flow<SeriesSortOption>
+        get() = flowOf(SeriesSortOption.InsertedAscending)
+
+    override fun setSeriesSortOption(sort: SeriesSortOption) {
         // No-op.
     }
 

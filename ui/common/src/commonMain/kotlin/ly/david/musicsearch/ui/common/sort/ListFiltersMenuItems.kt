@@ -14,6 +14,7 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.release.ShowStatusesMenuItem
@@ -146,6 +147,18 @@ fun OverflowMenuScope.ListFiltersMenuItems(
         is ListFilters.ReleaseGroups -> {
             SortMenuItem(
                 sortOptions = ReleaseGroupSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortOption(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Series -> {
+            SortMenuItem(
+                sortOptions = SeriesSortOption.entries,
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     eventSink(

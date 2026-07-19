@@ -16,13 +16,16 @@ import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.FiltersTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.series.SeriesListRepository
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -98,7 +101,7 @@ class SeriesListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 seriessListRepository.observeSeries(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Series(
                         query = query,
                     ),
                 )
@@ -163,19 +166,17 @@ class SeriesListRepositoryImplTest : KoinTest {
             seriess = listOf(),
         )
 
-        testFilter(
-            pagingFlowProducer = { query ->
+        testFilters(
+            pagingFlowProducer = { listFilters ->
                 seriessListRepository.observeSeries(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(
-                        query = query,
-                    ),
+                    listFilters = listFilters,
                 )
             },
             testCases = listOf(
-                FilterTestCase(
+                FiltersTestCase(
                     description = "no filter",
-                    query = "",
+                    listFilters = ListFilters.Series(),
                     expectedResult = listOf(
                         worksOfBeethovenSeriesListItemModel.copy(
                             collected = true,
@@ -185,10 +186,15 @@ class SeriesListRepositoryImplTest : KoinTest {
                         ),
                     ),
                 ),
-                FilterTestCase(
-                    description = "by type",
-                    query = "cat",
+                FiltersTestCase(
+                    description = "sort name desc",
+                    listFilters = ListFilters.Series(
+                        sortOption = SeriesSortOption.NameDescending,
+                    ),
                     expectedResult = listOf(
+                        comiketSeriesListItemModel.copy(
+                            collected = true,
+                        ),
                         worksOfBeethovenSeriesListItemModel.copy(
                             collected = true,
                         ),

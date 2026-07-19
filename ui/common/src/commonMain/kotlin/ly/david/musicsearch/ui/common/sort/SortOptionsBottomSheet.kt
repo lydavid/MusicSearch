@@ -18,6 +18,7 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.SortableOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -104,6 +105,7 @@ private fun SortableOption.getLabel(): String {
             is RecordingSortOption -> getLabelRes()
             is ReleaseSortOption -> getLabelRes()
             is ReleaseGroupSortOption -> getLabelRes()
+            is SeriesSortOption -> getLabelRes()
             is WorkSortOption -> getLabelRes()
         },
     )
@@ -241,6 +243,16 @@ private fun ReleaseGroupSortOption.getLabelRes(): StringResource {
 
         ReleaseGroupSortOption.PrimaryTypeAscending -> Res.string.typeAlphabetically
         ReleaseGroupSortOption.PrimaryTypeDescending -> Res.string.typeReverseAlphabetically
+    }
+}
+
+private fun SeriesSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        SeriesSortOption.InsertedAscending -> Res.string.earliestCached
+        SeriesSortOption.InsertedDescending -> Res.string.latestCached
+
+        SeriesSortOption.NameAscending -> Res.string.alphabetically
+        SeriesSortOption.NameDescending -> Res.string.alphabeticallyReverse
     }
 }
 

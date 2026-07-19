@@ -148,10 +148,10 @@ class InstrumentsListRepositoryImplTest : KoinTest {
         )
 
         testFilters(
-            pagingFlowProducer = { query ->
+            pagingFlowProducer = { listFilters ->
                 instrumentsListRepository.observeInstruments(
                     browseMethod = BrowseMethod.All,
-                    listFilters = query,
+                    listFilters = listFilters,
                 )
             },
             testCases = listOf(

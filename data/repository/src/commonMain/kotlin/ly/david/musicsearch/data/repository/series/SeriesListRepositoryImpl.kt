@@ -48,6 +48,7 @@ class SeriesListRepositoryImpl(
         return seriesDao.getSeries(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Series).sortOption,
         )
     }
 

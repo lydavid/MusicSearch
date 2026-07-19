@@ -12,6 +12,7 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 sealed interface ListFilters {
@@ -79,6 +80,12 @@ sealed interface ListFilters {
         override val query: String = "",
         override val isRemote: Boolean = true,
         val sortOption: ReleaseGroupSortOption = ReleaseGroupSortOption.InsertedAscending,
+    ) : ListFilters
+
+    data class Series(
+        override val query: String = "",
+        override val isRemote: Boolean = true,
+        val sortOption: SeriesSortOption = SeriesSortOption.InsertedAscending,
     ) : ListFilters
 
     data class Works(

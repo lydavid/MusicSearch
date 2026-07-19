@@ -84,6 +84,15 @@ AND (
   series_alias.name LIKE :query
 )
 GROUP BY series.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN series.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN series.name
+  END DESC
 LIMIT :limit OFFSET :offset;
 
 -- all series
@@ -126,4 +135,13 @@ WHERE (
   series_alias.name LIKE :query
 )
 GROUP BY series.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN series.rowid
+    WHEN 2 THEN series.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN series.rowid
+    WHEN 3 THEN series.name
+  END DESC
 LIMIT :limit OFFSET :offset;

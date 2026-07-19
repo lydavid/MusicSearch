@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.series.SeriesType
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import lydavidmusicsearchdatadatabase.SeriesQueries
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -82,10 +83,12 @@ class SeriesDao(
     fun getSeries(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: SeriesSortOption,
     ): PagingSource<Int, SeriesListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllSeries(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -93,6 +96,7 @@ class SeriesDao(
             getSeriesByCollection(
                 entityId = browseMethod.entityId,
                 query = query,
+                sortOption = sortOption,
             )
         }
     }
@@ -100,6 +104,7 @@ class SeriesDao(
     private fun getSeriesByCollection(
         entityId: String,
         query: String,
+        sortOption: SeriesSortOption,
     ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
         countQuery = getCountOfSeriesByCollectionQuery(
             collectionId = entityId,
@@ -111,6 +116,7 @@ class SeriesDao(
             transacter.getSeriesByCollection(
                 collectionId = entityId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToSeriesListItemModel,
@@ -154,6 +160,7 @@ class SeriesDao(
 
     private fun getAllSeries(
         query: String,
+        sortOption: SeriesSortOption,
     ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllSeries(
             query = query,
@@ -163,6 +170,7 @@ class SeriesDao(
         queryProvider = { limit, offset ->
             transacter.getAllSeries(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToSeriesListItemModel,

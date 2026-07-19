@@ -34,6 +34,7 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
+import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.SortableOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
@@ -83,6 +84,9 @@ abstract class BaseListPresenter(
 
         val releaseGroupSortOption
             by appPreferences.releaseGroupSortOption.collectAsRetainedState(ReleaseGroupSortOption.InsertedAscending)
+
+        val seriesSortOption
+            by appPreferences.seriesSortOption.collectAsRetainedState(SeriesSortOption.InsertedAscending)
 
         val workSortOption by appPreferences.workSortOption.collectAsRetainedState(WorkSortOption.InsertedAscending)
 
@@ -141,6 +145,12 @@ abstract class BaseListPresenter(
                 query = query,
                 isRemote = isRemote,
                 sortOption = releaseGroupSortOption,
+            )
+
+            MusicBrainzEntityType.SERIES -> ListFilters.Series(
+                query = query,
+                isRemote = isRemote,
+                sortOption = seriesSortOption,
             )
 
             MusicBrainzEntityType.WORK -> ListFilters.Works(
@@ -223,6 +233,7 @@ abstract class BaseListPresenter(
                         is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)
                         is ReleaseGroupSortOption -> appPreferences.setReleaseGroupSortOption(sortOption)
                         is ReleaseSortOption -> appPreferences.setReleaseSortOption(sortOption)
+                        is SeriesSortOption -> appPreferences.setSeriesSortOption(sortOption)
                         is WorkSortOption -> appPreferences.setWorkSortOption(sortOption)
                     }
                 }
