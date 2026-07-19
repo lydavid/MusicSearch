@@ -501,6 +501,7 @@ private val detailsUiState = DetailsUiState(
     allEntitiesListUiState = AllEntitiesListUiState(
         artistsListUiState = EntitiesListUiState(
             pagingDataFlow = canadianArtists,
+            listFilters = ListFilters.Artists(),
         ),
         eventsListUiState = EntitiesListUiState(
             pagingDataFlow = events,
