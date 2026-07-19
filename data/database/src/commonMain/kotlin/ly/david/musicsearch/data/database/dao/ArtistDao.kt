@@ -204,11 +204,13 @@ class ArtistDao(
     fun getArtists(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
         sortOption: ArtistSortOption,
     ): PagingSource<Int, ArtistListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllArtists(
                 query = query,
+                username = username,
                 sortOption = sortOption,
             )
         }
@@ -218,12 +220,14 @@ class ArtistDao(
                 getArtistsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    username = username,
                     sortOption = sortOption,
                 )
             } else {
                 getArtistsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    username = username,
                     sortOption = sortOption,
                 )
             }
@@ -265,6 +269,7 @@ class ArtistDao(
 
     private fun getAllArtists(
         query: String,
+        username: String,
         sortOption: ArtistSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfAllArtists(
@@ -275,9 +280,10 @@ class ArtistDao(
         queryProvider = { limit, offset ->
             transacter.getAllArtists(
                 query = "%$query%",
+                username = username,
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
-                sortBy = sortOption.order.toLong(),
                 mapper = ::mapToArtistListItemModel,
             )
         },
@@ -286,6 +292,7 @@ class ArtistDao(
     private fun getArtistsByEntity(
         entityId: String,
         query: String,
+        username: String,
         sortOption: ArtistSortOption,
     ) = QueryPagingSource(
         countQuery = getCountOfArtistsByEntityQuery(
@@ -298,6 +305,7 @@ class ArtistDao(
             transacter.getArtistsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                username = username,
                 sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
@@ -309,6 +317,7 @@ class ArtistDao(
     private fun getArtistsByCollection(
         collectionId: String,
         query: String,
+        username: String,
         sortOption: ArtistSortOption,
     ): PagingSource<Int, ArtistListItemModel> = QueryPagingSource(
         countQuery = getCountOfArtistsByCollectionQuery(
@@ -321,6 +330,7 @@ class ArtistDao(
             transacter.getArtistsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                username = username,
                 sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,

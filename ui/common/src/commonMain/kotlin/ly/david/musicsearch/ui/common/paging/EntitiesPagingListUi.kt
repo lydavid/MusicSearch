@@ -89,6 +89,8 @@ fun EntitiesPagingListUi(
                         artist = listItemModel,
                         filterText = filterText,
                         boldUnvisited = boldUnvisited,
+                        now = now,
+                        showLastListenedPeriod = uiState.showMoreInfo,
                         onClick = {
                             onItemClick(
                                 MusicBrainzEntityType.ARTIST,
@@ -190,8 +192,8 @@ fun EntitiesPagingListUi(
                     RecordingListItem(
                         recording = listItemModel,
                         filterText = filterText,
-                        now = now,
                         boldUnvisited = boldUnvisited,
+                        now = now,
                         showLastListenedPeriod = uiState.showMoreInfo,
                         onRecordingClick = {
                             onItemClick(

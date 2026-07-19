@@ -2,7 +2,9 @@ package ly.david.musicsearch.data.repository.artist
 
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -14,6 +16,7 @@ import ly.david.musicsearch.data.repository.base.BrowseEntities
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -23,6 +26,7 @@ class ArtistsListRepositoryImpl(
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
     private val browseApi: BrowseApi,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     aliasDao: AliasDao,
 ) : ArtistsListRepository,
     BrowseEntities<ArtistListItemModel, ArtistMusicBrainzNetworkModel, BrowseArtistsResponse>(
@@ -31,14 +35,19 @@ class ArtistsListRepositoryImpl(
         aliasDao = aliasDao,
     ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeArtists(
         browseMethod: BrowseMethod,
         listFilters: ListFilters.Artists,
     ): Flow<PagingData<ArtistListItemModel>> {
-        return observeEntities(
-            browseMethod = browseMethod,
-            listFilters = listFilters,
-        )
+        return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
+            observeEntities(
+                browseMethod = browseMethod,
+                listFilters = listFilters.copy(
+                    username = username,
+                ),
+            )
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -48,7 +57,8 @@ class ArtistsListRepositoryImpl(
         return artistDao.getArtists(
             browseMethod = browseMethod,
             query = listFilters.query,
-            sortOption = (listFilters as ListFilters.Artists).sortOption,
+            username = (listFilters as ListFilters.Artists).username,
+            sortOption = listFilters.sortOption,
         )
     }
 

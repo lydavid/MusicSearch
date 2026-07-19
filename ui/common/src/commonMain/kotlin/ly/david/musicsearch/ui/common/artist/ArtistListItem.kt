@@ -17,11 +17,13 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
+import ly.david.musicsearch.ui.common.listen.ListenInfoRow
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.release.ReleaseListItem
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import kotlin.time.Instant
 
 /**
  * Displays the artist's image if it exists.
@@ -32,6 +34,8 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 fun ArtistListItem(
     artist: ArtistListItemModel,
     filterText: String = "",
+    now: Instant,
+    showLastListenedPeriod: Boolean,
     modifier: Modifier = Modifier,
     boldUnvisited: Boolean = true,
     onClick: ArtistListItemModel.() -> Unit = {},
@@ -78,6 +82,12 @@ fun ArtistListItem(
                         modifier = Modifier.padding(top = 4.dp),
                     )
                 }
+
+                ListenInfoRow(
+                    listenInfo = artist,
+                    now = now,
+                    showLastListenedPeriod = showLastListenedPeriod,
+                )
             }
         },
         leadingContent = {

@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.repository.artist
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.bandoriCoverCollection8ReleaseMusicBrainzModel
 import ly.david.data.test.itouKanakoArtistListItemModel
 import ly.david.data.test.itouKanakoArtistMusicBrainzModel
@@ -18,25 +18,28 @@ import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.TagDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.data.repository.helpers.TestArtistsListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.recording.TestListenWithRecordingWithAliases
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
-import ly.david.musicsearch.shared.domain.artist.ArtistsListRepository
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ArtistDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.list.ListFilters
+import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -47,7 +50,11 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
+class ArtistsListRepositoryImplTest :
+    KoinTest,
+    TestArtistRepository,
+    TestArtistsListRepository,
+    TestListenWithRecordingWithAliases {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -62,33 +69,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
     override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
     private val collectionDao: CollectionDao by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
-
-    private fun createArtistsListRepository(
-        artists: List<ArtistMusicBrainzNetworkModel>,
-    ): ArtistsListRepository {
-        return ArtistsListRepositoryImpl(
-            browseRemoteMetadataDao = browseRemoteMetadataDao,
-            collectionEntityDao = collectionEntityDao,
-            artistDao = artistDao,
-            aliasDao = aliasDao,
-            browseApi = object : FakeBrowseApi() {
-                override suspend fun browseArtistsByEntity(
-                    entityId: String,
-                    entity: MusicBrainzEntityType,
-                    limit: Int,
-                    offset: Int,
-                    include: String,
-                ): BrowseArtistsResponse {
-                    return BrowseArtistsResponse(
-                        count = 1,
-                        offset = 0,
-                        musicBrainzModels = artists,
-                    )
-                }
-            },
-        )
-    }
+    override val collectionEntityDao: CollectionEntityDao by inject()
+    override val recordingDao: RecordingDao by inject()
+    override val listenDao: ListenDao by inject()
 
     private val atarayoMusicBrainzModel = ArtistMusicBrainzNetworkModel(
         id = "a5083194-56ab-46cd-a235-77a397723e93",
@@ -342,7 +325,10 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     atarayoListItemModel,
                     bumpOfChickenListItemModel,
                     roseliaArtistListItemModel,
-                    itouKanakoArtistListItemModel,
+                    // Aliases are not inserted yet?
+                    itouKanakoArtistListItemModel.copy(
+                        aliases = persistentListOf(),
+                    ),
                 ),
                 this,
             )
@@ -358,7 +344,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                 listOf(
                     atarayoListItemModel,
                     roseliaArtistListItemModel,
-                    itouKanakoArtistListItemModel,
+                    itouKanakoArtistListItemModel.copy(
+                        aliases = persistentListOf(),
+                    ),
                 ),
                 this,
             )
@@ -407,7 +395,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     expectedResult = listOf(
                         variousArtistsArtistListItemModel,
                         roseliaArtistListItemModel,
-                        itouKanakoArtistListItemModel,
+                        itouKanakoArtistListItemModel.copy(
+                            aliases = persistentListOf(),
+                        ),
                     ),
                 ),
                 FilterTestCase(
@@ -450,7 +440,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         bumpOfChickenListItemModel,
                         roseliaArtistListItemModel,
                         itouKanakoArtistListItemModel,
-                        variousArtistsArtistListItemModel,
+                        variousArtistsArtistListItemModel.copy(
+                            aliases = persistentListOf(),
+                        ),
                     ),
                 ),
                 FilterTestCase(
@@ -462,7 +454,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                         atarayoListItemModel,
                         roseliaArtistListItemModel,
                         itouKanakoArtistListItemModel,
-                        variousArtistsArtistListItemModel,
+                        variousArtistsArtistListItemModel.copy(
+                            aliases = persistentListOf(),
+                        ),
                     ),
                 ),
             ),
@@ -500,7 +494,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     roseliaArtistListItemModel.copy(
                         disambiguation = "new changes will show up",
                     ),
-                    itouKanakoArtistListItemModel,
+                    itouKanakoArtistListItemModel.copy(
+                        aliases = persistentListOf(),
+                    ),
                     bumpOfChickenListItemModel,
                 ),
                 this,
@@ -520,7 +516,9 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     roseliaArtistListItemModel.copy(
                         disambiguation = "new changes will show up",
                     ),
-                    itouKanakoArtistListItemModel,
+                    itouKanakoArtistListItemModel.copy(
+                        aliases = persistentListOf(),
+                    ),
                 ),
                 this,
             )
@@ -619,6 +617,64 @@ class ArtistsListRepositoryImplTest : KoinTest, TestArtistRepository {
                     ),
                     lastUpdated = testDateTimeInThePast,
                     listenBrainzUrl = "/artist/adea3c3d-a84d-4f9e-ac0b-1ef71a8947a5",
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `aliases does not multiply listen count`() = runTest {
+        `recording aliases does not multiply listen count`()
+
+        setUpArtistsByRelease()
+
+        val artists = listOf(
+            itouKanakoArtistMusicBrainzModel,
+        )
+        val repository = createArtistsListRepository(
+            artists = artists,
+            fakeBrowseUsername = TEST_USERNAME,
+        )
+        repository.observeArtists(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters.Artists(),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    variousArtistsArtistListItemModel.copy(
+                        listenCount = 0,
+                    ),
+                    roseliaArtistListItemModel.copy(
+                        listenCount = 0,
+                    ),
+                    itouKanakoArtistListItemModel.copy(
+                        listenCount = 1,
+                        lastListenedAtMs = 1755101240000,
+                    ),
+                ),
+                this,
+            )
+        }
+
+        repository.observeArtists(
+            browseMethod = BrowseMethod.All,
+            listFilters = ListFilters.Artists(
+                sortOption = ArtistSortOption.LastListenedDescending,
+            ),
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    itouKanakoArtistListItemModel.copy(
+                        listenCount = 1,
+                        lastListenedAtMs = 1755101240000,
+                    ),
+                    variousArtistsArtistListItemModel.copy(
+                        listenCount = 0,
+                    ),
+                    roseliaArtistListItemModel.copy(
+                        listenCount = 0,
+                    ),
                 ),
                 this,
             )

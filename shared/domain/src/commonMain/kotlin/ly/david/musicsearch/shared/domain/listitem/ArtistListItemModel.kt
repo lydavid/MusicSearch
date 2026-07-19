@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.artist.Artist
 import ly.david.musicsearch.shared.domain.artist.ArtistGender
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
+import ly.david.musicsearch.shared.domain.listen.ListenInfo
 
 data class ArtistListItemModel(
     override val id: String,
@@ -23,7 +24,9 @@ data class ArtistListItemModel(
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
-) : EntityListItemModel, Artist, NameWithDisambiguationAndAliases {
+    override val listenCount: Long? = null,
+    override val lastListenedAtMs: Long? = null,
+) : EntityListItemModel, Artist, NameWithDisambiguationAndAliases, ListenInfo {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): ArtistListItemModel {
         return copy(aliases = aliases)
     }

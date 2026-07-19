@@ -4,6 +4,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.NameWithDisambiguationAndAliases
 import ly.david.musicsearch.shared.domain.alias.BasicAlias
+import ly.david.musicsearch.shared.domain.listen.ListenInfo
 import ly.david.musicsearch.shared.domain.recording.Recording
 
 data class RecordingListItemModel(
@@ -18,9 +19,9 @@ data class RecordingListItemModel(
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
-    val listenCount: Long? = null,
-    val lastListenedAtMs: Long? = null,
-) : EntityListItemModel, Recording, NameWithDisambiguationAndAliases {
+    override val listenCount: Long? = null,
+    override val lastListenedAtMs: Long? = null,
+) : EntityListItemModel, Recording, NameWithDisambiguationAndAliases, ListenInfo {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): NameWithDisambiguationAndAliases {
         return copy(aliases = aliases)
     }

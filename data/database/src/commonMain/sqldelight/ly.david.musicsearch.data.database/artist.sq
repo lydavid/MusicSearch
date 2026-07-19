@@ -145,12 +145,30 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
   ) AS collected,
-  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM artists_by_entity ae
 INNER JOIN artist ON artist.id = ae.artist_id
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
+LEFT JOIN (
+  SELECT
+    artist_alias.artist_id,
+    GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  FROM artist_alias
+  WHERE artist_alias.is_primary AND artist_alias.artist_id IN (
+    SELECT artist.id
+    FROM artist
+    INNER JOIN artists_by_entity ON artist.id = artists_by_entity.entity_id
+    WHERE artists_by_entity.entity_id = :entityId
+  )
+  GROUP BY artist_alias.artist_id
+) AS aliases ON aliases.artist_id = artist.id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
+LEFT JOIN artist_credit_name ON artist_credit_name.artist_id = artist.id
+LEFT JOIN artist_credit_entity ON artist_credit_entity.artist_credit_id = artist_credit_name.artist_credit_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = artist_credit_entity.entity_id
 WHERE ae.entity_id = :entityId
 AND (
   artist.name LIKE :query OR
@@ -159,7 +177,7 @@ AND (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  artist_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY artist.id
 ORDER BY
@@ -167,11 +185,15 @@ ORDER BY
     WHEN 0 THEN ae.rowid
     WHEN 2 THEN artist.name
     WHEN 4 THEN artist.`begin`
+    WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN ae.rowid
     WHEN 3 THEN artist.name
     WHEN 5 THEN artist.`begin`
+    WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   artist.`begin`,
   artist.`end`,
@@ -219,13 +241,31 @@ SELECT
   mi.source,
   details_metadata.entity_id IS NOT NULL AS visited,
   collection_entity.id IS NOT NULL AS collected,
-  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM artist
 INNER JOIN collection_entity ON artist.id = collection_entity.entity_id
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
+LEFT JOIN (
+  SELECT
+    artist_alias.artist_id,
+    GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  FROM artist_alias
+  WHERE artist_alias.is_primary AND artist_alias.artist_id IN (
+    SELECT artist.id
+    FROM artist
+    INNER JOIN collection_entity ON artist.id = collection_entity.entity_id
+    WHERE collection_entity.id = :collectionId
+  )
+  GROUP BY artist_alias.artist_id
+) AS aliases ON aliases.artist_id = artist.id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
+LEFT JOIN artist_credit_name ON artist_credit_name.artist_id = artist.id
+LEFT JOIN artist_credit_entity ON artist_credit_entity.artist_credit_id = artist_credit_name.artist_credit_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = artist_credit_entity.entity_id
 WHERE collection_entity.id = :collectionId
 AND collection_entity.deleted = 0
 AND (
@@ -235,7 +275,7 @@ AND (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  artist_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY artist.id
 ORDER BY
@@ -243,11 +283,15 @@ ORDER BY
     WHEN 0 THEN collection_entity.rowid
     WHEN 2 THEN artist.name
     WHEN 4 THEN artist.`begin`
+    WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN collection_entity.rowid
     WHEN 3 THEN artist.name
     WHEN 5 THEN artist.`begin`
+    WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   artist.`begin`,
   artist.`end`,
@@ -294,12 +338,25 @@ SELECT
   EXISTS (
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = artist.id
   ) AS collected,
-  GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
-  GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  aliases.alias_names,
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COUNT(listen.recording_musicbrainz_id) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE MAX(listen.listened_at_ms) END AS last_listened_at
 FROM artist
-LEFT JOIN artist_alias ON artist.id = artist_alias.artist_id AND artist_alias.is_primary
+LEFT JOIN (
+  SELECT
+    artist_alias.artist_id,
+    GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+  FROM artist_alias
+  WHERE artist_alias.is_primary
+  GROUP BY artist_alias.artist_id
+) AS aliases ON aliases.artist_id = artist.id
 LEFT JOIN mbid_image mi ON mi.mbid = artist.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = artist.id
+LEFT JOIN artist_credit_name ON artist_credit_name.artist_id = artist.id
+LEFT JOIN artist_credit_entity ON artist_credit_entity.artist_credit_id = artist_credit_name.artist_credit_id
+LEFT JOIN listen ON listen.recording_musicbrainz_id = artist_credit_entity.entity_id
 WHERE (
   artist.name LIKE :query OR
   artist.disambiguation LIKE :query OR
@@ -307,7 +364,7 @@ WHERE (
   artist.type LIKE :query OR
   artist.gender LIKE :query OR
   artist.country_code LIKE :query OR
-  artist_alias.name LIKE :query
+  aliases.alias_names LIKE :query
 )
 GROUP BY artist.id
 ORDER BY
@@ -315,11 +372,15 @@ ORDER BY
     WHEN 0 THEN artist.rowid
     WHEN 2 THEN artist.name
     WHEN 4 THEN artist.`begin`
+    WHEN 6 THEN listen_count
+    WHEN 8 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN artist.rowid
     WHEN 3 THEN artist.name
     WHEN 5 THEN artist.`begin`
+    WHEN 7 THEN listen_count
+    WHEN 9 THEN last_listened_at
   END DESC,
   artist.`begin`,
   artist.`end`,
@@ -332,8 +393,7 @@ getListenCountByArtist:
 SELECT COUNT(*)
 FROM artist_credit_name
 INNER JOIN artist_credit_entity ON artist_credit_entity.artist_credit_id = artist_credit_name.artist_credit_id
-INNER JOIN recording ON recording.id = artist_credit_entity.entity_id
-INNER JOIN listen ON listen.recording_musicbrainz_id = recording.id
+INNER JOIN listen ON listen.recording_musicbrainz_id = artist_credit_entity.entity_id
  AND listen.username = :username
  AND listen.deleted_at_ms IS NULL
 WHERE artist_credit_name.artist_id = :artistId;

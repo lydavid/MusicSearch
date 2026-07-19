@@ -54,8 +54,7 @@ import org.koin.test.inject
 class RecordingsListRepositoryImplTest :
     KoinTest,
     TestRecordingRepository,
-    TestRecordingsListRepository,
-    TestListensListRepository {
+    TestListenWithRecordingWithAliases {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -564,6 +563,12 @@ class RecordingsListRepositoryImplTest :
 
     @Test
     fun `aliases does not multiply listen count`() = runTest {
+        `recording aliases does not multiply listen count`()
+    }
+}
+
+interface TestListenWithRecordingWithAliases : TestListensListRepository, TestRecordingsListRepository {
+    suspend fun `recording aliases does not multiply listen count`() {
         val entityId = itouKanakoArtistMusicBrainzModel.id
         val entity = MusicBrainzEntityType.ARTIST
         val browseMethod = BrowseMethod.ByEntity(
@@ -613,7 +618,7 @@ class RecordingsListRepositoryImplTest :
                                     ),
                                     mbid_mapping = MbidMapping(
                                         recording_mbid = "6a8fc477-9b12-4001-9387-f5d936b05503",
-                                        recording_name = "絶絶絶絶対聖域",
+                                        recording_name = "スカイクラッドの観測者",
                                         artists = listOf(
                                             ListenBrainzArtist(
                                                 artist_credit_name = "いとうかなこ",

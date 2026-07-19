@@ -6,7 +6,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
-import ly.david.data.test.api.FakeBrowseApi
 import ly.david.data.test.davidBowieArtistMusicBrainzModel
 import ly.david.data.test.unitedKingdomAreaMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -17,11 +16,11 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.TagDao
-import ly.david.musicsearch.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.TestArtistRepository
+import ly.david.musicsearch.data.repository.helpers.TestArtistsListRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
@@ -43,7 +42,10 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.time.Duration.Companion.hours
 
-class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
+class ArtistRepositoryImplTest :
+    KoinTest,
+    TestArtistRepository,
+    TestArtistsListRepository {
 
     @get:Rule(order = 0)
     val koinTestRule = KoinTestRule()
@@ -57,7 +59,7 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
     override val aliasDao: AliasDao by inject()
     override val tagDao: TagDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
-    private val collectionEntityDao: CollectionEntityDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
 
     @Test
     fun `lookup artist`() = runTest {
@@ -185,42 +187,24 @@ class ArtistRepositoryImplTest : KoinTest, TestArtistRepository {
 
     @Test
     fun `browse first, then lookup should overwrite with more data`() = runTest {
-        val artistsListRepositoryImpl = ArtistsListRepositoryImpl(
-            browseRemoteMetadataDao = browseRemoteMetadataDao,
-            collectionEntityDao = collectionEntityDao,
-            artistDao = artistDao,
-            aliasDao = aliasDao,
-            browseApi = object : FakeBrowseApi() {
-                override suspend fun browseArtistsByEntity(
-                    entityId: String,
-                    entity: MusicBrainzEntityType,
-                    limit: Int,
-                    offset: Int,
-                    include: String,
-                ): BrowseArtistsResponse {
-                    return BrowseArtistsResponse(
-                        count = 1,
-                        offset = 0,
-                        musicBrainzModels = listOf(
-                            ArtistMusicBrainzNetworkModel(
-                                id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
-                                name = "The Beatles",
-                                type = "Group",
-                                typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
-                                lifeSpan = LifeSpanMusicBrainzModel(
-                                    begin = "1960",
-                                    end = "1970-04-10",
-                                    ended = true,
-                                ),
-                                sortName = "Beatles, The",
-                                area = unitedKingdomAreaMusicBrainzModel,
-                                countryCode = "GB",
-                                isnis = listOf("0000000121707484"),
-                            ),
-                        ),
-                    )
-                }
-            },
+        val artistsListRepositoryImpl = createArtistsListRepository(
+            artists = listOf(
+                ArtistMusicBrainzNetworkModel(
+                    id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
+                    name = "The Beatles",
+                    type = "Group",
+                    typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+                    lifeSpan = LifeSpanMusicBrainzModel(
+                        begin = "1960",
+                        end = "1970-04-10",
+                        ended = true,
+                    ),
+                    sortName = "Beatles, The",
+                    area = unitedKingdomAreaMusicBrainzModel,
+                    countryCode = "GB",
+                    isnis = listOf("0000000121707484"),
+                ),
+            ),
         )
         val flow: Flow<PagingData<ArtistListItemModel>> = artistsListRepositoryImpl.observeArtists(
             browseMethod = BrowseMethod.ByEntity(

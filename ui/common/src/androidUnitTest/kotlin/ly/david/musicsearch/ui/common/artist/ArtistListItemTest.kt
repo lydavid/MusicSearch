@@ -46,4 +46,11 @@ class ArtistListItemTest : ScreenshotTest() {
             PreviewArtistListItemSelected()
         }
     }
+
+    @Test
+    fun zeroListens() {
+        snapshot {
+            PreviewArtistListItemZeroListens()
+        }
+    }
 }

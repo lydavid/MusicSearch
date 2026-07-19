@@ -1,6 +1,8 @@
 package ly.david.data.test
 
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.musicsearch.shared.domain.LifeSpanUiModel
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.artist.ArtistType
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 
@@ -31,5 +33,17 @@ val itouKanakoArtistListItemModel = ArtistListItemModel(
     disambiguation = "singer",
     lifeSpan = LifeSpanUiModel(
         begin = "1973-03-28",
+    ),
+    aliases = persistentListOf(
+        BasicAlias(
+            name = "Kanako Ito",
+            locale = "en",
+            isPrimary = true,
+        ),
+        BasicAlias(
+            name = "いとうかなこ",
+            locale = "ja",
+            isPrimary = true,
+        ),
     ),
 )

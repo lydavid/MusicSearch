@@ -112,6 +112,8 @@ private fun ListItemUi(
             ArtistListItem(
                 artist = listItemModel,
                 filterText = filterText,
+                now = Clock.System.now(),
+                showLastListenedPeriod = false,
                 boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onClick = {
@@ -188,8 +190,8 @@ private fun ListItemUi(
                 recording = listItemModel,
                 filterText = filterText,
                 now = Clock.System.now(),
-                boldUnvisited = boldUnvisited,
                 showLastListenedPeriod = false,
+                boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 onRecordingClick = {
                     onItemClick(

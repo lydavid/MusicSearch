@@ -7,6 +7,7 @@ import ly.david.musicsearch.shared.domain.list.FilteredCount
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
@@ -37,6 +38,10 @@ fun AllEntitiesListUiState.toEntitiesPagingListUiState(
         EntitiesPagingListUiState(
             lazyPagingItems = entitiesLazyPagingItems.artistsLazyPagingItems,
             lazyListState = this.artistsListUiState.lazyListState,
+            showMoreInfo = (this.artistsListUiState.listFilters as ListFilters.Artists).sortOption in setOf(
+                ArtistSortOption.LastListenedAscending,
+                ArtistSortOption.LastListenedDescending,
+            ),
             totalCount = this.artistsListUiState.totalCount,
             filteredCount = this.artistsListUiState.filteredCount,
         )

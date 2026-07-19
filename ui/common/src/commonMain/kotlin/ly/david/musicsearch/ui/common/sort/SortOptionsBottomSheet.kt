@@ -134,6 +134,12 @@ private fun ArtistSortOption.getLabelRes(): StringResource {
 
         ArtistSortOption.DateAscending -> Res.string.earliestBeginDate
         ArtistSortOption.DateDescending -> Res.string.latestBeginDate
+
+        ArtistSortOption.ListensAscending -> Res.string.leastListened
+        ArtistSortOption.ListensDescending -> Res.string.mostListened
+
+        ArtistSortOption.LastListenedAscending -> Res.string.leastRecentlyListened
+        ArtistSortOption.LastListenedDescending -> Res.string.mostRecentlyListened
     }
 }
 

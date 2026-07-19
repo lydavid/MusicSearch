@@ -8,4 +8,8 @@ enum class ArtistSortOption(val order: Int) : SortableOption {
     NameDescending(3),
     DateAscending(4),
     DateDescending(5),
+    ListensAscending(6),
+    ListensDescending(7),
+    LastListenedAscending(8),
+    LastListenedDescending(9),
 }

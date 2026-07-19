@@ -9,6 +9,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.test.image.InitializeFakeImageLoader
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -20,6 +21,8 @@ internal fun PreviewArtistListItemSimple() {
                 name = "artist name",
                 sortName = "sort name should not be seen",
             ),
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = false,
         )
     }
 }
@@ -35,6 +38,8 @@ internal fun PreviewArtistListItemCountryCode() {
                 sortName = "sort name should not be seen",
                 countryCode = "CA",
             ),
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = false,
         )
     }
 }
@@ -55,8 +60,12 @@ internal fun PreviewArtistListItemAllInfoUnvisited() {
                     begin = "2020-12-31",
                     end = "2022-01-01",
                 ),
+                listenCount = 38,
+                lastListenedAtMs = 1783121497000,
             ),
             filterText = "wrap",
+            now = Instant.parse("2026-07-04T16:42:20Z"),
+            showLastListenedPeriod = true,
         )
     }
 }
@@ -78,7 +87,11 @@ internal fun PreviewArtistListItemAllInfoVisited() {
                     end = "2022-01-01",
                 ),
                 visited = true,
+                listenCount = 38,
+                lastListenedAtMs = 1783121497000,
             ),
+            now = Instant.parse("2026-07-04T16:42:20Z"),
+            showLastListenedPeriod = true,
         )
     }
 }
@@ -93,6 +106,8 @@ internal fun PreviewArtistListItemSelected() {
                 name = "artist name",
                 sortName = "sort name should not be seen",
             ),
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = true,
             isSelected = true,
         )
     }
@@ -113,6 +128,25 @@ internal fun PreviewArtistListItemWithCoverArt() {
                     rawThumbnailUrl = "www.example.com/image",
                 ),
             ),
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewArtistListItemZeroListens() {
+    PreviewWithTransitionAndOverlays {
+        ArtistListItem(
+            artist = ArtistListItemModel(
+                id = "1",
+                name = "artist name",
+                sortName = "sort name should not be seen",
+                listenCount = 0,
+            ),
+            now = Instant.parse("2025-04-26T16:42:20Z"),
+            showLastListenedPeriod = true,
         )
     }
 }

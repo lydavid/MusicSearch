@@ -24,6 +24,8 @@ fun mapToArtistListItemModel(
     collected: Boolean?,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long?,
+    lastListenedAtMs: Long?,
 ) = ArtistListItemModel(
     id = id,
     name = name,
@@ -45,4 +47,6 @@ fun mapToArtistListItemModel(
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),
+    listenCount = listenCount,
+    lastListenedAtMs = lastListenedAtMs,
 )

@@ -1,6 +1,7 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.AliasMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzNetworkModel
@@ -181,6 +182,18 @@ val itouKanakoArtistMusicBrainzModel = ArtistMusicBrainzNetworkModel(
     typeId = "b6e035f4-3ce9-331c-97df-83397230b0df",
     lifeSpan = LifeSpanMusicBrainzModel(
         begin = "1973-03-28",
+    ),
+    aliases = listOf(
+        AliasMusicBrainzNetworkModel(
+            name = "Kanako Ito",
+            locale = "en",
+            isPrimary = true,
+        ),
+        AliasMusicBrainzNetworkModel(
+            name = "いとうかなこ",
+            locale = "ja",
+            isPrimary = true,
+        ),
     ),
 )
 

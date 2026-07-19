@@ -33,6 +33,7 @@ sealed interface ListFilters {
     data class Artists(
         override val query: String = "",
         override val isRemote: Boolean = true,
+        val username: String = "",
         val sortOption: ArtistSortOption = ArtistSortOption.InsertedAscending,
     ) : ListFilters
 
