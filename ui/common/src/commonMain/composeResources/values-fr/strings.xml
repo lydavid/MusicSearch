@@ -469,4 +469,6 @@
     <string name="leastRecentlyListened">Écoutés le moins récemment</string>
     <string name="mostRecentlyListened">Écoutés le plus récemment</string>
     <string name="lastListenedXAgo">Dernière écoute : %s.</string>
+    <string name="boldUnvisited">Éléments non visités en gras</string>
+    <string name="boldUnvisitedDescription">Afficher les noms des entités en gras jusqu'à ce que vous cliquiez dessus</string>
 </resources>
