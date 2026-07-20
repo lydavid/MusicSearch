@@ -465,4 +465,6 @@
     <string name="leastRecentlyListened">Varem kuulatud</string>
     <string name="mostRecentlyListened">Hiljuti kuulatud</string>
     <string name="lastListenedXAgo">Viimati kuulatud %s.</string>
+    <string name="boldUnvisited">Vaatamata teave pakus kirjas</string>
+    <string name="boldUnvisitedDescription">Näita kirjete nimesid pakus kirjas seni kuni sa pole neil klõpsanud</string>
 </resources>
