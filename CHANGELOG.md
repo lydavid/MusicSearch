@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.129.0](https://github.com/lydavid/MusicSearch/compare/v1.128.0...v1.129.0) (2026-07-20)
+
+
+### Features
+
+* show number of listens in artists lists; support sorting by listen count and last listen date ascending/descending ([50ab74d](https://github.com/lydavid/MusicSearch/commit/50ab74d4bd848ce9d0951ed51c632ac949dbbd51))
+* support sorting series by cached order or name, ascending/descending; default is cached order ascending ([6bb9575](https://github.com/lydavid/MusicSearch/commit/6bb9575465b40b107597ccddcba486172a527fb5))
+
 ## [1.128.0](https://github.com/lydavid/MusicSearch/compare/v1.127.0...v1.128.0) (2026-07-19)
 
 
