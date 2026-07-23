@@ -71,9 +71,9 @@ jobs:
         run: |
           mkdir -p artifacts
           mv /home/runner/.maestro/tests/ artifacts
-          mv *.mp4 artifacts
           [ -f logcat ] && mv logcat artifacts
-          mv *.db artifacts
+          find . -maxdepth 1 -name '*.mp4' -exec mv -t artifacts/ {} +
+          find . -maxdepth 1 -name '*.db' -exec mv -t artifacts/ {} +
 
       - name: Save recordings
         if: always()
