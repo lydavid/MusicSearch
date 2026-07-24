@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.1](https://github.com/lydavid/MusicSearch/compare/v1.129.0...v1.129.1) (2026-07-24)
+
+
+### Bug Fixes
+
+* filter listen count by current ListenBrainz username for artist lists ([7aec0b1](https://github.com/lydavid/MusicSearch/commit/7aec0b1f6390b9af316a8988fa2b905d29528bce))
+
 ## [1.129.0](https://github.com/lydavid/MusicSearch/compare/v1.128.0...v1.129.0) (2026-07-20)
 
 
