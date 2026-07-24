@@ -13,6 +13,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemAllInfoVisited()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemSelected()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemWithCoverArt()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.PreviewArtistListItemZeroListens()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOff()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewCheckboxWithTextOn()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.button.PreviewRetryButton()
@@ -184,6 +185,8 @@ fun ly.david.musicsearch.ui.common.artist.getDisplayString(
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.artist.ArtistListItem(
   artist: ArtistListItemModel
   stable filterText: String? = @static ""
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
   stable modifier: Modifier? = @static <expression>
   stable boldUnvisited: Boolean = @static true
   stable onClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static <expression>
@@ -412,6 +415,11 @@ open scheme("[presenter]") fun ly.david.musicsearch.ui.common.list.AllEntitiesLi
 open fun ly.david.musicsearch.ui.common.list.BaseListPresenter.present(
   stable <this>: BaseListPresenter
 ): EntitiesListUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listen.ListenInfoRow(
+  listenInfo: ListenInfo
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
   stable text: String
   stable collapsed: Boolean
