@@ -24,4 +24,20 @@ class MusicBrainzRepositoryImpl(
             }
         }
     }
+
+    override fun getOAuthBaseUrl(): String {
+        return "${getBaseUrl()}/oauth2"
+    }
+
+    override fun getAuthorizationEndpoint(): String {
+        return "${getOAuthBaseUrl()}/authorize"
+    }
+
+    override fun getTokenEndpoint(): String {
+        return "${getOAuthBaseUrl()}/token"
+    }
+
+    override fun getRevokeEndpoint(): String {
+        return "${getOAuthBaseUrl()}/revoke"
+    }
 }

@@ -49,6 +49,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
             return MusicBrainzApiImpl(
                 httpClient = extendedClient,
                 musicBrainzOAuthInfo = musicBrainzAuthRepository.musicBrainzOAuthInfo,
+                musicbrainzRepository = musicbrainzRepository,
             )
         }
     }
@@ -57,4 +58,5 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
 class MusicBrainzApiImpl(
     override val httpClient: HttpClient,
     override val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+    override val musicbrainzRepository: MusicbrainzRepository,
 ) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzUserApiImpl, TagApiImpl, MusicBrainzApi

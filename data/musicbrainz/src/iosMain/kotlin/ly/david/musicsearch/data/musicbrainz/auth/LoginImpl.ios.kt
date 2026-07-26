@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import ly.david.musicsearch.shared.domain.auth.Login
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
 import platform.AuthenticationServices.ASPresentationAnchor
 import platform.AuthenticationServices.ASWebAuthenticationPresentationContextProvidingProtocol
 import platform.AuthenticationServices.ASWebAuthenticationSession
@@ -18,13 +19,17 @@ import kotlin.coroutines.resumeWithException
 
 internal class LoginImpl(
     private val getAndSaveToken: GetAndSaveToken,
+    private val musicbrainzRepository: MusicbrainzRepository,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 ) : Login {
 
     // Inspiration from https://github.com/kalinjul/kotlin-multiplatform-oidc/blob/main/oidc-appsupport/src/iosMain/kotlin/org/publicvalue/multiplatform/oidc/appsupport/PlatformCodeAuthFlow.ios.kt
     override suspend operator fun invoke(): Boolean {
+        // TODO: generalize with GetMusicBrainzAuthorizationUrlImpl
+        //  only redirect_uri differ
+        //  would be nice if Android could use it too, but currently using net.openid.appauth to build url for intent
         val requestUrl = NSURL.URLWithString(
-            URLString = musicBrainzOAuthInfo.authorizationEndpoint +
+            URLString = musicbrainzRepository.getAuthorizationEndpoint() +
                 "?response_type=code" +
                 "&client_id=${musicBrainzOAuthInfo.clientId}" +
                 "&redirect_uri=$APPLICATION_ID://oauth2/redirect" +

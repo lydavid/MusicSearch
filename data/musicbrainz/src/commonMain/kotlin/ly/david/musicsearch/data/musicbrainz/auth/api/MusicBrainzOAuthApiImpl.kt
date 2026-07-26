@@ -5,9 +5,11 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.parameters
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
 
 class MusicBrainzOAuthApiImpl(
-    val httpClient: HttpClient,
+    private val httpClient: HttpClient,
+    private val musicbrainzRepository: MusicbrainzRepository,
 ) : MusicBrainzOAuthApi {
     override suspend fun getAccessToken(
         musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
@@ -15,7 +17,7 @@ class MusicBrainzOAuthApiImpl(
         refreshToken: String,
     ): AccessToken {
         return httpClient.submitForm(
-            url = musicBrainzOAuthInfo.tokenEndpoint,
+            url = musicbrainzRepository.getTokenEndpoint(),
             formParameters = parameters {
                 append(
                     name = "client_id",

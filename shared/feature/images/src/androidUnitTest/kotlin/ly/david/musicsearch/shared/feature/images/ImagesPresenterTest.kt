@@ -76,6 +76,22 @@ class ImagesPresenterTest {
                 override fun getBaseUrl(): String {
                     return "https://custommusicbrainz.org"
                 }
+
+                override fun getOAuthBaseUrl(): String {
+                    return ""
+                }
+
+                override fun getAuthorizationEndpoint(): String {
+                    return ""
+                }
+
+                override fun getTokenEndpoint(): String {
+                    return ""
+                }
+
+                override fun getRevokeEndpoint(): String {
+                    return ""
+                }
             },
         ),
     )

@@ -8,15 +8,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalUriHandler
 import kotlinx.coroutines.launch
+import ly.david.musicsearch.shared.domain.auth.GetMusicBrainzAuthorizationUrl
 import ly.david.musicsearch.shared.domain.auth.Login
-import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthorizationUrl
 import ly.david.musicsearch.shared.domain.error.HandledException
 import kotlin.time.Clock
 import kotlin.time.Instant
 
 internal class MusicBrainzLoginPresenterImpl(
     private val login: Login,
-    private val musicBrainzAuthorizationUrl: MusicBrainzAuthorizationUrl,
+    private val getMusicBrainzAuthorizationUrl: GetMusicBrainzAuthorizationUrl,
     private val clock: Clock,
 ) : MusicBrainzLoginPresenter {
     @Composable
@@ -30,7 +30,7 @@ internal class MusicBrainzLoginPresenterImpl(
         fun eventSink(event: MusicBrainzLoginUiEvent) {
             when (event) {
                 MusicBrainzLoginUiEvent.StartLogin -> {
-                    uriHandler.openUri(musicBrainzAuthorizationUrl.url)
+                    uriHandler.openUri(getMusicBrainzAuthorizationUrl())
                     showDialog = true
                 }
 

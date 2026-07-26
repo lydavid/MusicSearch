@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.core.net.toUri
 import ly.david.musicsearch.shared.domain.APPLICATION_ID
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract
+import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
@@ -15,6 +16,7 @@ import net.openid.appauth.ResponseTypeValues
 class MusicBrainzLoginActivityResultContractImpl(
     private val authService: AuthorizationService,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+    private val musicbrainzRepository: MusicbrainzRepository,
 ) : MusicBrainzLoginActivityResultContract() {
 
     override fun createIntent(
@@ -26,13 +28,13 @@ class MusicBrainzLoginActivityResultContractImpl(
                 /* configuration = */
                 AuthorizationServiceConfiguration(
                     /* authorizationEndpoint = */
-                    musicBrainzOAuthInfo.authorizationEndpoint.toUri(),
+                    musicbrainzRepository.getAuthorizationEndpoint().toUri(),
                     /* tokenEndpoint = */
-                    musicBrainzOAuthInfo.tokenEndpoint.toUri(),
+                    musicbrainzRepository.getTokenEndpoint().toUri(),
                     /* registrationEndpoint = */
                     null,
                     /* endSessionEndpoint = */
-                    musicBrainzOAuthInfo.endSessionEndpoint.toUri(), // Doesn't work cause GET revoke not implemented
+                    musicbrainzRepository.getRevokeEndpoint().toUri(), // Doesn't work cause GET revoke not implemented
                 ),
                 /* clientId = */
                 musicBrainzOAuthInfo.clientId,
