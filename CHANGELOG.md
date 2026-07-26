@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.2](https://github.com/lydavid/MusicSearch/compare/v1.129.1...v1.129.2) (2026-07-26)
+
+
+### Bug Fixes
+
+* change MusicBrainz URLs used for login immediately without requiring restarting app ([46b32fc](https://github.com/lydavid/MusicSearch/commit/46b32fc2cf079b303e9c3867b60c1402b4cc2317))
+
 ## [1.129.1](https://github.com/lydavid/MusicSearch/compare/v1.129.0...v1.129.1) (2026-07-24)
 
 
