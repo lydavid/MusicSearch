@@ -19,7 +19,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzNetwor
 import ly.david.musicsearch.data.musicbrainz.models.core.UrlMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.relatableEntities
+import ly.david.musicsearch.shared.domain.network.relatableEntitiesShownInRelationships
 import ly.david.musicsearch.shared.domain.network.resourceUri
 
 const val INCLUDE = "inc"
@@ -271,8 +271,7 @@ interface LookupApiImpl : LookupApi {
                 parameter("limit", 1)
                 parameter(
                     key = INCLUDE,
-                    value = relatableEntities
-                        .minus(MusicBrainzEntityType.URL)
+                    value = relatableEntitiesShownInRelationships
                         .asRelationshipParameters,
                 )
                 parameter("resource", url)

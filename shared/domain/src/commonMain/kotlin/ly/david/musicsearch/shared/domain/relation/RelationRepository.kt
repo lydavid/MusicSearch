@@ -7,7 +7,6 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.relatableEntities
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -40,7 +39,6 @@ interface RelationRepository {
      */
     fun observeEntityRelationships(
         entity: MusicBrainzEntity,
-        relatedEntityTypes: Set<MusicBrainzEntityType> = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>>

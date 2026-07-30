@@ -99,8 +99,8 @@ val collectableEntities: List<MusicBrainzEntityType>
         MusicBrainzEntityType.WORK,
     )
 
-val relatableEntities: List<MusicBrainzEntityType>
-    get() = listOf(
+val relatableEntitiesShownInRelationships: Set<MusicBrainzEntityType>
+    get() = setOf(
         MusicBrainzEntityType.AREA,
         MusicBrainzEntityType.ARTIST,
         MusicBrainzEntityType.EVENT,
@@ -113,7 +113,6 @@ val relatableEntities: List<MusicBrainzEntityType>
         MusicBrainzEntityType.RELEASE_GROUP,
         MusicBrainzEntityType.SERIES,
         MusicBrainzEntityType.WORK,
-        MusicBrainzEntityType.URL,
     )
 
 val collaboratableEntities: List<MusicBrainzEntityType>

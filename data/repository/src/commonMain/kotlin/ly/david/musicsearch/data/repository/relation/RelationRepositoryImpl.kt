@@ -22,6 +22,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.network.relatableEntitiesShownInRelationships
 import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.relation.RelationTypeCount
@@ -45,10 +46,15 @@ class RelationRepositoryImpl(
     @OptIn(ExperimentalPagingApi::class)
     override fun observeEntityRelationships(
         entity: MusicBrainzEntity,
-        relatedEntityTypes: Set<MusicBrainzEntityType>,
         query: String,
         lastUpdated: Instant,
     ): Flow<PagingData<ListItemModel>> {
+        val relatedEntityTypes = relatableEntitiesShownInRelationships subtract
+            if (entity.type == MusicBrainzEntityType.WORK) {
+                setOf(MusicBrainzEntityType.RECORDING)
+            } else {
+                emptySet()
+            }
         return Pager(
             config = CommonPagingConfig.pagingConfig,
             remoteMediator = LookupEntityRemoteMediator(
@@ -70,9 +76,12 @@ class RelationRepositoryImpl(
                 },
             ),
             pagingSourceFactory = {
+                // We always don't show URLs here.
+                // For some entities' relationships, we may get some of their relationships from details lookup,
+                // but we still want to show them here.
                 relationDao.getEntityRelationships(
                     entityId = entity.id,
-                    relatedEntities = relatedEntityTypes,
+                    relatedEntities = relatableEntitiesShownInRelationships,
                     query = query,
                 )
             },

@@ -1,17 +1,25 @@
 package ly.david.musicsearch.data.repository.relation
 
 import androidx.paging.testing.asSnapshot
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.skycladObserverCoverRecordingMusicBrainzModel
+import ly.david.data.test.skycladObserverRecordingMusicBrainzModel
+import ly.david.data.test.skycladObserverWorkListItemModel
+import ly.david.data.test.skycladObserverWorkMusicBrainzModel
 import ly.david.data.test.zutomayoArtistMusicBrainzNetworkModel
 import ly.david.musicsearch.data.coverart.api.CoverArtUrls
 import ly.david.musicsearch.data.coverart.api.ThumbnailsUrls
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MediumDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.RelationsMetadataDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
@@ -19,6 +27,8 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.database.dao.WorkAttributeDao
+import ly.david.musicsearch.data.database.dao.WorkDao
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzNetworkModel
@@ -30,19 +40,24 @@ import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzNetworkM
 import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.relation.SerializableMusicBrainzEntity
+import ly.david.musicsearch.data.repository.helpers.TEST_USERNAME
 import ly.david.musicsearch.data.repository.helpers.TestMusicBrainzImageMetadataRepository
 import ly.david.musicsearch.data.repository.helpers.TestReleaseRepository
+import ly.david.musicsearch.data.repository.helpers.TestWorkRepository
 import ly.david.musicsearch.data.repository.helpers.testDateTimeInThePast
+import ly.david.musicsearch.data.repository.recording.TestListenWithRecordingWithAliases
+import ly.david.musicsearch.shared.domain.alias.BasicAlias
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.details.WorkDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.image.ImageId
 import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.image.ImageUrlDao
+import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.LastUpdatedFooter
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.relatableEntities
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -52,7 +67,9 @@ import org.koin.test.inject
 
 class RelationRepositoryImplTest :
     KoinTest,
+    TestListenWithRecordingWithAliases,
     TestReleaseRepository,
+    TestWorkRepository,
     TestMusicBrainzImageMetadataRepository {
 
     @get:Rule(order = 0)
@@ -69,9 +86,15 @@ class RelationRepositoryImplTest :
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
+    override val workDao: WorkDao by inject()
+    override val workAttributeDao: WorkAttributeDao by inject()
     override val imageUrlDao: ImageUrlDao by inject()
+    override val recordingDao: RecordingDao by inject()
+    override val collectionEntityDao: CollectionEntityDao by inject()
+    override val browseRemoteMetadataDao: BrowseRemoteMetadataDao by inject()
     override val aliasDao: AliasDao by inject()
     override val tagDao: TagDao by inject()
+    override val listenDao: ListenDao by inject()
     override val coroutineDispatchers: CoroutineDispatchers by inject()
 
     private fun createRepository(
@@ -185,7 +208,6 @@ class RelationRepositoryImplTest :
                 type = MusicBrainzEntityType.SERIES,
                 id = "eca82a1b-1efa-4d6b-9278-e278523267f8",
             ),
-            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -309,7 +331,6 @@ class RelationRepositoryImplTest :
                 type = MusicBrainzEntityType.WORK,
                 id = "2506ad88-1db3-454a-aed0-32cd5162fa1e",
             ),
-            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -412,7 +433,6 @@ class RelationRepositoryImplTest :
 
         relationRepository.observeEntityRelationships(
             entity = MusicBrainzEntity(id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c", type = MusicBrainzEntityType.WORK),
-            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -451,7 +471,6 @@ class RelationRepositoryImplTest :
         // when filtering, the linked entities that were filtered out will not be grouped
         relationRepository.observeEntityRelationships(
             entity = MusicBrainzEntity(id = "dfe5d4e5-ee03-4a8c-b7b3-4e231dcbcf6c", type = MusicBrainzEntityType.WORK),
-            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "pre",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -573,7 +592,6 @@ class RelationRepositoryImplTest :
                 id = zutomayoArtistMusicBrainzNetworkModel.id,
                 type = MusicBrainzEntityType.ARTIST,
             ),
-            relatedEntityTypes = relatableEntities subtract setOf(MusicBrainzEntityType.URL),
             query = "",
             lastUpdated = testDateTimeInThePast,
         ).asSnapshot().run {
@@ -596,6 +614,181 @@ class RelationRepositoryImplTest :
                         lastUpdated = testDateTimeInThePast,
                     ),
                     LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+    }
+
+    @Test
+    fun `work details, then work relationships, then refresh work details`() = runTest {
+        `recording aliases does not multiply listen count`()
+
+        val workRepository = createWorkRepository(
+            musicBrainzModel = skycladObserverWorkMusicBrainzModel.copy(
+                relations = listOf(
+                    RelationMusicBrainzModel(
+                        typeId = "a3005666-a872-32c3-ad06-98af558e99b0",
+                        type = "performance",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.RECORDING,
+                        recording = skycladObserverRecordingMusicBrainzModel,
+                        attributes = listOf(),
+                    ),
+                    RelationMusicBrainzModel(
+                        typeId = "108a3d66-d1ef-424d-a7cb-2f53a702ce45",
+                        type = "performance",
+                        direction = Direction.BACKWARD,
+                        targetType = SerializableMusicBrainzEntity.RECORDING,
+                        recording = skycladObserverCoverRecordingMusicBrainzModel,
+                        attributes = listOf("cover"),
+                        attributeIds = mapOf(
+                            "cover" to "1e8536bd-6eda-3822-8e78-1c0f4d3d2113",
+                        ),
+                    ),
+                    // and more
+                ),
+            ),
+            fakeBrowseUsername = TEST_USERNAME,
+        )
+        workRepository.lookupEntity(
+            entityId = skycladObserverWorkMusicBrainzModel.id,
+            forceRefresh = false,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                WorkDetailsModel(
+                    id = skycladObserverWorkMusicBrainzModel.id,
+                    name = skycladObserverWorkListItemModel.name,
+                    type = skycladObserverWorkListItemModel.type,
+                    languages = skycladObserverWorkListItemModel.languages,
+                    iswcs = skycladObserverWorkListItemModel.iswcs,
+                    attributes = attributes,
+                    lastUpdated = testDateTimeInThePast,
+                    listenCount = 1,
+                    latestListensTimestampsMs = persistentListOf(1755101240000),
+                ),
+                this,
+            )
+        }
+
+        val artist = ArtistMusicBrainzNetworkModel(
+            id = "ccb6e0b5-36f3-4c19-b897-42813cb0a5fa",
+            name = "志倉千代丸",
+            sortName = "Shikura, Chiyomaru",
+            disambiguation = "",
+        )
+        val relationRepository = createRepository(
+            lookupApi = object : FakeLookupApi() {
+                override suspend fun lookupWork(
+                    workId: String,
+                    include: String?,
+                ): WorkMusicBrainzNetworkModel {
+                    return skycladObserverWorkMusicBrainzModel.copy(
+                        relations = listOf(
+                            RelationMusicBrainzModel(
+                                typeId = "d59d99ea-23d4-4a80-b066-edca32ee158f",
+                                type = "composer",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = artist,
+                                attributes = listOf(),
+                            ),
+                            RelationMusicBrainzModel(
+                                typeId = "3e48faba-ec01-47fd-8e89-30e81161661c",
+                                type = "lyricist",
+                                direction = Direction.BACKWARD,
+                                targetType = SerializableMusicBrainzEntity.ARTIST,
+                                artist = artist,
+                                attributes = listOf(),
+                            ),
+                            // We used to fetch recordings again, which would double the listen count
+                        ),
+                    )
+                }
+            },
+        )
+
+        relationRepository.observeEntityRelationships(
+            entity = MusicBrainzEntity(
+                id = skycladObserverWorkMusicBrainzModel.id,
+                type = MusicBrainzEntityType.WORK,
+            ),
+            query = "",
+            lastUpdated = testDateTimeInThePast,
+        ).asSnapshot().run {
+            assertEquals(
+                listOf(
+                    RelationListItemModel(
+                        id = "ccb6e0b5-36f3-4c19-b897-42813cb0a5fa_2",
+                        linkedEntityId = "ccb6e0b5-36f3-4c19-b897-42813cb0a5fa",
+                        type = "composer, lyricist",
+                        name = "志倉千代丸",
+                        disambiguation = "",
+                        linkedEntity = MusicBrainzEntityType.ARTIST,
+                        visited = false,
+                        isForwardDirection = false,
+                        attributes = "",
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "6a8fc477-9b12-4001-9387-f5d936b05503_2",
+                        linkedEntityId = "6a8fc477-9b12-4001-9387-f5d936b05503",
+                        type = "performance",
+                        name = "スカイクラッドの観測者",
+                        disambiguation = "",
+                        linkedEntity = MusicBrainzEntityType.RECORDING,
+                        visited = false,
+                        isForwardDirection = false,
+                        aliases = persistentListOf(
+                            BasicAlias(
+                                name = "Skyclad Observer",
+                                locale = "en",
+                                isPrimary = true,
+                            ),
+                            BasicAlias(
+                                name = "スカイクラッドの観測者",
+                                locale = "ja",
+                                isPrimary = true,
+                            ),
+                        ),
+                        attributes = "",
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    RelationListItemModel(
+                        id = "108a3d66-d1ef-424d-a7cb-2f53a702ce45_3",
+                        linkedEntityId = "108a3d66-d1ef-424d-a7cb-2f53a702ce45",
+                        type = "performance",
+                        name = "スカイクラッドの観測者",
+                        disambiguation = "",
+                        attributes = "cover",
+                        linkedEntity = MusicBrainzEntityType.RECORDING,
+                        visited = false,
+                        isForwardDirection = false,
+                        lastUpdated = testDateTimeInThePast,
+                    ),
+                    LastUpdatedFooter(lastUpdated = testDateTimeInThePast),
+                ),
+                this,
+            )
+        }
+
+        workRepository.lookupEntity(
+            entityId = skycladObserverWorkMusicBrainzModel.id,
+            forceRefresh = true,
+            lastUpdated = testDateTimeInThePast,
+        ).run {
+            assertEquals(
+                WorkDetailsModel(
+                    id = skycladObserverWorkMusicBrainzModel.id,
+                    name = skycladObserverWorkListItemModel.name,
+                    type = skycladObserverWorkListItemModel.type,
+                    languages = skycladObserverWorkListItemModel.languages,
+                    iswcs = skycladObserverWorkListItemModel.iswcs,
+                    attributes = attributes,
+                    lastUpdated = testDateTimeInThePast,
+                    listenCount = 1,
+                    latestListensTimestampsMs = persistentListOf(1755101240000),
                 ),
                 this,
             )

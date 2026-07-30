@@ -133,7 +133,6 @@ class EntitiesListPresenterTest {
             getEntityRelationships = object : GetEntityRelationships {
                 override fun invoke(
                     entity: MusicBrainzEntity?,
-                    relatedEntities: Set<MusicBrainzEntityType>,
                     query: String,
                 ): Flow<PagingData<ListItemModel>> {
                     return flowOf(PagingData.from(relationListItems))

@@ -14,8 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.listitem.Header.id
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.relatableEntities
+import ly.david.musicsearch.shared.domain.network.relatableEntitiesShownInRelationships
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveCountOfRelationshipsByEntity
 
@@ -28,17 +27,11 @@ class RelationsPresenterImpl(
     @Composable
     override fun present(): RelationsUiState {
         var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
-        var relatedEntities: Set<MusicBrainzEntityType> by rememberSaveable {
-            mutableStateOf(
-                relatableEntities subtract setOf(MusicBrainzEntityType.URL),
-            )
-        }
         var query by rememberSaveable { mutableStateOf("") }
         val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(id, entity, query) {
             mutableStateOf(
                 getEntityRelationships(
                     entity = entity,
-                    relatedEntities = relatedEntities,
                     query = query,
                 ),
             )
@@ -47,6 +40,7 @@ class RelationsPresenterImpl(
 
         // Note that we count grouped items together (e.g. a performer, vocal relationship counts as 1).
         // So, this will often not be the same as the count of types of relationships in stats.
+        val relatedEntities = relatableEntitiesShownInRelationships
         val totalCount by observeCountOfRelationshipsByEntity(
             entityId = entity?.id ?: "",
             relatedEntities = relatedEntities,
@@ -62,7 +56,6 @@ class RelationsPresenterImpl(
             when (event) {
                 is RelationsUiEvent.GetRelations -> {
                     entity = event.byEntity
-                    relatedEntities = event.relatedEntities
                 }
 
                 is RelationsUiEvent.UpdateQuery -> {
