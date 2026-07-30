@@ -127,20 +127,6 @@ class RelationRepositoryImpl(
     ) {
         if (!forceRefresh) return
 
-        insertAllRelations(
-            entity = entity,
-            entityId = entityId,
-            relatedEntities = relatedEntities,
-            now = lastUpdated,
-        )
-    }
-
-    private suspend fun insertAllRelations(
-        entity: MusicBrainzEntityType,
-        entityId: String,
-        relatedEntities: Set<MusicBrainzEntityType>,
-        now: Instant,
-    ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entityType = entity,
             entityId = entityId,
@@ -153,7 +139,7 @@ class RelationRepositoryImpl(
         // which would cause us to keep trying to fetch it from remote
         relationsMetadataDao.upsert(
             entityId = entityId,
-            lastUpdated = now,
+            lastUpdated = lastUpdated,
         )
     }
 
