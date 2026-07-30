@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.3](https://github.com/lydavid/MusicSearch/compare/v1.129.2...v1.129.3) (2026-07-30)
+
+
+### Bug Fixes
+
+* do not fetch a work's recordings again from Relationships tab which doubles the listen count: you will have to refresh a work's Details tab to make the double count go away ([eb708eb](https://github.com/lydavid/MusicSearch/commit/eb708eb154101c50c1c14cc337fba64348b86f3c))
+
 ## [1.129.2](https://github.com/lydavid/MusicSearch/compare/v1.129.1...v1.129.2) (2026-07-26)
 
 
