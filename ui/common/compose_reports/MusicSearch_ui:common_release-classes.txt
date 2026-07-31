@@ -190,7 +190,6 @@ stable class ly.david.musicsearch.ui.common.relation.RelationsPresenterImpl {
 }
 stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.GetRelations {
   runtime val byEntity: MusicBrainzEntity
-  runtime val relatedEntities: Set<MusicBrainzEntityType>
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.relation.RelationsUiEvent.UpdateQuery {
