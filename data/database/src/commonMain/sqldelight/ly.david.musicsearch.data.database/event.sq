@@ -230,7 +230,7 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllEvents:
 SELECT IFNULL(
   (
-    SELECT COUNT(e.id)
+    SELECT COUNT(DISTINCT e.id)
     FROM event e
     LEFT JOIN event_alias ON e.id = event_alias.event_id AND event_alias.is_primary
     WHERE (

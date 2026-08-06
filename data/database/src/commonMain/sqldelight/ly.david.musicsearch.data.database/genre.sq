@@ -20,7 +20,7 @@ FROM genre WHERE id = ?;
 getNumberOfGenresByCollection:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT genre.id)
     FROM genre
     INNER JOIN collection_entity ON genre.id = collection_entity.entity_id
     WHERE collection_entity.id = :collectionId
@@ -57,7 +57,7 @@ LIMIT :limit OFFSET :offset;
 getCountOfAllGenres:
 SELECT IFNULL(
   (
-    SELECT COUNT(*)
+    SELECT COUNT(DISTINCT genre.id)
     FROM genre
     WHERE (
       genre.name LIKE :query OR

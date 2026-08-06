@@ -162,7 +162,7 @@ DELETE FROM releases_by_entity WHERE entity_id = :entityId;
 -- releases by label
 
 getNumberOfReleasesByLabel:
-SELECT COUNT(`release`.id) AS count
+SELECT COUNT(DISTINCT `release`.id) AS count
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
 LEFT JOIN (
@@ -328,7 +328,7 @@ WHERE label_id = :labelId;
 -- releases by collection
 
 getNumberOfReleasesByCollection:
-SELECT COUNT(`release`.id) AS count
+SELECT COUNT(DISTINCT `release`.id) AS count
 FROM `release`
 INNER JOIN collection_entity collection_entity ON `release`.id = collection_entity.entity_id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
@@ -460,7 +460,7 @@ LIMIT :limit OFFSET :offset;
 -- releases by entity
 
 getNumberOfReleasesByEntity:
-SELECT COUNT(`release`.id) AS count
+SELECT COUNT(DISTINCT `release`.id) AS count
 FROM `release`
 INNER JOIN releases_by_entity ON releases_by_entity.release_id = `release`.id
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
@@ -593,7 +593,7 @@ LIMIT :limit OFFSET :offset;
 -- all releases
 
 getCountOfAllReleases:
-SELECT COUNT(`release`.id) AS count
+SELECT COUNT(DISTINCT `release`.id) AS count
 FROM `release`
 LEFT JOIN artist_credit_entity acr ON acr.entity_id = `release`.id
 LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
