@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.4](https://github.com/lydavid/MusicSearch/compare/v1.129.3...v1.129.4) (2026-08-06)
+
+
+### Bug Fixes
+
+* do not overcount events/genres/releases in Stats ([b50bbf4](https://github.com/lydavid/MusicSearch/commit/b50bbf49aa0c2e058e2b29f76b2948e4b3b72ae5))
+
 ## [1.129.3](https://github.com/lydavid/MusicSearch/compare/v1.129.2...v1.129.3) (2026-07-30)
 
 
