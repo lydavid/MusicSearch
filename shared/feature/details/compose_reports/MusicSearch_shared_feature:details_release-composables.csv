@@ -28,6 +28,7 @@ ly.david.musicsearch.shared.feature.details.instrument.PreviewInstrumentDetailsU
 ly.david.musicsearch.shared.feature.details.label.PreviewLabelDetailsUi,PreviewLabelDetailsUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUi,PreviewPlaceDetailsUi,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUiWithoutCoordinates,PreviewPlaceDetailsUiWithoutCoordinates,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUiAlternative,PreviewPlaceDetailsUiAlternative,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetails,PreviewRecordingUiDetails,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsVideo,PreviewRecordingUiDetailsVideo,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.shared.feature.details.recording.PreviewRecordingUiDetailsWithListens,PreviewRecordingUiDetailsWithListens,1,1,1,0,0,0,0,0,1,1,

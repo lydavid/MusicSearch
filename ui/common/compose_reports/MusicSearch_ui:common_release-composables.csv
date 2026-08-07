@@ -200,7 +200,7 @@ ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState,toEntitiesPagi
 ly.david.musicsearch.ui.common.paging.FooterLoadingIndicator,FooterLoadingIndicator,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError,ScreenWithPagingLoadingAndError,1,1,1,0,0,0,1,0,3,4,
 ly.david.musicsearch.ui.common.paging.AppendFooter,AppendFooter,1,1,1,0,0,0,0,0,4,3,
-ly.david.musicsearch.ui.common.place.CoordinateListItem,CoordinateListItem,1,1,1,0,0,0,0,0,1,3,
+ly.david.musicsearch.ui.common.place.CoordinateListItem,CoordinateListItem,1,1,1,0,0,0,0,0,4,4,
 ly.david.musicsearch.ui.common.place.PlaceListItem,PlaceListItem,1,1,1,0,0,0,0,0,1,5,
 ly.david.musicsearch.ui.common.place.getDisplayString,getDisplayString,1,0,0,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.preview.PreviewTheme,PreviewTheme,1,1,1,0,0,0,1,0,2,3,
