@@ -11,14 +11,12 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUi
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.areaSection
-import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.ui.common.place.CoordinateListItem
 import ly.david.musicsearch.ui.common.place.getDisplayString
 import ly.david.musicsearch.ui.common.text.TextWithHeading
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.address
 import musicsearch.ui.common.generated.resources.closed
-import musicsearch.ui.common.generated.resources.coordinates
 import musicsearch.ui.common.generated.resources.opened
 import musicsearch.ui.common.generated.resources.type
 import org.jetbrains.compose.resources.stringResource
@@ -72,6 +70,18 @@ internal fun PlaceDetailsTabUi(
                     filterText = filterText,
                 )
             }
+
+            val coordinates = place.coordinates
+            val showCoordinates = coordinates.latitude != null && coordinates.longitude != null
+            if (showCoordinates) {
+                val label = place.name +
+                    if (place.lifeSpan.ended) " (${stringResource(Res.string.closed)})" else ""
+                CoordinateListItem(
+                    coordinates = coordinates,
+                    label = label,
+                    filterText = filterText,
+                )
+            }
         },
         bringYourOwnLabelsSection = {
             areaSection(
@@ -84,22 +94,6 @@ internal fun PlaceDetailsTabUi(
                     eventSink(DetailsTabUiEvent.ToggleCollapseExpandSection(CollapsibleSection.Area))
                 },
             )
-
-            val coordinates = place.coordinates
-            val showCoordinates = coordinates.latitude != null && coordinates.longitude != null
-            if (showCoordinates) {
-                item {
-                    // TODO: either support collapsing coordinates, or move it under place information
-                    //  but then we need to support clicking on rows there
-                    ListSeparatorHeader(stringResource(Res.string.coordinates))
-                    val label = place.name +
-                        if (place.lifeSpan.ended) " (${stringResource(Res.string.closed)})" else ""
-                    CoordinateListItem(
-                        coordinates = coordinates,
-                        label = label,
-                    )
-                }
-            }
         },
     )
 }

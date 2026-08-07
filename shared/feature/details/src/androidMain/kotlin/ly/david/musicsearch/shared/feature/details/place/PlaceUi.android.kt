@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsTabUiState
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
 import ly.david.musicsearch.ui.common.topappbar.Tab
+import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import kotlin.time.Instant
 
 private val place = PlaceDetailsModel(
@@ -68,6 +69,24 @@ internal fun PreviewPlaceDetailsUiWithoutCoordinates() {
                 detailsModel = place.copy(
                     coordinates = CoordinatesUiModel(),
                 ),
+            ),
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewPlaceDetailsUiAlternative() {
+    PreviewWithTransitionAndOverlays {
+        PlaceUi(
+            state = detailsUiState.copy(
+                detailsModel = place.copy(
+                    coordinates = CoordinatesUiModel(
+                        -123.4567809,
+                        123.4567809,
+                    ),
+                ),
+                topAppBarFilterState = TopAppBarFilterState(initialFilterText = "123"),
             ),
         )
     }
