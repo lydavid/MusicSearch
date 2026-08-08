@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.5](https://github.com/lydavid/MusicSearch/compare/v1.129.4...v1.129.5) (2026-08-08)
+
+
+### Bug Fixes
+
+* move place coordinates under information section so it can be collapsed; click to open in your map app; long click to copy ([8d8a92d](https://github.com/lydavid/MusicSearch/commit/8d8a92ddf151561f40d64acbc8843e7dbc2282c1))
+
 ## [1.129.4](https://github.com/lydavid/MusicSearch/compare/v1.129.3...v1.129.4) (2026-08-06)
 
 
