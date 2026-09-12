@@ -1,7 +1,7 @@
 [versions]
 aboutlibraries = "14.2.1"
 androidGradlePlugin = "8.13.2"
-baselineprofile = "1.4.1"
+baselineprofile = "1.5.0"
 benchmarkMacroJunit4 = "1.5.0"
 chucker = "4.3.1"
 circuit = "0.33.1"
