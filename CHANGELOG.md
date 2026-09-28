@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.130.0](https://github.com/lydavid/MusicSearch/compare/v1.129.5...v1.130.0) (2026-09-28)
+
+
+### Features
+
+* support switching to Indonesian from App Info for Android 13+ ([d7b7659](https://github.com/lydavid/MusicSearch/commit/d7b7659352df9f37e3fecb9daf5cc0ccf9d74c33))
+
 ## [1.129.5](https://github.com/lydavid/MusicSearch/compare/v1.129.4...v1.129.5) (2026-08-08)
 
 
