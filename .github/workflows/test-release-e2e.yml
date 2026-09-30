@@ -104,7 +104,6 @@ jobs:
         run: |
           mkdir -p before_artifacts
           mv /home/runner/.maestro/tests/ before_artifacts
-          mv *.mp4 before_artifacts
           [ -f logcat ] && mv logcat before_artifacts
           mv android/app/build/outputs/apk/fDroid/debug/*.apk before_artifacts
 
@@ -152,7 +151,6 @@ jobs:
         run: |
           mkdir -p after_artifacts
           mv /home/runner/.maestro/tests/ after_artifacts
-          mv *.mp4 after_artifacts
           [ -f logcat ] && mv logcat after_artifacts
           mv android/app/build/outputs/apk/fDroid/debug/*.apk after_artifacts
 
