@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.history
 
+import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import com.slack.circuit.test.FakeNavigator
@@ -21,15 +22,17 @@ import ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.HistoryScreen
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.time.Clock
 
 /**
  * There's no need to repeat the repository tests in this layer. We should only test UI event sinking in this layer.
  */
+@Config(sdk = [VANILLA_ICE_CREAM])
 @RunWith(RobolectricTestRunner::class)
 class HistoryPresenterTest {
 
@@ -87,9 +90,9 @@ class HistoryPresenterTest {
 
         presenterTestOf({ historyPresenter.present() }) {
             var state = awaitItem()
-            assertEquals(HistorySortOption.RECENTLY_VISITED, state.sortOption)
-            assertEquals("", state.topAppBarFilterState.filterText)
-            assertEquals(
+            Assert.assertEquals(HistorySortOption.RECENTLY_VISITED, state.sortOption)
+            Assert.assertEquals("", state.topAppBarFilterState.filterText)
+            Assert.assertEquals(
                 listOf(
                     LookupHistoryListItemModel(
                         title = "欠けた心象、世のよすが",
@@ -106,7 +109,7 @@ class HistoryPresenterTest {
             // This doesn't affect our Presenter at all because we faked out all dependencies
             state.topAppBarFilterState.updateFilterText("hello")
             state = awaitItem()
-            assertEquals("hello", state.topAppBarFilterState.filterText)
+            Assert.assertEquals("hello", state.topAppBarFilterState.filterText)
 
             state.eventSink(
                 HistoryUiEvent.ClickItem(
@@ -114,7 +117,7 @@ class HistoryPresenterTest {
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                 ),
             )
-            assertEquals(
+            Assert.assertEquals(
                 navigator.awaitNextScreen(),
                 DetailsScreen(
                     entityType = MusicBrainzEntityType.RELEASE_GROUP,
@@ -139,7 +142,7 @@ class HistoryPresenterTest {
 
         presenterTestOf({ historyPresenter.present() }) {
             val state = awaitItem()
-            assertEquals(
+            Assert.assertEquals(
                 listOf(
                     LookupHistoryListItemModel(
                         title = "My collection",
@@ -157,7 +160,7 @@ class HistoryPresenterTest {
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
                 ),
             )
-            assertEquals(
+            Assert.assertEquals(
                 navigator.awaitNextScreen(),
                 CollectionScreen(
                     collectionId = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
