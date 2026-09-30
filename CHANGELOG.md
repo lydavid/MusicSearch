@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.130.1](https://github.com/lydavid/MusicSearch/compare/v1.130.0...v1.130.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* use updated language code for Indonesian so that app actually changes language ([35f24b2](https://github.com/lydavid/MusicSearch/commit/35f24b2e5360a41c7abba79ddc7c4432e48a7768))
+
 ## [1.130.0](https://github.com/lydavid/MusicSearch/compare/v1.129.5...v1.130.0) (2026-09-28)
 
 
