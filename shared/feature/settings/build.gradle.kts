@@ -1,8 +1,8 @@
 plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     id("ly.david.musicsearch.compose.multiplatform")
-    alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.build.config)
 }
 
 buildConfig {
