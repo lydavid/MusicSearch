@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.images
 
+import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import com.slack.circuit.test.FakeNavigator
@@ -25,7 +26,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import kotlin.intArrayOf
 
+@Config(sdk = [VANILLA_ICE_CREAM])
 @RunWith(RobolectricTestRunner::class)
 class ImagesPresenterTest {
 
