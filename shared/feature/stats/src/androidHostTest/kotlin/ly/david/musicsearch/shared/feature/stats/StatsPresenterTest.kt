@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.stats
 
-import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
+import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import com.slack.circuit.test.presenterTestOf
 import kotlinx.collections.immutable.persistentHashMapOf
 import kotlinx.collections.immutable.persistentListOf
@@ -35,7 +35,7 @@ import org.robolectric.annotation.Config
 import kotlin.intArrayOf
 import kotlin.time.Instant
 
-@Config(sdk = [VANILLA_ICE_CREAM])
+@Config(sdk = [UPSIDE_DOWN_CAKE])
 @RunWith(RobolectricTestRunner::class)
 class StatsPresenterTest {
 

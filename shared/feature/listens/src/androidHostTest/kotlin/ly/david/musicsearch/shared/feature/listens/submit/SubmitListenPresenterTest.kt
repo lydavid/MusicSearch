@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.listens.submit
 
-import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
+import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config
 import kotlin.intArrayOf
 import kotlin.time.Instant
 
-@Config(sdk = [VANILLA_ICE_CREAM])
+@Config(sdk = [UPSIDE_DOWN_CAKE])
 @RunWith(RobolectricTestRunner::class)
 class SubmitListenPresenterTest {
 

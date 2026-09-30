@@ -1,6 +1,6 @@
 package ly.david.musicsearch.shared.feature.history
 
-import android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM
+import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import com.slack.circuit.test.FakeNavigator
@@ -32,7 +32,7 @@ import kotlin.time.Clock
 /**
  * There's no need to repeat the repository tests in this layer. We should only test UI event sinking in this layer.
  */
-@Config(sdk = [VANILLA_ICE_CREAM])
+@Config(sdk = [UPSIDE_DOWN_CAKE])
 @RunWith(RobolectricTestRunner::class)
 class HistoryPresenterTest {
 
