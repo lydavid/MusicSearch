@@ -15,7 +15,7 @@ on:
 jobs:
   update-licenses:
     name: Update aboutlibraries.json for F-Droid release variant
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: write
     steps:

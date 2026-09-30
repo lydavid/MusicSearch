@@ -19,7 +19,7 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     outputs:
       status: ${{ steps.early_exit.outputs.status }}
     steps:
