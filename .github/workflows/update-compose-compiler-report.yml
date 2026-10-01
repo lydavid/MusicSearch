@@ -3,6 +3,7 @@ name: Update compose compiler report
 on:
   schedule:
     - cron: '42 6 * * 5'
+      timezone: 'America/Toronto'
   workflow_dispatch:
 
 jobs:

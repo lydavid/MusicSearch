@@ -2,7 +2,8 @@ name: Nightly chores
 
 on:
   schedule:
-    - cron: '42 4 * * *'
+    - cron: '42 2 * * *'
+      timezone: 'America/Toronto'
   workflow_dispatch:
 
 jobs:

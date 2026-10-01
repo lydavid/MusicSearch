@@ -8,7 +8,8 @@ run-name: "Publish beta build from ${{ github.sha }}"
 # Google Play allows us to reuse versionName, so it isn't a problem for our releases to be out of sync.
 on:
   schedule:
-    - cron: '42 0 * * *'
+    - cron: '42 3 * * *'
+      timezone: 'America/Toronto'
   workflow_dispatch:
     inputs:
       skip-desktop:
