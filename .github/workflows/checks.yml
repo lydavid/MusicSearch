@@ -47,21 +47,17 @@ jobs:
 
       # Includes non-KMP detekt, verifySqlDelightMigration
       - name: Perform checks on all modules
+        id: all-checks
         if: ${{ !cancelled() }}
         run: ./gradlew check
 
-      - name: Verify screenshot tests
-        id: screenshotsverify
-        if: ${{ !cancelled() }}
-        run: ./gradlew verifyPaparazziDebug
-
       - name: Delete all snapshot golden
-        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' }}
+        if: ${{ !cancelled() && steps.all-checks.outcome == 'failure' }}
         run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs -I {} rm {}
 
       - name: Generate new screenshots if verification failed
         id: screenshotsrecord
-        if: ${{ !cancelled() && steps.screenshotsverify.outcome == 'failure' && !startsWith(github.ref, 'refs/heads/renovate/') }}
+        if: ${{ !cancelled() && steps.all-checks.outcome == 'failure' && !startsWith(github.ref, 'refs/heads/renovate/') }}
         run: |
           ./gradlew recordPaparazziDebug
 
