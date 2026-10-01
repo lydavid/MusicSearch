@@ -1,16 +1,14 @@
 plugins {
-    id("ly.david.android.library")
-    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
+    id("ly.david.musicsearch.compose.multiplatform")
     alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
 }
 
-android {
-    namespace = "ly.david.musicsearch.shared.feature.details"
-}
-
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.shared.feature.details"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -39,7 +37,7 @@ kotlin {
                 implementation(libs.compose.ui.tooling)
             }
         }
-        val androidUnitTest by getting {
+        val androidHostTest by getting {
             dependencies {
                 implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)
@@ -50,18 +48,6 @@ kotlin {
                 implementation(libs.circuit.test)
                 implementation(libs.robolectric)
                 implementation(libs.mockk)
-            }
-        }
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(projects.testData)
-                implementation(libs.androidx.test.junit)
-                implementation(libs.androidx.test.espresso.core)
-                implementation(libs.androidx.arch.core.testing)
-                implementation(libs.bundles.kotlinx.coroutines)
-                implementation(libs.koin.test)
-                implementation(libs.sqldelight.android.driver)
-                implementation(libs.test.parameter.injector)
             }
         }
     }

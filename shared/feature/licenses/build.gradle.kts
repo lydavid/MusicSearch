@@ -1,14 +1,12 @@
 plugins {
-    id("ly.david.android.library")
-    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-}
-
-android {
-    namespace = "ly.david.musicsearch.shared.feature.licenses"
+    id("ly.david.musicsearch.compose.multiplatform")
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.shared.feature.licenses"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

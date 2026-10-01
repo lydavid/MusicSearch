@@ -1,11 +1,13 @@
 plugins {
-    id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.database"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -61,8 +63,4 @@ sqldelight {
             schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
         }
     }
-}
-
-android {
-    namespace = "ly.david.musicsearch.data.database"
 }

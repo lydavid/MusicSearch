@@ -59,7 +59,7 @@ jobs:
         id: screenshotsrecord
         if: ${{ !cancelled() && steps.all-checks.outcome == 'failure' && !startsWith(github.ref, 'refs/heads/renovate/') }}
         run: |
-          ./gradlew recordPaparazziDebug
+          ./gradlew recordPaparazzi
 
       - name: Push new screenshots if available
         if: ${{ !cancelled() && steps.screenshotsrecord.outcome == 'success' }}
