@@ -5,9 +5,9 @@ baselineprofile = "1.5.0-alpha06"
 benchmarkMacroJunit4 = "1.5.0"
 chucker = "4.3.1"
 circuit = "0.33.1"
-coil = "3.5.0"
+coil = "3.6.3"
 colorpicker = "1.2.0"
-compose-multiplatform = "1.11.1"
+compose-multiplatform = "1.12.1"
 datastore = "1.2.1"
 detekt = "1.23.8"
 junit = "4.13.2"
@@ -70,7 +70,7 @@ compose-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref = "compose-multiplatform" }
-compose-ui-test = "androidx.compose.ui:ui-test-junit4:1.11.4"
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-multiplatform" }
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-multiplatform" }
 composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }

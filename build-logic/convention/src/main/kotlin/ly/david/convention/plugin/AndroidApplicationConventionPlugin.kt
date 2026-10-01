@@ -9,7 +9,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
-const val COMPILE_SDK_VERSION = 36
+const val COMPILE_SDK_VERSION = 37
 private const val MIN_SDK_VERSION = 24
 
 @Suppress("unused")
