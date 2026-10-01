@@ -1,3 +1,5 @@
+package ly.david.musicsearch.konsist
+
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.lemonappdev.konsist.api.KoModifier
@@ -99,7 +101,8 @@ class KonsistTest {
         Konsist
             .scopeFromSourceSet(
                 "test",
-                "androidUnitTest",
+                "androidHostTest",
+                "jvmTest",
             )
             .classes()
             .filter {

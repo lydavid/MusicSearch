@@ -1,16 +1,14 @@
 plugins {
-    id("ly.david.android.library")
-    alias(libs.plugins.kotlin.parcelize)
-    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.parcelize")
     alias(libs.plugins.paparazzi)
 }
 
-android {
-    namespace = "ly.david.musicsearch.ui.common"
-}
-
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.ui.common"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -60,7 +58,7 @@ kotlin {
                 implementation(libs.coil.network.ktor3)
             }
         }
-        val androidUnitTest by getting {
+        val androidHostTest by getting {
             dependencies {
                 implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)

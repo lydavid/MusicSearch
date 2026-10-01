@@ -1,13 +1,8 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.powerAssert)
-}
-
-android {
-    namespace = "ly.david.musicsearch.data.repository"
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -20,6 +15,9 @@ powerAssert {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.data.repository"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {

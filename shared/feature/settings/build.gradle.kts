@@ -1,13 +1,8 @@
 plugins {
-    id("ly.david.android.library")
-    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
+    id("ly.david.musicsearch.compose.multiplatform")
     alias(libs.plugins.build.config)
     alias(libs.plugins.paparazzi)
-}
-
-android {
-    namespace = "ly.david.musicsearch.shared.feature.settings"
 }
 
 buildConfig {
@@ -22,6 +17,9 @@ buildConfig {
 }
 
 kotlin {
+    android {
+        namespace = "ly.david.musicsearch.shared.feature.settings"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -48,7 +46,7 @@ kotlin {
                 implementation(libs.compose.ui.tooling)
             }
         }
-        val androidUnitTest by getting {
+        val androidHostTest by getting {
             dependencies {
                 implementation(projects.testData)
                 implementation(projects.ui.test.screenshot)
