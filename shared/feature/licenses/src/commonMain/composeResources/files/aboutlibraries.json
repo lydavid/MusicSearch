@@ -1342,9 +1342,9 @@
         },
         {
             "uniqueId": "net.engawapg.lib:zoomable-android",
-            "artifactVersion": "2.12.0",
+            "artifactVersion": "2.15.0",
             "name": "Engawapg Zoomable",
-            "description": "An android library for Jetpack Compose that enables contents zoomable.",
+            "description": "A Compose Multiplatform library that enables contents zoomable.",
             "website": "https://github.com/usuiat/Zoomable",
             "developers": [
                 {
