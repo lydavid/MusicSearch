@@ -1,0 +1,68 @@
+stable class musicsearch.shared.feature.history.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.history.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.history.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.history.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.history.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.history.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  runtime val getPagedHistory: GetPagedHistory
+  runtime val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion
+  runtime val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion
+  runtime val deleteLookupHistory: DeleteLookupHistory
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
+  stable val sortOption: HistorySortOption
+  runtime val pagingDataFlow: Flow<PagingData<ListItemModel>>
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<HistoryUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.UpdateSortOption {
+  stable val sortOptionIndex: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.MarkHistoryForDeletion {
+  runtime val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.UnMarkHistoryForDeletion {
+  runtime val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.DeleteHistory {
+  runtime val history: LookupHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.MarkAllHistoryForDeletion {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.UnMarkAllHistoryForDeletion {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.DeleteAllHistory {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.history.internal.HistoryUiEvent.ClickItem {
+  stable val entityType: MusicBrainzEntityType
+  stable val id: String
+  <runtime stability> = Stable
+}

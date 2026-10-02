@@ -1,0 +1,15 @@
+unstable class ly.david.musicsearch.android.app.CrashlyticsCrashReporterSettings {
+  <runtime stability> = Unstable
+}
+unstable class ly.david.musicsearch.android.app.CrashlyticsTree {
+  <runtime stability> = Unstable
+}
+unstable class ly.david.musicsearch.android.app.MainActivity {
+  runtime val appPreferences$delegate: Lazy<AppPreferences>
+  runtime val circuit$delegate: Lazy<Circuit>
+  runtime val broadcastReceiver$delegate: Lazy<SpotifyBroadcastReceiver>
+  <runtime stability> = Unstable
+}
+unstable class ly.david.musicsearch.android.app.MusicSearchApplication {
+  <runtime stability> = Unstable
+}

@@ -1,0 +1,31 @@
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.licenses.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.licenses.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.licenses.internal.LicensesUiState {
+  stable val scrollToHideTopAppBar: Boolean
+  stable val eventSink: Function1<LicensesUiEvent, Unit>
+  <runtime stability> = Stable
+}

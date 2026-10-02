@@ -1,0 +1,62 @@
+stable class ly.david.musicsearch.shared.feature.spotify.BroadcastTypes {
+  stable val SPOTIFY_PACKAGE: String
+  stable val PLAYBACK_STATE_CHANGED: String
+  stable val QUEUE_CHANGED: String
+  stable val METADATA_CHANGED: String
+  <runtime stability> = Stable
+}
+unstable class ly.david.musicsearch.shared.feature.spotify.SpotifyBroadcastReceiver {
+  runtime val spotifyHistoryRepository$delegate: Lazy<SpotifyHistoryRepository>
+  <runtime stability> = Unstable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.drawable {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.string {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.array {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.plurals {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res.font {
+  <runtime stability> = Stable
+}
+stable class musicsearch.shared.feature.spotify.generated.resources.Res {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryPresenter {
+  stable val navigator: Navigator
+  runtime val spotifyHistoryRepository: SpotifyHistoryRepository
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiState {
+  stable val topAppBarFilterState: TopAppBarFilterState
+  stable val scrollToHideTopAppBar: Boolean
+  runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable val lazyListState: LazyListState
+  stable val eventSink: Function1<SpotifyUiEvent, Unit>
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.GoToSearch {
+  stable val query: String
+  stable val entityType: MusicBrainzEntityType
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.MarkForDeletion {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.UndoMarkForDeletion {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiEvent.Delete {
+  runtime val history: SpotifyHistoryListItemModel
+  <runtime stability> = Stable
+}

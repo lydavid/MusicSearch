@@ -1,0 +1,10 @@
+open fun ly.david.musicsearch.shared.feature.licenses.internal.LicensesPresenter.present(
+  stable <this>: LicensesPresenter
+): LicensesUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.licenses.internal.LicensesUi(
+  stable state: LicensesUiState
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.licenses.internal.LicensesUi(
+  stable modifier: Modifier? = @static <expression>
+)
