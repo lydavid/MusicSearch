@@ -1391,7 +1391,7 @@
         },
         {
             "uniqueId": "net.engawapg.lib:zoomable-android",
-            "artifactVersion": "2.15.0",
+            "artifactVersion": "2.16.0",
             "name": "Engawapg Zoomable",
             "description": "A Compose Multiplatform library that enables contents zoomable.",
             "website": "https://github.com/usuiat/Zoomable",
