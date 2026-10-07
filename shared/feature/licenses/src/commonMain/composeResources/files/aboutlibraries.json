@@ -672,10 +672,10 @@
         },
         {
             "uniqueId": "androidx.paging:paging-common-android",
-            "artifactVersion": "3.5.1",
+            "artifactVersion": "3.5.2",
             "name": "Paging-Common",
             "description": "Android Paging-Common",
-            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.5.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/paging#3.5.2",
             "developers": [
                 {
                     "name": "The Android Open Source Project"
