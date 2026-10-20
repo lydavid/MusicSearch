@@ -1,0 +1,3 @@
+### Features
+
+* add option to disable pull/swipe to refresh under Appearance Settings

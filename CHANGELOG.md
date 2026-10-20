@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.131.0](https://github.com/lydavid/MusicSearch/compare/v1.130.1...v1.131.0) (2026-10-20)
+
+
+### Features
+
+* add option to disable pull/swipe to refresh under Appearance Settings ([c78ccd8](https://github.com/lydavid/MusicSearch/commit/c78ccd83505f31a854624ba174bb9a7b37388031))
+
 ## [1.130.1](https://github.com/lydavid/MusicSearch/compare/v1.130.0...v1.130.1) (2026-09-30)
 
 
