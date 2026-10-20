@@ -1,6 +1,7 @@
 package ly.david.musicsearch.ui.common.paging
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,6 +60,7 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     customNoResultsText: String = "",
     keyed: Boolean = false,
     onLogin: () -> Unit = {},
+    isPullToRefreshEnabled: Boolean,
     header: @Composable (() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
@@ -68,71 +70,108 @@ fun <T : Identifiable> ScreenWithPagingLoadingAndError(
     val isRefreshing = lazyPagingItems.loadState.refresh is LoadState.Loading
     val refreshState = rememberPullToRefreshState()
 
-    PullToRefreshBox(
-        modifier = modifier,
-        state = refreshState,
-        isRefreshing = isRefreshing,
-        onRefresh = lazyPagingItems::refresh,
-    ) {
-        // This doesn't affect "loads" from db/source.
-        when {
-            lazyPagingItems.loadState.refresh is LoadState.Loading -> {
-                FullScreenLoadingIndicator()
-            }
+    if (isPullToRefreshEnabled) {
+        PullToRefreshBox(
+            modifier = modifier,
+            state = refreshState,
+            isRefreshing = isRefreshing,
+            onRefresh = lazyPagingItems::refresh,
+        ) {
+            ScreenWithPagingLoadingAndError(
+                lazyPagingItems = lazyPagingItems,
+                onLogin = onLogin,
+                noResultsText = noResultsText,
+                lazyListState = lazyListState,
+                keyed = keyed,
+                itemContent = itemContent,
+                header = header,
+            )
+        }
+    } else {
+        Box(
+            modifier = modifier,
+        ) {
+            ScreenWithPagingLoadingAndError(
+                lazyPagingItems = lazyPagingItems,
+                onLogin = onLogin,
+                noResultsText = noResultsText,
+                lazyListState = lazyListState,
+                keyed = keyed,
+                itemContent = itemContent,
+                header = header,
+            )
+        }
+    }
+}
 
-            lazyPagingItems.loadState.refresh is LoadState.Error -> {
-                FullScreenErrorWithActionableButton(
-                    handledException = (lazyPagingItems.loadState.refresh as LoadState.Error).error
-                        as? HandledException,
-                    onRefresh = { lazyPagingItems.refresh() },
-                    onLogin = onLogin,
-                )
-            }
+@Composable
+private fun <T : Identifiable> ScreenWithPagingLoadingAndError(
+    lazyPagingItems: LazyPagingItems<T>,
+    onLogin: () -> Unit,
+    noResultsText: String,
+    lazyListState: LazyListState,
+    keyed: Boolean,
+    itemContent: @Composable (LazyItemScope.(T?) -> Unit),
+    header: @Composable (() -> Unit)?,
+) {
+    // This doesn't affect "loads" from db/source.
+    when {
+        lazyPagingItems.loadState.refresh is LoadState.Loading -> {
+            FullScreenLoadingIndicator()
+        }
 
-            lazyPagingItems.loadState.append.endOfPaginationReached &&
-                lazyPagingItems.itemCount == 0 ||
-                lazyPagingItems.itemCount == 1 && lazyPagingItems[0] is Header -> {
-                FullScreenText(noResultsText)
-            }
+        lazyPagingItems.loadState.refresh is LoadState.Error -> {
+            FullScreenErrorWithActionableButton(
+                handledException = (lazyPagingItems.loadState.refresh as LoadState.Error).error
+                    as? HandledException,
+                onRefresh = { lazyPagingItems.refresh() },
+                onLogin = onLogin,
+            )
+        }
 
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    state = lazyListState,
-                ) {
-                    for (index in 0 until lazyPagingItems.itemCount) {
-                        when (val item = lazyPagingItems.peek(index)) {
-                            is ListSeparator, is ReleaseGroupListSeparator -> {
-                                stickyHeader(
-                                    key = item.id.takeIf { keyed },
-                                ) {
-                                    itemContent(this, lazyPagingItems[index])
+        lazyPagingItems.loadState.append.endOfPaginationReached &&
+            lazyPagingItems.itemCount == 0 ||
+            lazyPagingItems.itemCount == 1 && lazyPagingItems[0] is Header -> {
+            FullScreenText(noResultsText)
+        }
+
+        else -> {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = lazyListState,
+            ) {
+                for (index in 0 until lazyPagingItems.itemCount) {
+                    when (val item = lazyPagingItems.peek(index)) {
+                        is ListSeparator, is ReleaseGroupListSeparator -> {
+                            stickyHeader(
+                                key = item.id.takeIf { keyed },
+                            ) {
+                                itemContent(this, lazyPagingItems[index])
+                            }
+
+                            if (header != null && index == 0) {
+                                item {
+                                    header()
                                 }
+                            }
+                        }
 
-                                if (header != null && index == 0) {
-                                    item {
-                                        header()
-                                    }
+                        else -> {
+                            if (header != null && index == 0) {
+                                item {
+                                    header()
                                 }
                             }
 
-                            else -> {
-                                if (header != null && index == 0) {
-                                    item {
-                                        header()
-                                    }
-                                }
+                            item(
+                                key = item?.id.takeIf { keyed },
+                            ) {
+                                itemContent(this, lazyPagingItems[index])
+                            }
 
-                                item(
-                                    key = item?.id.takeIf { keyed },
-                                ) {
-                                    itemContent(this, lazyPagingItems[index])
-                                }
-
-                                if (index == lazyPagingItems.itemCount - 1) {
-                                    item {
-                                        AppendFooter(lazyPagingItems)
-                                    }
+                            if (index == lazyPagingItems.itemCount - 1) {
+                                item {
+                                    AppendFooter(lazyPagingItems)
                                 }
                             }
                         }

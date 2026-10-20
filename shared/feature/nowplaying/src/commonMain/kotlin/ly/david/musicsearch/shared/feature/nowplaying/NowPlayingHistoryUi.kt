@@ -46,6 +46,7 @@ internal fun NowPlayingHistoryUi(
         NowPlayingHistoryContent(
             lazyPagingItems = state.lazyPagingItems,
             filterText = state.topAppBarFilterState.filterText,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             lazyListState = state.lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
@@ -69,6 +70,7 @@ internal fun NowPlayingHistoryUi(
 private fun NowPlayingHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     filterText: String,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
@@ -78,35 +80,37 @@ private fun NowPlayingHistoryContent(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is ListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.text)
+                }
 
-            is NowPlayingHistoryListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        NowPlayingHistoryListItem(
-                            nowPlayingHistory = listItemModel,
-                            filterText = filterText,
-                            onClick = {
-                                searchMusicBrainz(
-                                    "\"$title\" artist:\"$artist\"",
-                                    MusicBrainzEntityType.RECORDING,
-                                )
-                            },
-                        )
-                    },
-                    onDelete = {
-                        onDelete(listItemModel.id)
-                    },
-                )
-            }
+                is NowPlayingHistoryListItemModel -> {
+                    SwipeToDeleteListItem(
+                        content = {
+                            NowPlayingHistoryListItem(
+                                nowPlayingHistory = listItemModel,
+                                filterText = filterText,
+                                onClick = {
+                                    searchMusicBrainz(
+                                        "\"$title\" artist:\"$artist\"",
+                                        MusicBrainzEntityType.RECORDING,
+                                    )
+                                },
+                            )
+                        },
+                        onDelete = {
+                            onDelete(listItemModel.id)
+                        },
+                    )
+                }
 
-            else -> {
-                // Do nothing.
+                else -> {
+                    // Do nothing.
+                }
             }
-        }
-    }
+        },
+    )
 }

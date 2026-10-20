@@ -158,6 +158,7 @@ internal fun AllLocalEntitiesUi(
             uiState = uiState,
             filterText = state.topAppBarFilterState.filterText,
             now = now,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             boldUnvisited = state.boldUnvisited,
             modifier = Modifier
                 .padding(innerPadding)

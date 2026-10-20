@@ -48,6 +48,7 @@ fun EntitiesPagingListUi(
     filterText: String,
     now: Instant,
     boldUnvisited: Boolean,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
     selectedIds: ImmutableList<String> = persistentListOf(),
@@ -63,6 +64,7 @@ fun EntitiesPagingListUi(
         modifier = modifier,
         lazyListState = uiState.lazyListState,
         keyed = true,
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
         onLogin = onLogin,
         header = header,
         itemContent = { listItemModel: ListItemModel? ->

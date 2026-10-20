@@ -37,6 +37,7 @@ internal class NowPlayingHistoryPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val listItems by rememberRetained(query) {
             mutableStateOf(
                 getNowPlayingHistory(
@@ -72,6 +73,7 @@ internal class NowPlayingHistoryPresenter(
         return NowPlayingHistoryUiState(
             topAppBarFilterState = topAppBarFilterState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -83,6 +85,7 @@ internal class NowPlayingHistoryPresenter(
 internal data class NowPlayingHistoryUiState(
     val topAppBarFilterState: TopAppBarFilterState = TopAppBarFilterState(),
     val scrollToHideTopAppBar: Boolean = false,
+    val isPullToRefreshEnabled: Boolean = true,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (NowPlayingHistoryUiEvent) -> Unit = {},

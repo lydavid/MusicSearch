@@ -50,6 +50,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
             Tab.DETAILS -> {
                 DetailsWithErrorHandling(
                     modifier = Modifier.fillMaxSize(),
+                    isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                     isLoading = state.detailsTabUiState.isLoading,
                     handledException = state.detailsTabUiState.handledException,
                     onRefresh = {
@@ -66,6 +67,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     uiState = state.allEntitiesListUiState.tracksByReleaseUiState,
                     filterText = state.topAppBarFilterState.filterText,
                     boldUnvisited = state.boldUnvisited,
+                    isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                     onRecordingClick = { id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
@@ -99,6 +101,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     filterText = filterText,
                     now = state.detailsTabUiState.now,
                     boldUnvisited = state.boldUnvisited,
+                    isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                     onItemClick = { entity, id ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(

@@ -70,6 +70,7 @@ internal class CollectionPresenter(
         val query = topAppBarFilterState.filterText
         var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         val loginUiState = musicBrainzLoginPresenter.present()
@@ -189,6 +190,7 @@ internal class CollectionPresenter(
             musicBrainzLoginUiState = loginUiState,
             allEntitiesListUiState = entitiesListUiState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             boldUnvisited = boldUnvisited,
             eventSink = ::eventSink,
         )
@@ -207,6 +209,7 @@ internal data class CollectionUiState(
     val musicBrainzLoginUiState: MusicBrainzLoginUiState,
     val allEntitiesListUiState: AllEntitiesListUiState,
     val scrollToHideTopAppBar: Boolean = false,
+    val isPullToRefreshEnabled: Boolean = true,
     val boldUnvisited: Boolean = true,
     val eventSink: (CollectionUiEvent) -> Unit,
 ) : CircuitUiState

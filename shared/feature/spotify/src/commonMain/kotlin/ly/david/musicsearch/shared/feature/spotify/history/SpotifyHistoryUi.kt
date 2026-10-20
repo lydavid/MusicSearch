@@ -60,6 +60,7 @@ internal fun SpotifyHistoryUi(
         SpotifyHistoryContent(
             lazyPagingItems = state.lazyPagingItems,
             filterText = state.topAppBarFilterState.filterText,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             lazyListState = state.lazyListState,
             modifier = Modifier
                 .padding(innerPadding)
@@ -108,6 +109,7 @@ internal fun SpotifyHistoryUi(
 private fun SpotifyHistoryContent(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     filterText: String,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     searchMusicBrainz: (query: String, entity: MusicBrainzEntityType) -> Unit = { _, _ -> },
@@ -136,32 +138,34 @@ private fun SpotifyHistoryContent(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is ListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.text)
+                }
 
-            is SpotifyHistoryListItemModel -> {
-                SwipeToDeleteListItem(
-                    content = {
-                        SpotifyHistoryListItem(
-                            spotifyHistory = listItemModel,
-                            filterText = filterText,
-                            onClick = {
-                                clickListItem = this
-                            },
-                        )
-                    },
-                    onDelete = {
-                        onDelete(listItemModel)
-                    },
-                )
-            }
+                is SpotifyHistoryListItemModel -> {
+                    SwipeToDeleteListItem(
+                        content = {
+                            SpotifyHistoryListItem(
+                                spotifyHistory = listItemModel,
+                                filterText = filterText,
+                                onClick = {
+                                    clickListItem = this
+                                },
+                            )
+                        },
+                        onDelete = {
+                            onDelete(listItemModel)
+                        },
+                    )
+                }
 
-            else -> {
-                // Do nothing.
+                else -> {
+                    // Do nothing.
+                }
             }
-        }
-    }
+        },
+    )
 }

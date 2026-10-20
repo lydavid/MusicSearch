@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -21,6 +22,7 @@ import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
 
@@ -31,6 +33,7 @@ internal class GenrePresenter(
     override val incrementLookupHistory: IncrementLookupHistory,
     private val logger: Logger,
     private val getMusicBrainzUrl: GetMusicBrainzUrl,
+    private val appPreferences: AppPreferences,
 ) : Presenter<GenreUiState>, RecordVisit {
 
     @Composable
@@ -39,6 +42,7 @@ internal class GenrePresenter(
         var handledException: HandledException? by rememberSaveable { mutableStateOf(null) }
         var genre: GenreListItemModel? by rememberRetained { mutableStateOf(null) }
         var forceRefreshDetails by remember { mutableStateOf(false) }
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
 
         LaunchedEffect(forceRefreshDetails) {
             try {
@@ -80,6 +84,7 @@ internal class GenrePresenter(
             handledException = handledException,
             genre = genre,
             url = getMusicBrainzUrl(entity = MusicBrainzEntity(type = screen.entityType, id = screen.id)),
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             eventSink = ::genreSink,
         )
     }
@@ -91,6 +96,7 @@ internal data class GenreUiState(
     val genre: GenreListItemModel?,
     val handledException: HandledException? = null,
     val url: String = "",
+    val isPullToRefreshEnabled: Boolean = true,
     val eventSink: (GenreUiEvent) -> Unit = {},
 ) : CircuitUiState
 

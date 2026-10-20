@@ -45,6 +45,7 @@ internal fun GenreUi(
     ) { innerPadding ->
         DetailsWithErrorHandling(
             modifier = Modifier.padding(innerPadding),
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             handledException = state.handledException,
             onRefresh = { eventSink(GenreUiEvent.ForceRefresh) },
             detailsModel = state.genre,

@@ -218,6 +218,13 @@ open class NoOpAppPreferences : AppPreferences {
         // No-op.
     }
 
+    override val isPullToRefreshEnabled: Flow<Boolean>
+        get() = flowOf()
+
+    override fun setPullToRefresh(enable: Boolean) {
+        // No-op.
+    }
+
     override val observeNumberOfListensInDetails: Flow<Long>
         get() = flowOf(DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW)
 

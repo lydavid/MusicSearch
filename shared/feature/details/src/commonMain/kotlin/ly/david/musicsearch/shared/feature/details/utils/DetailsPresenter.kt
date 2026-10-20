@@ -118,6 +118,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
         ).collectAsRetainedState(false)
         val loggedInUsername by listenBrainzAuthStore.username.collectAsRetainedState("")
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         val entitiesListUiState = allEntitiesListPresenter.present()
@@ -331,6 +332,7 @@ internal abstract class DetailsPresenter<DetailsModel : MusicBrainzDetailsModel>
             allEntitiesListUiState = entitiesListUiState,
             musicBrainzLoginUiState = loginUiState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             boldUnvisited = boldUnvisited,
             eventSink = ::eventSink,
         )
@@ -353,6 +355,7 @@ internal data class DetailsUiState<DetailsModel : MusicBrainzDetailsModel>(
     val allEntitiesListUiState: AllEntitiesListUiState = AllEntitiesListUiState(),
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val scrollToHideTopAppBar: Boolean = false,
+    val isPullToRefreshEnabled: Boolean = true,
     val boldUnvisited: Boolean = true,
     val eventSink: (DetailsUiEvent) -> Unit = {},
 ) : CircuitUiState

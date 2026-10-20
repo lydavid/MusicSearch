@@ -38,6 +38,7 @@ internal class SpotifyHistoryPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val listItems: Flow<PagingData<ListItemModel>> by rememberRetained(query) {
             mutableStateOf(
                 spotifyHistoryRepository.observeSpotifyHistory(
@@ -90,6 +91,7 @@ internal class SpotifyHistoryPresenter(
         return SpotifyUiState(
             topAppBarFilterState = topAppBarFilterState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             lazyPagingItems = listItems.collectAsLazyPagingItems(),
             lazyListState = lazyListState,
             eventSink = ::eventSink,
@@ -101,6 +103,7 @@ internal class SpotifyHistoryPresenter(
 internal data class SpotifyUiState(
     val topAppBarFilterState: TopAppBarFilterState,
     val scrollToHideTopAppBar: Boolean,
+    val isPullToRefreshEnabled: Boolean = true,
     val lazyPagingItems: LazyPagingItems<ListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
     val eventSink: (SpotifyUiEvent) -> Unit = {},

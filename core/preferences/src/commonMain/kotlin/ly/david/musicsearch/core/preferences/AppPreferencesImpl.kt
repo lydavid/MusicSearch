@@ -43,6 +43,7 @@ import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.shared.domain.spotify.SpotifyOAuthInfo
 
+@Suppress("LargeClass")
 internal class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,
@@ -531,6 +532,25 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[scrollToHideTopAppBarPreference] = enable
+            }
+        }
+    }
+
+    private val enablePullToRefreshPreference =
+        booleanPreferencesKey(AppPreferencesKey.IS_PULL_TO_REFRESH_ENABLED.name)
+    override val isPullToRefreshEnabled: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[enablePullToRefreshPreference] ?: true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setPullToRefresh(enable: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[enablePullToRefreshPreference] = enable
             }
         }
     }

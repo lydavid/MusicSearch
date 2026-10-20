@@ -48,6 +48,7 @@ import musicsearch.ui.common.generated.resources.boldUnvisited
 import musicsearch.ui.common.generated.resources.boldUnvisitedDescription
 import musicsearch.ui.common.generated.resources.dark
 import musicsearch.ui.common.generated.resources.light
+import musicsearch.ui.common.generated.resources.pullToRefresh
 import musicsearch.ui.common.generated.resources.reset
 import musicsearch.ui.common.generated.resources.scrollToHideTopAppBar
 import musicsearch.ui.common.generated.resources.seedColor
@@ -109,12 +110,22 @@ internal fun AppearanceSettingsUi(
                 },
             )
 
+            // not really related to appearance
+            // once there's more options similar to this, put them in their own group
+            SettingSwitch(
+                header = stringResource(Res.string.pullToRefresh),
+                checked = state.isPullToRefreshEnabled,
+                onCheckedChange = {
+                    eventSink(AppearanceSettingsUiEvent.UpdatePullToRefresh(it))
+                },
+            )
+
             SettingSwitch(
                 header = stringResource(Res.string.boldUnvisited),
                 subtitle = stringResource(Res.string.boldUnvisitedDescription),
                 checked = state.boldUnvisited,
                 onCheckedChange = {
-                    eventSink(AppearanceSettingsUiEvent.BoldUnvisited(it))
+                    eventSink(AppearanceSettingsUiEvent.UpdateBoldUnvisited(it))
                 },
             )
 

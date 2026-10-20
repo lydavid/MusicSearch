@@ -51,6 +51,7 @@ import kotlin.time.Clock
 internal fun SearchResultsUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     boldUnvisited: Boolean,
+    isPullToRefreshEnabled: Boolean,
     lazyListState: LazyListState = rememberLazyListState(),
     onEditCollectionClick: (String) -> Unit,
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
@@ -59,14 +60,16 @@ internal fun SearchResultsUi(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         customNoResultsText = stringResource(Res.string.noResultsFoundSearch),
-    ) { listItemModel: ListItemModel? ->
-        ListItemUi(
-            listItemModel = listItemModel,
-            boldUnvisited = boldUnvisited,
-            onEditCollectionClick = onEditCollectionClick,
-            onItemClick = onItemClick,
-        )
-    }
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
+        itemContent = { listItemModel: ListItemModel? ->
+            ListItemUi(
+                listItemModel = listItemModel,
+                boldUnvisited = boldUnvisited,
+                onEditCollectionClick = onEditCollectionClick,
+                onItemClick = onItemClick,
+            )
+        },
+    )
 }
 
 @Composable

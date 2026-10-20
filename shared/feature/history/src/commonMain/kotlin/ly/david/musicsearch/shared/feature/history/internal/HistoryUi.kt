@@ -140,6 +140,7 @@ internal fun HistoryUi(
         HistoryUi(
             lazyPagingItems = lazyPagingItems,
             filterText = state.topAppBarFilterState.filterText,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -186,6 +187,7 @@ internal fun HistoryUi(
 internal fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     filterText: String,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
     onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
@@ -195,24 +197,26 @@ internal fun HistoryUi(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is ListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.text)
+                }
 
-            is LookupHistoryListItemModel -> {
-                HistoryListItem(
-                    lookupHistory = listItemModel,
-                    filterText = filterText,
-                    onItemClick = onItemClick,
-                    onDeleteItem = onDeleteItem,
-                )
-            }
+                is LookupHistoryListItemModel -> {
+                    HistoryListItem(
+                        lookupHistory = listItemModel,
+                        filterText = filterText,
+                        onItemClick = onItemClick,
+                        onDeleteItem = onDeleteItem,
+                    )
+                }
 
-            else -> {
-                // Do nothing.
+                else -> {
+                    // Do nothing.
+                }
             }
-        }
-    }
+        },
+    )
 }

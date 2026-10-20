@@ -117,6 +117,7 @@ val detailsFeatureModule = module {
                                 incrementLookupHistory = get(),
                                 logger = get(),
                                 getMusicBrainzUrl = get(),
+                                appPreferences = get(),
                             )
                         }
 

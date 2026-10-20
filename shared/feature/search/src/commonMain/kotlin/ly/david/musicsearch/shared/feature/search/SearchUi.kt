@@ -155,6 +155,7 @@ private fun SearchUiContent(
             SearchHistoryUi(
                 lazyPagingItems = state.searchHistory,
                 lazyListState = state.searchHistoryListState,
+                isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                 onItemClick = { entityType, query ->
                     eventSink(SearchUiEvent.UpdateEntity(entityType))
                     eventSink(SearchUiEvent.UpdateQuery(query))
@@ -170,6 +171,7 @@ private fun SearchUiContent(
             SearchResultsUi(
                 lazyPagingItems = state.searchResults,
                 lazyListState = state.searchResultsListState,
+                isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                 boldUnvisited = state.boldUnvisited,
                 onEditCollectionClick = {
                     showEditCollectionSheet(

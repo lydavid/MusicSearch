@@ -467,4 +467,5 @@
     <string name="lastListenedXAgo">Last listened %s.</string>
     <string name="boldUnvisited">Bold unvisited items</string>
     <string name="boldUnvisitedDescription">Show names of entities in bold until you've clicked on them</string>
+    <string name="pullToRefresh">Pull to refresh</string>
 </resources>

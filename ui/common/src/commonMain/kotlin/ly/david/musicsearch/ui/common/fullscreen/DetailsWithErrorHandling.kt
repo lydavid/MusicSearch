@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.fullscreen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -10,40 +11,67 @@ import ly.david.musicsearch.shared.domain.error.HandledException
 /**
  * For displaying a [detailsScreen], showing a loading indicator when [detailsModel] is null,
  * handling errors when [handledException] is not null, and delegating retry with [onRefresh].
- * Supports pull to refresh, delegating to [onRefresh].
+ * Supports pull to refresh if [isPullToRefreshEnabled], delegating to [onRefresh].
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DetailsWithErrorHandling(
     detailsModel: T?,
     onRefresh: () -> Unit,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     handledException: HandledException? = null,
     detailsScreen: @Composable ((T) -> Unit),
 ) {
-    val refreshState = rememberPullToRefreshState()
-    PullToRefreshBox(
-        modifier = modifier,
-        state = refreshState,
-        isRefreshing = isLoading,
-        onRefresh = onRefresh,
-    ) {
-        when {
-            handledException != null -> {
-                FullScreenErrorWithActionableButton(
-                    handledException = handledException,
-                    onRefresh = onRefresh,
-                )
-            }
+    if (isPullToRefreshEnabled) {
+        val refreshState = rememberPullToRefreshState()
+        PullToRefreshBox(
+            modifier = modifier,
+            state = refreshState,
+            isRefreshing = isLoading,
+            onRefresh = onRefresh,
+        ) {
+            DetailsWithErrorHandling(
+                handledException = handledException,
+                onRefresh = onRefresh,
+                detailsModel = detailsModel,
+                detailsScreen = detailsScreen,
+            )
+        }
+    } else {
+        Box(modifier = modifier) {
+            DetailsWithErrorHandling(
+                handledException = handledException,
+                onRefresh = onRefresh,
+                detailsModel = detailsModel,
+                detailsScreen = detailsScreen,
+            )
+        }
+    }
+}
 
-            detailsModel == null -> {
-                FullScreenLoadingIndicator()
-            }
+@Composable
+private fun <T> DetailsWithErrorHandling(
+    handledException: HandledException?,
+    onRefresh: () -> Unit,
+    detailsModel: T?,
+    detailsScreen: @Composable ((T) -> Unit),
+) {
+    when {
+        handledException != null -> {
+            FullScreenErrorWithActionableButton(
+                handledException = handledException,
+                onRefresh = onRefresh,
+            )
+        }
 
-            else -> {
-                detailsScreen(detailsModel)
-            }
+        detailsModel == null -> {
+            FullScreenLoadingIndicator()
+        }
+
+        else -> {
+            detailsScreen(detailsModel)
         }
     }
 }

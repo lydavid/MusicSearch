@@ -49,6 +49,7 @@ internal class CollectionListPresenter(
         val topAppBarFilterState = rememberTopAppBarFilterState()
         val query = topAppBarFilterState.filterText
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
         val showLocal by appPreferences.showLocalCollections.collectAsRetainedState(true)
         val showRemote by appPreferences.showRemoteCollections.collectAsRetainedState(true)
@@ -150,6 +151,7 @@ internal class CollectionListPresenter(
         return CollectionsListUiState(
             topAppBarFilterState = topAppBarFilterState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             boldUnvisited = boldUnvisited,
             showLocal = showLocal,
             showRemote = showRemote,
@@ -175,6 +177,7 @@ internal data class CollectionsListUiState(
     val selectionState: SelectionState = SelectionState(),
     val lazyPagingItems: LazyPagingItems<CollectionListItemModel>,
     val lazyListState: LazyListState = LazyListState(),
+    val isPullToRefreshEnabled: Boolean = true,
     val firstActionableResult: ActionableResult? = null,
     val secondActionableResult: ActionableResult? = null,
     val eventSink: (CollectionsListUiEvent) -> Unit = {},

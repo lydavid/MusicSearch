@@ -568,32 +568,34 @@ private fun ListensContent(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
             keyed = true,
-        ) { listItemModel: Identifiable? ->
-            when (listItemModel) {
-                is ListenListItemModel -> ListenListItem(
-                    listen = listItemModel,
-                    filterText = filterText,
-                    boldUnvisited = state.boldUnvisited,
-                    onClick = { id ->
-                        eventSink(
-                            ListensUiEvent.GoToScreen(
-                                DetailsScreen(
-                                    entityType = MusicBrainzEntityType.RECORDING,
-                                    id = id,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
+            itemContent = { listItemModel: Identifiable? ->
+                when (listItemModel) {
+                    is ListenListItemModel -> ListenListItem(
+                        listen = listItemModel,
+                        filterText = filterText,
+                        boldUnvisited = state.boldUnvisited,
+                        onClick = { id ->
+                            eventSink(
+                                ListensUiEvent.GoToScreen(
+                                    DetailsScreen(
+                                        entityType = MusicBrainzEntityType.RECORDING,
+                                        id = id,
+                                    ),
                                 ),
-                            ),
-                        )
-                    },
-                    onMoreActionsClick = {
-                        showBottomSheetForListen = listItemModel
-                    },
-                )
+                            )
+                        },
+                        onMoreActionsClick = {
+                            showBottomSheetForListen = listItemModel
+                        },
+                    )
 
-                is ListSeparator -> ListSeparatorHeader(
-                    text = listItemModel.text,
-                )
-            }
-        }
+                    is ListSeparator -> ListSeparatorHeader(
+                        text = listItemModel.text,
+                    )
+                }
+            },
+        )
     }
 }
 

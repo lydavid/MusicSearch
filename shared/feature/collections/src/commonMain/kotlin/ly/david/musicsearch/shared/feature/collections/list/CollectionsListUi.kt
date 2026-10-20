@@ -210,6 +210,7 @@ internal fun CollectionListUi(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
             keyed = true,
+            isPullToRefreshEnabled = state.isPullToRefreshEnabled,
             onLogin = {
                 // not needed here because we don't load remote collections if not logged in
             },

@@ -34,6 +34,7 @@ internal fun TracksByReleaseUi(
     uiState: TracksByReleaseUiState,
     filterText: String,
     boldUnvisited: Boolean,
+    isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
     selectedIds: ImmutableList<SelectableId> = persistentListOf(),
@@ -64,37 +65,39 @@ internal fun TracksByReleaseUi(
         lazyPagingItems = uiState.pagingDataFlow.collectAsLazyPagingItems(),
         modifier = modifier,
         lazyListState = uiState.lazyListState,
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
         header = header,
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is TrackListItemModel -> {
-                if (!uiState.collapsedMediumIds.contains(listItemModel.mediumId)) {
-                    TrackListItem(
-                        track = listItemModel,
-                        filterText = filterText,
-                        boldUnvisited = boldUnvisited,
-                        mostListenedTrackCount = uiState.mostListenedTrackCount,
-                        onRecordingClick = onRecordingClick,
-                        isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
-                        onSelect = onSelect,
-                        onMoreActionsClick = { showBottomSheetForTrack = listItemModel },
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is TrackListItemModel -> {
+                    if (!uiState.collapsedMediumIds.contains(listItemModel.mediumId)) {
+                        TrackListItem(
+                            track = listItemModel,
+                            filterText = filterText,
+                            boldUnvisited = boldUnvisited,
+                            mostListenedTrackCount = uiState.mostListenedTrackCount,
+                            onRecordingClick = onRecordingClick,
+                            isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
+                            onSelect = onSelect,
+                            onMoreActionsClick = { showBottomSheetForTrack = listItemModel },
+                        )
+                    }
+                }
+
+                is ListSeparator -> {
+                    CollapsibleListSeparatorHeader(
+                        text = listItemModel.text,
+                        collapsed = uiState.collapsedMediumIds.contains(listItemModel.id.toLong()),
+                        onClick = {
+                            eventSink(TracksByReleaseUiEvent.ToggleMedium(listItemModel.id))
+                        },
                     )
                 }
-            }
 
-            is ListSeparator -> {
-                CollapsibleListSeparatorHeader(
-                    text = listItemModel.text,
-                    collapsed = uiState.collapsedMediumIds.contains(listItemModel.id.toLong()),
-                    onClick = {
-                        eventSink(TracksByReleaseUiEvent.ToggleMedium(listItemModel.id))
-                    },
-                )
+                else -> {
+                    // Do nothing.
+                }
             }
-
-            else -> {
-                // Do nothing.
-            }
-        }
-    }
+        },
+    )
 }

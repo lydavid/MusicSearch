@@ -49,6 +49,7 @@ internal class SearchPresenter(
         var entity by rememberSaveable { mutableStateOf(screen.entityType ?: MusicBrainzEntityType.ARTIST) }
 
         val scrollToHideTopAppBar by appPreferences.scrollToHideTopAppBar.collectAsRetainedState(false)
+        val isPullToRefreshEnabled by appPreferences.isPullToRefreshEnabled.collectAsRetainedState(true)
         val boldUnvisited by appPreferences.boldUnvisited.collectAsRetainedState(true)
 
         val searchResults by rememberRetained(query, entity) {
@@ -124,6 +125,7 @@ internal class SearchPresenter(
             searchHistory = searchHistory.collectAsLazyPagingItems(),
             searchHistoryListState = searchHistoryListState,
             scrollToHideTopAppBar = scrollToHideTopAppBar,
+            isPullToRefreshEnabled = isPullToRefreshEnabled,
             boldUnvisited = boldUnvisited,
             musicBrainzLoginUiState = loginUiState,
             eventSink = ::eventSink,
@@ -140,6 +142,7 @@ internal data class SearchUiState(
     val searchHistory: LazyPagingItems<ListItemModel>,
     val searchHistoryListState: LazyListState = LazyListState(),
     val scrollToHideTopAppBar: Boolean = false,
+    val isPullToRefreshEnabled: Boolean = true,
     val boldUnvisited: Boolean = true,
     val musicBrainzLoginUiState: MusicBrainzLoginUiState = MusicBrainzLoginUiState(),
     val eventSink: (SearchUiEvent) -> Unit,

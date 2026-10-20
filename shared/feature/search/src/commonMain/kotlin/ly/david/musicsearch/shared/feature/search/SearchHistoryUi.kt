@@ -24,6 +24,7 @@ import org.jetbrains.compose.resources.stringResource
 internal fun SearchHistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
+    isPullToRefreshEnabled: Boolean,
     onItemClick: (entityType: MusicBrainzEntityType, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
     onDeleteAllHistory: () -> Unit = {},
@@ -44,27 +45,29 @@ internal fun SearchHistoryUi(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         customNoResultsText = "Enter a query to start searching MusicBrainz's database",
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is Header -> {
-                RecentSearchesHeader(
-                    onDeleteAllHistory = {
-                        showDeleteConfirmationDialog = true
-                    },
-                )
-            }
+        isPullToRefreshEnabled = isPullToRefreshEnabled,
+        itemContent = { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is Header -> {
+                    RecentSearchesHeader(
+                        onDeleteAllHistory = {
+                            showDeleteConfirmationDialog = true
+                        },
+                    )
+                }
 
-            is SearchHistoryListItemModel -> {
-                SearchHistoryListItem(
-                    searchHistory = listItemModel,
-                    onItemClick = onItemClick,
-                    onDeleteItem = onDeleteItem,
-                )
-            }
+                is SearchHistoryListItemModel -> {
+                    SearchHistoryListItem(
+                        searchHistory = listItemModel,
+                        onItemClick = onItemClick,
+                        onDeleteItem = onDeleteItem,
+                    )
+                }
 
-            else -> {
-                // Do nothing.
+                else -> {
+                    // Do nothing.
+                }
             }
-        }
-    }
+        },
+    )
 }

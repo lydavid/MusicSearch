@@ -283,6 +283,7 @@ internal fun CollectionUi(
                 filterText = state.topAppBarFilterState.filterText,
                 now = now,
                 boldUnvisited = state.boldUnvisited,
+                isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
