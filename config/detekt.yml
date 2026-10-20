@@ -26,6 +26,7 @@ naming:
   FunctionNaming:
     ignoreAnnotated:
       - "Composable"
+      - "Test"
 style:
   ForbiddenComment:
     active: false

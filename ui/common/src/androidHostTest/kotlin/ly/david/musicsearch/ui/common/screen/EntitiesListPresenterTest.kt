@@ -53,7 +53,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 class EntitiesListPresenterTest {
 
-    @Suppress("LongMethod")
+    @Suppress("LongMethod", "MagicNumber")
     private fun createPresenter(
         areasListItems: List<ListItemModel>,
         artistsListItems: List<ListItemModel>,
