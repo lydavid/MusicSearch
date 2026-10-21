@@ -409,10 +409,10 @@
         },
         {
             "uniqueId": "androidx.datastore:datastore-android",
-            "artifactVersion": "1.2.1",
+            "artifactVersion": "1.3.0",
             "name": "DataStore",
             "description": "Android DataStore - contains the underlying store used by each serialization method along with components that require an Android dependency",
-            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.2.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.3.0",
             "developers": [
                 {
                     "name": "The Android Open Source Project"
@@ -434,10 +434,10 @@
         },
         {
             "uniqueId": "androidx.datastore:datastore-preferences-external-protobuf",
-            "artifactVersion": "1.2.1",
+            "artifactVersion": "1.3.0",
             "name": "Preferences External Protobuf",
             "description": "Repackaged proto-lite dependency for use by datastore preferences",
-            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.2.1",
+            "website": "https://developer.android.com/jetpack/androidx/releases/datastore#1.3.0",
             "developers": [
                 {
                     "name": "The Android Open Source Project"
@@ -815,16 +815,19 @@
             ]
         },
         {
-            "uniqueId": "androidx.tracing:tracing",
-            "artifactVersion": "1.2.0",
-            "name": "Android Tracing",
+            "uniqueId": "androidx.tracing:tracing-android",
+            "artifactVersion": "2.0.1",
+            "name": "Tracing",
             "description": "Android Tracing",
-            "website": "https://developer.android.com/jetpack/androidx/releases/tracing#1.2.0",
+            "website": "https://developer.android.com/jetpack/androidx/releases/tracing#2.0.1",
             "developers": [
                 {
                     "name": "The Android Open Source Project"
                 }
             ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            },
             "scm": {
                 "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
                 "url": "https://cs.android.com/androidx/platform/frameworks/support"
