@@ -467,4 +467,5 @@
     <string name="lastListenedXAgo">Zuletzt gehört %s.</string>
     <string name="boldUnvisited">Nicht besuchte Einträge fett</string>
     <string name="boldUnvisitedDescription">Namen der Entitäten fett dargestellen, bis sie darauf geklickt wurden</string>
+    <string name="pullToRefresh">Zum Aktualisieren nach unten ziehen</string>
 </resources>
