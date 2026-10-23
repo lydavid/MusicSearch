@@ -313,9 +313,16 @@ fun ly.david.musicsearch.ui.common.event.getDisplayString(
 restartable skippable fun ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling(
   detailsModel: T?
   stable onRefresh: Function0<Unit>
+  stable isPullToRefreshEnabled: Boolean
   stable modifier: Modifier? = @static <expression>
   stable isLoading: Boolean = @static false
   handledException: HandledException? = @static null
+  stable detailsScreen: Function3<T, Composer, Int, Unit>
+)
+restartable skippable fun ly.david.musicsearch.ui.common.fullscreen.DetailsWithErrorHandling(
+  handledException: HandledException?
+  stable onRefresh: Function0<Unit>
+  detailsModel: T?
   stable detailsScreen: Function3<T, Composer, Int, Unit>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.fullscreen.FullScreenContent(
@@ -520,6 +527,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable filterText: String
   stable now: Instant
   stable boldUnvisited: Boolean
+  stable isPullToRefreshEnabled: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   stable selectedIds: ImmutableList<String>? = @static <expression>
@@ -534,15 +542,25 @@ fun ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState(
   entitiesLazyPagingItems: EntitiesLazyPagingItems
 ): EntitiesPagingListUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.FooterLoadingIndicator()
-restartable skippable scheme("[androidx.compose.ui.UiComposable, [_], [_]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
   lazyPagingItems: LazyPagingItems<T>
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable customNoResultsText: String? = @static ""
   stable keyed: Boolean = @static false
   stable onLogin: Function0<Unit>? = @static <expression>
+  stable isPullToRefreshEnabled: Boolean
   stable header: Function2<Composer, Int, Unit>? = @static null
   stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, @[ParameterName(name = 'value')] T?, Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [_], [_]]") fun ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError(
+  lazyPagingItems: LazyPagingItems<T>
+  stable onLogin: Function0<Unit>
+  stable noResultsText: String
+  stable lazyListState: LazyListState
+  stable keyed: Boolean
+  stable itemContent: @[ExtensionFunctionType] Function4<LazyItemScope, T?, Composer, Int, Unit>
+  stable header: Function2<Composer, Int, Unit>?
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.paging.AppendFooter(
   unused stable <this>: LazyItemScope

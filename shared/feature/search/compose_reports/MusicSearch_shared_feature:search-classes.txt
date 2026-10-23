@@ -35,6 +35,7 @@ stable class ly.david.musicsearch.shared.feature.search.SearchUiState {
   runtime val searchHistory: LazyPagingItems<ListItemModel>
   stable val searchHistoryListState: LazyListState
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val eventSink: Function1<SearchUiEvent, Unit>

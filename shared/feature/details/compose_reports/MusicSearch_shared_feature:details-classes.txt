@@ -49,6 +49,7 @@ stable class ly.david.musicsearch.shared.feature.details.genre.GenrePresenter {
   runtime val incrementLookupHistory: IncrementLookupHistory
   runtime val logger: Logger
   runtime val getMusicBrainzUrl: GetMusicBrainzUrl
+  runtime val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiState {
@@ -56,6 +57,7 @@ stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiState {
   runtime val genre: GenreListItemModel?
   runtime val handledException: HandledException?
   stable val url: String
+  stable val isPullToRefreshEnabled: Boolean
   stable val eventSink: Function1<GenreUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.details.genre.GenreUiEvent.NavigateUp {
@@ -156,6 +158,7 @@ stable class ly.david.musicsearch.shared.feature.details.utils.DetailsUiState {
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val eventSink: Function1<DetailsUiEvent, Unit>
   <runtime stability> = Stable

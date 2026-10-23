@@ -36,6 +36,7 @@ stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyHistoryP
 stable class ly.david.musicsearch.shared.feature.spotify.history.SpotifyUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<SpotifyUiEvent, Unit>

@@ -62,6 +62,7 @@ stable class ly.david.musicsearch.shared.feature.collections.list.CollectionsLis
   stable val selectionState: SelectionState
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   stable val lazyListState: LazyListState
+  stable val isPullToRefreshEnabled: Boolean
   runtime val firstActionableResult: ActionableResult?
   runtime val secondActionableResult: ActionableResult?
   stable val eventSink: Function1<CollectionsListUiEvent, Unit>
@@ -119,6 +120,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUi
   stable val musicBrainzLoginUiState: MusicBrainzLoginUiState
   stable val allEntitiesListUiState: AllEntitiesListUiState
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val eventSink: Function1<CollectionUiEvent, Unit>
 }

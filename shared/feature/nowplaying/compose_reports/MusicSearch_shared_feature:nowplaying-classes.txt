@@ -32,6 +32,7 @@ stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryPre
 stable class ly.david.musicsearch.shared.feature.nowplaying.NowPlayingHistoryUiState {
   stable val topAppBarFilterState: TopAppBarFilterState
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   runtime val lazyPagingItems: LazyPagingItems<ListItemModel>
   stable val lazyListState: LazyListState
   stable val eventSink: Function1<NowPlayingHistoryUiEvent, Unit>

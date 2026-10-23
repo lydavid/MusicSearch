@@ -182,6 +182,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable uiState: TracksByReleaseUiState
   stable filterText: String
   stable boldUnvisited: Boolean
+  stable isPullToRefreshEnabled: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   selectedIds: ImmutableList<SelectableId>? = @static <expression>

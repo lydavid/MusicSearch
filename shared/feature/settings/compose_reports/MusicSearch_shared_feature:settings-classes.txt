@@ -94,6 +94,7 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.Ap
 stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiState {
   stable val theme: Theme
   stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val useMaterialYou: Boolean
   stable val seedColor: Int
@@ -111,7 +112,11 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.Ap
   stable val enable: Boolean
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.BoldUnvisited {
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdatePullToRefresh {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateBoldUnvisited {
   stable val bold: Boolean
   <runtime stability> = Stable
 }

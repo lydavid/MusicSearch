@@ -23,6 +23,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchHistoryUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable lazyListState: LazyListState? = @dynamic <expression>
+  stable isPullToRefreshEnabled: Boolean
   stable onItemClick: Function2<@[ParameterName(name = 'entityType')] MusicBrainzEntityType, @[ParameterName(name = 'query')] String, Unit>? = @static <expression>
   stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static <expression>
   stable onDeleteAllHistory: Function0<Unit>? = @static <expression>
@@ -33,6 +34,7 @@ open scheme("[presenter]") fun ly.david.musicsearch.shared.feature.search.Search
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.search.SearchResultsUi(
   lazyPagingItems: LazyPagingItems<ListItemModel>
   stable boldUnvisited: Boolean
+  stable isPullToRefreshEnabled: Boolean
   stable lazyListState: LazyListState? = @dynamic <expression>
   stable onEditCollectionClick: Function1<String, Unit>
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
