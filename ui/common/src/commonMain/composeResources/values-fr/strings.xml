@@ -471,4 +471,5 @@
     <string name="lastListenedXAgo">Dernière écoute : %s.</string>
     <string name="boldUnvisited">Éléments non visités en gras</string>
     <string name="boldUnvisitedDescription">Afficher les noms des entités en gras jusqu'à ce que vous cliquiez dessus</string>
+    <string name="pullToRefresh">Faites glisser vers le bas pour actualiser</string>
 </resources>
