@@ -2,6 +2,7 @@ package ly.david.musicsearch.ui.common.releasegroup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import kotlin.time.Instant
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.ui.common.preview.PreviewWithTransitionAndOverlays
@@ -23,6 +24,8 @@ internal fun PreviewReleaseGroupListItem() {
             releaseGroup = testReleaseGroup,
             filterText = "",
             showType = false,
+            now = Instant.parse("1970-01-01T00:00:00Z"),
+            showLastListenedPeriod = false,
         )
     }
 }
@@ -35,6 +38,8 @@ internal fun PreviewReleaseGroupListItemWithType() {
             releaseGroup = testReleaseGroup,
             filterText = "",
             showType = true,
+            now = Instant.parse("1970-01-01T00:00:00Z"),
+            showLastListenedPeriod = false,
         )
     }
 }
@@ -55,6 +60,8 @@ internal fun PreviewReleaseGroupListItemVisited() {
             ),
             filterText = "artist",
             showType = true,
+            now = Instant.parse("1970-01-01T00:00:00Z"),
+            showLastListenedPeriod = false,
         )
     }
 }

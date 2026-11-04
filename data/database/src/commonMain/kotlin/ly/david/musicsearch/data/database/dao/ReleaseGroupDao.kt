@@ -51,6 +51,7 @@ interface ReleaseGroupDao : EntityDao {
     fun getReleaseGroups(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel>
 
@@ -238,11 +239,13 @@ class ReleaseGroupDaoImpl(
     override fun getReleaseGroups(
         browseMethod: BrowseMethod,
         query: String,
+        username: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllReleaseGroups(
                 query = query,
+                username = username,
                 sortOption = sortOption,
             )
         }
@@ -252,12 +255,14 @@ class ReleaseGroupDaoImpl(
                 getReleaseGroupsByCollection(
                     collectionId = browseMethod.entityId,
                     query = query,
+                    username = username,
                     sortOption = sortOption,
                 )
             } else {
                 getReleaseGroupsByEntity(
                     entityId = browseMethod.entityId,
                     query = query,
+                    username = username,
                     sortOption = sortOption,
                 )
             }
@@ -299,6 +304,7 @@ class ReleaseGroupDaoImpl(
 
     private fun getAllReleaseGroups(
         query: String,
+        username: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllReleaseGroups(
@@ -309,6 +315,7 @@ class ReleaseGroupDaoImpl(
         queryProvider = { limit, offset ->
             transacter.getAllReleaseGroups(
                 query = "%$query%",
+                username = username,
                 sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
@@ -320,6 +327,7 @@ class ReleaseGroupDaoImpl(
     private fun getReleaseGroupsByEntity(
         entityId: String,
         query: String,
+        username: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleaseGroupsByEntityQuery(
@@ -332,6 +340,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByEntity(
                 entityId = entityId,
                 query = "%$query%",
+                username = username,
                 sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
@@ -343,6 +352,7 @@ class ReleaseGroupDaoImpl(
     private fun getReleaseGroupsByCollection(
         collectionId: String,
         query: String,
+        username: String,
         sortOption: ReleaseGroupSortOption,
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = getCountOfReleaseGroupsByCollectionQuery(
@@ -355,6 +365,7 @@ class ReleaseGroupDaoImpl(
             transacter.getReleaseGroupsByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                username = username,
                 sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,

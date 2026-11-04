@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.common.ifNotNull
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
+import ly.david.musicsearch.ui.common.listen.ListenInfoRow
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
@@ -23,12 +24,15 @@ import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.theme.TextStyles
+import kotlin.time.Instant
 
 @Composable
 fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,
     filterText: String,
     showType: Boolean,
+    now: Instant,
+    showLastListenedPeriod: Boolean,
     modifier: Modifier = Modifier,
     boldUnvisited: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
@@ -84,6 +88,12 @@ fun ReleaseGroupListItem(
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
+
+                ListenInfoRow(
+                    listenInfo = releaseGroup,
+                    now = now,
+                    showLastListenedPeriod = showLastListenedPeriod,
+                )
             }
         },
         leadingContent = {

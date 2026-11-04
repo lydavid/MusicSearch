@@ -21,6 +21,8 @@ internal fun mapToReleaseGroupListItemModel(
     collected: Boolean?,
     aliasNames: String?,
     aliasLocales: String?,
+    listenCount: Long? = null,
+    lastListenedAtMs: Long? = null,
 ) = ReleaseGroupListItemModel(
     id = id,
     name = name,
@@ -39,4 +41,6 @@ internal fun mapToReleaseGroupListItemModel(
     visited = visited == true,
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),
+    listenCount = listenCount,
+    lastListenedAtMs = lastListenedAtMs,
 )

@@ -80,6 +80,7 @@ sealed interface ListFilters {
     data class ReleaseGroups(
         override val query: String = "",
         override val isRemote: Boolean = true,
+        val username: String = "",
         val sortOption: ReleaseGroupSortOption = ReleaseGroupSortOption.InsertedAscending,
     ) : ListFilters
 

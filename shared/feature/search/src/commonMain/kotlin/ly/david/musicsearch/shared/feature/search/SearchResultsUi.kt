@@ -224,6 +224,8 @@ private fun ListItemUi(
             ReleaseGroupListItem(
                 releaseGroup = listItemModel,
                 filterText = filterText,
+                now = Clock.System.now(),
+                showLastListenedPeriod = false,
                 boldUnvisited = boldUnvisited,
                 onEditCollectionClick = onEditCollectionClick,
                 showType = true,

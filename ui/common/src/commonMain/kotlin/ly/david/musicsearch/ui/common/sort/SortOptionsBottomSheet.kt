@@ -249,6 +249,12 @@ private fun ReleaseGroupSortOption.getLabelRes(): StringResource {
 
         ReleaseGroupSortOption.PrimaryTypeAscending -> Res.string.typeAlphabetically
         ReleaseGroupSortOption.PrimaryTypeDescending -> Res.string.typeReverseAlphabetically
+
+        ReleaseGroupSortOption.ListenCountAscending -> Res.string.leastListened
+        ReleaseGroupSortOption.ListenCountDescending -> Res.string.mostListened
+
+        ReleaseGroupSortOption.LastListenedAscending -> Res.string.leastRecentlyListened
+        ReleaseGroupSortOption.LastListenedDescending -> Res.string.mostRecentlyListened
     }
 }
 

@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.image.ImageMetadata
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
+import ly.david.musicsearch.shared.domain.listen.ListenInfo
 
 data class ReleaseGroupListItemModel(
     override val id: String,
@@ -21,7 +22,9 @@ data class ReleaseGroupListItemModel(
     override val visited: Boolean = false,
     override val collected: Boolean = false,
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
-) : EntityListItemModel, ReleaseGroup, NameWithDisambiguationAndAliases {
+    override val listenCount: Long? = null,
+    override val lastListenedAtMs: Long? = null,
+) : EntityListItemModel, ReleaseGroup, NameWithDisambiguationAndAliases, ListenInfo {
     override fun withAliases(aliases: ImmutableList<BasicAlias>): ReleaseGroupListItemModel {
         return copy(aliases = aliases)
     }

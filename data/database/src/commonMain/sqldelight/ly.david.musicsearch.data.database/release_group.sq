@@ -158,7 +158,35 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT COALESCE(SUM(rec.listen_count), 0)
+    FROM (
+      SELECT DISTINCT t.recording_id
+      FROM release_release_group rrg
+      INNER JOIN release r ON rrg.release_id = r.id
+      INNER JOIN medium m ON m.release_id = r.id
+      INNER JOIN track t ON t.medium_id = m.id
+      WHERE rrg.release_group_id = release_group.id
+    ) AS uniq
+    LEFT JOIN (
+      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
+      FROM listen
+      WHERE username = :username
+        AND deleted_at_ms IS NULL
+      GROUP BY recording_musicbrainz_id
+    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
+  ) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT MAX(l.listened_at_ms)
+    FROM release_release_group rrg
+    INNER JOIN release r ON rrg.release_id = r.id
+    INNER JOIN medium m ON m.release_id = r.id
+    INNER JOIN track t ON t.medium_id = m.id
+    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
+    WHERE rrg.release_group_id = release_group.id
+      AND l.username = :username
+  ) END AS last_listened_at
 FROM release_group
 INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
@@ -195,12 +223,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN release_groups_by_entity.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,
@@ -250,7 +282,35 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT COALESCE(SUM(rec.listen_count), 0)
+    FROM (
+      SELECT DISTINCT t.recording_id
+      FROM release_release_group rrg
+      INNER JOIN release r ON rrg.release_id = r.id
+      INNER JOIN medium m ON m.release_id = r.id
+      INNER JOIN track t ON t.medium_id = m.id
+      WHERE rrg.release_group_id = release_group.id
+    ) AS uniq
+    LEFT JOIN (
+      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
+      FROM listen
+      WHERE username = :username
+        AND deleted_at_ms IS NULL
+      GROUP BY recording_musicbrainz_id
+    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
+  ) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT MAX(l.listened_at_ms)
+    FROM release_release_group rrg
+    INNER JOIN release r ON rrg.release_id = r.id
+    INNER JOIN medium m ON m.release_id = r.id
+    INNER JOIN track t ON t.medium_id = m.id
+    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
+    WHERE rrg.release_group_id = release_group.id
+      AND l.username = :username
+  ) END AS last_listened_at
 FROM release_group
 INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
@@ -288,12 +348,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN collection_entity.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,
@@ -345,7 +409,35 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT COALESCE(SUM(rec.listen_count), 0)
+    FROM (
+      SELECT DISTINCT t.recording_id
+      FROM release_release_group rrg
+      INNER JOIN release r ON rrg.release_id = r.id
+      INNER JOIN medium m ON m.release_id = r.id
+      INNER JOIN track t ON t.medium_id = m.id
+      WHERE rrg.release_group_id = release_group.id
+    ) AS uniq
+    LEFT JOIN (
+      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
+      FROM listen
+      WHERE username = :username
+        AND deleted_at_ms IS NULL
+      GROUP BY recording_musicbrainz_id
+    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
+  ) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
+    SELECT MAX(l.listened_at_ms)
+    FROM release_release_group rrg
+    INNER JOIN release r ON rrg.release_id = r.id
+    INNER JOIN medium m ON m.release_id = r.id
+    INNER JOIN track t ON t.medium_id = m.id
+    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
+    WHERE rrg.release_group_id = release_group.id
+      AND l.username = :username
+  ) END AS last_listened_at
 FROM release_group
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
@@ -383,12 +475,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN release_group.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,

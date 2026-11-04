@@ -2,8 +2,11 @@ package ly.david.musicsearch.data.repository.releasegroup
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.adoArtistMusicBrainzModel
 import ly.david.data.test.alsoSprachZarathustraReleaseGroupListItemModel
 import ly.david.data.test.alsoSprachZarathustraReleaseGroupMusicBrainzModel
@@ -103,6 +106,10 @@ class ReleaseGroupsListRepositoryImplTest :
                         musicBrainzModels = releaseGroups,
                     )
                 }
+            },
+            listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
+                override val browseUsername: Flow<String>
+                    get() = flowOf("")
             },
         )
     }
