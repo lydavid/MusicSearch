@@ -4,7 +4,9 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.TerminalSeparatorType
 import androidx.paging.insertSeparators
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
@@ -19,6 +21,7 @@ import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
@@ -30,6 +33,7 @@ class ReleaseGroupsListRepositoryImpl(
     private val browseRemoteMetadataDao: BrowseRemoteMetadataDao,
     private val browseApi: BrowseApi,
     private val releaseGroupDao: ReleaseGroupDao,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
     aliasDao: AliasDao,
 ) : ReleaseGroupsListRepository,
     BrowseEntities<ReleaseGroupListItemModel, ReleaseGroupMusicBrainzNetworkModel, BrowseReleaseGroupsResponse>(
@@ -38,7 +42,23 @@ class ReleaseGroupsListRepositoryImpl(
         aliasDao = aliasDao,
     ) {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeReleaseGroups(
+        browseMethod: BrowseMethod,
+        listFilters: ListFilters.ReleaseGroups,
+        now: Instant,
+    ): Flow<PagingData<ListItemModel>> {
+        return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
+            observeReleaseGroupsInternal(
+                browseMethod = browseMethod,
+                listFilters = listFilters.copy(username = username),
+                now = now,
+            )
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun observeReleaseGroupsInternal(
         browseMethod: BrowseMethod,
         listFilters: ListFilters.ReleaseGroups,
         now: Instant,
@@ -81,7 +101,8 @@ class ReleaseGroupsListRepositoryImpl(
         return releaseGroupDao.getReleaseGroups(
             browseMethod = browseMethod,
             query = listFilters.query,
-            sortOption = (listFilters as ListFilters.ReleaseGroups).sortOption,
+            username = (listFilters as ListFilters.ReleaseGroups).username,
+            sortOption = listFilters.sortOption,
         )
     }
 

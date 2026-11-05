@@ -140,6 +140,34 @@ AND (
 );
 
 getReleaseGroupsByEntity:
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
@@ -158,11 +186,14 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN mbid_image images ON images.mbid = release_group.id
 LEFT JOIN (
   SELECT
@@ -195,12 +226,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN release_groups_by_entity.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,
@@ -232,6 +267,34 @@ AND (
 );
 
 getReleaseGroupsByCollection:
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
@@ -250,11 +313,14 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN mbid_image images ON images.mbid = release_group.id
 LEFT JOIN (
   SELECT
@@ -288,12 +354,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN collection_entity.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,
@@ -327,6 +397,34 @@ WHERE (
 );
 
 getAllReleaseGroups:
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
@@ -345,10 +443,13 @@ SELECT
     SELECT 1 FROM collection_entity WHERE collection_entity.entity_id = release_group.id
   ) AS collected,
   aliases.alias_names,
-  aliases.alias_locales
+  aliases.alias_locales,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,
@@ -383,12 +484,16 @@ ORDER BY
     WHEN 2 THEN release_group.name
     WHEN 4 THEN release_group.first_release_date
     WHEN 6 THEN release_group.primary_type
+    WHEN 8 THEN listen_count
+    WHEN 10 THEN last_listened_at
   END ASC,
   CASE :sortBy
     WHEN 1 THEN release_group.rowid
     WHEN 3 THEN release_group.name
     WHEN 5 THEN release_group.first_release_date
     WHEN 7 THEN release_group.primary_type
+    WHEN 9 THEN listen_count
+    WHEN 11 THEN last_listened_at
   END DESC,
   release_group.primary_type ASC,
   release_group.secondary_types ASC,

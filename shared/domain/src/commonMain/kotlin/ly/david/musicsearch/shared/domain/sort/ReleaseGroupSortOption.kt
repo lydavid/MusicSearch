@@ -10,4 +10,8 @@ enum class ReleaseGroupSortOption(val order: Int) : SortableOption {
     DateDescending(5),
     PrimaryTypeAscending(6),
     PrimaryTypeDescending(7),
+    ListenCountAscending(8),
+    ListenCountDescending(9),
+    LastListenedAscending(10),
+    LastListenedDescending(11),
 }
