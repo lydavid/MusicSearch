@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.132.0](https://github.com/lydavid/MusicSearch/compare/v1.131.0...v1.132.0) (2026-11-05)
+
+
+### Features
+
+* show number of listens for release groups lists ([#2438](https://github.com/lydavid/MusicSearch/issues/2438)) ([4a165c8](https://github.com/lydavid/MusicSearch/commit/4a165c8861888008892ea0aab162db409a504b30))
+
 ## [1.131.0](https://github.com/lydavid/MusicSearch/compare/v1.130.1...v1.131.0) (2026-10-20)
 
 

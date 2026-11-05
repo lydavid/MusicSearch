@@ -1,0 +1,3 @@
+### Features
+
+* show number of listens for release groups lists
