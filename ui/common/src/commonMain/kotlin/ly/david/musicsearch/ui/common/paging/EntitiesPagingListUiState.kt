@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.shared.domain.list.FilteredCount
 import ly.david.musicsearch.shared.domain.list.ListFilters
-import ly.david.musicsearch.shared.domain.list.showTypes
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
+import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
 import ly.david.musicsearch.ui.common.topappbar.Tab
 
@@ -18,6 +18,7 @@ data class EntitiesPagingListUiState(
     override val totalCount: Int = 0,
     override val filteredCount: Int = 0,
     val showMoreInfo: Boolean = true,
+    val showType: Boolean = true,
 ) : FilteredCount
 
 @Composable
@@ -116,10 +117,18 @@ fun AllEntitiesListUiState.toEntitiesPagingListUiState(
     }
 
     Tab.RELEASE_GROUPS -> {
+        val sortOption = (this.releaseGroupsListUiState.listFilters as ListFilters.ReleaseGroups).sortOption
         EntitiesPagingListUiState(
             lazyPagingItems = entitiesLazyPagingItems.releaseGroupsLazyPagingItems,
             lazyListState = this.releaseGroupsListUiState.lazyListState,
-            showMoreInfo = this.releaseGroupsListUiState.listFilters.showTypes(),
+            showType = sortOption !in setOf(
+                ReleaseGroupSortOption.PrimaryTypeAscending,
+                ReleaseGroupSortOption.PrimaryTypeDescending,
+            ),
+            showMoreInfo = sortOption in setOf(
+                ReleaseGroupSortOption.LastListenedAscending,
+                ReleaseGroupSortOption.LastListenedDescending,
+            ),
             totalCount = this.releaseGroupsListUiState.totalCount,
             filteredCount = this.releaseGroupsListUiState.filteredCount,
         )

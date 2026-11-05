@@ -237,7 +237,7 @@ fun EntitiesPagingListUi(
                         boldUnvisited = boldUnvisited,
                         now = now,
                         showLastListenedPeriod = uiState.showMoreInfo,
-                        showType = uiState.showMoreInfo,
+                        showType = uiState.showType,
                         requestForMissingCoverArtUrl = {
                             requestForMissingCoverArtUrl(listItemModel.id)
                         },

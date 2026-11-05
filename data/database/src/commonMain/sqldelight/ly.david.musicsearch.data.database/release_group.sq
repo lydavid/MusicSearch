@@ -140,6 +140,33 @@ AND (
 );
 
 getReleaseGroupsByEntity:
+WITH rec_listens AS (
+  SELECT
+    recording_musicbrainz_id AS recording_id,
+    COUNT(*) AS listen_count,
+    MAX(listened_at_ms) AS last_listened_at
+  FROM listen
+  WHERE username = :username
+    AND deleted_at_ms IS NULL
+  GROUP BY recording_musicbrainz_id
+),
+rg_stats AS (
+  SELECT
+    uniq.release_group_id,
+    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+    MAX(rec_listens.last_listened_at) AS last_listened_at
+  FROM (
+    SELECT DISTINCT
+      release_release_group.release_group_id AS release_group_id,
+      track.recording_id AS recording_id
+    FROM release_release_group
+    INNER JOIN release ON release_release_group.release_id = release.id
+    INNER JOIN medium ON medium.release_id = release.id
+    INNER JOIN track ON track.medium_id = medium.id
+  ) AS uniq
+  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+  GROUP BY uniq.release_group_id
+)
 SELECT
   release_group.id,
   release_group.name,
@@ -159,38 +186,13 @@ SELECT
   ) AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT COALESCE(SUM(rec.listen_count), 0)
-    FROM (
-      SELECT DISTINCT t.recording_id
-      FROM release_release_group rrg
-      INNER JOIN release r ON rrg.release_id = r.id
-      INNER JOIN medium m ON m.release_id = r.id
-      INNER JOIN track t ON t.medium_id = m.id
-      WHERE rrg.release_group_id = release_group.id
-    ) AS uniq
-    LEFT JOIN (
-      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
-      FROM listen
-      WHERE username = :username
-        AND deleted_at_ms IS NULL
-      GROUP BY recording_musicbrainz_id
-    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
-  ) END AS listen_count,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT MAX(l.listened_at_ms)
-    FROM release_release_group rrg
-    INNER JOIN release r ON rrg.release_id = r.id
-    INNER JOIN medium m ON m.release_id = r.id
-    INNER JOIN track t ON t.medium_id = m.id
-    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
-    WHERE rrg.release_group_id = release_group.id
-      AND l.username = :username
-  ) END AS last_listened_at
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN release_groups_by_entity ON release_group.id = release_groups_by_entity.release_group_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN mbid_image images ON images.mbid = release_group.id
 LEFT JOIN (
   SELECT
@@ -264,6 +266,33 @@ AND (
 );
 
 getReleaseGroupsByCollection:
+WITH rec_listens AS (
+  SELECT
+    recording_musicbrainz_id AS recording_id,
+    COUNT(*) AS listen_count,
+    MAX(listened_at_ms) AS last_listened_at
+  FROM listen
+  WHERE username = :username
+    AND deleted_at_ms IS NULL
+  GROUP BY recording_musicbrainz_id
+),
+rg_stats AS (
+  SELECT
+    uniq.release_group_id,
+    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+    MAX(rec_listens.last_listened_at) AS last_listened_at
+  FROM (
+    SELECT DISTINCT
+      release_release_group.release_group_id AS release_group_id,
+      track.recording_id AS recording_id
+    FROM release_release_group
+    INNER JOIN release ON release_release_group.release_id = release.id
+    INNER JOIN medium ON medium.release_id = release.id
+    INNER JOIN track ON track.medium_id = medium.id
+  ) AS uniq
+  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+  GROUP BY uniq.release_group_id
+)
 SELECT
   release_group.id,
   release_group.name,
@@ -283,38 +312,13 @@ SELECT
   ) AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT COALESCE(SUM(rec.listen_count), 0)
-    FROM (
-      SELECT DISTINCT t.recording_id
-      FROM release_release_group rrg
-      INNER JOIN release r ON rrg.release_id = r.id
-      INNER JOIN medium m ON m.release_id = r.id
-      INNER JOIN track t ON t.medium_id = m.id
-      WHERE rrg.release_group_id = release_group.id
-    ) AS uniq
-    LEFT JOIN (
-      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
-      FROM listen
-      WHERE username = :username
-        AND deleted_at_ms IS NULL
-      GROUP BY recording_musicbrainz_id
-    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
-  ) END AS listen_count,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT MAX(l.listened_at_ms)
-    FROM release_release_group rrg
-    INNER JOIN release r ON rrg.release_id = r.id
-    INNER JOIN medium m ON m.release_id = r.id
-    INNER JOIN track t ON t.medium_id = m.id
-    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
-    WHERE rrg.release_group_id = release_group.id
-      AND l.username = :username
-  ) END AS last_listened_at
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN collection_entity ON release_group.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN mbid_image images ON images.mbid = release_group.id
 LEFT JOIN (
   SELECT
@@ -391,6 +395,33 @@ WHERE (
 );
 
 getAllReleaseGroups:
+WITH rec_listens AS (
+  SELECT
+    recording_musicbrainz_id AS recording_id,
+    COUNT(*) AS listen_count,
+    MAX(listened_at_ms) AS last_listened_at
+  FROM listen
+  WHERE username = :username
+    AND deleted_at_ms IS NULL
+  GROUP BY recording_musicbrainz_id
+),
+rg_stats AS (
+  SELECT
+    uniq.release_group_id,
+    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+    MAX(rec_listens.last_listened_at) AS last_listened_at
+  FROM (
+    SELECT DISTINCT
+      release_release_group.release_group_id AS release_group_id,
+      track.recording_id AS recording_id
+    FROM release_release_group
+    INNER JOIN release ON release_release_group.release_id = release.id
+    INNER JOIN medium ON medium.release_id = release.id
+    INNER JOIN track ON track.medium_id = medium.id
+  ) AS uniq
+  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+  GROUP BY uniq.release_group_id
+)
 SELECT
   release_group.id,
   release_group.name,
@@ -410,37 +441,12 @@ SELECT
   ) AS collected,
   aliases.alias_names,
   aliases.alias_locales,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT COALESCE(SUM(rec.listen_count), 0)
-    FROM (
-      SELECT DISTINCT t.recording_id
-      FROM release_release_group rrg
-      INNER JOIN release r ON rrg.release_id = r.id
-      INNER JOIN medium m ON m.release_id = r.id
-      INNER JOIN track t ON t.medium_id = m.id
-      WHERE rrg.release_group_id = release_group.id
-    ) AS uniq
-    LEFT JOIN (
-      SELECT recording_musicbrainz_id, COUNT(*) AS listen_count
-      FROM listen
-      WHERE username = :username
-        AND deleted_at_ms IS NULL
-      GROUP BY recording_musicbrainz_id
-    ) rec ON rec.recording_musicbrainz_id = uniq.recording_id
-  ) END AS listen_count,
-  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE (
-    SELECT MAX(l.listened_at_ms)
-    FROM release_release_group rrg
-    INNER JOIN release r ON rrg.release_id = r.id
-    INNER JOIN medium m ON m.release_id = r.id
-    INNER JOIN track t ON t.medium_id = m.id
-    INNER JOIN listen l ON l.recording_musicbrainz_id = t.recording_id
-    WHERE rrg.release_group_id = release_group.id
-      AND l.username = :username
-  ) END AS last_listened_at
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count,
+  CASE WHEN :username = '' THEN CAST(NULL AS INTEGER) ELSE lg.last_listened_at END AS last_listened_at
 FROM release_group
 INNER JOIN artist_credit_entity acr ON acr.entity_id = release_group.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN rg_stats lg ON lg.release_group_id = release_group.id
 LEFT JOIN (
   SELECT
     mbid_image.mbid,

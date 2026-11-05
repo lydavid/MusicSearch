@@ -25,4 +25,18 @@ class ReleaseGroupListItemTest : ScreenshotTest() {
             PreviewReleaseGroupListItemVisited()
         }
     }
+
+    @Test
+    fun withLastListenedPeriod() {
+        snapshot {
+            PreviewReleaseGroupListItemWithLastListenedPeriod()
+        }
+    }
+
+    @Test
+    fun visitedWithLastListenedPeriod() {
+        snapshot {
+            PreviewReleaseGroupListItemVisitedWithLastListenedPeriod()
+        }
+    }
 }

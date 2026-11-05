@@ -97,11 +97,3 @@ sealed interface ListFilters {
         val sortOption: WorkSortOption = WorkSortOption.InsertedAscending,
     ) : ListFilters
 }
-
-fun ListFilters.showTypes(): Boolean {
-    val sortOption = (this as ListFilters.ReleaseGroups).sortOption
-    return !setOf(
-        ReleaseGroupSortOption.PrimaryTypeAscending,
-        ReleaseGroupSortOption.PrimaryTypeDescending,
-    ).contains(sortOption)
-}

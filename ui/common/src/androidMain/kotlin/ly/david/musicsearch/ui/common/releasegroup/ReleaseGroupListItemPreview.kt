@@ -16,6 +16,10 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
     formattedArtistCredits = "Some artist feat. some other artist",
 )
 
+private val lastListenedNow = Instant.parse("2024-06-01T00:00:00Z")
+private val lastListenedThreeDaysAgo = Instant.parse("2024-05-29T00:00:00Z").toEpochMilliseconds()
+private val lastListenedFiveHoursAgo = Instant.parse("2024-05-31T19:00:00Z").toEpochMilliseconds()
+
 @PreviewLightDark
 @Composable
 internal fun PreviewReleaseGroupListItem() {
@@ -62,6 +66,41 @@ internal fun PreviewReleaseGroupListItemVisited() {
             showType = true,
             now = Instant.parse("1970-01-01T00:00:00Z"),
             showLastListenedPeriod = false,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseGroupListItemWithLastListenedPeriod() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseGroupListItem(
+            releaseGroup = testReleaseGroup.copy(
+                listenCount = 42L,
+                lastListenedAtMs = lastListenedThreeDaysAgo,
+            ),
+            filterText = "",
+            showType = false,
+            now = lastListenedNow,
+            showLastListenedPeriod = true,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseGroupListItemVisitedWithLastListenedPeriod() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseGroupListItem(
+            releaseGroup = testReleaseGroup.copy(
+                visited = true,
+                listenCount = 42L,
+                lastListenedAtMs = lastListenedFiveHoursAgo,
+            ),
+            filterText = "artist",
+            showType = false,
+            now = lastListenedNow,
+            showLastListenedPeriod = true,
         )
     }
 }
