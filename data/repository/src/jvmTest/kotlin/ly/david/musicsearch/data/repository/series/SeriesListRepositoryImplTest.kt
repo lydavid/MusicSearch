@@ -141,7 +141,7 @@ class SeriesListRepositoryImplTest : KoinTest {
                                     isPrimary = true,
                                     locale = "en",
                                 ),
-                            )
+                            ),
                         ),
                     ),
                 ),

@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroup
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagChip
 import kotlin.time.Clock
@@ -26,6 +27,9 @@ data class ReleaseGroupDetailsModel(
     override val tags: ImmutableList<TagChip> = persistentListOf(),
     override val urls: ImmutableList<RelationListItemModel> = persistentListOf(),
     override val aliases: ImmutableList<BasicAlias> = persistentListOf(),
+    val listenCount: Long? = null,
+    val latestListens: ImmutableList<ListenWithRecording> = persistentListOf(),
+    val listenBrainzUrl: String = "",
 ) : ReleaseGroup, MusicBrainzDetailsModel {
     override fun withArtistCredits(artistCredits: ImmutableList<ArtistCreditUiModel>): MusicBrainzDetailsModel {
         return copy(artistCredits = artistCredits)

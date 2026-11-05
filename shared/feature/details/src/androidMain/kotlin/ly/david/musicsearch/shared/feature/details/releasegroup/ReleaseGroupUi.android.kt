@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
@@ -70,6 +71,56 @@ private val detailsUiState = DetailsUiState(
     ),
     detailsTabUiState = detailsTabUiState,
 )
+
+private val detailsUiStateWithListens = detailsUiState.copy(
+    detailsModel = detailsUiState.detailsModel?.copy(
+        id = "88ee1a12-f362-4737-b7f4-b2f0b079e218",
+        name = "幻燈",
+        primaryType = ReleaseGroupPrimaryType.Album,
+        firstReleaseDate = "2023-04-05",
+        listenCount = 134L,
+        latestListens = persistentListOf(
+            ListenWithRecording(
+                id = "c43037a7-e888-49d6-89b5-243c971ca9b2",
+                name = "又三郎",
+                disambiguation = "",
+                listenedMs = 1788520134000L,
+            ),
+            ListenWithRecording(
+                id = "e3c81234-74f9-41db-b51f-f996b02322ea",
+                name = "アルジャーノン",
+                disambiguation = "",
+                listenedMs = 1787678804000L,
+            ),
+            ListenWithRecording(
+                id = "80db4119-213c-4b0c-af9b-37c4a11eaa72",
+                name = "老人と海",
+                disambiguation = "",
+                listenedMs = 1787626640000L,
+            ),
+            ListenWithRecording(
+                id = "9c4a772f-52f5-4472-84dd-35171106ef48",
+                name = "第一夜",
+                disambiguation = "",
+                listenedMs = 1787623106000L,
+            ),
+        ),
+        listenBrainzUrl = "https://listenbrainz.example.com/release-group/88ee1a12-f362-4737-b7f4-b2f0b079e218",
+    ),
+    detailsTabUiState = detailsUiState.detailsTabUiState.copy(
+        now = Instant.parse("2026-09-05T19:42:20Z"),
+    ),
+)
+
+@PreviewLightDark
+@Composable
+internal fun PreviewReleaseGroupDetailsUiWithListens() {
+    PreviewWithTransitionAndOverlays {
+        ReleaseGroupUi(
+            state = detailsUiStateWithListens,
+        )
+    }
+}
 
 @PreviewLightDark
 @Composable

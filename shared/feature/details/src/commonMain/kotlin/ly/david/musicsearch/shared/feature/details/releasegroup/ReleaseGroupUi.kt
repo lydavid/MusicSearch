@@ -274,6 +274,16 @@ internal fun ReleaseGroupUi(
                     releaseGroup = detailsModel,
                     detailsTabUiState = state.detailsTabUiState,
                     filterText = state.topAppBarFilterState.filterText,
+                    onItemClick = { entity, id ->
+                        eventSink(
+                            DetailsUiEvent.GoToScreen(
+                                screen = DetailsScreen(
+                                    entityType = entity,
+                                    id = id,
+                                ),
+                            ),
+                        )
+                    },
                     snackbarHostState = snackbarHostState,
                 )
             },

@@ -5,11 +5,11 @@ import ly.david.musicsearch.shared.domain.list.ListFilters
 data class FilterTestCase<T>(
     val description: String,
     val query: String,
-    val expectedResult: List<T>
+    val expectedResult: List<T>,
 )
 
 data class FiltersTestCase<T>(
     val description: String,
     val listFilters: ListFilters,
-    val expectedResult: List<T>
+    val expectedResult: List<T>,
 )

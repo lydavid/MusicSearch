@@ -40,6 +40,34 @@ VALUES (
 }
 
 getReleaseGroupForDetails:
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :listenBrainzUsername
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   rg.id,
   rg.name,
@@ -47,9 +75,11 @@ SELECT
   rg.first_release_date,
   rg.primary_type_id,
   rg.secondary_type_ids,
-  details_metadata.last_updated
+  details_metadata.last_updated,
+  CASE WHEN :listenBrainzUsername = '' THEN CAST(NULL AS INTEGER) ELSE COALESCE(lg.listen_count, 0) END AS listen_count
 FROM release_group rg
 LEFT JOIN details_metadata ON details_metadata.entity_id = rg.id
+LEFT JOIN rg_stats lg ON lg.release_group_id = rg.id
 WHERE rg.id = :releaseGroupId;
 
 getReleaseGroupForRelease:
@@ -65,6 +95,42 @@ INNER JOIN release_release_group rrg ON rg.id = rrg.release_group_id
 INNER JOIN release r ON rrg.release_id = r.id
 WHERE r.id = :releaseId
 LIMIT 1;
+
+-- listens
+
+getListenCountByReleaseGroup:
+SELECT COUNT(*)
+FROM (
+  SELECT DISTINCT track.recording_id
+  FROM release_release_group
+  INNER JOIN release ON release_release_group.release_id = release.id
+  INNER JOIN medium ON medium.release_id = release.id
+  INNER JOIN track ON track.medium_id = medium.id
+) AS recs
+INNER JOIN listen ON listen.recording_musicbrainz_id = recs.recording_id
+  AND listen.username = :username
+  AND listen.deleted_at_ms IS NULL;
+
+getLatestListensByReleaseGroup:
+SELECT
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  listen.listened_at_ms
+FROM (
+  SELECT DISTINCT track.recording_id
+  FROM release_release_group
+  INNER JOIN release ON release_release_group.release_id = release.id
+  INNER JOIN medium ON medium.release_id = release.id
+  INNER JOIN track ON track.medium_id = medium.id
+  WHERE release_release_group.release_group_id = :releaseGroupId
+) AS recs
+INNER JOIN recording ON recording.id = recs.recording_id
+INNER JOIN listen ON listen.recording_musicbrainz_id = recording.id
+  AND listen.username = :username
+  AND listen.deleted_at_ms IS NULL
+ORDER BY listened_at_ms DESC
+LIMIT COALESCE(:limit, -1);
 
 deleteReleaseGroup:
 DELETE FROM release_group

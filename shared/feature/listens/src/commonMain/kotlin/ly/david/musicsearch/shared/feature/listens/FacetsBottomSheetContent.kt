@@ -46,6 +46,7 @@ import org.jetbrains.compose.resources.stringResource
 internal val tabs = persistentListOf(
     Tab.RECORDINGS,
     Tab.RELEASES,
+    Tab.RELEASE_GROUPS,
     Tab.ARTISTS,
     Tab.WORKS,
 )
