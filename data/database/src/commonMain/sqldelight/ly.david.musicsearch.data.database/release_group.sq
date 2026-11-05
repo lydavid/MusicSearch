@@ -140,33 +140,34 @@ AND (
 );
 
 getReleaseGroupsByEntity:
-WITH rec_listens AS (
-  SELECT
-    recording_musicbrainz_id AS recording_id,
-    COUNT(*) AS listen_count,
-    MAX(listened_at_ms) AS last_listened_at
-  FROM listen
-  WHERE username = :username
-    AND deleted_at_ms IS NULL
-  GROUP BY recording_musicbrainz_id
-),
-rg_stats AS (
-  SELECT
-    uniq.release_group_id,
-    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
-    MAX(rec_listens.last_listened_at) AS last_listened_at
-  FROM (
-    SELECT DISTINCT
-      release_release_group.release_group_id AS release_group_id,
-      track.recording_id AS recording_id
-    FROM release_release_group
-    INNER JOIN release ON release_release_group.release_id = release.id
-    INNER JOIN medium ON medium.release_id = release.id
-    INNER JOIN track ON track.medium_id = medium.id
-  ) AS uniq
-  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
-  GROUP BY uniq.release_group_id
-)
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
@@ -266,33 +267,34 @@ AND (
 );
 
 getReleaseGroupsByCollection:
-WITH rec_listens AS (
-  SELECT
-    recording_musicbrainz_id AS recording_id,
-    COUNT(*) AS listen_count,
-    MAX(listened_at_ms) AS last_listened_at
-  FROM listen
-  WHERE username = :username
-    AND deleted_at_ms IS NULL
-  GROUP BY recording_musicbrainz_id
-),
-rg_stats AS (
-  SELECT
-    uniq.release_group_id,
-    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
-    MAX(rec_listens.last_listened_at) AS last_listened_at
-  FROM (
-    SELECT DISTINCT
-      release_release_group.release_group_id AS release_group_id,
-      track.recording_id AS recording_id
-    FROM release_release_group
-    INNER JOIN release ON release_release_group.release_id = release.id
-    INNER JOIN medium ON medium.release_id = release.id
-    INNER JOIN track ON track.medium_id = medium.id
-  ) AS uniq
-  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
-  GROUP BY uniq.release_group_id
-)
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
@@ -395,33 +397,34 @@ WHERE (
 );
 
 getAllReleaseGroups:
-WITH rec_listens AS (
-  SELECT
-    recording_musicbrainz_id AS recording_id,
-    COUNT(*) AS listen_count,
-    MAX(listened_at_ms) AS last_listened_at
-  FROM listen
-  WHERE username = :username
-    AND deleted_at_ms IS NULL
-  GROUP BY recording_musicbrainz_id
-),
-rg_stats AS (
-  SELECT
-    uniq.release_group_id,
-    COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
-    MAX(rec_listens.last_listened_at) AS last_listened_at
-  FROM (
-    SELECT DISTINCT
-      release_release_group.release_group_id AS release_group_id,
-      track.recording_id AS recording_id
-    FROM release_release_group
-    INNER JOIN release ON release_release_group.release_id = release.id
-    INNER JOIN medium ON medium.release_id = release.id
-    INNER JOIN track ON track.medium_id = medium.id
-  ) AS uniq
-  LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
-  GROUP BY uniq.release_group_id
-)
+WITH
+  rec_listens AS (
+    SELECT
+      recording_musicbrainz_id AS recording_id,
+      COUNT(*) AS listen_count,
+      MAX(listened_at_ms) AS last_listened_at
+    FROM listen
+    WHERE username = :username
+      AND deleted_at_ms IS NULL
+    GROUP BY recording_musicbrainz_id
+  ),
+  rg_stats AS (
+    SELECT
+      uniq.release_group_id,
+      COALESCE(SUM(rec_listens.listen_count), 0) AS listen_count,
+      MAX(rec_listens.last_listened_at) AS last_listened_at
+    FROM (
+      SELECT DISTINCT
+        release_release_group.release_group_id AS release_group_id,
+        track.recording_id AS recording_id
+      FROM release_release_group
+      INNER JOIN release ON release_release_group.release_id = release.id
+      INNER JOIN medium ON medium.release_id = release.id
+      INNER JOIN track ON track.medium_id = medium.id
+    ) AS uniq
+    LEFT JOIN rec_listens ON rec_listens.recording_id = uniq.recording_id
+    GROUP BY uniq.release_group_id
+  )
 SELECT
   release_group.id,
   release_group.name,
