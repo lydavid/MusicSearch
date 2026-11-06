@@ -165,12 +165,20 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
+      # fastlane is no longer pre-installed on ubuntu-latest (ubuntu-26.04):
+      # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+
       # This step may fail if we rerun because we have already uploaded this version
       # so subsequent steps should always run
       - name: Publish build to Google Play
         id: publish_play_store
         run: |
-          fastlane android publish \
+          bundle exec fastlane android publish \
             track:${{ inputs.track }} \
             json_key_path:${{ steps.auth.outputs.credentials_file_path }}
 

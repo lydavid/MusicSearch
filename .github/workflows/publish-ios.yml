@@ -36,10 +36,18 @@ jobs:
           echo "${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}" | base64 -d > ios-app/musicsearch/GoogleService-Info.plist
           echo "${{ secrets.APP_STORE_API_KEY_JSON_BASE64 }}" | base64 -d > app_store_api_key.json
 
+      # fastlane is no longer pre-installed on ubuntu-latest (ubuntu-26.04):
+      # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+
       - name: Build and upload iOS app to App Store Connect
         run: |
           echo "MATCH_GIT_BASIC_AUTHORIZATION=$(echo -n "lydavid:${{ secrets.PAT }}" | base64)" >> "$GITHUB_ENV"
-          fastlane ios publish
+          bundle exec fastlane ios publish
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
