@@ -81,6 +81,7 @@ class ArtistDao(
             mapper = ::toDetailsModel,
         ).executeAsOneOrNull() ?: return null
 
+        // TODO: can be fetched in same query, similar to rg
         val listenCount = if (listenBrainzUsername.isNotEmpty()) {
             transacter.getListenCountByArtist(
                 artistId = artistId,

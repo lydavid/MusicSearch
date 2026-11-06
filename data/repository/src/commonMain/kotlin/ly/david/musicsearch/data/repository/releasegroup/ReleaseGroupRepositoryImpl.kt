@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.repository.releasegroup
 
 import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.first
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
@@ -13,7 +14,10 @@ import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 import kotlin.time.Instant
@@ -28,6 +32,9 @@ class ReleaseGroupRepositoryImpl(
     detailsMetadataDao: DetailsMetadataDao,
     coroutineDispatchers: CoroutineDispatchers,
     musicBrainzAuthStore: MusicBrainzAuthStore,
+    private val listenBrainzAuthStore: ListenBrainzAuthStore,
+    private val listenBrainzRepository: ListenBrainzRepository,
+    private val appPreferences: AppPreferences,
 ) : ReleaseGroupRepository, LookupEntityRepository<ReleaseGroupDetailsModel, ReleaseGroupMusicBrainzNetworkModel>(
     relationRepository = relationRepository,
     aliasDao = aliasDao,
@@ -42,7 +49,14 @@ class ReleaseGroupRepositoryImpl(
 
     override suspend fun getCachedData(entityId: String): ReleaseGroupDetailsModel? {
         if (!visited(entityId)) return null
-        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(entityId) ?: return null
+
+        val username = listenBrainzAuthStore.browseUsername.first()
+        val numberOfListensToShow = appPreferences.observeNumberOfListensInDetails.first()
+        val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(
+            releaseGroupId = entityId,
+            listenBrainzUsername = username,
+            numberOfListensToShow = numberOfListensToShow,
+        ) ?: return null
 
         val artistCredits = artistCreditDao.getArtistCreditsForEntity(entityId)
         val urlRelations = relationRepository.getRelationshipsByType(entityId)
@@ -59,6 +73,7 @@ class ReleaseGroupRepositoryImpl(
             aliases = aliases,
             genres = genres,
             tags = tags,
+            listenBrainzUrl = "${listenBrainzRepository.getBaseUrl()}/release-group/${releaseGroup.id}",
         )
     }
 

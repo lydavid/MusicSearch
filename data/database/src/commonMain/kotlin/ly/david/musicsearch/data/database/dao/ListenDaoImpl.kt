@@ -184,6 +184,7 @@ class ListenDaoImpl(
         val queryWithWildcards = "%$query%"
         val recordingId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RECORDING }?.id
         val releaseId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RELEASE }?.id
+        val releaseGroupId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.RELEASE_GROUP }?.id
         val artistId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.ARTIST }?.id
         val workId = facetEntity.takeIf { it?.type == MusicBrainzEntityType.WORK }?.id
         return QueryPagingSource(
@@ -192,6 +193,7 @@ class ListenDaoImpl(
                 query = queryWithWildcards,
                 recordingId = recordingId,
                 releaseId = releaseId,
+                releaseGroupId = releaseGroupId,
                 artistId = artistId,
                 workId = workId,
                 maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
@@ -204,6 +206,7 @@ class ListenDaoImpl(
                     query = queryWithWildcards,
                     recordingId = recordingId,
                     releaseId = releaseId,
+                    releaseGroupId = releaseGroupId,
                     artistId = artistId,
                     workId = workId,
                     maxDateTimeEpochMilliseconds = maxDateTimeEpochMilliseconds,
@@ -253,6 +256,26 @@ class ListenDaoImpl(
                     context = coroutineDispatchers.io,
                     queryProvider = { limit, offset ->
                         listenTransacter.getReleaseFacets(
+                            username = username,
+                            query = queryWithWildcards,
+                            limit = limit,
+                            offset = offset,
+                            mapper = ::mapToReleaseFacet,
+                        )
+                    },
+                )
+            }
+
+            MusicBrainzEntityType.RELEASE_GROUP -> {
+                QueryPagingSource(
+                    countQuery = listenTransacter.getCountOfReleaseGroupFacets(
+                        username = username,
+                        query = queryWithWildcards,
+                    ),
+                    transacter = listenTransacter,
+                    context = coroutineDispatchers.io,
+                    queryProvider = { limit, offset ->
+                        listenTransacter.getReleaseGroupFacets(
                             username = username,
                             query = queryWithWildcards,
                             limit = limit,

@@ -1,6 +1,10 @@
 package ly.david.musicsearch.data.repository.helpers
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.NoOpListenBrainzAuthStore
+import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.data.test.preferences.NoOpMusicBrainzAuthStore
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -12,6 +16,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.data.repository.relation.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupRepository
 
@@ -57,6 +62,20 @@ interface TestReleaseGroupRepository {
             },
             coroutineDispatchers = coroutineDispatchers,
             musicBrainzAuthStore = NoOpMusicBrainzAuthStore(),
+            listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
+                override val browseUsername: Flow<String>
+                    get() = flowOf("")
+            },
+            listenBrainzRepository = object : ListenBrainzRepository {
+                override fun getBaseUrl(): String {
+                    return ""
+                }
+
+                override fun getBaseApiUrl(): String {
+                    return ""
+                }
+            },
+            appPreferences = NoOpAppPreferences(),
         )
     }
 }

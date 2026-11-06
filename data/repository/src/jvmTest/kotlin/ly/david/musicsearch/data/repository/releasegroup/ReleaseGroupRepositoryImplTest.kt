@@ -83,6 +83,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                listenBrainzUrl = "/release-group/93bb79c2-2995-4607-af5e-061a25a4e06f",
                 lastUpdated = testDateTimeInThePast,
             ),
             sparseDetailsModel,
@@ -159,6 +160,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                listenBrainzUrl = "/release-group/93bb79c2-2995-4607-af5e-061a25a4e06f",
                 lastUpdated = testDateTimeInThePast,
             ),
             allDataArtistDetailsModel,
@@ -181,6 +183,7 @@ class ReleaseGroupRepositoryImplTest : KoinTest, TestReleaseGroupRepository {
                         joinPhrase = "",
                     ),
                 ),
+                listenBrainzUrl = "/release-group/93bb79c2-2995-4607-af5e-061a25a4e06f",
                 lastUpdated = testDateTimeInThePast,
                 urls = persistentListOf(
                     RelationListItemModel(

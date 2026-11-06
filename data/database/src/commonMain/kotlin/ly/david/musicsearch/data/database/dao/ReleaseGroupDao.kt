@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,6 +16,7 @@ import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainz
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsModel
+import ly.david.musicsearch.shared.domain.listen.ListenWithRecording
 import ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
@@ -33,7 +35,11 @@ interface ReleaseGroupDao : EntityDao {
     )
 
     fun insertAllReleaseGroups(releaseGroups: List<ReleaseGroupMusicBrainzNetworkModel>)
-    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel?
+    fun getReleaseGroupForDetails(
+        releaseGroupId: String,
+        listenBrainzUsername: String,
+        numberOfListensToShow: Long,
+    ): ReleaseGroupDetailsModel?
     fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease?
     fun deleteReleaseGroup(id: String)
 
@@ -104,13 +110,41 @@ class ReleaseGroupDaoImpl(
         }
     }
 
-    override fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupDetailsModel? =
-        transacter.getReleaseGroupForDetails(
+    override fun getReleaseGroupForDetails(
+        releaseGroupId: String,
+        listenBrainzUsername: String,
+        numberOfListensToShow: Long,
+    ): ReleaseGroupDetailsModel? {
+        val releaseGroup = transacter.getReleaseGroupForDetails(
             releaseGroupId = releaseGroupId,
-            mapper = ::mapToReleaseGroupForDetails,
-        ).executeAsOneOrNull()
+            listenBrainzUsername = listenBrainzUsername,
+            mapper = ::toDetailsModel,
+        ).executeAsOneOrNull() ?: return null
 
-    private fun mapToReleaseGroupForDetails(
+        val latestListens = if (listenBrainzUsername.isNotEmpty()) {
+            transacter.getLatestListensByReleaseGroup(
+                releaseGroupId = releaseGroupId,
+                username = listenBrainzUsername,
+                limit = numberOfListensToShow,
+                mapper = { id, name, disambiguation, listenedAtMs ->
+                    ListenWithRecording(
+                        id = id,
+                        name = name,
+                        disambiguation = disambiguation,
+                        listenedMs = listenedAtMs,
+                    )
+                },
+            ).executeAsList().toPersistentList()
+        } else {
+            persistentListOf()
+        }
+
+        return releaseGroup.copy(
+            latestListens = latestListens,
+        )
+    }
+
+    private fun toDetailsModel(
         id: String,
         name: String,
         disambiguation: String,
@@ -118,6 +152,7 @@ class ReleaseGroupDaoImpl(
         primaryTypeId: String,
         secondaryTypeIds: List<String>,
         lastUpdated: Instant?,
+        listenCount: Long?,
     ) = ReleaseGroupDetailsModel(
         id = id,
         name = name,
@@ -128,6 +163,8 @@ class ReleaseGroupDaoImpl(
             ReleaseGroupSecondaryType.fromId(id)
         }.toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
+        listenCount = listenCount,
+        latestListens = persistentListOf(),
     )
 
     override fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
