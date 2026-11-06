@@ -318,7 +318,10 @@ runtime class ly.david.musicsearch.shared.domain.details.ReleaseGroupDetailsMode
   runtime val tags: ImmutableList<TagChip>
   runtime val urls: ImmutableList<RelationListItemModel>
   runtime val aliases: ImmutableList<BasicAlias>
-  <runtime stability> = Runtime(BasicAlias),Runtime(RelationListItemModel),Runtime(TagChip),Runtime(GenreChip),Runtime(ArtistCreditUiModel)
+  stable val listenCount: Long?
+  runtime val latestListens: ImmutableList<ListenWithRecording>
+  stable val listenBrainzUrl: String
+  <runtime stability> = Runtime(ListenWithRecording),Runtime(BasicAlias),Runtime(RelationListItemModel),Runtime(TagChip),Runtime(GenreChip),Runtime(ArtistCreditUiModel)
 }
 runtime class ly.david.musicsearch.shared.domain.details.SeriesDetailsModel {
   stable val id: String
@@ -579,6 +582,7 @@ stable class ly.david.musicsearch.shared.domain.list.ListFilters.Releases {
 stable class ly.david.musicsearch.shared.domain.list.ListFilters.ReleaseGroups {
   stable val query: String
   stable val isRemote: Boolean
+  stable val username: String
   stable val sortOption: ReleaseGroupSortOption
   <runtime stability> = Stable
 }
@@ -956,6 +960,8 @@ runtime class ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListItemMo
   stable val visited: Boolean
   stable val collected: Boolean
   runtime val aliases: ImmutableList<BasicAlias>
+  stable val listenCount: Long?
+  stable val lastListenedAtMs: Long?
   <runtime stability> = Runtime(BasicAlias)
 }
 runtime class ly.david.musicsearch.shared.domain.listitem.ReleaseGroupListSeparator {

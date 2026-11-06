@@ -96,6 +96,8 @@ ly.david.musicsearch.ui.common.release.PreviewReleaseStatusesBottomSheetContentW
 ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItem,PreviewReleaseGroupListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithType,PreviewReleaseGroupListItemWithType,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisited,PreviewReleaseGroupListItemVisited,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithLastListenedPeriod,PreviewReleaseGroupListItemWithLastListenedPeriod,1,1,1,0,0,0,0,0,1,1,
+ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisitedWithLastListenedPeriod,PreviewReleaseGroupListItemVisitedWithLastListenedPeriod,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.screen.screenContainerSize,screenContainerSize,1,0,0,0,0,0,0,0,2,1,
 ly.david.musicsearch.ui.common.series.PreviewSeriesListItem,PreviewSeriesListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.musicsearch.ui.common.series.PreviewSeriesListItemAllInfo,PreviewSeriesListItemAllInfo,1,1,1,0,0,0,0,0,1,1,

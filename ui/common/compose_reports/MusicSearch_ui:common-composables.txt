@@ -97,6 +97,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithType()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemWithLastListenedPeriod()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.releasegroup.PreviewReleaseGroupListItemVisitedWithLastListenedPeriod()
 fun ly.david.musicsearch.ui.common.screen.screenContainerSize()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.PreviewSeriesListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.series.PreviewSeriesListItemAllInfo()
@@ -654,6 +656,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   releaseGroup: ReleaseGroupListItemModel
   stable filterText: String
   stable showType: Boolean
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
   stable modifier: Modifier? = @static <expression>
   stable boldUnvisited: Boolean = @static true
   requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @dynamic <expression>

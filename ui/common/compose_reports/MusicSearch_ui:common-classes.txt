@@ -175,6 +175,7 @@ runtime class ly.david.musicsearch.ui.common.paging.EntitiesPagingListUiState {
   stable val totalCount: Int
   stable val filteredCount: Int
   stable val showMoreInfo: Boolean
+  stable val showType: Boolean
   <runtime stability> = Runtime(LazyPagingItems)
 }
 stable class ly.david.musicsearch.ui.common.place.PlacesListPresenter {
