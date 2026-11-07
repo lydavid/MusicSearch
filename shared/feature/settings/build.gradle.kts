@@ -2,18 +2,6 @@ plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     id("ly.david.musicsearch.compose.multiplatform")
     alias(libs.plugins.paparazzi)
-    alias(libs.plugins.build.config)
-}
-
-buildConfig {
-    buildConfigField(
-        name = "VERSION_CODE",
-        value = project.properties["VERSION_CODE"] as String? ?: "",
-    )
-    buildConfigField(
-        name = "VERSION_NAME",
-        value = project.properties["VERSION_NAME"] as String? ?: "",
-    )
 }
 
 kotlin {

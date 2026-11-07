@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.feature.settings.services
 
+import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.test.FakeNavigator
 import com.slack.circuit.test.presenterTestOf
@@ -19,7 +20,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@Config(sdk = [UPSIDE_DOWN_CAKE])
 @RunWith(RobolectricTestRunner::class)
 class ServicesSettingsPresenterTest {
 

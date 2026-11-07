@@ -1,5 +1,7 @@
 package ly.david.musicsearch.shared.domain
 
+import MusicSearch.shared.domain.BuildConfig
+import ly.david.musicsearch.shared.domain.app.AppInfo
 import ly.david.musicsearch.shared.domain.collection.usecase.CreateCollection
 import ly.david.musicsearch.shared.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.shared.domain.collection.usecase.GetCollection
@@ -43,6 +45,13 @@ val domainModule = module {
     )
 
     single { Clock.System } bind Clock::class
+
+    single {
+        AppInfo(
+            versionName = BuildConfig.VERSION_NAME,
+            versionCode = BuildConfig.VERSION_CODE.toIntOrNull() ?: 0,
+        )
+    }
 
     singleOf(::GetEntitiesImpl) bind GetEntities::class
     singleOf(::CreateCollection)
