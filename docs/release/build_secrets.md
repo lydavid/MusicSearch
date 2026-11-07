@@ -13,10 +13,11 @@ These are the secrets used to build and release the app. Change them in https://
 - `ORG_GRADLE_PROJECT_MUSICBRAINZ_CLIENT_SECRET`: From `not_so_secret.properties`
 - `ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID`: From `secrets.properties`
 - `ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET`: From `secrets.properties`
-- `PAT`: GitHub personal access token with push access to `lydavid/MusicSearch` and read access to `lydavid/musicsearch-fastlane-match` (from https://github.com/settings/personal-access-tokens)
+- `PAT`: GitHub personal access token with push access to `lydavid/MusicSearch` (from https://github.com/settings/personal-access-tokens)
 - `RELEASE_KEY_PASSWORD`: The key password to `release-keystore.jks`
 - `RELEASE_KEYSTORE_JKS_BASE64`: The base64 encoding of `release-keystore.jks` used for publishing our app
 - `RELEASE_STORE_PASSWORD`: The store password to `release-keystore.jks`
 - `SERVICE_ACCOUNT`: See https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1
 - `SIGNING_KEY`: Conveyor signing key (https://github.com/hydraulic-software/conveyor/blob/master/actions/build/README.md)
+- `SSH_PRIVATE_KEY_BASE64`: `cat ~/.ssh/gha | base64` of a private ssh key with access to `lydavid/musicsearch-fastlane-match`
 - `WORKLOAD_IDENTITY_PROVIDER`: See https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1
