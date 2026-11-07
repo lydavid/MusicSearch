@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.circuit.foundation)
     implementation(libs.koin.core)
+    implementation(libs.windowSizeClass)
 }
 
 java {

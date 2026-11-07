@@ -17,9 +17,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,8 +64,9 @@ internal expect fun AppearanceSettingsUi(
 @Composable
 internal fun AppearanceSettingsUi(
     state: AppearanceSettingsUiState,
+    isAndroid12Plus: Boolean,
+    isCompact: Boolean,
     modifier: Modifier = Modifier,
-    isAndroid12Plus: Boolean = false,
 ) {
     val eventSink = state.eventSink
 
@@ -143,6 +141,7 @@ internal fun AppearanceSettingsUi(
             CustomColorPickerSection(
                 state = state,
                 useMaterialYou = useMaterialYou,
+                isCompact = isCompact,
                 eventSink = eventSink,
             )
         }
@@ -154,6 +153,7 @@ internal fun AppearanceSettingsUi(
 private fun ColumnScope.CustomColorPickerSection(
     state: AppearanceSettingsUiState,
     useMaterialYou: Boolean,
+    isCompact: Boolean,
     eventSink: (AppearanceSettingsUiEvent) -> Unit,
 ) {
     val controller = rememberColorPickerController()
@@ -182,12 +182,7 @@ private fun ColumnScope.CustomColorPickerSection(
         }
     }
 
-    val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
-    val padding = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-        16.dp
-    } else {
-        64.dp
-    }
+    val padding = if (isCompact) 16.dp else 64.dp
 
     AnimatedVisibility(
         visible = !useMaterialYou,

@@ -108,6 +108,7 @@ dependencies {
     implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
     implementation(libs.androidx.profileinstaller)
+    implementation(libs.androidx.adaptive)
 //    "baselineProfile"(projects.android.baselineprofile)
 
     googlePlayImplementation(platform(libs.firebase.bom))

@@ -1,4 +1,6 @@
-
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -16,6 +18,7 @@ import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.theme.BaseTheme
 import org.koin.core.context.startKoin
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 fun main() = application {
     val windowState = rememberWindowState()
 
@@ -45,10 +48,13 @@ fun main() = application {
                     onRootPop = { exitApplication() },
                 )
 
+                val windowSizeClass = calculateWindowSizeClass()
+
                 AppRoot(
                     backStack = backStack,
                     navigator = navigator,
                     circuit = circuit,
+                    isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
                 )
             },
         )

@@ -2,6 +2,9 @@
 
 package ly.david.musicsearch.shared
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.window.ComposeUIViewController
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
@@ -32,6 +35,7 @@ class AppComponent : KoinComponent {
     val appPreferences: AppPreferences by inject()
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Suppress("FunctionName", "unused")
 fun MainViewController(): UIViewController =
     ComposeUIViewController {
@@ -47,10 +51,14 @@ fun MainViewController(): UIViewController =
                 backStack = backStack,
                 onRootPop = {},
             )
+
+            val windowSizeClass = calculateWindowSizeClass()
+
             AppRoot(
                 backStack = backStack,
                 navigator = navigator,
                 circuit = appComponent.circuit,
+                isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
             )
         }
     }

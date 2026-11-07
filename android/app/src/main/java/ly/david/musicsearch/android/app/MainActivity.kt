@@ -10,8 +10,10 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.content.ContextCompat
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
@@ -92,10 +94,13 @@ internal class MainActivity : ComponentActivity() {
                         }
                     }
 
+                    val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
+
                     AppRoot(
                         backStack = backStack,
                         navigator = navigator,
                         circuit = circuit,
+                        isCompact = !windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND),
                     )
                 },
             )

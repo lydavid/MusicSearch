@@ -17,10 +17,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -71,31 +67,15 @@ import musicsearch.ui.common.generated.resources.images
 import musicsearch.ui.common.generated.resources.sortAction
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(
-    ExperimentalMaterial3WindowSizeClassApi::class,
-    ExperimentalComposeUiApi::class,
-)
 @Composable
-internal fun ImagesUi(
+internal expect fun ImagesUi(
     state: ImagesUiState,
     modifier: Modifier = Modifier,
-) {
-    val eventSink = state.eventSink
-
-    BackHandler {
-        eventSink(ImagesUiEvent.NavigateUp)
-    }
-
-    val windowSizeClass: WindowSizeClass = calculateWindowSizeClass()
-    ImagesUi(
-        state = state,
-        isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-        modifier = modifier,
-    )
-}
+)
 
 @OptIn(
     ExperimentalMaterial3Api::class,
+    ExperimentalComposeUiApi::class,
 )
 @Composable
 internal fun ImagesUi(
@@ -109,6 +89,10 @@ internal fun ImagesUi(
         .collectAsLazyPagingItems()
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
+
+    BackHandler {
+        eventSink(ImagesUiEvent.NavigateUp)
+    }
 
     if (showBottomSheet) {
         MultipleChoiceBottomSheet(

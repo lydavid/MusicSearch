@@ -33,6 +33,7 @@ kotlin {
 
                 implementation(libs.compose.ui.tooling.preview)
                 implementation(libs.compose.ui.tooling)
+                implementation(libs.androidx.adaptive)
             }
         }
         val androidHostTest by getting {
