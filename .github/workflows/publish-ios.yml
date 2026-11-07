@@ -43,10 +43,22 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Build and upload iOS app to App Store Connect
+      - name: setup ssh
         run: |
-          echo "MATCH_GIT_BASIC_AUTHORIZATION=$(echo -n "lydavid:${{ secrets.PAT }}" | base64)" >> "$GITHUB_ENV"
-          bundle exec fastlane ios publish
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY_BASE64 }}" | base64 -d > ~/.ssh/gha
+          chmod 600 ~/.ssh/gha
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host github.com
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/gha
+            IdentitiesOnly yes
+          EOF
+
+      - name: Build and upload iOS app to App Store Connect
+        run: bundle exec fastlane ios publish
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
