@@ -31,12 +31,14 @@ platform :android do
 end
 
 platform :ios do
+  # To renew, run `bundle exec fastlane matchAppStore` locally.
   lane :matchAppStore do
     match(
       type: "appstore",
       api_key_path: "app_store_api_key.json",
       team_id: "29HRCHW674",
-      readonly: is_ci
+      readonly: is_ci,
+      renew_expired_certs: true
     )
   end
 
