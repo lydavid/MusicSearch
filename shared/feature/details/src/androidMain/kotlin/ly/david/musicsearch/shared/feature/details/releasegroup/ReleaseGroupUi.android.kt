@@ -72,8 +72,14 @@ private val detailsUiState = DetailsUiState(
     detailsTabUiState = detailsTabUiState,
 )
 
-private val detailsUiStateWithListens = detailsUiState.copy(
-    detailsModel = detailsUiState.detailsModel?.copy(
+private val detailsUiStateWithListens = DetailsUiState(
+    browseMethod = BrowseMethod.ByEntity(
+        entityId = "rg1",
+        entityType = MusicBrainzEntityType.RELEASE_GROUP,
+    ),
+    tabs = releaseGroupTabs,
+    selectedTab = Tab.DETAILS,
+    detailsModel = ReleaseGroupDetailsModel(
         id = "88ee1a12-f362-4737-b7f4-b2f0b079e218",
         name = "幻燈",
         primaryType = ReleaseGroupPrimaryType.Album,
@@ -106,9 +112,10 @@ private val detailsUiStateWithListens = detailsUiState.copy(
             ),
         ),
         listenBrainzUrl = "https://listenbrainz.example.com/release-group/88ee1a12-f362-4737-b7f4-b2f0b079e218",
+        lastUpdated = Instant.parse("2026-09-05T20:42:20Z"),
     ),
-    detailsTabUiState = detailsUiState.detailsTabUiState.copy(
-        now = Instant.parse("2026-09-05T19:42:20Z"),
+    detailsTabUiState = DetailsTabUiState(
+        now = Instant.parse("2026-09-06T19:42:20Z"),
     ),
 )
 
