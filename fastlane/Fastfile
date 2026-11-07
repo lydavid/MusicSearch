@@ -35,9 +35,7 @@ platform :ios do
     match(
       type: "appstore",
       api_key_path: "app_store_api_key.json",
-      app_identifier: "io.github.lydavid.musicsearch",
       team_id: "29HRCHW674",
-      git_url: "git@github.com:lydavid/musicsearch-fastlane-match.git",
       readonly: is_ci
     )
   end

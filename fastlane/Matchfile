@@ -1,5 +1,7 @@
 storage_mode("git")
 
+git_url("git@github.com:lydavid/musicsearch-fastlane-match.git")
+
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
 app_identifier("io.github.lydavid.musicsearch")
