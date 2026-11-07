@@ -1,15 +1,5 @@
 # Changelog
 
-## [1.133.0](https://github.com/lydavid/MusicSearch/compare/v1.132.0...v1.133.0) (2026-11-06)
-
-
-### Features
-
-* show number of times user has listened to recordings part of releases part of a release group and latest listens in details; support filtering all listens by release group ([#2443](https://github.com/lydavid/MusicSearch/issues/2443)) ([1f7e661](https://github.com/lydavid/MusicSearch/commit/1f7e6613cae8cc049a28daa8c1542bc33dc26b24))
-
-## [1.132.0](https://github.com/lydavid/MusicSearch/compare/v1.131.0...v1.132.0) (2026-11-05)
-
-
 ### Features
 
 * show number of listens for release groups lists ([#2438](https://github.com/lydavid/MusicSearch/issues/2438)) ([4a165c8](https://github.com/lydavid/MusicSearch/commit/4a165c8861888008892ea0aab162db409a504b30))
