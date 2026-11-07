@@ -5,6 +5,7 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.parcelize")
     alias(libs.plugins.kotlin.powerAssert)
+    alias(libs.plugins.build.config)
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -13,6 +14,17 @@ powerAssert {
         "kotlin.test.assertEquals",
         "kotlin.test.assertNull",
         "kotlin.test.assertNotNull",
+    )
+}
+
+buildConfig {
+    buildConfigField(
+        name = "VERSION_CODE",
+        value = project.properties["VERSION_CODE"] as String? ?: "",
+    )
+    buildConfigField(
+        name = "VERSION_NAME",
+        value = project.properties["VERSION_NAME"] as String? ?: "",
     )
 }
 
