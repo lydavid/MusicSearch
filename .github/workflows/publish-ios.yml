@@ -41,7 +41,6 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
         with:
-          ruby-version: "2.3.26"
           bundler-cache: true
 
       - name: Build and upload iOS app to App Store Connect
