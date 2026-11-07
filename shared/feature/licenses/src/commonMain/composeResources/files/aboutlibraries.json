@@ -217,6 +217,31 @@
             ]
         },
         {
+            "uniqueId": "androidx.compose.material3.adaptive:adaptive-android",
+            "artifactVersion": "1.4.0-alpha03",
+            "name": "Material Adaptive",
+            "description": "Compose Material Design Adaptive Library",
+            "website": "https://developer.android.com/jetpack/androidx/releases/compose-material3-adaptive#1.4.0-alpha03",
+            "developers": [
+                {
+                    "name": "The Android Open Source Project"
+                }
+            ],
+            "organization": {
+                "name": "The Android Open Source Project"
+            },
+            "scm": {
+                "connection": "scm:git:https://android.googlesource.com/platform/frameworks/support",
+                "url": "https://cs.android.com/androidx/platform/frameworks/support"
+            },
+            "licenses": [
+                "Apache-2.0"
+            ],
+            "funding": [
+                
+            ]
+        },
+        {
             "uniqueId": "androidx.compose.material3:material3-android",
             "artifactVersion": "1.5.0-alpha08",
             "name": "Compose Material3 Components",
@@ -1245,29 +1270,6 @@
                 "connection": "scm:git:git://github.com/lysine-dev/okio.git",
                 "developerConnection": "scm:git:ssh://git@github.com/lysine-dev/okio.git",
                 "url": "https://github.com/lysine-dev/okio/"
-            },
-            "licenses": [
-                "Apache-2.0"
-            ],
-            "funding": [
-                
-            ]
-        },
-        {
-            "uniqueId": "dev.chrisbanes.material3:material3-window-size-class-multiplatform-android",
-            "artifactVersion": "0.5.0",
-            "name": "Compose Material 3 Window Size Class",
-            "description": "Provides window size classes for building responsive UIs",
-            "website": "https://github.com/chrisbanes/material3-windowsizeclass-multiplatform/",
-            "developers": [
-                {
-                    "name": "Chris Banes"
-                }
-            ],
-            "scm": {
-                "connection": "scm:git:git://github.com/chrisbanes/material3-windowsizeclass-multiplatform.git",
-                "developerConnection": "scm:git:git://github.com/chrisbanes/material3-windowsizeclass-multiplatform.git",
-                "url": "https://github.com/chrisbanes/material3-windowsizeclass-multiplatform/"
             },
             "licenses": [
                 "Apache-2.0"
