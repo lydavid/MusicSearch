@@ -15,11 +15,14 @@ import ly.david.musicsearch.data.database.dao.GenreDao
 import ly.david.musicsearch.data.musicbrainz.api.BrowseGenresResponse
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.helpers.FilterTestCase
+import ly.david.musicsearch.data.repository.helpers.FiltersTestCase
 import ly.david.musicsearch.data.repository.helpers.testFilter
+import ly.david.musicsearch.data.repository.helpers.testFilters
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import org.junit.Rule
 import org.junit.Test
@@ -135,19 +138,17 @@ class GenresListRepositoryImplTest : KoinTest {
             genres = listOf(),
         )
 
-        testFilter(
-            pagingFlowProducer = { query ->
+        testFilters(
+            pagingFlowProducer = { listFilters ->
                 genresListRepository.observeGenres(
                     browseMethod = BrowseMethod.All,
-                    listFilters = ListFilters.Base(
-                        query = query,
-                    ),
+                    listFilters = listFilters,
                 )
             },
             testCases = listOf(
-                FilterTestCase(
+                FiltersTestCase(
                     description = "no filter",
-                    query = "",
+                    listFilters = ListFilters.Genres(),
                     expectedResult = listOf(
                         mathRockGenreListItemModel.copy(
                             collected = true,
@@ -157,11 +158,16 @@ class GenresListRepositoryImplTest : KoinTest {
                         ),
                     ),
                 ),
-                FilterTestCase(
-                    description = "by name",
-                    query = "pop",
+                FiltersTestCase(
+                    description = "sort name desc",
+                    listFilters = ListFilters.Genres(
+                        sortOption = GenreSortOption.NameDescending,
+                    ),
                     expectedResult = listOf(
                         jPopGenreListItemModel.copy(
+                            collected = true,
+                        ),
+                        mathRockGenreListItemModel.copy(
                             collected = true,
                         ),
                     ),

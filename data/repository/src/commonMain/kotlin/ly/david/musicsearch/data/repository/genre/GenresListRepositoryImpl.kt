@@ -48,6 +48,7 @@ class GenresListRepositoryImpl(
         return genreDao.getGenres(
             browseMethod = browseMethod,
             query = listFilters.query,
+            sortOption = (listFilters as ListFilters.Genres).sortOption,
         )
     }
 

@@ -33,14 +33,15 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.shared.domain.spotify.SpotifyOAuthInfo
 
@@ -152,6 +153,25 @@ internal class AppPreferencesImpl(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[eventSortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
+
+    // region Genres
+    private val genreSortOptionPreference = stringPreferencesKey(AppPreferencesKey.GENRE_SORT_OPTION.name)
+
+    override val genreSortOption: Flow<GenreSortOption>
+        get() = preferencesDataStore.data
+            .map {
+                it[genreSortOptionPreference].toEnumOrDefault(GenreSortOption.InsertedAscending)
+            }
+            .distinctUntilChanged()
+
+    override fun setGenreSortOption(sort: GenreSortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[genreSortOptionPreference] = sort.name
             }
         }
     }

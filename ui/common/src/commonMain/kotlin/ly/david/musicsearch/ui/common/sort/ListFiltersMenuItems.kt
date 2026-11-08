@@ -8,6 +8,7 @@ import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
@@ -62,6 +63,18 @@ fun OverflowMenuScope.ListFiltersMenuItems(
         is ListFilters.Events -> {
             SortMenuItem(
                 sortOptions = EventSortOption.entries,
+                selectedSortOption = listFilters.sortOption,
+                onSortOptionClick = {
+                    eventSink(
+                        EntitiesListUiEvent.UpdateSortOption(it),
+                    )
+                },
+            )
+        }
+
+        is ListFilters.Genres -> {
+            SortMenuItem(
+                sortOptions = GenreSortOption.entries,
                 selectedSortOption = listFilters.sortOption,
                 onSortOptionClick = {
                     eventSink(

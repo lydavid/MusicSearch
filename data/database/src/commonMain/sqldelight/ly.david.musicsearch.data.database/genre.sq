@@ -50,6 +50,16 @@ AND (
   genre.name LIKE :query OR
   genre.disambiguation LIKE :query
 )
+GROUP BY genre.id
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN collection_entity.rowid
+    WHEN 2 THEN genre.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN collection_entity.rowid
+    WHEN 3 THEN genre.name
+  END DESC
 LIMIT :limit OFFSET :offset;
 
 -- all genres
@@ -83,4 +93,13 @@ WHERE (
   genre.name LIKE :query OR
   genre.disambiguation LIKE :query
 )
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN genre.rowid
+    WHEN 2 THEN genre.name
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN genre.rowid
+    WHEN 3 THEN genre.name
+  END DESC
 LIMIT :limit OFFSET :offset;

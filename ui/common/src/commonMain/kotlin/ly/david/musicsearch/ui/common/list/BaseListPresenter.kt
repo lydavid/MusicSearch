@@ -28,6 +28,7 @@ import ly.david.musicsearch.shared.domain.release.ReleaseStatus
 import ly.david.musicsearch.shared.domain.sort.AreaSortOption
 import ly.david.musicsearch.shared.domain.sort.ArtistSortOption
 import ly.david.musicsearch.shared.domain.sort.EventSortOption
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.sort.InstrumentSortOption
 import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
@@ -62,6 +63,9 @@ abstract class BaseListPresenter(
 
         val eventSortOption
             by appPreferences.eventSortOption.collectAsRetainedState(EventSortOption.InsertedAscending)
+
+        val genreSortOption
+            by appPreferences.genreSortOption.collectAsRetainedState(GenreSortOption.InsertedAscending)
 
         val instrumentSortOption
             by appPreferences.instrumentSortOption.collectAsRetainedState(InstrumentSortOption.InsertedAscending)
@@ -108,6 +112,12 @@ abstract class BaseListPresenter(
                 query = query,
                 isRemote = isRemote,
                 sortOption = eventSortOption,
+            )
+
+            MusicBrainzEntityType.GENRE -> ListFilters.Genres(
+                query = query,
+                isRemote = isRemote,
+                sortOption = genreSortOption,
             )
 
             MusicBrainzEntityType.INSTRUMENT -> ListFilters.Instruments(
@@ -228,6 +238,7 @@ abstract class BaseListPresenter(
                         is AreaSortOption -> appPreferences.setAreaSortOption(sortOption)
                         is ArtistSortOption -> appPreferences.setArtistSortOption(sortOption)
                         is EventSortOption -> appPreferences.setEventSortOption(sortOption)
+                        is GenreSortOption -> appPreferences.setGenreSortOption(sortOption)
                         is InstrumentSortOption -> appPreferences.setInstrumentSortOption(sortOption)
                         is LabelSortOption -> appPreferences.setLabelSortOption(sortOption)
                         is PlaceSortOption -> appPreferences.setPlaceSortOption(sortOption)

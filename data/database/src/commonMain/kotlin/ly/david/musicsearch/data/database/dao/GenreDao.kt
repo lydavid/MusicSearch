@@ -12,6 +12,7 @@ import ly.david.musicsearch.data.database.mapper.mapToGenreListItemModel
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import lydavidmusicsearchdatadatabase.Genre
 
@@ -44,10 +45,12 @@ class GenreDao(
     fun getGenres(
         browseMethod: BrowseMethod,
         query: String,
+        sortOption: GenreSortOption,
     ): PagingSource<Int, GenreListItemModel> = when (browseMethod) {
         is BrowseMethod.All -> {
             getAllGenres(
                 query = query,
+                sortOption = sortOption,
             )
         }
 
@@ -55,6 +58,7 @@ class GenreDao(
             getGenresByCollection(
                 collectionId = browseMethod.entityId,
                 query = query,
+                sortOption = sortOption,
             )
         }
     }
@@ -88,6 +92,7 @@ class GenreDao(
     private fun getGenresByCollection(
         collectionId: String,
         query: String,
+        sortOption: GenreSortOption,
     ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
         countQuery = getCountOfGenresByCollectionQuery(
             collectionId = collectionId,
@@ -99,6 +104,7 @@ class GenreDao(
             transacter.getGenresByCollection(
                 collectionId = collectionId,
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToGenreListItemModel,
@@ -116,6 +122,7 @@ class GenreDao(
 
     private fun getAllGenres(
         query: String,
+        sortOption: GenreSortOption,
     ): PagingSource<Int, GenreListItemModel> = QueryPagingSource(
         countQuery = getCountOfAllGenres(
             query = query,
@@ -125,6 +132,7 @@ class GenreDao(
         queryProvider = { limit, offset ->
             transacter.getAllGenres(
                 query = "%$query%",
+                sortBy = sortOption.order.toLong(),
                 limit = limit,
                 offset = offset,
                 mapper = ::mapToGenreListItemModel,
