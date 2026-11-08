@@ -22,8 +22,8 @@ import ly.david.musicsearch.shared.domain.BrowseMethod
 import ly.david.musicsearch.shared.domain.genre.GenresListRepository
 import ly.david.musicsearch.shared.domain.list.ListFilters
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.GenreSortOption
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -99,7 +99,7 @@ class GenresListRepositoryImplTest : KoinTest {
             pagingFlowProducer = { query ->
                 genresListRepository.observeGenres(
                     browseMethod = browseMethod,
-                    listFilters = ListFilters.Base(
+                    listFilters = ListFilters.Genres(
                         query = query,
                     ),
                 )
@@ -159,9 +159,37 @@ class GenresListRepositoryImplTest : KoinTest {
                     ),
                 ),
                 FiltersTestCase(
+                    description = "insertion desc",
+                    listFilters = ListFilters.Genres(
+                        sortOption = GenreSortOption.InsertedDescending,
+                    ),
+                    expectedResult = listOf(
+                        jPopGenreListItemModel.copy(
+                            collected = true,
+                        ),
+                        mathRockGenreListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FiltersTestCase(
                     description = "sort name desc",
                     listFilters = ListFilters.Genres(
                         sortOption = GenreSortOption.NameDescending,
+                    ),
+                    expectedResult = listOf(
+                        mathRockGenreListItemModel.copy(
+                            collected = true,
+                        ),
+                        jPopGenreListItemModel.copy(
+                            collected = true,
+                        ),
+                    ),
+                ),
+                FiltersTestCase(
+                    description = "sort name asc",
+                    listFilters = ListFilters.Genres(
+                        sortOption = GenreSortOption.NameAscending,
                     ),
                     expectedResult = listOf(
                         jPopGenreListItemModel.copy(
