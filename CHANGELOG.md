@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.136.0](https://github.com/lydavid/MusicSearch/compare/v1.135.0...v1.136.0) (2026-11-08)
+
+
+### Bug Fixes
+
+* fix startup crash on desktop due to NoClassDefFoundError for WindowSizeClass ([6fe802a](https://github.com/lydavid/MusicSearch/commit/6fe802a0acd3d7ffa3a224de168a06f61a20c93e)), closes [#material3-material3](https://github.com/lydavid/MusicSearch/issues/material3-material3)
+* **ios:** fix too much top and bottom (safe-area) padding ([8945240](https://github.com/lydavid/MusicSearch/commit/89452408ceec9706be37420b877d8c449277e650))
+
+
+### Features
+
+* support sorting tracks by original/reverse order, most/least listened, and most/least recently listened ([#2454](https://github.com/lydavid/MusicSearch/issues/2454)) ([5825b64](https://github.com/lydavid/MusicSearch/commit/5825b6484398df1e0ff3b1d5dd5b6e81b06d3844))
+
 ## [1.135.0](https://github.com/lydavid/MusicSearch/compare/v1.134.0...v1.135.0) (2026-11-07)
 
 
