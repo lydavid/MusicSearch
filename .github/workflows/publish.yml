@@ -199,7 +199,8 @@ jobs:
           command: make site
           extra_flags: --parallelism=1
 
-      - run: |
+      - name: Add desktop assets
+        run: |
           du -ah output | sort -rh
           mv output/download.html .
           mv output/icon.svg .
