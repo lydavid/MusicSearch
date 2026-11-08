@@ -24,6 +24,7 @@ import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationship
 import ly.david.musicsearch.shared.domain.relation.usecase.ObserveCountOfRelationshipsByEntity
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
 import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.ui.common.area.AreasListPresenter
 import ly.david.musicsearch.ui.common.artist.ArtistsListPresenter
 import ly.david.musicsearch.ui.common.event.EventsListPresenter
@@ -156,6 +157,7 @@ class EntitiesListPresenterTest {
                 override fun invoke(
                     releaseId: String,
                     query: String,
+                    sortOption: TrackSortOption,
                 ): Flow<PagingData<ListItemModel>> {
                     return flowOf(PagingData.from(trackListItems))
                 }
@@ -173,6 +175,7 @@ class EntitiesListPresenterTest {
                     return flowOf(123)
                 }
             },
+            appPreferences = NoOpAppPreferences(),
         ),
     )
 

@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.paging.PagingData
+import androidx.paging.filter
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -23,29 +24,50 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.shared.domain.list.FilteredCount
 import ly.david.musicsearch.shared.domain.list.ObserveTrackCount
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
+import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.release.usecase.GetTrackIdsByRelease
 import ly.david.musicsearch.shared.domain.release.usecase.ObserveTracksByRelease
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 
 class TracksByReleasePresenter(
     private val observeTracksByRelease: ObserveTracksByRelease,
     private val getTracksIdsByRelease: GetTrackIdsByRelease,
     private val observeTrackCount: ObserveTrackCount,
+    private val appPreferences: AppPreferences,
 ) : Presenter<TracksByReleaseUiState> {
     @Composable
     override fun present(): TracksByReleaseUiState {
         var query by rememberSaveable { mutableStateOf("") }
         var releaseId: String by rememberSaveable { mutableStateOf("") }
         var mostListenedTrackCount: Long by rememberSaveable { mutableLongStateOf(0) }
-        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(releaseId, query) {
+        val trackSortOption: TrackSortOption
+            by appPreferences.trackSortOption.collectAsRetainedState(TrackSortOption.NormalAscending)
+        val pagingDataFlow: Flow<PagingData<ListItemModel>> by rememberRetained(
+            releaseId,
+            query,
+            trackSortOption,
+        ) {
             mutableStateOf(
                 observeTracksByRelease(
                     releaseId = releaseId,
                     query = query,
-                ),
+                    sortOption = trackSortOption,
+                ).map { pagingData ->
+                    val showDividers =
+                        trackSortOption == TrackSortOption.NormalAscending ||
+                            trackSortOption == TrackSortOption.NormalDescending
+                    if (showDividers) {
+                        pagingData
+                    } else {
+                        pagingData.filter { item: ListItemModel -> item !is ListSeparator }
+                    }
+                },
             )
         }
         // TODO: consider changing "select all" for all other list screens to actually select all like tracks
@@ -78,6 +100,10 @@ class TracksByReleasePresenter(
                     query = event.query
                 }
 
+                is TracksByReleaseUiEvent.UpdateSortOption -> {
+                    appPreferences.setTrackSortOption(event.sortOption)
+                }
+
                 is TracksByReleaseUiEvent.ToggleMedium -> {
                     val mediumId = event.id.toLong()
                     collapsedMediumIds = if (collapsedMediumIds.contains(mediumId)) {
@@ -97,6 +123,7 @@ class TracksByReleasePresenter(
             mostListenedTrackCount = mostListenedTrackCount,
             totalCount = totalCount,
             filteredCount = filteredCount,
+            sortOption = trackSortOption,
             eventSink = { event ->
                 eventSink(event = event)
             },
@@ -111,6 +138,7 @@ data class TracksByReleaseUiState(
     val collapsedMediumIds: ImmutableSet<Long> = persistentSetOf(),
     val trackIds: ImmutableList<SelectableId> = persistentListOf(),
     val mostListenedTrackCount: Long = 0L,
+    val sortOption: TrackSortOption = TrackSortOption.NormalAscending,
     override val totalCount: Int = 0,
     override val filteredCount: Int = 0,
     val eventSink: (TracksByReleaseUiEvent) -> Unit = {},
@@ -124,6 +152,10 @@ sealed interface TracksByReleaseUiEvent : CircuitUiEvent {
 
     data class UpdateQuery(
         val query: String,
+    ) : TracksByReleaseUiEvent
+
+    data class UpdateSortOption(
+        val sortOption: TrackSortOption,
     ) : TracksByReleaseUiEvent
 
     data class ToggleMedium(

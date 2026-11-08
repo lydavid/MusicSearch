@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import kotlin.time.Instant
 
 interface ReleaseRepository {
@@ -17,5 +18,6 @@ interface ReleaseRepository {
         releaseId: String,
         query: String,
         lastUpdated: Instant,
+        sortOption: TrackSortOption,
     ): Flow<PagingData<ListItemModel>>
 }

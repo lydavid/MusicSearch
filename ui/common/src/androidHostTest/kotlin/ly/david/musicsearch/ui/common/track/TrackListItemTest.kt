@@ -25,4 +25,11 @@ class TrackListItemTest : ScreenshotTest() {
             PreviewTrackListItemVisited()
         }
     }
+
+    @Test
+    fun listensWithoutLatestListenPeriod() {
+        snapshot {
+            PreviewTrackListItemListensWithoutLatestListenPeriod()
+        }
+    }
 }

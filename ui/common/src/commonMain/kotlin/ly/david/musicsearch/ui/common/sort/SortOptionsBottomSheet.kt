@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.SortableOption
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.icons.Check
@@ -47,6 +48,8 @@ import musicsearch.ui.common.generated.resources.leastRecentlyListened
 import musicsearch.ui.common.generated.resources.mostCompleteListened
 import musicsearch.ui.common.generated.resources.mostListened
 import musicsearch.ui.common.generated.resources.mostRecentlyListened
+import musicsearch.ui.common.generated.resources.tracksNormalOrder
+import musicsearch.ui.common.generated.resources.tracksReverseOrder
 import musicsearch.ui.common.generated.resources.typeAlphabetically
 import musicsearch.ui.common.generated.resources.typeReverseAlphabetically
 import org.jetbrains.compose.resources.StringResource
@@ -107,6 +110,7 @@ private fun SortableOption.getLabel(): String {
             is ReleaseGroupSortOption -> getLabelRes()
             is SeriesSortOption -> getLabelRes()
             is WorkSortOption -> getLabelRes()
+            is TrackSortOption -> getLabelRes()
         },
     )
 }
@@ -278,5 +282,17 @@ private fun WorkSortOption.getLabelRes(): StringResource {
 
         WorkSortOption.ListensAscending -> Res.string.leastListened
         WorkSortOption.ListensDescending -> Res.string.mostListened
+    }
+}
+
+private fun TrackSortOption.getLabelRes(): StringResource {
+    return when (this) {
+        TrackSortOption.NormalAscending -> Res.string.tracksNormalOrder
+        TrackSortOption.NormalDescending -> Res.string.tracksReverseOrder
+
+        TrackSortOption.MostListenCountDescending -> Res.string.mostListened
+        TrackSortOption.MostListenCountAscending -> Res.string.leastListened
+        TrackSortOption.MostLastListenedAtDescending -> Res.string.mostRecentlyListened
+        TrackSortOption.MostLastListenedAtAscending -> Res.string.leastRecentlyListened
     }
 }
