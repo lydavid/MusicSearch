@@ -46,6 +46,7 @@ import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import kotlin.time.Instant
 
 class ReleaseRepositoryImpl(
@@ -199,6 +200,7 @@ class ReleaseRepositoryImpl(
         releaseId: String,
         query: String,
         lastUpdated: Instant,
+        sortOption: TrackSortOption,
     ): Flow<PagingData<ListItemModel>> {
         return listenBrainzAuthStore.browseUsername.flatMapLatest { username ->
             getPagingFlow(
@@ -206,6 +208,7 @@ class ReleaseRepositoryImpl(
                 lastUpdated = lastUpdated,
                 query = query,
                 username = username,
+                sortOption = sortOption,
             )
         }
     }
@@ -216,6 +219,7 @@ class ReleaseRepositoryImpl(
         lastUpdated: Instant,
         query: String,
         username: String,
+        sortOption: TrackSortOption,
     ): Flow<PagingData<ListItemModel>> {
         return Pager(
             config = CommonPagingConfig.pagingConfig,
@@ -236,6 +240,7 @@ class ReleaseRepositoryImpl(
                     releaseId = releaseId,
                     query = query,
                     username = username,
+                    sortOption = sortOption,
                 )
             },
         ).flow
@@ -286,4 +291,5 @@ private fun TrackAndMedium.toTrackListItemModel() =
         format = format,
         aliases = aliases,
         listenCount = listenCount,
+        lastListenedAtMs = lastListenedAtMs,
     )

@@ -13,6 +13,7 @@ import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
 import ly.david.musicsearch.ui.common.preview.PreviewTheme
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
+import kotlin.time.Instant
 
 @PreviewLightDark
 @Composable
@@ -155,9 +156,10 @@ internal fun PreviewTracksByReleaseUi() {
                     totalCount = 52,
                     filteredCount = 5,
                 ),
-                isPullToRefreshEnabled = false,
-                boldUnvisited = true,
                 filterText = "い",
+                boldUnvisited = true,
+                isPullToRefreshEnabled = false,
+                now = Instant.parse("1970-01-02T05:00:00Z"),
             )
         }
     }

@@ -161,6 +161,8 @@
     <string name="latestCached">Latest cached</string>
     <string name="typeAlphabetically">Type alphabetically</string>
     <string name="typeReverseAlphabetically">Type reverse alphabetically</string>
+    <string name="tracksNormalOrder">Original order</string>
+    <string name="tracksReverseOrder">Reverse order</string>
     <string name="loginToMusicBrainz">Login to MusicBrainz</string>
     <string name="artificialLanguage">[Artificial (Other)]</string>
     <string name="mostEntities">Most entities</string>

@@ -36,6 +36,7 @@ import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
 import ly.david.musicsearch.shared.domain.sort.SortableOption
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 import ly.david.musicsearch.ui.common.topappbar.BrowseMethodSaver
 
@@ -233,6 +234,7 @@ abstract class BaseListPresenter(
                         is RecordingSortOption -> appPreferences.setRecordingSortOption(sortOption)
                         is ReleaseGroupSortOption -> appPreferences.setReleaseGroupSortOption(sortOption)
                         is ReleaseSortOption -> appPreferences.setReleaseSortOption(sortOption)
+                        is TrackSortOption -> appPreferences.setTrackSortOption(sortOption)
                         is SeriesSortOption -> appPreferences.setSeriesSortOption(sortOption)
                         is WorkSortOption -> appPreferences.setWorkSortOption(sortOption)
                     }

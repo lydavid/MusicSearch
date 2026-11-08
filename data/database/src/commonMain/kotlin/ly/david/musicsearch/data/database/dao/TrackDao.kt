@@ -17,6 +17,7 @@ import ly.david.musicsearch.shared.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import lydavidmusicsearchdatadatabase.Track
 
 class TrackDao(
@@ -97,6 +98,7 @@ class TrackDao(
         releaseId: String,
         query: String,
         username: String,
+        sortOption: TrackSortOption,
     ): PagingSource<Int, TrackAndMedium> {
         val queryWithWildcards = "%$query%"
         return QueryPagingSource(
@@ -111,6 +113,7 @@ class TrackDao(
                     releaseId = releaseId,
                     query = queryWithWildcards,
                     username = username,
+                    sortBy = sortOption.order.toLong(),
                     limit = limit,
                     offset = offset,
                     mapper = ::mapToTrackAndMedium,
@@ -170,6 +173,7 @@ private fun mapToTrackAndMedium(
     aliasNames: String?,
     aliasLocales: String?,
     listenCount: Long?,
+    lastListenedAtMs: Long?,
 ) = TrackAndMedium(
     id = id,
     position = position,
@@ -187,6 +191,7 @@ private fun mapToTrackAndMedium(
     collected = collected == true,
     aliases = combineToAliases(aliasNames, aliasLocales),
     listenCount = listenCount,
+    lastListenedAtMs = lastListenedAtMs,
     mediumPosition = mediumPosition ?: 0,
     mediumName = mediumName,
     trackCount = trackCount,
@@ -206,6 +211,7 @@ data class TrackAndMedium(
     val collected: Boolean = false,
     val aliases: ImmutableList<BasicAlias>,
     val listenCount: Long? = null,
+    val lastListenedAtMs: Long? = null,
 
     val mediumPosition: Int,
     val mediumName: String?,

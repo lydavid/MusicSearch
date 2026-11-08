@@ -19,6 +19,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -43,6 +44,7 @@ import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.label.LabelType
 import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listen.ListenDao
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -55,6 +57,7 @@ import ly.david.musicsearch.shared.domain.release.TextRepresentationUiModel
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupPrimaryType
 import ly.david.musicsearch.shared.domain.releasegroup.ReleaseGroupSecondaryType
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -74,6 +77,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
     override val labelDao: LabelDao by inject()
     override val mediumDao: MediumDao by inject()
     override val trackDao: TrackDao by inject()
+    val listenDao: ListenDao by inject()
     override val relationsMetadataDao: RelationsMetadataDao by inject()
     override val detailsMetadataDao: DetailsMetadataDao by inject()
     override val relationDao: RelationDao by inject()
@@ -988,6 +992,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             releaseId = releaseId,
             query = "",
             lastUpdated = testDateTimeInThePast,
+            sortOption = TrackSortOption.NormalAscending,
         )
         val listItemModelsBeforeEdit: List<ListItemModel> = tracksFlowBeforeEdit.asSnapshot()
         assertEquals(
@@ -1065,6 +1070,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             releaseId = releaseId,
             query = "",
             lastUpdated = testDateTimeInThePast,
+            sortOption = TrackSortOption.NormalAscending,
         )
         val listItemModelsAfterEdit: List<ListItemModel> = tracksFlowAfterEdit.asSnapshot {
             refresh()
@@ -1209,6 +1215,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             releaseId = releaseId,
             query = "",
             lastUpdated = testDateTimeInThePast,
+            sortOption = TrackSortOption.NormalAscending,
         )
         flow.asSnapshot().let { tracksAndMedium ->
             assertEquals(
@@ -1487,5 +1494,326 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 this,
             )
         }
+    }
+
+    @Test
+    fun `sort release with multiple media and tracks by various options`() = runTest {
+        val releaseId = "f7a96d7b-67a7-4bc6-89dc-2a426f51b1f0"
+        val releaseRepository = createRepositoryWithMedia(
+            media = listOf(
+                // Disc 1: tracks t1-t4, each with a distinct listen count.
+                MediumMusicBrainzModel(
+                    position = 1,
+                    formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+                    format = "CD",
+                    trackCount = 4,
+                    title = "Disc 1",
+                    tracks = listOf(
+                        TrackMusicBrainzModel(
+                            id = "t1",
+                            position = 1,
+                            number = "1",
+                            name = "Track 1",
+                            length = 18733,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 1",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a1",
+                                        name = "Artist 1",
+                                        sortName = "Artist 1",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "t1",
+                                name = "Track 1",
+                                length = 18733,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t2",
+                            position = 2,
+                            number = "2",
+                            name = "Track 2",
+                            length = 20000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 2",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a2",
+                                        name = "Artist 2",
+                                        sortName = "Artist 2",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "t2",
+                                name = "Track 2",
+                                length = 20000,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t3",
+                            position = 3,
+                            number = "3",
+                            name = "Track 3",
+                            length = 22000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 3",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a3",
+                                        name = "Artist 3",
+                                        sortName = "Artist 3",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "t3",
+                                name = "Track 3",
+                                length = 22000,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t4",
+                            position = 4,
+                            number = "4",
+                            name = "Track 4",
+                            length = 25000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 4",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a4",
+                                        name = "Artist 4",
+                                        sortName = "Artist 4",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "t4",
+                                name = "Track 4",
+                                length = 25000,
+                                firstReleaseDate = "2023-07-26",
+                            ),
+                        ),
+                    ),
+                ),
+                // Disc 2: tracks t5-t8, with mixed listens to exercise listen-count ordering
+                // across discs.
+                MediumMusicBrainzModel(
+                    position = 2,
+                    formatId = "9712d52a-4509-3d4b-a1a2-67c88c643e31",
+                    format = "CD",
+                    trackCount = 4,
+                    title = "Disc 2",
+                    tracks = listOf(
+                        TrackMusicBrainzModel(
+                            id = "t5",
+                            position = 1,
+                            number = "1",
+                            name = "Track 5",
+                            length = 19000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 5",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a5",
+                                        name = "Artist 5",
+                                        sortName = "Artist 5",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "r5",
+                                name = "Track 5",
+                                length = 19000,
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t6",
+                            position = 2,
+                            number = "2",
+                            name = "Track 6",
+                            length = 20000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 6",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a6",
+                                        name = "Artist 6",
+                                        sortName = "Artist 6",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "r6",
+                                name = "Track 6",
+                                length = 20000,
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t7",
+                            position = 3,
+                            number = "3",
+                            name = "Track 7",
+                            length = 21000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 7",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a7",
+                                        name = "Artist 7",
+                                        sortName = "Artist 7",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "r7",
+                                name = "Track 7",
+                                length = 21000,
+                            ),
+                        ),
+                        TrackMusicBrainzModel(
+                            id = "t8",
+                            position = 4,
+                            number = "4",
+                            name = "Track 8",
+                            length = 22000,
+                            artistCredits = persistentListOf(
+                                ArtistCreditMusicBrainzModel(
+                                    name = "Artist 8",
+                                    artist = ArtistMusicBrainzNetworkModel(
+                                        id = "a8",
+                                        name = "Artist 8",
+                                        sortName = "Artist 8",
+                                        type = "Group",
+                                    ),
+                                    joinPhrase = "",
+                                ),
+                            ),
+                            recording = RecordingMusicBrainzNetworkModel(
+                                id = "r8",
+                                name = "Track 8",
+                                length = 22000,
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            fakeBrowseUsername = "testuser",
+        )
+
+        fun insertListens(recordingMusicBrainzId: String, count: Int, startListenedAtMs: Long) {
+            val listens = (0 until count).map { index ->
+                Listen(
+                    insertedAtMs = 1_700_000_000_000L,
+                    listenedAtMs = startListenedAtMs + index * 1000L,
+                    recordingMessybrainzId = "$recordingMusicBrainzId-$index",
+                    username = "testuser",
+                    artistName = "artist",
+                    trackName = "track",
+                    discNumber = null,
+                    trackNumber = null,
+                    isrc = null,
+                    mediaPlayer = null,
+                    submissionClient = null,
+                    musicService = null,
+                    musicServiceName = null,
+                    originUrl = null,
+                    spotifyAlbumArtistIds = null,
+                    spotifyAlbumId = null,
+                    spotifyArtistIds = null,
+                    spotifyId = null,
+                    entityMapping = Listen.EntityMapping(
+                        recordingMusicbrainzId = recordingMusicBrainzId,
+                        recordingName = "recording",
+                        durationMs = null,
+                        caaId = null,
+                        caaReleaseMbid = null,
+                        releaseMbid = null,
+                        releaseName = null,
+                        artistCredits = persistentListOf(),
+                    ),
+                )
+            }
+            listenDao.insert(listens)
+        }
+
+        // Disc 1 listen counts: t1=3, t2=2, t3=1, t4=0.
+        insertListens("r1", count = 3, startListenedAtMs = 10_000)
+        insertListens("r2", count = 2, startListenedAtMs = 20_000)
+        insertListens("r3", count = 1, startListenedAtMs = 30_000)
+        // Disc 2 listen counts: t5=0, t6=1, t7=2, t8=3.
+        insertListens("r6", count = 1, startListenedAtMs = 40_000)
+        insertListens("r7", count = 2, startListenedAtMs = 50_000)
+        insertListens("r8", count = 3, startListenedAtMs = 60_000)
+
+        suspend fun ids(sortOption: TrackSortOption, query: String = ""): List<String> {
+            return releaseRepository
+                .observeTracksByRelease(
+                    releaseId = releaseId,
+                    query = query,
+                    lastUpdated = testDateTimeInThePast,
+                    sortOption = sortOption,
+                )
+                .asSnapshot()
+                .filterIsInstance<TrackListItemModel>()
+                .map { it.id }
+        }
+
+        // Normal ascending: ordered by medium.position then track.position ascending.
+        assertEquals(
+            listOf("t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"),
+            ids(TrackSortOption.NormalAscending),
+        )
+        // Normal descending: medium position descending (Disc 2 before Disc 1) with each disc's
+        // tracks descending by track.position — i.e. the full ascending list reversed.
+        assertEquals(
+            listOf("t8", "t7", "t6", "t5", "t4", "t3", "t2", "t1"),
+            ids(TrackSortOption.NormalDescending),
+        )
+        // Most listen count descending: by listen count descending (t8,t7 = 3; t6,t7...), and
+        // within equal counts Disc 1 (medium 1) precedes Disc 2 (medium 2). Counts: t1:3, t2:2,
+        // t3:1, t4:0, t5:0, t6:1, t7:2, t8:3 -> t8, t7, t6 (Disc2 counts) then t1, t2 (Disc1).
+        assertEquals(
+            listOf("t8", "t7", "t6", "t1", "t2", "t3", "t4", "t5"),
+            ids(TrackSortOption.MostListenCountDescending),
+        )
+        // Least listen count ascending: reverse of the above.
+        assertEquals(
+            listOf("t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"),
+            ids(TrackSortOption.MostListenCountAscending),
+        )
+        // Most recently listened descending: by last_listened_at descending, ties broken by
+        // Disc 1 then Disc 2. t8(61), t7(51), t6(40) on Disc 2 before t1(12), t2(21), t3(30),
+        // then the unlistened t4, t5.
+        assertEquals(
+            listOf("t8", "t7", "t6", "t1", "t2", "t3", "t4", "t5"),
+            ids(TrackSortOption.MostLastListenedAtDescending),
+        )
+        // Least recently listened ascending: reverse of most recently listened descending.
+        assertEquals(
+            listOf("t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8"),
+            ids(TrackSortOption.MostLastListenedAtAscending),
+        )
     }
 }

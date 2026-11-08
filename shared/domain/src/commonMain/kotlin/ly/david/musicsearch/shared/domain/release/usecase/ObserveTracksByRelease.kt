@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.release.ReleaseRepository
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import kotlin.time.Clock
 
 interface ObserveTracksByRelease {
     operator fun invoke(
         releaseId: String,
         query: String,
+        sortOption: TrackSortOption,
     ): Flow<PagingData<ListItemModel>>
 }
 
@@ -24,6 +26,7 @@ class ObserveTracksByReleaseImpl(
     override operator fun invoke(
         releaseId: String,
         query: String,
+        sortOption: TrackSortOption,
     ): Flow<PagingData<ListItemModel>> {
         return if (releaseId.isEmpty()) {
             emptyFlow()
@@ -32,6 +35,7 @@ class ObserveTracksByReleaseImpl(
                 releaseId = releaseId,
                 query = query,
                 lastUpdated = Clock.System.now(),
+                sortOption = sortOption,
             )
                 .distinctUntilChanged()
                 .cachedIn(scope = coroutineScope)

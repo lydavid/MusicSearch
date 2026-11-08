@@ -39,6 +39,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
     detailsScreen: @Composable ((T) -> Unit),
 ) {
     val eventSink = state.eventSink
+    val now = state.detailsTabUiState.now
 
     HorizontalPager(
         state = pagerState,
@@ -87,6 +88,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     },
                     onEditCollectionClick = onEditCollectionClick,
                     onSubmitListenClick = onSubmitListenClick,
+                    now = now,
                 )
             }
 
@@ -99,7 +101,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                 EntitiesPagingListUi(
                     uiState = uiState,
                     filterText = filterText,
-                    now = state.detailsTabUiState.now,
+                    now = now,
                     boldUnvisited = state.boldUnvisited,
                     isPullToRefreshEnabled = state.isPullToRefreshEnabled,
                     onItemClick = { entity, id ->

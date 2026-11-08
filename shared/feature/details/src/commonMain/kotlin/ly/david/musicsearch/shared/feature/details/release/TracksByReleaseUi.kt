@@ -15,12 +15,14 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.SelectableId
 import ly.david.musicsearch.shared.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader
 import ly.david.musicsearch.ui.common.paging.ScreenWithPagingLoadingAndError
 import ly.david.musicsearch.ui.common.paging.createFilteredCountHeader
 import ly.david.musicsearch.ui.common.track.TrackListItem
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent
 import ly.david.musicsearch.ui.common.track.TracksByReleaseUiState
+import kotlin.time.Instant
 
 /**
  * Shows all tracks in all media in this release.
@@ -35,6 +37,7 @@ internal fun TracksByReleaseUi(
     filterText: String,
     boldUnvisited: Boolean,
     isPullToRefreshEnabled: Boolean,
+    now: Instant,
     modifier: Modifier = Modifier,
     onRecordingClick: (id: String) -> Unit = {},
     selectedIds: ImmutableList<SelectableId> = persistentListOf(),
@@ -74,12 +77,16 @@ internal fun TracksByReleaseUi(
                         TrackListItem(
                             track = listItemModel,
                             filterText = filterText,
-                            boldUnvisited = boldUnvisited,
                             mostListenedTrackCount = uiState.mostListenedTrackCount,
+                            showLastListenedPeriod =
+                            uiState.sortOption == TrackSortOption.MostLastListenedAtDescending ||
+                                uiState.sortOption == TrackSortOption.MostLastListenedAtAscending,
+                            boldUnvisited = boldUnvisited,
                             onRecordingClick = onRecordingClick,
                             isSelected = selectedIds.map { it.id }.contains(listItemModel.id),
                             onSelect = onSelect,
                             onMoreActionsClick = { showBottomSheetForTrack = listItemModel },
+                            now = now,
                         )
                     }
                 }

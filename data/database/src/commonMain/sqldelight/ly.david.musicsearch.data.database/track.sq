@@ -83,7 +83,12 @@ SELECT
     CAST(NULL AS INTEGER)
   ELSE
     COALESCE(track_listen_counts.listen_count, 0)
-  END AS listen_count
+  END AS listen_count,
+  CASE WHEN :username = '' THEN
+    CAST(NULL AS INTEGER)
+  ELSE
+    track_listen_counts.last_listened_at
+  END AS last_listened_at
 FROM track
 INNER JOIN medium ON track.medium_id = medium.id
 INNER JOIN `release` ON medium.release_id = `release`.id
@@ -124,7 +129,8 @@ LEFT JOIN (
 LEFT JOIN (
   SELECT
     recording_musicbrainz_id,
-    COUNT(*) AS listen_count
+    COUNT(*) AS listen_count,
+    MAX(listened_at_ms) AS last_listened_at
   FROM listen
   WHERE username = :username
   GROUP BY recording_musicbrainz_id
@@ -137,7 +143,25 @@ AND (
   aliases.alias_names LIKE :query
 )
 GROUP BY track.id
-ORDER BY medium.position, track.position
+ORDER BY
+  CASE :sortBy
+    WHEN 0 THEN medium.position
+    WHEN 3 THEN listen_count
+    WHEN 5 THEN last_listened_at
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN medium.position
+    WHEN 2 THEN listen_count
+    WHEN 4 THEN last_listened_at
+  END DESC,
+  medium.position ASC,
+  CASE :sortBy
+    WHEN 0 THEN track.position
+  END ASC,
+  CASE :sortBy
+    WHEN 1 THEN track.position
+  END DESC,
+  track.position ASC
 LIMIT :limit OFFSET :offset;
 
 getTracksByReleaseForListenSubmission:

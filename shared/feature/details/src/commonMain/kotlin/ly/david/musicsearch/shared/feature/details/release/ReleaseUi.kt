@@ -15,6 +15,7 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
@@ -32,6 +33,7 @@ import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
+import ly.david.musicsearch.ui.common.sort.SortMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
@@ -232,6 +234,20 @@ internal fun ReleaseUi(
                         overlayHost = overlayHost,
                         eventSink = entitiesListEventSink,
                     )
+
+                    if (selectedTab == Tab.TRACKS) {
+                        val tracksUiState = state.allEntitiesListUiState.tracksByReleaseUiState
+                        SortMenuItem(
+                            sortOptions = TrackSortOption.entries,
+                            selectedSortOption = tracksUiState.sortOption,
+                            onSortOptionClick = {
+                                tracksUiState.eventSink(
+                                    ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.UpdateSortOption(it),
+                                )
+                                closeMenu()
+                            },
+                        )
+                    }
 
                     AddAllToCollectionMenuItem(
                         tab = selectedTab,
