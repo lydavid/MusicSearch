@@ -1,0 +1,3 @@
+### Features
+
+* support sorting genres by cached order or name, ascending/descending; default is cached order ascending

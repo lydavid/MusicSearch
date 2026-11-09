@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.137.0](https://github.com/lydavid/MusicSearch/compare/v1.136.0...v1.137.0) (2026-11-09)
+
+
+### Features
+
+* support sorting genres by cached order or name, ascending/descending; default is cached order ascending ([07894a8](https://github.com/lydavid/MusicSearch/commit/07894a813192944e8bf9e8fad7810f3ea2f32a31))
+
 ## [1.136.0](https://github.com/lydavid/MusicSearch/compare/v1.135.0...v1.136.0) (2026-11-08)
 
 
