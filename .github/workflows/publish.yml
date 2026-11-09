@@ -226,7 +226,7 @@ jobs:
           git commit -m "chore: bump version to ${{ env.VERSION_NAME }} (${{ env.VERSION_CODE }}) [skip ci]"
           git push
 
-      # See .releaserc for the artifacts we include in each release
+      # See .releaserc for the artifacts we upload with semantic-release
       - name: Publish to GitHub
         if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' }}
         run: npx semantic-release
@@ -235,12 +235,9 @@ jobs:
 
       - name: Upload desktop assets
         if: ${{ !cancelled() && steps.get-next-version.outputs.new-release-published == 'true' && !inputs.skip-desktop }}
-        run: node .github/scripts/upload-desktop-assets.mjs
+        run: gh release upload v${{ env.VERSION_NAME }} output/*
         env:
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_UPLOAD_TOKEN: ${{ secrets.PAT }}
-          RELEASE_TAG: v${{ env.VERSION_NAME }}
-          OUTPUT_DIR: output
+          GH_TOKEN: ${{ secrets.PAT }}
 
   publish-ios:
     needs: publish # depends on it modifying and committing some files
