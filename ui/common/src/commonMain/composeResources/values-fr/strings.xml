@@ -38,12 +38,12 @@
     <string name="noResultsFoundSearch">Aucun résultat trouvé.\nEssayez de modifier votre recherche.</string>
     <string name="recentSearches">Recherches récentes</string>
     <string name="clearSearchHistory">Effacer l'historique de recherche</string>
-    <string name="deleteSearchHistoryConfirmation">Effacer votre historique de recherche ?</string>
+    <string name="deleteSearchHistoryConfirmation">Effacer votre historique de recherche ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="recentHistory">Historique récent</string>
     <string name="clearHistory">Effacer l'historique</string>
-    <string name="deleteLookupHistoryConfirmation">Effacer votre historique ?</string>
+    <string name="deleteLookupHistoryConfirmation">Effacer votre historique ?</string>
     <string name="nowPlayingHistory">Historique de lecture en cours</string>
     <string name="labels">Étiquettes</string>
     <string name="details">Informations</string>
