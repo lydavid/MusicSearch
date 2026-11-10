@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -40,6 +41,10 @@ fun ResourceDropdownPicker(
     onSelectOption: (MusicBrainzEntityType) -> Unit = {},
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        onDispose { expanded = false }
+    }
 
     ExposedDropdownMenuBox(
         expanded = expanded,

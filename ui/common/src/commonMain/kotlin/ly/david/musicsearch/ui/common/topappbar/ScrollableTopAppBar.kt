@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -200,6 +201,10 @@ private fun SubtitleWithOverflow(
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        onDispose { showMenu = false }
+    }
 
     val scope = remember {
         object : OverflowMenuScope {

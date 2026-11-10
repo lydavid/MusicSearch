@@ -8,6 +8,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,10 @@ fun OverflowMenu(
     minimumInteractiveComponentSize: Int = DEFAULT_MINIMUM_INTERACTIVE_COMPONENT_SIZE,
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    DisposableEffect(Unit) {
+        onDispose { showMenu = false }
+    }
 
     val scope = remember {
         object : OverflowMenuScope {
