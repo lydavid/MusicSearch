@@ -464,4 +464,5 @@
     <string name="festivalStage"></string>
     <string name="enableCrashReporting"></string>
     <string name="earliestStartDate"></string>
+    <string name="clearFacets"></string>
 </resources>
