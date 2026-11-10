@@ -132,8 +132,8 @@
     <string name="spotifySubtitle">Rechercher l'artiste, l'album ou le titre de la chanson en cours de lecture</string>
     <string name="spotifyTutorial">Activez l'option « Diffuser l'état de l'appareil » dans les paramètres de l'application Spotify afin que MusicSearch puisse détecter le morceau en cours de lecture</string>
     <string name="spotifyHistory">Historique Spotify</string>
-    <string name="searchX">Rechercher : %1$s</string>
-    <string name="searchXByX">Rechercher : %1$s par %2$s</string>
+    <string name="searchX">Rechercher : %1$s</string>
+    <string name="searchXByX">Rechercher : %1$s par %2$s</string>
     <string name="none">Aucun</string>
     <string name="alphabetically">Par ordre alphabétique</string>
     <string name="alphabeticallyReverse">Par ordre alphabétique inversé</string>
@@ -216,7 +216,7 @@
     <string name="failedToRefreshMapping">Échec de l'actualisation du mappage</string>
     <string name="failedToSubmitMapping">Échec de l'envoi du mappage manuel</string>
     <string name="noRecordingWithIdFound">Aucun enregistrement correspondant à l'identifiant MusicBrainz %1$s n'a été trouvé</string>
-    <string name="invalidMusicBrainzId">Identifiant MusicBrainz non valide : %1$s</string>
+    <string name="invalidMusicBrainzId">Identifiant MusicBrainz non valide : %1$s</string>
     <string name="deletedListens">Supprimé %1$d</string>
     <string name="failedToDeleteListen">Échec de la suppression de la connexion d'écoute</string>
     <string name="submitToListenBrainz">Soumettez votre écoute à ListenBrainz</string>
@@ -237,11 +237,11 @@
     <string name="moreActionsFor">Plus d'actions pour %1$s</string>
     <string name="login">Connexion</string>
     <string name="authorizationCode">Code d'autorisation</string>
-    <string name="enterAuthorizationCode">Saisissez le code d'autorisation depuis votre navigateur :</string>
+    <string name="enterAuthorizationCode">Saisissez le code d'autorisation depuis votre navigateur :</string>
     <string name="artificialLanguage">[Artificiel (Autre)]</string>
     <string name="submitTrackListenToListenBrainz">Envoyer le morceau vers ListenBrainz</string>
     <string name="submitAlbumListenToListenBrainz">Envoyer l'album vers ListenBrainz</string>
-    <string name="startedAt">Début à : %1$s</string>
+    <string name="startedAt">Début à : %1$s</string>
     <string name="xTracksWithYLength">%1$d titres (%2$s)</string>
     <string name="choir">Chœur</string>
     <string name="group">Groupe</string>
@@ -313,11 +313,11 @@
     <string name="copyIDToClipboard">Copier l'identifiant dans le presse-papiers</string>
     <string name="local">Locale</string>
     <string name="remote">Distant</string>
-    <string name="sortX">Tri : %1$s</string>
+    <string name="sortX">Tri : %1$s</string>
     <string name="endOfSearchResults">Fin des résultats de recherche.</string>
     <string name="addXCountToCollection">Ajouter %1$d à la collection</string>
     <string name="tapRelationshipsTab">Appuyez sur l'onglet « Relations » pour afficher davantage de statistiques.</string>
-    <string name="totalRelationships">Nombre total de relations : %1$d</string>
+    <string name="totalRelationships">Nombre total de relations : %1$d</string>
     <string name="scrollToHideTopAppBar">Faites défiler pour masquer la barre d'applications supérieure</string>
     <string name="showingXOfY">Affichage de %1$d sur %2$d.</string>
     <string name="unknown">Inconnu</string>
@@ -468,7 +468,7 @@
     <string name="clientSecret">Client Secret</string>
     <string name="leastRecentlyListened">Écoutés le moins récemment</string>
     <string name="mostRecentlyListened">Écoutés le plus récemment</string>
-    <string name="lastListenedXAgo">Dernière écoute : %s.</string>
+    <string name="lastListenedXAgo">Dernière écoute : %s.</string>
     <string name="boldUnvisited">Éléments non visités en gras</string>
     <string name="boldUnvisitedDescription">Afficher les noms des entités en gras jusqu'à ce que vous cliquiez dessus</string>
     <string name="pullToRefresh">Faites glisser vers le bas pour actualiser</string>
