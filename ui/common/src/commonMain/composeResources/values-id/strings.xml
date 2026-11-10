@@ -464,4 +464,8 @@
     <string name="lastListenedXAgo">Terakhir didengarkan %s.</string>
     <string name="boldUnvisited">Tebalkan item yang belum dikunjungi</string>
     <string name="boldUnvisitedDescription">Tampilkan nama entitas dengan tebal hingga Anda mengkliknya</string>
+    <string name="tracksNormalOrder"></string>
+    <string name="goToTag"></string>
+    <string name="pullToRefresh"></string>
+    <string name="tracksReverseOrder"></string>
 </resources>
