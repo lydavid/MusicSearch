@@ -470,5 +470,4 @@
     <string name="pullToRefresh">Zum Aktualisieren nach unten ziehen</string>
     <string name="tracksNormalOrder">Original-Reihenfolge</string>
     <string name="tracksReverseOrder">Umgekehrte-Reihenfolge</string>
-    <string name="goToTag"></string>
 </resources>

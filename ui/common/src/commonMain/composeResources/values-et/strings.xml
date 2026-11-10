@@ -470,5 +470,4 @@
     <string name="pullToRefresh">Värskendamiseks tõmba ülevalt alla</string>
     <string name="tracksNormalOrder">Algupärane järjestus</string>
     <string name="tracksReverseOrder">Tagurpidi järjestus</string>
-    <string name="goToTag"></string>
 </resources>
