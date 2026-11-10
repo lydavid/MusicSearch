@@ -29,6 +29,7 @@ import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.ui.common.list.AllEntitiesListPresenter
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.AllEntitiesListUiState
@@ -37,6 +38,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginPresenter
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiState
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.GenreOrTagScreen
 import ly.david.musicsearch.ui.common.screen.RecordVisit
 import ly.david.musicsearch.ui.common.topappbar.SelectionState
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -136,10 +138,23 @@ internal class CollectionPresenter(
                 is CollectionUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            DetailsScreen(
-                                entityType = event.entityType,
-                                id = event.id,
-                            ),
+                            screen = when (event.entityType) {
+                                MusicBrainzEntityType.GENRE -> {
+                                    GenreOrTagScreen(
+                                        genreOrTag = GenreChip(
+                                            id = event.id,
+                                            name = event.name,
+                                        ),
+                                    )
+                                }
+
+                                else -> {
+                                    DetailsScreen(
+                                        entityType = event.entityType,
+                                        id = event.id,
+                                    )
+                                }
+                            },
                         ),
                     )
                 }
@@ -224,6 +239,7 @@ internal sealed interface CollectionUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entityType: MusicBrainzEntityType,
         val id: String,
+        val name: String,
     ) : CollectionUiEvent
 
     data object DeleteItemsMarkedAsDeleted : CollectionUiEvent

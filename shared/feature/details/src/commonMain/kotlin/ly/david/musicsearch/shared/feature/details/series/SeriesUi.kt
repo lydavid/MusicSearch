@@ -15,6 +15,7 @@ import ly.david.musicsearch.shared.domain.details.SeriesDetailsModel
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
@@ -130,7 +131,7 @@ internal fun SeriesUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entityType,
+                imageVector = entityType.getIcon(),
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {

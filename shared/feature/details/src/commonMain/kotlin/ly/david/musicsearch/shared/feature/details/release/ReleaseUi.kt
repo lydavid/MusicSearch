@@ -15,14 +15,15 @@ import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.listen.SubmitListenType
-import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.listen.TrackInfo
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
@@ -145,7 +146,7 @@ internal fun ReleaseUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entityType,
+                imageVector = entityType.getIcon(),
                 annotatedString = annotatedName,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,

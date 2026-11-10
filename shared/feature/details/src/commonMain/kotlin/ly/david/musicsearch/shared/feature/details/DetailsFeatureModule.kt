@@ -21,9 +21,6 @@ import ly.david.musicsearch.shared.feature.details.artist.ArtistPresenter
 import ly.david.musicsearch.shared.feature.details.artist.ArtistUi
 import ly.david.musicsearch.shared.feature.details.event.EventPresenter
 import ly.david.musicsearch.shared.feature.details.event.EventUi
-import ly.david.musicsearch.shared.feature.details.genre.GenrePresenter
-import ly.david.musicsearch.shared.feature.details.genre.GenreUi
-import ly.david.musicsearch.shared.feature.details.genre.GenreUiState
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentPresenter
 import ly.david.musicsearch.shared.feature.details.instrument.InstrumentUi
 import ly.david.musicsearch.shared.feature.details.label.LabelPresenter
@@ -38,6 +35,9 @@ import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupPres
 import ly.david.musicsearch.shared.feature.details.releasegroup.ReleaseGroupUi
 import ly.david.musicsearch.shared.feature.details.series.SeriesPresenter
 import ly.david.musicsearch.shared.feature.details.series.SeriesUi
+import ly.david.musicsearch.shared.feature.details.tag.GenreOrTagPresenter
+import ly.david.musicsearch.shared.feature.details.tag.GenreOrTagUi
+import ly.david.musicsearch.shared.feature.details.tag.GenreOrTagUiState
 import ly.david.musicsearch.shared.feature.details.tag.TagDetailsBottomSheetContent
 import ly.david.musicsearch.shared.feature.details.tag.TagDetailsPresenter
 import ly.david.musicsearch.shared.feature.details.tag.TagDetailsUiState
@@ -45,6 +45,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.shared.feature.details.work.WorkPresenter
 import ly.david.musicsearch.shared.feature.details.work.WorkUi
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.GenreOrTagScreen
 import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -105,18 +106,6 @@ val detailsFeatureModule = module {
                                 wikimediaRepository = get(),
                                 collectionRepository = get(),
                                 listenBrainzAuthStore = get(),
-                                appPreferences = get(),
-                            )
-                        }
-
-                        MusicBrainzEntityType.GENRE -> {
-                            GenrePresenter(
-                                screen = screen,
-                                navigator = navigator,
-                                repository = get(),
-                                incrementLookupHistory = get(),
-                                logger = get(),
-                                getMusicBrainzUrl = get(),
                                 appPreferences = get(),
                             )
                         }
@@ -265,7 +254,10 @@ val detailsFeatureModule = module {
                             )
                         }
 
-                        else -> null
+                        MusicBrainzEntityType.COLLECTION,
+                        MusicBrainzEntityType.GENRE,
+                        MusicBrainzEntityType.URL,
+                        -> null
                     }
                 }
 
@@ -279,16 +271,34 @@ val detailsFeatureModule = module {
                     )
                 }
 
+                is GenreOrTagScreen -> {
+                    GenreOrTagPresenter(
+                        screen = screen,
+                        navigator = navigator,
+                        getEntitiesByTagOrGenre = get(),
+                        incrementLookupHistory = get(),
+                        musicbrainzRepository = get(),
+                    )
+                }
+
                 else -> null
             }
         }
     }
-    single(named("DetailsScreen")) {
+    single(named("EntitiesByTagScreen")) {
         Ui.Factory { screen, _ ->
             when (screen) {
                 is TagDetailsScreen -> {
                     ui<TagDetailsUiState> { state, _ ->
                         TagDetailsBottomSheetContent(
+                            state = state,
+                        )
+                    }
+                }
+
+                is GenreOrTagScreen -> {
+                    ui<GenreOrTagUiState> { state, _ ->
+                        GenreOrTagUi(
                             state = state,
                         )
                     }
@@ -317,15 +327,6 @@ val detailsFeatureModule = module {
                         MusicBrainzEntityType.EVENT -> {
                             ui<DetailsUiState<EventDetailsModel>> { state, modifier ->
                                 EventUi(
-                                    state = state,
-                                    modifier = modifier,
-                                )
-                            }
-                        }
-
-                        MusicBrainzEntityType.GENRE -> {
-                            ui<GenreUiState> { state, modifier ->
-                                GenreUi(
                                     state = state,
                                     modifier = modifier,
                                 )
@@ -404,7 +405,10 @@ val detailsFeatureModule = module {
                             }
                         }
 
-                        else -> null
+                        MusicBrainzEntityType.COLLECTION,
+                        MusicBrainzEntityType.GENRE,
+                        MusicBrainzEntityType.URL,
+                        -> null
                     }
                 }
 

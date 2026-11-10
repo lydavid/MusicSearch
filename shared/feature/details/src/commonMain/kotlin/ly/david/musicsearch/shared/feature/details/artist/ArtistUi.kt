@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsHorizontalPager
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Group
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
@@ -145,7 +146,7 @@ internal fun ArtistUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entityType,
+                imageVector = entityType.getIcon(),
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {

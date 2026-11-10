@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.tag.GenreChip
-import ly.david.musicsearch.shared.domain.tag.TagChip
 import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.domain.tag.VoteType
 import ly.david.musicsearch.ui.common.component.ClickableItem
@@ -34,12 +33,14 @@ import ly.david.musicsearch.ui.common.icons.Add
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Remove
 import ly.david.musicsearch.ui.common.icons.Search
+import ly.david.musicsearch.ui.common.icons.Tag
 import ly.david.musicsearch.ui.common.icons.TheaterComedy
 import ly.david.musicsearch.ui.common.text.SyncingText
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.downvotedX
 import musicsearch.ui.common.generated.resources.failedToVoteForX
 import musicsearch.ui.common.generated.resources.goToGenre
+import musicsearch.ui.common.generated.resources.goToTag
 import musicsearch.ui.common.generated.resources.loginAgainForTags
 import musicsearch.ui.common.generated.resources.searchGenre
 import musicsearch.ui.common.generated.resources.searchTag
@@ -138,29 +139,23 @@ fun TagDetailsBottomSheetContent(
             }
         }
 
-        // TODO: support filtering local database with genre/tag
+        val isGenre = genreOrTag is GenreChip
+
         ClickableItem(
-            title = stringResource(
-                when (genreOrTag) {
-                    is GenreChip -> Res.string.searchGenre
-                    is TagChip -> Res.string.searchTag
-                },
-            ),
+            title = stringResource(if (isGenre) Res.string.searchGenre else Res.string.searchTag),
             startIcon = CustomIcons.Search,
             onClick = {
-                eventSink(TagDetailsUiEvent.SearchGenreOrTag(genreOrTag.name))
+                eventSink(TagDetailsUiEvent.SearchGenreOrTag)
             },
         )
 
-        if (genreOrTag is GenreChip) {
-            ClickableItem(
-                title = stringResource(Res.string.goToGenre),
-                startIcon = CustomIcons.TheaterComedy,
-                onClick = {
-                    eventSink(TagDetailsUiEvent.GoToGenre(genreOrTag.id))
-                },
-            )
-        }
+        ClickableItem(
+            title = stringResource(if (isGenre) Res.string.goToGenre else Res.string.goToTag),
+            startIcon = if (isGenre) CustomIcons.TheaterComedy else CustomIcons.Tag,
+            onClick = {
+                eventSink(TagDetailsUiEvent.GoToGenreOrTag)
+            },
+        )
     }
 }
 

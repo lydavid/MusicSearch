@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.repository.tag
 
+import androidx.paging.Pager
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ly.david.musicsearch.data.database.dao.TagDao
@@ -10,8 +12,10 @@ import ly.david.musicsearch.shared.domain.error.ErrorResolution
 import ly.david.musicsearch.shared.domain.error.ErrorType
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.HandledException
+import ly.david.musicsearch.shared.domain.listitem.TaggedEntityListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.resourceUri
+import ly.david.musicsearch.shared.domain.paging.CommonPagingConfig
 import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.domain.tag.TagVote
@@ -24,6 +28,24 @@ class TagRepositoryImpl(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val clock: Clock,
 ) : TagRepository {
+
+    override fun observeEntitiesByTagOrGenre(
+        name: String,
+        query: String,
+    ): Flow<PagingData<TaggedEntityListItemModel>> {
+        val config = CommonPagingConfig.pagingConfig
+        return Pager(
+            config = config,
+            pagingSourceFactory = {
+                tagDao.getAllEntitiesWithTagOrGenre(
+                    name = name,
+                    query = query,
+                    pageSize = config.pageSize,
+                )
+            },
+        ).flow
+    }
+
     override suspend fun voteOnTagForEntity(
         genreOrTag: GenreOrTag,
         musicBrainzEntity: MusicBrainzEntity,

@@ -104,7 +104,7 @@ internal fun <T : MusicBrainzDetailsModel> DetailsHorizontalPager(
                     now = now,
                     boldUnvisited = state.boldUnvisited,
                     isPullToRefreshEnabled = state.isPullToRefreshEnabled,
-                    onItemClick = { entity, id ->
+                    onItemClick = { entity, id, _ ->
                         eventSink(
                             DetailsUiEvent.GoToScreen(
                                 screen = DetailsScreen(

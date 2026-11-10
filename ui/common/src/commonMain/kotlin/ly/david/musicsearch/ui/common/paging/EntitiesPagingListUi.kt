@@ -22,7 +22,6 @@ import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.area.AreaListItem
 import ly.david.musicsearch.ui.common.artist.ArtistListItem
 import ly.david.musicsearch.ui.common.event.EventListItem
@@ -50,7 +49,7 @@ fun EntitiesPagingListUi(
     boldUnvisited: Boolean,
     isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntityType, id: String, name: String?) -> Unit = { _, _, _ -> },
     selectedIds: ImmutableList<String> = persistentListOf(),
     onSelect: (String) -> Unit = {},
     onEditCollectionClick: (String) -> Unit = {},
@@ -78,6 +77,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.AREA,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -97,6 +97,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.ARTIST,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -114,6 +115,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.EVENT,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -131,6 +133,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.GENRE,
                                 id,
+                                name,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -148,6 +151,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.INSTRUMENT,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -165,6 +169,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.LABEL,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -182,6 +187,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.PLACE,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -201,6 +207,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.RECORDING,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -222,6 +229,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.RELEASE,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -245,6 +253,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.RELEASE_GROUP,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -262,6 +271,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.SERIES,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -279,6 +289,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 MusicBrainzEntityType.WORK,
                                 id,
+                                null,
                             )
                         },
                         isSelected = selectedIds.contains(listItemModel.id),
@@ -297,6 +308,7 @@ fun EntitiesPagingListUi(
                             onItemClick(
                                 entity,
                                 id,
+                                null,
                             )
                         },
                     )

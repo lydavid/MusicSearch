@@ -25,7 +25,7 @@ import ly.david.musicsearch.shared.domain.history.HistorySortOption
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
+import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.MultipleChoiceBottomSheet
 import ly.david.musicsearch.ui.common.dialog.SimpleAlertDialog
 import ly.david.musicsearch.ui.common.listitem.ListSeparatorHeader
@@ -145,11 +145,12 @@ internal fun HistoryUi(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyListState = state.lazyListState,
-            onItemClick = { entity, id ->
+            onItemClick = { entity, id, name ->
                 eventSink(
                     HistoryUiEvent.ClickItem(
                         entityType = entity,
                         id = id,
+                        name = name,
                     ),
                 )
             },
@@ -184,13 +185,13 @@ internal fun HistoryUi(
 }
 
 @Composable
-internal fun HistoryUi(
+private fun HistoryUi(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     filterText: String,
     isPullToRefreshEnabled: Boolean,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = LazyListState(),
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntityType, id: String, name: String) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     ScreenWithPagingLoadingAndError(

@@ -25,8 +25,10 @@ import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.ui.common.screen.CollectionScreen
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.GenreOrTagScreen
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
 import ly.david.musicsearch.ui.common.topappbar.rememberTopAppBarFilterState
 
@@ -60,6 +62,7 @@ internal class HistoryPresenter(
                 is HistoryUiEvent.NavigateUp -> {
                     navigator.pop()
                 }
+
                 is HistoryUiEvent.UpdateSortOption -> {
                     appPreferences.setHistorySortOption(HistorySortOption.entries[event.sortOptionIndex])
                 }
@@ -91,15 +94,28 @@ internal class HistoryPresenter(
                 is HistoryUiEvent.ClickItem -> {
                     navigator.onNavEvent(
                         NavEvent.GoTo(
-                            if (event.entityType == MusicBrainzEntityType.COLLECTION) {
-                                CollectionScreen(
-                                    collectionId = event.id,
-                                )
-                            } else {
-                                DetailsScreen(
-                                    entityType = event.entityType,
-                                    id = event.id,
-                                )
+                            when (event.entityType) {
+                                MusicBrainzEntityType.COLLECTION -> {
+                                    CollectionScreen(
+                                        collectionId = event.id,
+                                    )
+                                }
+
+                                MusicBrainzEntityType.GENRE -> {
+                                    GenreOrTagScreen(
+                                        genreOrTag = GenreChip(
+                                            id = event.id,
+                                            name = event.name,
+                                        ),
+                                    )
+                                }
+
+                                else -> {
+                                    DetailsScreen(
+                                        entityType = event.entityType,
+                                        id = event.id,
+                                    )
+                                }
                             },
                         ),
                     )
@@ -144,5 +160,6 @@ internal sealed interface HistoryUiEvent : CircuitUiEvent {
     data class ClickItem(
         val entityType: MusicBrainzEntityType,
         val id: String,
+        val name: String,
     ) : HistoryUiEvent
 }

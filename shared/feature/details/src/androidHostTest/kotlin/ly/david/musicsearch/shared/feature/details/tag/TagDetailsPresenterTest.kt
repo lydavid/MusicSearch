@@ -18,7 +18,7 @@ import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.domain.tag.VoteType
-import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.GenreOrTagScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
@@ -78,7 +78,7 @@ class TagDetailsPresenterTest {
                 state.genreOrTag,
             )
 
-            state.eventSink(TagDetailsUiEvent.SearchGenreOrTag(name = genre.name))
+            state.eventSink(TagDetailsUiEvent.SearchGenreOrTag)
             assertEquals(
                 FakeNavigator.PopEvent(
                     poppedScreen = null,
@@ -92,14 +92,19 @@ class TagDetailsPresenterTest {
                 navigator.awaitPop(),
             )
 
-            state.eventSink(TagDetailsUiEvent.GoToGenre(id = genre.id))
+            state.eventSink(TagDetailsUiEvent.GoToGenreOrTag)
             assertEquals(
                 FakeNavigator.PopEvent(
                     poppedScreen = null,
                     result = SnackbarPopResult(
-                        feedback = DetailsScreen(
-                            id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
-                            entityType = MusicBrainzEntityType.GENRE,
+                        feedback = GenreOrTagScreen(
+                            genreOrTag = GenreChip(
+                                id = "b7ef058e-6d83-4ca4-8123-9724bff4648b",
+                                name = "art rock",
+                                disambiguation = "",
+                                count = 22,
+                                voteType = VoteType.Withdraw,
+                            ),
                         ),
                     ),
                 ),

@@ -109,3 +109,169 @@ ORDER BY
   ELSE 1 END DESC,
   mbid_genre.count DESC,
   genre.name ASC;
+
+-- TODO: consider joining with aliases like getEntityInfoForUrl and using model like RelationListItemModel
+getAllEntitiesWithTagOrGenre:
+SELECT
+  entity_type,
+  id,
+  name,
+  disambiguation
+FROM (
+  SELECT
+    'area' AS entity_type,
+    area.id AS id,
+    area.name AS name,
+    area.disambiguation AS disambiguation
+  FROM area
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = area.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = area.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'artist' AS entity_type,
+    artist.id AS id,
+    artist.name AS name,
+    artist.disambiguation AS disambiguation
+  FROM artist
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = artist.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = artist.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'event' AS entity_type,
+    event.id AS id,
+    event.name AS name,
+    event.disambiguation AS disambiguation
+  FROM event
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = event.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = event.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'instrument' AS entity_type,
+    instrument.id AS id,
+    instrument.name AS name,
+    instrument.disambiguation AS disambiguation
+  FROM instrument
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = instrument.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = instrument.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'label' AS entity_type,
+    label.id AS id,
+    label.name AS name,
+    label.disambiguation AS disambiguation
+  FROM label
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = label.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = label.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'place' AS entity_type,
+    place.id AS id,
+    place.name AS name,
+    place.disambiguation AS disambiguation
+  FROM place
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = place.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = place.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'recording' AS entity_type,
+    recording.id AS id,
+    recording.name AS name,
+    recording.disambiguation AS disambiguation
+  FROM recording
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = recording.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = recording.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'release' AS entity_type,
+    `release`.id AS id,
+    `release`.name AS name,
+    `release`.disambiguation AS disambiguation
+  FROM `release`
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = `release`.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = `release`.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'release-group' AS entity_type,
+    release_group.id AS id,
+    release_group.name AS name,
+    release_group.disambiguation AS disambiguation
+  FROM release_group
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = release_group.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = release_group.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'series' AS entity_type,
+    series.id AS id,
+    series.name AS name,
+    series.disambiguation AS disambiguation
+  FROM series
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = series.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = series.id AND g.name = :name
+  )
+
+  UNION ALL
+
+  SELECT
+    'work' AS entity_type,
+    work.id AS id,
+    work.name AS name,
+    work.disambiguation AS disambiguation
+  FROM work
+  WHERE EXISTS (
+    SELECT 1 FROM mbid_tag t WHERE t.mbid = work.id AND t.name = :name
+    UNION ALL
+    SELECT 1 FROM mbid_genre mg JOIN genre g ON g.id = mg.genre_id WHERE mg.mbid = work.id AND g.name = :name
+  )
+)
+WHERE name LIKE :query
+ORDER BY
+  entity_type,
+  name
+LIMIT :limit OFFSET :offset;

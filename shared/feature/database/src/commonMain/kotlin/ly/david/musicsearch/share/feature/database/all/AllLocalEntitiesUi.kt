@@ -164,11 +164,12 @@ internal fun AllLocalEntitiesUi(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            onItemClick = { entity, id ->
+            onItemClick = { entity, id, name ->
                 eventSink(
                     AllLocalEntitiesUiEvent.ClickItem(
                         entityType = entity,
                         id = id,
+                        name = name.orEmpty(),
                     ),
                 )
             },

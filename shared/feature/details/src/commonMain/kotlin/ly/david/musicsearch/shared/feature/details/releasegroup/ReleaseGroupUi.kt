@@ -20,6 +20,7 @@ import ly.david.musicsearch.shared.feature.details.utils.DetailsUiEvent
 import ly.david.musicsearch.shared.feature.details.utils.DetailsUiState
 import ly.david.musicsearch.ui.common.EntityIcon
 import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
+import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.list.EntitiesListUiEvent
 import ly.david.musicsearch.ui.common.list.getListFilters
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
@@ -142,7 +143,7 @@ internal fun ReleaseGroupUi(
                 onBack = {
                     eventSink(DetailsUiEvent.NavigateUp)
                 },
-                entity = entityType,
+                imageVector = entityType.getIcon(),
                 annotatedString = annotatedName,
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,

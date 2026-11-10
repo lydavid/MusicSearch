@@ -14,14 +14,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.error.withTime
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.domain.tag.TagChip
 import ly.david.musicsearch.shared.domain.tag.TagRepository
 import ly.david.musicsearch.shared.domain.tag.VoteType
 import ly.david.musicsearch.shared.domain.tag.getNewVoteCount
-import ly.david.musicsearch.ui.common.screen.DetailsScreen
+import ly.david.musicsearch.ui.common.screen.GenreOrTagScreen
 import ly.david.musicsearch.ui.common.screen.SearchScreen
 import ly.david.musicsearch.ui.common.screen.SnackbarPopResult
 import ly.david.musicsearch.ui.common.screen.TagDetailsScreen
@@ -101,19 +100,18 @@ class TagDetailsPresenter(
                     navigator.pop(
                         SnackbarPopResult(
                             SearchScreen(
-                                query = "tag:\"${event.name}\"",
+                                query = "tag:\"${genreOrTag.name}\"",
                                 entityType = screen.entity.type,
                             ),
                         ),
                     )
                 }
 
-                is TagDetailsUiEvent.GoToGenre -> {
+                is TagDetailsUiEvent.GoToGenreOrTag -> {
                     navigator.pop(
                         SnackbarPopResult(
-                            DetailsScreen(
-                                id = event.id,
-                                entityType = MusicBrainzEntityType.GENRE,
+                            GenreOrTagScreen(
+                                genreOrTag = genreOrTag,
                             ),
                         ),
                     )
@@ -138,7 +136,7 @@ data class TagDetailsUiState(
 ) : CircuitUiState
 
 sealed interface TagDetailsUiEvent : CircuitUiEvent {
-    data class SearchGenreOrTag(val name: String) : TagDetailsUiEvent
-    data class GoToGenre(val id: String) : TagDetailsUiEvent
+    data object SearchGenreOrTag : TagDetailsUiEvent
+    data object GoToGenreOrTag : TagDetailsUiEvent
     data class Vote(val voteType: VoteType) : TagDetailsUiEvent
 }

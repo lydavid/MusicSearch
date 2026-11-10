@@ -1,10 +1,16 @@
 package ly.david.musicsearch.data.database.dao
 
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.withContext
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzNetworkModel
 import ly.david.musicsearch.data.musicbrainz.models.core.TagMusicBrainzNetworkModel
+import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
+import ly.david.musicsearch.shared.domain.listitem.TaggedEntityListItemModel
+import ly.david.musicsearch.shared.domain.network.toMusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.tag.GenreChip
 import ly.david.musicsearch.shared.domain.tag.GenreOrTag
 import ly.david.musicsearch.shared.domain.tag.TagChip
@@ -14,8 +20,46 @@ import ly.david.musicsearch.shared.domain.tag.getNewVoteCount
 class TagDao(
     database: Database,
     private val genreDao: GenreDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.tagQueries
+
+    fun getAllEntitiesWithTagOrGenre(
+        name: String,
+        query: String,
+        pageSize: Int,
+    ): PagingSource<Int, TaggedEntityListItemModel> =
+        object : PagingSource<Int, TaggedEntityListItemModel>() {
+            override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TaggedEntityListItemModel> {
+                val offset = (params.key ?: 0).toLong() * pageSize
+                val items = withContext(coroutineDispatchers.io) {
+                    transacter.getAllEntitiesWithTagOrGenre(
+                        name = name,
+                        query = "%$query%",
+                        limit = pageSize.toLong(),
+                        offset = offset,
+                        mapper = { entityType, id, entityName, disambiguation ->
+                            TaggedEntityListItemModel(
+                                id = id,
+                                entityType = (
+                                    entityType.toMusicBrainzEntityType()
+                                        ?: error("Unknown entity type '$entityType'")
+                                    ),
+                                entityName = entityName,
+                                disambiguation = disambiguation,
+                            )
+                        },
+                    ).executeAsList()
+                }
+                return LoadResult.Page(
+                    data = items,
+                    prevKey = if (offset == 0L) null else ((offset - pageSize) / pageSize).toInt(),
+                    nextKey = if (items.size < pageSize) null else ((offset + pageSize) / pageSize).toInt(),
+                )
+            }
+
+            override fun getRefreshKey(state: PagingState<Int, TaggedEntityListItemModel>): Int? = null
+        }
 
     private fun insertGenreLink(
         entityId: String,

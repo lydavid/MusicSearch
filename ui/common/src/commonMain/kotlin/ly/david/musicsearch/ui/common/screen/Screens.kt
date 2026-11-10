@@ -66,6 +66,11 @@ data class TagDetailsScreen(
 ) : Screen
 
 @Parcelize
+data class GenreOrTagScreen(
+    val genreOrTag: GenreOrTag,
+) : Screen, NavigatableFromOverlayResult
+
+@Parcelize
 sealed interface NavigatableFromOverlayResult : Screen, CommonParcelable
 
 @Parcelize

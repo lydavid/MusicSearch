@@ -21,6 +21,7 @@ import ly.david.musicsearch.shared.domain.list.GetEntities
 import ly.david.musicsearch.shared.domain.list.GetEntitiesImpl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrl
 import ly.david.musicsearch.shared.domain.musicbrainz.usecase.GetMusicBrainzUrlImpl
+import ly.david.musicsearch.shared.domain.tag.usecase.GetEntitiesByTagOrGenre
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.shared.domain.nowplaying.usecase.GetNowPlayingHistory
 import ly.david.musicsearch.shared.domain.relation.usecase.GetEntityRelationships
@@ -73,4 +74,5 @@ val domainModule = module {
     singleOf(::RecordSearchHistory)
     singleOf(::GetSearchResults)
     singleOf(::GetMusicBrainzUrlImpl) bind GetMusicBrainzUrl::class
+    singleOf(::GetEntitiesByTagOrGenre)
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.theme.TextStyles
 
@@ -105,7 +106,7 @@ fun ClickableItem(
                     foregroundColor = foregroundColor,
                 )
 
-                subtitle?.let {
+                subtitle.ifNotNullOrEmpty {
                     HighlightableText(
                         text = buildAnnotatedString {
                             withStyle(style = SpanStyle(fontWeight = fontWeight)) {

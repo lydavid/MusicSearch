@@ -4,8 +4,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.AnnotatedString
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 
 /**
  * [ScrollableTopAppBar] with filtering.
@@ -18,7 +18,7 @@ actual fun TopAppBarWithFilter(
     onBack: () -> Unit,
     showBackButton: Boolean,
     onSelectAllToggle: () -> Unit,
-    entity: MusicBrainzEntityType?,
+    imageVector: ImageVector?,
     subtitle: String,
     scrollBehavior: TopAppBarScrollBehavior?,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
@@ -32,7 +32,7 @@ actual fun TopAppBarWithFilter(
         modifier = modifier,
         onBack = onBack,
         showBackButton = showBackButton,
-        entity = entity,
+        imageVector = imageVector,
         annotatedString = annotatedString,
         subtitle = subtitle,
         scrollBehavior = scrollBehavior,

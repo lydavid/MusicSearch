@@ -11,7 +11,6 @@ import ly.david.musicsearch.shared.domain.common.DateTimeFormat
 import ly.david.musicsearch.shared.domain.common.getDateTimeFormatted
 import ly.david.musicsearch.shared.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
-import ly.david.musicsearch.shared.domain.network.MusicBrainzItemClickHandler
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.getName
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -25,7 +24,7 @@ internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
     filterText: String,
     modifier: Modifier = Modifier,
-    onItemClick: MusicBrainzItemClickHandler = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntityType, id: String, name: String) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     SwipeToDeleteListItem(
@@ -42,6 +41,7 @@ internal fun HistoryListItem(
                     onItemClick(
                         lookupHistory.entity,
                         lookupHistory.id,
+                        lookupHistory.title,
                     )
                 },
                 supportingContent = {

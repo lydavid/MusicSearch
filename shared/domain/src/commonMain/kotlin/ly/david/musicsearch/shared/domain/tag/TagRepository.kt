@@ -1,7 +1,9 @@
 package ly.david.musicsearch.shared.domain.tag
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.shared.domain.error.Feedback
+import ly.david.musicsearch.shared.domain.listitem.TaggedEntityListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 import ly.david.musicsearch.shared.domain.parcelize.Parcelize
@@ -12,6 +14,15 @@ interface TagRepository {
         musicBrainzEntity: MusicBrainzEntity,
         voteType: VoteType,
     ): Flow<Feedback<TagFeedback>>
+
+    /**
+     * All locally cached entities carrying a tag or genre named [name], in a single paged list
+     * across every entity type.
+     */
+    fun observeEntitiesByTagOrGenre(
+        name: String,
+        query: String = "%",
+    ): Flow<PagingData<TaggedEntityListItemModel>>
 
     @Parcelize
     sealed interface TagFeedback : CommonParcelable {

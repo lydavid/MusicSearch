@@ -115,6 +115,7 @@ class HistoryPresenterTest {
                 HistoryUiEvent.ClickItem(
                     entityType = MusicBrainzEntityType.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                    name = "",
                 ),
             )
             Assert.assertEquals(
@@ -158,6 +159,7 @@ class HistoryPresenterTest {
                 HistoryUiEvent.ClickItem(
                     entityType = MusicBrainzEntityType.COLLECTION,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3757",
+                    name = "",
                 ),
             )
             Assert.assertEquals(

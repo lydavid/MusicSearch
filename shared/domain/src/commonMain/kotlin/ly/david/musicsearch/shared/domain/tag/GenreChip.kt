@@ -7,7 +7,7 @@ data class GenreChip(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
-    override val count: Int,
+    override val count: Int = 0,
     override val voteType: VoteType = VoteType.Withdraw,
 ) : Genre, GenreOrTag {
     override val fullName: String

@@ -288,11 +288,12 @@ internal fun CollectionUi(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
-                onItemClick = { entity, id ->
+                onItemClick = { entity, id, name ->
                     eventSink(
                         CollectionUiEvent.ClickItem(
                             entityType = entity,
                             id = id,
+                            name = name.orEmpty(),
                         ),
                     )
                 },

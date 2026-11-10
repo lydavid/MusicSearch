@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.state.ToggleableState
@@ -45,7 +46,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.button.TriStateCheckboxWithText
 import ly.david.musicsearch.ui.common.icons.ArrowBack
 import ly.david.musicsearch.ui.common.icons.Clear
@@ -63,7 +63,7 @@ fun TopAppBarWithFilter(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntityType? = null,
+    imageVector: ImageVector? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -79,7 +79,7 @@ fun TopAppBarWithFilter(
         modifier = modifier,
         onBack = onBack,
         showBackButton = showBackButton,
-        entity = entity,
+        imageVector = imageVector,
         annotatedString = AnnotatedString(title),
         subtitle = subtitle,
         scrollBehavior = scrollBehavior,
@@ -104,7 +104,7 @@ expect fun TopAppBarWithFilter(
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     onSelectAllToggle: () -> Unit = {},
-    entity: MusicBrainzEntityType? = null,
+    imageVector: ImageVector? = null,
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -122,7 +122,7 @@ internal fun TopAppBarWithFilterInternal(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    entity: MusicBrainzEntityType? = null,
+    imageVector: ImageVector? = null,
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -247,7 +247,7 @@ internal fun TopAppBarWithFilterInternal(
                 }
             },
             showBackButton = showBackButton,
-            entity = entity,
+            imageVector = imageVector,
             annotatedString = if (isEditMode) {
                 AnnotatedString(selectionState.title.ifEmpty { "Editing..." })
             } else {
