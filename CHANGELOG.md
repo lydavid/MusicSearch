@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.138.0](https://github.com/lydavid/MusicSearch/compare/v1.137.0...v1.138.0) (2026-11-10)
+
+
+### Bug Fixes
+
+* fix memory leak caused by opened dropdown menus when leaving a screen such as when navigating to browser through Open in browser ([badeab5](https://github.com/lydavid/MusicSearch/commit/badeab53d83fe2d6ebd87ca2b9d8f8a4799a6787))
+
+
+### Features
+
+* show all entities in local database with a genre/tag in its own list screen, reachable from Go to genre/tag after tapping on a genre/tag; replace existing genre navigation with this new screen ([9b26769](https://github.com/lydavid/MusicSearch/commit/9b26769139046ef6416c00d409e6d78e352b3b8e))
+
 ## [1.137.0](https://github.com/lydavid/MusicSearch/compare/v1.136.0...v1.137.0) (2026-11-09)
 
 

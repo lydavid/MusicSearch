@@ -1,0 +1,8 @@
+### Bug Fixes
+
+* fix memory leak caused by opened dropdown menus when leaving a screen such as when navigating to browser through Open in browser
+
+
+### Features
+
+* show all entities in local database with a genre/tag in its own list screen, reachable from Go to genre/tag after tapping on a genre/tag; replace existing genre navigation with this new screen
