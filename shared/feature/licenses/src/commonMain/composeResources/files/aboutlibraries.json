@@ -957,7 +957,7 @@
         },
         {
             "uniqueId": "app.cash.sqldelight:android-driver",
-            "artifactVersion": "2.3.2",
+            "artifactVersion": "2.4.1",
             "name": "SQLDelight Android Driver",
             "description": "Driver to support SQLDelight generated code on Android",
             "website": "https://github.com/sqldelight/sqldelight/",
