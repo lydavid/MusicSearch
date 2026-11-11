@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.138.1](https://github.com/lydavid/MusicSearch/compare/v1.138.0...v1.138.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **desktop:** fix crash on open in browser for tags ([baba9ec](https://github.com/lydavid/MusicSearch/commit/baba9ec6e1c6872858e14f28fa47bda0da191f85))
+
 ## [1.138.0](https://github.com/lydavid/MusicSearch/compare/v1.137.0...v1.138.0) (2026-11-10)
 
 

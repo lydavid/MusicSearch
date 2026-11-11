@@ -1,0 +1,3 @@
+### Bug Fixes
+
+* **desktop:** fix crash on open in browser for tags
