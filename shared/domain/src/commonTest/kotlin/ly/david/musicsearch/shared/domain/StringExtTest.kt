@@ -1,5 +1,6 @@
 package ly.david.musicsearch.shared.domain
 
+import ly.david.musicsearch.shared.domain.common.encodeUrlComponent
 import ly.david.musicsearch.shared.domain.common.getYear
 import ly.david.musicsearch.shared.domain.common.prependHttpsIfMissing
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
@@ -25,6 +26,41 @@ internal class StringExtTest {
     @Test
     fun `get year too short`() {
         assertEquals("", "202".getYear())
+    }
+    // endregion
+
+    // region encodeUrlComponent
+    @Test
+    fun `unreserved characters are kept literal`() {
+        assertEquals("rock", "rock".encodeUrlComponent())
+        assertEquals("a-b_c.d~e", "a-b_c.d~e".encodeUrlComponent())
+    }
+
+    @Test
+    fun `space is percent encoded`() {
+        assertEquals("dark%20wave", "dark wave".encodeUrlComponent())
+    }
+
+    @Test
+    fun `reserved characters are percent encoded`() {
+        assertEquals("a%2Fb%3Fc", "a/b?c".encodeUrlComponent())
+        assertEquals("%23fragment", "#fragment".encodeUrlComponent())
+    }
+
+    @Test
+    fun `non ascii characters are kept literal when they are unreserved`() {
+        assertEquals("na%C3%AFve", "naïve".encodeUrlComponent())
+    }
+
+    @Test
+    fun `cjk characters are percent encoded as utf8`() {
+        assertEquals("%E7%88%B5%E5%A3%AB%E4%B9%90", "爵士乐".encodeUrlComponent())
+        assertEquals("%E9%9F%B3%E6%A5%BD", "音楽".encodeUrlComponent())
+    }
+
+    @Test
+    fun `empty string is unchanged`() {
+        assertEquals("", "".encodeUrlComponent())
     }
     // endregion
 

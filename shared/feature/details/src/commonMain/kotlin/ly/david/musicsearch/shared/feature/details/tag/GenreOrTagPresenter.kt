@@ -15,6 +15,7 @@ import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.shared.domain.common.encodeUrlComponent
 import ly.david.musicsearch.shared.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.shared.domain.listitem.TaggedEntityListItemModel
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicbrainzRepository
@@ -46,7 +47,7 @@ internal class GenreOrTagPresenter(
         val url = musicbrainzRepository.getBaseUrl() + if (isGenre) {
             "/genre/${genreOrTag.id}"
         } else {
-            "/tag/$name"
+            "/tag/${name.encodeUrlComponent()}"
         }
 
         val pagingData: Flow<PagingData<TaggedEntityListItemModel>> by rememberRetained(

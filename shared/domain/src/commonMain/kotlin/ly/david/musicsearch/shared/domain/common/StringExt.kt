@@ -34,6 +34,42 @@ fun String.trimProtocolAndExtension(): String = this
     .removePrefix("http://")
     .removeSuffix(".jpg")
 
+/**
+ * Percent-encodes this string so it is safe to use as a component (segment) of a URL, following
+ * the rules of [RFC 3986 section 3.3](https://www.rfc-editor.org/rfc/rfc3986#section-3.3).
+ *
+ * Only the unreserved characters - letters, digits, hyphen, underscore, dot and tilde - are kept
+ * literal. Every other byte of the [UTF-8](https://www.rfc-editor.org/rfc/rfc3629) encoding is
+ * replaced with its `%`-escaped representation, so multibyte characters such as CJK text are
+ * encoded correctly.
+ */
+fun String.encodeUrlComponent(): String {
+    val encodedBytes = encodeToByteArray()
+    val result = StringBuilder(encodedBytes.size)
+    for (byte in encodedBytes) {
+        if (byte.isUrlComponentUnreserved()) {
+            result.append(byte.toInt().toChar())
+        } else {
+            val hexValue = (byte.toInt() and UNSIGNED_BYTE_MASK).toString(URL_RADIX)
+            result.append(PERCENT)
+            result.append(hexValue.uppercase().padStart(HEX_LENGTH, HEX_PAD))
+        }
+    }
+    return result.toString()
+}
+
+private fun Byte.isUrlComponentUnreserved(): Boolean {
+    val char = toInt().toChar()
+    return char in 'A'..'Z' || char in 'a'..'z' || char in '0'..'9' || char in URL_COMPONENT_SYMBOLS
+}
+
+private const val PERCENT = '%'
+private const val HEX_PAD = '0'
+private const val HEX_LENGTH = 2
+private const val URL_RADIX = 16
+private const val UNSIGNED_BYTE_MASK = 0xFF
+private const val URL_COMPONENT_SYMBOLS = "-_.~"
+
 inline fun String.ifNotEmpty(block: (String) -> Unit) {
     if (this.isNotEmpty()) {
         block(this)
