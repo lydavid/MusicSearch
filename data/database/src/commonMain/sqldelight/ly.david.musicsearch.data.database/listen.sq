@@ -366,8 +366,8 @@ LEFT JOIN artist_credit ON artist_credit.id = artist_credit_entity.artist_credit
 LEFT JOIN (
   SELECT
     recording_id,
-    GROUP_CONCAT(name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(locale, CHAR(9)) AS alias_locales
+    COALESCE(GROUP_CONCAT(name, CHAR(9)), '') AS alias_names,
+    COALESCE(GROUP_CONCAT(locale, CHAR(9)), '') AS alias_locales
   FROM recording_alias
   WHERE is_primary
   GROUP BY recording_id
@@ -469,8 +469,8 @@ FROM (
 LEFT JOIN (
   SELECT
     release_alias.release_id,
-    GROUP_CONCAT(release_alias.name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(release_alias.locale, CHAR(9)) AS alias_locales
+    COALESCE(GROUP_CONCAT(release_alias.name, CHAR(9)), '') AS alias_names,
+    COALESCE(GROUP_CONCAT(release_alias.locale, CHAR(9)), '') AS alias_locales
   FROM release_alias
   WHERE release_alias.is_primary AND release_alias.release_id IN (
     SELECT DISTINCT `release`.id
@@ -583,8 +583,8 @@ FROM (
 LEFT JOIN (
   SELECT
     release_group_alias.release_group_id,
-    GROUP_CONCAT(release_group_alias.name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(release_group_alias.locale, CHAR(9)) AS alias_locales
+    COALESCE(GROUP_CONCAT(release_group_alias.name, CHAR(9)), '') AS alias_names,
+    COALESCE(GROUP_CONCAT(release_group_alias.locale, CHAR(9)), '') AS alias_locales
   FROM release_group_alias
   WHERE release_group_alias.is_primary AND release_group_alias.release_group_id IN (
     SELECT DISTINCT `release_group`.id
@@ -683,8 +683,8 @@ FROM (
 LEFT JOIN (
   SELECT
     artist_alias.artist_id,
-    GROUP_CONCAT(artist_alias.name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(artist_alias.locale, CHAR(9)) AS alias_locales
+    COALESCE(GROUP_CONCAT(artist_alias.name, CHAR(9)), '') AS alias_names,
+    COALESCE(GROUP_CONCAT(artist_alias.locale, CHAR(9)), '') AS alias_locales
   FROM artist_alias
   WHERE artist_alias.is_primary AND artist_alias.artist_id IN (
     SELECT DISTINCT artist.id
@@ -751,8 +751,8 @@ JOIN work
 LEFT JOIN (
   SELECT
     work_alias.work_id,
-    GROUP_CONCAT(work_alias.name, CHAR(9)) AS alias_names,
-    GROUP_CONCAT(work_alias.locale, CHAR(9)) AS alias_locales
+    COALESCE(GROUP_CONCAT(work_alias.name, CHAR(9)), '') AS alias_names,
+    COALESCE(GROUP_CONCAT(work_alias.locale, CHAR(9)), '') AS alias_locales
   FROM work_alias
   WHERE work_alias.is_primary
   GROUP BY work_alias.work_id
