@@ -22,7 +22,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiWithWikipediaUrlButNoExtract()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.artist.PreviewArtistDetailsUiShowDownvotedTags()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.PreviewEventDetailsUi()
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.PreviewGenreUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.PreviewInstrumentDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.label.PreviewLabelDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.place.PreviewPlaceDetailsUi()
@@ -45,6 +44,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.releasegroup.PreviewReleaseGroupDetailsUiCollapsed()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.series.PreviewSeriesDetailsUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewGenreUi()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentGenre()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentTag()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.PreviewTagDetailsBottomSheetContentLongTag()
@@ -102,13 +103,6 @@ restartable skippable fun ly.david.musicsearch.shared.feature.details.event.Even
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.event.EventUi(
   stable state: DetailsUiState<EventDetailsModel>
-  stable modifier: Modifier? = @static <expression>
-)
-open fun ly.david.musicsearch.shared.feature.details.genre.GenrePresenter.present(
-  stable <this>: GenrePresenter
-): GenreUiState
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.genre.GenreUi(
-  stable state: GenreUiState
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.instrument.InstrumentDetailsTabUi(
@@ -184,6 +178,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable filterText: String
   stable boldUnvisited: Boolean
   stable isPullToRefreshEnabled: Boolean
+  stable now: Instant
   stable modifier: Modifier? = @static <expression>
   stable onRecordingClick: Function1<@[ParameterName(name = 'id')] String, Unit>? = @static <expression>
   selectedIds: ImmutableList<SelectableId>? = @static <expression>
@@ -219,6 +214,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable filterText: String
   stable modifier: Modifier? = @static <expression>
   stable onClick: Function1<GenreOrTag, Unit>? = @static null
+)
+open fun ly.david.musicsearch.shared.feature.details.tag.GenreOrTagPresenter.present(
+  stable <this>: GenreOrTagPresenter
+): GenreOrTagUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.GenreOrTagUi(
+  stable state: GenreOrTagUiState
+  stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.tag.MoreActionsOverflowMenu(
   stable showDownvotedTags: Boolean

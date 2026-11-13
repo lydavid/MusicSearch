@@ -62,13 +62,15 @@ open fun ly.david.musicsearch.shared.feature.settings.internal.appearance.Appear
 ): AppearanceSettingsUiState
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUi(
   stable state: AppearanceSettingsUiState
+  stable isAndroid12Plus: Boolean
+  stable isCompact: Boolean
   stable modifier: Modifier? = @static <expression>
-  stable isAndroid12Plus: Boolean = @static false
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.CustomColorPickerSection(
   stable <this>: ColumnScope
   stable state: AppearanceSettingsUiState
   stable useMaterialYou: Boolean
+  stable isCompact: Boolean
   stable eventSink: Function1<AppearanceSettingsUiEvent, Unit>
 )
 fun ly.david.musicsearch.shared.feature.settings.internal.appearance.getText(

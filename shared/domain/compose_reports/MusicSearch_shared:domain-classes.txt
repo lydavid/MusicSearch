@@ -12,6 +12,11 @@ runtime class ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityRe
 unstable class ly.david.musicsearch.shared.domain.auth.MusicBrainzLoginActivityResultContract {
   <runtime stability> = Unstable
 }
+stable class MusicSearch.shared.domain.BuildConfig {
+  stable val VERSION_CODE: String
+  stable val VERSION_NAME: String
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.BrowseMethod.All {
   <runtime stability> = Stable
 }
@@ -545,6 +550,12 @@ stable class ly.david.musicsearch.shared.domain.list.ListFilters.Events {
   stable val sortOption: EventSortOption
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.list.ListFilters.Genres {
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val sortOption: GenreSortOption
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.list.ListFilters.Instruments {
   stable val query: String
   stable val isRemote: Boolean
@@ -1041,6 +1052,13 @@ stable class ly.david.musicsearch.shared.domain.listitem.SpotifyHistoryListItemM
   stable val lastListened: Instant
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.listitem.TaggedEntityListItemModel {
+  stable val id: String
+  stable val entityType: MusicBrainzEntityType
+  stable val entityName: String
+  stable val disambiguation: String
+  <runtime stability> = Stable
+}
 runtime class ly.david.musicsearch.shared.domain.listitem.TrackListItemModel {
   stable val id: String
   stable val position: Int
@@ -1058,6 +1076,7 @@ runtime class ly.david.musicsearch.shared.domain.listitem.TrackListItemModel {
   stable val format: String?
   runtime val aliases: ImmutableList<BasicAlias>
   stable val listenCount: Long?
+  stable val lastListenedAtMs: Long?
   stable val disambiguation: String?
   <runtime stability> = Runtime(BasicAlias),Runtime(ArtistCreditUiModel)
 }
@@ -1271,6 +1290,11 @@ stable class ly.david.musicsearch.shared.domain.tag.TagVote {
   stable val name: String
   stable val voteType: VoteType
   <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.tag.usecase.GetEntitiesByTagOrGenre {
+  runtime val tagRepository: TagRepository
+  runtime val coroutineScope: CoroutineScope
+  <runtime stability> = 
 }
 runtime class ly.david.musicsearch.shared.domain.url.EntityAdditionalInfo {
   stable val imageMetadata: ImageMetadata?

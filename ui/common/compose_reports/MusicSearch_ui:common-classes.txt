@@ -270,6 +270,10 @@ stable class ly.david.musicsearch.ui.common.screen.TagDetailsScreen {
   runtime val genreOrTag: GenreOrTag
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.GenreOrTagScreen {
+  runtime val genreOrTag: GenreOrTag
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.PopWithoutResult {
   <runtime stability> = Stable
 }
@@ -374,6 +378,7 @@ stable class ly.david.musicsearch.ui.common.track.TracksByReleasePresenter {
   runtime val observeTracksByRelease: ObserveTracksByRelease
   runtime val getTracksIdsByRelease: GetTrackIdsByRelease
   runtime val observeTrackCount: ObserveTrackCount
+  runtime val appPreferences: AppPreferences
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
@@ -382,6 +387,7 @@ stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiState {
   stable val collapsedMediumIds: ImmutableSet<Long>
   runtime val trackIds: ImmutableList<SelectableId>
   stable val mostListenedTrackCount: Long
+  stable val sortOption: TrackSortOption
   stable val totalCount: Int
   stable val filteredCount: Int
   stable val eventSink: Function1<TracksByReleaseUiEvent, Unit>
@@ -393,6 +399,10 @@ stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.Get {
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.UpdateQuery {
   stable val query: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.UpdateSortOption {
+  stable val sortOption: TrackSortOption
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.ui.common.track.TracksByReleaseUiEvent.ToggleMedium {

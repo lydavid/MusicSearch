@@ -136,6 +136,7 @@ stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUi
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.ClickItem {
   stable val entityType: MusicBrainzEntityType
   stable val id: String
+  stable val name: String
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.single.CollectionUiEvent.DeleteItemsMarkedAsDeleted {

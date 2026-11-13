@@ -16,11 +16,6 @@ stable class musicsearch.shared.feature.settings.generated.resources.Res.font {
 stable class musicsearch.shared.feature.settings.generated.resources.Res {
   <runtime stability> = Stable
 }
-stable class MusicSearch.shared.feature.settings.BuildConfig {
-  stable val VERSION_CODE: String
-  stable val VERSION_NAME: String
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.shared.feature.settings.internal.SettingsPresenter {
   stable val navigator: Navigator
   runtime val appPreferences: AppPreferences

@@ -61,5 +61,6 @@ stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiE
 stable class ly.david.musicsearch.share.feature.database.all.AllLocalEntitiesUiEvent.ClickItem {
   stable val entityType: MusicBrainzEntityType
   stable val id: String
+  stable val name: String
   <runtime stability> = Stable
 }

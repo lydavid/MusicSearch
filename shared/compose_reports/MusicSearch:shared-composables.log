@@ -1,1 +1,1 @@
-applier inference AppNavigationRail.kt:17:5: Type disagreement [Binding(135), [Binding(152)], [Binding(token = androidx.compose.ui.UiComposable)]] <=> [Binding(135), [Binding(135)]]
+applier inference AppNavigationRail.kt:17:5: Type disagreement [Binding(133), [Binding(150)], [Binding(token = androidx.compose.ui.UiComposable)]] <=> [Binding(133), [Binding(133)]]

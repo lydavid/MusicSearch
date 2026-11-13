@@ -125,7 +125,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable onBack: Function0<Unit>? = @static <expression>
   stable showBackButton: Boolean = @static true
   stable onSelectAllToggle: Function0<Unit>? = @static <expression>
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector? = @static null
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -147,6 +147,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItemAllInfo()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItemVisited()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.track.PreviewTrackListItemListensWithoutLatestListenPeriod()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.wikimedia.PreviewWikipediaSection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItem()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.work.PreviewWorkListItemAllInfo()
@@ -429,6 +430,12 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable now: Instant
   stable showLastListenedPeriod: Boolean
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.listen.ListenInfoRow(
+  listenInfo: ListenInfo
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
+  stable mostListenedCount: Long? = @static null
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable], [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.listitem.CollapsibleListSeparatorHeader(
   stable text: String
   stable collapsed: Boolean
@@ -531,7 +538,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable boldUnvisited: Boolean
   stable isPullToRefreshEnabled: Boolean
   stable modifier: Modifier? = @static <expression>
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'name')] String?, Unit>? = @static <expression>
   stable selectedIds: ImmutableList<String>? = @static <expression>
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
@@ -875,7 +882,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable modifier: Modifier? = @static <expression>
   stable onBack: Function0<Unit>? = @static <expression>
   stable showBackButton: Boolean = @static true
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector? = @static null
   stable title: String? = @static ""
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
@@ -889,7 +896,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable modifier: Modifier? = @static <expression>
   stable onBack: Function0<Unit>? = @static <expression>
   stable showBackButton: Boolean = @static true
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector? = @static null
   stable annotatedString: AnnotatedString? = @static <expression>
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
@@ -901,7 +908,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun ly.david.musicsearch.ui.common.topappbar.TitleAndSubtitle(
   stable annotatedString: AnnotatedString
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector?
   stable subtitle: String? = @static ""
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
 )
@@ -955,7 +962,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable modifier: Modifier? = @static <expression>
   stable onBack: Function0<Unit>? = @static <expression>
   stable showBackButton: Boolean = @static true
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector? = @static null
   stable title: String? = @static ""
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
@@ -972,7 +979,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable modifier: Modifier? = @static <expression>
   stable onBack: Function0<Unit>? = @static <expression>
   stable showBackButton: Boolean = @static true
-  stable entity: MusicBrainzEntityType? = @static null
+  stable imageVector: ImageVector? = @static null
   stable subtitle: String? = @static ""
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -987,6 +994,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   track: TrackListItemModel
   stable filterText: String
   stable mostListenedTrackCount: Long
+  stable now: Instant
+  stable showLastListenedPeriod: Boolean
   stable modifier: Modifier? = @static <expression>
   stable boldUnvisited: Boolean = @static true
   stable onRecordingClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>

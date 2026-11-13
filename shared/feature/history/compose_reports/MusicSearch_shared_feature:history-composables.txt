@@ -12,7 +12,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   lookupHistory: LookupHistoryListItemModel
   stable filterText: String
   stable modifier: Modifier? = @static <expression>
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'name')] String, Unit>? = @static <expression>
   stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static <expression>
 )
 open fun ly.david.musicsearch.shared.feature.history.internal.HistoryPresenter.present(
@@ -31,6 +31,6 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable isPullToRefreshEnabled: Boolean
   stable modifier: Modifier? = @static <expression>
   stable lazyListState: LazyListState? = @dynamic <expression>
-  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, Unit>? = @static <expression>
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntityType, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'name')] String, Unit>? = @static <expression>
   stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static <expression>
 )

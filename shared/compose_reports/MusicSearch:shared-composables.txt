@@ -15,6 +15,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable circuit: Circuit
   stable backStack: SaveableBackStack
   stable navigator: Navigator
+  stable isCompact: Boolean
   stable modifier: Modifier? = @static <expression>
 )
 fun ly.david.musicsearch.shared.useDarkTheme(

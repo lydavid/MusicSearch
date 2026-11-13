@@ -1,3 +1,7 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.ImagesUi(
+  stable state: ImagesUiState
+  stable modifier: Modifier? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.PreviewImagesGridUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.PreviewImagesPagerUiCompact()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.PreviewImagesPagerUiNonCompact()
@@ -7,10 +11,6 @@ open fun ly.david.musicsearch.shared.feature.images.ImagesPresenter.present(
 fun ly.david.musicsearch.shared.feature.images.getLabel(
   stable <this>: ImagesSortOption
 ): String
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.ImagesUi(
-  stable state: ImagesUiState
-  stable modifier: Modifier? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.images.ImagesUi(
   stable state: ImagesUiState
   stable isCompact: Boolean
