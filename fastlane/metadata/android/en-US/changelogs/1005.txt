@@ -1,0 +1,3 @@
+### Bug Fixes
+
+* fix crash when clicking Facets in Listens

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.138.2](https://github.com/lydavid/MusicSearch/compare/v1.138.1...v1.138.2) (2026-11-13)
+
+
+### Bug Fixes
+
+* fix crash when clicking Facets in Listens ([12888c4](https://github.com/lydavid/MusicSearch/commit/12888c45bdd6605fee2ebbd0050f7dcbef28029f))
+
 ## [1.138.1](https://github.com/lydavid/MusicSearch/compare/v1.138.0...v1.138.1) (2026-11-11)
 
 
