@@ -43,9 +43,3 @@ kotlin {
         }
     }
 }
-
-// TODO: if I want to keep chucker, maybe have android module bind an implementation based on flavor
-dependencies {
-//    "androidRuntimeClasspath"(libs.chucker)
-//    releaseImplementation(libs.chucker.noop)
-}

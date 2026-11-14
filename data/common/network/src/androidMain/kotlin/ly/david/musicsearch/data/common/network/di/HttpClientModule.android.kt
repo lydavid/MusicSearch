@@ -22,7 +22,6 @@ actual val HttpClientModule: Module = module {
         okHttpConfig.config {
             readTimeout(10, TimeUnit.SECONDS)
             cache(null)
-//            addInterceptor(ChuckerInterceptor(context = get()))
         }
         ApiHttpClient.configAndCreate(
             engine = OkHttpEngine(config = okHttpConfig),
