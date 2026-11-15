@@ -30,11 +30,15 @@ import ly.david.musicsearch.shared.domain.error.Feedback
 import ly.david.musicsearch.shared.domain.list.FacetListItem
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
+import ly.david.musicsearch.shared.domain.listen.ListenListItemModel
 import ly.david.musicsearch.shared.domain.listen.ListensListFeedback
 import ly.david.musicsearch.shared.domain.listen.ListensListRepository
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
+import ly.david.musicsearch.shared.domain.recording.RecordingRepository
+import ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult
+import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
 import ly.david.musicsearch.ui.common.topappbar.Tab
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarFilterState
@@ -49,6 +53,7 @@ internal class ListensPresenter(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listensListRepository: ListensListRepository,
     private val listenBrainzRepository: ListenBrainzRepository,
+    private val recordingRepository: RecordingRepository,
     private val externalScope: CoroutineScope,
     private val appPreferences: AppPreferences,
 ) : Presenter<ListensUiState> {
@@ -60,6 +65,14 @@ internal class ListensPresenter(
         var textFieldText by rememberSaveable { mutableStateOf("") }
         var feedback by remember { mutableStateOf<Feedback<ListensListFeedback>?>(null) }
         var markForDeletionActionableResult by remember { mutableStateOf<ActionableResult?>(null) }
+
+        var showBottomSheetForListen by rememberRetained { mutableStateOf<ListenListItemModel?>(null) }
+        var showLinkDialog by rememberRetained { mutableStateOf(false) }
+        var isAutomaticLink by rememberSaveable { mutableStateOf(true) }
+        // Because we're not collecting this as a flow, visiting an item and returning will not mark it as visited
+        // until user closes and searches again.
+        var recordingsMatchingIsrcResult by
+            rememberRetained { mutableStateOf<RecordingsMatchingIsrcResult>(RecordingsMatchingIsrcResult.Loading) }
 
         val lazyListState = rememberLazyListState()
         val coroutineScope = rememberCoroutineScope()
@@ -163,6 +176,34 @@ internal class ListensPresenter(
                     showUnmappedData = !showUnmappedData
                 }
 
+                is ListensUiEvent.OpenAdditionalActions -> {
+                    showBottomSheetForListen = event.listen
+                    showLinkDialog = false
+                }
+
+                is ListensUiEvent.CloseAdditionalActions -> {
+                    showBottomSheetForListen = null
+                }
+
+                is ListensUiEvent.OpenLinkDialog -> {
+                    showLinkDialog = true
+                    showBottomSheetForListen?.let { listen ->
+                        coroutineScope.launch {
+                            recordingRepository.getRecordingsByIsrc(listen.unmappedIsrc).collect {
+                                recordingsMatchingIsrcResult = it
+                            }
+                        }
+                    }
+                }
+
+                is ListensUiEvent.CloseLinkDialog -> {
+                    showLinkDialog = false
+                }
+
+                is ListensUiEvent.SelectLinkOption -> {
+                    isAutomaticLink = event.isAutomatic
+                }
+
                 is ListensUiEvent.SubmitMapping -> {
                     coroutineScope.launch {
                         feedback = listensListRepository.submitManualMapping(
@@ -178,6 +219,15 @@ internal class ListensPresenter(
                             recordingMessyBrainzId = event.recordingMessyBrainzId,
                         )
                     }
+                }
+
+                is ListensUiEvent.GoToRecording -> {
+                    navigator.goTo(
+                        screen = DetailsScreen(
+                            entityType = MusicBrainzEntityType.RECORDING,
+                            id = event.recordingMusicBrainzId,
+                        ),
+                    )
                 }
 
                 is ListensUiEvent.MarkForDeletion -> {
@@ -227,6 +277,12 @@ internal class ListensPresenter(
             isPullToRefreshEnabled = isPullToRefreshEnabled,
             boldUnvisited = boldUnvisited,
             showUnmappedData = showUnmappedData,
+            showBottomSheetForListen = showBottomSheetForListen,
+            linkUiState = LinkUiState(
+                recordingsMatchingIsrcResult = recordingsMatchingIsrcResult,
+                showLinkDialog = showLinkDialog,
+                isAutomatic = isAutomaticLink,
+            ),
             eventSink = ::eventSink,
         )
     }
@@ -249,6 +305,8 @@ internal data class ListensUiState(
     val isPullToRefreshEnabled: Boolean = true,
     val boldUnvisited: Boolean = true,
     val showUnmappedData: Boolean = false,
+    val showBottomSheetForListen: ListenListItemModel? = null,
+    val linkUiState: LinkUiState = LinkUiState(),
     val eventSink: (ListensUiEvent) -> Unit = {},
 ) : CircuitUiState {
     val noUsernameSet: Boolean
@@ -263,6 +321,12 @@ internal data class FacetsUiState(
     val filterState: TopAppBarFilterState = TopAppBarFilterState(),
     val facetsPagingDataFlow: Flow<PagingData<FacetListItem>> = emptyFlow(),
     val selectedDateTimeEpochSeconds: Long? = null,
+)
+
+internal data class LinkUiState(
+    val showLinkDialog: Boolean = false,
+    val recordingsMatchingIsrcResult: RecordingsMatchingIsrcResult = RecordingsMatchingIsrcResult.Loading,
+    val isAutomatic: Boolean = true,
 )
 
 internal sealed interface ListensUiEvent : CircuitUiEvent {
@@ -300,8 +364,26 @@ internal sealed interface ListensUiEvent : CircuitUiEvent {
 
     data object ToggleShowUnmappedData : ListensUiEvent
 
+    data class OpenAdditionalActions(
+        val listen: ListenListItemModel,
+    ) : ListensUiEvent
+
+    data object CloseAdditionalActions : ListensUiEvent
+
+    data object OpenLinkDialog : ListensUiEvent
+
+    data object CloseLinkDialog : ListensUiEvent
+
+    data class SelectLinkOption(
+        val isAutomatic: Boolean,
+    ) : ListensUiEvent
+
     data class SubmitMapping(
         val recordingMessyBrainzId: String,
+        val recordingMusicBrainzId: String,
+    ) : ListensUiEvent
+
+    data class GoToRecording(
         val recordingMusicBrainzId: String,
     ) : ListensUiEvent
 

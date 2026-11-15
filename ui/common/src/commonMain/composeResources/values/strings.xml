@@ -302,6 +302,9 @@
     <string name="MusicBrainzUrlMBID">MusicBrainz URL/MBID</string>
     <string name="addMapping">Add mapping</string>
     <string name="linkWithMusicBrainz">Link with MusicBrainz</string>
+    <string name="searchForMatchingRecordings">Search for matching recordings</string>
+    <string name="select">Select</string>
+    <string name="searchRecordingsByIsrc">Search for recordings by ISRC</string>
     <string name="album">Album</string>
     <string name="broadcast">Broadcast</string>
     <string name="ep">EP</string>

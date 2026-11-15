@@ -17,6 +17,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -97,9 +98,9 @@ private const val ROTATE_DOWN = 90f
 @Composable
 internal fun ListensUi(
     state: ListensUiState,
+    modifier: Modifier = Modifier,
     timeZone: TimeZone = TimeZone.currentSystemDefault(),
     clock: Clock = Clock.System,
-    modifier: Modifier = Modifier,
 ) {
     val eventSink = state.eventSink
     val snackbarHostState = remember { SnackbarHostState() }
@@ -490,12 +491,14 @@ private fun ListensContent(
             },
         )
     } else {
-        var showBottomSheetForListen: ListenListItemModel? by remember { mutableStateOf(null) }
         var showMoreFilters by rememberSaveable { mutableStateOf(false) }
 
-        showBottomSheetForListen?.let { listen ->
+        state.showBottomSheetForListen?.let { listen ->
             ModalBottomSheet(
-                onDismissRequest = { showBottomSheetForListen = null },
+                // I tried hoisting this to presenter and outside the block, but can't seem to persist
+                // expanded state when returning from another screen.
+                sheetState = rememberModalBottomSheetState(),
+                onDismissRequest = { eventSink(ListensUiEvent.CloseAdditionalActions) },
             ) {
                 val selectedDateTimeEpochSeconds = state.facetsUiState.selectedDateTimeEpochSeconds
                 ListenAdditionalActionsBottomSheetContent(
@@ -533,6 +536,17 @@ private fun ListensContent(
                         )
                     },
                     allowedToEdit = state.browsingUserIsSameAsLoggedInUser,
+                    onGoToRecording = { recordingId ->
+                        eventSink(
+                            ListensUiEvent.GoToRecording(
+                                recordingMusicBrainzId = recordingId,
+                            ),
+                        )
+                    },
+                    linkUiState = state.linkUiState,
+                    onOpenLinkDialog = { eventSink(ListensUiEvent.OpenLinkDialog) },
+                    onCloseLinkDialog = { eventSink(ListensUiEvent.CloseLinkDialog) },
+                    onSelectAutomatic = { eventSink(ListensUiEvent.SelectLinkOption(isAutomatic = it)) },
                     onSubmitMapping = { recordingMessyBrainzId, recordingId ->
                         eventSink(
                             ListensUiEvent.SubmitMapping(
@@ -556,7 +570,9 @@ private fun ListensContent(
                             ),
                         )
                     },
-                    onDismiss = { showBottomSheetForListen = null },
+                    onDismiss = {
+                        eventSink(ListensUiEvent.CloseAdditionalActions)
+                    },
                 )
             }
         }
@@ -586,7 +602,9 @@ private fun ListensContent(
                             )
                         },
                         onMoreActionsClick = {
-                            showBottomSheetForListen = listItemModel
+                            eventSink(
+                                ListensUiEvent.OpenAdditionalActions(listen = listItemModel),
+                            )
                         },
                     )
 

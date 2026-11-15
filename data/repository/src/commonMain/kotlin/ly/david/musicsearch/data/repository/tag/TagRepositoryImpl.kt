@@ -51,6 +51,8 @@ class TagRepositoryImpl(
         musicBrainzEntity: MusicBrainzEntity,
         voteType: VoteType,
     ): Flow<Feedback<TagRepository.TagFeedback>> = flow {
+        // with this wrapper model, the generic data needs its own loading state
+        // pretty strange. is there a better way to do it?
         emit(
             Feedback.Loading(
                 data = TagRepository.TagFeedback.Syncing,

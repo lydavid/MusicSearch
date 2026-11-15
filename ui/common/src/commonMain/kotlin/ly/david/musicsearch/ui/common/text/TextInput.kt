@@ -42,10 +42,12 @@ fun TextInput(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
-                text = instructions,
-                textAlign = TextAlign.Center,
-            )
+            if (instructions.isNotEmpty()) {
+                Text(
+                    text = instructions,
+                    textAlign = TextAlign.Center,
+                )
+            }
             SingleLineTextField(
                 text = text,
                 textLabel = textLabel,

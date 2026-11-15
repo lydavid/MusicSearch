@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
 import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MusicVideo
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -148,6 +150,86 @@ fun RecordingListItem(
                 entityListItemModel = recording,
                 onClick = onEditCollectionClick,
             )
+        },
+    )
+}
+
+@Composable
+fun RecordingByIsrcListItem(
+    recording: RecordingListItemModel,
+    modifier: Modifier = Modifier,
+    boldUnvisited: Boolean = true,
+    onRecordingClick: () -> Unit = {},
+    isSelected: Boolean = false,
+    onSelect: () -> Unit = {},
+) {
+    val fullName = recording.getAnnotatedName(boldUnvisited = boldUnvisited)
+    ListItem(
+        headlineContent = {
+            HighlightableText(
+                text = fullName,
+                highlightedText = "",
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        },
+        modifier = modifier.combinedClickable(
+            onClick = onRecordingClick,
+        ),
+        colors = listItemColors(isSelected = isSelected),
+        supportingContent = {
+            Column {
+                Row(
+                    modifier = Modifier.padding(top = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    val dateAndLength = listOfNotNull(
+                        recording.firstReleaseDate.takeIf { it.isNotEmpty() },
+                        recording.length.toDisplayTime(),
+                    ).joinToString(DOT_SEPARATOR)
+                    Text(
+                        text = dateAndLength,
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+
+                    if (recording.video) {
+                        Icon(
+                            imageVector = CustomIcons.MusicVideo,
+                            modifier = Modifier
+                                .padding(start = 4.dp)
+                                .size(TINY_ICON_SIZE.dp),
+                            contentDescription = stringResource(Res.string.video),
+                        )
+                    }
+                }
+
+                recording.formattedArtistCredits.ifNotNullOrEmpty {
+                    HighlightableText(
+                        modifier = Modifier.padding(top = 2.dp),
+                        text = it,
+                        highlightedText = "",
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+
+                recording.isrcs.ifNotEmpty {
+                    HighlightableText(
+                        modifier = Modifier.padding(top = 2.dp),
+                        text = it.joinToString(", "),
+                        highlightedText = "",
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
+            }
+        },
+        trailingContent = {
+            IconButton(
+                onClick = onSelect,
+            ) {
+                Icon(
+                    imageVector = CustomIcons.Check,
+                    contentDescription = "Select $fullName",
+                )
+            }
         },
     )
 }

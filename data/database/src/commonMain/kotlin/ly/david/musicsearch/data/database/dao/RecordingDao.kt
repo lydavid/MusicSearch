@@ -91,6 +91,17 @@ class RecordingDao(
         }
     }
 
+    fun getRecordingsByIsrc(
+        isrc: String,
+    ): List<RecordingListItemModel> {
+        return transacter.transactionWithResult {
+            transacter.getRecordingForIsrc(
+                isrc = isrc,
+                mapper = ::mapToRecordingListItemModel,
+            ).executeAsList()
+        }
+    }
+
     private fun toDetailsModel(
         id: String,
         name: String,

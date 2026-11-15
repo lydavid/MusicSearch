@@ -71,6 +71,40 @@ LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id
 WHERE recording.id = :recordingId
 GROUP BY recording.id;
 
+getRecordingForIsrc:
+SELECT
+  recording.id,
+  recording.name,
+  recording.disambiguation,
+  recording.first_release_date,
+  recording.length,
+  recording.video,
+  recording.isrcs,
+  ac.name AS artist_credits,
+  details_metadata.entity_id IS NOT NULL AS visited,
+  aliases.alias_names,
+  aliases.alias_locales
+FROM recording
+INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN (
+  SELECT
+    recording_alias.recording_id,
+    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
+  FROM recording_alias
+  WHERE recording_alias.is_primary
+  GROUP BY recording_alias.recording_id
+) AS aliases ON aliases.recording_id = recording.id
+LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
+WHERE (
+  CAST(recording.isrcs AS TEXT) = CAST(:isrc AS TEXT)
+  OR CAST(recording.isrcs AS TEXT) LIKE CAST(:isrc AS TEXT) || ',%'
+  OR CAST(recording.isrcs AS TEXT) LIKE '%,' || CAST(:isrc AS TEXT) || ',%'
+  OR CAST(recording.isrcs AS TEXT) LIKE '%,' || CAST(:isrc AS TEXT)
+)
+GROUP BY recording.id;
+
 getLatestListensByRecording:
 SELECT
   listened_at_ms
