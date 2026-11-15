@@ -27,7 +27,6 @@ import ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult
 import ly.david.musicsearch.ui.common.component.ClickableItem
 import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.icons.AddLink
-import ly.david.musicsearch.ui.common.icons.ChevronRight
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.recording.RecordingByIsrcListItem
 import ly.david.musicsearch.ui.common.text.SyncingText
@@ -69,7 +68,6 @@ internal fun LinkWithMusicBrainzItem(
     ClickableItem(
         title = stringResource(Res.string.linkWithMusicBrainz),
         startIcon = CustomIcons.AddLink,
-        endIcon = CustomIcons.ChevronRight,
         onClick = onOpenLinkDialog,
     )
 }
