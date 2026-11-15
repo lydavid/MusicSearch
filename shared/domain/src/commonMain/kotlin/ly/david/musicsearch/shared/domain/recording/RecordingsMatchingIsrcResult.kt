@@ -7,4 +7,5 @@ sealed interface RecordingsMatchingIsrcResult {
     data object Loading : RecordingsMatchingIsrcResult
     data object NoUnmappedIsrc : RecordingsMatchingIsrcResult
     data object NoMatchingRecordings : RecordingsMatchingIsrcResult
+    data class NetworkError(val message: String) : RecordingsMatchingIsrcResult
 }

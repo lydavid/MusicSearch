@@ -18,6 +18,7 @@ import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
@@ -63,9 +64,15 @@ class RecordingRepositoryImpl(
 
         val cachedRecordings = recordingDao.getRecordingsByIsrc(isrc)
         if (cachedRecordings.isEmpty()) {
-            // no pagination for simplicity, because an ISRC matching over 100 recordings is extremely rare
-            val recordingMusicBrainzNetworkModels = searchApi.queryRecordings(query = "isrc:$isrc").recordings
-            recordingDao.withTransaction {
+            val recordingMusicBrainzNetworkModels = try {
+                // no pagination for simplicity, because an ISRC matching over 100 recordings is extremely rare
+                searchApi.queryRecordings(query = "isrc:$isrc").recordings
+            } catch (ex: HandledException) {
+                emit(RecordingsMatchingIsrcResult.NetworkError(ex.userMessage))
+                return@flow
+            }
+
+            withTransaction {
                 recordingDao.upsertAll(recordingMusicBrainzNetworkModels)
                 aliasDao.insertAll(
                     musicBrainzNetworkModels = recordingMusicBrainzNetworkModels,
@@ -81,6 +88,7 @@ class RecordingRepositoryImpl(
                     RecordingsMatchingIsrcResult.Success(recordings)
                 },
             )
+
             return@flow
         }
 

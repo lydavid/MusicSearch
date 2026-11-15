@@ -36,8 +36,13 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
 import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.addMapping
+import musicsearch.ui.common.generated.resources.automatic
 import musicsearch.ui.common.generated.resources.linkListenWithMusicBrainz
 import musicsearch.ui.common.generated.resources.linkWithMusicBrainz
+import musicsearch.ui.common.generated.resources.listenHasNoISRC
+import musicsearch.ui.common.generated.resources.manual
+import musicsearch.ui.common.generated.resources.noRecordingsMatchISRC
+import musicsearch.ui.common.generated.resources.searching
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -123,7 +128,7 @@ internal fun LinkWithMusicBrainzDialogContent(
                 ),
                 onClick = { onSelectAutomatic(true) },
                 selected = isAutomatic,
-                label = { Text("Automatic") },
+                label = { Text(stringResource(Res.string.automatic)) },
             )
             SegmentedButton(
                 shape = SegmentedButtonDefaults.itemShape(
@@ -132,7 +137,7 @@ internal fun LinkWithMusicBrainzDialogContent(
                 ),
                 onClick = { onSelectAutomatic(false) },
                 selected = !isAutomatic,
-                label = { Text("Manual") },
+                label = { Text(stringResource(Res.string.manual)) },
             )
         }
 
@@ -145,20 +150,16 @@ internal fun LinkWithMusicBrainzDialogContent(
             ) {
                 when (val result = linkUiState.recordingsMatchingIsrcResult) {
                     RecordingsMatchingIsrcResult.Loading -> {
-                        SyncingText(message = "Searching...")
+                        SyncingText(message = stringResource(Res.string.searching))
                     }
 
                     RecordingsMatchingIsrcResult.NoUnmappedIsrc -> {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                        ) {
-                            Text(
-                                "This listen has no ISRC, so we can’t automatically match it.",
-                                style = TextStyles.getCardBodySubTextStyle(),
-                                color = MaterialTheme.colorScheme.error,
-                            )
-                        }
+                        Text(
+                            text = stringResource(Res.string.listenHasNoISRC),
+                            modifier = Modifier.fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                            color = MaterialTheme.colorScheme.error,
+                        )
                     }
 
                     RecordingsMatchingIsrcResult.NoMatchingRecordings -> {
@@ -167,11 +168,20 @@ internal fun LinkWithMusicBrainzDialogContent(
                                 .fillMaxWidth(),
                         ) {
                             Text(
-                                "No recordings matched this listen's ISRC.",
+                                text = stringResource(Res.string.noRecordingsMatchISRC),
                                 style = TextStyles.getCardBodySubTextStyle(),
                                 color = MaterialTheme.colorScheme.error,
                             )
                         }
+                    }
+
+                    is RecordingsMatchingIsrcResult.NetworkError -> {
+                        Text(
+                            text = result.message,
+                            modifier = Modifier.fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                            color = MaterialTheme.colorScheme.error,
+                        )
                     }
 
                     is RecordingsMatchingIsrcResult.Success -> {

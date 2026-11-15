@@ -68,6 +68,22 @@ internal fun PreviewLinkWithMusicBrainzDialogContentNoMatchingRecordings() {
 
 @PreviewLightDark
 @Composable
+internal fun PreviewLinkWithMusicBrainzDialogContentNetworkError() {
+    PreviewTheme {
+        Surface {
+            LinkWithMusicBrainzDialogContent(
+                linkUiState = LinkUiState(
+                    recordingsMatchingIsrcResult = RecordingsMatchingIsrcResult.NetworkError(
+                        message = "Some network error",
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
 internal fun PreviewLinkWithMusicBrainzDialogContentSuccess() {
     PreviewWithTransitionAndOverlays {
         Surface {

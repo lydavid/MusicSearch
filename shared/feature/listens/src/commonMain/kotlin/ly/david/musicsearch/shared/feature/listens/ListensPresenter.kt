@@ -69,7 +69,7 @@ internal class ListensPresenter(
         var showBottomSheetForListen by rememberRetained { mutableStateOf<ListenListItemModel?>(null) }
         var showLinkDialog by rememberRetained { mutableStateOf(false) }
         var isAutomaticLink by rememberSaveable { mutableStateOf(true) }
-        // Because we're not collecting this as a flow, visiting an item and returning will not mark it as visited
+        // Because we're not collecting this as a flow again, visiting an item and returning will not mark it as visited
         // until user closes and searches again.
         var recordingsMatchingIsrcResult by
             rememberRetained { mutableStateOf<RecordingsMatchingIsrcResult>(RecordingsMatchingIsrcResult.Loading) }

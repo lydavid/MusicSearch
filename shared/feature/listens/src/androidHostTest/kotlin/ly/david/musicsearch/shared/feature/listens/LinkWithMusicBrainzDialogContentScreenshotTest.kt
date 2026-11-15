@@ -34,6 +34,13 @@ class LinkWithMusicBrainzDialogContentScreenshotTest : ScreenshotTest() {
     }
 
     @Test
+    fun networkError() {
+        snapshot {
+            PreviewLinkWithMusicBrainzDialogContentNetworkError()
+        }
+    }
+
+    @Test
     fun success() {
         snapshot {
             PreviewLinkWithMusicBrainzDialogContentSuccess()
