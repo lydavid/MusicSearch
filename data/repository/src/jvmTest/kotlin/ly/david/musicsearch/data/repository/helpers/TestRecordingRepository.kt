@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import ly.david.data.test.NoOpListenBrainzAuthStore
 import ly.david.data.test.api.FakeLookupApi
+import ly.david.data.test.api.FakeSearchApi
 import ly.david.data.test.preferences.NoOpAppPreferences
 import ly.david.data.test.preferences.NoOpMusicBrainzAuthStore
 import ly.david.musicsearch.data.database.dao.AliasDao
@@ -33,6 +34,7 @@ interface TestRecordingRepository {
     fun createRecordingRepository(
         musicBrainzModel: RecordingMusicBrainzNetworkModel,
         fakeBrowseUsername: String = "",
+        recordingsReturnedBySearch: List<RecordingMusicBrainzNetworkModel> = listOf(musicBrainzModel),
     ): RecordingRepository {
         val relationRepository = RelationRepositoryImpl(
             lookupApi = object : FakeLookupApi() {
@@ -59,6 +61,17 @@ interface TestRecordingRepository {
                     include: String,
                 ): RecordingMusicBrainzNetworkModel {
                     return musicBrainzModel
+                }
+            },
+            searchApi = object : FakeSearchApi() {
+                override suspend fun queryRecordings(
+                    query: String,
+                    limit: Int,
+                    offset: Int,
+                ): ly.david.musicsearch.data.musicbrainz.api.SearchRecordingsResponse {
+                    return ly.david.musicsearch.data.musicbrainz.api.SearchRecordingsResponse(
+                        recordings = recordingsReturnedBySearch,
+                    )
                 }
             },
             listenBrainzAuthStore = object : NoOpListenBrainzAuthStore() {
