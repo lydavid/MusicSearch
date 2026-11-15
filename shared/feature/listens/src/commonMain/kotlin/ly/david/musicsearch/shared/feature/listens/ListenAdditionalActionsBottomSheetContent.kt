@@ -15,10 +15,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -35,9 +31,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.musicbrainz.MusicBrainzEntity
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.component.ClickableItem
-import ly.david.musicsearch.ui.common.dialog.DialogWithCloseButton
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icons.AddLink
 import ly.david.musicsearch.ui.common.icons.Album
 import ly.david.musicsearch.ui.common.icons.CalendarMonth
 import ly.david.musicsearch.ui.common.icons.ChevronRight
@@ -54,23 +48,22 @@ import ly.david.musicsearch.ui.common.icons.Refresh
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.locale.getAnnotatedName
-import ly.david.musicsearch.ui.common.text.TextInput
 import ly.david.musicsearch.ui.common.text.getFontWeightWithPreference
 import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.theme.getSubTextColor
-import musicsearch.ui.common.generated.resources.MusicBrainzUrlMBID
 import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.addMapping
 import musicsearch.ui.common.generated.resources.delete
 import musicsearch.ui.common.generated.resources.filterFromListenDate
 import musicsearch.ui.common.generated.resources.goToAlbum
-import musicsearch.ui.common.generated.resources.linkListenWithMusicBrainz
-import musicsearch.ui.common.generated.resources.linkWithMusicBrainz
 import musicsearch.ui.common.generated.resources.openInBrowser
 import musicsearch.ui.common.generated.resources.refreshMapping
 import musicsearch.ui.common.generated.resources.stopFilteringFromThisDate
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * @param onDismiss Only invoked for actions that do not take the user somewhere, so that when the user returns,
+ * they still see the bottom sheet up.
+ */
 @Composable
 internal fun ListenAdditionalActionsBottomSheetContent(
     listen: ListenListItemModel,
@@ -87,6 +80,11 @@ internal fun ListenAdditionalActionsBottomSheetContent(
     onFilterByDate: (dateMilliseconds: Long) -> Unit = {},
     allowedToEdit: Boolean,
     onSubmitMapping: (recordingMessyBrainzId: String, recordingId: String) -> Unit = { _, _ -> },
+    linkUiState: LinkUiState = LinkUiState(),
+    onGoToRecording: (recordingId: String) -> Unit = {},
+    onOpenLinkDialog: () -> Unit = {},
+    onCloseLinkDialog: () -> Unit = {},
+    onSelectAutomatic: (isAutomatic: Boolean) -> Unit = {},
     onRefreshMapping: (recordingMessyBrainzId: String) -> Unit = {},
     onOpenInBrowser: (listenedAtMs: Long) -> Unit = {},
     onDelete: (listenedAtMs: Long, username: String, recordingMessyBrainzId: String) -> Unit = { _, _, _ -> },
@@ -116,7 +114,6 @@ internal fun ListenAdditionalActionsBottomSheetContent(
                 fontWeight = release.getFontWeightWithPreference(boldUnvisited = boldUnvisited),
                 onClick = {
                     onGoToRelease(releaseId)
-                    onDismiss()
                 },
             )
 
@@ -138,10 +135,18 @@ internal fun ListenAdditionalActionsBottomSheetContent(
 
         if (allowedToEdit) {
             LinkWithMusicBrainzItem(
+                linkUiState = linkUiState,
+                boldUnvisited = boldUnvisited,
                 onSubmitMapping = {
                     onSubmitMapping(listen.recordingMessybrainzId, it)
                     onDismiss()
                 },
+                onGoToRecording = { recordingMusicBrainzId ->
+                    onGoToRecording(recordingMusicBrainzId)
+                },
+                onOpenLinkDialog = onOpenLinkDialog,
+                onCloseLinkDialog = onCloseLinkDialog,
+                onSelectAutomatic = onSelectAutomatic,
             )
 
             ClickableItem(
@@ -159,7 +164,6 @@ internal fun ListenAdditionalActionsBottomSheetContent(
             startIcon = CustomIcons.OpenInNew,
             onClick = {
                 onOpenInBrowser(listen.listenedAtMs)
-                onDismiss()
             },
         )
 
@@ -588,40 +592,4 @@ private fun PreviewSection(
             }
         }
     }
-}
-
-@Composable
-private fun LinkWithMusicBrainzItem(
-    onSubmitMapping: (recordingMessyBrainzId: String) -> Unit,
-) {
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-    var mbid by rememberSaveable { mutableStateOf("") }
-    if (showDialog) {
-        DialogWithCloseButton(
-            onDismiss = { showDialog = false },
-        ) {
-            TextInput(
-                instructions = buildAnnotatedString {
-                    append(stringResource(Res.string.linkListenWithMusicBrainz))
-                },
-                text = mbid,
-                textLabel = stringResource(Res.string.MusicBrainzUrlMBID),
-                textHint = null,
-                onTextChange = { mbid = it },
-                buttonText = stringResource(Res.string.addMapping),
-                onButtonClick = {
-                    onSubmitMapping(mbid)
-                },
-                modifier = Modifier,
-            )
-        }
-    }
-
-    ClickableItem(
-        title = stringResource(Res.string.linkWithMusicBrainz),
-        startIcon = CustomIcons.AddLink,
-        onClick = {
-            showDialog = true
-        },
-    )
 }

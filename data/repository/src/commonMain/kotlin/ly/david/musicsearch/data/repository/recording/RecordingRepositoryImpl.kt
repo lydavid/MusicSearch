@@ -2,7 +2,9 @@ package ly.david.musicsearch.data.repository.recording
 
 import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -10,17 +12,20 @@ import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.musicbrainz.api.ARTIST_CREDITS
 import ly.david.musicsearch.data.musicbrainz.api.ISRCS
 import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.SearchApi
 import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
 import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.RecordingDetailsModel
+import ly.david.musicsearch.shared.domain.error.HandledException
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzAuthStore
 import ly.david.musicsearch.shared.domain.listen.ListenBrainzRepository
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.shared.domain.preferences.AppPreferences
 import ly.david.musicsearch.shared.domain.recording.RecordingRepository
+import ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult
 import ly.david.musicsearch.shared.domain.relation.RelationRepository
 import kotlin.time.Instant
 
@@ -32,6 +37,7 @@ class RecordingRepositoryImpl(
     private val listenBrainzAuthStore: ListenBrainzAuthStore,
     private val listenBrainzRepository: ListenBrainzRepository,
     private val lookupApi: LookupApi,
+    private val searchApi: SearchApi,
     private val tagDao: TagDao,
     detailsMetadataDao: DetailsMetadataDao,
     coroutineDispatchers: CoroutineDispatchers,
@@ -47,6 +53,46 @@ class RecordingRepositoryImpl(
 ) {
     override fun withTransaction(block: TransactionWithoutReturn.() -> Unit) {
         recordingDao.withTransaction(block)
+    }
+
+    override suspend fun getRecordingsByIsrc(isrc: String?): Flow<RecordingsMatchingIsrcResult> = flow {
+        emit(RecordingsMatchingIsrcResult.Loading)
+        if (isrc.isNullOrBlank()) {
+            emit(RecordingsMatchingIsrcResult.NoUnmappedIsrc)
+            return@flow
+        }
+
+        val cachedRecordings = recordingDao.getRecordingsByIsrc(isrc)
+        if (cachedRecordings.isEmpty()) {
+            val recordingMusicBrainzNetworkModels = try {
+                // no pagination for simplicity, because an ISRC matching over 100 recordings is extremely rare
+                searchApi.queryRecordings(query = "isrc:$isrc").recordings
+            } catch (ex: HandledException) {
+                emit(RecordingsMatchingIsrcResult.NetworkError(ex.userMessage))
+                return@flow
+            }
+
+            withTransaction {
+                recordingDao.upsertAll(recordingMusicBrainzNetworkModels)
+                aliasDao.insertAll(
+                    musicBrainzNetworkModels = recordingMusicBrainzNetworkModels,
+                    deleteExisting = false,
+                )
+            }
+
+            val recordings = recordingDao.getRecordingsByIsrc(isrc)
+            emit(
+                if (recordings.isEmpty()) {
+                    RecordingsMatchingIsrcResult.NoMatchingRecordings
+                } else {
+                    RecordingsMatchingIsrcResult.Success(recordings)
+                },
+            )
+
+            return@flow
+        }
+
+        emit(RecordingsMatchingIsrcResult.Success(cachedRecordings))
     }
 
     override suspend fun getCachedData(entityId: String): RecordingDetailsModel? {

@@ -67,6 +67,7 @@ data class TrackMetadata(
  * @param artist_names All actual artist names.
  * @param release_artist_names All artist names on the release, may be "Various Artist".
  * @param release_mbid The id submitted, which may be more accurate than the mapped release id.
+ * @param isrc Seems to be a single ISRC.
  */
 @Suppress("ConstructorParameterNaming")
 @Serializable

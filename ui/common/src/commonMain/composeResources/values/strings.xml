@@ -471,4 +471,9 @@
     <string name="boldUnvisited">Bold unvisited items</string>
     <string name="boldUnvisitedDescription">Show names of entities in bold until you've clicked on them</string>
     <string name="pullToRefresh">Pull to refresh</string>
+    <string name="automatic">Automatic</string>
+    <string name="manual">Manual</string>
+    <string name="searching">Searching...</string>
+    <string name="listenHasNoISRC">This listen has no ISRC, so we can’t automatically match it.</string>
+    <string name="noRecordingsMatchISRC">No recordings matched this listen's ISRC.</string>
 </resources>

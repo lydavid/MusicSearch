@@ -22,6 +22,7 @@ val listensFeatureModule = module {
                     listenBrainzAuthStore = get(),
                     listensListRepository = get(),
                     listenBrainzRepository = get(),
+                    recordingRepository = get(),
                     externalScope = get(),
                     appPreferences = get(),
                 )

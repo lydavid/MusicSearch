@@ -2,8 +2,10 @@ package ly.david.musicsearch.data.repository.recording
 
 import androidx.paging.testing.asSnapshot
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.KoinTestRule
+import ly.david.data.test.underPressureRecordingMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.AliasDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
@@ -35,6 +37,7 @@ import ly.david.musicsearch.shared.domain.listen.ListenRelease
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
 import ly.david.musicsearch.shared.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
+import ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -368,5 +371,55 @@ class RecordingRepositoryImplTest :
                 this,
             )
         }
+    }
+
+    @Test
+    fun `getRecordingsByIsrc emits NoUnmappedIsrc for a null or blank isrc`() = runTest {
+        val repository = createRecordingRepository(musicBrainzModel = underPressureRecordingMusicBrainzModel)
+
+        repository.getRecordingsByIsrc(isrc = null).toList().run {
+            Assert.assertEquals(RecordingsMatchingIsrcResult.Loading, first())
+            Assert.assertEquals(RecordingsMatchingIsrcResult.NoUnmappedIsrc, last())
+        }
+        repository.getRecordingsByIsrc(isrc = "   ").toList().run {
+            Assert.assertEquals(RecordingsMatchingIsrcResult.Loading, first())
+            Assert.assertEquals(RecordingsMatchingIsrcResult.NoUnmappedIsrc, last())
+        }
+    }
+
+    @Test
+    fun `getRecordingsByIsrc fetches from the network, caches, and returns cached results on a second call`() =
+        runTest {
+            val repository = createRecordingRepository(musicBrainzModel = underPressureRecordingMusicBrainzModel)
+            val isrc = underPressureRecordingMusicBrainzModel.isrcs?.first()
+
+            // First call misses the cache, hits the network, caches the result, then emits it.
+            val firstResult = repository.getRecordingsByIsrc(isrc).toList()
+            Assert.assertEquals(RecordingsMatchingIsrcResult.Loading, firstResult.first())
+            val firstSuccess = firstResult.drop(1).first() as RecordingsMatchingIsrcResult.Success
+            Assert.assertEquals(1, firstSuccess.recordings.size)
+            Assert.assertEquals(underPressureRecordingMusicBrainzModel.id, firstSuccess.recordings.first().id)
+            Assert.assertTrue(firstSuccess.recordings.first().isrcs.contains(isrc))
+
+            // Second call finds the cached recording and returns it without hitting the network.
+            val secondResult = repository.getRecordingsByIsrc(isrc).toList()
+            val secondSuccess = secondResult.drop(1).first() as RecordingsMatchingIsrcResult.Success
+            Assert.assertEquals(
+                firstSuccess.recordings.first().id,
+                secondSuccess.recordings.first().id,
+            )
+        }
+
+    @Test
+    fun `getRecordingsByIsrc emits NoMatchingRecordings when the network returns no match`() = runTest {
+        val repository = createRecordingRepository(
+            musicBrainzModel = underPressureRecordingMusicBrainzModel,
+            recordingsReturnedBySearch = emptyList(),
+        )
+        val isrc = underPressureRecordingMusicBrainzModel.isrcs?.first()
+
+        val result = repository.getRecordingsByIsrc(isrc).toList()
+        Assert.assertEquals(RecordingsMatchingIsrcResult.Loading, result.first())
+        Assert.assertEquals(RecordingsMatchingIsrcResult.NoMatchingRecordings, result.drop(1).first())
     }
 }
