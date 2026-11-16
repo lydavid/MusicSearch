@@ -51,14 +51,15 @@ class BaselineProfileGenerator {
                 waitForStableInActiveWindow()
                 onElement { textAsString() == "Search" }.click()
                 onElement { textAsString() == "Database" }.click()
-                waitForStableInActiveWindow()
-                onElement { textAsString() == "History" }.click()
-                pressBack()
+                // Adding these seem to flake on managed virtual devices, but not on default emulator
+//                waitForStableInActiveWindow()
+//                onElement { textAsString() == "History" }.click()
+//                pressBack()
                 onElement { textAsString() == "Collections" }.click()
                 onElement { textAsString() == "Settings" }.click()
-                waitForStableInActiveWindow()
-                onElement { textAsString() == "Listens" }.click()
-                pressBack()
+//                waitForStableInActiveWindow()
+//                onElement { textAsString() == "Listens" }.click()
+//                pressBack()
                 pressHome()
             }
         }

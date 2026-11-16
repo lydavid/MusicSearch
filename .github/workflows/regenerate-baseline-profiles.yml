@@ -43,8 +43,8 @@ jobs:
       # The release app pulls these release credentials from not_so_secret.properties.
       - name: Replace debug MusicBrainz client id/secret with release versions
         run: |
-          echo "TVVTSUNCUkFJTlpfQ0xJEU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
-          echo "TVVTSUNCUkFJTlpfQ0xJEU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJRU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
 
       # The baseline profile scenarios target the production application id, so the release
       # variant needs to drop the ".debug" suffix before it can be generated.
