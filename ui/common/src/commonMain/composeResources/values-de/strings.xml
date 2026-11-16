@@ -470,4 +470,10 @@
     <string name="pullToRefresh">Zum Aktualisieren nach unten ziehen</string>
     <string name="tracksNormalOrder">Original-Reihenfolge</string>
     <string name="tracksReverseOrder">Umgekehrte-Reihenfolge</string>
+    <string name="goToTag">Zum Tag wechseln</string>
+    <string name="automatic">Automatisch</string>
+    <string name="manual">Manuell</string>
+    <string name="searching">Suchen...</string>
+    <string name="noRecordingsMatchISRC">Keine Aufnahmen stimmten mit dem ISRC des Gehörten überein.</string>
+    <string name="listenHasNoISRC">Dieser Titel hat keine ISRC-Nummer, daher könnte er nicht automatisch zuordnet werden.</string>
 </resources>
