@@ -3,8 +3,8 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.application")
-//    alias(libs.plugins.baselineprofile)
     alias(libs.plugins.aboutlibraries)
+    alias(libs.plugins.baselineprofile)
 }
 
 // For F-Droid, remove google-services.json and we will not apply these plugins.
@@ -109,7 +109,7 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.adaptive)
-//    "baselineProfile"(projects.android.baselineprofile)
+    "baselineProfile"(projects.android.baselineprofile)
 
     googlePlayImplementation(platform(libs.firebase.bom))
     googlePlayImplementation(libs.firebase.analytics)
