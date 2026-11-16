@@ -28,6 +28,7 @@ import ly.david.musicsearch.data.musicbrainz.api.LookupApi
 import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzNetworkModel
 import ly.david.musicsearch.data.repository.base.LookupEntityRepository
 import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
+import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.area.AreaType
 import ly.david.musicsearch.shared.domain.area.NonCountryAreaWithCode
 import ly.david.musicsearch.shared.domain.auth.MusicBrainzAuthStore
@@ -253,7 +254,7 @@ class ReleaseRepositoryImpl(
                         if (before?.mediumId != after?.mediumId && after != null) {
                             ListSeparator(
                                 id = "${after.mediumId}",
-                                text = "${after.mediumPosition}・" +
+                                text = "${after.mediumPosition}$DOT_SEPARATOR" +
                                     after.format.orEmpty() +
                                     after.mediumName.transformThisIfNotNullOrEmpty { " ($it)" },
                             )

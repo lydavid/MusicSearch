@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ly.david.musicsearch.shared.domain.DOT_SEPARATOR
 import ly.david.musicsearch.shared.domain.UNKNOWN
 import ly.david.musicsearch.shared.domain.common.ifNotNullOrEmpty
 import ly.david.musicsearch.shared.domain.common.toFlagEmoji
@@ -86,7 +87,7 @@ fun ReleaseListItem(
                         buildString {
                             append("${countryCode.toFlagEmoji()} $countryCode")
                             if (release.releaseCountryCount > 1) append(" + ${release.releaseCountryCount - 1}")
-                            if (release.date.isNotEmpty()) append("・${release.date}")
+                            if (release.date.isNotEmpty()) append("$DOT_SEPARATOR${release.date}")
                         }
                     } ?: release.date
                     if (countryAndDate.isNotEmpty()) {

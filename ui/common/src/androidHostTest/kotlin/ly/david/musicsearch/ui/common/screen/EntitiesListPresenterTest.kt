@@ -184,7 +184,7 @@ class EntitiesListPresenterTest {
         val trackListItems = listOf(
             ListSeparator(
                 id = "1",
-                text = "1・CD",
+                text = "1·CD",
             ),
             TrackListItemModel(
                 id = "c",

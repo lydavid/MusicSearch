@@ -999,7 +999,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             listOf(
                 ListSeparator(
                     id = "1",
-                    text = "1・CD (SFC版「真・女神転生」)",
+                    text = "1·CD (SFC版「真・女神転生」)",
                 ),
                 TrackListItemModel(
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
@@ -1079,7 +1079,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             listOf(
                 ListSeparator(
                     id = "2",
-                    text = "1・CD (SFC版「真・女神転生」)",
+                    text = "1·CD (SFC版「真・女神転生」)",
                 ),
                 TrackListItemModel(
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
@@ -1226,7 +1226,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 listOf(
                     ListSeparator(
                         id = "1",
-                        text = "1・CD (SFC版「真・女神転生」)",
+                        text = "1·CD (SFC版「真・女神転生」)",
                     ),
                 ) + Array(200) { trackIndex ->
                     TrackListItemModel(
@@ -1264,7 +1264,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 listOf(
                     ListSeparator(
                         id = "1",
-                        text = "1・CD (SFC版「真・女神転生」)",
+                        text = "1·CD (SFC版「真・女神転生」)",
                     ),
                 ) + Array(trackCount) { trackIndex ->
                     TrackListItemModel(

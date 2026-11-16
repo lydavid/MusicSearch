@@ -33,6 +33,6 @@ const val SECONDS_IN_DAY = 24 * SECONDS_IN_HOUR
 
 const val DEFAULT_NUMBER_OF_LATEST_LISTENS_TO_SHOW: Long = 3
 
-const val DOT_SEPARATOR = "・"
+const val DOT_SEPARATOR = "·"
 const val ELLIPSIS = "…"
 const val UNKNOWN = "?"
