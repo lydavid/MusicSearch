@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.139.0](https://github.com/lydavid/MusicSearch/compare/v1.138.2...v1.139.0) (2026-11-16)
+
+### Features
+
+* clicking Link with MusicBrainz searches for recordings with the same ISRC as the listen and presents them to you to link in one click; moved original mapping by pasting recording MBID under Manual tab ([#2476](https://github.com/lydavid/MusicSearch/issues/2476)) ([67520cf](https://github.com/lydavid/MusicSearch/commit/67520cff0daa4f6d57eb83c34a8413449033e619))
+
 ## [1.138.2](https://github.com/lydavid/MusicSearch/compare/v1.138.1...v1.138.2) (2026-11-13)
 
 
