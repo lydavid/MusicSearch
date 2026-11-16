@@ -1,0 +1,79 @@
+name: Regenerate baseline profiles
+
+on:
+  workflow_call:
+
+jobs:
+  regenerate-baseline-profiles:
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+    timeout-minutes: 120
+    env:
+      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID }}
+      ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Setup gradle
+        uses: ./.github/actions/setup
+
+      # Necessary because the debug and release version of the app has a different redirect.
+      # The release app pulls these release credentials from not_so_secret.properties.
+      - name: Replace debug MusicBrainz client id/secret with release versions
+        run: |
+          echo "TVVTSUNCUkFJTlpfQ0xJEU5UX0lEPWtpbVpiWXlaYUVia2Ewb0Npb1ExNUdINWhlNFp4dGtXCg==" | base64 -d > not_so_secret.properties
+          echo "TVVTSUNCUkFJTlpfQ0xJEU5UX1NFQ1JFVD00ZVlINmpqRzBVVm1GRGN1Yk1CSThrVVlxT18xVkxHRAo=" | base64 -d >> not_so_secret.properties
+
+      # The baseline profile scenarios target the production application id, so the release
+      # variant needs to drop the ".debug" suffix before it can be generated.
+      - name: Replace application id
+        run: sed -i -e 's/\.debug//' shared/domain/src/commonMain/kotlin/ly/david/musicsearch/shared/domain/Constants.kt
+
+      - name: Decrypt release keystore
+        run: echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d > release-keystore.jks
+
+      - name: Write to keystore.properties
+        run: |
+          echo "storePassword=${{ secrets.RELEASE_STORE_PASSWORD }}" >> keystore.properties
+          echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> keystore.properties
+        shell: bash
+
+      - name: Decrypt Google Services file
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d > android/app/google-services.json
+
+      - name: Regenerate baseline profiles
+        run: ./gradlew :android:app:generateBaselineProfile --max-workers=1
+
+      - name: Restore application id
+        if: always()
+        run: git checkout shared/domain/src/commonMain/kotlin/ly/david/musicsearch/shared/domain/Constants.kt
+
+      - name: Commit
+        run: |
+          git pull --autostash
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add 'android/app/src/*/generated/baselineProfiles/'
+          git commit -m "chore: regenerate baseline profiles [skip ci]" || echo "No changes to commit"
+          git push
