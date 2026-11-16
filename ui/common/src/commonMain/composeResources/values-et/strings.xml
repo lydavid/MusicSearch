@@ -471,4 +471,9 @@
     <string name="tracksNormalOrder">Algupärane järjestus</string>
     <string name="tracksReverseOrder">Tagurpidi järjestus</string>
     <string name="goToTag">Suundu sildi juurde</string>
+    <string name="automatic">Automaatne</string>
+    <string name="manual">Käsitsi</string>
+    <string name="searching">Otsin…</string>
+    <string name="listenHasNoISRC">Sellel kuulamisel on ISRC-kood puudu ja me seega ei saa automaatselt vastet leida.</string>
+    <string name="noRecordingsMatchISRC">Ükski salvestis ei vasta selle kuulamise ISRC-koodile.</string>
 </resources>
