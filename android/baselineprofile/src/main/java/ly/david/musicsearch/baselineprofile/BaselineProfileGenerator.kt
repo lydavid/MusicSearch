@@ -3,6 +3,8 @@ package ly.david.musicsearch.baselineprofile
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.uiautomator.textAsString
+import androidx.test.uiautomator.uiAutomator
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,12 +43,22 @@ class BaselineProfileGenerator {
     fun generate() {
         rule.collect(
             packageName = "io.github.lydavid.musicsearch",
-
             // See: https://d.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
             includeInStartupProfile = true,
         ) {
-            pressHome()
-            startActivityAndWait()
+            uiAutomator {
+                startApp(packageName)
+                waitForStableInActiveWindow()
+                onElement { textAsString() == "Search" }.click()
+                onElement { textAsString() == "Database" }.click()
+                onElement { textAsString() == "History" }.click()
+                pressBack()
+                onElement { textAsString() == "Collections" }.click()
+                onElement { textAsString() == "Settings" }.click()
+                onElement { textAsString() == "Listens" }.click()
+                pressBack()
+                pressHome()
+            }
         }
     }
 }
