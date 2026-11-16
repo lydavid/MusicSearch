@@ -2,6 +2,7 @@ name: Regenerate baseline profiles
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   regenerate-baseline-profiles:
