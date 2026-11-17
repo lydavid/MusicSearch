@@ -1,6 +1,9 @@
 name: Regenerate baseline profiles
 
 on:
+  schedule:
+    - cron: '37 23 * * 2'
+      timezone: 'America/Toronto'
   workflow_call:
   workflow_dispatch:
 
