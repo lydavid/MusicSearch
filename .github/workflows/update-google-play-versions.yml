@@ -1,0 +1,76 @@
+name: Update Google Play version
+
+on:
+  schedule:
+    - cron: '42 5 * * *'
+      timezone: 'America/Toronto'
+  workflow_dispatch:
+
+jobs:
+  update:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@385a8ecc719e50b8c71af6ab01a624b486b7c3bc # v1
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@b3aaceaef7e0ee231b499e7b5f49c03fc1d32199 # v1.338.0
+        with:
+          bundler-cache: true
+
+      - name: Get versions
+        id: get-versions
+        shell: bash
+        run: |
+          # fastlane prints the answer as  Result: ["1.2.3"]  (on stderr), so capture
+          # both streams, grab that line, and pull out the first quoted version.
+          beta=$(
+            bundle exec fastlane run google_play_track_release_names \
+              track:beta \
+              json_key:${{ steps.auth.outputs.credentials_file_path }} \
+              2>&1 \
+            | grep -E 'Result:' | head -n1 \
+            | grep -oE '"[0-9][^"]*"' | head -n1 | tr -d '"'
+          )
+          production=$(
+            bundle exec fastlane run google_play_track_release_names \
+              track:production \
+              json_key:${{ steps.auth.outputs.credentials_file_path }} \
+              2>&1 \
+            | grep -E 'Result:' | head -n1 \
+            | grep -oE '"[0-9][^"]*"' | head -n1 | tr -d '"'
+          )
+          if [ -z "${production}" ] || [ -z "${beta}" ]; then
+            echo "Failed to determine Google Play versions (production='${production}', beta='${beta}')" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "beta=${beta}" >> "$GITHUB_OUTPUT"
+          echo "production=${production}" >> "$GITHUB_OUTPUT"
+
+      - name: Update README badges
+        shell: bash
+        run: |
+          sed -i -E "/Google_Play_\((Production)\)/ s#-v[0-9.]+#-v${{ steps.get-versions.outputs.production }}#" README.md
+          sed -i -E "/Google_Play_\((Beta)\)/ s#-v[0-9.]+#-v${{ steps.get-versions.outputs.beta }}#" README.md
+
+      - name: Commit update
+        run: |
+          git pull --rebase --autostash
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add README.md
+          git commit -m "chore: update Google Play version badges to ${{ steps.get-versions.outputs.production }} / ${{ steps.get-versions.outputs.beta }} [skip ci]" || echo "No changes to commit"
+          git push
