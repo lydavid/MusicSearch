@@ -42,6 +42,13 @@ platform :ios do
     )
   end
 
+  lane :get_app_store_version do |options|
+    app_store_build_number(
+      api_key_path: "app_store_api_key.json",
+      app_identifier: "io.github.lydavid.musicsearch"
+    )
+  end
+
   lane :publish do |options|
     setup_ci if ENV['CI']
     matchAppStore

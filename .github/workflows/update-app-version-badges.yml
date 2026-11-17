@@ -1,4 +1,4 @@
-name: Update Google Play version
+name: Update app version badges
 
 on:
   schedule:
@@ -53,18 +53,30 @@ jobs:
             | grep -E 'Result:' | head -n1 \
             | grep -oE '"[0-9][^"]*"' | head -n1 | tr -d '"'
           )
+          echo "${{ secrets.APP_STORE_API_KEY_JSON_BASE64 }}" | base64 -d > app_store_api_key.json
+          apple=$(
+            bundle exec fastlane ios get_app_store_version \
+            | grep -E 'Latest upload for live-version' | head -n1 \
+            | sed -E 's/.*live-version ([0-9.]+).*/\1/'
+          )
           if [ -z "${production}" ] || [ -z "${beta}" ]; then
             echo "Failed to determine Google Play versions (production='${production}', beta='${beta}')" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
+          if [ -z "${apple}" ]; then
+            echo "Failed to determine Apple App Store version (apple='${apple}', beta='${beta}')" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
           echo "beta=${beta}" >> "$GITHUB_OUTPUT"
           echo "production=${production}" >> "$GITHUB_OUTPUT"
+          echo "apple=${apple}" >> "$GITHUB_OUTPUT"
 
       - name: Update README badges
         shell: bash
         run: |
           sed -i -E "/Google_Play_\((Production)\)/ s#-v[0-9.]+#-v${{ steps.get-versions.outputs.production }}#" README.md
           sed -i -E "/Google_Play_\((Beta)\)/ s#-v[0-9.]+#-v${{ steps.get-versions.outputs.beta }}#" README.md
+          sed -i -E "/Apple_App_Store/ s#-v[0-9.]+#-v${{ steps.get-versions.outputs.apple }}#" README.md
 
       - name: Commit update
         run: |
@@ -72,5 +84,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add README.md
-          git commit -m "chore: update Google Play version badges to ${{ steps.get-versions.outputs.production }} / ${{ steps.get-versions.outputs.beta }} [skip ci]" || echo "No changes to commit"
+          git commit -m "chore: update store version badges to Google Play production ${{ steps.get-versions.outputs.production }}, Google Play beta ${{ steps.get-versions.outputs.beta }}, Apple App Store ${{ steps.get-versions.outputs.apple }} [skip ci]" || echo "No changes to commit"
           git push
