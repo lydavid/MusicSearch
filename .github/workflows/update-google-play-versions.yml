@@ -30,7 +30,6 @@ jobs:
           bundler-cache: true
 
       - name: Get versions
-        id: publish_play_store
         run: |
           bundle exec fastlane run google_play_track_release_names \
             track:beta \
