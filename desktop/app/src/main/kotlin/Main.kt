@@ -7,6 +7,7 @@ import androidx.compose.ui.window.rememberWindowState
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
@@ -40,22 +41,23 @@ fun main() = application {
             appPreferences = appPreferences,
             darkTheme = appPreferences.useDarkTheme(),
             content = {
-                val backStack: SaveableBackStack = rememberSaveableBackStack(
-                    initialScreens = persistentListOf(SearchScreen()),
-                )
-                val navigator: Navigator = rememberCircuitNavigator(
-                    backStack = backStack,
-                    onRootPop = { exitApplication() },
-                )
+                CircuitCompositionLocals(circuit) {
+                    val backStack: SaveableBackStack = rememberSaveableBackStack(
+                        initialScreens = persistentListOf(SearchScreen()),
+                    )
+                    val navigator: Navigator = rememberCircuitNavigator(
+                        backStack = backStack,
+                        onRootPop = { exitApplication() },
+                    )
 
-                val windowSizeClass = calculateWindowSizeClass()
+                    val windowSizeClass = calculateWindowSizeClass()
 
-                AppRoot(
-                    backStack = backStack,
-                    navigator = navigator,
-                    circuit = circuit,
-                    isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-                )
+                    AppRoot(
+                        backStack = backStack,
+                        navigator = navigator,
+                        isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
+                    )
+                }
             },
         )
     }

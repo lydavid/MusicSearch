@@ -1,6 +1,8 @@
 package ly.david.musicsearch.ui.common.screen
 
 import com.slack.circuit.runtime.screen.PopResult
+import com.slack.circuit.runtime.screen.ParcelablePopResult
+import com.slack.circuit.runtime.screen.ParcelableScreen
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -16,126 +18,126 @@ import ly.david.musicsearch.ui.common.topappbar.Tab
 data class SearchScreen(
     val query: String? = null,
     val entityType: MusicBrainzEntityType? = null,
-) : Screen, NavigatableFromOverlayResult
+) : ParcelableScreen, NavigatableFromOverlayResult
 
 @Parcelize
 data class LookupUrlScreen(
     val query: String? = null,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class ArtistCollaborationScreen(
     val id: String,
     val name: String,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
-data object DatabaseScreen : Screen
+data object DatabaseScreen : ParcelableScreen
 
 @Parcelize
 data class AllEntitiesScreen(
     val entityType: MusicBrainzEntityType,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
-data object HistoryScreen : Screen
+data object HistoryScreen : ParcelableScreen
 
 @Parcelize
 data class CollectionListScreen(
     val newCollectionId: String? = null,
     val newCollectionName: String? = null,
     val newCollectionEntity: MusicBrainzEntityType? = null,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class CollectionScreen(
     val collectionId: String,
     val collectableId: String? = null,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class EditCollectionScreen(
     val entityType: MusicBrainzEntityType,
     val collectableIds: List<String>,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class TagDetailsScreen(
     val entity: MusicBrainzEntity,
     val genreOrTag: GenreOrTag,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class GenreOrTagScreen(
     val genreOrTag: GenreOrTag,
-) : Screen, NavigatableFromOverlayResult
+) : ParcelableScreen, NavigatableFromOverlayResult
 
 @Parcelize
 sealed interface NavigatableFromOverlayResult : Screen, CommonParcelable
 
 @Parcelize
-data object PopWithoutResult : PopResult
+data object PopWithoutResult : PopResult, ParcelablePopResult
 
 // TODO: rename to OverlayPopResult: isn't just for snackbars
 @Parcelize
 data class SnackbarPopResult<T : CommonParcelable>(
     val feedback: T?,
-) : PopResult
+) : PopResult, ParcelablePopResult
 
 @Parcelize
 data class DetailsScreen(
     val entityType: MusicBrainzEntityType,
     val id: String,
-) : Screen, NavigatableFromOverlayResult
+) : ParcelableScreen, NavigatableFromOverlayResult
 
 @Parcelize
 data class CoverArtsScreen(
     val entity: MusicBrainzEntity? = null,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class StatsScreen(
     val browseMethod: BrowseMethod,
     val tabs: ImmutableList<Tab>,
     val isRemote: Boolean = true,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class ReleaseStatusesScreen(
     val browseMethod: BrowseMethod,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
-data object SettingsScreen : Screen
+data object SettingsScreen : ParcelableScreen
 
 @Parcelize
-data object AppearanceSettingsScreen : Screen
+data object AppearanceSettingsScreen : ParcelableScreen
 
 @Parcelize
-data object ImagesSettingsScreen : Screen
+data object ImagesSettingsScreen : ParcelableScreen
 
 @Parcelize
-data object ServicesSettingsScreen : Screen
+data object ServicesSettingsScreen : ParcelableScreen
 
 @Parcelize
-data object ListensSettingsScreen : Screen
+data object ListensSettingsScreen : ParcelableScreen
 
 @Parcelize
-data object LicensesScreen : Screen
+data object LicensesScreen : ParcelableScreen
 
 @Parcelize
-data object NowPlayingHistoryScreen : Screen
+data object NowPlayingHistoryScreen : ParcelableScreen
 
 @Parcelize
-data object SpotifyHistoryScreen : Screen
+data object SpotifyHistoryScreen : ParcelableScreen
 
 @Parcelize
 data class ListensScreen(
     val entityFacet: MusicBrainzEntity? = null,
     val dateTimeEpochSeconds: Long? = null,
-) : Screen
+) : ParcelableScreen
 
 @Parcelize
 data class SubmitListenScreen(
     val submitListenType: SubmitListenType,
-) : Screen
+) : ParcelableScreen

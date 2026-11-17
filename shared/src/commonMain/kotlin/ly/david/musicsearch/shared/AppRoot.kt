@@ -9,13 +9,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.slack.circuit.backstack.SaveableBackStack
-import com.slack.circuit.foundation.Circuit
-import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.sharedelements.SharedElementTransitionLayout
 import com.slack.circuitx.gesturenavigation.GestureNavigationDecorationFactory
+import com.slack.circuitx.gesturenavigation.GestureNavigationEventListener
 import ly.david.musicsearch.ui.common.image.InitializeImageLoader
 
 @OptIn(
@@ -23,7 +22,6 @@ import ly.david.musicsearch.ui.common.image.InitializeImageLoader
 )
 @Composable
 fun AppRoot(
-    circuit: Circuit,
     backStack: SaveableBackStack,
     navigator: Navigator,
     isCompact: Boolean,
@@ -31,51 +29,49 @@ fun AppRoot(
 ) {
     InitializeImageLoader()
 
-    CircuitCompositionLocals(circuit) {
-        SharedElementTransitionLayout {
-            ContentWithOverlays {
-                Scaffold(
-                    modifier = modifier,
-                    contentWindowInsets = WindowInsets(0),
-                    bottomBar = {
-                        if (isCompact) {
-                            AppBottomNavigationBar(
-                                currentTopLevelScreen = backStack.last().screen,
-                                navigateToTopLevelScreen = { screen ->
-                                    navigator.resetRoot(screen)
-                                },
-                            )
-                        }
-                    },
-                ) { innerPadding ->
-
-                    Row(
-                        modifier = Modifier
-                            .padding(innerPadding),
-                    ) {
-                        if (!isCompact) {
-                            AppNavigationRail(
-                                currentTopLevelScreen = backStack.last().screen,
-                                navigateToTopLevelScreen = { screen ->
-                                    navigator.resetRoot(screen)
-                                },
-                            )
-                        }
-
-                        val contentModifier: Modifier = if (isCompact) {
-                            Modifier
-                        } else {
-                            Modifier.navigationBarsPadding()
-                        }
-                        NavigableCircuitContent(
-                            navigator = navigator,
-                            backStack = backStack,
-                            modifier = contentModifier,
-                            decoratorFactory = GestureNavigationDecorationFactory(
-                                onBackInvoked = navigator::pop,
-                            ),
+    SharedElementTransitionLayout {
+        ContentWithOverlays {
+            Scaffold(
+                modifier = modifier,
+                contentWindowInsets = WindowInsets(0),
+                bottomBar = {
+                    if (isCompact) {
+                        AppBottomNavigationBar(
+                            currentTopLevelScreen = backStack.last().screen,
+                            navigateToTopLevelScreen = { screen ->
+                                navigator.resetRoot(screen)
+                            },
                         )
                     }
+                },
+            ) { innerPadding ->
+
+                Row(
+                    modifier = Modifier
+                        .padding(innerPadding),
+                ) {
+                    if (!isCompact) {
+                        AppNavigationRail(
+                            currentTopLevelScreen = backStack.last().screen,
+                            navigateToTopLevelScreen = { screen ->
+                                navigator.resetRoot(screen)
+                            },
+                        )
+                    }
+
+                    val contentModifier: Modifier = if (isCompact) {
+                        Modifier
+                    } else {
+                        Modifier.navigationBarsPadding()
+                    }
+                    NavigableCircuitContent(
+                        navigator = navigator,
+                        backStack = backStack,
+                        modifier = contentModifier,
+                        decoratorFactory = GestureNavigationDecorationFactory(
+                            listener = GestureNavigationEventListener.NoOp,
+                        ),
+                    )
                 }
             }
         }

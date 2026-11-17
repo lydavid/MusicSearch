@@ -9,6 +9,7 @@ import androidx.compose.ui.window.ComposeUIViewController
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import kotlinx.collections.immutable.persistentListOf
@@ -44,21 +45,22 @@ fun MainViewController(): UIViewController =
             appPreferences = appComponent.appPreferences,
             darkTheme = appComponent.appPreferences.useDarkTheme(),
         ) {
-            val backStack: SaveableBackStack = rememberSaveableBackStack(
-                initialScreens = persistentListOf(SearchScreen()),
-            )
-            val navigator: Navigator = rememberCircuitNavigator(
-                backStack = backStack,
-                onRootPop = {},
-            )
+            CircuitCompositionLocals(appComponent.circuit) {
+                val backStack: SaveableBackStack = rememberSaveableBackStack(
+                    initialScreens = persistentListOf(SearchScreen()),
+                )
+                val navigator: Navigator = rememberCircuitNavigator(
+                    backStack = backStack,
+                    onRootPop = {},
+                )
 
-            val windowSizeClass = calculateWindowSizeClass()
+                val windowSizeClass = calculateWindowSizeClass()
 
-            AppRoot(
-                backStack = backStack,
-                navigator = navigator,
-                circuit = appComponent.circuit,
-                isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
-            )
+                AppRoot(
+                    backStack = backStack,
+                    navigator = navigator,
+                    isCompact = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact,
+                )
+            }
         }
     }

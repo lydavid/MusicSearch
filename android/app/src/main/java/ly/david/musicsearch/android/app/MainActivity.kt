@@ -17,6 +17,7 @@ import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOW
 import com.slack.circuit.backstack.SaveableBackStack
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.screen.Screen
@@ -79,29 +80,30 @@ internal class MainActivity : ComponentActivity() {
                 appPreferences = appPreferences,
                 darkTheme = darkTheme,
                 content = {
-                    val backStack: SaveableBackStack = rememberSaveableBackStack(
-                        initialScreens = getInitialScreens(intent.data).toImmutableList(),
-                    )
-                    val navigator: Navigator = rememberCircuitNavigator(
-                        backStack = backStack,
-                        onRootPop = {},
-                    )
+                    CircuitCompositionLocals(circuit) {
+                        val backStack: SaveableBackStack = rememberSaveableBackStack(
+                            initialScreens = getInitialScreens(intent.data).toImmutableList(),
+                        )
+                        val navigator: Navigator = rememberCircuitNavigator(
+                            backStack = backStack,
+                            onRootPop = {},
+                        )
 
-                    if (Build.VERSION.SDK_INT <= 33) {
-                        // This unfortunately disables predictive back
-                        BackHandler {
-                            if (navigator.pop() == null) finish()
+                        if (Build.VERSION.SDK_INT <= 33) {
+                            // This unfortunately disables predictive back
+                            BackHandler {
+                                if (navigator.pop() == null) finish()
+                            }
                         }
+
+                        val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
+
+                        AppRoot(
+                            backStack = backStack,
+                            navigator = navigator,
+                            isCompact = !windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND),
+                        )
                     }
-
-                    val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
-
-                    AppRoot(
-                        backStack = backStack,
-                        navigator = navigator,
-                        circuit = circuit,
-                        isCompact = !windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND),
-                    )
                 },
             )
         }
