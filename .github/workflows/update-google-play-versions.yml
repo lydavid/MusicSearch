@@ -33,14 +33,28 @@ jobs:
         id: get-versions
         shell: bash
         run: |
-          beta=$(bundle exec fastlane run google_play_track_release_names \
-            track:beta \
-            json_key:${{ steps.auth.outputs.credentials_file_path }} \
-            | sed -n 's/^Result: //p' | tr -d '[]"')
-          production=$(bundle exec fastlane run google_play_track_release_names \
-            track:production \
-            json_key:${{ steps.auth.outputs.credentials_file_path }} \
-            | sed -n 's/^Result: //p' | tr -d '[]"')
+          # fastlane prints the answer as  Result: ["1.2.3"]  (on stderr), so capture
+          # both streams, grab that line, and pull out the first quoted version.
+          beta=$(
+            bundle exec fastlane run google_play_track_release_names \
+              track:beta \
+              json_key:${{ steps.auth.outputs.credentials_file_path }} \
+              2>&1 \
+            | grep -E 'Result:' | head -n1 \
+            | grep -oE '"[0-9][^"]*"' | head -n1 | tr -d '"'
+          )
+          production=$(
+            bundle exec fastlane run google_play_track_release_names \
+              track:production \
+              json_key:${{ steps.auth.outputs.credentials_file_path }} \
+              2>&1 \
+            | grep -E 'Result:' | head -n1 \
+            | grep -oE '"[0-9][^"]*"' | head -n1 | tr -d '"'
+          )
+          if [ -z "${production}" ] || [ -z "${beta}" ]; then
+            echo "Failed to determine Google Play versions (production='${production}', beta='${beta}')" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
           echo "beta=${beta}" >> "$GITHUB_OUTPUT"
           echo "production=${production}" >> "$GITHUB_OUTPUT"
 
