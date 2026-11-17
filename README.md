@@ -4,7 +4,7 @@
     <img alt="F-Droid Version" src="https://img.shields.io/f-droid/v/io.github.lydavid.musicsearch?label=F-Droid">
     <img alt="GitHub Release Version" src="https://img.shields.io/github/v/release/lydavid/MusicSearch?label=GitHub">
     <img alt="Google Play production badge" src="https://img.shields.io/badge/Google_Play_(Production)-v1.129.3-green">
-    <img alt="Google Play beta badge" src="https://img.shields.io/badge/Google_Play_(Beta)-v1.139.0-blue">
+    <img alt="Google Play beta badge" src="https://img.shields.io/badge/Google_Play_(Beta)-v1.139.1-blue">
 </p>
 
 An app for browsing songs, artists, and anything related to them
