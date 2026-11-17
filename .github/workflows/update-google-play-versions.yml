@@ -1,7 +1,9 @@
 name: Update Google Play version
 
 on:
-  push:
+  schedule:
+    - cron: '42 5 * * *'
+      timezone: 'America/Toronto'
   workflow_dispatch:
 
 jobs:
