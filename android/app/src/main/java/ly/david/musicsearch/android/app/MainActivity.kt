@@ -37,6 +37,8 @@ import ly.david.musicsearch.ui.common.screen.SettingsScreen
 import ly.david.musicsearch.ui.common.theme.BaseTheme
 import org.koin.android.ext.android.inject
 
+private const val MAX_SDK_VERSION_REQUIRING_CUSTOM_BACK_HANDLER = 33
+
 internal class MainActivity : ComponentActivity() {
 
     private val appPreferences: AppPreferences by inject()
@@ -89,7 +91,7 @@ internal class MainActivity : ComponentActivity() {
                             onRootPop = {},
                         )
 
-                        if (Build.VERSION.SDK_INT <= 33) {
+                        if (Build.VERSION.SDK_INT <= MAX_SDK_VERSION_REQUIRING_CUSTOM_BACK_HANDLER) {
                             // This unfortunately disables predictive back
                             BackHandler {
                                 if (navigator.pop() == null) finish()
