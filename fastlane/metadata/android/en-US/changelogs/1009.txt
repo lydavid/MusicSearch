@@ -1,0 +1,2 @@
+
+* update dot separator to use middle dot instead of katakana middle dot

@@ -1,2 +1,2 @@
 
-* clicking Link with MusicBrainz searches for recordings with the same ISRC as the listen and presents them to you to link in one click; moved original mapping by pasting recording MBID under Manual tab
+* update dot separator to use middle dot instead of katakana middle dot

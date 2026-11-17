@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.139.1](https://github.com/lydavid/MusicSearch/compare/v1.139.0...v1.139.1) (2026-11-17)
+
+### Bug Fixes
+
+* update dot separator to use middle dot instead of katakana middle dot ([709cb7c](https://github.com/lydavid/MusicSearch/commit/709cb7c697478bd3e7038a6c9f9c3fd0cf8cb630))
+
 ## [1.139.0](https://github.com/lydavid/MusicSearch/compare/v1.138.2...v1.139.0) (2026-11-16)
 
 ### Features
