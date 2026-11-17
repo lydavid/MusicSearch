@@ -32,9 +32,9 @@ jobs:
       - name: Get versions
         id: publish_play_store
         run: |
-          bundle exec fastlane run google_play_track_version_codes \
+          bundle exec fastlane run google_play_track_release_names \
             track:beta \
             json_key:${{ steps.auth.outputs.credentials_file_path }}
-          bundle exec fastlane run google_play_track_version_codes \
+          bundle exec fastlane run google_play_track_release_names \
             track:production \
             json_key:${{ steps.auth.outputs.credentials_file_path }}
