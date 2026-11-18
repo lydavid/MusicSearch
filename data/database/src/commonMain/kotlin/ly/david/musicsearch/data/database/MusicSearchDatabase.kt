@@ -54,7 +54,6 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         recordingAdapter = Recording.Adapter(
             lengthAdapter = IntColumnAdapter,
-            isrcsAdapter = ListStringColumnAdapter,
         ),
         artist_credit_nameAdapter = Artist_credit_name.Adapter(
             positionAdapter = IntColumnAdapter,

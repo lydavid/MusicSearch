@@ -51,8 +51,14 @@ class RecordingDao(
                 firstReleaseDate = firstReleaseDate.orEmpty(),
                 length = length,
                 video = video == true,
-                isrcs = isrcs?.sorted().orEmpty(),
             )
+            transacter.deleteIsrcs(recordingId = id)
+            isrcs?.sorted().orEmpty().forEach { isrc ->
+                transacter.insertIsrcs(
+                    recordingId = id,
+                    isrc = isrc,
+                )
+            }
             artistCreditDao.insertArtistCredits(
                 entityId = recording.id,
                 artistCredits = artistCredits,
@@ -95,7 +101,7 @@ class RecordingDao(
         isrc: String,
     ): List<RecordingListItemModel> {
         return transacter.transactionWithResult {
-            transacter.getRecordingForIsrc(
+            transacter.getRecordingsByIsrc(
                 isrc = isrc,
                 mapper = ::mapToRecordingListItemModel,
             ).executeAsList()
@@ -109,7 +115,7 @@ class RecordingDao(
         firstReleaseDate: String,
         length: Int?,
         video: Boolean,
-        isrcs: List<String>,
+        isrcs: String?,
         lastUpdated: Instant?,
         listenCount: Long,
     ) = RecordingDetailsModel(
@@ -119,7 +125,7 @@ class RecordingDao(
         disambiguation = disambiguation,
         length = length,
         video = video,
-        isrcs = isrcs.toPersistentList(),
+        isrcs = isrcs?.split(",").orEmpty().toPersistentList(),
         lastUpdated = lastUpdated ?: Clock.System.now(),
         listenCount = listenCount,
     )

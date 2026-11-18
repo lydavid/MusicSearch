@@ -1,0 +1,53 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
+CREATE TABLE recording_isrc (
+  recording_id TEXT NOT NULL,
+  isrc TEXT NOT NULL,
+  PRIMARY KEY (recording_id, isrc)
+);
+
+CREATE INDEX idx_recording_isrc_isrc ON recording_isrc(isrc);
+
+INSERT INTO recording_isrc (recording_id, isrc)
+WITH RECURSIVE parts(rec_id, val, rest) AS (
+  SELECT id, '', isrcs FROM recording
+  UNION ALL
+  SELECT
+    rec_id,
+    CASE WHEN instr(rest, ',') > 0 THEN substr(rest, 1, instr(rest,',')-1) ELSE rest END,
+    CASE WHEN instr(rest, ',') > 0 THEN substr(rest, instr(rest,',')+1) ELSE '' END
+  FROM parts
+  WHERE length(rest) > 0
+)
+SELECT rec_id, val FROM parts WHERE length(val) > 0;
+
+CREATE TABLE recording_temp (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  first_release_date TEXT NOT NULL,
+  length INTEGER AS Int,
+  video INTEGER AS Boolean NOT NULL
+);
+
+INSERT OR IGNORE INTO recording_temp (
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  length,
+  video
+)
+SELECT
+  id,
+  name,
+  disambiguation,
+  first_release_date,
+  length,
+  video
+FROM recording;
+
+DROP TABLE recording;
+
+ALTER TABLE recording_temp RENAME TO recording;

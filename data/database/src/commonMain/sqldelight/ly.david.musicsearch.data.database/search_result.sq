@@ -243,7 +243,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  NULLIF(GROUP_CONCAT(recording_isrc.isrc, ","), '') AS isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -257,6 +257,7 @@ FROM search_result sr
 INNER JOIN recording ON sr.entity_id = recording.id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 GROUP BY sr.id

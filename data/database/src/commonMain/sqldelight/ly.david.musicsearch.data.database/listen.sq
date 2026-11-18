@@ -199,7 +199,7 @@ SELECT
   listen.disc_number AS unmappedDiscNumber,
   listen.track_number AS unmappedTrackNumber,
   listen.isrc AS unmappedIsrc,
-  recording.isrcs,
+  recording_isrc.isrcs,
   mi.thumbnail_url,
   mi.id AS imageId,
   mi.source,
@@ -226,6 +226,11 @@ LEFT JOIN (
   GROUP BY artist_credit_id
 ) recording_credits ON recording_credits.artist_credit_id = artist_credit.id
 LEFT JOIN recording ON recording.id = listen.recording_musicbrainz_id
+LEFT JOIN (
+  SELECT recording_id, NULLIF(GROUP_CONCAT(isrc, ","), '') AS isrcs
+  FROM recording_isrc
+  GROUP BY recording_id
+) recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN `release` ON `release`.id = COALESCE(listen.release_mbid, listen.caa_release_mbid)
 LEFT JOIN (
   SELECT
