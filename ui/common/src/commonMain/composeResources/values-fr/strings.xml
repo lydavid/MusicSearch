@@ -475,4 +475,9 @@
     <string name="tracksNormalOrder">Ordre original</string>
     <string name="tracksReverseOrder">Ordre inverse</string>
     <string name="goToTag">Aller à la balise</string>
+    <string name="automatic">Automatique</string>
+    <string name="manual">Manuel</string>
+    <string name="searching">Recherche en cours...</string>
+    <string name="listenHasNoISRC">Cet enregistrement ne comporte pas de code ISRC ; nous ne pouvons donc pas l'associer automatiquement à un titre.</string>
+    <string name="noRecordingsMatchISRC">Aucun enregistrement ne correspond à l'ISRC de cet enregistrement.</string>
 </resources>
