@@ -9,8 +9,26 @@ CREATE TABLE recording (
   disambiguation TEXT NOT NULL,
   first_release_date TEXT NOT NULL,
   length INTEGER AS Int,
-  video INTEGER AS Boolean NOT NULL,
-  isrcs TEXT AS List<String> NOT NULL
+  video INTEGER AS Boolean NOT NULL
+);
+
+CREATE TABLE recording_isrc (
+  recording_id TEXT NOT NULL,
+  isrc TEXT NOT NULL,
+  PRIMARY KEY (recording_id, isrc)
+);
+
+CREATE INDEX idx_recording_isrc_isrc ON recording_isrc(isrc);
+
+deleteIsrcs:
+DELETE FROM recording_isrc
+WHERE recording_id = :recordingId;
+
+insertIsrcs:
+INSERT INTO recording_isrc
+VALUES (
+  :recordingId,
+  :isrc
 );
 
 insert:
@@ -21,8 +39,7 @@ VALUES (
   :disambiguation,
   :firstReleaseDate,
   :length,
-  :video,
-  :isrcs
+  :video
 );
 
 upsert {
@@ -32,8 +49,7 @@ SET
   disambiguation = :disambiguation,
   first_release_date = :firstReleaseDate,
   length = :length,
-  video = :video,
-  isrcs = :isrcs
+  video = :video
 WHERE id = :id;
 
 INSERT OR IGNORE INTO recording
@@ -43,8 +59,7 @@ VALUES (
   :disambiguation,
   :firstReleaseDate,
   :length,
-  :video,
-  :isrcs
+  :video
 );
 }
 
@@ -60,10 +75,15 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  recording_isrc.isrcs,
   details_metadata.last_updated,
   COUNT(listen.recording_musicbrainz_id) AS listen_count
 FROM recording
+LEFT JOIN (
+  SELECT recording_id, NULLIF(GROUP_CONCAT(isrc, ","), '') AS isrcs
+  FROM recording_isrc
+  GROUP BY recording_id
+) recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
 LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id
  AND listen.username = :username
@@ -71,7 +91,7 @@ LEFT JOIN listen ON listen.recording_musicbrainz_id = recording.id
 WHERE recording.id = :recordingId
 GROUP BY recording.id;
 
-getRecordingForIsrc:
+getRecordingsByIsrc:
 SELECT
   recording.id,
   recording.name,
@@ -79,7 +99,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  NULLIF(GROUP_CONCAT(recording_isrc.isrc, ","), '') AS isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   aliases.alias_names,
@@ -87,22 +107,19 @@ SELECT
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN recording_isrc ON recording.id = recording_isrc.recording_id AND recording_isrc.isrc = :isrc
 LEFT JOIN (
+  -- NULLIF needed for sqldelight to infer alias_names as nullable
+  -- this is different from queries that have alias_names appear in WHERE clause
   SELECT
     recording_alias.recording_id,
-    GROUP_CONCAT(recording_alias.name, CHAR(9)) AS alias_names,
+    GROUP_CONCAT(NULLIF(recording_alias.name, ''), CHAR(9)) AS alias_names,
     GROUP_CONCAT(recording_alias.locale, CHAR(9)) AS alias_locales
   FROM recording_alias
   WHERE recording_alias.is_primary
   GROUP BY recording_alias.recording_id
 ) AS aliases ON aliases.recording_id = recording.id
 LEFT JOIN details_metadata ON details_metadata.entity_id = recording.id
-WHERE (
-  CAST(recording.isrcs AS TEXT) = CAST(:isrc AS TEXT)
-  OR CAST(recording.isrcs AS TEXT) LIKE CAST(:isrc AS TEXT) || ',%'
-  OR CAST(recording.isrcs AS TEXT) LIKE '%,' || CAST(:isrc AS TEXT) || ',%'
-  OR CAST(recording.isrcs AS TEXT) LIKE '%,' || CAST(:isrc AS TEXT)
-)
 GROUP BY recording.id;
 
 getLatestListensByRecording:
@@ -141,13 +158,14 @@ SELECT IFNULL(
     INNER JOIN recording ON recording.id = re.recording_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN recording_isrc ON recording.id = recording_isrc.recording_id
     LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
     WHERE re.entity_id = :entityId
     AND (
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
-      recording.isrcs LIKE :query OR
+      recording_isrc.isrc LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -163,7 +181,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  recording_isrc.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -177,6 +195,11 @@ FROM recordings_by_entity re
 INNER JOIN recording ON recording.id = re.recording_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN (
+  SELECT recording_id, NULLIF(GROUP_CONCAT(isrc, ","), '') AS isrcs
+  FROM recording_isrc
+  GROUP BY recording_id
+) recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN (
   SELECT
     recording_alias.recording_id,
@@ -198,7 +221,7 @@ AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
-  recording.isrcs LIKE :query OR
+  recording_isrc.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )
@@ -232,6 +255,7 @@ SELECT IFNULL(
     INNER JOIN collection_entity ON recording.id = collection_entity.entity_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN recording_isrc ON recording.id = recording_isrc.recording_id
     LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
     WHERE collection_entity.id = :collectionId
     AND collection_entity.deleted = 0
@@ -239,7 +263,7 @@ SELECT IFNULL(
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
-      recording.isrcs LIKE :query OR
+      recording_isrc.isrc LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -255,7 +279,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  recording_isrc.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   collection_entity.id IS NOT NULL AS collected,
@@ -267,6 +291,11 @@ FROM recording
 INNER JOIN collection_entity ON recording.id = collection_entity.entity_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN (
+  SELECT recording_id, NULLIF(GROUP_CONCAT(isrc, ","), '') AS isrcs
+  FROM recording_isrc
+  GROUP BY recording_id
+) recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN (
   SELECT
     recording_alias.recording_id,
@@ -289,7 +318,7 @@ AND (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
-  recording.isrcs LIKE :query OR
+  recording_isrc.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )
@@ -322,12 +351,13 @@ SELECT IFNULL(
     FROM recording
     INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    LEFT JOIN recording_isrc ON recording.id = recording_isrc.recording_id
     LEFT JOIN recording_alias ON recording.id = recording_alias.recording_id AND recording_alias.is_primary
     WHERE (
       recording.name LIKE :query OR
       recording.disambiguation LIKE :query OR
       recording.first_release_date LIKE :query OR
-      recording.isrcs LIKE :query OR
+      recording_isrc.isrc LIKE :query OR
       ac.name LIKE :query OR
       recording_alias.name LIKE :query
     )
@@ -343,7 +373,7 @@ SELECT
   recording.first_release_date,
   recording.length,
   recording.video,
-  recording.isrcs,
+  recording_isrc.isrcs,
   ac.name AS artist_credits,
   details_metadata.entity_id IS NOT NULL AS visited,
   EXISTS (
@@ -356,6 +386,11 @@ SELECT
 FROM recording
 INNER JOIN artist_credit_entity acr ON acr.entity_id = recording.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN (
+  SELECT recording_id, NULLIF(GROUP_CONCAT(isrc, ","), '') AS isrcs
+  FROM recording_isrc
+  GROUP BY recording_id
+) recording_isrc ON recording.id = recording_isrc.recording_id
 LEFT JOIN (
   SELECT
     recording_alias.recording_id,
@@ -371,7 +406,7 @@ WHERE (
   recording.name LIKE :query OR
   recording.disambiguation LIKE :query OR
   recording.first_release_date LIKE :query OR
-  recording.isrcs LIKE :query OR
+  recording_isrc.isrcs LIKE :query OR
   ac.name LIKE :query OR
   aliases.alias_names LIKE :query
 )

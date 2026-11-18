@@ -89,7 +89,6 @@ class ListenDaoImpl(
             firstReleaseDate = "",
             length = entityMapping.durationMs?.toInt(),
             video = false,
-            isrcs = emptyList(),
         )
 
         artistCreditDao.insertArtistCredits(
@@ -396,7 +395,7 @@ private fun mapToListenListItemModel(
     unmappedDiscNumber: Int?,
     unmappedTrackNumber: String?,
     unmappedIsrc: String?,
-    isrcs: List<String>?,
+    isrcs: String?,
     thumbnailUrl: String?,
     imageId: Long?,
     source: ImageSource?,
@@ -432,7 +431,7 @@ private fun mapToListenListItemModel(
     unmappedDiscNumber = unmappedDiscNumber,
     unmappedTrackNumber = unmappedTrackNumber,
     unmappedIsrc = unmappedIsrc,
-    isrcs = isrcs.orEmpty().toPersistentList(),
+    isrcs = isrcs?.split(",").orEmpty().toPersistentList(),
     imageMetadata = mapToImageMetadata(
         id = imageId,
         thumbnailUrl = thumbnailUrl,
