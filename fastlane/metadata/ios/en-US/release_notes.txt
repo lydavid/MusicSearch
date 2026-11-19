@@ -1,2 +1,2 @@
 
-* update dot separator to use middle dot instead of katakana middle dot
+* improve local ISRC matching speed when clicking Link with MusicBrainz; update database version to 82

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.139.2](https://github.com/lydavid/MusicSearch/compare/v1.139.1...v1.139.2) (2026-11-19)
+
+### Bug Fixes
+
+* improve local ISRC matching speed when clicking Link with MusicBrainz; update database version to 82 ([#2489](https://github.com/lydavid/MusicSearch/issues/2489)) ([a555122](https://github.com/lydavid/MusicSearch/commit/a555122f71920abe93794a06148c13ffe961cfe7))
+
 ## [1.139.1](https://github.com/lydavid/MusicSearch/compare/v1.139.0...v1.139.1) (2026-11-17)
 
 ### Bug Fixes
