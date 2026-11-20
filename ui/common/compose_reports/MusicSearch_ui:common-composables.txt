@@ -613,6 +613,14 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.recording.RecordingByIsrcListItem(
+  recording: RecordingListItemModel
+  stable modifier: Modifier? = @static <expression>
+  stable boldUnvisited: Boolean = @static true
+  stable onRecordingClick: Function0<Unit>? = @static <expression>
+  stable isSelected: Boolean = @static false
+  stable onSelect: Function0<Unit>? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.relation.RelationListItem(
   relation: RelationListItemModel
   stable filterText: String

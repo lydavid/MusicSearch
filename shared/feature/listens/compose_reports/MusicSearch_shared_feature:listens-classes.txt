@@ -22,6 +22,7 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensPresenter {
   runtime val listenBrainzAuthStore: ListenBrainzAuthStore
   runtime val listensListRepository: ListensListRepository
   runtime val listenBrainzRepository: ListenBrainzRepository
+  runtime val recordingRepository: RecordingRepository
   runtime val externalScope: CoroutineScope
   runtime val appPreferences: AppPreferences
   <runtime stability> = Stable
@@ -42,6 +43,8 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiState {
   stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val showUnmappedData: Boolean
+  runtime val showBottomSheetForListen: ListenListItemModel?
+  runtime val linkUiState: LinkUiState
   stable val eventSink: Function1<ListensUiEvent, Unit>
 }
 runtime class ly.david.musicsearch.shared.feature.listens.FacetsUiState {
@@ -51,6 +54,12 @@ runtime class ly.david.musicsearch.shared.feature.listens.FacetsUiState {
   runtime val facetsPagingDataFlow: Flow<PagingData<FacetListItem>>
   stable val selectedDateTimeEpochSeconds: Long?
   <runtime stability> = Runtime(MusicBrainzEntity)
+}
+runtime class ly.david.musicsearch.shared.feature.listens.LinkUiState {
+  stable val showLinkDialog: Boolean
+  runtime val recordingsMatchingIsrcResult: RecordingsMatchingIsrcResult
+  stable val isAutomatic: Boolean
+  <runtime stability> = Uncertain(RecordingsMatchingIsrcResult)
 }
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.NavigateUp {
   <runtime stability> = Stable
@@ -89,8 +98,29 @@ stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectEx
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.ToggleShowUnmappedData {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.OpenAdditionalActions {
+  runtime val listen: ListenListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.CloseAdditionalActions {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.OpenLinkDialog {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.CloseLinkDialog {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SelectLinkOption {
+  stable val isAutomatic: Boolean
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.SubmitMapping {
   stable val recordingMessyBrainzId: String
+  stable val recordingMusicBrainzId: String
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.listens.ListensUiEvent.GoToRecording {
   stable val recordingMusicBrainzId: String
   <runtime stability> = Stable
 }

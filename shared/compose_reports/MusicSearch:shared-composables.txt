@@ -12,7 +12,6 @@ restartable skippable fun ly.david.musicsearch.shared.AppNavigationRail(
   stable navigateToTopLevelScreen: Function1<Screen, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.AppRoot(
-  stable circuit: Circuit
   stable backStack: SaveableBackStack
   stable navigator: Navigator
   stable isCompact: Boolean

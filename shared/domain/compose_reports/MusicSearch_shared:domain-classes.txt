@@ -1154,6 +1154,23 @@ stable class ly.david.musicsearch.shared.domain.preferences.WikidataInstance.Cus
   stable val url: String
   <runtime stability> = Stable
 }
+runtime class ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult.Success {
+  runtime val recordings: List<RecordingListItemModel>
+  <runtime stability> = Uncertain(List)
+}
+stable class ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult.Loading {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult.NoUnmappedIsrc {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult.NoMatchingRecordings {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.recording.RecordingsMatchingIsrcResult.NetworkError {
+  stable val message: String
+  <runtime stability> = Stable
+}
 runtime class ly.david.musicsearch.shared.domain.relation.RelationStats {
   runtime val relationTypeCounts: ImmutableList<RelationTypeCount>
   stable val lastUpdated: Instant?
