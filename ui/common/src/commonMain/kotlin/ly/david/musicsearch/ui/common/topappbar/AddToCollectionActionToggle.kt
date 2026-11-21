@@ -22,7 +22,6 @@ fun AddToCollectionActionToggle(
     modifier: Modifier = Modifier,
     nameWithDisambiguation: String = "",
 ) {
-    // TODO: support removing current entity from collections from bottom sheet
     IconButton(
         modifier = modifier,
         onClick = {
