@@ -55,7 +55,7 @@ fun CollapsibleListSeparatorHeader(
                     bottom = verticalPadding,
                 )
                 .fillMaxWidth()
-                .semantics(mergeDescendants = true) {
+                .semantics(mergeDescendants = false) {
                     contentDescription = "$text, ${if (collapsed) "collapsed" else "expanded"}"
                 },
         ) {
