@@ -25,7 +25,7 @@ internal fun PreviewTracksByReleaseUi() {
                     listOf(
                         ListSeparator(
                             id = "1",
-                            text = "1·CD",
+                            text = "1 · CD",
                         ),
                         TrackListItemModel(
                             id = "3d116c5d-e4c4-4995-91b4-8a18a72d9a1d",
@@ -104,7 +104,7 @@ internal fun PreviewTracksByReleaseUi() {
                         ),
                         ListSeparator(
                             id = "2",
-                            text = "2·CD",
+                            text = "2 · CD",
                         ),
                         TrackListItemModel(
                             id = "1af38b9b-5d34-3350-98ba-33276886b3be",
@@ -125,7 +125,7 @@ internal fun PreviewTracksByReleaseUi() {
                         ),
                         ListSeparator(
                             id = "3",
-                            text = "3·Blu-ray (ROAD GAME『テクノプア』~叢雲のつるぎ~)",
+                            text = "3 · Blu-ray (ROAD GAME『テクノプア』~叢雲のつるぎ~)",
                         ),
                         TrackListItemModel(
                             id = "3333",

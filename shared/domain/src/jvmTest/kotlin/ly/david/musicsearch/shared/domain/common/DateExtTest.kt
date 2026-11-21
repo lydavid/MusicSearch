@@ -24,7 +24,7 @@ class DateExtTest {
             instant.getDateTimeFormatted(format = DateTimeFormat.Time),
         )
         assertEquals(
-            "Apr 5, 2024·5:42 p.m.",
+            "Apr 5, 2024 · 5:42 p.m.",
             instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime),
         )
     }
@@ -46,7 +46,7 @@ class DateExtTest {
             instant.getDateTimeFormatted(format = DateTimeFormat.Time),
         )
         assertEquals(
-            "Apr 5, 2024·5:42 PM",
+            "Apr 5, 2024 · 5:42 PM",
             instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime),
         )
     }
@@ -68,7 +68,7 @@ class DateExtTest {
             instant.getDateTimeFormatted(format = DateTimeFormat.Time),
         )
         assertEquals(
-            "5 avr. 2024·17:42",
+            "5 avr. 2024 · 17:42",
             instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime),
         )
     }
@@ -90,7 +90,7 @@ class DateExtTest {
             instant.getDateTimeFormatted(format = DateTimeFormat.Time),
         )
         assertEquals(
-            "2024/04/05·17:42",
+            "2024/04/05 · 17:42",
             instant.getDateTimeFormatted(format = DateTimeFormat.MediumDateTime),
         )
     }

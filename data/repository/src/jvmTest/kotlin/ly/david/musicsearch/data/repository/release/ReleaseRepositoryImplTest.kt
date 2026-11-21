@@ -19,7 +19,6 @@ import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.TagDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
@@ -43,8 +42,9 @@ import ly.david.musicsearch.shared.domain.coroutine.CoroutineDispatchers
 import ly.david.musicsearch.shared.domain.details.ReleaseDetailsModel
 import ly.david.musicsearch.shared.domain.history.DetailsMetadataDao
 import ly.david.musicsearch.shared.domain.label.LabelType
-import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.shared.domain.listen.Listen
 import ly.david.musicsearch.shared.domain.listen.ListenDao
+import ly.david.musicsearch.shared.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.shared.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListItemModel
 import ly.david.musicsearch.shared.domain.listitem.ListSeparator
@@ -999,7 +999,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             listOf(
                 ListSeparator(
                     id = "1",
-                    text = "1·CD (SFC版「真・女神転生」)",
+                    text = "1 · CD (SFC版「真・女神転生」)",
                 ),
                 TrackListItemModel(
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
@@ -1079,7 +1079,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
             listOf(
                 ListSeparator(
                     id = "2",
-                    text = "1·CD (SFC版「真・女神転生」)",
+                    text = "1 · CD (SFC版「真・女神転生」)",
                 ),
                 TrackListItemModel(
                     id = "c9700f84-638f-3dec-9170-a15eb4f0cc96",
@@ -1226,7 +1226,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 listOf(
                     ListSeparator(
                         id = "1",
-                        text = "1·CD (SFC版「真・女神転生」)",
+                        text = "1 · CD (SFC版「真・女神転生」)",
                     ),
                 ) + Array(200) { trackIndex ->
                     TrackListItemModel(
@@ -1264,7 +1264,7 @@ class ReleaseRepositoryImplTest : KoinTest, TestReleaseRepository {
                 listOf(
                     ListSeparator(
                         id = "1",
-                        text = "1·CD (SFC版「真・女神転生」)",
+                        text = "1 · CD (SFC版「真・女神転生」)",
                     ),
                 ) + Array(trackCount) { trackIndex ->
                     TrackListItemModel(
