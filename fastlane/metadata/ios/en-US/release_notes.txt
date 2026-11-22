@@ -1,2 +1,3 @@
 
-* improve local ISRC matching speed when clicking Link with MusicBrainz; update database version to 82
+* add space to both side of middle dot so text that it divides are not so close together
+* do not read section headers twice with accessibility tools

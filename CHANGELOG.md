@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.139.3](https://github.com/lydavid/MusicSearch/compare/v1.139.2...v1.139.3) (2026-11-22)
+
+### Bug Fixes
+
+* add space to both side of middle dot so text that it divides are not so close together ([e60cdc1](https://github.com/lydavid/MusicSearch/commit/e60cdc167561195d18c15e2d372cc599364263f3))
+* do not read section headers twice with accessibility tools ([c6f876f](https://github.com/lydavid/MusicSearch/commit/c6f876f9549403ecce0bff0648e9ba3823331479))
+
 ## [1.139.2](https://github.com/lydavid/MusicSearch/compare/v1.139.1...v1.139.2) (2026-11-19)
 
 ### Bug Fixes

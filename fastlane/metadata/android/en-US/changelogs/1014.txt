@@ -1,0 +1,3 @@
+
+* add space to both side of middle dot so text that it divides are not so close together
+* do not read section headers twice with accessibility tools
