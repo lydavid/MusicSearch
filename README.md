@@ -5,7 +5,7 @@
     <img alt="GitHub Release Version" src="https://img.shields.io/github/v/release/lydavid/MusicSearch?label=GitHub">
     <img alt="Google Play production" src="https://img.shields.io/badge/Google_Play_(Production)-v1.129.3-green">
     <img alt="Google Play beta" src="https://img.shields.io/badge/Google_Play_(Beta)-v1.139.3-blue">
-    <img alt="Apple App Store" src="https://img.shields.io/badge/Apple_App_Store-v1.139.2-blue">
+    <img alt="Apple App Store" src="https://img.shields.io/badge/Apple_App_Store-v1.139.3-blue">
 </p>
 
 An app for browsing songs, artists, and anything related to them
