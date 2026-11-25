@@ -26,7 +26,7 @@ import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
-import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
@@ -181,7 +181,7 @@ internal fun WorkUi(
                         overlayHost = overlayHost,
                         eventSink = entitiesListEventSink,
                     )
-                    AddAllToCollectionMenuItem(
+                    EditCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,

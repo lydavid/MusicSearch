@@ -35,4 +35,18 @@ class CollectionListItemTest : ScreenshotTest() {
             PreviewCollectionListItemHighlighted()
         }
     }
+
+    @Test
+    fun pendingRemove() {
+        snapshot {
+            PreviewCollectionListItemPendingRemove()
+        }
+    }
+
+    @Test
+    fun pendingAdd() {
+        snapshot {
+            PreviewCollectionListItemPendingAdd()
+        }
+    }
 }

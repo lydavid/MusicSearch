@@ -37,14 +37,25 @@ interface CollectionRepository {
         collectionId: String,
     )
 
-    suspend fun deleteAllMarkedForDeletionFromCollection(
+    fun deleteAllMarkedForDeletionFromCollection(
         collection: CollectionListItemModel,
     ): Flow<Feedback<EditACollectionFeedback>>
 
-    suspend fun addToCollection(
-        collectionId: String,
+    fun deleteFromCollectionImmediately(
+        collection: CollectionListItemModel,
+        collectableIds: List<String>,
+    ): Flow<Feedback<EditACollectionFeedback>>
+
+    fun addToCollection(
+        collection: CollectionListItemModel,
         entityType: MusicBrainzEntityType,
-        entityIds: List<String>,
+        collectableIds: List<String>,
+    ): Flow<Feedback<EditACollectionFeedback>>
+
+    fun applyAllEdits(
+        pendingEdits: Map<String, CollectionListItemModel>,
+        entityType: MusicBrainzEntityType,
+        collectableIds: List<String>,
     ): Flow<Feedback<EditACollectionFeedback>>
 
     fun markDeletedCollections(
@@ -64,12 +75,14 @@ interface CollectionRepository {
 sealed interface EditACollectionFeedback : CommonParcelable {
     data object SyncingWithMusicBrainz : EditACollectionFeedback
 
+    data object Loading : EditACollectionFeedback
+
     data class Deleting(
         val count: Int,
         val collectionName: String,
     ) : EditACollectionFeedback
 
-    data class Deleted(
+    data class DeletedFromCollection(
         val count: Int,
         val collectionName: String,
     ) : EditACollectionFeedback
@@ -86,18 +99,35 @@ sealed interface EditACollectionFeedback : CommonParcelable {
 
     data object DoesNotExist : EditACollectionFeedback
 
+    // should no longer be possible
     data class AlreadyIn(val collectionName: String) : EditACollectionFeedback
 
     data class AddedOne(val collectionName: String) : EditACollectionFeedback
 
-    data class AddedMultiple(
+    data class AddedMultipleToCollection(
         val newInsertions: Int,
         val collectionName: String,
     ) : EditACollectionFeedback
 
-    data class AddedMultipleSomeAlreadyAdded(
+    data class AddedMultipleToCollectionSomeAlreadyAdded(
         val newInsertions: Int,
         val collectionName: String,
         val countAlreadyAdded: Int,
+    ) : EditACollectionFeedback
+
+    data class AddedToMultipleCollections(
+        val count: Int,
+        val countCollectionsInsertedTo: Int,
+    ) : EditACollectionFeedback
+
+    data class DeletedFromMultipleCollections(
+        val count: Int,
+        val countCollectionsDeletedFrom: Int,
+    ) : EditACollectionFeedback
+
+    data class EditedMultipleCollections(
+        val count: Int,
+        val countCollectionsInsertedTo: Int,
+        val countCollectionsDeletedFrom: Int,
     ) : EditACollectionFeedback
 }

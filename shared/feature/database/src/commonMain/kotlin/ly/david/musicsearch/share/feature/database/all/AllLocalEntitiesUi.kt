@@ -30,7 +30,7 @@ import ly.david.musicsearch.ui.common.paging.toEntitiesPagingListUiState
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
-import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
 import ly.david.musicsearch.ui.common.topappbar.StatsMenuItem
 import ly.david.musicsearch.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.musicsearch.ui.common.topappbar.toTab
@@ -127,7 +127,7 @@ internal fun AllLocalEntitiesUi(
                         overlayHost = overlayHost,
                         eventSink = releasesByEntityEventSink,
                     )
-                    AddAllToCollectionMenuItem(
+                    EditCollectionMenuItem(
                         tab = entity.toTab(),
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,

@@ -9,6 +9,9 @@ import ly.david.musicsearch.shared.feature.settings.internal.SettingsUiState
 import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiState
+import ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsPresenter
+import ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUi
+import ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiState
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsPresenter
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsUiState
@@ -19,6 +22,7 @@ import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSe
 import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUi
 import ly.david.musicsearch.shared.feature.settings.internal.services.ServicesSettingsUiState
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
+import ly.david.musicsearch.ui.common.screen.BehaviourSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ListensSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ServicesSettingsScreen
@@ -46,6 +50,11 @@ val settingsFeatureModule = module {
                 )
 
                 is AppearanceSettingsScreen -> AppearanceSettingsPresenter(
+                    navigator = navigator,
+                    appPreferences = get(),
+                )
+
+                is BehaviourSettingsScreen -> BehaviourSettingsPresenter(
                     navigator = navigator,
                     appPreferences = get(),
                 )
@@ -84,6 +93,15 @@ val settingsFeatureModule = module {
                 is AppearanceSettingsScreen -> {
                     ui<AppearanceSettingsUiState> { state, modifier ->
                         AppearanceSettingsUi(
+                            state = state,
+                            modifier = modifier,
+                        )
+                    }
+                }
+
+                is BehaviourSettingsScreen -> {
+                    ui<BehaviourSettingsUiState> { state, modifier ->
+                        BehaviourSettingsUi(
                             state = state,
                             modifier = modifier,
                         )

@@ -77,7 +77,6 @@ internal fun FacetsBottomSheetContent(
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBarWithFilter(
             title = stringResource(Res.string.filterByEntity),
-            modifier = Modifier,
             onBack = onDismiss,
             topAppBarFilterState = state.filterState,
             additionalBar = {

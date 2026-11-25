@@ -16,9 +16,9 @@ import ly.david.musicsearch.shared.domain.sort.LabelSortOption
 import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
-import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
 import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 interface AppPreferences {
@@ -147,4 +147,7 @@ interface AppPreferences {
 
     val boldUnvisited: Flow<Boolean>
     fun setBoldUnvisited(bold: Boolean)
+
+    val confirmChanges: Flow<Boolean>
+    fun setConfirmChanges(confirm: Boolean)
 }

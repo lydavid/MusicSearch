@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -66,6 +67,7 @@ fun TopAppBarWithFilter(
     imageVector: ImageVector? = null,
     title: String = "",
     subtitle: String = "",
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -82,6 +84,7 @@ fun TopAppBarWithFilter(
         imageVector = imageVector,
         annotatedString = AnnotatedString(title),
         subtitle = subtitle,
+        windowInsets = windowInsets,
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
@@ -106,6 +109,7 @@ expect fun TopAppBarWithFilter(
     onSelectAllToggle: () -> Unit = {},
     imageVector: ImageVector? = null,
     subtitle: String = "",
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -124,6 +128,7 @@ internal fun TopAppBarWithFilterInternal(
     showBackButton: Boolean = true,
     imageVector: ImageVector? = null,
     subtitle: String = "",
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -254,6 +259,7 @@ internal fun TopAppBarWithFilterInternal(
                 annotatedString
             },
             subtitle = subtitle,
+            windowInsets = windowInsets,
             scrollBehavior = scrollBehavior.takeIf { !isEditMode },
             containerColor = containerColor,
             actions = {

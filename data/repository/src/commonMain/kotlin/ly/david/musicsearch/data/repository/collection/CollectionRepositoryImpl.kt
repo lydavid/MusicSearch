@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import ly.david.musicsearch.data.database.dao.BrowseRemoteMetadataDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
@@ -14,6 +15,7 @@ import ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadataRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionRepository
 import ly.david.musicsearch.shared.domain.collection.CollectionSortOption
 import ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback
+import ly.david.musicsearch.shared.domain.collection.PendingEdit
 import ly.david.musicsearch.shared.domain.error.Action
 import ly.david.musicsearch.shared.domain.error.ActionableResult
 import ly.david.musicsearch.shared.domain.error.ErrorResolution
@@ -147,7 +149,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.unMarkDeletedFromCollection(collectionId = collectionId)
     }
 
-    override suspend fun deleteAllMarkedForDeletionFromCollection(
+    override fun deleteAllMarkedForDeletionFromCollection(
         collection: CollectionListItemModel,
     ): Flow<Feedback<EditACollectionFeedback>> = flow {
         val idsMarkedForDeletion = collectionEntityDao.getIdsMarkedForDeletionFromCollection(collection.id)
@@ -186,7 +188,7 @@ class CollectionRepositoryImpl(
         collectionEntityDao.deleteAllMarkedForDeletionFromCollection(collectionId = collection.id)
         emit(
             Feedback.Success(
-                data = EditACollectionFeedback.Deleted(
+                data = EditACollectionFeedback.DeletedFromCollection(
                     count = idsMarkedForDeletion.size,
                     collectionName = collection.name,
                 ),
@@ -195,23 +197,25 @@ class CollectionRepositoryImpl(
         )
     }
 
-    override suspend fun addToCollection(
-        collectionId: String,
-        entityType: MusicBrainzEntityType,
-        entityIds: List<String>,
+    override fun deleteFromCollectionImmediately(
+        collection: CollectionListItemModel,
+        collectableIds: List<String>,
     ): Flow<Feedback<EditACollectionFeedback>> = flow {
-        val collection = collectionDao.getCollection(collectionId)
-        if (collection == null) {
-            emit(
-                Feedback.Error(
-                    data = EditACollectionFeedback.DoesNotExist,
-                    errorResolution = ErrorResolution.None,
-                    time = clock.now(),
-                ),
-            )
-            return@flow
+        markDeletedFromCollection(
+            collection = collection,
+            collectableIds = collectableIds,
+        ).collect { _ ->
+            // ignore
         }
 
+        emitAll(deleteAllMarkedForDeletionFromCollection(collection))
+    }
+
+    override fun addToCollection(
+        collection: CollectionListItemModel,
+        entityType: MusicBrainzEntityType,
+        collectableIds: List<String>,
+    ): Flow<Feedback<EditACollectionFeedback>> = flow {
         if (collection.isRemote) {
             emit(
                 Feedback.Loading(
@@ -220,9 +224,9 @@ class CollectionRepositoryImpl(
                 ),
             )
             try {
-                entityIds.chunked(CollectionApi.MAX_ENTITIES_PER_REQUEST).forEach { chunkedIds ->
+                collectableIds.chunked(CollectionApi.MAX_ENTITIES_PER_REQUEST).forEach { chunkedIds ->
                     collectionApi.addToCollection(
-                        collectionId = collectionId,
+                        collectionId = collection.id,
                         resourceUriPlural = entityType.resourceUriPlural,
                         mbids = chunkedIds,
                     )
@@ -244,8 +248,8 @@ class CollectionRepositoryImpl(
         }
 
         val feedback: EditACollectionFeedback = insertAndGetResult(
-            collectionId = collectionId,
-            entityIds = entityIds,
+            collectionId = collection.id,
+            entityIds = collectableIds,
             collection = collection,
         )
         emit(
@@ -275,18 +279,176 @@ class CollectionRepositoryImpl(
                 collectionName = collection.name,
             )
 
-            insertions == entityIds.size -> EditACollectionFeedback.AddedMultiple(
+            insertions == entityIds.size -> EditACollectionFeedback.AddedMultipleToCollection(
                 newInsertions = insertions,
                 collectionName = collection.name,
             )
 
-            else -> EditACollectionFeedback.AddedMultipleSomeAlreadyAdded(
+            else -> EditACollectionFeedback.AddedMultipleToCollectionSomeAlreadyAdded(
                 newInsertions = insertions,
                 collectionName = collection.name,
                 countAlreadyAdded = entityIds.size - insertions,
             )
         }
         return data
+    }
+
+    override fun applyAllEdits(
+        pendingEdits: Map<String, CollectionListItemModel>,
+        entityType: MusicBrainzEntityType,
+        collectableIds: List<String>,
+    ): Flow<Feedback<EditACollectionFeedback>> = flow {
+        val hasRemote = pendingEdits.values.any { it.isRemote }
+        emit(
+            Feedback.Loading(
+                data = if (hasRemote) {
+                    EditACollectionFeedback.SyncingWithMusicBrainz
+                } else {
+                    EditACollectionFeedback.Loading
+                },
+                time = clock.now(),
+            ),
+        )
+
+        val errorFeedbackList: MutableList<Feedback<EditACollectionFeedback>> = mutableListOf()
+        val insertionFeedbackList: MutableList<EditACollectionFeedback> = mutableListOf()
+        val deletionFeedbackList: MutableList<EditACollectionFeedback> = mutableListOf()
+
+        fun record(feedback: Feedback<EditACollectionFeedback>) {
+            when (feedback) {
+                is Feedback.Actionable<*>,
+                is Feedback.Loading<*>,
+                -> {
+                    // ignore
+                }
+
+                is Feedback.Error<*> -> {
+                    errorFeedbackList.add(feedback)
+                }
+
+                is Feedback.Success<*> -> {
+                    when (val data = feedback.data) {
+                        is EditACollectionFeedback.AddedMultipleToCollection,
+                        is EditACollectionFeedback.AddedMultipleToCollectionSomeAlreadyAdded,
+                        is EditACollectionFeedback.AddedOne,
+                        -> {
+                            insertionFeedbackList.add(data)
+                        }
+
+                        is EditACollectionFeedback.DeletedFromCollection -> {
+                            deletionFeedbackList.add(data)
+                        }
+
+                        is EditACollectionFeedback.AlreadyIn,
+                        is EditACollectionFeedback.Deleting,
+                        EditACollectionFeedback.DoesNotExist,
+                        is EditACollectionFeedback.EditedMultipleCollections,
+                        is EditACollectionFeedback.FailedToAdd,
+                        is EditACollectionFeedback.FailedToDelete,
+                        EditACollectionFeedback.Loading,
+                        EditACollectionFeedback.SyncingWithMusicBrainz,
+                        is EditACollectionFeedback.AddedToMultipleCollections,
+                        is EditACollectionFeedback.DeletedFromMultipleCollections,
+                        -> {
+                            // ignore
+                        }
+                    }
+                }
+            }
+        }
+
+        pendingEdits.values.toList().forEach { collectionWithPendingEdit ->
+            when (collectionWithPendingEdit.pendingEdit) {
+                PendingEdit.Add ->
+                    addToCollection(
+                        collection = collectionWithPendingEdit,
+                        entityType = entityType,
+                        collectableIds = collectableIds,
+                    ).collect { feedback ->
+                        record(feedback)
+                    }
+
+                // This immediately deletes. Since we pop bottom sheet after applying changes,
+                // I don't think it would be simple to offer an undo without forcing all call-sites to implement
+                // undo like they do for onLoginClick. Fortunately, selection is kept after popping,
+                // so you can simply edit again and add the recently deleted items back.
+                PendingEdit.Remove -> {
+                    deleteFromCollectionImmediately(
+                        collection = collectionWithPendingEdit,
+                        collectableIds = collectableIds,
+                    ).collect { feedback ->
+                        record(feedback)
+                    }
+                }
+
+                null -> {
+                    // No-op.
+                }
+            }
+        }
+
+        emit(
+            getSummarizedFeedback(
+                errorFeedbackList = errorFeedbackList,
+                insertionFeedbackList = insertionFeedbackList,
+                deletionFeedbackList = deletionFeedbackList,
+                collectableIds = collectableIds,
+            ),
+        )
+    }
+
+    private fun getSummarizedFeedback(
+        errorFeedbackList: MutableList<Feedback<EditACollectionFeedback>>,
+        insertionFeedbackList: MutableList<EditACollectionFeedback>,
+        deletionFeedbackList: MutableList<EditACollectionFeedback>,
+        collectableIds: List<String>,
+    ): Feedback<EditACollectionFeedback> {
+        val firstError = errorFeedbackList.firstOrNull { it is Feedback.Error }
+        return if (firstError == null) {
+            val feedback: EditACollectionFeedback
+            val insertions = insertionFeedbackList.size
+            val deletions = deletionFeedbackList.size
+            feedback = when {
+                insertions == 1 && deletions == 0 -> {
+                    insertionFeedbackList.first()
+                }
+
+                insertions == 0 && deletions == 1 -> {
+                    deletionFeedbackList.first()
+                }
+
+                insertions > 1 && deletions == 0 -> {
+                    EditACollectionFeedback.AddedToMultipleCollections(
+                        count = collectableIds.size,
+                        countCollectionsInsertedTo = insertions,
+                    )
+                }
+
+                insertions == 0 && deletions > 1 -> {
+                    EditACollectionFeedback.DeletedFromMultipleCollections(
+                        count = collectableIds.size,
+                        countCollectionsDeletedFrom = deletions,
+                    )
+                }
+
+                else -> {
+                    EditACollectionFeedback.EditedMultipleCollections(
+                        count = collectableIds.size,
+                        countCollectionsInsertedTo = insertions,
+                        countCollectionsDeletedFrom = deletions,
+                    )
+                }
+            }
+
+            Feedback.Success(
+                data = feedback,
+                time = clock.now(),
+            )
+        } else {
+            // It's possible to offer login due to showEditCollectionSheet handling it
+            // Local edits will succeed even though remote edits failed. This doesn't let the user know.
+            firstError
+        }
     }
 
     override fun markDeletedCollections(
@@ -315,6 +477,7 @@ class CollectionRepositoryImpl(
         return ActionableResult(message = "Deleted selected collections.")
     }
 
+    // Seems like this could just come from details query
     override fun observeEntityIsInACollection(
         entityId: String,
     ): Flow<Boolean> {

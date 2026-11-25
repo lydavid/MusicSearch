@@ -24,10 +24,11 @@ fun showEditCollectionSheet(
 ) {
     coroutineScope.launch {
         val result: SnackbarPopResult<Feedback<EditACollectionFeedback>> = overlayHost.showInBottomSheetForResult(
-            EditCollectionScreen(
+            screen = EditCollectionScreen(
                 entityType = entityType,
                 collectableIds = entityIds,
             ),
+            skipPartiallyExpandedState = true,
         )
 
         result.feedback?.let { feedback ->

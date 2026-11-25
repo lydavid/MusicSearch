@@ -15,10 +15,12 @@ import ly.david.musicsearch.shared.domain.parcelize.CommonParcelable
 @Suppress("UNCHECKED_CAST")
 suspend fun <T : CommonParcelable> OverlayHost.showInBottomSheetForResult(
     screen: Screen,
+    skipPartiallyExpandedState: Boolean = false,
 ): SnackbarPopResult<T> = show(
     @OptIn(ExperimentalMaterial3Api::class)
     BottomSheetOverlay(
         model = Unit,
+        skipPartiallyExpandedState = skipPartiallyExpandedState,
         onDismiss = { SnackbarPopResult(feedback = null) },
         contentWindowInsets = { WindowInsets.navigationBars },
     ) { _, overlayNavigator ->

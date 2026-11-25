@@ -1,5 +1,6 @@
 package ly.david.musicsearch.ui.common.topappbar
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ actual fun TopAppBarWithFilter(
     onSelectAllToggle: () -> Unit,
     imageVector: ImageVector?,
     subtitle: String,
+    windowInsets: WindowInsets,
     scrollBehavior: TopAppBarScrollBehavior?,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)?,
@@ -35,6 +37,7 @@ actual fun TopAppBarWithFilter(
         imageVector = imageVector,
         annotatedString = annotatedString,
         subtitle = subtitle,
+        windowInsets = windowInsets,
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,

@@ -13,11 +13,11 @@ import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.PlaylistAdd
 import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.addXCountToCollection
+import musicsearch.ui.common.generated.resources.editX
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun OverflowMenuScope.AddAllToCollectionMenuItem(
+fun OverflowMenuScope.EditCollectionMenuItem(
     tab: Tab?,
     entityIds: ImmutableList<String>,
     overlayHost: OverlayHost,
@@ -35,7 +35,7 @@ fun OverflowMenuScope.AddAllToCollectionMenuItem(
     DropdownMenuItem(
         text = {
             Text(
-                text = stringResource(Res.string.addXCountToCollection, distinctEntityIds.size),
+                text = stringResource(Res.string.editX, distinctEntityIds.size),
             )
         },
         leadingIcon = {

@@ -6,10 +6,13 @@ import musicsearch.ui.common.generated.resources.Res
 import musicsearch.ui.common.generated.resources.addedMultipleToCollection
 import musicsearch.ui.common.generated.resources.addedMultipleToCollectionSomeAlreadyAdded
 import musicsearch.ui.common.generated.resources.addedOneToCollection
+import musicsearch.ui.common.generated.resources.addedToMultipleCollections
 import musicsearch.ui.common.generated.resources.alreadyInCollection
 import musicsearch.ui.common.generated.resources.collectionDoesNotExist
 import musicsearch.ui.common.generated.resources.deletedCountFromCollection
+import musicsearch.ui.common.generated.resources.deletedFromMultipleCollections
 import musicsearch.ui.common.generated.resources.deletingCountFromCollection
+import musicsearch.ui.common.generated.resources.editedMultipleCollections
 import musicsearch.ui.common.generated.resources.failedToAddToCollection
 import musicsearch.ui.common.generated.resources.failedToDeleteFromCollection
 import musicsearch.ui.common.generated.resources.syncingWithMusicBrainz
@@ -19,11 +22,13 @@ suspend fun Feedback<EditACollectionFeedback>.getMessage(): String {
     return when (val data = this.data) {
         is EditACollectionFeedback.SyncingWithMusicBrainz -> getString(Res.string.syncingWithMusicBrainz)
 
+        EditACollectionFeedback.Loading -> ""
+
         is EditACollectionFeedback.Deleting -> {
             getString(Res.string.deletingCountFromCollection, data.count, data.collectionName)
         }
 
-        is EditACollectionFeedback.Deleted -> {
+        is EditACollectionFeedback.DeletedFromCollection -> {
             getString(Res.string.deletedCountFromCollection, data.count, data.collectionName)
         }
 
@@ -43,17 +48,36 @@ suspend fun Feedback<EditACollectionFeedback>.getMessage(): String {
 
         is EditACollectionFeedback.AddedOne -> getString(Res.string.addedOneToCollection, data.collectionName)
 
-        is EditACollectionFeedback.AddedMultiple -> getString(
+        is EditACollectionFeedback.AddedMultipleToCollection -> getString(
             Res.string.addedMultipleToCollection,
             data.newInsertions,
             data.collectionName,
         )
 
-        is EditACollectionFeedback.AddedMultipleSomeAlreadyAdded -> getString(
+        is EditACollectionFeedback.AddedMultipleToCollectionSomeAlreadyAdded -> getString(
             Res.string.addedMultipleToCollectionSomeAlreadyAdded,
             data.newInsertions,
             data.collectionName,
             data.countAlreadyAdded,
+        )
+
+        is EditACollectionFeedback.AddedToMultipleCollections -> getString(
+            Res.string.addedToMultipleCollections,
+            data.count,
+            data.countCollectionsInsertedTo,
+        )
+
+        is EditACollectionFeedback.DeletedFromMultipleCollections -> getString(
+            Res.string.deletedFromMultipleCollections,
+            data.count,
+            data.countCollectionsDeletedFrom,
+        )
+
+        is EditACollectionFeedback.EditedMultipleCollections -> getString(
+            Res.string.editedMultipleCollections,
+            data.countCollectionsInsertedTo + data.countCollectionsDeletedFrom,
+            data.countCollectionsInsertedTo,
+            data.countCollectionsDeletedFrom,
         )
     }
 }

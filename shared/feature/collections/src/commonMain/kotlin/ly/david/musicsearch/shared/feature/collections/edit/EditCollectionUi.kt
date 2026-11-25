@@ -42,16 +42,10 @@ internal fun EditCollectionUi(
     }
 
     CollectionBottomSheetContent(
-        collections = state.lazyPagingItems,
-        numberOfItemsToAddToCollection = state.numberOfItemsToAddToCollection,
-        boldUnvisited = state.boldUnvisited,
+        state = state,
         modifier = modifier,
-        feedback = state.feedback,
         onCreateCollectionClick = {
             showDialog = true
-        },
-        onAddToCollection = { collectionId ->
-            eventSink(EditCollectionUiEvent.AddToCollection(collectionId))
         },
     )
 }
