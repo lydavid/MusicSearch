@@ -15,7 +15,7 @@ import ly.david.musicsearch.shared.domain.getLifeSpanForDisplay
 import ly.david.musicsearch.shared.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icon.EditCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listen.ListenInfoRow
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
@@ -103,7 +103,7 @@ fun ArtistListItem(
             )
         },
         trailingContent = {
-            AddToCollectionIconButton(
+            EditCollectionIconButton(
                 entityListItemModel = artist,
                 onClick = onEditCollectionClick,
             )

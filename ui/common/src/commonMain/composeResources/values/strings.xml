@@ -133,7 +133,8 @@
     <string name="apply">Apply changes</string>
     <string name="name">Name</string>
     <string name="collectionNamePlaceholder">Enter name</string>
-    <string name="addToCollection">Add to collection</string>
+    <string name="editCollection">Edit collection</string>
+    <string name="editCollectionsForX">Edit collections for %1$s</string>
     <string name="about">About</string>
     <string name="experimentalSearch">Experimental search methods</string>
     <string name="openSourceLicenses">Open source licenses</string>
@@ -328,7 +329,6 @@
     <string name="remote">Remote</string>
     <string name="sortX">Sort: %1$s</string>
     <string name="endOfSearchResults">End of search results.</string>
-    <string name="addXCountToCollection">Add %1$d to collection</string>
     <string name="editX">Edit %1$d</string>
     <string name="editingX">Editing %1$d</string>
     <string name="tapRelationshipsTab">Tap Relationships tab to see more stats.</string>

@@ -30,7 +30,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band) to collection"
+- tapOn: "Edit collections for ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - tapOn: "Create a collection"
 - inputText: "Artists"
 - tapOn: "OK"
@@ -91,9 +91,11 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "japan"
 - assertVisible: "Japan"
 - tapOn: Cancel
-- tapOn: "Add ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band) to another collection"
+- tapOn: "Edit collections for ずっと真夜中でいいのに。 (ZUTOMAYO, Japanese pop band)"
 - tapOn: "Artists"
-# Do not assert text in snackbar because sometimes it doesn't show up (in CI only).
+# We could test deleting from here, but for now, deleting comes later.
+- tapOn: "Artists"
+- tapOn: "Back"
 
 - assertVisible: "Release Groups"
 - tapOn: "Release Groups"

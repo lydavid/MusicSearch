@@ -36,7 +36,7 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -150,7 +150,7 @@ internal fun ArtistUi(
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
-                    AddToCollectionActionToggle(
+                    EditCollectionActionToggle(
                         collected = state.collected,
                         entityType = entityType,
                         entityId = entityId,

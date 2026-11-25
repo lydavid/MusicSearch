@@ -56,7 +56,7 @@ internal fun TracksByReleaseUi(
                 track = track,
                 boldUnvisited = boldUnvisited,
                 onDismiss = { showBottomSheetForTrack = null },
-                onAddToCollectionClick = onEditCollectionClick,
+                onEditCollectionClick = onEditCollectionClick,
                 onSubmitListenClick = onSubmitListenClick,
             )
         }

@@ -21,7 +21,7 @@ import ly.david.musicsearch.shared.domain.common.toDisplayTime
 import ly.david.musicsearch.shared.domain.listitem.RecordingListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icon.EditCollectionIconButton
 import ly.david.musicsearch.ui.common.icons.Check
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.MusicVideo
@@ -146,7 +146,7 @@ fun RecordingListItem(
             )
         },
         trailingContent = {
-            AddToCollectionIconButton(
+            EditCollectionIconButton(
                 entityListItemModel = recording,
                 onClick = onEditCollectionClick,
             )

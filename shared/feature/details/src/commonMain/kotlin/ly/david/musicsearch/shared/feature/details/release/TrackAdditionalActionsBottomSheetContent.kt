@@ -24,7 +24,7 @@ import ly.david.musicsearch.ui.common.theme.TextStyles
 import ly.david.musicsearch.ui.common.track.TrackNumber
 import ly.david.musicsearch.ui.common.track.TrackTitleWithLength
 import musicsearch.ui.common.generated.resources.Res
-import musicsearch.ui.common.generated.resources.addToCollection
+import musicsearch.ui.common.generated.resources.editCollection
 import musicsearch.ui.common.generated.resources.submitListen
 import org.jetbrains.compose.resources.stringResource
 
@@ -34,7 +34,7 @@ internal fun TrackAdditionalActionsBottomSheetContent(
     boldUnvisited: Boolean,
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit = {},
-    onAddToCollectionClick: (recordingId: String) -> Unit = {},
+    onEditCollectionClick: (recordingId: String) -> Unit = {},
     onSubmitListenClick: (track: TrackListItemModel) -> Unit = {},
 ) {
     Column(
@@ -68,14 +68,14 @@ internal fun TrackAdditionalActionsBottomSheetContent(
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
 
         ClickableItem(
-            title = stringResource(Res.string.addToCollection),
+            title = stringResource(Res.string.editCollection),
             startIcon = {
                 CollectionIcon(
                     collected = track.collected,
                 )
             },
             onClick = {
-                onAddToCollectionClick(track.recordingId)
+                onEditCollectionClick(track.recordingId)
                 onDismiss()
             },
         )

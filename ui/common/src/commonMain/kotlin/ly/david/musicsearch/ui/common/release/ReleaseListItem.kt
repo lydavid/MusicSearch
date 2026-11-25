@@ -24,7 +24,7 @@ import ly.david.musicsearch.shared.domain.common.toFlagEmoji
 import ly.david.musicsearch.shared.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icon.EditCollectionIconButton
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.icons.StarFilled
@@ -211,7 +211,7 @@ fun ReleaseListItem(
             )
         },
         trailingContent = {
-            AddToCollectionIconButton(
+            EditCollectionIconButton(
                 entityListItemModel = release,
                 onClick = onEditCollectionClick,
             )
