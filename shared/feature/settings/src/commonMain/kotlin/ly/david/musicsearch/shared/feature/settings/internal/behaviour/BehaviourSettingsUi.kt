@@ -66,7 +66,6 @@ internal fun BehaviourSettingsUi(
 
             SettingSwitch(
                 header = stringResource(Res.string.confirmChanges),
-//                subtitle = stringResource(Res.string.boldUnvisitedDescription),
                 checked = state.confirmChanges,
                 onCheckedChange = {
                     eventSink(BehaviourSettingsUiEvent.UpdateConfirmChanges(it))

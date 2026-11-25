@@ -35,6 +35,7 @@ appId: io.github.lydavid.musicsearch.debug
 - inputText: "Artists"
 - tapOn: "OK"
 - tapOn: "Artists"
+- tapOn: "Apply changes"
 
 - assertVisible: "Release Groups"
 - tapOn: "Release Groups"
