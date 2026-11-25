@@ -1,3 +1,2 @@
 
-* add space to both side of middle dot so text that it divides are not so close together
-* do not read section headers twice with accessibility tools
+* support bulk editing collections from bottom sheet: default now requires you to confirm changes; add setting in Behaviour to turn off confirm changes which is similar to previous experience; relocate scroll to hide top app bar and pull to refresh under Behaviour

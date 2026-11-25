@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.140.0](https://github.com/lydavid/MusicSearch/compare/v1.139.3...v1.140.0) (2026-11-25)
+
+### Features
+
+* support bulk editing collections from bottom sheet: default now requires you to confirm changes; add setting in Behaviour to turn off confirm changes which is similar to previous experience; relocate scroll to hide top app bar and pull to refresh under Behaviour ([#2502](https://github.com/lydavid/MusicSearch/issues/2502)) ([8227076](https://github.com/lydavid/MusicSearch/commit/8227076becdf96e28309aa54aefa5f5f12a3a793))
+
 ## [1.139.3](https://github.com/lydavid/MusicSearch/compare/v1.139.2...v1.139.3) (2026-11-22)
 
 ### Bug Fixes
