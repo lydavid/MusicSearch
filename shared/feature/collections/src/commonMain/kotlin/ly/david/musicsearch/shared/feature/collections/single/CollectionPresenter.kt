@@ -94,9 +94,9 @@ internal class CollectionPresenter(
             title = nonNullCollection.name
 
             collectionRepository.addToCollection(
-                collectionId = nonNullCollection.id,
+                collection = nonNullCollection,
                 entityType = nonNullCollection.entity,
-                entityIds = oneShotNewCollectableId?.run { listOf(this) } ?: return@LaunchedEffect,
+                collectableIds = oneShotNewCollectableId?.run { listOf(this) } ?: return@LaunchedEffect,
             ).collect {
                 finalFeedback = it
             }

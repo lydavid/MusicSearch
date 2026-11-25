@@ -14,7 +14,7 @@ import ly.david.musicsearch.shared.domain.common.ifNotEmpty
 import ly.david.musicsearch.shared.domain.listitem.WorkListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icon.EditCollectionIconButton
 import ly.david.musicsearch.ui.common.icons.CustomIcons
 import ly.david.musicsearch.ui.common.icons.Headphones
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
@@ -128,7 +128,7 @@ fun WorkListItem(
             )
         },
         trailingContent = {
-            AddToCollectionIconButton(
+            EditCollectionIconButton(
                 entityListItemModel = work,
                 onClick = onEditCollectionClick,
             )

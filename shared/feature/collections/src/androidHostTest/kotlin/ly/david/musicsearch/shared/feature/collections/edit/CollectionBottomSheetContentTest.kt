@@ -12,6 +12,33 @@ class CollectionBottomSheetContentTest : ScreenshotTest() {
         }
     }
 
+    @Test
+    fun noConfirm() {
+        snapshot {
+            PreviewCollectionBottomSheetContentNoConfirm()
+        }
+    }
+
+    @Test
+    fun withQuery() {
+        snapshot {
+            PreviewCollectionBottomSheetContentWithQuery()
+        }
+    }
+
+    @Test
+    fun applyEnabled() {
+        snapshot {
+            PreviewCollectionBottomSheetContentApplyEnabled()
+        }
+    }
+
+    @Test
+    fun noItems() {
+        snapshot {
+            PreviewCollectionBottomSheetContentNoItems()
+        }
+    }
     // There's some timing issue
 //    @Test
 //    fun syncing() {

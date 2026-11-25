@@ -130,9 +130,11 @@
     <string name="showMoreInfo">Show more info</string>
     <string name="showLessInfo">Show less info</string>
     <string name="createCollection">Create a collection</string>
+    <string name="apply">Apply changes</string>
     <string name="name">Name</string>
     <string name="collectionNamePlaceholder">Enter name</string>
-    <string name="addToCollection">Add to collection</string>
+    <string name="editCollection">Edit collection</string>
+    <string name="editCollectionsForX">Edit collections for %1$s</string>
     <string name="about">About</string>
     <string name="experimentalSearch">Experimental search methods</string>
     <string name="openSourceLicenses">Open source licenses</string>
@@ -295,6 +297,9 @@
     <string name="addedOneToCollection">Added to %1$s</string>
     <string name="addedMultipleToCollection">Added %1$d to %2$s</string>
     <string name="addedMultipleToCollectionSomeAlreadyAdded">Added %1$d to %2$s. %3$d already in collection</string>
+    <string name="addedToMultipleCollections">Added %1$d to %2$d collections</string>
+    <string name="deletedFromMultipleCollections">Deleted %1$d from %2$d collections</string>
+    <string name="editedMultipleCollections">Edited %1$d collections (added to %2$d, deleted from %3$d)</string>
     <string name="goToAlbum">Go to album</string>
     <string name="refreshMapping">Refresh mapping</string>
     <string name="delete">Delete</string>
@@ -324,7 +329,8 @@
     <string name="remote">Remote</string>
     <string name="sortX">Sort: %1$s</string>
     <string name="endOfSearchResults">End of search results.</string>
-    <string name="addXCountToCollection">Add %1$d to collection</string>
+    <string name="editX">Edit %1$d</string>
+    <string name="editingX">Editing %1$d</string>
     <string name="tapRelationshipsTab">Tap Relationships tab to see more stats.</string>
     <string name="totalRelationships">Total relationships: %1$d</string>
     <string name="scrollToHideTopAppBar">Scroll to hide top app bar</string>
@@ -476,4 +482,11 @@
     <string name="searching">Searching...</string>
     <string name="listenHasNoISRC">This listen has no ISRC, so we can’t automatically match it.</string>
     <string name="noRecordingsMatchISRC">No recordings matched this listen's ISRC.</string>
+    <string name="selectedItemsNotInCollection">Selected items not in collection</string>
+    <string name="someSelectedItemsInCollection">Some selected items in collection</string>
+    <string name="selectedItemsInCollection">Selected items in collection</string>
+    <string name="selectedItemsWillBeAddedToCollection">Selected items will be added collection</string>
+    <string name="selectedItemsWillBeDeletedFromCollection">Selected items will be deleted from collection</string>
+    <string name="behaviour">Behaviour</string>
+    <string name="confirmChanges">Confirm changes when editing collections</string>
 </resources>

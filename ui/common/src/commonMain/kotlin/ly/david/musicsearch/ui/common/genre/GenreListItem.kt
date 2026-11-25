@@ -13,7 +13,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.GenreListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.getIcon
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton
+import ly.david.musicsearch.ui.common.icon.EditCollectionIconButton
 import ly.david.musicsearch.ui.common.image.ThumbnailImage
 import ly.david.musicsearch.ui.common.listitem.HighlightableText
 import ly.david.musicsearch.ui.common.listitem.listItemColors
@@ -66,7 +66,7 @@ fun GenreListItem(
             )
         },
         trailingContent = {
-            AddToCollectionIconButton(
+            EditCollectionIconButton(
                 entityListItemModel = genre,
                 onClick = onEditCollectionClick,
             )

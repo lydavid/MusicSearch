@@ -25,8 +25,8 @@ import ly.david.musicsearch.shared.domain.sort.PlaceSortOption
 import ly.david.musicsearch.shared.domain.sort.RecordingSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseGroupSortOption
 import ly.david.musicsearch.shared.domain.sort.ReleaseSortOption
-import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.SeriesSortOption
+import ly.david.musicsearch.shared.domain.sort.TrackSortOption
 import ly.david.musicsearch.shared.domain.sort.WorkSortOption
 
 open class NoOpAppPreferences : AppPreferences {
@@ -304,6 +304,13 @@ open class NoOpAppPreferences : AppPreferences {
         get() = flowOf(true)
 
     override fun setBoldUnvisited(bold: Boolean) {
+        // No-op.
+    }
+
+    override val confirmChanges: Flow<Boolean>
+        get() = flowOf(true)
+
+    override fun setConfirmChanges(confirm: Boolean) {
         // No-op.
     }
 }

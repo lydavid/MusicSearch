@@ -8,10 +8,10 @@ import com.slack.circuit.overlay.OverlayHost
 import kotlinx.coroutines.CoroutineScope
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
 import ly.david.musicsearch.ui.common.collection.showEditCollectionSheet
-import ly.david.musicsearch.ui.common.icon.AddToCollectionIcon
+import ly.david.musicsearch.ui.common.icon.EditCollectionIcon
 
 @Composable
-fun AddToCollectionActionToggle(
+fun EditCollectionActionToggle(
     collected: Boolean,
     entityType: MusicBrainzEntityType,
     entityId: String,
@@ -35,7 +35,7 @@ fun AddToCollectionActionToggle(
             )
         },
     ) {
-        AddToCollectionIcon(
+        EditCollectionIcon(
             collected = collected,
             nameWithDisambiguation = nameWithDisambiguation,
         )

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -59,6 +60,7 @@ fun ScrollableTopAppBar(
     imageVector: ImageVector? = null,
     title: String = "",
     subtitle: String = "",
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     containerColor: Color = Color.Unspecified,
     actions: @Composable () -> Unit = {},
@@ -73,6 +75,7 @@ fun ScrollableTopAppBar(
         imageVector = imageVector,
         annotatedString = AnnotatedString(title),
         subtitle = subtitle,
+        windowInsets = windowInsets,
         scrollBehavior = scrollBehavior,
         containerColor = containerColor,
         actions = actions,
@@ -102,6 +105,7 @@ fun ScrollableTopAppBar(
     imageVector: ImageVector? = null,
     annotatedString: AnnotatedString = AnnotatedString(""),
     subtitle: String = "",
+    windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     containerColor: Color = Color.Unspecified,
     actions: @Composable (() -> Unit) = {},
@@ -122,6 +126,7 @@ fun ScrollableTopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = containerColor,
             ),
+            windowInsets = windowInsets,
             scrollBehavior = scrollBehavior,
             navigationIcon = {
                 if (showBackButton) {

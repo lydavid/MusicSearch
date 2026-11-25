@@ -7,7 +7,7 @@ import ly.david.musicsearch.shared.domain.getNameWithDisambiguation
 import ly.david.musicsearch.shared.domain.listitem.EntityListItemModel
 
 @Composable
-fun AddToCollectionIconButton(
+fun EditCollectionIconButton(
     entityListItemModel: EntityListItemModel,
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -18,7 +18,7 @@ fun AddToCollectionIconButton(
             onClick(entityListItemModel.id)
         },
     ) {
-        AddToCollectionIcon(
+        EditCollectionIcon(
             collected = entityListItemModel.collected,
             nameWithDisambiguation = entityListItemModel.getNameWithDisambiguation(),
         )

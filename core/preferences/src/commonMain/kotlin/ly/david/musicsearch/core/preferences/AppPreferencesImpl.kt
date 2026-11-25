@@ -819,6 +819,25 @@ internal class AppPreferencesImpl(
             }
         }
     }
+
+    private val confirmChangesPreference =
+        booleanPreferencesKey(AppPreferencesKey.CONFIRM_CHANGES.name)
+    override val confirmChanges: Flow<Boolean>
+        get() {
+            return preferencesDataStore.data
+                .map {
+                    it[confirmChangesPreference] ?: true
+                }
+                .distinctUntilChanged()
+        }
+
+    override fun setConfirmChanges(confirm: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[confirmChangesPreference] = confirm
+            }
+        }
+    }
 }
 
 private object ArtistImageSourceKey {

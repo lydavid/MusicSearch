@@ -35,8 +35,8 @@ import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
 import ly.david.musicsearch.ui.common.sort.SortMenuItem
-import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -166,7 +166,7 @@ internal fun ReleaseUi(
                     )
                 },
                 additionalActions = {
-                    AddToCollectionActionToggle(
+                    EditCollectionActionToggle(
                         collected = state.collected,
                         entityType = entityType,
                         entityId = entityId,
@@ -250,7 +250,7 @@ internal fun ReleaseUi(
                         )
                     }
 
-                    AddAllToCollectionMenuItem(
+                    EditCollectionMenuItem(
                         tab = selectedTab,
                         entityIds = if (selectedTab == Tab.TRACKS) {
                             selectionState.selectedRecordingIds

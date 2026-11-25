@@ -221,8 +221,8 @@ internal fun CollectionListUi(
                             collection = collectionListItemModel,
                             query = state.topAppBarFilterState.filterText,
                             boldUnvisited = state.boldUnvisited,
-                            onClick = {
-                                eventSink(CollectionsListUiEvent.GoToCollection(id = collectionListItemModel.id))
+                            onClick = { collection ->
+                                eventSink(CollectionsListUiEvent.GoToCollection(id = collection.id))
                             },
                             enabled = !state.selectionState.isEditMode || !collectionListItemModel.isRemote,
                             isSelected = state.selectionState.selectedIds.contains(collectionListItemModel.id),

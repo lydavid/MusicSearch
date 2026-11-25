@@ -23,12 +23,12 @@ fun SyncingText(
         //  until https://github.com/cashapp/paparazzi/issues/678 or https://github.com/cashapp/paparazzi/issues/627 are resolved
         if (!LocalInspectionMode.current) {
             CircularProgressIndicator(
-                modifier = modifier.size(16.dp),
+                modifier = Modifier.size(16.dp),
             )
         }
         Text(
             text = message,
-            modifier = modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(start = 4.dp),
             style = TextStyles.getCardBodySubTextStyle(),
         )
     }

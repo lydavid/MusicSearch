@@ -34,6 +34,7 @@ import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUi
 import ly.david.musicsearch.ui.common.musicbrainz.MusicBrainzLoginUiEvent
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen
+import ly.david.musicsearch.ui.common.screen.BehaviourSettingsScreen
 import ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen
 import ly.david.musicsearch.ui.common.screen.LicensesScreen
 import ly.david.musicsearch.ui.common.screen.ListensScreen
@@ -47,6 +48,7 @@ import musicsearch.ui.common.generated.resources.about
 import musicsearch.ui.common.generated.resources.appRestartRequired
 import musicsearch.ui.common.generated.resources.appVersion
 import musicsearch.ui.common.generated.resources.appearance
+import musicsearch.ui.common.generated.resources.behaviour
 import musicsearch.ui.common.generated.resources.database
 import musicsearch.ui.common.generated.resources.databaseVersion
 import musicsearch.ui.common.generated.resources.enableCrashReporting
@@ -182,6 +184,14 @@ internal fun SettingsUi(
                 endIcon = CustomIcons.ChevronRight,
                 onClick = {
                     eventSink(SettingsUiEvent.GoToScreen(AppearanceSettingsScreen))
+                },
+            )
+
+            ClickableItem(
+                title = stringResource(Res.string.behaviour),
+                endIcon = CustomIcons.ChevronRight,
+                onClick = {
+                    eventSink(SettingsUiEvent.GoToScreen(BehaviourSettingsScreen))
                 },
             )
 

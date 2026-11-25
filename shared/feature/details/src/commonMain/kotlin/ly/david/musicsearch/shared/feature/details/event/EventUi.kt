@@ -23,8 +23,8 @@ import ly.david.musicsearch.ui.common.paging.EntitiesLazyPagingItems
 import ly.david.musicsearch.ui.common.paging.getLoadedIdsForTab
 import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.StatsScreen
-import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -137,7 +137,7 @@ internal fun EventUi(
                 annotatedString = annotatedName,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
-                    AddToCollectionActionToggle(
+                    EditCollectionActionToggle(
                         collected = state.collected,
                         entityType = entityType,
                         entityId = entityId,
@@ -173,7 +173,7 @@ internal fun EventUi(
                         coroutineScope = coroutineScope,
                     )
                     CopyToClipboardMenuItem(entityId)
-                    AddAllToCollectionMenuItem(
+                    EditCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,

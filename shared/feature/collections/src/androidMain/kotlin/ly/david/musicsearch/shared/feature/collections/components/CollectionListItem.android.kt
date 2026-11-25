@@ -3,6 +3,7 @@ package ly.david.musicsearch.shared.feature.collections.components
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import ly.david.musicsearch.shared.domain.collection.PendingEdit
 import ly.david.musicsearch.shared.domain.listitem.CollectionContainsEntities
 import ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.shared.domain.network.MusicBrainzEntityType
@@ -72,6 +73,50 @@ internal fun PreviewCollectionListItemHighlighted() {
                     visited = true,
                 ),
                 query = "Text ",
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCollectionListItemPendingRemove() {
+    PreviewTheme {
+        Surface {
+            CollectionListItem(
+                collection = CollectionListItemModel(
+                    id = "3048448c-0605-494a-9e9f-c1a0521906f1",
+                    isRemote = true,
+                    name = "Text where text appears twice",
+                    description = "Some songs",
+                    entity = MusicBrainzEntityType.RECORDING,
+                    cachedEntityCount = 9999,
+                    remoteEntityCount = 9999,
+                    visited = true,
+                    pendingEdit = PendingEdit.Remove,
+                ),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+internal fun PreviewCollectionListItemPendingAdd() {
+    PreviewTheme {
+        Surface {
+            CollectionListItem(
+                collection = CollectionListItemModel(
+                    id = "3048448c-0605-494a-9e9f-c1a0521906f1",
+                    isRemote = true,
+                    name = "Text where text appears twice",
+                    description = "Some songs",
+                    entity = MusicBrainzEntityType.RECORDING,
+                    cachedEntityCount = 9999,
+                    remoteEntityCount = 9999,
+                    visited = true,
+                    pendingEdit = PendingEdit.Add,
+                ),
             )
         }
     }

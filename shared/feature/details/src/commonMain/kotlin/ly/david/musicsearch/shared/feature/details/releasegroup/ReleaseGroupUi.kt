@@ -31,8 +31,8 @@ import ly.david.musicsearch.ui.common.scaffold.AppScaffold
 import ly.david.musicsearch.ui.common.screen.DetailsScreen
 import ly.david.musicsearch.ui.common.screen.StatsScreen
 import ly.david.musicsearch.ui.common.sort.ListFiltersMenuItems
-import ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem
-import ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem
+import ly.david.musicsearch.ui.common.topappbar.EditCollectionActionToggle
 import ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.musicsearch.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.musicsearch.ui.common.topappbar.RefreshMenuItem
@@ -148,7 +148,7 @@ internal fun ReleaseGroupUi(
                 subtitle = state.subtitle,
                 scrollBehavior = scrollBehavior,
                 additionalActions = {
-                    AddToCollectionActionToggle(
+                    EditCollectionActionToggle(
                         collected = state.collected,
                         entityType = entityType,
                         entityId = entityId,
@@ -194,7 +194,7 @@ internal fun ReleaseGroupUi(
                         overlayHost = overlayHost,
                         eventSink = releasesByEntityEventSink,
                     )
-                    AddAllToCollectionMenuItem(
+                    EditCollectionMenuItem(
                         tab = state.selectedTab,
                         entityIds = state.selectionState.selectedIds,
                         overlayHost = overlayHost,

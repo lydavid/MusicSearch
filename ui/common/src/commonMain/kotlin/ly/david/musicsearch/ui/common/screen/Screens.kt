@@ -1,8 +1,8 @@
 package ly.david.musicsearch.ui.common.screen
 
-import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.ParcelablePopResult
 import com.slack.circuit.runtime.screen.ParcelableScreen
+import com.slack.circuit.runtime.screen.PopResult
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
 import ly.david.musicsearch.shared.domain.BrowseMethod
@@ -112,6 +112,9 @@ data object SettingsScreen : ParcelableScreen
 
 @Parcelize
 data object AppearanceSettingsScreen : ParcelableScreen
+
+@Parcelize
+data object BehaviourSettingsScreen : ParcelableScreen
 
 @Parcelize
 data object ImagesSettingsScreen : ParcelableScreen
