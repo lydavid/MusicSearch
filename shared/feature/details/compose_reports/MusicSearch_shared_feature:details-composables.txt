@@ -170,7 +170,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable boldUnvisited: Boolean
   stable modifier: Modifier? = @static <expression>
   stable onDismiss: Function0<Unit>? = @static <expression>
-  stable onAddToCollectionClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
+  stable onEditCollectionClick: Function1<@[ParameterName(name = 'recordingId')] String, Unit>? = @static <expression>
   stable onSubmitListenClick: Function1<@[ParameterName(name = 'track')] TrackListItemModel, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.details.release.TracksByReleaseUi(

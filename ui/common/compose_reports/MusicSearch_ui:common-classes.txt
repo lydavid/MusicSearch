@@ -306,6 +306,9 @@ stable class ly.david.musicsearch.ui.common.screen.SettingsScreen {
 stable class ly.david.musicsearch.ui.common.screen.AppearanceSettingsScreen {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.ui.common.screen.BehaviourSettingsScreen {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.ui.common.screen.ImagesSettingsScreen {
   <runtime stability> = Stable
 }

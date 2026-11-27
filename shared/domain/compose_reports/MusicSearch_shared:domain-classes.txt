@@ -84,12 +84,15 @@ stable class ly.david.musicsearch.shared.domain.browse.BrowseRemoteMetadata {
 stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.SyncingWithMusicBrainz {
   <runtime stability> = Stable
 }
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.Loading {
+  <runtime stability> = Stable
+}
 stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.Deleting {
   stable val count: Int
   stable val collectionName: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.Deleted {
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.DeletedFromCollection {
   stable val count: Int
   stable val collectionName: String
   <runtime stability> = Stable
@@ -115,15 +118,31 @@ stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedba
   stable val collectionName: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultiple {
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultipleToCollection {
   stable val newInsertions: Int
   stable val collectionName: String
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultipleSomeAlreadyAdded {
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedMultipleToCollectionSomeAlreadyAdded {
   stable val newInsertions: Int
   stable val collectionName: String
   stable val countAlreadyAdded: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.AddedToMultipleCollections {
+  stable val count: Int
+  stable val countCollectionsInsertedTo: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.DeletedFromMultipleCollections {
+  stable val count: Int
+  stable val countCollectionsDeletedFrom: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.domain.collection.EditACollectionFeedback.EditedMultipleCollections {
+  stable val count: Int
+  stable val countCollectionsInsertedTo: Int
+  stable val countCollectionsDeletedFrom: Int
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.domain.collection.CreateNewCollectionResult.NewCollection {
@@ -830,6 +849,7 @@ stable class ly.david.musicsearch.shared.domain.listitem.CollectionListItemModel
   stable val remoteEntityCount: Int?
   stable val visited: Boolean
   stable val containsEntities: CollectionContainsEntities?
+  stable val pendingEdit: PendingEdit?
   <runtime stability> = Stable
 }
 runtime class ly.david.musicsearch.shared.domain.listitem.EventListItemModel {

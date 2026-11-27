@@ -32,14 +32,23 @@ stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollection
   runtime val lazyPagingItems: LazyPagingItems<CollectionListItemModel>
   runtime val feedback: Feedback<EditACollectionFeedback>?
   stable val boldUnvisited: Boolean
+  stable val confirmChanges: Boolean
+  stable val filterState: TopAppBarFilterState
+  runtime val pendingEdits: Map<String, CollectionListItemModel>
   stable val eventSink: Function1<EditCollectionUiEvent, Unit>
 }
 stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.CreateNewCollection {
   runtime val newCollection: NewCollection
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.AddToCollection {
-  stable val collectionId: String
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.ClickCollection {
+  runtime val collection: CollectionListItemModel
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.ApplyChanges {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.collections.edit.EditCollectionUiEvent.Dismiss {
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.collections.list.CollectionListPresenter {

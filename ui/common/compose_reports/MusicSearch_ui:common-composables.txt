@@ -127,6 +127,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable onSelectAllToggle: Function0<Unit>? = @static <expression>
   stable imageVector: ImageVector? = @static null
   stable subtitle: String? = @static ""
+  stable windowInsets: WindowInsets? = @dynamic <expression>
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -355,20 +356,20 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSelect: Function1<String, Unit>? = @static <expression>
   stable onEditCollectionClick: Function1<String, Unit>? = @static <expression>
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.AddToCollectionIcon(
-  stable collected: Boolean
-  stable modifier: Modifier? = @static <expression>
-  stable nameWithDisambiguation: String? = @static ""
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.AddToCollectionIconButton(
-  entityListItemModel: EntityListItemModel
-  stable onClick: Function1<String, Unit>
-  stable modifier: Modifier? = @static <expression>
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.CollectionIcon(
   stable collected: Boolean
   stable modifier: Modifier? = @static <expression>
   stable contentDescription: String? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.EditCollectionIcon(
+  stable collected: Boolean
+  stable modifier: Modifier? = @static <expression>
+  stable nameWithDisambiguation: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.icon.EditCollectionIconButton(
+  entityListItemModel: EntityListItemModel
+  stable onClick: Function1<String, Unit>
+  stable modifier: Modifier? = @static <expression>
 )
 restartable skippable fun ly.david.musicsearch.ui.common.image.InitializeImageLoader()
 restartable skippable fun ly.david.musicsearch.ui.common.image.LargeImage(
@@ -821,27 +822,6 @@ fun ly.david.musicsearch.ui.common.theme.TextStyles.getCardBodySubTextStyle(
 fun ly.david.musicsearch.ui.common.theme.useMaterialYou(
   <this>: AppPreferences
 ): Boolean
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.AddAllToCollectionMenuItem(
-  <this>: OverflowMenuScope
-  stable tab: Tab?
-  stable entityIds: ImmutableList<String>
-  stable overlayHost: OverlayHost
-  coroutineScope: CoroutineScope
-  stable snackbarHostState: SnackbarHostState
-  stable onLoginClick: Function0<Unit>
-  stable modifier: Modifier? = @static <expression>
-)
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.AddToCollectionActionToggle(
-  stable collected: Boolean
-  stable entityType: MusicBrainzEntityType
-  stable entityId: String
-  stable overlayHost: OverlayHost
-  coroutineScope: CoroutineScope
-  stable snackbarHostState: SnackbarHostState
-  stable onLoginClick: Function0<Unit>
-  stable modifier: Modifier? = @static <expression>
-  stable nameWithDisambiguation: String? = @static ""
-)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.CopyToClipboardMenuItem(
   <this>: OverflowMenuScope
   stable entityId: String
@@ -860,6 +840,27 @@ fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing.animateAlphaWithDelay(
   stable delay: Int
 ): State<Float>
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.DotsFlashing(
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.EditCollectionActionToggle(
+  stable collected: Boolean
+  stable entityType: MusicBrainzEntityType
+  stable entityId: String
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable onLoginClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+  stable nameWithDisambiguation: String? = @static ""
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.EditCollectionMenuItem(
+  <this>: OverflowMenuScope
+  stable tab: Tab?
+  stable entityIds: ImmutableList<String>
+  stable overlayHost: OverlayHost
+  coroutineScope: CoroutineScope
+  stable snackbarHostState: SnackbarHostState
+  stable onLoginClick: Function0<Unit>
   stable modifier: Modifier? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.ui.common.topappbar.GoToScreenMenuItem(
@@ -893,6 +894,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable imageVector: ImageVector? = @static null
   stable title: String? = @static ""
   stable subtitle: String? = @static ""
+  stable windowInsets: WindowInsets? = @dynamic <expression>
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable containerColor: Color = @static <expression>
   stable actions: Function2<Composer, Int, Unit>? = @static <expression>
@@ -907,6 +909,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable imageVector: ImageVector? = @static null
   stable annotatedString: AnnotatedString? = @static <expression>
   stable subtitle: String? = @static ""
+  stable windowInsets: WindowInsets? = @dynamic <expression>
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable containerColor: Color = @static <expression>
   stable actions: Function2<Composer, Int, Unit>? = @static <expression>
@@ -973,6 +976,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable imageVector: ImageVector? = @static null
   stable title: String? = @static ""
   stable subtitle: String? = @static ""
+  stable windowInsets: WindowInsets? = @dynamic <expression>
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
@@ -989,6 +993,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
   stable showBackButton: Boolean = @static true
   stable imageVector: ImageVector? = @static null
   stable subtitle: String? = @static ""
+  stable windowInsets: WindowInsets? = @dynamic <expression>
   stable scrollBehavior: TopAppBarScrollBehavior? = @static null
   stable overflowDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null
   stable subtitleDropdownMenuItems: @[ExtensionFunctionType] Function3<OverflowMenuScope, Composer, Int, Unit>? = @static null

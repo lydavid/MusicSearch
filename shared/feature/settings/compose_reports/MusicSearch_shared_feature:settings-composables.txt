@@ -17,6 +17,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiCustomColors()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiSystemColors()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.appearance.PreviewAppearanceSettingsUiNonAndroid12Plus()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.behaviour.PreviewBehaviourSettingsUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedOut()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedIn()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.PreviewProfileCardLoggedInWaitingForUsername()
@@ -76,6 +77,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 fun ly.david.musicsearch.shared.feature.settings.internal.appearance.getText(
   stable <this>: Theme
 ): String
+open fun ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsPresenter.present(
+  stable <this>: BehaviourSettingsPresenter
+): BehaviourSettingsUiState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUi(
+  stable state: BehaviourSettingsUiState
+  stable modifier: Modifier? = @static <expression>
+)
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.settings.internal.components.ListenBrainzProfileCard(
   stable listenBrainzSettingsUrl: String
   stable username: String

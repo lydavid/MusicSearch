@@ -89,7 +89,6 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.Ap
 stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiState {
   stable val theme: Theme
   stable val scrollToHideTopAppBar: Boolean
-  stable val isPullToRefreshEnabled: Boolean
   stable val boldUnvisited: Boolean
   stable val useMaterialYou: Boolean
   stable val seedColor: Int
@@ -103,14 +102,6 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.Ap
   stable val theme: Theme
   <runtime stability> = Stable
 }
-stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateScrollToHideTopAppBar {
-  stable val enable: Boolean
-  <runtime stability> = Stable
-}
-stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdatePullToRefresh {
-  stable val enable: Boolean
-  <runtime stability> = Stable
-}
 stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.UpdateBoldUnvisited {
   stable val bold: Boolean
   <runtime stability> = Stable
@@ -121,6 +112,33 @@ stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.Ap
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.appearance.AppearanceSettingsUiEvent.SetSeedColor {
   stable val seedColor: Int
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsPresenter {
+  stable val navigator: Navigator
+  runtime val appPreferences: AppPreferences
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiState {
+  stable val scrollToHideTopAppBar: Boolean
+  stable val isPullToRefreshEnabled: Boolean
+  stable val confirmChanges: Boolean
+  stable val eventSink: Function1<BehaviourSettingsUiEvent, Unit>
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiEvent.NavigateUp {
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiEvent.UpdateScrollToHideTopAppBar {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiEvent.UpdatePullToRefresh {
+  stable val enable: Boolean
+  <runtime stability> = Stable
+}
+stable class ly.david.musicsearch.shared.feature.settings.internal.behaviour.BehaviourSettingsUiEvent.UpdateConfirmChanges {
+  stable val confirm: Boolean
   <runtime stability> = Stable
 }
 stable class ly.david.musicsearch.shared.feature.settings.internal.images.ImagesSettingsPresenter {

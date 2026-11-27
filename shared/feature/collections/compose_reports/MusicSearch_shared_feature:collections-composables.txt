@@ -5,10 +5,17 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemDisabled()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemHighlighted()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemPendingRemove()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCollectionListItemPendingAdd()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContent()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.PreviewCreateNewCollectionDialogContentDefaultEntity()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContent()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentNoConfirm()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentWithQuery()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentSyncing()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentLoading()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentApplyEnabled()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.PreviewCollectionBottomSheetContentNoItems()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUi()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelection()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.list.PreviewCollectionListUiSelectedAll()
@@ -17,10 +24,13 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable modifier: Modifier? = @static <expression>
   stable boldUnvisited: Boolean = @static true
   stable query: String? = @static ""
-  stable onClick: Function1<String, Unit>? = @static <expression>
   stable enabled: Boolean = @static true
   stable isSelected: Boolean = @static false
-  stable onSelect: Function1<String, Unit>? = @static <expression>
+  stable onClick: Function1<CollectionListItemModel, Unit>? = @static <expression>
+  stable onSelect: Function1<String, Unit>? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.components.TristateIcon(
+  collection: CollectionListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.create.CreateNewCollectionDialogContent(
   stable modifier: Modifier? = @static <expression>
@@ -29,13 +39,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.
   stable onSubmit: Function2<@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntityType, Unit>? = @static <expression>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ly.david.musicsearch.shared.feature.collections.edit.CollectionBottomSheetContent(
-  collections: LazyPagingItems<CollectionListItemModel>
-  stable numberOfItemsToAddToCollection: Int
+  stable state: EditCollectionUiState
   stable modifier: Modifier? = @static <expression>
-  stable boldUnvisited: Boolean = @static true
-  feedback: Feedback<EditACollectionFeedback>? = @static null
   stable onCreateCollectionClick: Function0<Unit>? = @static <expression>
-  stable onAddToCollection: Function1<@[ParameterName(name = 'collectionId')] String, Unit>? = @static <expression>
 )
 open fun ly.david.musicsearch.shared.feature.collections.edit.EditCollectionPresenter.present(
   stable <this>: EditCollectionPresenter
